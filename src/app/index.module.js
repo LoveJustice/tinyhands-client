@@ -14,6 +14,7 @@ import SessionService from './utils/session.service';
 // REGION: Directives
 import MapDirective from './components/map/map.directive';
 import NavbarDirective from './components/navbar/navbar.directive';
+import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
   
 // REGION: Controllers
@@ -37,8 +38,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Services
 
   // REGION: Directives
-  .directive('navbar', () => new NavbarDirective())
   .directive('googlemap', () => new MapDirective())
+  .directive('navbar', () => new NavbarDirective())
+  .directive('tally', () => new TallyDirective())
   // ENDREGION: Directives
   
   // REGION: Controllers

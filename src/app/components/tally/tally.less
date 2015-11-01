@@ -1,0 +1,76 @@
+#tally {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  .tally-tab {
+    background-color: rgba(255,255,255,0.85);
+    border-radius: 10px;
+    cursor: default;
+    margin-right: 15px;
+    /* REGION: Drop-down animation */
+
+    -webkit-transition: max-height 1s;
+    transition: max-height 1s;
+    top: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    &:hover {
+      max-height: 500px;
+    }
+    /* ENDREGION: Drop-down animation */
+    * {
+      overflow: hidden;
+      text-overflow: '.';
+    }
+    .tallyFade.ng-hide-add {
+      -webkit-animation-duration: 0.4s;
+      animation-duration: 0.4s;
+      -webkit-animation-name: fadeOutUp;
+      animation-name: fadeOutUp;
+    }
+
+    .tallyFade.ng-hide-remove {
+      -webkit-animation-duration: 0.4s;
+      animation-duration: 0.4s;
+      -webkit-animation-name: fadeInDown;
+      animation-name: fadeInDown;
+    }
+    h3, h4 {
+      font-size: 15px;
+    }
+  }
+  .tally-tab-small {
+    background-color: rgba(255,255,255,0.85);
+    border-radius: 10px;
+    position: absolute;
+    display: table;
+    width: 50%;
+    left: 25%;
+    div {
+      display: table-cell;
+    }
+    h3, h4 {
+      font-size: 20px;
+    }
+  }
+  .day-of-week {
+    margin: 0;
+  }
+  #layer-dropdown {
+    top:55px;
+    display:block;
+    position:fixed;
+    right:95px;
+    .btn.dropdown-toggle {
+      height:20px;
+    }
+    ul.dropdown-menu {
+      left:-76px;
+      min-width: 100px;
+      li.checkbox {
+        padding-left: 5px;
+      }
+    }
+  }
+}

@@ -3,33 +3,43 @@ import BaseService from '../base.service';
 class SessionService extends BaseService {
 	constructor ($http, $rootScope, $state, $timeout) {
 		'ngInject';
-		super();
-		
+		super($http);
+
 		this.root = $rootScope;
 		this.routeState = $state;
 		this.timeout = $timeout;
 	}
 	
-	attemptLogin (username, password, rememberMe) {
-		sessionStorage.currentUser = username + password + rememberMe;
-		this.root.authenticated = true;
-		
-		// Login API call here
-		this.routeState.go('dashboard');
+	attemptLogin (username, password) {
+        var self = this;
+		return super.post('api/login/', '', {"username": username, "password": password})
+			.success(function(data) {
+				sessionStorage.token = "Token " + data.token;
+                self.root.authenticated = true;
+                self.timeout(() => { // State isn't quite ready on load so we need this timeout
+                    self.routeState.go('dashboard');
+			    });
+			});
 	}
 
+    me () {
+        return super.get('api/me/')
+            .success(function(data) {
+		        sessionStorage.username = data.first_name + " " + data.last_name;
+            });
+    }
 	// See if page loading needs to have user logged in
 	// See if there is already a user logged in
 	checkAuthenticity () {
 		this.createStateChangeListener();
 	}
 	
-	checkAuthenticityLogic (requireLogin, currentUser) {
-		if (requireLogin && typeof currentUser === 'undefined') { // if not logged in and page requires login
+	checkAuthenticityLogic (requireLogin, token) {
+		if (requireLogin && typeof token === 'undefined') { // if not logged in and page requires login
 			this.timeout(() => { // State isn't quite ready on load so we need this timeout
 				this.routeState.go('login'); // Make user login
 			});
-		} else if (currentUser) {
+		} else if (token) {
 			this.root.authenticated = true;
 		}
 	}
@@ -38,16 +48,16 @@ class SessionService extends BaseService {
 		var self = this;
 		this.root.$on('$stateChangeStart', function (event, toState) {
 			var requireLogin = toState.data.requireLogin; // See if page requires login
-			var currentUser = sessionStorage.currentUser; // Get user from storage if already logged in
+			var token = sessionStorage.token; // Get user token from storage if already logged in
 			
-			self.checkAuthenticityLogic(requireLogin, currentUser);
+			self.checkAuthenticityLogic(requireLogin, token);
 		});
 	}
 	
 	logout () {
-		sessionStorage.removeItem('currentUser'); // Remove user from storage
+		sessionStorage.removeItem('token'); // Remove user from storage
+		sessionStorage.removeItem('username'); // Remove user from storage
 		this.root.authenticated = false; // Set authenticated to false
-		
 		this.routeState.go('login');
 	}
 }

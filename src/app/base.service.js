@@ -1,7 +1,6 @@
 class BaseService {
 	constructor($http) {
 		'ngInject';
-		
 		this.$http = $http;
 	}
 	
@@ -12,26 +11,36 @@ class BaseService {
 	* headers - JSON object
 	* params - Array of JSON objects formatted [ { name: "first", value: "Rick" }, { name: "last", value: "Astley" }, { name: "job", value: "Rock Star" } ]
 	*/
-	get(url, headers, params) {
+	get(url, headers={}, params=[]) {
+		if(sessionStorage.getItem("token")) {
+			headers.Authorization = sessionStorage.token;
+		}
+
 		return this.$http({
 			method: 'GET',
-			url: url,
+			url: 'http://0.0.0.0:3389/' + url + $.param(params),
 			headers: headers
 		});
 	}
-	
-	
+
+
 	/*
 	* Function: post
-	* Params: 
+	* Params:
 	*	url - string
 	* headers - JSON object
 	* data - JSON object of data to post
 	*/
-	post(url, headers, data) {
+	post(url, userHeaders, data) {
+		var headers = {};
+		angular.copy(userHeaders, headers);
+		if(sessionStorage.getItem("token")){
+			headers.Authorization = sessionStorage.token;
+		}
+        
 		return this.$http({
 			method: 'POST',
-			url: url,
+			url: 'http://0.0.0.0:3389/' + url,
 			headers: headers,
 			data: data
 		});

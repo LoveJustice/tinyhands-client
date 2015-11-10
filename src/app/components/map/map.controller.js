@@ -56,9 +56,8 @@ class MapController {
 		};
 	}
 	
-	toggleAddress2Layer () {
-		this.showAddress2Layer = !this.showAddress2Layer;
-		if (this.showAddress2Layer) {
+	toggleAddress2Layer (event, showAddress2Layer) {
+		if (showAddress2Layer) {
 			this.setAddress2Layer();
 		} else {
 			this.layerOptions = {};

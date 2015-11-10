@@ -13,7 +13,7 @@
 								<div ng-repeat="(station,numIntercepts) in day.interceptions">
 										<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} INT in {{station}}</h4>
 								</div>
-								<h4 ng-show="showInt && tally.isEmptyObject(day.interceptions)" class="animated tallyFade">No Interceptions</h4>
+								<h4 ng-show="showInt" class="animated tallyFade">No Interceptions</h4>
 						</div>
 				</div>
 				
@@ -32,35 +32,4 @@
 				</div>
 				<!--   ENDREGION: Tally w/Smaller screens     -->
 		</div>
-
-		<!--    REGION: Layer Dropdown    -->
-		<div id="layer-dropdown" class="btn-group" ng-mouseenter="showDropDown = true" ng-class="{'open':showDropDown}">
-				<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-						<i class="glyphicon glyphicon-menu-hamburger"></i>
-				</button>
-				<ul class="dropdown-menu" role="menu" ng-mouseleave="showDropDown = false">
-
-						<li class="checkbox">
-								<label><input type="checkbox"
-															ng-model="tally.showEvents">Events
-								</label>
-						</li>
-
-						<li class="checkbox">
-								<label><input id="tallyToggle" type="checkbox"
-															ng-model="tally.showTally">Tally
-								</label>
-						</li>
-
-						<li class="checkbox">
-								<label>
-										<input type="checkbox"
-														ng-model="tally.showVDCLayer"
-														ng-click="tally.toggleVDCLayer()">VDCs
-								</label>
-						</li>
-
-				</ul>
-		</div>
-		<!--   ENDREGION: Layer Dropdown     -->
 </div>

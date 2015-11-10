@@ -9,6 +9,7 @@ import runBlock from './index.run';
 
 // REGION: Services
 import SessionService from './utils/session.service';
+import TallyService from './components/tally/tally.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -35,6 +36,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   
   // REGION: Services
   .service('session', SessionService)
+  .service('tallyService', TallyService)
   // ENDREGION: Services
 
   // REGION: Directives

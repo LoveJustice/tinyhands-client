@@ -1,4 +1,36 @@
-<div class="full-height">
+<div id="dashboard" class="full-height">
 	<tally></tally>
 	<googlemap></googlemap>
+	
+
+	<!--    REGION: Layer Dropdown    -->
+	<div id="layer-dropdown" class="btn-group" ng-mouseenter="showDropDown = true" ng-class="{'open':showDropDown}">
+			<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+					<i class="glyphicon glyphicon-menu-hamburger"></i>
+			</button>
+			<ul class="dropdown-menu" role="menu" ng-mouseleave="showDropDown = false">
+
+					<li class="checkbox">
+							<label><input type="checkbox"
+														ng-model="dashboard.showEvents">Events
+							</label>
+					</li>
+
+					<li class="checkbox">
+							<label><input id="dashboardToggle" type="checkbox"
+														ng-model="dashboard.showTally">Tally
+							</label>
+					</li>
+
+					<li class="checkbox">
+							<label>
+									<input type="checkbox"
+													ng-model="dashboard.showAddress2Layer"
+													ng-click="dashboard.toggleAddress2Layer()">VDCs
+							</label>
+					</li>
+
+			</ul>
+	</div>
+	<!--   ENDREGION: Layer Dropdown     -->
 </div>

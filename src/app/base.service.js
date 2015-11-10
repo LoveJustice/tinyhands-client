@@ -37,7 +37,7 @@ class BaseService {
 		if(sessionStorage.getItem("token")){
 			headers.Authorization = sessionStorage.token;
 		}
-        
+
 		return this.$http({
 			method: 'POST',
 			url: 'http://0.0.0.0:3389/' + url,

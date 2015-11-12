@@ -18,6 +18,15 @@ function routerConfig ($stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: false
       }
+    })
+    .state('address2', {
+      url: '/address2',
+      templateUrl: 'app/addresses/address2.html',
+      controller: 'Address2Controller',
+      controllerAs: 'vm',
+      data: {
+        requireLogin: true
+      }
     });
 
   $urlRouterProvider.otherwise('/');

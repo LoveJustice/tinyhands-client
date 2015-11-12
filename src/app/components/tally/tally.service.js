@@ -4,13 +4,11 @@ class TallyService extends BaseService {
 	constructor($http) {
 		'ngInject';
 		
-		super();
-		
-		this.$http = $http;
+		super($http);
 	}
 	
 	getTallyDays() {
-		return this.$http.get('http://localhost:8000/portal/tally/days/').then((data) => {
+		return super.get('portal/tally/days/').then((data) => {
 			// Data should be:
 			// {0:{dayOfWeek:'Monday',
 			//     interceptions: {<String of StationCode>:<Num of Interceptions>}},

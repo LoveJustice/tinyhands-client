@@ -1,14 +1,13 @@
 class MapController {
 	constructor ($rootScope, uiGmapGoogleMapApi) {
 		'ngInject';
-		
+
 		this.maps = null;
 		this.rootScope = $rootScope;
-		this.showAddress2Layer = true;
-		
+
 		this.activate(uiGmapGoogleMapApi);
 	}
-	
+
 	activate (gMapsApi) {
 		var self = this;
 		gMapsApi.then((maps) => {
@@ -16,10 +15,10 @@ class MapController {
 			self.setMapData();
 			self.setAddress2Layer();
 		});
-		
-		this.rootScope.$on('toggleAddress2Layer', this.toggleAddress2Layer);
+
+		this.rootScope.$on('toggleAddress2Layer', (e,s) => {this.toggleAddress2Layer(e,s);});
 	}
-	
+
 	setAddress2Layer () {
 		this.layerOptions = {
 			query: {
@@ -36,7 +35,7 @@ class MapController {
 			}
 		};
 	}
-	
+
 	setMapData () {
 		this.mapData = {
 			center: {latitude: 28.394857, longitude: 84.124008},
@@ -51,11 +50,11 @@ class MapController {
 					position: this.maps.ControlPosition.RIGHT_BOTTOM,
 					style: this.maps.ZoomControlStyle.SMALL
 				}
-			}, 
+			},
 			zoom: 8
 		};
 	}
-	
+
 	toggleAddress2Layer (event, showAddress2Layer) {
 		if (showAddress2Layer) {
 			this.setAddress2Layer();

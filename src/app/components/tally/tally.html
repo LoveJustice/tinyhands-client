@@ -13,10 +13,10 @@
 								<div ng-repeat="(station,numIntercepts) in day.interceptions">
 										<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} INT in {{station}}</h4>
 								</div>
-								<h4 ng-show="showInt" class="animated tallyFade">No Interceptions</h4>
+								<h4 ng-show="showInt && tally.isEmptyObject(day.interceptions)" class="animated tallyFade">No Interceptions</h4>
 						</div>
 				</div>
-				
+
 				<div class="col-lg-1 hidden-md hidden-sm hidden-xs"></div>
 				<!--   ENDREGION: Tally w/Larger screens     -->
 

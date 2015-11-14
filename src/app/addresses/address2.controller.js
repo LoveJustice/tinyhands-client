@@ -9,19 +9,16 @@ class Address2Controller {
         this.address2Service = address2Service;
         this.modal = $uibModal;
 
-
         this.loading = false;
         this.reverse = false;
         this.paginateBy = 25;
         this.addresses = [];
         this.searchValue = "";
         this.nextPageUrl = "";
-        this.selectedAddress = {};
         this.sortColumn = "";
 
         this.getAddresses();
     }
-
 
     sortIcon(column) {
         if (column === this.sortColumn) {
@@ -117,8 +114,6 @@ class Address2Controller {
         });
 
     }
-
-
 }
 
 export default Address2Controller;

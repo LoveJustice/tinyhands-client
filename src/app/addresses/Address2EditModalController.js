@@ -11,7 +11,6 @@ class Address2EditModalController extends BaseService {
         this.scope.address = angular.copy(address);
     }
 
-
     save (){
         // this is so we can save null cannon names
         if(this.scope.address.cannonical_name === "" || this.scope.address.cannonical_name === undefined || this.scope.address.cannonical_name === null){
@@ -38,5 +37,4 @@ class Address2EditModalController extends BaseService {
             });
     }
 }
-
 export default Address2EditModalController;

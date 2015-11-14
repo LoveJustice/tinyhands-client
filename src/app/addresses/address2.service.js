@@ -17,15 +17,15 @@ class Address2Service extends BaseService {
         return this.listAddresses(queryParams);
     }
 
-	loadMoreAddresses(url) {
-        return super.get(url).
+	loadMoreAddresses(queryParams) {
+        return super.get("api/address2/" + queryParams).
             success((data) => {
                 return data;
             });
     }
 
 	saveAddress(address) {
-        return super.put('api/address2/' + address.id, address).
+        return super.put('api/address2/' + address.id + '/', address).
             success((data) => {
                 return data;
             });

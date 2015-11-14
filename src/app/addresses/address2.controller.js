@@ -1,5 +1,5 @@
 class Address2Controller {
-    constructor($rootScope, $scope, $http, $timeout, address2Service, $modal) {
+    constructor($rootScope, $scope, $http, $timeout, address2Service, $uibModal) {
         'ngInject';
 
         this.rootScope = $rootScope;
@@ -7,7 +7,7 @@ class Address2Controller {
         this.http = $http;
         this.timeout = $timeout;
         this.address2Service = address2Service;
-        this.modal = $modal;
+        this.modal = $uibModal;
 
 
         this.loading = false;
@@ -24,17 +24,16 @@ class Address2Controller {
 
 
     sortIcon(column) {
-        var vm = this;
-        if (column === vm.sortColumn) {
+        if (column === this.sortColumn) {
             switch (column) {
                 case "latitude":
                 case "longitude":
-                    return vm.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
+                    return this.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
                 case "name":
                 case "cannonical_name.name":
                 case "district.name":
                 case "verified":
-                    return vm.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
+                    return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
                 default:
                     return "glyphicon-sort";
             }
@@ -61,7 +60,11 @@ class Address2Controller {
         this.address2Service.loadMoreAddresses(this.nextPageUrl, "&" + this.getQueryParams().slice(1))
             .success((data) => {
                 this.addresses = this.addresses.concat(data.results);
-                this.nextPageUrl = data.next;
+
+                var nextURL = data.next.split('/');
+                nextURL = nextURL[nextURL.length - 1];
+
+                this.nextPageUrl = nextURL;
                 this.loading = false;
             });
     }
@@ -77,49 +80,46 @@ class Address2Controller {
     }
 
     getQueryParams() {
-        var vm = this;
         var params = [];
-        params.push({"name": "page_size", "value": vm.paginateBy});
-        if (vm.searchValue) {
-            params.push({"name": "search", "value": vm.searchValue});
+        params.push({"name": "page_size", "value": this.paginateBy});
+        if (this.searchValue) {
+            params.push({"name": "search", "value": this.searchValue});
         }
-        if (vm.sortColumn) {
-            if (vm.reverse) {
-                params.push({"name": "ordering", "value": ("-" + vm.sortColumn.replace(".", "__"))});
+        if (this.sortColumn) {
+            if (this.reverse) {
+                params.push({"name": "ordering", "value": ("-" + this.sortColumn.replace(".", "__"))});
             } else {
-                params.push({"name": "ordering", "value": (vm.sortColumn.replace(".", "__"))});
+                params.push({"name": "ordering", "value": (this.sortColumn.replace(".", "__"))});
             }
         }
         return params;
     }
 
-    //editAddress2(address){
-    //    var vm = this;
-    //    vm.selectedAddress = address;
-    //    var size = 'md';
-    //    var modalInstance = this.modal.open({
-    //      animation: true,
-    //      templateUrl: 'address2EditModal.html',
-    //      controller: 'ModalInstanceCtrl',
-    //      size: size,
-    //      resolve: {
-    //        address: function () {
-    //            return address;
-    //        }
-    //      }
-    //    });
-    //    modalInstance.result.then(function (address) {
-    //            this.address2Service.saveAddress(address)
-    //                .success(function (){
-    //                    main();
-    //                })
-    //                .error(function (){
-    //                    alert(address);
-    //
-    //                });
-    //    });
-    //
-    //}
+    editAddress2(address){
+        this.selectedAddress = address;
+        var size = 'md';
+        var modalInstance = this.modal.open({
+          animation: true,
+          templateUrl: 'address2EditModal.html',
+          controller: 'Address2EditModalController as vm',
+          size: size,
+          resolve: {
+            address: function () {
+                return address;
+            }
+          }
+        });
+        modalInstance.result.then((address) => {
+            this.address2Service.saveAddress(address)
+                .success(() => {
+                    this.getAddresses();
+                })
+                .error(() => {
+                    alert("There was an error with your request");
+                });
+        });
+
+    }
 
 
 }

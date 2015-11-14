@@ -23,6 +23,7 @@ import TallyDirective from './components/tally/tally.directive';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
 import Address2Controller from './addresses/address2.controller';
+import Address2EditModalController from './addresses/Address2EditModalController';
 // ENDREGION: Controllers
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
@@ -50,6 +51,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   
   // REGION: Controllers
   .controller('DashboardController', DashboardController)
-  .controller('LoginController', LoginController);
-  .controller('Address2Controller', Address2Controller);
+  .controller('LoginController', LoginController)
+  .controller('Address2Controller', Address2Controller)
+  .controller('Address2EditModalController', Address2EditModalController);
   // ENDREGION: Controllers

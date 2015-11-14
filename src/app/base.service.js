@@ -21,7 +21,7 @@ class BaseService {
 		params = params ? "?" + $.param(params) : "";
 		return this.$http({
 			method: 'GET',
-			url: this.baseUrl + url + params,
+			url: this.BASE_URL + url + params,
 			headers: headers
 		});
 	}

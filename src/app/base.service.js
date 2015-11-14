@@ -1,7 +1,8 @@
 class BaseService {
-	constructor($http) {
+	constructor($http, BASE_URL) {
 		'ngInject';
 		this.$http = $http;
+		this.BASE_URL = 'http://craton.cse.taylor.edu:3389/';
 	}
 	
 	/*
@@ -18,7 +19,7 @@ class BaseService {
 
 		return this.$http({
 			method: 'GET',
-			url: 'http://0.0.0.0:3389/' + url + $.param(params),
+			url: this.BASE_URL + url + $.param(params),
 			headers: headers
 		});
 	}
@@ -40,7 +41,7 @@ class BaseService {
 
 		return this.$http({
 			method: 'POST',
-			url: 'http://0.0.0.0:3389/' + url,
+			url: this.BASE_URL + url,
 			headers: headers,
 			data: data
 		});

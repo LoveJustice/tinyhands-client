@@ -49,3 +49,4 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController);
   // ENDREGION: Controllers
+

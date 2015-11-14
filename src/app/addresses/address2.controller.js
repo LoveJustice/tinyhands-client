@@ -113,9 +113,6 @@ class Address2Controller {
             this.address2Service.saveAddress(address)
                 .success(() => {
                     this.getAddresses();
-                })
-                .error(() => {
-                    alert("There was an error with your request");
                 });
         });
 

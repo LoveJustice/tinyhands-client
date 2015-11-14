@@ -14,7 +14,7 @@ class Address2EditModalController extends BaseService {
 
     save (){
         // this is so we can save null cannon names
-        if(this.scope.address.cannonical_name === "" || this.scope.address.cannonical_name == undefined || this.scope.address.cannonical_name == null){
+        if(this.scope.address.cannonical_name === "" || this.scope.address.cannonical_name === undefined || this.scope.address.cannonical_name === null){
             this.scope.address.cannonical_name = {id: -1, name: "Empty"};
         }
         this.modalInstance.close(this.scope.address);

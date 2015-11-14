@@ -1,0 +1,128 @@
+<h1 class="text-center">All Address 2 Entries</h1>
+<br/>
+
+<div class="container" ng-cloak>
+    <div class="row">
+        <div class="col-md-2">
+            <select ng-model="vm.paginateBy" ng-options="[25,50,75,500]" ng-change="vm.getAddresses()" class="form-control">
+            </select>
+        </div>
+        <div class="col-md-3">
+            <p style="margin-top: 5px;">Results per page</p>
+        </div>
+        <div class="search-bar pull-right">
+            <form ng-submit="vm.searchAddresses()">
+                  <label>
+                      <input type="search" placeholder="by Address 2 name..." ng-model="vm.searchValue" class="form-control">
+                  </label>
+                  <a class="btn btn-primary" ng-click="vm.searchAddresses()">Search</a>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center" id="addressNameHeader">
+                Name <i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
+            </th>
+            <th ng-click="vm.sortColumn = 'latitude'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                Latitude <i class="glyphicon" ng-class="vm.sortIcon('latitude')"></i>
+            </th>
+            <th ng-click="vm.sortColumn = 'longitude'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                Longitude <i class="glyphicon" ng-class="vm.sortIcon('longitude')"></i>
+            </th>
+            <th ng-click="vm.sortColumn = 'district.name'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                Address 1 <i class="glyphicon" ng-class="vm.sortIcon('district.name')"></i>
+            </th>
+            <th ng-click="vm.sortColumn = 'cannonical_name.name'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                Canonical Name <i class="glyphicon" ng-class="vm.sortIcon('cannonical_name.name')"></i>
+            </th>
+            <th ng-click="vm.sortColumn = 'verified'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                Verified <i class="glyphicon" ng-class="vm.sortIcon('verified')"></i>
+            </th>
+            <th class="text-center">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody ng-init="vm.sortColumn = 'name'">
+            <tr ng-repeat="address in vm.addresses | orderBy:vm.sortColumn:vm.reverse">
+
+                <td class="text-center address-name">{{ address.name }}</td>
+                <td class="text-center">{{ address.latitude }}</td>
+                <td class="text-center">{{ address.longitude }}</td>
+                <td class="text-center">{{ address.district.name }}</td>
+                <td class="text-center">{{ address.cannonical_name.name }}</td>
+                <td class="text-center">{{ address.verified ? "Yes" : "No" }}
+                </td>
+                <td>
+                    <a href="#" ng-click="vm.editAddress2(address)" class="btn btn-warning edit">Edit</a>
+                </td>
+            </tr>
+            <tr ng-show="vm.addresses.length == 0">
+                <td colspan="12">There are currently no Address 2 records in the database</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreAddresses()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">Load more results</button>
+    </div>
+
+
+    <script type="text/ng-template" id="address2EditModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit Address 2</h3>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label for="addressName">Name</label>
+                <input type="text" id="addressName" class="form-control" ng-model="address.name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="addressName">Latitude</label>
+                <input type="number" class="form-control" ng-model="address.latitude"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="addressName">Longitude</label>
+                <input type="number" class="form-control" ng-model="address.longitude"/>
+            </div>
+
+
+            <div class="form-group">
+                <label for="addressName">Address 1</label>
+                <i ng-show="loadingAddress1" class="glyphicon glyphicon-refresh"></i>
+                <input id="address1" type="text" ng-model="address.district" placeholder="Address 1" typeahead="address1 as address1.name for address1 in getFuzzyAddress1s($viewValue)" typeahead-loading="loadingAddress1" typeahead-no-results="noResults" class="form-control">
+                <div ng-show="noResults">
+                  <i class="glyphicon glyphicon-remove"></i> No Results Found
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="addressName">Canonical Name</label>
+                <i ng-show="loadingAddress2" class="glyphicon glyphicon-refresh" style="position: relative; bottom:25px;"></i>
+                <input id="canonical_name" type="text" ng-model="address.cannonical_name" placeholder="Canonical Name" typeahead="address2 as address2.name for address2 in getFuzzyAddress2s($viewValue)" typeahead-loading="loadingAddress2" typeahead-no-results="noResults" class="form-control">
+                <div ng-show="noResults">
+                  <i class="glyphicon glyphicon-remove"></i> No Results Found
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Verified</label>
+                <input id="verified_checkbox" type="checkbox" class="form-control" ng-model="address.verified"/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="updateSubmitButton" class="btn btn-primary" type="button" ng-click="save()">Save</button>
+            <button class="btn btn-danger" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <!-- Loading animation container -->
+    <div ng-show="vm.loading" class="loader-container">
+        <div class="loader">Loading...</div>
+    </div>
+</div>

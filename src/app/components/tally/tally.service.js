@@ -3,10 +3,9 @@ import BaseService from '../../base.service';
 class TallyService extends BaseService {
 	constructor($http) {
 		'ngInject';
-		
 		super($http);
 	}
-	
+
 	getTallyDays() {
 		return super.get('portal/tally/days/').then((data) => {
 			// Data should be:

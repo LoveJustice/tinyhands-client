@@ -1,27 +1,27 @@
 class TallyController {
 	constructor ($rootScope, tallyService) {
 		'ngInject';
-		
+
 		this.rootScope = $rootScope;
 		this.service = tallyService;
 
 		this.days = [];
 		this.userId = null;
-		
+
 		this.activate();
 	}
-	
+
 	activate() {
 		this.getTallyData(true);
 	}
-	
+
 	changeColor(day) {
 		if (day.change && !day.seen) {
 			return {'background-color': 'rgba(255,0,0,0.5)',
 							'color': 'white'};
 		}
 	}
-	
+
 	checkDifferences(data){
 		if (this.days.length > 0) {
 			for(var i in data.reverse()){
@@ -50,7 +50,7 @@ class TallyController {
 		}
 		this.days = data;
 	}
-	
+
 	getDayOfWeek(date) {
 		var newDate = window.moment(date);
 		var today = window.moment().tz("Asia/Kathmandu");
@@ -60,7 +60,7 @@ class TallyController {
 		var nameOfDay = newDate.format('dddd');
 		return nameOfDay;
 	}
-	
+
 	getTallyData(firstCall) {
 		return this.service.getTallyDays().then((promise) => {
 			var data = promise.data;
@@ -68,34 +68,34 @@ class TallyController {
 				this.userId = data.id;
 				this.getTallyLocalStorage();
 				this.checkDifferences(data.days);
-				window.setInterval(this.getTallyData, 60000);
+				window.setInterval(() => {this.getTallyData();}, 60000);
 			}else{ //updates
 				this.checkDifferences(data.days);
 			}
 			this.saveTallyLocalStorage();
 		});
 	}
-	
+
 	getTallyLocalStorage() {
 		var oldTally = window.localStorage.getItem('tally-'+this.userId);
 		if(oldTally){
 			this.days = JSON.parse(oldTally);
 		}
 	}
-	
+
 	isEmptyObject(obj) {
 		return $.isEmptyObject(obj);
 	}
-	
+
 	onMouseLeave(day){
 		day.seen = true;
 		this.saveTallyLocalStorage();
 	}
-	
+
 	saveTallyLocalStorage() {
 		window.localStorage.setItem('tally-'+this.userId, JSON.stringify(this.days));
 	}
-	
+
 	sumNumIntercepts(day) {
 		var sumInt = 0;
 		for (var key in day.interceptions) {

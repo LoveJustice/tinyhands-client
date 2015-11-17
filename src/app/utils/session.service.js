@@ -12,18 +12,23 @@ class SessionService extends BaseService {
 	
 	attemptLogin (username, password) {
 		return super.post('api/login/', {"username": username, "password": password})
-			.success((data) => {
-				sessionStorage.token = "Token " + data.token;
-                this.root.authenticated = true;
-                this.timeout(() => { // State isn't quite ready on load so we need this timeout
-                    this.routeState.go('dashboard');
-			    });
-			});
+			.then(
+				(promise) => {
+					sessionStorage.token = "Token " + promise.data.token;
+					this.root.authenticated = true;
+					this.timeout(() => { // State isn't quite ready on load so we need this timeout
+						this.routeState.go('dashboard');
+					});
+				},
+				() => {
+					window.toastr.error("Invalid Login");
+				}
+			);
 	}
 
     me () {
         return super.get('api/me/')
-            .success((data) => {
+            .then((data) => {
 		        sessionStorage.username = data.first_name + " " + data.last_name;
             });
     }

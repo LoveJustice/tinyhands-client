@@ -27,10 +27,7 @@ class SessionService extends BaseService {
 	}
 
     me () {
-        return super.get('api/me/')
-            .then((data) => {
-		        sessionStorage.username = data.first_name + " " + data.last_name;
-            });
+        return super.get('api/me/');
     }
 	// See if page loading needs to have user logged in
 	// See if there is already a user logged in

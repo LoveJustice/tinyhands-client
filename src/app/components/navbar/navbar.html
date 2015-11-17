@@ -9,59 +9,52 @@
     <a class="navbar-brand" style="margin-top: -10px" href="#"><img ng-src="assets/images/tiny-hands-logo.png" alt="Tiny Hands" /></a>
   </div>
 
-  <!-- /.navbar-collapse -->
   <div class="collapse navbar-collapse navbar-header-collapse"
        ng-if="authenticated">
-    <!-- TODO: If user is logged in show this stuff-->
     <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
         <li><a href="#">Dashboard</a></li>
-        <!-- TODO: If they have permission to view boarderstations show this dropdown-->
-        <li class="dropdown" ng-class="{open:stationsOpen}">
+
+        <li ng-show="navbar.user.permission_border_stations_view" class="dropdown" ng-class="{open:stationsOpen}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
                ng-click="stationsOpen=!stationsOpen">Stations<b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <!-- TODO: If they have permission to create borderstations show this link-->
-                <li><a href="#" id="border_station_create_link">Create Station</a></li>
+                <li><a ng-show="navbar.user.permission_border_stations_add" href="#" id="border_station_create_link">Create Station</a></li>
                 <hr style="margin: 4px"/>
-                <!-- ENDTODO: If they have permission to create borderstations show this link-->
-                
-                <!-- TODO: Loop through all borderstations and create links to their detail page-->
+
+                <!-- TODO: Loop through all borderstations and create links to their detail page or their view page with respect to their permissions -->
             </ul>
         </li>
-        <!-- ENDTODO: If they have permission to view boarderstations show this dropdown-->
 
-        <li class="dropdown" ng-class="{open:formsOpen}">
+        <li ng-hide="!navbar.user.permission_irf_view && !navbar.user.permission_vif_view" class="dropdown" ng-class="{open:formsOpen}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                ng-click="formsOpen=!formsOpen">Forms<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-            <li><a href="#">IRFs</a></li>
-            <li><a href="#">VIFs</a></li>
+                <li><a ng-show="navbar.user.permission_irf_view" href="#">IRFs</a></li>
+                <li><a ng-show="navbar.user.permission_vif_view" href="#">VIFs</a></li>
             </ul>
         </li>
 
-        <!-- TODO: If person has permission to manage budget-->
-        <li><a href="#">Budget Sheets</a></li>
+        <li><a ng-show="navbar.user.permission_budget_manage" href="#">Budget Sheets</a></li>
 
         <li><a href="#">Event Calendar</a></li>
 
     </ul>
     <ul class="nav navbar-nav navbar-right" ng-mouseleave="menuOpen = false">
         <li>
-          <p class="navbar-text">Nepal Time: THETIMEGOESHERE</p>
+          <p class="navbar-text">Nepal Time:  {{ navbar.nepalTime }}</p>
         </li>
         
         <li class="dropdown" ng-class="{open:menuOpen}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-             ng-click="menuOpen=!menuOpen">USERNAMEHERE<span class="caret"></span></a>
+             ng-click="menuOpen=!menuOpen">Hello {{ navbar.user.first_name + " " + navbar.user.last_name }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Accounts and Permissions</a></li>
-            <li><a href="#">Edit Address 1</a></li>
-            <li><a ui-sref="address2" href="#">Edit Address 2</a></li>
+            <li><a ng-show="navbar.user.permission_accounts_manage" href="#">Accounts and Permissions</a></li>
+            <li><a ng-show="navbar.user.permission_vdc_manage" href="#">Edit Address 1</a></li>
+            <li><a ng-show="navbar.user.permission_vdc_manage" ui-sref="address2">Edit Address 2</a></li>
             <li role="separator" class="divider"></li>
             <li ng-click="navbar.logout()"><a href="#">Logout</a></li>
           </ul>
         </li>
     </ul>
-    <!-- ENDTODO: If user is logged in show this stuff-->
-  </div><!-- /.navbar-collapse -->
+  </div>
 </div>

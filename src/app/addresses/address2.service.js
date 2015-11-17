@@ -7,10 +7,7 @@ class Address2Service extends BaseService {
 	}
 
 	listAddresses(queryParams) {
-        return super.get('api/address2/', queryParams).
-            success((data) => {
-                return data;
-            });
+        return super.get('api/address2/', queryParams);
     }
 
 	searchAddresses(queryParams) {
@@ -18,24 +15,15 @@ class Address2Service extends BaseService {
     }
 
 	loadMoreAddresses(queryParams) {
-        return super.get("api/address2/" + queryParams).
-            success((data) => {
-                return data;
-            });
+        return super.get("api/address2/" + queryParams);
     }
 
 	saveAddress(address) {
-        return super.put('api/address2/' + address.id + '/', address).
-            success((data) => {
-                return data;
-            });
+        return super.put('api/address2/' + address.id + '/', address);
     }
 
     listAddress1s(){
-        return super.get('api/address1/')
-            .success((data) => {
-                return data;
-            });
+        return super.get('api/address1/');
     }
 }
 

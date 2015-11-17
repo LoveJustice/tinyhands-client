@@ -4,7 +4,7 @@
 <div class="container" ng-cloak>
     <div class="row">
         <div class="col-md-2">
-            <select ng-model="vm.paginateBy" ng-options="o as o for o in [25,50,75,500]" ng-change="vm.getAddresses()" class="form-control">
+            <select ng-model="vm.paginateBy" ng-options="o for o in [25,50,75,500]" ng-change="vm.getAddresses()" class="form-control">
             </select>
         </div>
         <div class="col-md-3">

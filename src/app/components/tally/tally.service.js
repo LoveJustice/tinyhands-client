@@ -3,10 +3,7 @@ import BaseService from '../../base.service';
 class TallyService extends BaseService {
 	constructor($http) {
 		'ngInject';
-
-		super();
-
-		this.$http = $http;
+		super($http);
 	}
 
 	getTallyDays() {

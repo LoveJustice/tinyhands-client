@@ -4,7 +4,9 @@ class MapController {
 
 		this.maps = null;
 		this.rootScope = $rootScope;
-
+		
+		this.showAddress2Layer = true;
+		
 		this.activate(uiGmapGoogleMapApi);
 	}
 
@@ -37,8 +39,9 @@ class MapController {
 	}
 
 	setMapData () {
-		this.mapData = {
+		this.data = {
 			center: {latitude: 28.394857, longitude: 84.124008},
+			control: {},
 			options: {
 				mapTypeControlOptions: {
 					position: this.maps.ControlPosition.TOP_LEFT,
@@ -57,9 +60,9 @@ class MapController {
 
 	toggleAddress2Layer (event, showAddress2Layer) {
 		if (showAddress2Layer) {
-			this.setAddress2Layer();
+			this.showAddress2Layer = true;
 		} else {
-			this.layerOptions = {};
+			this.showAddress2Layer = false;
 		}
 	}
 }

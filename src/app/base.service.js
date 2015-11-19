@@ -3,7 +3,7 @@ class BaseService {
 		'ngInject';
 
 		this.$http = $http;
-		this.baseUrl = "http://aylward.cse.taylor.edu:3389/";
+		this.baseUrl = "http://craton.cse.taylor.edu:3389/";
 	}
 	
 	/*

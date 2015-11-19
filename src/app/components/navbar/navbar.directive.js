@@ -15,5 +15,4 @@ class NavbarDirective {
 	}
 }
 
-
 export default NavbarDirective;

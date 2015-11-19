@@ -2,6 +2,7 @@
 import config from './index.config';
 
 import routerConfig from './index.route';
+import errorRoutes from './error/error.route';
 
 import googleMapsConfig from './components/map/map.config';
 
@@ -20,11 +21,15 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
   
 // REGION: Controllers
-import DashboardController from './dashboard/dashboard.controller';
-import LoginController from './login/login.controller';
 import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/Address2EditModalController';
+import DashboardController from './dashboard/dashboard.controller';
+import LoginController from './login/login.controller';
 // ENDREGION: Controllers
+
+// REGION: Factories
+import ErrorService from './error/error.factory';
+// ENDREGION: Factories
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
@@ -32,16 +37,21 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .config(config)
 
   .config(routerConfig)
-  
+  .config(errorRoutes)
+
   .config(googleMapsConfig) // Pass google maps config
 
   .run(runBlock)
-  
+
   // REGION: Services
+  .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
-  .service('address2Service', Address2Service)
   // ENDREGION: Services
+
+  // REGION: Factories
+  .factory('ErrorHandler', ErrorService.errorFactory)
+  // ENDREGION: Factories
 
   // REGION: Directives
   .directive('googlemap', () => new MapDirective())
@@ -50,8 +60,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
   
   // REGION: Controllers
+  .controller('Address2Controller', Address2Controller)
+  .controller('Address2EditModalController', Address2EditModalController)
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
-  .controller('Address2Controller', Address2Controller)
-  .controller('Address2EditModalController', Address2EditModalController);
   // ENDREGION: Controllers
+;

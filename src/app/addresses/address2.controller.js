@@ -43,11 +43,7 @@ class Address2Controller {
         this.address2Service.listAddresses(this.getQueryParams())
             .success((data) => {
                 this.addresses = data.results;
-
-                var nextURL = data.next.split('/');
-                nextURL = nextURL[nextURL.length - 1];
-
-                this.nextPageUrl = nextURL;
+                this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
             });
     }
@@ -57,11 +53,7 @@ class Address2Controller {
         this.address2Service.loadMoreAddresses(this.nextPageUrl, "&" + this.getQueryParams().slice(1))
             .success((data) => {
                 this.addresses = this.addresses.concat(data.results);
-
-                var nextURL = data.next.split('/');
-                nextURL = nextURL[nextURL.length - 1];
-
-                this.nextPageUrl = nextURL;
+                this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
             });
     }
@@ -71,7 +63,7 @@ class Address2Controller {
         this.address2Service.searchAddresses(this.getQueryParams())
             .success((data) => {
                 this.addresses = data.results;
-                this.nextPageUrl = data.next;
+                this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
             });
     }
@@ -93,13 +85,11 @@ class Address2Controller {
     }
 
     editAddress2(address){
-        this.selectedAddress = address;
-        var size = 'md';
         var modalInstance = this.modal.open({
           animation: true,
-          templateUrl: 'address2EditModal.html',
+          templateUrl: 'app/addresses/address2Modal.html',
           controller: 'Address2EditModalController as vm',
-          size: size,
+          size: 'md',
           resolve: {
             address: function () {
                 return address;
@@ -112,7 +102,14 @@ class Address2Controller {
                     this.getAddresses();
                 });
         });
+    }
 
+    nextUrl(url){
+        if(url) {
+            url = url.split('/');
+            url = url[url.length - 1];
+        }
+        return url;
     }
 }
 

@@ -31,7 +31,7 @@ import LoginController from './login/login.controller';
 // ENDREGION: Controllers
 
 // REGION: Factories
-import ErrorService from './error/error.factory';
+import ErrorFactory from './error/error.factory';
 // ENDREGION: Factories
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
@@ -54,7 +54,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Services
 
   // REGION: Factories
-  .factory('ErrorHandler', ErrorService.errorFactory)
+  .factory('ErrorHandler', ErrorFactory.errorFactory)
   // ENDREGION: Factories
 
   // REGION: Directives

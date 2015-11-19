@@ -2,23 +2,16 @@
   position: fixed;
   width: 100%;
   height: 0;
+  user-select: none;
   z-index: 1;
   .tally-tab {
     background-color: rgba(255,255,255,0.85);
     border-radius: 10px;
     cursor: default;
     margin-right: 15px;
-    /* REGION: Drop-down animation */
-
-    -webkit-transition: max-height 1s;
-    transition: max-height 1s;
-    top: 5px;
     padding-left: 0;
     padding-right: 0;
-    &:hover {
-      max-height: 500px;
-    }
-    /* ENDREGION: Drop-down animation */
+    top: 5px;
     * {
       overflow: hidden;
       text-overflow: '.';

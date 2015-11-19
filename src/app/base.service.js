@@ -14,12 +14,16 @@ class BaseService {
 	* params - Array of JSON objects formatted [ { name: "first", value: "Rick" }, { name: "last", value: "Astley" }, { name: "job", value: "Rock Star" } ]
 	*/
 	get(url, params=[], headers={}) {
-		if(sessionStorage.getItem("token")) {
+		if(sessionStorage.getItem('token')) {
 			headers.Authorization = sessionStorage.token;
 		}
 
-
-		params = params ? "?" + $.param(params) : "";
+		if (params.length > 0) {
+			params = params ? '?' + $.param(params) : '';
+		} else {
+			params = '';
+		}
+		
 		return this.$http({
 			method: 'GET',
 			url: this.baseUrl + url + params,
@@ -38,7 +42,7 @@ class BaseService {
 	post(url, data, userHeaders) {
 		var headers = {};
 		angular.copy(userHeaders, headers);
-		if(sessionStorage.getItem("token")){
+		if(sessionStorage.getItem('token')){
 			headers.Authorization = sessionStorage.token;
 		}
 
@@ -61,7 +65,7 @@ class BaseService {
 	put(url, data, userHeaders) {
 		var headers = {};
 		angular.copy(userHeaders, headers);
-		if(sessionStorage.getItem("token")){
+		if(sessionStorage.getItem('token')){
 			headers.Authorization = sessionStorage.token;
 		}
 

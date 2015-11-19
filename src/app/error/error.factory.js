@@ -1,4 +1,4 @@
-class ErrorService {
+class ErrorFactory {
     constructor($q) {
         'ng-inject';
 
@@ -7,14 +7,14 @@ class ErrorService {
 
     responseError(rejection){
         if ([403, 404, 500].find(x => x === rejection.status)) {
-            window.location = '/#/error/' + 403;
+            window.location = '/#/error/' + rejection.status;
         }
         return this.q.reject(rejection);
     }
 
     static errorFactory($q){
-        return new ErrorService($q);
+        return new ErrorFactory($q);
     }
 }
 
-export default ErrorService;
+export default ErrorFactory;

@@ -2,6 +2,7 @@
 import config from './index.config';
 
 import routerConfig from './index.route';
+import errorRoutes from './error/error.route';
 
 import googleMapsConfig from './components/map/map.config';
 
@@ -32,7 +33,8 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .config(config)
 
   .config(routerConfig)
-  
+  .config(errorRoutes)
+
   .config(googleMapsConfig) // Pass google maps config
 
   .run(runBlock)

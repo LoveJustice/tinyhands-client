@@ -29,7 +29,6 @@ class NavbarController {
 			this.session.me().then(
 					(promise) => {
 						this.user = promise.data;
-						console.log(promise.data);
 					}
 			);
 		}

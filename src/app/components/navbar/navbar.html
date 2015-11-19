@@ -6,13 +6,13 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" style="margin-top: -10px" href="#"><img ng-src="assets/images/tiny-hands-logo.png" alt="Tiny Hands" /></a>
+    <a class="navbar-brand" style="margin-top: -10px" href="#" ui-sref="dashboard"><img ng-src="assets/images/tiny-hands-logo.png" alt="Tiny Hands" /></a>
   </div>
 
   <div class="collapse navbar-collapse navbar-header-collapse"
        ng-if="authenticated">
     <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
-        <li><a href="#">Dashboard</a></li>
+        <li><a href="#" ui-sref="dashboard">Dashboard</a></li>
 
         <li ng-show="navbar.user.permission_border_stations_view" class="dropdown" ng-class="{open:stationsOpen}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"

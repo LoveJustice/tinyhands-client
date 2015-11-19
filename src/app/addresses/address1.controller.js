@@ -1,12 +1,12 @@
-class Address2Controller {
-    constructor($rootScope, $scope, $http, $timeout, address2Service, $uibModal) {
+class Address1Controller {
+    constructor($rootScope, $scope, $http, $timeout, address1Service, $uibModal) {
         'ngInject';
 
         this.rootScope = $rootScope;
         this.scope = $scope;
         this.http = $http;
         this.timeout = $timeout;
-        this.address2Service = address2Service;
+        this.address1Service = address1Service;
         this.modal = $uibModal;
 
         this.loading = false;
@@ -20,27 +20,13 @@ class Address2Controller {
         this.getAddresses();
     }
 
-    sortIcon(column) {
-        if (column === this.sortColumn) {
-            switch (column) {
-                case "latitude":
-                case "longitude":
-                    return this.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
-                case "name":
-                case "cannonical_name.name":
-                case "district.name":
-                case "verified":
-                    return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
-                default:
-                    return "glyphicon-sort";
-            }
-        }
-        return "glyphicon-sort";
+    sortIcon() {
+        return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
     }
 
     getAddresses() {
         this.loading = true;
-        this.address2Service.listAddresses(this.getQueryParams())
+        this.address1Service.listAddresses(this.getQueryParams())
             .success((data) => {
                 this.addresses = data.results;
                 this.nextPageUrl = this.nextUrl(data.next);
@@ -50,7 +36,7 @@ class Address2Controller {
 
     loadMoreAddresses() {
         this.loading = true;
-        this.address2Service.loadMoreAddresses(this.getQueryParams(true))
+        this.address1Service.loadMoreAddresses(this.getQueryParams(true))
             .success((data) => {
                 this.addresses = this.addresses.concat(data.results);
                 this.nextPageUrl = this.nextUrl(data.next);
@@ -60,7 +46,7 @@ class Address2Controller {
 
     searchAddresses() {
         this.loading = true;
-        this.address2Service.searchAddresses(this.getQueryParams())
+        this.address1Service.searchAddresses(this.getQueryParams())
             .success((data) => {
                 this.addresses = data.results;
                 this.nextPageUrl = this.nextUrl(data.next);
@@ -87,11 +73,11 @@ class Address2Controller {
         return params;
     }
 
-    editAddress2(address){
+    editAddress1(address){
         var modalInstance = this.modal.open({
           animation: true,
-          templateUrl: 'app/addresses/address2Modal.html',
-          controller: 'Address2EditModalController as vm',
+          templateUrl: 'app/addresses/address1Modal.html',
+          controller: 'Address1EditModalController as vm',
           size: 'md',
           resolve: {
             address: function () {
@@ -100,7 +86,7 @@ class Address2Controller {
           }
         });
         modalInstance.result.then((address) => {
-            this.address2Service.saveAddress(address)
+            this.address1Service.saveAddress(address)
                 .success(() => {
                     this.getAddresses();
                 });
@@ -116,5 +102,5 @@ class Address2Controller {
     }
 }
 
-export default Address2Controller;
+export default Address1Controller;
 

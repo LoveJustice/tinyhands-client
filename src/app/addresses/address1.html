@@ -1,0 +1,50 @@
+<h1 class="text-center">All Address 1s</h1>
+<br/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getAddresses()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
+        </div>
+        <div class="col-md-3">
+            <p style="margin-top: 5px;">Results per page</p>
+        </div>
+        <div class="pull-right">
+            <form ng-submit="vm.searchAddresses()">
+                  <label>
+                      <input type="search" placeholder="by Address 1 name..." ng-model="vm.searchValue" class="form-control">
+                  </label>
+                  <a class="btn btn-primary" ng-click="vm.searchAddresses()">Search</a>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th id="addressNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                    Name <i class="glyphicon" ng-class="vm.sortIcon()"></i>
+                </th>
+                <th class="text-center">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="address in vm.addresses | orderBy:vm.sortColumn:vm.reverse">
+                <td class="text-center address-name">{{ address.name }}</td>
+                <td class="text-center">
+                    <button ng-click="vm.editAddress1(address)" class="edit btn btn-warning">Edit</button>
+                </td>
+            </tr>
+            <tr ng-show="vm.addresses.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>Nothing Matched your search for: "{{ vm.searchValue }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreAddresses()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">Load more results</button>
+    </div>
+
+    <div ng-show="vm.loading" class="loader-container">
+        <div class="loader">Loading...</div>
+    </div>
+</div>

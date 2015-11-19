@@ -1,12 +1,11 @@
-import BaseService from '../base.service';
-
-class Address2EditModalController extends BaseService {
-    constructor($uibModalInstance, $http, address, $scope){
+class Address2EditModalController {
+    constructor($uibModalInstance, address, $scope, address2Service, address1Service){
         'ngInject';
-        super($http);
+
+        this.address2Service = address2Service;
+        this.address1Service = address1Service;
 
         this.modalInstance = $uibModalInstance;
-        this.http = $http;
         this.scope = $scope;
         this.scope.address = angular.copy(address);
     }
@@ -24,16 +23,16 @@ class Address2EditModalController extends BaseService {
     }
 
     getFuzzyAddress1s (val) {
-        return super.get('api/address1/fuzzy/?district=' + val)
-            .then(function(response){
-                return response.data;
+        return this.address1Service.getFuzzyAddress1s(val)
+            .then((promise) => {
+               return promise.data;
             });
     }
 
     getFuzzyAddress2s (val) {
-        return super.get('api/address2/fuzzy/?vdc=' + val)
-            .then(function(response){
-                return response.data;
+        return this.address2Service.getFuzzyAddress2s(val)
+            .then((promise) => {
+               return promise.data;
             });
     }
 }

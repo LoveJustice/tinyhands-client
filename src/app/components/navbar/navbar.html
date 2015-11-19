@@ -49,7 +49,7 @@
              ng-click="menuOpen=!menuOpen">Hello {{ navbar.user.first_name + " " + navbar.user.last_name }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a ng-show="navbar.user.permission_accounts_manage" href="#">Accounts and Permissions</a></li>
-            <li><a ng-show="navbar.user.permission_vdc_manage" href="#">Edit Address 1</a></li>
+            <li><a ng-show="navbar.user.permission_vdc_manage" ui-sref="address1">Edit Address 1</a></li>
             <li><a ng-show="navbar.user.permission_vdc_manage" ui-sref="address2">Edit Address 2</a></li>
             <li role="separator" class="divider"></li>
             <li ng-click="navbar.logout()"><a href="#">Logout</a></li>

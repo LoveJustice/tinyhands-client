@@ -97,7 +97,7 @@ class Address2Controller {
         var size = 'md';
         var modalInstance = this.modal.open({
           animation: true,
-          templateUrl: 'address2EditModal.html',
+          templateUrl: 'app/addresses/address2Modal.html',
           controller: 'Address2EditModalController as vm',
           size: size,
           resolve: {

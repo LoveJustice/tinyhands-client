@@ -21,10 +21,10 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
   
 // REGION: Controllers
-import DashboardController from './dashboard/dashboard.controller';
-import LoginController from './login/login.controller';
 import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/Address2EditModalController';
+import DashboardController from './dashboard/dashboard.controller';
+import LoginController from './login/login.controller';
 // ENDREGION: Controllers
 
 // REGION: Factories
@@ -44,9 +44,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .run(runBlock)
 
   // REGION: Services
+  .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
-  .service('address2Service', Address2Service)
   // ENDREGION: Services
 
   // REGION: Factories
@@ -60,9 +60,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
   
   // REGION: Controllers
-  .controller('DashboardController', DashboardController)
-  .controller('LoginController', LoginController)
   .controller('Address2Controller', Address2Controller)
   .controller('Address2EditModalController', Address2EditModalController)
+  .controller('DashboardController', DashboardController)
+  .controller('LoginController', LoginController)
   // ENDREGION: Controllers
 ;

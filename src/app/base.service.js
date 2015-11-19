@@ -1,8 +1,9 @@
 class BaseService {
-	constructor($http, BASE_URL) {
+	constructor($http) {
 		'ngInject';
+
 		this.$http = $http;
-		this.BASE_URL = 'http://patrick.cse.taylor.edu:3389/';
+		this.baseUrl = "http://aylward.cse.taylor.edu:3389/";
 	}
 	
 	/*
@@ -21,7 +22,7 @@ class BaseService {
 		params = params ? "?" + $.param(params) : "";
 		return this.$http({
 			method: 'GET',
-			url: this.BASE_URL + url + params,
+			url: this.baseUrl + url + params,
 			headers: headers
 		});
 	}
@@ -43,7 +44,7 @@ class BaseService {
 
 		return this.$http({
 			method: 'POST',
-			url: this.BASE_URL + url,
+			url: this.baseUrl + url,
 			headers: headers,
 			data: data
 		});
@@ -66,7 +67,7 @@ class BaseService {
 
 		return this.$http({
 			method: 'PUT',
-			url: this.BASE_URL + url,
+			url: this.baseUrl + url,
 			headers: headers,
 			data: data
 		});

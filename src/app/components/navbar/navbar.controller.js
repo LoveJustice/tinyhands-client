@@ -20,12 +20,10 @@ export default class NavbarController {
 
 	getUser () {
 		if (sessionStorage.token){
-			this.$timeout( () => {
-				this.session.me().then(
-					(promise) => {
-						this.user = promise.data;
-					});
-			});
+			this.session.me().then(
+				(promise) => {
+					this.user = promise.data;
+				});
 		}
 	}
 	

@@ -10,15 +10,6 @@ function routerConfig ($stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
-    .state('login', {
-      url: '/login',
-      templateUrl: 'app/login/login.html',
-      controller: 'LoginController',
-      controllerAs: 'login',
-      data: {
-        requireLogin: false
-      }
-    })
     .state('address2', {
       url: '/address2',
       templateUrl: 'app/addresses/address2.html',
@@ -26,6 +17,24 @@ function routerConfig ($stateProvider, $urlRouterProvider) {
       controllerAs: 'vm',
       data: {
         requireLogin: true
+      }
+    })
+    .state('border-station', {
+      url: '/border-station/{id:int}',
+      templateUrl: 'app/border-station/borderStation.html',
+      controller: 'BorderStationController',
+      controllerAs: 'bsCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('login', {
+      url: '/login',
+      templateUrl: 'app/login/login.html',
+      controller: 'LoginController',
+      controllerAs: 'login',
+      data: {
+        requireLogin: false
       }
     });
 

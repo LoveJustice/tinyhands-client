@@ -26,9 +26,9 @@ class SessionService extends BaseService {
 			);
 	}
 
-    me () {
-        return super.get('api/me/');
-    }
+	me () {
+		return super.get('api/me/');
+	}
 	// See if page loading needs to have user logged in
 	// See if there is already a user logged in
 	checkAuthenticity () {
@@ -56,8 +56,7 @@ class SessionService extends BaseService {
 	}
 	
 	logout () {
-		sessionStorage.removeItem('token'); // Remove user from storage
-		sessionStorage.removeItem('username'); // Remove user from storage
+		sessionStorage.clear();
 		this.root.authenticated = false; // Set authenticated to false
 		this.routeState.go('login');
 	}

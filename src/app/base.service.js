@@ -24,11 +24,7 @@ class BaseService {
 			params = '';
 		}
 		
-		return this.$http({
-			method: 'GET',
-			url: this.baseUrl + url + params,
-			headers: headers
-		});
+		return this.$http.get(this.baseUrl + url + params, { headers: headers });
 	}
 
 
@@ -46,12 +42,7 @@ class BaseService {
 			headers.Authorization = sessionStorage.token;
 		}
 
-		return this.$http({
-			method: 'POST',
-			url: this.baseUrl + url,
-			headers: headers,
-			data: data
-		});
+		return this.$http.post(this.baseUrl + url, data, { headers: headers });
 	}
 
 
@@ -69,12 +60,7 @@ class BaseService {
 			headers.Authorization = sessionStorage.token;
 		}
 
-		return this.$http({
-			method: 'PUT',
-			url: this.baseUrl + url,
-			headers: headers,
-			data: data
-		});
+		return this.$http.put(this.baseUrl + url, data, { headers: headers });
 	}
 }
 

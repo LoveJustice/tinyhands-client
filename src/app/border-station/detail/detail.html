@@ -1,0 +1,52 @@
+<div class="row well well-sm">
+  <h1>Details
+    <!--{% if request.user.permission_budget_manage %}
+      <a class="btn btn-success pull-right" href="{% url 'budget_create_api' form.instance.id %}">New Budget Calculation Form</a>
+    {% endif %}-->
+  <div class="row">
+      <div class="col-xs-12">
+          <button class="btn" 
+                  ng-class="{'btn-success':detailCtrl.details.open, 'btn-danger':!detailCtrl.details.open}"
+                  ng-click="detailCtrl.changeStationStatus()">Station Status: {{detailCtrl.details.open ? "Open" : "Closed"}}</button>
+      </div>
+  </div>
+  </h1>
+  <hr/>
+  <div class="row">
+      <div class="col-sm-6 form-group">
+        <label for="stationName">Station Name</label>
+        <input type="text" class="form-control" id="stationName" placeholder="Station Name"
+               ng-model="detailCtrl.details.station_name">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label for="stationCode">Station Code</label>
+        <input type="text" class="form-control" id="stationCode" placeholder="Station Code"
+               ng-model="detailCtrl.details.station_code">
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm-6 form-group">
+        <label for="dateEstablished">Date Established</label>
+        <input type="text" class="form-control" id="dateEstablished" placeholder="Date Established" 
+               ng-model="detailCtrl.details.date_established">
+      </div>
+      <div class="col-sm-6 checkbox" style="margin: 20px 0px">
+        <label>
+          <input type="checkbox" id="hasShelter"
+                 ng-model="detailCtrl.details.has_shelter"> Has Shelter
+        </label>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm-6 form-group">
+        <label for="latitude">Latitude</label>
+        <input type="text" class="form-control" id="latitude" placeholder="Latitude"
+               ng-model="detailCtrl.details.latitude">
+      </div>
+      <div class="col-sm-6 form-group">
+        <label for="longitude">Longitude</label>
+        <input type="text" class="form-control" id="longitude" placeholder="Longitude"
+               ng-model="detailCtrl.details.longitude">
+      </div>
+  </div>
+</div>

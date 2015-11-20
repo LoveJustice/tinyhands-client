@@ -3,7 +3,8 @@ import BaseService from '../base.service';
 class Address2Service extends BaseService {
 	constructor ($http) {
 		'ngInject';
-		super($http);
+		super();
+        this.$http = $http;
 	}
 
 	listAddresses(queryParams) {
@@ -15,15 +16,15 @@ class Address2Service extends BaseService {
     }
 
 	loadMoreAddresses(queryParams) {
-        return super.get("api/address2/" + queryParams);
+        return super.get("api/address2/", queryParams);
     }
 
 	saveAddress(address) {
         return super.put('api/address2/' + address.id + '/', address);
     }
 
-    listAddress1s(){
-        return super.get('api/address1/');
+    getFuzzyAddress2s (val) {
+        return super.get('api/address2/fuzzy/?vdc=' + val);
     }
 }
 

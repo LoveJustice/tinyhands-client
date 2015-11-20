@@ -9,10 +9,11 @@ import googleMapsConfig from './components/map/map.config';
 import runBlock from './index.run';
 
 // REGION: Services
+import Address1Service from './addresses/address1.service';
+import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
-import Address2Service from './addresses/address2.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -25,6 +26,8 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
   
 // REGION: Controllers
+import Address1Controller from './addresses/address1.controller';
+import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/Address2EditModalController';
 import BorderStationController from './border-station/borderStation.controller';
@@ -49,6 +52,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .run(runBlock)
 
   // REGION: Services
+  .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('session', SessionService)
@@ -69,7 +73,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
   
   // REGION: Controllers
+  .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)
+  .controller('Address1EditModalController', Address1EditModalController)
   .controller('Address2EditModalController', Address2EditModalController)
   .controller('BorderStationController', BorderStationController)
   .controller('DashboardController', DashboardController)

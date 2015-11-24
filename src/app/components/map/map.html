@@ -1,4 +1,14 @@
 <ui-gmap-google-map center="map.data.center" control="map.data.control" zoom="map.data.zoom" options="map.data.options">
 	<ui-gmap-layer type="FusionTablesLayer" options="map.layerOptions" ng-if="map.showAddress2Layer"></ui-gmap-layer>
-	<ui-gmap-markers models="map.borderStations" coords="'self'"></ui-gmap-markers>
+	<ui-gmap-markers models="map.borderStations" coords="'self'">
+		<ui-gmap-windows show="show">
+			<div ng-non-bindable>
+				<h3>{{ station_name + '-' + station_code }}</h3>
+				<p>Est. {{ date_established ? date_established : 'N/A' }} </p>
+				<p>Has shelter: {{ has_shelter ? 'Yes' : 'No' }} </p>
+				<p>Interceptions:  </p>
+				<p># of Staff:  </p>
+			</div>
+		</ui-gmap-windows>
+	</ui-gmap-markers>
 </ui-gmap-google-map>

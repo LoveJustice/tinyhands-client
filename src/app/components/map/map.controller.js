@@ -1,27 +1,41 @@
 class MapController {
-	constructor ($rootScope, uiGmapGoogleMapApi) {
+	constructor ($rootScope, BorderStationService, uiGmapGoogleMapApi) {
 		'ngInject';
 
+		this.borderStationService = BorderStationService;
 		this.maps = null;
 		this.rootScope = $rootScope;
 		
+		this.nepal = {
+			lat: 28.394857,
+			lon: 84.124008
+		}
+		
+		this.borderStations = [];
 		this.showAddress2Layer = true;
 		
 		this.activate(uiGmapGoogleMapApi);
 	}
 
-	activate (gMapsApi) {
-		var self = this;
+	activate(gMapsApi) {
 		gMapsApi.then((maps) => {
-			self.maps = maps;
-			self.setMapData();
-			self.setAddress2Layer();
+			this.maps = maps;
+			this.setMapData();
+			this.setAddress2Layer();
 		});
 
-		this.rootScope.$on('toggleAddress2Layer', (e,s) => {this.toggleAddress2Layer(e,s);});
+		this.rootScope.$on('toggleAddress2Layer',(e,s) => {this.toggleAddress2Layer(e,s);});
+		
+		this.getBorderStations();
+	}
+	
+	getBorderStations() {
+		this.borderStationService.getBorderStations().then((response) => {
+			this.borderStations = response.data.results;
+		});
 	}
 
-	setAddress2Layer () {
+	setAddress2Layer() {
 		this.layerOptions = {
 			query: {
 				select: 'col13',
@@ -38,9 +52,9 @@ class MapController {
 		};
 	}
 
-	setMapData () {
+	setMapData() {
 		this.data = {
-			center: {latitude: 28.394857, longitude: 84.124008},
+			center: {latitude: this.nepal.lat, longitude: this.nepal.lon},
 			control: {},
 			options: {
 				mapTypeControlOptions: {
@@ -58,8 +72,8 @@ class MapController {
 		};
 	}
 
-	toggleAddress2Layer (event, showAddress2Layer) {
-		if (showAddress2Layer) {
+	toggleAddress2Layer(event, showAddress2Layer) {
+		if(showAddress2Layer) {
 			this.showAddress2Layer = true;
 		} else {
 			this.showAddress2Layer = false;

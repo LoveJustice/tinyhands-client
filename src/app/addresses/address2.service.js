@@ -8,7 +8,7 @@ class Address2Service extends BaseService {
 	}
 
 	listAddresses(queryParams) {
-        return super.get('api/address2/', queryParams);
+        return this.get('api/address2/', queryParams);
     }
 
 	searchAddresses(queryParams) {
@@ -16,15 +16,15 @@ class Address2Service extends BaseService {
     }
 
 	loadMoreAddresses(queryParams) {
-        return super.get("api/address2/", queryParams);
+        return this.get('api/address2/', queryParams);
     }
 
 	saveAddress(address) {
-        return super.put('api/address2/' + address.id + '/', address);
+        return this.put('api/address2/' + address.id + '/', address);
     }
 
     getFuzzyAddress2s (val) {
-        return super.get('api/address2/fuzzy/?vdc=' + val);
+        return this.get('api/address2/fuzzy/?vdc=' + val);
     }
 }
 

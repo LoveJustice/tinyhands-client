@@ -1,4 +1,4 @@
-function routerConfig ($stateProvider, $urlRouterProvider) {
+function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
   'ngInject';
   $stateProvider
     .state('dashboard', {
@@ -47,6 +47,9 @@ function routerConfig ($stateProvider, $urlRouterProvider) {
       }
     });
 
+  // Remove hash from url
+  $locationProvider.html5Mode(true);
+  
   $urlRouterProvider.otherwise('/');
 }
 

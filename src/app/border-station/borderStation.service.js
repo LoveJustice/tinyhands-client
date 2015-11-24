@@ -15,15 +15,15 @@ export default class BorderStationService extends BaseService {
 
 	// POSTs		
 	createCommitteeMember(data) {
-		return super.post('api/committee-member/', data);
+		return this.post('api/committee-member/', data);
 	}
 
 	createLocation(data) {
-		return super.post('api/location/', data);
+		return this.post('api/location/', data);
 	}
 
 	createStaff(data) {
-		return super.post('api/staff/', data);
+		return this.post('api/staff/', data);
 	}
 	
 	createRelationship(createArray, createApiFunction) {
@@ -57,8 +57,7 @@ export default class BorderStationService extends BaseService {
 	}
 
 	getDetails() {
-		console.log(this);
-		return this.get('api/border-station/' + this.borderStationId)
+		return this.get('api/border-station/' + this.borderStationId + '/');
 	}
 
 	getLocations() {
@@ -100,15 +99,15 @@ export default class BorderStationService extends BaseService {
 
 	// PUTs
 	updateCommitteeMembers(memberId, data) {
-		return super.put('api/committee-member/' + memberId, data);
+		return this.put('api/committee-member/' + memberId + '/', data);
 	}
 
 	updateDetails(data) {
-		return super.put('api/border-station/' + this.borderStationId, data);
+		return this.put('api/border-station/' + this.borderStationId + '/', data);
 	}
 
 	updateLocations(locationId, data) {
-		return super.put('api/location/' + locationId, data);
+		return this.put('api/location/' + locationId + '/', data);
 	}
 	
 	updateRelationship(updateArray, updateApiFunction, numNew=0) {
@@ -137,6 +136,6 @@ export default class BorderStationService extends BaseService {
 	}
 
 	updateStaff(staffId, data) {
-		return super.put('api/staff/' + staffId, data);
+		return this.put('api/staff/' + staffId + '/', data);
 	}
 }

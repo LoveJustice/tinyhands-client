@@ -29,7 +29,7 @@ import TallyDirective from './components/tally/tally.directive';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
-import Address2EditModalController from './addresses/Address2EditModalController';
+import Address2EditModalController from './addresses/Address2EditModal.controller';
 import BorderStationController from './border-station/borderStation.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';

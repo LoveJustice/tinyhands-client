@@ -11,14 +11,21 @@ export default class DetailController {
 	}
 	
 	activate() {
-		this.$scope.$on('GetBorderStationData',() => { // Create listener
-			this.getDetails();
-		});
 		this.getDetails();
 	}
 		
 	changeStationStatus() {
 		this.details.open = !this.details.open;
+	}
+	
+	
+	createListeners() {
+		this.$scope.$on('GetBorderStationData',() => { // Create listener
+			this.getDetails();
+		});
+		this.$scope.$on('UpdateBorderStationData',() => {
+			this.updateDetails();
+		});
 	}
 		
 		
@@ -31,15 +38,15 @@ export default class DetailController {
 	// GET Calls	
 	getDetails() {
 		this.service.getDetails().then((response) => {
-			console.log(response);
+			this.details = response.data;
 		});
 	}
 		
 		
 	// UPDATE calls
-	updateDetails(details) {
-		details.date_established = this.formatDate(details.date_established);
+	updateDetails() {
+		this.details.date_established = this.formatDate(this.details.date_established);
 		
-		return this.service.updateRelationship([details], this.service.updateDetails, 0);
+		return this.service.updateRelationship([this.details], this.service.updateDetails);
 	}
 }

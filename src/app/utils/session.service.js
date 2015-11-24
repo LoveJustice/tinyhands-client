@@ -11,7 +11,7 @@ class SessionService extends BaseService {
 	}
 	
 	attemptLogin (username, password) {
-		return super.post('api/login/', {"username": username, "password": password})
+		return this.post('api/login/', {"username": username, "password": password})
 			.then(
 				(promise) => {
 					sessionStorage.token = "Token " + promise.data.token;
@@ -27,7 +27,7 @@ class SessionService extends BaseService {
 	}
 
 	me () {
-		return super.get('api/me/');
+		return this.get('api/me/');
 	}
 	// See if page loading needs to have user logged in
 	// See if there is already a user logged in
@@ -46,12 +46,11 @@ class SessionService extends BaseService {
 	}
 	
 	createStateChangeListener () {
-		var self = this;
-		this.root.$on('$stateChangeStart', function (event, toState) {
+		this.root.$on('$stateChangeStart', (event, toState) => {
 			var requireLogin = toState.data.requireLogin; // See if page requires login
 			var token = sessionStorage.token; // Get user token from storage if already logged in
 			
-			self.checkAuthenticityLogic(requireLogin, token);
+			this.checkAuthenticityLogic(requireLogin, token);
 		});
 	}
 	

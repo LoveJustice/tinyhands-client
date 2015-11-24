@@ -12,6 +12,9 @@ class MapController {
 		}
 		
 		this.borderStations = [];
+		this.markerEvents = {
+			mouseover: this.onMarkerMouseOver
+		};
 		this.showAddress2Layer = true;
 		
 		this.activate(uiGmapGoogleMapApi);
@@ -33,6 +36,10 @@ class MapController {
 		this.borderStationService.getBorderStations().then((response) => {
 			this.borderStations = response.data.results;
 		});
+	}
+	
+	onMarkerMouseOver(marker, e) {
+		marker.show = true;
 	}
 
 	setAddress2Layer() {

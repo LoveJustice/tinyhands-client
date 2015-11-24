@@ -14,45 +14,44 @@
     <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
         <li><a href="#" ui-sref="dashboard">Dashboard</a></li>
 
-        <li ng-show="navbar.user.permission_border_stations_view" class="dropdown" ng-class="{open:stationsOpen}">
+        <li ng-show="navbarCtrl.user.permission_border_stations_view" class="dropdown" ng-class="{open:stationsOpen}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
                ng-click="stationsOpen=!stationsOpen">Stations<b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a ng-show="navbar.user.permission_border_stations_add" href="#" id="border_station_create_link">Create Station</a></li>
+                <li><a ng-show="navbarCtrl.user.permission_border_stations_add" href="#" id="border_station_create_link">Create Station</a></li>
                 <hr style="margin: 4px"/>
-
-                <!-- TODO: Loop through all borderstations and create links to their detail page or their view page with respect to their permissions -->
+                <li ng-repeat="station in navbarCtrl.borderStations"><a ui-sref="border-station({id: station.id})">{{ station.station_name }}</a></li>
             </ul>
         </li>
 
-        <li ng-hide="!navbar.user.permission_irf_view && !navbar.user.permission_vif_view" class="dropdown" ng-class="{open:formsOpen}">
+        <li ng-hide="!navbarCtrl.user.permission_irf_view && !navbarCtrl.user.permission_vif_view" class="dropdown" ng-class="{open:formsOpen}">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                ng-click="formsOpen=!formsOpen">Forms<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a ng-show="navbar.user.permission_irf_view" href="#">IRFs</a></li>
-                <li><a ng-show="navbar.user.permission_vif_view" href="#">VIFs</a></li>
+                <li><a ng-show="navbarCtrl.user.permission_irf_view" href="#">IRFs</a></li>
+                <li><a ng-show="navbarCtrl.user.permission_vif_view" href="#">VIFs</a></li>
             </ul>
         </li>
 
-        <li><a ng-show="navbar.user.permission_budget_manage" href="#">Budget Sheets</a></li>
+        <li><a ng-show="navbarCtrl.user.permission_budget_manage" href="#">Budget Sheets</a></li>
 
         <li><a href="#">Event Calendar</a></li>
 
     </ul>
     <ul class="nav navbar-nav navbar-right" ng-mouseleave="menuOpen = false">
         <li>
-          <p class="navbar-text">Nepal Time:  {{ navbar.nepalTime }}</p>
+          <p class="navbar-text">Nepal Time:  {{ navbarCtrl.nepalTime }}</p>
         </li>
         
         <li class="dropdown" ng-class="{open:menuOpen}">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
-             ng-click="menuOpen=!menuOpen">Hello {{ navbar.user.first_name + " " + navbar.user.last_name }}<span class="caret"></span></a>
+             ng-click="menuOpen=!menuOpen">Hello {{ navbarCtrl.user.first_name + " " + navbarCtrl.user.last_name }}<span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a ng-show="navbar.user.permission_accounts_manage" href="#">Accounts and Permissions</a></li>
-            <li><a ng-show="navbar.user.permission_vdc_manage" ui-sref="address1">Edit Address 1</a></li>
-            <li><a ng-show="navbar.user.permission_vdc_manage" ui-sref="address2">Edit Address 2</a></li>
+            <li><a ng-show="navbarCtrl.user.permission_accounts_manage" href="#">Accounts and Permissions</a></li>
+            <li><a ng-show="navbarCtrl.user.permission_vdc_manage" ui-sref="address1">Edit Address 1</a></li>
+            <li><a ng-show="navbarCtrl.user.permission_vdc_manage" ui-sref="address2">Edit Address 2</a></li>
             <li role="separator" class="divider"></li>
-            <li ng-click="navbar.logout()"><a href="#">Logout</a></li>
+            <li ng-click="navbarCtrl.logout()"><a href="#">Logout</a></li>
           </ul>
         </li>
     </ul>

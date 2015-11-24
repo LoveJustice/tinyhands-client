@@ -8,7 +8,7 @@ class NavbarDirective {
 			restrict: 'E',
 			templateUrl: 'app/components/navbar/navbar.html',
 			controller: NavbarController,
-			controllerAs: 'navbar'
+			controllerAs: 'navbarCtrl'
 		};
 		
 		return directive;

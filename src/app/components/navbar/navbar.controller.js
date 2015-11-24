@@ -1,12 +1,14 @@
 export default class NavbarController {
-	constructor ($interval, $timeout, session) {
+	constructor ($interval, $timeout, BorderStationService, session) {
 		'ngInject';
 		
 		this.$interval = $interval;
-		this.session = session;
 		this.$timeout = $timeout;
+		this.borderStationService = BorderStationService;
+		this.session = session;
 		
 		
+		this.borderStations = [];
 		this.nepalTime = window.moment.tz("Asia/Kathmandu").format("MMMM Do YYYY, h:mm:ssA");
 		this.user = {};
 		
@@ -16,6 +18,13 @@ export default class NavbarController {
 	
 	activate() {
 		this.getUser();
+		this.getBorderStations();
+	}
+	
+	getBorderStations() {
+		this.borderStationService.getBorderStations().then((response) => {
+			this.borderStations = response.data.results;
+		});
 	}
 
 	getUser () {

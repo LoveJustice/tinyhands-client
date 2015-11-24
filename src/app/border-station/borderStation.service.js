@@ -51,7 +51,11 @@ export default class BorderStationService extends BaseService {
 	}
 
 	
-	// GETs	
+	// GETs
+	getBorderStations() {
+		return this.get('api/border-station/');
+	}
+	
 	getCommitteeMembers() {
 		return this.get('api/committee-member/?border_station=' + this.borderStationId);
 	}

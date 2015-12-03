@@ -9,13 +9,11 @@ class MapController {
 		this.nepal = {
 			lat: 28.394857,
 			lon: 84.124008
-		}
+		};
 		
 		this.borderStations = [];
-		this.markerEvents = {
-			mouseover: this.onMarkerMouseOver
-		};
 		this.showAddress2Layer = true;
+		this.templateUrl = 'app/components/map/infoWindow.html';
 		
 		this.activate(uiGmapGoogleMapApi);
 	}
@@ -25,21 +23,27 @@ class MapController {
 			this.maps = maps;
 			this.setMapData();
 			this.setAddress2Layer();
+			
+			this.getBorderStations();
 		});
 
 		this.rootScope.$on('toggleAddress2Layer',(e,s) => {this.toggleAddress2Layer(e,s);});
-		
-		this.getBorderStations();
 	}
 	
 	getBorderStations() {
 		this.borderStationService.getBorderStations().then((response) => {
 			this.borderStations = response.data.results;
+			this.borderStations.forEach((marker) => {
+				marker.templateUrl = this.templateUrl;
+				marker.templateParameter = {
+					date_established: marker.date_established,
+					has_shelter: marker.has_shelter,
+					id: marker.id,
+					station_code: marker.station_code,
+					station_name: marker.station_name
+				};
+			});
 		});
-	}
-	
-	onMarkerMouseOver(marker, e) {
-		marker.show = true;
 	}
 
 	setAddress2Layer() {

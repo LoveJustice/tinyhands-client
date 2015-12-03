@@ -1,0 +1,20 @@
+<div class="col-xs-12" ng-cloak>
+	<div class="row">
+		<h3 class="text-center">{{ parameter.station_name + '-' + parameter.station_code }}</h3>
+	</div>
+
+	<div class="row text-center">
+		<button class="btn btn-default" ui-sref="border-station({id: parameter.id})">Details</button>
+		<button class="btn btn-default">IRFs</button>
+		<button class="btn btn-default">VIFs</button>
+	</div>
+	
+	<br/>
+	
+	<div class="row panel panel-default panel-body">
+		<p>Est. {{ parameter.date_established ? parameter.date_established : 'N/A' }}</p>
+		<p>Has shelter: {{ parameter.has_shelter ? 'Yes' : 'No' }}</p>
+		<p>Interceptions: </p>
+		<p># of Staff: </p>
+	</div>
+</div>

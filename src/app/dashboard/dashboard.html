@@ -11,6 +11,14 @@
 			<ul class="dropdown-menu" role="menu" ng-mouseleave="showDropDown = false">
 
 					<li class="checkbox">
+							<label>
+									<input type="checkbox"
+													ng-model="dashboard.showAddress2Layer"
+													ng-click="dashboard.toggleAddress2Layer()">Address 2
+							</label>
+					</li>
+
+					<li class="checkbox">
 							<label><input type="checkbox"
 														ng-model="dashboard.showEvents">Events
 							</label>
@@ -19,14 +27,6 @@
 					<li class="checkbox">
 							<label><input id="dashboardToggle" type="checkbox"
 														ng-model="dashboard.showTally">Tally
-							</label>
-					</li>
-
-					<li class="checkbox">
-							<label>
-									<input type="checkbox"
-													ng-model="dashboard.showAddress2Layer"
-													ng-click="dashboard.toggleAddress2Layer()">Address 2
 							</label>
 					</li>
 

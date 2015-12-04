@@ -1,7 +1,10 @@
+import constants from './../constants.js';
+
 export default class LocationController {
-	constructor($scope, BorderStationService) {
+	constructor($q, $scope, BorderStationService) {
 		'ngInject';
 		
+		this.$q = $q;
 		this.$scope = $scope;
 		this.service = BorderStationService;
 		
@@ -9,15 +12,12 @@ export default class LocationController {
 		this.newLocations = [];
 		this.removeToLocations = [];
 		
-		this.activate();
+		if (this.service.borderStationId) {
+			this.getLocations();
+		}
+		this.createListeners();
 	}
 	
-	activate() {
-		this.$scope.$on('GetBorderStationData',() => { // Create listener
-			this.getLocations();
-		});
-		this.getLocations();
-	}
 		
 	addLocation() {
 		var newLocation = {
@@ -29,12 +29,27 @@ export default class LocationController {
 		
 	
 	// CREATE calls
-	createLocations(locations) {
-		return this.service.createRelationship(locations, this.service.createLocation);
+	createLocations() {
+		return this.service.createRelationship(this.newLocations, 'createLocation');
+	}
+	
+	
+	createListeners() {
+		this.$scope.$on(constants.Events.Create.BorderStation.Done,() => { // POST listener
+			this.service.setBorderStationIdOfData(this.newLocations);
+			this.service.setBorderStationIdOfData(this.locations);
+			this.update();
+		});
+		this.$scope.$on(constants.Events.Get.BorderStation,() => { // GET listener
+			this.getLocations();
+		});
+		this.$scope.$on(constants.Events.Update.BorderStation, () => { // UPDATE listener
+			this.update();
+		});
 	}
 		
 	
-	// GET calls
+	// GET call
 	getLocations() {
 		this.service.getLocations().then((response) => {
 			this.locations = response.data.results;
@@ -42,7 +57,7 @@ export default class LocationController {
 	}
 		
 		
-	// REMOVE calls
+	// Remove call (not an api call)
 	removeLocation(location) {
 		if (location.removeConfirmed) {
 			this.service.removeRelationship(location, this.newLocations, this.locations, this.removeToLocations);
@@ -53,10 +68,27 @@ export default class LocationController {
 		
 		
 	// UPDATE calls
-	updateLocations(locations, removing) {
+	update() {
+		var promises = [];
+		
+		promises.push(this.createLocations());
+		promises.push(this.updateLocations(true));
+		promises.push(this.updateLocations());
+		
+		this.$q.all(promises).then(() => {
+			this.newLocations = [];
+			this.removeToLocations = [];
+			this.$scope.$emit(constants.Events.Update.Location.Done);
+		}, () => {
+			this.$scope.$emit(constants.Events.Update.Location.Error);
+		});
+	}
+	
+	
+	updateLocations(removing) {
 		if (removing) {
-			return this.service.updateRelationship(locations, this.service.updateLocations, 0);
+			return this.service.updateRelationship(this.removeToLocations, 'updateLocations', 0);
 		}
-		return this.service.updateRelationship(locations, this.service.updateLocations, this.newLocations.length);
+		return this.service.updateRelationship(this.locations, 'updateLocations', this.newLocations.length);
 	}
 }

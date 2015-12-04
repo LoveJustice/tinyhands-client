@@ -10,10 +10,13 @@ export default class BorderStationService extends BaseService {
 		this.$q = $q;
 		
 		this.borderStationId = 0;
-		this.errors = [];
 	}
 
-	// POSTs		
+	// POSTs
+	createBorderStation(data) {
+		return this.post('api/border-station/', data);
+	}
+	
 	createCommitteeMember(data) {
 		return this.post('api/committee-member/', data);
 	}
@@ -30,8 +33,8 @@ export default class BorderStationService extends BaseService {
 		var expectedNumCalls = createArray.length;
 		var numCalls = 0;
 		var deferred = this.$q.defer();
-		createArray.forEach((anObject) => {
-			createApiFunction(anObject).then((response) => {
+		angular.forEach(createArray, (anObject) => {
+			this[createApiFunction](anObject).then((response) => {
 				numCalls++;
 				anObject = response.data;
 				if (numCalls >= expectedNumCalls) {
@@ -71,18 +74,6 @@ export default class BorderStationService extends BaseService {
 	getStaff() {
 		return this.get('api/staff/?border_station=' + this.borderStationId);
 	}
-		
-		
-	// Error Handling
-	handleErrors(error) {
-		var errorData = error.data;
-		for (var key in errorData) {
-			this.errors.push({
-				field: key,
-				messages: errorData[key]
-			});
-		}
-	}
 	
 	
 	// REMOVE
@@ -94,10 +85,17 @@ export default class BorderStationService extends BaseService {
 			value.border_station = null;
 			removeArray.push(value); // Add item to remove array to finalize removal upon updating
 		}
-			
-		// Remove item from list
-		idx = currentArray.indexOf(value);
-		currentArray.splice(idx, 1);
+		
+		if (currentArray.length > 0) {
+			// Remove item from list
+			idx = currentArray.indexOf(value);
+			currentArray.splice(idx, 1);
+		}
+	}
+	
+	
+	setBorderStationIdOfData(data) {
+		data.map(el => el.border_station = this.borderStationId);
 	}
 
 
@@ -106,8 +104,8 @@ export default class BorderStationService extends BaseService {
 		return this.put('api/committee-member/' + memberId + '/', data);
 	}
 
-	updateDetails(data) {
-		return this.put('api/border-station/' + this.borderStationId + '/', data);
+	updateDetails(borderStationId, data) {
+		return this.put('api/border-station/' + borderStationId + '/', data);
 	}
 
 	updateLocations(locationId, data) {
@@ -118,9 +116,9 @@ export default class BorderStationService extends BaseService {
 		var expectedNumCalls = updateArray.length - numNew;
 		var numCalls = 0;
 		var deferred = this.$q.defer();
-		updateArray.forEach((anObject) => {
-			if (anObject.id) {
-				updateApiFunction(anObject.id, anObject).then(() => {
+		angular.forEach(updateArray, (anObject) => {
+			if (anObject.id !== undefined) {
+				this[updateApiFunction](anObject.id, anObject).then(() => {
 					numCalls++;
 					if (numCalls >= expectedNumCalls) {
 						deferred.resolve('Finished sending update calls');

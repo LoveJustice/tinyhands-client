@@ -18,7 +18,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
                ng-click="stationsOpen=!stationsOpen">Stations<b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a ng-show="navbarCtrl.user.permission_border_stations_add" href="#" id="border_station_create_link">Create Station</a></li>
+                <li><a ng-show="navbarCtrl.user.permission_border_stations_add" ui-sref="border-station({id: null})">Create Station</a></li>
                 <hr style="margin: 4px"/>
                 <li ng-repeat="station in navbarCtrl.borderStations"><a ui-sref="border-station({id: station.id})">{{ station.station_name }}</a></li>
             </ul>

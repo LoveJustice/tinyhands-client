@@ -29,7 +29,7 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       }
     })
     .state('border-station', {
-      url: '/border-station/{id:int}',
+      url: '/border-station/:id',
       templateUrl: 'app/border-station/borderStation.html',
       controller: 'BorderStationController',
       controllerAs: 'bsCtrl',

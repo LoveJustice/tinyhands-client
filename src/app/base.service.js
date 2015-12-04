@@ -3,7 +3,9 @@ class BaseService {
 		'ngInject';
 
 		this.$http = $http;
+		
 		this.baseUrl = "http://craton.cse.taylor.edu:3389/";
+		this.errors = [];
 	}
 	
 	/*
@@ -25,6 +27,18 @@ class BaseService {
 		}
 		
 		return this.$http.get(this.baseUrl + url + params, { headers: headers });
+	}
+		
+		
+	// Error Handling
+	handleErrors(error) {
+		var errorData = error.data;
+		for (var key in errorData) {
+			this.errors.push({
+				field: key,
+				messages: errorData[key]
+			});
+		}
 	}
 
 
@@ -59,7 +73,7 @@ class BaseService {
 		if(sessionStorage.getItem('token')){
 			headers.Authorization = sessionStorage.token;
 		}
-
+		
 		return this.$http.put(this.baseUrl + url, data, { headers: headers });
 	}
 }

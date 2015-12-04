@@ -1,13 +1,13 @@
 class ErrorFactory {
     constructor($q) {
-        'ng-inject';
+        'ngInject';
 
         this.q = $q;
     }
 
     responseError(rejection){
         if ([403, 404, 500].find(x => x === rejection.status)) {
-            window.location = '/#/error/' + rejection.status;
+            window.location = '/error/' + rejection.status;
         }
         return this.q.reject(rejection);
     }

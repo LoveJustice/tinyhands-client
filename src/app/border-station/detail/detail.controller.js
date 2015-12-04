@@ -1,3 +1,5 @@
+import constants from './../constants.js';
+
 export default class DetailController {
 	constructor($scope, BorderStationService) {
 		'ngInject';
@@ -7,31 +9,44 @@ export default class DetailController {
 		
 		this.details = {};
 		
-		this.activate();
+		if (this.service.borderStationId) {
+			this.getDetails();
+		}
+		this.createListeners();
 	}
 	
-	activate() {
-		this.getDetails();
-	}
 		
 	changeStationStatus() {
 		this.details.open = !this.details.open;
 	}
 	
+	create() {
+		this.modifyDetails().then((response) => {
+			this.details = response.data;
+			this.service.borderStationId = this.details.id;
+			this.$scope.$emit(constants.Events.Create.BorderStation.Done);
+		}, () => {
+			this.$scope.$emit(constants.Events.Create.BorderStation.Error);
+		});
+	}
+	
 	
 	createListeners() {
-		this.$scope.$on('GetBorderStationData',() => { // Create listener
+		this.$scope.$on(constants.Events.Create.BorderStation.Start,() => { // POST listener
+			this.create();
+		});
+		this.$scope.$on(constants.Events.Get.BorderStation,() => { // GET listener
 			this.getDetails();
 		});
-		this.$scope.$on('UpdateBorderStationData',() => {
-			this.updateDetails();
+		this.$scope.$on(constants.Events.Update.BorderStation,() => { // PUT listener
+			this.update();
 		});
 	}
 		
 		
 	// Date Formatting
 	formatDate (dateToFormat) { // Formats date string to YYYY[-MM[-DD]]
-		return window.moment(dateToFormat).format('YYYY-MM-DD');
+		return dateToFormat ? window.moment(dateToFormat).format('YYYY-MM-DD') : window.moment().format('YYYY-MM-DD');
 	}
 	
 	
@@ -44,9 +59,20 @@ export default class DetailController {
 		
 		
 	// UPDATE calls
-	updateDetails() {
+	update() {
+		this.modifyDetails().then(() => {
+			this.$scope.$emit(constants.Events.Update.Detail.Done);
+		}, () => {
+			this.$scope.$emit(constants.Events.Update.Detail.Error);
+		});
+	}
+	
+	modifyDetails() {
 		this.details.date_established = this.formatDate(this.details.date_established);
 		
-		return this.service.updateRelationship([this.details], this.service.updateDetails);
+		if (this.service.borderStationId) {
+			return this.service.updateRelationship([this.details], 'updateDetails');
+		}
+		return this.service.createBorderStation(this.details);
 	}
 }

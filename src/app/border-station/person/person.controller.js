@@ -1,7 +1,10 @@
+import constants from './../constants.js';
+
 export default class PersonController {
-	constructor($scope, BorderStationService) {
+	constructor($q, $scope, BorderStationService) {
 		'ngInject';
 		
+		this.$q = $q;
 		this.$scope = $scope;
 		this.service = BorderStationService;
 		
@@ -11,34 +14,29 @@ export default class PersonController {
 		this.newCommitteeMembers = [];
 		this.newStaff = [];
 		this.people = {
-			staff: {
-				data: [],
-				name: this.staffTitle
-			},
 			committeeMembers: {
 				data: [],
 				name: this.committeeMemTitle
+			},
+			staff: {
+				data: [],
+				name: this.staffTitle
 			}
 		};
-		this.removeToStaff = [];
 		this.removeToCommitteeMembers = [];
+		this.removeToStaff = [];
 		
-		
-		this.activate();
-	}
-	
-	activate() {
-		this.$scope.$on('GetBorderStationData',() => { // Create listener
+		if (this.service.borderStationId) {
 			this.getCommitteeMembers();
 			this.getStaff();
-		});
-		this.getCommitteeMembers();
-		this.getStaff();
+		}
+		this.createListeners();
 	}
+	
 		
 	addPerson(persons) {
 		var newPerson = {
-			border_station: this.borderStationId
+			border_station: this.service.borderStationId
 		};
 		if (persons.name === this.staffTitle) {
 			this.newStaff.push(newPerson);
@@ -51,12 +49,31 @@ export default class PersonController {
 	
 	
 	// CREATE calls
-	createCommitteeMembers(members) {
-		return this.service.createRelationship(members, this.service.createCommitteeMember);
+	createCommitteeMembers() {
+		return this.service.createRelationship(this.newCommitteeMembers, 'createCommitteeMember');
 	}
 	
-	createStaff(staff) {
-		return this.service.createRelationship(staff, this.service.createStaff);
+	
+	createListeners() {
+		this.$scope.$on(constants.Events.Create.BorderStation.Done,() => { // POST listener
+			this.service.setBorderStationIdOfData(this.newCommitteeMembers);
+			this.service.setBorderStationIdOfData(this.newStaff);
+			this.service.setBorderStationIdOfData(this.people.committeeMembers.data);
+			this.service.setBorderStationIdOfData(this.people.staff.data);
+			this.update();
+		});
+		this.$scope.$on(constants.Events.Get.BorderStation,() => { // GET listener
+			this.getCommitteeMembers();
+			this.getStaff();
+		});
+		this.$scope.$on(constants.Events.Update.BorderStation, () => { // PUT listener
+			this.update();
+		});
+	}	
+	
+	
+	createStaff() {
+		return this.service.createRelationship(this.newStaff, 'createStaff');
 	}
 	
 	
@@ -74,14 +91,18 @@ export default class PersonController {
 	}
 		
 		
-	// REMOVE calls
+	// Remove calls (not api calls)
 	removeCommitteeMember(member) {
 		this.service.removeRelationship(member, this.newCommitteeMembers, this.people.committeeMembers.data, this.removeToCommitteeMembers);
 	}
 	
 	removePerson(persons, person) {
 		if (person.removeConfirmed) {
-			persons.name = this.staffTitle ? this.removeStaff(person) : this.removeCommitteeMember(person);
+			if (persons.name === this.staffTitle) {
+				this.removeStaff(person);
+			} else {
+				this.removeCommitteeMember(person);
+			}
 		} else {
 			person.removeConfirmed = true;
 		}
@@ -93,17 +114,39 @@ export default class PersonController {
 		
 		
 	// UPDATE calls
-	updateCommitteeMembers(committeeMembers, removing) {
-		if (removing) {
-			return this.service.updateRelationship(committeeMembers, this.service.updateCommitteeMembers, 0);
-		}
-		return this.service.updateRelationship(committeeMembers, this.service.updateCommitteeMembers, this.newCommitteeMembers.length);
+	update() {
+		var promises = [];
+		
+		promises.push(this.createCommitteeMembers());
+		promises.push(this.createStaff());
+		promises.push(this.updateCommitteeMembers(true));
+		promises.push(this.updateCommitteeMembers());
+		promises.push(this.updateStaff(true));
+		promises.push(this.updateStaff());
+		
+		this.$q.all(promises).then(() => {
+			this.newCommitteeMembers = [];
+			this.newStaff = [];
+			this.removeToCommitteeMembers = [];
+			this.removeToStaff = [];
+			this.$scope.$emit(constants.Events.Update.People.Done);
+		}, () => {
+			this.$scope.$emit(constants.Events.Update.People.Error);
+		});
 	}
 	
-	updateStaff(staff, removing) {
+	
+	updateCommitteeMembers(removing) {
 		if (removing) {
-			return this.service.updateRelationship(staff, this.service.updateStaff, 0);
+			return this.service.updateRelationship(this.removeToCommitteeMembers, 'updateCommitteeMembers', 0);
 		}
-		return this.service.updateRelationship(staff, this.service.updateStaff, this.newStaff.length);
+		return this.service.updateRelationship(this.people.committeeMembers.data, 'updateCommitteeMembers', this.newCommitteeMembers.length);
+	}
+	
+	updateStaff(removing) {
+		if (removing) {
+			return this.service.updateRelationship(this.removeToStaff, 'updateStaff', 0);
+		}
+		return this.service.updateRelationship(this.people.staff.data, 'updateStaff', this.newStaff.length);
 	}
 }

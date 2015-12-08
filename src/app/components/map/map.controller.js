@@ -32,7 +32,7 @@ class MapController {
 	
 	getBorderStations() {
 		this.borderStationService.getBorderStations().then((response) => {
-			this.borderStations = response.data.results;
+			this.borderStations = response.data;
 			this.borderStations.forEach((marker) => {
 				marker.templateUrl = this.templateUrl;
 				marker.templateParameter = {

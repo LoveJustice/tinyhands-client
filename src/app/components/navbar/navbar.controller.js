@@ -23,7 +23,7 @@ export default class NavbarController {
 	
 	getBorderStations() {
 		this.borderStationService.getBorderStations().then((response) => {
-			this.borderStations = response.data.results;
+			this.borderStations = response.data;
 		});
 	}
 

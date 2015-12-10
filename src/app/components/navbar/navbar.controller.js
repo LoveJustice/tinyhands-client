@@ -1,5 +1,5 @@
 export default class NavbarController {
-	constructor ($interval, $timeout, BorderStationService, session) {
+	constructor ($interval, $scope, $timeout, BorderStationService, session) {
 		'ngInject';
 		
 		this.$interval = $interval;
@@ -10,29 +10,18 @@ export default class NavbarController {
 		
 		this.borderStations = [];
 		this.nepalTime = window.moment.tz("Asia/Kathmandu").format("MMMM Do YYYY, h:mm:ssA");
-		this.user = {};
 		
 		
-		this.activate();
-	}
-	
-	activate() {
-		this.getUser();
-		this.getBorderStations();
+		$scope.$on('GetNavBarBorderStations', () => {
+			this.getBorderStations();
+		});
 	}
 	
 	getBorderStations() {
-		this.borderStationService.getBorderStations().then((response) => {
-			this.borderStations = response.data;
-		});
-	}
-
-	getUser () {
-		if (sessionStorage.token){
-			this.session.me().then(
-				(promise) => {
-					this.user = promise.data;
-				});
+		if (this.session.user.permission_border_stations_view) {
+			this.borderStationService.getBorderStations().then((response) => {
+				this.borderStations = response.data;
+			});
 		}
 	}
 	

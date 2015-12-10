@@ -8,6 +8,8 @@ class SessionService extends BaseService {
 		this.root = $rootScope;
 		this.routeState = $state;
 		this.timeout = $timeout;
+		
+		this.user = {};
 	}
 	
 	attemptLogin (username, password) {
@@ -16,9 +18,7 @@ class SessionService extends BaseService {
 				(promise) => {
 					sessionStorage.token = "Token " + promise.data.token;
 					this.root.authenticated = true;
-					this.timeout(() => { // State isn't quite ready on load so we need this timeout
-						this.routeState.go('dashboard');
-					});
+					this.routeState.go('dashboard');
 				},
 				() => {
 					window.toastr.error("Invalid Login");
@@ -27,7 +27,10 @@ class SessionService extends BaseService {
 	}
 
 	me () {
-		return this.get('api/me/');
+		return this.get('api/me/').then((result) => {
+			this.user = result.data;
+			this.root.$broadcast('GetNavBarBorderStations');
+		});
 	}
 	// See if page loading needs to have user logged in
 	// See if there is already a user logged in
@@ -42,6 +45,7 @@ class SessionService extends BaseService {
 			});
 		} else if (token) {
 			this.root.authenticated = true;
+			this.me();
 		}
 	}
 	
@@ -56,6 +60,7 @@ class SessionService extends BaseService {
 	
 	logout () {
 		sessionStorage.clear();
+		this.user = {};
 		this.root.authenticated = false; // Set authenticated to false
 		this.routeState.go('login');
 	}

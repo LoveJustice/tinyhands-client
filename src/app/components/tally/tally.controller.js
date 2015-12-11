@@ -24,11 +24,11 @@ class TallyController {
 
 	checkDifferences(data){
 		if (this.days.length > 0) {
-			for(var i in data.reverse()){
-				var interceptions = data[i].interceptions;
+			for(let i in data.reverse()){
+				let interceptions = data[i].interceptions;
 				data[i].change = false;
 				data[i].seen = false;
-				for(var key in interceptions){
+				for(let key in interceptions){
 					if(interceptions.hasOwnProperty(key)){
 						if(this.days[i].interceptions[key] !== interceptions[key]){
 							//data has changed
@@ -41,7 +41,7 @@ class TallyController {
 				}
 			}
 		}else{ //localStorage days is null
-			for(var x in data){
+			for(let x in data){
 				if(!this.isEmptyObject(data[x].interceptions)){
 					data[x].change = true;
 					data[x].seen = false;
@@ -52,18 +52,18 @@ class TallyController {
 	}
 
 	getDayOfWeek(date) {
-		var newDate = window.moment(date);
-		var today = window.moment().tz("Asia/Kathmandu");
+		let newDate = window.moment(date);
+		let today = window.moment().tz("Asia/Kathmandu");
 		if (today.date() === newDate.date()) {
 			return 'Today';
 		}
-		var nameOfDay = newDate.format('dddd');
+		let nameOfDay = newDate.format('dddd');
 		return nameOfDay;
 	}
 
 	getTallyData(firstCall) {
 		return this.service.getTallyDays().then((promise) => {
-			var data = promise.data;
+			let data = promise.data;
 			if(firstCall){
 				this.userId = data.id;
 				this.getTallyLocalStorage();
@@ -77,7 +77,7 @@ class TallyController {
 	}
 
 	getTallyLocalStorage() {
-		var oldTally = window.localStorage.getItem('tally-'+this.userId);
+		let oldTally = window.localStorage.getItem('tally-'+this.userId);
 		if(oldTally){
 			this.days = JSON.parse(oldTally);
 		}
@@ -97,8 +97,8 @@ class TallyController {
 	}
 
 	sumNumIntercepts(day) {
-		var sumInt = 0;
-		for (var key in day.interceptions) {
+		let sumInt = 0;
+		for (let key in day.interceptions) {
 			sumInt += day.interceptions[key];
 		}
 		return sumInt;

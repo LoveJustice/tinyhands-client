@@ -59,8 +59,8 @@ export default class BorderStationService extends BaseService {
 		return this.get('api/border-station/');
 	}
 	
-	getCommitteeMembers() {
-		return this.get('api/committee-member/?border_station=' + this.borderStationId);
+	getCommitteeMembers(bsId=this.borderStationId) {
+		return this.get('api/committee-member/?border_station=' + bsId);
 	}
 
 	getDetails() {
@@ -71,8 +71,8 @@ export default class BorderStationService extends BaseService {
 		return this.get('api/location/?border_station=' + this.borderStationId);
 	}
 
-	getStaff() {
-		return this.get('api/staff/?border_station=' + this.borderStationId);
+	getStaff(bsId=this.borderStationId) {
+		return this.get('api/staff/?border_station=' + bsId);
 	}
 	
 	

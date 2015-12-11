@@ -13,36 +13,42 @@ class MapController {
 		
 		this.borderStations = [];
 		this.showAddress2Layer = true;
-		this.templateUrl = 'app/components/map/infoWindow.html';
+		this.templateUrl = 'app/components/map/infoWindow.html'; // Abs path is needed
 		
-		this.activate(uiGmapGoogleMapApi);
+		
+		this.createMapListeners();
+		this.initializeGoogleMaps(uiGmapGoogleMapApi);
 	}
-
-	activate(gMapsApi) {
-		gMapsApi.then((maps) => {
-			this.maps = maps;
-			this.setMapData();
-			this.setAddress2Layer();
-			
-			this.getBorderStations();
-		});
-
+	
+	createMapListeners() {
 		this.rootScope.$on('toggleAddress2Layer',(e,s) => {this.toggleAddress2Layer(e,s);});
 	}
 	
 	getBorderStations() {
 		this.borderStationService.getBorderStations().then((response) => {
 			this.borderStations = response.data;
-			this.borderStations.forEach((marker) => {
-				marker.templateUrl = this.templateUrl;
-				marker.templateParameter = {
-					date_established: marker.date_established,
-					has_shelter: marker.has_shelter,
-					id: marker.id,
-					station_code: marker.station_code,
-					station_name: marker.station_name
-				};
+			this.borderStations.forEach((borderStation) => {
+				this.getBorderStationStaff(borderStation).then(() => {
+					this.setInfoWindowParams(borderStation);
+				});
 			});
+		});
+	}
+	
+	getBorderStationStaff(borderStation) {
+		borderStation.numberOfStaff = 0;
+		return this.borderStationService.getStaff(borderStation.id).then((response) => {
+			borderStation.numberOfStaff += response.data.count;
+		});
+	}
+	
+	initializeGoogleMaps(gMapsApi) {
+		gMapsApi.then((maps) => {
+			this.maps = maps;
+			this.setMapData();
+			this.setAddress2Layer();
+			
+			this.getBorderStations();
 		});
 	}
 
@@ -60,6 +66,18 @@ class MapController {
 				styleId: 2,
 				templateId: 2
 			}
+		};
+	}
+	
+	setInfoWindowParams(borderStation) {
+		borderStation.templateUrl = this.templateUrl;
+		borderStation.templateParameter = {
+			date_established: borderStation.date_established,
+			has_shelter: borderStation.has_shelter,
+			id: borderStation.id,
+			numberOfStaff: borderStation.numberOfStaff,
+			station_code: borderStation.station_code,
+			station_name: borderStation.station_name
 		};
 	}
 

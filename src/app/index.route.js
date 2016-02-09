@@ -37,6 +37,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
+    .state('budget', {
+      url: '/budget/:id',
+      templateUrl: 'app/budget/budget.html',
+      controller: 'BudgetController',
+      controllerAs: 'budgetCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',
@@ -49,7 +58,7 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
 
   // Remove hash from url
   $locationProvider.html5Mode(true);
-  
+
   $urlRouterProvider.otherwise('/');
 }
 

@@ -9,11 +9,11 @@
 <form id="budget-calc-form" method="post">
     <!-- First Table Thing -->
 
-    <div class="form-page" ng-controller="MainCtrl as main">
+    <div class="form-page">
 
         <h1 class="text-center" style="font-size: 25px">
-            {{ main.form.station_name }} Budget Calculation Form For
-            <input type="month" class="form-control" id="month_year" name="input" ng-model="main.form.month_year" onchange='change()' min="2005-01-01" required />
+            {{ budgetCtrl.form.station_name }} Budget Calculation Form For
+            <input type="month" class="form-control" id="month_year" name="input" ng-model="budgetCtrl.form.month_year" onchange='change()' min="2005-01-01" required />
         </h1>
 
         <div class="row" ng-controller="topTableCtrl as table">
@@ -64,37 +64,37 @@
                   <tbody>
                   <tr>
                       <td>Salaries</td>
-                      <td width="25%"><p class="text-right" ng-bind="main.staffTotal()"></p></td>
+                      <td width="25%"><p class="text-right" ng-bind="budgetCtrl.staffTotal()"></p></td>
                       <td class="active" width="25%"></td>
                   </tr>
                   <tr>
                       <td>Comm.</td>
-                      <td><p class="text-right" ng-bind="main.communicationTotalValue"></p></td>
+                      <td><p class="text-right" ng-bind="budgetCtrl.communicationTotalValue"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr>
                       <td>Travel</td>
-                      <td><p class="text-right" ng-bind="main.travelTotalValue"></p></td>
+                      <td><p class="text-right" ng-bind="budgetCtrl.travelTotalValue"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr>
                       <td>Admin.</td>
-                      <td><p class="text-right" ng-bind="main.adminTotal()"></p></td>
+                      <td><p class="text-right" ng-bind="budgetCtrl.adminTotal()"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr>
                       <td>Medical</td>
-                      <td><p class="text-right" ng-bind="main.medicalTotal()"></p></td>
+                      <td><p class="text-right" ng-bind="budgetCtrl.medicalTotal()"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr>
                       <td>Misc.</td>
-                      <td><p class="text-right" ng-bind="main.miscTotalValue"></p></td>
+                      <td><p class="text-right" ng-bind="budgetCtrl.miscTotalValue"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr>
                       <td class="text-right"><b>TOTAL</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="main.bunchTotal()"></p></td>
+                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.bunchTotal()"></p></td>
                   </tr>
                   </tbody>
                   <thead>
@@ -105,43 +105,43 @@
                   <tbody>
                   <tr>
                       <td class="warning">Shelter</td>
-                      <td class="warning"><p class="text-right" ng-bind="main.shelterTotal()"></p></td>
+                      <td class="warning"><p class="text-right" ng-bind="budgetCtrl.shelterTotal()"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr>
                       <td class="warning">Food</td>
-                      <td class="warning"><p class="text-right" ng-bind="main.foodGasTotal()"></p></td>
+                      <td class="warning"><p class="text-right" ng-bind="budgetCtrl.foodGasTotal()"></p></td>
                       <td class="active"></td>
                   </tr>
                   <tr class="warning">
                       <td class="text-right"><b>TOTAL</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="main.foodAndShelterTotal()"></p></td>
+                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.foodAndShelterTotal()"></p></td>
                   </tr>
                   </tbody>
                   <tbody>
                   <tr>
                       <td class="text-center"><b>Awareness</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="main.awarenessTotalValue"></p></td>
+                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.awarenessTotalValue"></p></td>
                   </tr>
                   <tr>
                       <td class="text-center"><b>Supplies</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="main.suppliesTotalValue"></p></td>
+                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.suppliesTotalValue"></p></td>
                   </tr>
                   <tr>
                       <td class="text-center"><b>STATION TOTAL</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="main.stationTotal()"></p></td>
+                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.stationTotal()"></p></td>
                   </tr>
                   <tr>
                       <td class="text-center">Last month's TOTAL</td>
-                      <td class="text-right" colspan="2">{{ main.last_months_total_cost }}</td>
+                      <td class="text-right" colspan="2">{{ budgetCtrl.last_months_total_cost }}</td>
                   </tr>
                   </tbody>
 
               </table>
             </div>
 
-            <input type="button" ng-show="main.update" id="budget_update" class="pull-right btn btn-success navbar-btn btn-lg" value="Submit" ng-click="main.updateForm()">
-            <input type="button" ng-show="main.create" id="budget_create" class="pull-right btn btn-success navbar-btn btn-lg" value="Submit" ng-click="main.createForm()">
+            <input type="button" ng-show="budgetCtrl.update" id="budget_update" class="pull-right btn btn-success navbar-btn btn-lg" value="Submit" ng-click="budgetCtrl.updateForm()">
+            <input type="button" ng-show="budgetCtrl.create" id="budget_create" class="pull-right btn btn-success navbar-btn btn-lg" value="Submit" ng-click="budgetCtrl.createForm()">
         </div>
 
     </div>

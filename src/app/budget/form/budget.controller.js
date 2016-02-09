@@ -1,6 +1,6 @@
-
-class BudgetController {
+export default class BudgetController {
   constructor($scope, $http, $location, $window, mainCtrlService) {
+    'ngInject';
     // Variable Declarations
     this.form = {};
     this.salariesTotal = 0;
@@ -42,16 +42,16 @@ class BudgetController {
 
 
     // Event Listeners
-    $scope.$on('handleOtherItemsTotalChangeBroadcast', function(event, args) {
+    $scope.$on('handleOtherItemsTotalChangeBroadcast', (event, args) => {
         this.otherItemsTotals[args['form_section']-1][0] = args['total'];
-        callTotals();
+        this.callTotals();
     });
 
-    $scope.$on('handleSalariesTotalChangeBroadcast', function(event, args) {
+    $scope.$on('handleSalariesTotalChangeBroadcast', (event, args) => {
         this.salariesTotal = args['total'];
     });
 
-    $scope.$on('lastBudgetTotalBroadcast', function(event, args) {
+    $scope.$on('lastBudgetTotalBroadcast', (event, args) => {
         this.last_months_total_cost = args['total'];
     });
   }
@@ -60,7 +60,7 @@ class BudgetController {
   // Functions
 
   //Determine the kind of functionality...view/create/edit
-  main(){
+  main (){
     if( (window.submit_type) == 1 ) {
         this.create = true;
         this.retrieveNewForm();
@@ -110,54 +110,8 @@ class BudgetController {
   }
 
   //shelter
-  utilTotal() {
-    return (this.form.shelter_rent + this.form.shelter_water + this.form.shelter_electricity);
-  }
-
-  shelterCheckboxTotal() {
-    var totalAmount = 0;
-    if (this.form.shelter_shelter_startup) {
-        totalAmount += this.form.shelter_shelter_startup_amount;
-    }
-    if (this.form.shelter_shelter_two) {
-        totalAmount += this.form.shelter_shelter_two_amount;
-    }
-    return totalAmount;
-  }
-
-  shelterTotal() {
-    var amount = 0;
-    amount += this.form.shelter_rent +
-            this.form.shelter_water +
-            this.form.shelter_electricity +
-            this.shelterCheckboxTotal();
-    this.shelterTotalValue = amount + this.otherShelterTotalValue[0];
-    return this.shelterTotalValue;
-  }
 
   //Food and Gas Section
-  foodGasInterceptedGirls () {
-    return  this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
-            this.form.food_and_gas_number_of_intercepted_girls *
-            this.form.food_and_gas_number_of_intercepted_girls_multiplier_after;
-  }
-
-  foodGasLimboGirls () {
-    return  this.form.food_and_gas_limbo_girls_multiplier *
-            this.form.food_and_gas_number_of_limbo_girls *
-            this.form.food_and_gas_number_of_days;
-  }
-
-  foodGasTotal() {
-    var amount = 0;
-    amount += this.foodTotal();
-    this.otherfoodGasTotalValue = amount + this.otherFoodGasTotalValue[0];
-    return this.otherfoodGasTotalValue;
-  }
-
-  foodTotal () {
-    return this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
-  }
 
   //Communication Section
   commManagerTotal () {
@@ -298,51 +252,50 @@ class BudgetController {
   //CRUD Functions
   updateForm() {
     this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
-    mainCtrlService.updateForm(this.form.id, this.form).then(function(promise) {
+    this.mainCtrlService.updateForm(this.form.id, this.form).then((promise) => {
       this.id = promise.data.id;
       //Broadcast event to call the saveAllItems function in the otherItems controller
-      $scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'});
-      $window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
+      this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'});
+      this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
     });
   }
 
   createForm() {
     this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
-    mainCtrlService.createForm(this.form).then(function(promise) {
+    this.mainCtrlService.createForm(this.form).then((promise) => {
       var data = promise.data;
       this.id = data.id;
       window.budget_calc_id = data.id;
-      $scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'}); //Broadcast event to call the saveAllItems function in the otherItems controller
-      $window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
+      this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'}); //Broadcast event to call the saveAllItems function in the otherItems controller
+      this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
     });
   }
 
   retrieveForm(id) {
-    mainCtrlService.retrieveForm(id).then(function(promise){
+    this.mainCtrlService.retrieveForm(id).then((promise) => {
       this.form = promise.data;
       this.form.month_year = new Date(promise.data.month_year);
       this.form.station_name = window.station_name;
-      $scope.$emit('dateSetEmit', {date: promise.data.month_year});
-      callTotals();
+      this.$scope.$emit('dateSetEmit', {date: promise.data.month_year});
+      this.callTotals();
     });
   }
 
   retrieveNewForm() {
-    mainCtrlService.retrieveNewForm(window.budget_calc_id).then(function (promise) {
+    this.mainCtrlService.retrieveNewForm(window.budget_calc_id).then((promise) => {
       var data = promise.data.budget_form;
       if (promise.data.None) {
-        resetValuesToZero();
+        this.resetValuesToZero();
       }
       else {
         this.form = data;
-        //callTotals();
       }
       this.form.station_name = window.station_name;
       this.form.month_year = this.date;
       this.form.next_month = this.next_month;
       data.members = [];
       data.id = undefined;
-      callTotals();
+      this.callTotals();
     });
   }
 

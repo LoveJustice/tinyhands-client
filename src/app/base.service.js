@@ -4,7 +4,7 @@ class BaseService {
 
 		this.$http = $http;
 		
-		this.baseUrl = "http://craton.cse.taylor.edu:3389/";
+		this.baseUrl = "http://edwards.cse.taylor.edu:80/";
 		this.errors = [];
 	}
 	

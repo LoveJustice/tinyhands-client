@@ -1,0 +1,95 @@
+<div>
+  <div class="row text-center" style="margin-top: 30px">
+    <h2 class="background"><span>Food & Gas</span></h2>
+
+
+      <div class="col-lg-2 calc-form-input-no-width">
+          <input class="text-right form-control" type="number" id="food_gas_multiplier_before" ng-model="main.form.food_and_gas_number_of_intercepted_girls_multiplier_before"/>
+
+      </div>
+      <div class="col-lg-1">
+          <h4 class="text-center">*</h4>
+      </div>
+      <div class="col-lg-2 calc-form-input-no-width">
+          <input class="text-right form-control" type="number" id="food_gas_number_of_girls" ng-model="main.form.food_and_gas_number_of_intercepted_girls"/>
+          <small># of Girls</small>
+      </div>
+      <div class="col-lg-1 ">
+          <h4 class="text-center">*</h4>
+      </div>
+      <div class="col-lg-2 calc-form-input-no-width">
+          <input class="text-right form-control" type="number" id="food_gas_multiplier_after" ng-model="main.form.food_and_gas_number_of_intercepted_girls_multiplier_after"/>
+      </div>
+      <div class="col-lg-1 ">
+          <h4 class="text-center">=</h4>
+      </div>
+      <div class="col-lg-3 input-group text-center">
+          <div class="input-group-addon">$</div>
+          <input class="form-control text-center" ng-value="main.foodGasInterceptedGirls()" disabled="disabled"/>
+      </div>
+      <small class="text-center">Intercepted Girls</small>
+
+  </div>
+  <div class="row" style="margin-top: 20px">
+      <div class="col-lg-2 calc-form-input-no-width">
+          <input class="text-right form-control" type="number" id="limbo_multiplier" ng-model="main.form.food_and_gas_limbo_girls_multiplier"/>
+      </div>
+      <div class="col-lg-1">
+          <h4 class="text-center">*</h4>
+      </div>
+      <div class="col-lg-2 calc-form-input-no-width">
+          <input class="text-right form-control" type="number" id="limbo_number_of_girls" ng-model="main.form.food_and_gas_number_of_limbo_girls"/>
+          <small># of Girls</small>
+      </div>
+      <div class="col-lg-1">
+          <h4 class="text-center">*</h4>
+      </div>
+      <div class="col-lg-2 calc-form-input-no-width">
+          <input class="text-right form-control" type="number" id="limbo_number_of_days" ng-model="main.form.food_and_gas_number_of_days"/>
+          <small># of Days</small>
+      </div>
+      <div class="col-lg-1">
+          <h4 class="text-center">=</h4>
+      </div>
+      <div class="col-lg-3 input-group">
+          <div class="input-group-addon">$</div>
+          <input class="form-control text-center" ng-value="main.foodGasLimboGirls()" disabled="disabled"/>
+      </div>
+      <small>Limbo Girls</small>
+  </div>
+
+  {% verbatim %}
+  <div class="row" ng-controller="otherBudgetItemsCtrl as foodGasItemsCtrl" ng-init="form_section = 6;">
+      <div class="animated-budget-items" ng-repeat="form in foodGasItemsCtrl.foodGasForms">
+
+          <div class="col-lg-4 col-lg-offset-2">
+              <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view"/>
+          </div>
+          <div class="col-lg-4">
+              <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="foodGasItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
+          </div>
+          <div class="col-lg-2">
+              <a class="btn btn-danger" ng-click="foodGasItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</a>
+          </div>
+          <br/><br/>
+      </div>
+      <div class="row">
+          <br/>
+
+          <div class="col-lg-4 col-lg-offset-5">
+              <a class="btn btn-success" id="foodGas_add_item" ng-click="foodGasItemsCtrl.addNewItem()" ng-hide="main.view">Add item</a>
+          </div>
+      </div>
+  </div>
+  {% endverbatim %}
+
+  <div class="row text-center" style="margin-top: 30px">
+
+      <div class="col-lg-4 col-lg-offset-4">
+          <label>Total Food</label>
+          <input class="form-control text-center" ng-value="main.foodGasTotal()" disabled="disabled"/>
+      </div>
+      <div class="col-lg-4"></div>
+  </div>
+
+</div>

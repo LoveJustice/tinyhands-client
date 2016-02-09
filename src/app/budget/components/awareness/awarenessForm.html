@@ -1,0 +1,64 @@
+<div class="col-lg-6">
+  <h2 class="background"><span>Awareness</span></h2>
+
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="awareness_contact_cards_bool" ng-model="main.form.awareness_contact_cards" ng-change="main.awarenessTotal()"/>
+          <label for="awareness_contact_cards_bool">Contact Cards</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="awareness_contact_cards_amount" ng-model="main.form.awareness_contact_cards_amount" ng-change="main.awarenessTotal()"/>
+      </div>
+  </div>
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="awareness_awareness_party_bool" ng-model="main.form.awareness_awareness_party_boolean" ng-change="main.awarenessTotal()"/>
+          <label>Awareness Party</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="awareness_awareness_party_amount" ng-model="main.form.awareness_awareness_party" ng-change="main.awarenessTotal()"/>
+      </div>
+  </div>
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="awareness_sign_boards_bool" ng-model="main.form.awareness_sign_boards_boolean" ng-change="main.awarenessTotal()"/>
+          <label>Sign Boards</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="awareness_sign_boards_amount" ng-model="main.form.awareness_sign_boards" ng-change="main.awarenessTotal()"/>
+      </div>
+  </div>
+
+  {% verbatim %}
+  <div class="row" ng-controller="otherBudgetItemsCtrl as awarenessItemsCtrl" ng-init="form_section = 3;">
+      <div class="animated-budget-items" ng-repeat="form in awarenessItemsCtrl.awarenessForms">
+
+          <div class="col-lg-4 col-lg-offset-2">
+              <input class="form-control awareness-extra-item-name" type="text" ng-model="form.name" ng-disabled="main.view"/>
+          </div>
+          <div class="col-lg-4">
+              <input class="text-right awareness-extra-item-value form-control" type="number" ng-model="form.cost" ng-change="awarenessItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
+          </div>
+          <div class="col-lg-2">
+              <a class="btn btn-danger" ng-click="awarenessItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</a>
+          </div>
+          <br/>
+          <br/>
+      </div>
+      <div class="row">
+          <br/>
+          <div class="col-lg-4 col-lg-offset-5">
+              <a class="btn btn-success" id="awareness_add_item" ng-click="awarenessItemsCtrl.addNewItem()" ng-hide="main.view">Add item</a>
+          </div>
+      </div>
+  </div>
+  {% endverbatim %}
+
+  <div class="row center text-center" style="margin-top: 20px">
+
+      <div class="col-lg-4 col-lg-offset-4">
+          <label>Total Awareness</label>
+          <input class="form-control text-center" ng-value="main.awarenessTotalValue" disabled="disabled"/>
+      </div>
+  </div>
+</div>

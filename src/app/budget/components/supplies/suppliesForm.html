@@ -1,0 +1,71 @@
+<div class="col-lg-6">
+  <h2 class="background"><span>Supplies</span></h2>
+
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="supplies_walkie_talkies_bool" ng-model="main.form.supplies_walkie_talkies_boolean" ng-change="main.suppliesTotal()"/>
+          <label>Walkie Talkies</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="supplies_walkie_talkies_amount" ng-model="main.form.supplies_walkie_talkies_amount" ng-change="main.suppliesTotal()"/>
+      </div>
+  </div>
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="supplies_recorders_bool" ng-model="main.form.supplies_recorders_boolean" ng-change="main.suppliesTotal()"/>
+          <label>Recorders</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="supplies_recorders_amount" ng-model="main.form.supplies_recorders_amount" ng-change="main.suppliesTotal()"/>
+      </div>
+  </div>
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="supplies_binoculars_bool" ng-model="main.form.supplies_binoculars_boolean" ng-change="main.suppliesTotal()"/>
+          <label>Binoculars</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="supplies_binoculars_amount" ng-model="main.form.supplies_binoculars_amount" ng-change="main.suppliesTotal()"/>
+      </div>
+  </div>
+  <div class="row" style="margin-bottom: 7px">
+      <div class="col-lg-4 col-lg-offset-2">
+          <input type="checkbox" id="supplies_flashlights_bool" ng-model="main.form.supplies_flashlights_boolean" ng-change="main.suppliesTotal()"/>
+          <label>Flashlights</label>
+      </div>
+      <div class="col-lg-4">
+          <input class="text-right form-control" type="number" id="supplies_flashlights_amount" ng-model="main.form.supplies_flashlights_amount" ng-change="main.suppliesTotal()"/>
+      </div>
+  </div>
+  {% verbatim %}
+  <div class="row" ng-controller="otherBudgetItemsCtrl as suppliesItemsCtrl" ng-init="form_section = 4;">
+      <div class="animated-budget-items" ng-repeat="form in suppliesItemsCtrl.suppliesForms">
+
+          <div class="col-lg-4 col-lg-offset-2">
+              <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view"/>
+          </div>
+          <div class="col-lg-4">
+              <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="suppliesItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
+          </div>
+          <div class="col-lg-2">
+              <a class="btn btn-danger" ng-click="suppliesItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</a>
+          </div>
+          <br/><br/>
+      </div>
+      <div class="row">
+          <br/>
+          <div class="col-lg-4 col-lg-offset-5">
+              <a class="btn btn-success" id="supplies_add_item" ng-click="suppliesItemsCtrl.addNewItem()" ng-hide="main.view">Add item</a>
+          </div>
+      </div>
+  </div>
+  {% endverbatim %}
+
+  <div class="row center text-center" style="margin-top: 20px">
+
+      <div class="col-lg-4 col-lg-offset-4">
+          <label>Total Supplies</label>
+          <input class="form-control text-center" ng-value="main.suppliesTotalValue" disabled="disabled"/>
+      </div>
+  </div>
+</div>

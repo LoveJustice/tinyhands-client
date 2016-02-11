@@ -12,6 +12,7 @@ import runBlock from './index.run';
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
+import BudgetService from './budget/form/budget.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 // ENDREGION: Services
@@ -56,6 +57,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
+  .service('BudgetService', BudgetService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
   // ENDREGION: Services

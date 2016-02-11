@@ -1,6 +1,10 @@
 export default class BudgetController {
-  constructor($scope, $http, $location, $window, mainCtrlService) {
+  constructor($scope, $http, $location, $window, BudgetService) {
     'ngInject';
+
+    this.service = BudgetService;
+
+
     // Variable Declarations
     this.form = {};
     this.salariesTotal = 0;
@@ -120,28 +124,6 @@ export default class BudgetController {
   //Medical Section
 
   //Administration Section
-  adminStationaryTotal() {
-    return (this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.form.administration_number_of_intercepts_last_month_adder;
-  }
-
-  adminMeetingsTotal() {
-    return this.form.administration_number_of_meetings_per_month * this.form.administration_number_of_meetings_per_month_multiplier;
-  }
-
-  adminBoothRentalTotal() {
-    var amount = 0;
-    if(this.form.administration_booth) {
-        amount += this.form.administration_booth_amount;
-    }
-    if(this.form.administration_registration) {
-        amount += this.form.administration_registration_amount;
-    }
-    return amount;
-  }
-
-  adminTotal() {
-    return this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal();
-  }
 
   //Travel Section
   travelNumberOfStaffUsingBikesTotal() {

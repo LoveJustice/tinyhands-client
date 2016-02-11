@@ -31,7 +31,7 @@ import Address1EditModalController from './addresses/address1EditModal.controlle
 import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/address2EditModal.controller';
 import BorderStationController from './border-station/borderStation.controller';
-import BudgetController from './budget/budget.controller';
+import BudgetController from './budget/form/budget.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
 // ENDREGION: Controllers

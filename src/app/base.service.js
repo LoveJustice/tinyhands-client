@@ -3,14 +3,14 @@ class BaseService {
 		'ngInject';
 
 		this.$http = $http;
-		
-		this.baseUrl = "http://edwards.cse.taylor.edu:80/";
+
+		this.baseUrl = "http://muller.cse.taylor.edu:80/";
 		this.errors = [];
 	}
-	
+
 	/*
 	* Function: get
-	* Params: 
+	* Params:
 	*	url - string
 	* headers - JSON object
 	* params - Array of JSON objects formatted [ { name: "first", value: "Rick" }, { name: "last", value: "Astley" }, { name: "job", value: "Rock Star" } ]
@@ -25,11 +25,11 @@ class BaseService {
 		} else {
 			params = '';
 		}
-		
+
 		return this.$http.get(this.baseUrl + url + params, { headers: headers });
 	}
-		
-		
+
+
 	// Error Handling
 	handleErrors(error) {
 		var errorData = error.data;
@@ -73,7 +73,7 @@ class BaseService {
 		if(sessionStorage.getItem('token')){
 			headers.Authorization = sessionStorage.token;
 		}
-		
+
 		return this.$http.put(this.baseUrl + url, data, { headers: headers });
 	}
 }

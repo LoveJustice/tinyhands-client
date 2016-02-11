@@ -1,9 +1,8 @@
 
     <h1 class="text-center">All Budget Calculations</h1>
-    {% if borderstationbudgetcalculation_list %}
     <br/>
-
-    <table class="table table-striped table-condensed crud-datatable">
+    
+    <table ng-if="budgetListCtrl.listOfBudgets.length > 0" class="table table-striped table-condensed crud-datatable">
         <thead>
             <tr>
                 <th class="text-center">Station</th>

@@ -12,6 +12,7 @@ import runBlock from './index.run';
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
+import BudgetListService from './budget/list/budgetList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 // ENDREGION: Services
@@ -32,6 +33,7 @@ import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/address2EditModal.controller';
 import BorderStationController from './border-station/borderStation.controller';
 import BudgetController from './budget/form/budget.controller';
+import BudgetListController from './budget/list/budgetList.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
 // ENDREGION: Controllers
@@ -56,6 +58,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
+  .service('BudgetListService', BudgetListService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
   // ENDREGION: Services
@@ -80,6 +83,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('Address2EditModalController', Address2EditModalController)
   .controller('BorderStationController', BorderStationController)
   .controller('BudgetController', BudgetController)
+  .controller('BudgetListController', BudgetListController)  
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
   // ENDREGION: Controllers

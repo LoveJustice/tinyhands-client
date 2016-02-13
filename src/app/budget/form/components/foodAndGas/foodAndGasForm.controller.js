@@ -1,18 +1,18 @@
-export default class FoodAndGasController {
+export default class BudgetFoodAndGasFormController {
   constructor() {
 
   }
-  
-  foodGasInterceptedGirls () {
-    return  this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
-            this.form.food_and_gas_number_of_intercepted_girls *
-            this.form.food_and_gas_number_of_intercepted_girls_multiplier_after;
+
+  foodGasInterceptedGirls (form) {
+    return  form.food_and_gas_number_of_intercepted_girls_multiplier_before *
+            form.food_and_gas_number_of_intercepted_girls *
+            form.food_and_gas_number_of_intercepted_girls_multiplier_after;
   }
 
-  foodGasLimboGirls () {
-    return  this.form.food_and_gas_limbo_girls_multiplier *
-            this.form.food_and_gas_number_of_limbo_girls *
-            this.form.food_and_gas_number_of_days;
+  foodGasLimboGirls (form) {
+    return  form.food_and_gas_limbo_girls_multiplier *
+            form.food_and_gas_number_of_limbo_girls *
+            form.food_and_gas_number_of_days;
   }
 
   foodGasTotal() {

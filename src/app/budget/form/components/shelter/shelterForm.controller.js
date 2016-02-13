@@ -1,8 +1,8 @@
-export default class ShelterController {
+export default class BudgetShelterFormController {
   constructor() {
 
   }
-  
+
   utilTotal() {
     return (this.form.shelter_rent + this.form.shelter_water + this.form.shelter_electricity);
   }

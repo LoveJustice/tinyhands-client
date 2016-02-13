@@ -22,6 +22,7 @@ import TallyService from './components/tally/tally.service';
 import DetailDirective from './border-station/detail/detail.directive';
 import LocationDirective from './border-station/location/location.directive';
 import MapDirective from './components/map/map.directive';
+import MathOperator from './components/mathOperator/mathOperator.directive';
 import NavbarDirective from './components/navbar/navbar.directive';
 import PersonDirective from './border-station/person/person.directive';
 import TallyDirective from './components/tally/tally.directive';
@@ -33,6 +34,10 @@ import Address1EditModalController from './addresses/address1EditModal.controlle
 import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/address2EditModal.controller';
 import BorderStationController from './border-station/borderStation.controller';
+import BudgetAdministrationFormController from './budget/form/components/administration/administrationForm.controller';
+import BudgetAwarenessFormController from './budget/form/components/awareness/awarenessForm.controller';
+import BudgetCommunicationFormController from './budget/form/components/communication/communicationForm.controller';
+import BudgetFoodAndGasFormController from './budget/form/components/foodAndGas/foodAndGasForm.controller';
 import BudgetController from './budget/form/budget.controller';
 import BudgetListController from './budget/list/budgetList.controller';
 import DashboardController from './dashboard/dashboard.controller';
@@ -74,6 +79,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .directive('borderStationLocation', () => new LocationDirective())
   .directive('borderStationPerson', () => new PersonDirective())
   .directive('googlemap', () => new MapDirective())
+  .directive('operator', () => new MathOperator())
   .directive('navbar', () => new NavbarDirective())
   .directive('tally', () => new TallyDirective())
   // ENDREGION: Directives
@@ -84,6 +90,10 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('Address1EditModalController', Address1EditModalController)
   .controller('Address2EditModalController', Address2EditModalController)
   .controller('BorderStationController', BorderStationController)
+  .controller('BudgetAdministrationFormController', BudgetAdministrationFormController)
+  .controller('BudgetAwarenessFormController', BudgetAwarenessFormController)
+  .controller('BudgetCommunicationFormController', BudgetCommunicationFormController)
+  .controller('BudgetFoodAndGasFormController', BudgetFoodAndGasFormController)
   .controller('BudgetController', BudgetController)
   .controller('BudgetListController', BudgetListController)
   .controller('DashboardController', DashboardController)

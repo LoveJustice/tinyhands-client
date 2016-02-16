@@ -54,6 +54,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: false
       }
+    })
+    .state('account', {
+      url: '/account',
+      templateUrl: 'app/account/account.html',
+      controller: 'AccountController',
+      controllerAs: 'account',
+      data: {
+        requireLogin: true
+      }
     });
 
   // Remove hash from url

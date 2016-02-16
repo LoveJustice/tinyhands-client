@@ -62,7 +62,7 @@
                ng-click="menuOpen=!menuOpen">Hello {{ navbarCtrl.session.user.first_name + " " + navbarCtrl.session.user.last_name }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
             <li><a href="#"
-                   ng-show="navbarCtrl.session.user.permission_accounts_manage">Accounts and Permissions</a></li>
+                   ng-show="navbarCtrl.session.user.permission_accounts_manage" ui-sref="account">Accounts and Permissions</a></li>
             <li><a ui-sref="address1"
                    ng-show="navbarCtrl.session.user.permission_vdc_manage">Edit Address 1</a></li>
             <li><a ui-sref="address2"

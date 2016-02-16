@@ -59,7 +59,7 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       url: '/account',
       templateUrl: 'app/account/account.html',
       controller: 'AccountController',
-      controllerAs: 'account',
+      controllerAs: 'accountCtrl',
       data: {
         requireLogin: true
       }

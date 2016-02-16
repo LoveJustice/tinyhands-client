@@ -18,13 +18,13 @@
             <!--{% for form in borderstationbudgetcalculation_list %}
             <!--<div ng-repeat="form in "></div>-->
                     <td>{{ form.border_station }}</td>
-                    <td>{{ form.border_station.station_code }}</td>
-                    <td>{{ form.month_year|date:"F Y" }}</td>
-                    <td>{{ form.date_time_entered }}</td>
-                    <td>{{ form.date_time_last_updated }}</td>
+                    <td>{{ budgetListCtrl.codesArray[form.border_station] }}</td>
+                    <td>{{ form.month_year | date:'MMMM, yyyy'}}</td>
+                    <td>{{ form.date_time_entered | date:"MMM, dd yyyy 'at' h:mm a" }}</td>
+                    <td>{{ form.date_time_last_updated | date:"MMM, dd yyyy 'at' h:mm a"}}</td>
                     <td>
-                        <a href="{% url "budget_view_api" form.id %}" class="btn btn-sm btn-primary">View</a>
-                        <a href="{% url "budget_update_api" form.id %}" class="btn btn-sm btn-primary">Edit</a>
+                        <a ui-sref="budget({id:form.border_station})" class="btn btn-sm btn-primary">View</a>
+                        <a ui-sref="budget({id:form.border_station})" class="btn btn-sm btn-primary">Edit</a>
                         <a href="{% url 'money_distribution_view' form.id %}" class="btn btn-sm btn-primary">Resend MDF</a>
                    <!-- {% if request.user.is_superuser %}
                         {% include "delete_modal_forms.html" with form=form url_string="budget_delete"%}-->

@@ -4,7 +4,7 @@ export default class BudgetListService extends BaseService {
   constructor($http) {
     'ngInject';
     super();
-
+    this.getBudgetList();
     this.$http = $http;
   }
 

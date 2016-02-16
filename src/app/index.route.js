@@ -57,9 +57,9 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
     })
     .state('account', {
       url: '/account',
-      templateUrl: 'app/account/account.html',
-      controller: 'AccountController',
-      controllerAs: 'accountCtrl',
+      templateUrl: 'app/account/accountNav.html',
+      controller: 'AccountNavController',
+      controllerAs: 'accountNavCtrl',
       data: {
         requireLogin: true
       }

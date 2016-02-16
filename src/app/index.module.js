@@ -9,11 +9,13 @@ import googleMapsConfig from './components/map/map.config';
 import runBlock from './index.run';
 
 // REGION: Services
+import AccountService from './account/components/list/account.service';
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
+import PermissionsSetsService from './account/components/list/permissionsSets.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -26,7 +28,7 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
-import AccountController from './account/account.controller';
+import AccountNavController from './account/accountNav.controller';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
@@ -54,11 +56,13 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .run(runBlock)
 
   // REGION: Services
+  .service('AccountService', AccountService)
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('PermissionsSetsService', PermissionsSetsService)
   // ENDREGION: Services
 
   // REGION: Factories
@@ -75,7 +79,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
 
   // REGION: Controllers
-  .controller('AccountController', AccountController)
+  .controller('AccountNavController', AccountNavController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)
   .controller('Address1EditModalController', Address1EditModalController)

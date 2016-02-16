@@ -1,107 +1,91 @@
-<div class="col-lg-6">
-    <h2 class="background"><span>Travel</span></h2>
-
+<div class="col-md-offset-3 col-md-6">
+  <h2 class="text-center">Travel</h2>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="checkbox col-md-3 col-md-offset-1"><label><input type="checkbox" ng-model="main.form.travel_chair_with_bike" ng-change="main.travelTotal()"/></label></div>
+      <div class="col-md-6 calc-form-input-no-width">
+        <input class="form-control text-right" type="number" ng-model="main.form.travel_chair_with_bike_amount" ng-change="main.travelTotal()"/>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="checkbox col-md-3 col-md-offset-1"><label><input class="col-md-3" type="checkbox" ng-model="main.form.travel_manager_with_bike"
+      ng-change="main.travelTotal()"/></label></div>
+      <div class="col-md-6 calc-form-input-no-width">
+        <input class="form-control text-right" type="number" ng-model="main.form.travel_manager_with_bike_amount"
+        ng-change="main.travelTotal()"/>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="main.form.travel_number_of_staff_using_bikes" ng-change="main.travelTotal()"/>
+      <small># of staff using bikes</small>
+    </div>
+    <operator>*</operator>
+    <div class="col-md-3 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="main.form.travel_number_of_staff_using_bikes_multiplier" ng-change="main.travelTotal()"/>
+    </div>
+    <operator>=</operator>
+    <div class="col-md-3 input-group">
+      <div class="input-group-addon">$</div>
+      <input class="form-control text-center" ng-value="main.travelNumberOfStaffUsingBikesTotal()" disabled="disabled"/>
+    </div>
+  </div>
+  <hr>
+  <div class="row form-inline text-center">
+    <div class="calc-form-input-no-width">
+      <strong>Last month's expense for sending girls home</strong>
+      <input class="text-right form-control" type="number" ng-model="main.form.travel_last_months_expense_for_sending_girls_home" ng-change="main.travelTotal()"/>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-1 text-center checkbox">
+      <label><input type="checkbox" ng-model="main.form.travel_motorbike"
+      ng-change="main.travelTotal()"/></label>
+    </div>
+    <div class="col-md-3 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="main.form.travel_motorbike_amount"
+      ng-change="main.travelTotal()"/>
+      <small>Motorbike</small>
+    </div>
+    <operator>+</operator>
+    <div class="col-md-3 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="main.form.travel_plus_other" ng-change="main.travelTotal()"/>
+      <small>Other</small>
+    </div>
+    <operator>=</operator>
+    <div class="col-md-3 input-group">
+      <div class="input-group-addon">$</div>
+      <input class="form-control text-center" ng-value="main.travelMotorbikeOtherTotal()" disabled="disabled"/>
+    </div>
+  </div>
+  <hr/>
+  <div class="row " ng-controller="otherBudgetItemsCtrl as travelItemsCtrl" ng-init="form_section = 1;">
+    <div class="row" ng-repeat="form in travelItemsCtrl.travelForms">
+      <div class="col-md-4 col-md-offset-1">
+        <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view"/>
+      </div>
+      <div class="col-md-4">
+        <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="travelItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-danger" ng-click="travelItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</button>
+      </div>
+      <br/>
+      <br/>
+    </div>
     <div class="row">
-        <div class="col-lg-6">
-            <input style="margin-bottom: 0; margin-top: 10px" class="col-lg-3 col-lg-offset-1" type="checkbox" id="travel_chair_with_bike_bool" ng-model="main.form.travel_chair_with_bike" ng-change="main.travelTotal()"/>
-            <div class="col-lg-6 calc-form-input-no-width">
-                <input class="form-control text-right" type="number" id="travel_chair_with_bike_amount" ng-model="main.form.travel_chair_with_bike_amount" ng-change="main.travelTotal()"/>
-            </div>
-        </div>
-        <div class="col-lg-6 row">
-            <input style="margin-bottom: 0; margin-top: 10px" class="col-lg-3" type="checkbox" id="travel_manager_with_bike_bool" ng-model="main.form.travel_manager_with_bike" ng-change="main.travelTotal()"/>
-            <div class="col-lg-6 calc-form-input-no-width">
-                <input class="form-control text-right" type="number" id="travel_manager_with_bike_amount" ng-model="main.form.travel_manager_with_bike_amount" ng-change="main.travelTotal()"/>
-
-            </div>
-        </div>
+      <button class="btn btn-success col-md-4 col-md-offset-4" ng-click="travelItemsCtrl.addNewItem()" ng-hide="main.view">Add item</button>
     </div>
-
-    <div class="row" style="margin-top: 20px">
-        <div class="col-lg-4 calc-form-input-no-width">
-            <input style="; padding: 0; margin: 0" class="text-right form-control" type="number" id="travel_number_of_staff_using_bikes" ng-model="main.form.travel_number_of_staff_using_bikes" ng-change="main.travelTotal()"/>
-            <small># of staff using bikes</small>
-        </div>
-        <div class="col-lg-1">
-            <h4 class="text-center">*</h4>
-        </div>
-        <div class="col-lg-3 calc-form-input-no-width">
-            <input style="; padding: 0; margin: 0" class="text-right form-control" type="number" id="travel_number_of_staff_using_bikes_multiplier" ng-model="main.form.travel_number_of_staff_using_bikes_multiplier" ng-change="main.travelTotal()"/>
-        </div>
-        <div class="col-lg-1">
-            <h4 class="text-center">=</h4>
-        </div>
-        <div class="col-lg-3 input-group">
-            <div class="input-group-addon">$</div>
-            <input class="form-control text-center" ng-value="main.travelNumberOfStaffUsingBikesTotal()" disabled="disabled"/>
-        </div>
+  </div>
+  <hr>
+  <div class="row center text-center">
+    <div class="col-md-4 col-md-offset-4">
+      <label>Total Travel</label>
+      <input class="form-control text-center" ng-value="main.travelTotalValue" disabled="disabled"/>
     </div>
-    <div class="row" style="margin-top: 20px">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-7 calc-form-input-no-width">
-            <strong>Last month's expense for sending girls home</strong>
-        </div>
-        <div class="col-lg-3 calc-form-input-no-width">
-            <input class="text-right form-control" type="number" id="travel_sending_girls_home_expense" ng-model="main.form.travel_last_months_expense_for_sending_girls_home" ng-change="main.travelTotal()"/>
-        </div>
-    </div>
-
-    <div class="row" style="margin-top: 30px">
-        <div class="col-lg-1 text-center" style="padding: 0; margin: 0">
-            <input style="margin-bottom: 0; margin-top: 10px" type="checkbox" id="travel_motorbike_bool" ng-model="main.form.travel_motorbike" ng-change="main.travelTotal()"/>
-        </div>
-        <div class="col-lg-3 calc-form-input-no-width" style="padding: 0; margin: 0">
-            <input class="text-right form-control" type="number" id="travel_motorbike_amount" ng-model="main.form.travel_motorbike_amount" ng-change="main.travelTotal()"/>
-            <small>Motorbike</small>
-        </div>
-        <div class="col-lg-1 " style="padding: 0; margin: 0">
-            <h4 class="text-center">+</h4>
-        </div>
-        <div class="col-lg-3 calc-form-input-no-width" style="padding: 0; margin: 0">
-            <input class="text-right form-control" type="number" id="travel_other" ng-model="main.form.travel_plus_other" ng-change="main.travelTotal()"/>
-            <small>Other</small>
-        </div>
-        <div class="col-lg-1 " style="padding: 0; margin: 0">
-            <h4 class="text-center">=</h4>
-        </div>
-        <div class="col-lg-3 input-group" style="padding: 0; margin: 0">
-            <div class="input-group-addon">$</div>
-            <input class="form-control text-center" ng-value="main.travelMotorbikeOtherTotal()" disabled="disabled"/>
-        </div>
-    </div>
-    {% verbatim %}
-    <hr/>
-    <!--<h2 class="background"><span><small>Extra Travel Items</small></span></h2>-->
-    <div class="row " ng-controller="otherBudgetItemsCtrl as travelItemsCtrl" ng-init="form_section = 1;">
-        <div class="row animated-budget-items" ng-repeat="form in travelItemsCtrl.travelForms">
-
-            <div class="col-lg-4 col-lg-offset-1">
-                <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view"/>
-            </div>
-            <div class="col-lg-4">
-                <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="travelItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
-            </div>
-            <div class="col-lg-2">
-                <a class="btn btn-danger" ng-click="travelItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</a>
-            </div>
-            <br/>
-            <br/>
-        </div>
-        <div class="row">
-            <br/>
-            <div class="col-lg-4 col-lg-offset-5">
-                <a class="btn btn-success" id="travel_add_item" ng-click="travelItemsCtrl.addNewItem()" ng-hide="main.view">Add item</a>
-            </div>
-        </div>
-    </div>
-    {% endverbatim %}
-
-    <div class="row center text-center" style="margin-top: 20px">
-
-        <div class="col-lg-4 col-lg-offset-4">
-            <label>Total Travel</label>
-            <input class="form-control text-center" ng-value="main.travelTotalValue" disabled="disabled"/>
-        </div>
-    </div>
-
+  </div>
 </div>

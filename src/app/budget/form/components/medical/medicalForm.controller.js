@@ -1,4 +1,4 @@
-export default class MedicalController {
+export default class BudgetMedicalFormController {
   constructor() {
 
   }

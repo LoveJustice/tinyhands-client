@@ -7,142 +7,122 @@
 
 
 <form id="budget-calc-form" method="post">
-    <!-- First Table Thing -->
+  <h1 class="text-center" style="font-size: 25px">
+    {{ budgetCtrl.form.station_name }} Budget Calculation Form For
+  </h1>
 
-    <div class="form-page">
+  <!-- Budget Past/Current Info -->
+  <div class="col-xs-12 col-md-offset-4 col-md-4">
+    <table class="table table-striped table-bordered table-hover text-center">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="text-center">INT</th>
+          <th class="text-center">$/INT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Last Month</td>
+          <td>{{ table.form.last_month }}</td>
+          <td>{{ table.form.last_months_cost }}</td>
+        </tr>
+        <tr>
+          <td>Last 3 Months</td>
+          <td>{{ table.form.last_3_months }}</td>
+          <td>{{ table.form.last_3_months_cost }}</td>
+        </tr>
+        <tr>
+          <td>All Time</td>
+          <td>{{ table.form.all }}</td>
+          <td>{{ table.form.all_cost }}</td>
+        </tr>
+        <tr>
+          <td># of Staff</td>
+          <td colspan="2">{{ table.form.staff_count }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- End Budget Past/Current Info -->
 
-        <h1 class="text-center" style="font-size: 25px">
-            {{ budgetCtrl.form.station_name }} Budget Calculation Form For
-            <input type="month" class="form-control" id="month_year" name="input" ng-model="budgetCtrl.form.month_year" onchange='change()' min="2005-01-01" required />
-        </h1>
-
-        <div class="row" ng-controller="topTableCtrl as table">
-            <div class="col-lg-4 col-lg-offset-4">
-                <table class="table table-striped table-bordered table-hover text-center">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th class="text-center">INT</th>
-                        <th class="text-center">$/INT</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Last Month</td>
-                        <td>{{ table.form.last_month }}</td>
-                        <td>{{ table.form.last_months_cost }}</td>
-                    </tr>
-                    <tr>
-                        <td>Last 3 Months</td>
-                        <td>{{ table.form.last_3_months }}</td>
-                        <td>{{ table.form.last_3_months_cost }}</td>
-                    </tr>
-                    <tr>
-                        <td>All Time</td>
-                        <td>{{ table.form.all }}</td>
-                        <td>{{ table.form.all_cost }}</td>
-                    </tr>
-                    <tr>
-                        <td># of Staff</td>
-                        <td colspan="2">{{ table.form.staff_count }}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- End First Table Thingy -->
-
-        <div class="row">
-          <!-- Total Table -->
-          <div class="col-lg-6">
-              <table class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                      <th colspan="3" class="text-center">Border Monitoring Station</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                      <td>Salaries</td>
-                      <td width="25%"><p class="text-right" ng-bind="budgetCtrl.staffTotal()"></p></td>
-                      <td class="active" width="25%"></td>
-                  </tr>
-                  <tr>
-                      <td>Comm.</td>
-                      <td><p class="text-right" ng-bind="budgetCtrl.communicationTotalValue"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr>
-                      <td>Travel</td>
-                      <td><p class="text-right" ng-bind="budgetCtrl.travelTotalValue"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr>
-                      <td>Admin.</td>
-                      <td><p class="text-right" ng-bind="budgetCtrl.adminTotal()"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr>
-                      <td>Medical</td>
-                      <td><p class="text-right" ng-bind="budgetCtrl.medicalTotal()"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr>
-                      <td>Misc.</td>
-                      <td><p class="text-right" ng-bind="budgetCtrl.miscTotalValue"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr>
-                      <td class="text-right"><b>TOTAL</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.bunchTotal()"></p></td>
-                  </tr>
-                  </tbody>
-                  <thead>
-                  <tr class="warning">
-                      <th colspan="3" class="text-center">Safe Houses</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                      <td class="warning">Shelter</td>
-                      <td class="warning"><p class="text-right" ng-bind="budgetCtrl.shelterTotal()"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr>
-                      <td class="warning">Food</td>
-                      <td class="warning"><p class="text-right" ng-bind="budgetCtrl.foodGasTotal()"></p></td>
-                      <td class="active"></td>
-                  </tr>
-                  <tr class="warning">
-                      <td class="text-right"><b>TOTAL</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.foodAndShelterTotal()"></p></td>
-                  </tr>
-                  </tbody>
-                  <tbody>
-                  <tr>
-                      <td class="text-center"><b>Awareness</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.awarenessTotalValue"></p></td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><b>Supplies</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.suppliesTotalValue"></p></td>
-                  </tr>
-                  <tr>
-                      <td class="text-center"><b>STATION TOTAL</b></td>
-                      <td colspan="2"><p class="text-right" ng-bind="budgetCtrl.stationTotal()"></p></td>
-                  </tr>
-                  <tr>
-                      <td class="text-center">Last month's TOTAL</td>
-                      <td class="text-right" colspan="2">{{ budgetCtrl.last_months_total_cost }}</td>
-                  </tr>
-                  </tbody>
-
-              </table>
-            </div>
-
-            <input type="button" ng-show="budgetCtrl.update" id="budget_update" class="pull-right btn btn-success navbar-btn btn-lg" value="Submit" ng-click="budgetCtrl.updateForm()">
-            <input type="button" ng-show="budgetCtrl.create" id="budget_create" class="pull-right btn btn-success navbar-btn btn-lg" value="Submit" ng-click="budgetCtrl.createForm()">
-        </div>
-
+  <!-- Section Tabs -->
+  <div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+    <div class="btn-group btn-group-justified">
+      <div class="btn-group" ng-repeat="section in budgetCtrl.sections.allSections">
+        <button type="button" class="btn btn-default" ng-class="{active: budgetCtrl.active == $index}" ng-click="budgetCtrl.active = $index; budgetCtrl.sectionTemplateUrl = section.templateUrl">{{section.name}}</button>
+      </div>
     </div>
+  </div>
+  <!-- End Section Tabs -->
+
+
+  <div class="panel panel-default panel-body col-md-offset-1 col-md-10 container-fluid" ng-include="budgetCtrl.sectionTemplateUrl"></div>
+
+
+  <!-- Total Table -->
+  <div class="col-xs-12 col-md-offset-3 col-md-6">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th colspan="3" class="text-center">Border Monitoring Station</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="section in budgetCtrl.sections.borderMonitoringStationSections">
+          <td>{{section}}</td>
+          <td width="25%">
+            <p class="text-right" ng-bind="budgetCtrl.staffTotal()"></p>
+          </td>
+          <td class="active" width="25%"></td>
+        </tr>
+        <tr>
+          <td class="text-right"><b>TOTAL</b></td>
+          <td colspan="2">
+            <p class="text-right" ng-bind="budgetCtrl.bunchTotal()"></p>
+          </td>
+        </tr>
+      </tbody>
+      <!--Safe Houses-->
+      <thead>
+        <tr class="warning">
+          <th colspan="3" class="text-center">Safe Houses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="section in budgetCtrl.sections.safeHouseSections">
+          <td class="warning">{{section}}</td>
+          <td class="warning">
+            <p class="text-right" ng-bind="budgetCtrl.shelterTotal()"></p>
+          </td>
+          <td class="active"></td>
+        </tr>
+        <tr class="warning">
+          <td class="text-right"><b>TOTAL</b></td>
+          <td colspan="2">
+            <p class="text-right" ng-bind="budgetCtrl.foodAndShelterTotal()"></p>
+          </td>
+        </tr>
+      </tbody>
+      <!--End Safe Houses-->
+      <tbody>
+        <tr ng-repeat="section in budgetCtrl.sections.otherSections">
+          <td class="text-center"><b>{{section}}</b></td>
+          <td colspan="2">
+            <p class="text-right" ng-bind="budgetCtrl.awarenessTotalValue"></p>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center"><b>STATION TOTAL</b></td>
+          <td colspan="2">
+            <p class="text-right" ng-bind="budgetCtrl.stationTotal()"></p>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center">Last month's TOTAL</td>
+          <td class="text-right" colspan="2">{{ budgetCtrl.last_months_total_cost }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </form>

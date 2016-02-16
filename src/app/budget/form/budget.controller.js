@@ -1,7 +1,28 @@
 export default class BudgetController {
-  constructor($scope, $http, $location, $window, mainCtrlService) {
+  constructor($scope, $http, $location, $window, BudgetService) {
     'ngInject';
+
+    this.service = BudgetService;
+
+
     // Variable Declarations
+    let budgetFormPath = 'app/budget/form/components/';
+    this.sections = {allSections: [{ name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
+                                   { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
+                                   { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
+                                   { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
+                                   { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
+                                   { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
+                                   { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
+                                   { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
+                                   { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
+                                   { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }],
+      borderMonitoringStationSections: ['Administration', 'Communication', 'Medical', 'Miscellaneous', 'Salaries', 'Travel'],
+      safeHouseSections: ['Shelter', 'Food and Gas'],
+      otherSections: ['Awareness', 'Supplies']
+    };
+    this.active = 4;
+    this.sectionTemplateUrl = this.sections.allSections[4].templateUrl;
     this.form = {};
     this.salariesTotal = 0;
 
@@ -43,16 +64,16 @@ export default class BudgetController {
 
     // Event Listeners
     $scope.$on('handleOtherItemsTotalChangeBroadcast', (event, args) => {
-        this.otherItemsTotals[args['form_section']-1][0] = args['total'];
-        this.callTotals();
+      this.otherItemsTotals[args['form_section'] - 1][0] = args['total'];
+      this.callTotals();
     });
 
     $scope.$on('handleSalariesTotalChangeBroadcast', (event, args) => {
-        this.salariesTotal = args['total'];
+      this.salariesTotal = args['total'];
     });
 
     $scope.$on('lastBudgetTotalBroadcast', (event, args) => {
-        this.last_months_total_cost = args['total'];
+      this.last_months_total_cost = args['total'];
     });
   }
 
@@ -107,100 +128,6 @@ export default class BudgetController {
             this.bunchTotal() +
             this.awarenessTotalValue +
             this.suppliesTotalValue;
-  }
-
-  //shelter
-
-  //Food and Gas Section
-
-  //Communication Section
-
-  //Misc Section
-
-  //Medical Section
-
-  //Administration Section
-  adminStationaryTotal() {
-    return (this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.form.administration_number_of_intercepts_last_month_adder;
-  }
-
-  adminMeetingsTotal() {
-    return this.form.administration_number_of_meetings_per_month * this.form.administration_number_of_meetings_per_month_multiplier;
-  }
-
-  adminBoothRentalTotal() {
-    var amount = 0;
-    if(this.form.administration_booth) {
-        amount += this.form.administration_booth_amount;
-    }
-    if(this.form.administration_registration) {
-        amount += this.form.administration_registration_amount;
-    }
-    return amount;
-  }
-
-  adminTotal() {
-    return this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal();
-  }
-
-  //Travel Section
-  travelNumberOfStaffUsingBikesTotal() {
-    return this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier;
-  }
-
-  travelMotorbikeOtherTotal() {
-    var returnVal = 0;
-    if(this.form.travel_motorbike) {
-        returnVal = this.form.travel_motorbike_amount;
-    }
-    return returnVal + this.form.travel_plus_other;
-  }
-
-  travelTotal() {
-    var amount = 0;
-    if(this.form.travel_chair_with_bike) {
-        amount += this.form.travel_chair_with_bike_amount;
-    }
-    if(this.form.travel_manager_with_bike) {
-        amount += this.form.travel_manager_with_bike_amount;
-    }
-    if(this.form.travel_motorbike) {
-        amount += this.form.travel_motorbike_amount;
-    }
-    this.travelTotalValue = amount + this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier) + this.otherTravelTotalValue[0];
-  }
-
-  //Supplies Section
-  suppliesTotal() {
-    var amount = 0;
-    if(this.form.supplies_walkie_talkies_boolean) {
-        amount += this.form.supplies_walkie_talkies_amount;
-    }
-    if(this.form.supplies_recorders_boolean) {
-        amount += this.form.supplies_recorders_amount;
-    }
-    if(this.form.supplies_binoculars_boolean) {
-        amount += this.form.supplies_binoculars_amount;
-    }
-    if(this.form.supplies_flashlights_boolean) {
-        amount += this.form.supplies_flashlights_amount;
-    }
-    this.suppliesTotalValue = amount + this.otherSuppliesTotalValue[0];
-  }
-
-  //Awareness Section
-  awarenessTotal() {
-    var amount = 0;
-    if(this.form.awareness_contact_cards) {
-        amount += this.form.awareness_contact_cards_amount;
-    }
-    if(this.form.awareness_awareness_party_boolean) {
-        amount += this.form.awareness_awareness_party;
-    }
-    if(this.form.awareness_sign_boards_boolean) {
-        amount += this.form.awareness_sign_boards;
-    }
-    this.awarenessTotalValue = amount + this.otherAwarenessTotalValue[0];
   }
 
   //CRUD Functions

@@ -1,4 +1,4 @@
-export default class MiscellaneousController {
+export default class BudgetMiscellaneousFormController {
   constructor() {
 
   }
@@ -6,7 +6,7 @@ export default class MiscellaneousController {
   miscMaximum() {
     return this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier;
   }
-  
+
   miscTotal() {
     this.miscTotalValue = this.miscMaximum() + this.otherMiscTotalValue[0];
   }

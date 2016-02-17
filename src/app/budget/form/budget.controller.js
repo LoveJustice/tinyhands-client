@@ -21,8 +21,8 @@ export default class BudgetController {
       safeHouseSections: ['Shelter', 'Food and Gas'],
       otherSections: ['Awareness', 'Supplies']
     };
-    this.active = 4;
-    this.sectionTemplateUrl = this.sections.allSections[4].templateUrl;
+    this.active = 7;
+    this.sectionTemplateUrl = this.sections.allSections[7].templateUrl;
     this.form = {};
     this.salariesTotal = 0;
 

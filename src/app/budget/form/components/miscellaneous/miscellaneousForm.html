@@ -1,14 +1,14 @@
-button<div class="col-md-offset-3 col-md-6">
+<div class="col-md-offset-3 col-md-6" ng-init="budgetCtrl.form as form">
   <h2 class="text-center">Miscellaneous</h2>
   <hr>
   <div class="row">
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="main.form.miscellaneous_number_of_intercepts_last_month" ng-change="main.miscTotal()"/>
+      <input class="text-right form-control" type="number" ng-model="form.miscellaneous_number_of_intercepts_last_month" ng-change="main.miscTotal()"/>
       <small># of intercepts last month</small>
     </div>
     <operator>*</operator>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="main.form.miscellaneous_number_of_intercepts_last_month_multiplier"
+      <input class="text-right form-control" type="number" ng-model="form.miscellaneous_number_of_intercepts_last_month_multiplier"
       ng-change="main.miscTotal()" />
     </div>
     <operator>=</operator>

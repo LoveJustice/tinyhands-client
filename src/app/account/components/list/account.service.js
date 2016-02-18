@@ -11,7 +11,11 @@ export default class AccountService extends BaseService {
 	}
 
 	// GETs
+	getAccounts() {
+		return this.get('/api/account/all/')
+	}
 
-	All() {
+	getUser() {
+		return this.get('/api/me/')
 	}
 }

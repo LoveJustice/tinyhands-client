@@ -2,13 +2,23 @@ export default class AccountController {
     constructor($scope, $http, $location, $window, AccountService, PermissionsSetsService) {
     'ngInject';
 
+    this.AccountsService = AccountService
+    this.PermissionsSetsService = PermissionsSetsService
     this.activate();
     }
-
+t
     activate() {
-      this.accounts = AccountService.all();
-      this.permissions = PermissionsSetsService.all();
-      this.currentuser = AccountService.me();
+      console.log("get")
+      this.AccountsService.getAccounts().then((response) => {
+        this.accounts = response.data;
+      });
+      this.PermissionsSetsService.getPermissions().then((response) => {
+        this.permissions = response.data;
+      });
+      this.AccountsService.getUser().then((response) => {
+        this.currentuser = response.data;
+      });
+      //this.currentuser = AccountService.me();
     }
 
     resendActivationEmail(accountID) {

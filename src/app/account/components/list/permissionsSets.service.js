@@ -9,4 +9,8 @@ export default class PermissionsSetsService extends BaseService {
 		this.$http = $http;
 		this.$q = $q;
 	}
+
+  getPermissions() {
+    return this.get('/api/defaultPermissionsSet/')
+  }
 }

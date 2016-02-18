@@ -63,6 +63,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: false
       }
+    })
+    .state('vif', {
+      url: '/vif',
+      templateUrl: 'app/vif/list/vifList.html',
+      controller: 'VifListController',
+      controllerAs: 'vifListCtrl',
+      data: {
+        requireLogin: true
+      }
     });
 
   // Remove hash from url

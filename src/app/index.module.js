@@ -42,6 +42,7 @@ import BudgetController from './budget/form/budget.controller';
 import BudgetListController from './budget/list/budgetList.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
+import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
 // REGION: Factories
@@ -98,5 +99,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('BudgetListController', BudgetListController)
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
+  .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

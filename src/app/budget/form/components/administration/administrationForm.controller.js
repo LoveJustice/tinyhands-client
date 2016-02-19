@@ -1,8 +1,4 @@
 export default class BudgetAdministrationFormController {
-  constructor() {
-
-  }
-
   adminStationaryTotal(form) {
     return (form.administration_number_of_intercepts_last_month * form.administration_number_of_intercepts_last_month_multiplier) + form.administration_number_of_intercepts_last_month_adder;
   }

@@ -1,69 +1,69 @@
-<div class="col-md-offset-3 col-md-6" ng-init="budgetCtrl.form as form" ng-controller="BudgetAdministrationFormController as adminCtrl">
+<div class="col-md-offset-3 col-md-6" ng-controller="BudgetAdministrationFormController as adminCtrl">
   <h2 class="text-center">Administration</h2>
   <hr>
   <div class="row">
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_number_of_intercepts_last_month"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month"/>
           <small># of intercepts last month</small>
       </div>
       <operator>*</operator>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_number_of_intercepts_last_month_multiplier"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_multiplier"/>
       </div>
       <operator>+</operator>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_number_of_intercepts_last_month_adder"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_adder"/>
       </div>
       <operator>=</operator>
       <div class="col-md-3 input-group">
           <div class="input-group-addon">$</div>
-          <input class="form-control text-center" ng-value="adminCtrl.adminStationaryTotal(form)" disabled="disabled"/>
+          <input class="form-control text-center" ng-value="adminCtrl.adminStationaryTotal(budgetCtrl.form) | number" disabled="disabled"/>
       </div>
   </div>
   <hr>
   <div class="row">
       <div class="col-md-offset-2 col-md-1"></div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_number_of_meetings_per_month"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month"/>
           <small># of meetings per month</small>
       </div>
       <operator>*</operator>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_number_of_meetings_per_month_multiplier"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month_multiplier"/>
       </div>
       <operator>=</operator>
       <div class="col-md-3 input-group">
           <div class="input-group-addon">$</div>
-          <input class="form-control text-center" ng-value="adminCtrl.adminMeetingsTotal(form)" disabled="disabled"/>
+          <input class="form-control text-center" ng-value="adminCtrl.adminMeetingsTotal(budgetCtrl.form) | number" disabled="disabled"/>
       </div>
   </div>
   <hr>
   <div class="row">
       <div class="col-md-1 col-md-offset-2">
-          <input type="checkbox" ng-model="form.administration_booth"/>
+          <input type="checkbox" ng-model="budgetCtrl.form.administration_booth"/>
       </div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_booth_amount"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_booth_amount"/>
           <small>Booth</small>
       </div>
       <div class="col-md-1">
-          <input type="checkbox" ng-model="form.administration_registration"/>
+          <input type="checkbox" ng-model="budgetCtrl.form.administration_registration"/>
       </div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="form.administration_registration_amount"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_registration_amount"/>
           <small>Registration</small>
       </div>
       <operator>=</operator>
       <div class="col-md-3 input-group">
           <div class="input-group-addon">$</div>
-          <input class="form-control text-center" ng-value="adminCtrl.adminBoothRentalTotal(form)" disabled="disabled"/>
+          <input class="form-control text-center" ng-value="adminCtrl.adminBoothRentalTotal(budgetCtrl.form) | number" disabled="disabled"/>
       </div>
   </div>
   <hr>
   <div class="row center text-center">
-      <div class="col-md-4 col-md-offset-4">
+      <div class="col-md-6 col-md-offset-3">
           <label>Total Admininstration</label>
-          <input class="form-control text-center" ng-value="adminCtrl.adminTotal(form)" disabled="disabled"/>
+          <input class="form-control text-center" ng-value="adminCtrl.adminTotal(budgetCtrl.form) | currency" disabled="disabled"/>
       </div>
   </div>
 </div>

@@ -1,8 +1,4 @@
 export default class BudgetCommunicationFormController {
-  constructor() {
-
-  }
-
   commManagerTotal (form) {
       var amount = 0;
 
@@ -31,13 +27,14 @@ export default class BudgetCommunicationFormController {
     return this.staffTotalValue;
   }
 
-  communicationTotal () {
+  communicationTotal (form) {
     var amount = 0;
-    amount += this.commTotal();
-    this.communicationTotalValue = amount + this.otherCommunicationTotalValue[0];
+    amount += this.commTotal(form);
+    // this.communicationTotalValue = amount + this.otherCommunicationTotalValue[0];
+    return amount;
   }
 
-  commTotal () {
-    return this.commManagerTotal() + this.commNumberOfStaffTotal() + this.commEachStaffTotal();
+  commTotal (form) {
+    return this.commManagerTotal(form) + this.commNumberOfStaffTotal(form) + this.commEachStaffTotal(form);
   }
 }

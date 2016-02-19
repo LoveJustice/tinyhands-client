@@ -1,5 +1,5 @@
 export default class BudgetController {
-  constructor($scope, $http, $location, $window, BudgetService) {
+  constructor($scope, $http, $location, $stateParams, $window, BudgetService) {
     'ngInject';
 
     this.service = BudgetService;
@@ -21,8 +21,10 @@ export default class BudgetController {
       safeHouseSections: ['Shelter', 'Food and Gas'],
       otherSections: ['Awareness', 'Supplies']
     };
-    this.active = 7;
-    this.sectionTemplateUrl = this.sections.allSections[7].templateUrl;
+    this.active = null;
+    this.sectionTemplateUrl = null;
+
+    this.budgetId = $stateParams.id
     this.form = {};
     this.salariesTotal = 0;
 
@@ -63,22 +65,60 @@ export default class BudgetController {
 
 
     // Event Listeners
-    $scope.$on('handleOtherItemsTotalChangeBroadcast', (event, args) => {
-      this.otherItemsTotals[args['form_section'] - 1][0] = args['total'];
-      this.callTotals();
-    });
+    // $scope.$on('handleOtherItemsTotalChangeBroadcast', (event, args) => {
+    //   this.otherItemsTotals[args['form_section'] - 1][0] = args['total'];
+    //   this.callTotals();
+    // });
 
-    $scope.$on('handleSalariesTotalChangeBroadcast', (event, args) => {
-      this.salariesTotal = args['total'];
-    });
+    // $scope.$on('handleSalariesTotalChangeBroadcast', (event, args) => {
+    //   this.salariesTotal = args['total'];
+    // });
 
-    $scope.$on('lastBudgetTotalBroadcast', (event, args) => {
-      this.last_months_total_cost = args['total'];
-    });
+    // $scope.$on('lastBudgetTotalBroadcast', (event, args) => {
+    //   this.last_months_total_cost = args['total'];
+    // });
+
+    this.getBudgetForm();
   }
 
 
   // Functions
+
+  getBorderStation() {
+    this.service.getBorderStation(this.form.border_station).then((response) => {
+      this.form.station_name = response.data.station_name;
+    });
+  }
+
+  getBudgetForm() {
+    this.service.getBudgetForm(this.budgetId).then((response) => {
+      this.form = response.data;
+      this.getStaff();
+      this.getBorderStation();
+    });
+  }
+
+  getOtherStaff() {
+    this.service.getOtherItems(this.budgetId, 8).then((response) => {
+      this.form.otherStaff = response.data.results;
+    });
+  }
+
+  getStaff() {
+    this.service.getStaff(this.form.border_station).then((response) => {
+      this.form.staff = response.data.results;
+      this.getStaffSalaries();
+      this.getOtherStaff();
+    });
+  }
+
+  getStaffSalaries() {
+    this.service.getStaffSalaries(this.form.border_station).then((response) => {
+      this.form.staff.map((staff) => {
+        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person == staff.id })[0];
+      });
+    });
+  }
 
   //Determine the kind of functionality...view/create/edit
   main (){

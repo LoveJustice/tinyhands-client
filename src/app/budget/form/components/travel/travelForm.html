@@ -1,91 +1,98 @@
-<div class="col-md-offset-3 col-md-6">
+<div class="col-md-offset-3 col-md-6" ng-controller="BudgetTravelFormController as travelCtrl">
   <h2 class="text-center">Travel</h2>
   <hr>
   <div class="row">
     <div class="col-md-6">
-      <div class="checkbox col-md-3 col-md-offset-1"><label><input type="checkbox" ng-model="main.form.travel_chair_with_bike" ng-change="main.travelTotal()"/></label></div>
+      <div class="checkbox col-md-3 col-md-offset-1">
+        <label>
+          <input type="checkbox" ng-model="budgetCtrl.form.travel_chair_with_bike" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
+        </label>
+      </div>
       <div class="col-md-6 calc-form-input-no-width">
-        <input class="form-control text-right" type="number" ng-model="main.form.travel_chair_with_bike_amount" ng-change="main.travelTotal()"/>
+        <input class="form-control text-right" type="number" ng-model="budgetCtrl.form.travel_chair_with_bike_amount" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="checkbox col-md-3 col-md-offset-1"><label><input class="col-md-3" type="checkbox" ng-model="main.form.travel_manager_with_bike"
-      ng-change="main.travelTotal()"/></label></div>
+      <div class="checkbox col-md-3 col-md-offset-1">
+        <label>
+          <input class="col-md-3" type="checkbox" ng-model="budgetCtrl.form.travel_manager_with_bike" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
+        </label>
+      </div>
       <div class="col-md-6 calc-form-input-no-width">
-        <input class="form-control text-right" type="number" ng-model="main.form.travel_manager_with_bike_amount"
-        ng-change="main.travelTotal()"/>
+        <input class="form-control text-right" type="number" ng-model="budgetCtrl.form.travel_manager_with_bike_amount" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
       </div>
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-md-4 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="main.form.travel_number_of_staff_using_bikes" ng-change="main.travelTotal()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.travel_number_of_staff_using_bikes" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
       <small># of staff using bikes</small>
     </div>
     <operator>*</operator>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="main.form.travel_number_of_staff_using_bikes_multiplier" ng-change="main.travelTotal()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.travel_number_of_staff_using_bikes_multiplier" ng-change="travelCtrl.travelTotal(budgetCtrl.form)" />
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="main.travelNumberOfStaffUsingBikesTotal()" disabled="disabled"/>
+      <input class="form-control text-center" ng-value="travelCtrl.travelNumberOfStaffUsingBikesTotal(budgetCtrl.form) | number"
+      disabled="disabled" />
     </div>
   </div>
   <hr>
   <div class="row form-inline text-center">
     <div class="calc-form-input-no-width">
       <strong>Last month's expense for sending girls home</strong>
-      <input class="text-right form-control" type="number" ng-model="main.form.travel_last_months_expense_for_sending_girls_home" ng-change="main.travelTotal()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.travel_last_months_expense_for_sending_girls_home" ng-change="travelCtrl.travelTotal(budgetCtrl.form)" />
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-md-1 text-center checkbox">
-      <label><input type="checkbox" ng-model="main.form.travel_motorbike"
-      ng-change="main.travelTotal()"/></label>
+      <label>
+        <input type="checkbox" ng-model="budgetCtrl.form.travel_motorbike" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
+      </label>
     </div>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="main.form.travel_motorbike_amount"
-      ng-change="main.travelTotal()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.travel_motorbike_amount" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
       <small>Motorbike</small>
     </div>
     <operator>+</operator>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="main.form.travel_plus_other" ng-change="main.travelTotal()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.travel_plus_other" ng-change="travelCtrl.travelTotal(budgetCtrl.form)"/>
       <small>Other</small>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="main.travelMotorbikeOtherTotal()" disabled="disabled"/>
+      <input class="form-control text-center" ng-value="travelCtrl.travelMotorbikeOtherTotal(budgetCtrl.form) | number" disabled="disabled"/>
     </div>
   </div>
   <hr/>
-  <div class="row " ng-controller="otherBudgetItemsCtrl as travelItemsCtrl" ng-init="form_section = 1;">
-    <div class="row" ng-repeat="form in travelItemsCtrl.travelForms">
+  <div class="row" ng-init="form_section = 1;">
+    <div class="row" ng-repeat="form in budgetCtrl.travelForms">
       <div class="col-md-4 col-md-offset-1">
-        <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view"/>
+        <input class="form-control" type="text" ng-model="form.name" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-4">
-        <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="travelItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
+        <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="budgetCtrl.otherItemsTotal()" ng-disabled="budgetCtrl.view"/>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="travelItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-md-4 col-md-offset-4" ng-click="travelItemsCtrl.addNewItem()" ng-hide="main.view">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.addNewItem()" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Travel</label>
-      <input class="form-control text-center" ng-value="main.travelTotalValue" disabled="disabled"/>
+      <input class="form-control text-center" ng-value="travelCtrl.travelTotal(budgetCtrl.form) | currency" budgetCtrl.form disabled="disabled"/>
     </div>
   </div>
 </div>

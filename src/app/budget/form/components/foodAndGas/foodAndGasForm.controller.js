@@ -1,8 +1,4 @@
 export default class BudgetFoodAndGasFormController {
-  constructor() {
-
-  }
-
   foodGasInterceptedGirls (form) {
     return  form.food_and_gas_number_of_intercepted_girls_multiplier_before *
             form.food_and_gas_number_of_intercepted_girls *
@@ -22,7 +18,7 @@ export default class BudgetFoodAndGasFormController {
     return this.otherfoodGasTotalValue;
   }
 
-  foodTotal () {
-    return this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
+  foodTotal (form) {
+    return this.foodGasInterceptedGirls(form) + this.foodGasLimboGirls(form);
   }
 }

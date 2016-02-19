@@ -1,10 +1,6 @@
 export default class BudgetMiscellaneousFormController {
-  constructor() {
-
-  }
-
-  miscMaximum() {
-    return this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier;
+  miscMaximum(form) {
+    return form.miscellaneous_number_of_intercepts_last_month * form.miscellaneous_number_of_intercepts_last_month_multiplier;
   }
 
   miscTotal() {

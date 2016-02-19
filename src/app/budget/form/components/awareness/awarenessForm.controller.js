@@ -1,8 +1,4 @@
 export default class BudgetAwarenessFormController {
-  constructor() {
-
-  }
-
   awarenessTotal(form) {
     var amount = 0;
     if(form.awareness_contact_cards) {

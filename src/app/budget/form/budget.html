@@ -6,10 +6,10 @@
 </script>-->
 
 
-<form id="budget-calc-form" method="post">
-  <h1 class="text-center" style="font-size: 25px">
-    {{ budgetCtrl.form.station_name }} Budget Calculation Form For
-  </h1>
+<form id="budget-calc-form" class="container" method="post">
+  <h2 class="text-center">
+    Budget Calculation Form For {{ budgetCtrl.form.station_name }}
+  </h2>
 
   <!-- Budget Past/Current Info -->
   <div class="col-xs-12 col-md-offset-4 col-md-4">
@@ -46,8 +46,9 @@
   </div>
   <!-- End Budget Past/Current Info -->
 
+
   <!-- Section Tabs -->
-  <div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+  <div class="hidden-xs hidden-sm col-md-offset-1 col-md-10">
     <div class="btn-group btn-group-justified">
       <div class="btn-group" ng-repeat="section in budgetCtrl.sections.allSections">
         <button type="button" class="btn btn-default" ng-class="{active: budgetCtrl.active == $index}" ng-click="budgetCtrl.active = $index; budgetCtrl.sectionTemplateUrl = section.templateUrl">{{section.name}}</button>
@@ -56,12 +57,27 @@
   </div>
   <!-- End Section Tabs -->
 
+  <!-- Section Dropdown -->
+  <div class="hidden-md hidden-lg col-xs-12 text-center">
+    <div class="btn-group" uib-dropdown is-open="sectionOpen">
+      <button class="btn btn-default" uib-dropdown-toggle>Sections <span class="caret"></span></button>
+      <ul uib-dropdown-menu>
+        <li ng-repeat="section in budgetCtrl.sections.allSections" ng-click="budgetCtrl.active = $index; budgetCtrl.sectionTemplateUrl = section.templateUrl"><a class="btn">{{section.name}}</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- End Section Dropdown -->
 
-  <div class="panel panel-default panel-body col-md-offset-1 col-md-10 container-fluid" ng-include="budgetCtrl.sectionTemplateUrl"></div>
+  <!-- Section Area -->
+  <div id="sectionArea" class="panel panel-default panel-body col-md-offset-1 col-md-10 container-fluid" ng-if="budgetCtrl.active != null" ng-cloak>
+    <i class="glyphicon glyphicon-remove btn pull-right" ng-click="budgetCtrl.active = null"></i>
+    <div ng-include="budgetCtrl.sectionTemplateUrl"></div>
+  </div>
+  <!-- End Section Area -->
 
 
   <!-- Total Table -->
-  <div class="col-xs-12 col-md-offset-3 col-md-6">
+  <div id="totalTable" class="col-xs-12 col-md-offset-3 col-md-6">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>

@@ -1,72 +1,72 @@
-<div class="col-md-offset-3 col-md-6" ng-init="budgetCtrl.form as form" ng-controller="BudgetFoodAndGasFormController as foodAndGasCtrl">
+<div class="col-md-offset-3 col-md-6" ng-controller="BudgetFoodAndGasFormController as foodAndGasCtrl">
   <div class="row">
     <h2 class="text-center">Food & Gas</h2>
     <hr>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="form.food_and_gas_number_of_intercepted_girls_multiplier_before"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_before"/>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="form.food_and_gas_number_of_intercepted_girls"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls"/>
       <small># of Girls</small>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="form.food_and_gas_number_of_intercepted_girls_multiplier_after"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_after"/>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group text-center">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="foodAndGasCtrl.foodGasInterceptedGirls(form)" disabled="disabled" />
+      <input class="form-control text-center" ng-value="foodAndGasCtrl.foodGasInterceptedGirls(budgetCtrl.form) | number" disabled="disabled" />
     </div>
     <small>Intercepted Girls</small>
   </div>
   <hr>
   <div class="row">
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="form.food_and_gas_limbo_girls_multiplier"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.food_and_gas_limbo_girls_multiplier"/>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="form.food_and_gas_number_of_limbo_girls"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.food_and_gas_number_of_limbo_girls"/>
       <small># of Girls</small>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="form.food_and_gas_number_of_days"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.food_and_gas_number_of_days"/>
       <small># of Days</small>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="foodAndGasCtrl.foodGasLimboGirls(form)" disabled="disabled" />
+      <input class="form-control text-center" ng-value="foodAndGasCtrl.foodGasLimboGirls(budgetCtrl.form) | number" disabled="disabled" />
     </div>
     <small>Limbo Girls</small>
   </div>
   <hr>
-  <div class="row" ng-controller="otherBudgetItemsCtrl as foodGasItemsCtrl" ng-init="form_section = 6;">
-    <div ng-repeat="form in foodGasItemsCtrl.foodGasForms">
+  <div class="row" ng-init="form_section = 6;">
+    <div ng-repeat="form in foodAndGasCtrl.foodGasForms">
       <div class="col-md-4 col-md-offset-2">
-        <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view" />
+        <input class="form-control" type="text" ng-model="budgetCtrl.form.name" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-4">
-        <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="foodGasItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
+        <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.cost" ng-change="foodAndGasCtrl.otherItemsTotal()" ng-disabled="budgetCtrl.view"/>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="foodGasItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</button>
+        <button class="btn btn-danger" ng-click="foodAndGasCtrl.removeItem(budgetCtrl.form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-md-4 col-md-offset-4" ng-click="foodGasItemsCtrl.addNewItem()" ng-hide="main.view">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="foodAndGasCtrl.addNewItem()" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>
   <div class="row text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Food</label>
-      <input class="form-control text-center" ng-value="foodAndGasCtrl.foodGasTotal()" disabled="disabled" />
+      <input class="form-control text-center" ng-value="foodAndGasCtrl.foodTotal(budgetCtrl.form) | currency" disabled="disabled" />
     </div>
     <div class="col-md-4"></div>
   </div>

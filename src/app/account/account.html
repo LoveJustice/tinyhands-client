@@ -1,7 +1,0 @@
-<div class="btn-group btn-group-justified">
-    <div class="btn-group" ng-repeat="section in accountCtrl.sections.allSections">
-        <button type="button" class="btn btn-default" ng-class="{active: accountCtrl.active == $index}" ng-click="accountCtrl.active = $index; accountCtrl.sectionTemplateUrl = section.templateUrl">{{section.name}}</button>
-    </div>
-</div>
-
-<div ng-include="accountCtrl.sectionTemplateUrl"></div>

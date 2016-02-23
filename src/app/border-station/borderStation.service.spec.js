@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
-  var service;
-
   describe('BorderStationService', function() {
+
+    var service;
 
     beforeEach(module('tinyhandsFrontend'));
 

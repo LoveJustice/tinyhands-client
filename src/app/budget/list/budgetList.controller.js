@@ -18,4 +18,12 @@ export default class BudgetList {
     });
   }
 
+  removeBudget(array, instance) {
+    if (instance.budgetRemoved) {
+      //remove the things
+    } else {
+      instance.budgetRemoved = true;
+    }
+  }
+
 }

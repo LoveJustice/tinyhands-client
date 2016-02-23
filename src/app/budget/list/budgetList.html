@@ -14,7 +14,9 @@
       </tr>
     </thead>
     <tbody class="text-center">
-      <tr ng-repeat="form in budgetListCtrl.listOfBudgets">
+      <tr ng-repeat="form in budgetListCtrl.listOfBudgets"
+          ng-mouseenter="form.hover = true"
+          ng-mouseleave="form.hover = false; form.budgetRemoved = false">
         <td>{{ form.border_station.station_name }}</td>
         <td>{{ form.border_station.station_code }}</td>
         <td>{{ form.month_year | date:'MMMM, yyyy'}}</td>
@@ -27,7 +29,11 @@
           <a href="{% url 'money_distribution_view' form.id %}" class="btn btn-sm btn-primary">Resend MDF</a>
           <!--{#                        {% if request.user.is_superuser %}#}
 {#                        {% include "delete_modal_forms.html" with form=form url_string="budget_delete"%}#}-->
-          <button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-{{ form.pk }}">Delete</button>
+          <button class="btn btn-sm btn-danger animated"
+                  ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
+                  ng-class="{fadeIn: form.hover && !form.budgetRemoved, fadeOut: !form.hover, pulse: form.budgetRemoved}">
+            {{ form.budgetRemoved ? "Are you sure?" : "Remove Budget" }}
+          </button>
         </td>
       </tr>
     </tbody>

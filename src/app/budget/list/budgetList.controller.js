@@ -1,9 +1,15 @@
 export default class BudgetList {
-  constructor(BudgetListService) {
+  constructor($uibModal, BudgetListService) {
     'ngInject';
+
+    this.$uibModal = $uibModal;
     this.service = BudgetListService;
 
     this.getBudgetList();
+  }
+
+  deleteBorderStationBudget(id) {
+    this.service.deleteBorderStationBudget(id);
   }
 
   getBudgetList() {
@@ -12,7 +18,4 @@ export default class BudgetList {
     });
   }
 
-  deleteBorderStationBudget(id) {
-    this.service.deleteBorderStationBudget(id);
-  }
 }

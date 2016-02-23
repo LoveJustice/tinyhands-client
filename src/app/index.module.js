@@ -47,6 +47,7 @@ import BudgetSuppliesFormController from './budget/form/components/supplies/supp
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
+import TallyController from './components/tally/tally.controller';
 // import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
@@ -109,6 +110,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('BudgetTravelFormController', BudgetTravelFormController)
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
+  .controller('TallyController', TallyController)
   // .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

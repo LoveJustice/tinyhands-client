@@ -39,13 +39,22 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
     })
     .state('budget', {
       url: '/budget/:id',
-      templateUrl: 'app/budget/budget.html',
+      templateUrl: 'app/budget/form/budget.html',
       controller: 'BudgetController',
       controllerAs: 'budgetCtrl',
       data: {
         requireLogin: true
       }
     })
+    .state('budgetList', {
+      url: '/budget',
+      templateUrl: 'app/budget/list/budgetList.html',
+      controller: 'BudgetListController',
+      controllerAs: 'budgetListCtrl',
+      data: {
+        requireLogin: true
+      }
+    })    
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',
@@ -53,6 +62,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       controllerAs: 'login',
       data: {
         requireLogin: false
+      }
+    })
+    .state('vif', {
+      url: '/vif',
+      templateUrl: 'app/vif/list/vifList.html',
+      controller: 'VifListController',
+      controllerAs: 'vifListCtrl',
+      data: {
+        requireLogin: true
       }
     });
 

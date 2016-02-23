@@ -1,29 +1,25 @@
-export default class CommunicationController {
-  constructor() {
-
-  }
-
-  commManagerTotal () {
+export default class BudgetCommunicationFormController {
+  commManagerTotal (form) {
       var amount = 0;
 
-      if (this.form.communication_chair) {
-          amount += this.form.communication_chair_amount;
+      if (form.communication_chair) {
+          amount += form.communication_chair_amount;
       }
-      if (this.form.communication_manager) {
-          amount += this.form.communication_manager_amount;
+      if (form.communication_manager) {
+          amount += form.communication_manager_amount;
 
       }
       return amount;
   }
 
-  commNumberOfStaffTotal () {
-    return  this.form.communication_number_of_staff_with_walkie_talkies *
-            this.form.communication_number_of_staff_with_walkie_talkies_multiplier;
+  commNumberOfStaffTotal (form) {
+    return  form.communication_number_of_staff_with_walkie_talkies *
+            form.communication_number_of_staff_with_walkie_talkies_multiplier;
   }
 
-  commEachStaffTotal () {
-    return  this.form.communication_each_staff *
-            this.form.communication_each_staff_multiplier;
+  commEachStaffTotal (form) {
+    return  form.communication_each_staff *
+            form.communication_each_staff_multiplier;
   }
 
   staffTotal () {
@@ -31,13 +27,14 @@ export default class CommunicationController {
     return this.staffTotalValue;
   }
 
-  communicationTotal () {
+  communicationTotal (form) {
     var amount = 0;
-    amount += this.commTotal();
-    this.communicationTotalValue = amount + this.otherCommunicationTotalValue[0];
+    amount += this.commTotal(form);
+    // this.communicationTotalValue = amount + this.otherCommunicationTotalValue[0];
+    return amount;
   }
 
-  commTotal () {
-    return this.commManagerTotal() + this.commNumberOfStaffTotal() + this.commEachStaffTotal();
+  commTotal (form) {
+    return this.commManagerTotal(form) + this.commNumberOfStaffTotal(form) + this.commEachStaffTotal(form);
   }
 }

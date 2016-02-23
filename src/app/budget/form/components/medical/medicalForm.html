@@ -1,16 +1,13 @@
-<div class="col-xs-6">
-  <h2 class="background"><span>Medical</span></h2>
-
-  <div class="row">
-    <div class="col-lg-4 calc-form-input-no-width col-lg-offset-1">
-        <input class="text-right form-control" type="number" id="medical_expense" ng-model="main.form.medical_last_months_expense"/>
+<div class="col-md-offset-3 col-md-6">
+  <h2 class="text-center">Medical</h2>
+  <div class="row form-group">
+    <div class="col-md-5 calc-form-input-no-width">
+        <input class="text-right form-control" type="number" id="medical_expense" ng-model="budgetCtrl.form.medical_last_months_expense"/>
         <small>Last month's medical expense</small>
     </div>
-    <div class="col-lg-1">
-        <h4 class="text-center">=</h4>
-    </div>
-    <div class="col-lg-5 calc-form-input-no-width">
-        <input class="form-control text-center" ng-value="main.medicalTotal()" disabled="disabled"/>
+    <operator width="2">=</operator>
+    <div class="col-md-5 calc-form-input-no-width">
+        <input class="form-control text-center" ng-value="budgetCtrl.form.medical_last_months_expense | currency" disabled="disabled"/>
     </div>
   </div>
 </div>

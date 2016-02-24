@@ -1,58 +1,58 @@
-<div class="col-md-offset-3 col-md-6" ng-controller="BudgetShelterFormController as shelterCtrl">
+<div class="col-md-offset-3 col-md-6">
   <h2 class="text-center">Shelter</h2>
   <hr>
   <div class="row">
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.shelter_rent" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_rent" />
       <small>Rent</small>
     </div>
     <operator>+</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.shelter_water" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_water" />
       <small>Water</small>
     </div>
     <operator>+</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.shelter_electricity" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_electricity" />
       <small>Electricity</small>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="shelterCtrl.utilTotal(budgetCtrl.form) | number" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.shelterUtilTotal() | number" disabled="disabled" />
     </div>
   </div>
   <hr>
   <div class="row">
-    <div class="col-md-1 col-md-offset-2">
-      <input type="checkbox" ng-model="budgetCtrl.form.shelter_shelter_startup"/>
+    <div class="col-md-1 col-md-offset-1">
+      <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_startup"/>
     </div>
     <div class="col-md-2 input-with-text calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.shelter_shelter_startup_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_startup"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_startup_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_startup"/>
       <small>Shelter Startup</small>
     </div>
+    <operator>+</operator>
     <div class="col-md-1">
-      <input type="checkbox" ng-model="budgetCtrl.form.shelter_shelter_two"/>
+      <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_two"/>
     </div>
     <div class="col-md-2 input-with-text calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.shelter_shelter_two_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_two"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_two_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_two"/>
       <small>Shelter 2</small>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="shelterCtrl.shelterCheckboxTotal(budgetCtrl.form) | number" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.shelterCheckboxTotal() | number" disabled="disabled" />
     </div>
   </div>
   <hr>
   <div class="row" ng-init="form_section = 5;">
     <div ng-repeat="form in budgetCtrl.shelterForms">
       <div class="col-md-4 col-md-offset-2">
-        <input class="form-control" type="text" ng-model="form.name" ng-disabled="budgetCtrl.view" />
+        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="form.name" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-4">
-        <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="budgetCtrl.otherItemsTotal()"
-        ng-disabled="budgetCtrl.view" />
+        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="form.cost" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
         <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
@@ -68,7 +68,7 @@
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Shelter Total</label>
-      <input class="form-control text-center" ng-value="shelterCtrl.shelterTotal(budgetCtrl.form) | currency" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.shelterTotal() | currency" disabled="disabled" />
     </div>
   </div>
 </div>

@@ -1,46 +1,45 @@
-<div class="col-md-offset-3 col-md-6" ng-controller="BudgetMiscellaneousFormController as miscCtrl">
+<div class="col-md-offset-3 col-md-6">
   <h2 class="text-center">Miscellaneous</h2>
   <hr>
   <div class="row">
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month" ng-change="miscCtrl.miscTotal()"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month"/>
       <small># of intercepts last month</small>
     </div>
     <operator>*</operator>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month_multiplier"
-      ng-change="miscCtrl.miscTotal()" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month_multiplier"/>
     </div>
     <operator>=</operator>
     <div class="col-md-4 input-group">
       <div class="input-group-addon">$</div>
-      <input class="form-control text-center" ng-value="miscCtrl.miscMaximum(budgetCtrl.form) | number" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.miscellaneousMaximum() | number" disabled="disabled" />
     </div>
   </div>
   <hr>
   <div class="row" ng-init="form_section = 2;">
-    <div ng-repeat="form in miscCtrl.miscForms">
+    <div ng-repeat="form in budgetCtrl.miscForms">
       <div class="col-md-4 col-md-offset-1">
-        <input class="form-control" type="text" ng-model="budgetCtrl.form.name" ng-disabled="budgetCtrl.view" />
+        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.name" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
-        <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.cost" ng-change="miscCtrl.otherItemsTotal()" ng-disabled="budgetCtrl.view"/>
+        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.cost" ng-disabled="budgetCtrl.view"/>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="miscCtrl.removeItem(budgetCtrl.form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="miscCtrl.addNewItem();" ng-hide="budgetCtrl.view">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.addNewItem();" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Miscellaneous</label>
-      <input class="text-center form-control" ng-value="miscCtrl.miscMaximum(budgetCtrl.form) | currency" disabled="disabled" />
+      <input class="text-center form-control" ng-value="budgetCtrl.miscellaneousMaximum() | currency" disabled="disabled" />
     </div>
   </div>
 </div>

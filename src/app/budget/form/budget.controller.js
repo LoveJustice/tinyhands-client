@@ -1,7 +1,10 @@
+import Constants from './constants.js';
+
 export default class BudgetController {
   constructor($scope, $http, $location, $stateParams, $window, BudgetService) {
     'ngInject';
 
+    this.formSections = Constants.FormSections;
     this.service = BudgetService;
 
 
@@ -320,13 +323,22 @@ export default class BudgetController {
       };
       this.getStaff();
       this.getBorderStation();
+      this.getPreviousData();
     });
   }
 
   getOtherStaff() {
-    this.service.getOtherItems(this.budgetId, 8).then((response) => {
+    this.service.getOtherItems(this.budgetId, this.formSections.Salaries).then((response) => {
       this.form.otherStaff = response.data.results;
       this.getStaffSalaries();
+    });
+  }
+
+  getPreviousData() {
+    let month = moment(this.form.month_year).format('M');
+    let year = moment(this.form.month_year).format('YYYY');
+    this.service.getPreviousData(this.form.border_station, month, year).then((response) => {
+      this.form.previousData = response.data;
     });
   }
 
@@ -338,9 +350,13 @@ export default class BudgetController {
   }
 
   getStaffSalaries() {
-    this.service.getStaffSalaries(this.form.border_station).then((response) => {
+    this.service.getStaffSalaries(this.budgetId).then((response) => {
       this.form.staff.map((staff) => {
-        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
+        if (response.data.length > 0) {
+          staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
+        } else {
+          staff.salaryInfo = { salary: 0 };
+        }
       });
       this.setTotals();
     });

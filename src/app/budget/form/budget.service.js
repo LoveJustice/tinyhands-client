@@ -20,9 +20,13 @@ export default class BudgetService extends BaseService {
     return this.get(`api/budget/${budgetId}/item/?form_section=${formSection}`);
   }
 
-  getStaff(bsId) {
-    if (bsId) {
-      return this.get(`api/staff/?border_station=${bsId}`);
+  getPreviousData(borderStationId, month, year) {
+    return this.get(`api/budget/previous_data/${borderStationId}/${month}/${year}/`);
+  }
+
+  getStaff(borderStationId) {
+    if (borderStationId) {
+      return this.get(`api/staff/?border_station=${borderStationId}`);
     }
   }
 

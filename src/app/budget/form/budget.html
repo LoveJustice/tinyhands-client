@@ -1,12 +1,4 @@
-<!--<script type="text/javascript">
-    window.budget_calc_id = {{ pk }};
-    window.submit_type = {{ submit_type }};
-    window.border_station = {{ border_station.id }};
-    window.station_name = "{{ border_station.station_name }}";
-</script>-->
-
-
-<form id="budget-calc-form" class="container col-xs-12" method="post">
+<form id="budget-calc-form" class="container-fluid col-xs-12">
   <h2 class="text-center">
     {{ budgetCtrl.form.station_name }} Budget Form For {{ budgetCtrl.form.month_year | date:'MMMM yyyy'}}
   </h2>
@@ -17,29 +9,29 @@
       <thead>
         <tr>
           <th></th>
-          <th class="text-center">INT</th>
-          <th class="text-center">$/INT</th>
+          <th class="text-center">Interceptions</th>
+          <th class="text-center">$/Interceptions</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Last Month</td>
-          <td>{{ table.form.last_month }}</td>
-          <td>{{ table.form.last_months_cost }}</td>
+          <td>{{ budgetCtrl.form.previousData.last_month }}</td>
+          <td>{{ budgetCtrl.form.previousData.last_months_cost | currency }}</td>
         </tr>
         <tr>
           <td>Last 3 Months</td>
-          <td>{{ table.form.last_3_months }}</td>
-          <td>{{ table.form.last_3_months_cost }}</td>
+          <td>{{ budgetCtrl.form.previousData.last_3_months }}</td>
+          <td>{{ budgetCtrl.form.previousData.last_3_months_cost | currency }}</td>
         </tr>
         <tr>
           <td>All Time</td>
-          <td>{{ table.form.all }}</td>
-          <td>{{ table.form.all_cost }}</td>
+          <td>{{ budgetCtrl.form.previousData.all }}</td>
+          <td>{{ budgetCtrl.form.previousData.all_cost | currency }}</td>
         </tr>
         <tr>
           <td># of Staff</td>
-          <td colspan="2">{{ table.form.staff_count }}</td>
+          <td colspan="2">{{ budgetCtrl.form.previousData.staff_count }}</td>
         </tr>
       </tbody>
     </table>
@@ -136,7 +128,7 @@
         </tr>
         <tr>
           <td class="text-center">Last month's TOTAL</td>
-          <td class="text-right" colspan="2">{{ budgetCtrl.last_months_total_cost }}</td>
+          <td class="text-right" colspan="2">{{ budgetCtrl.form.previousData.last_months_cost | currency }}</td>
         </tr>
       </tbody>
     </table>

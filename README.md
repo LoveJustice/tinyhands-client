@@ -9,6 +9,7 @@
 4. Install more dependencies: `bower install`
 
 **Note**: if `npm install -g` fails because of permission errors (trying to install in /usr/local), run the following commands:
+
 1. `echo 'prefix = ${HOME}/.npm-packages' >> ~/.npmrc`
 2. `echo 'export PATH="$PATH:$HOME/.npm-packages/bin"' >> ~/.bashrc`
 

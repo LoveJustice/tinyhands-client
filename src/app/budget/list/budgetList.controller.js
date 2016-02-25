@@ -9,7 +9,6 @@ export default class BudgetList {
   }
 
   deleteBorderStationBudget(id) {
-    this.service.deleteBorderStationBudget(id);
   }
 
   getBudgetList() {
@@ -18,11 +17,19 @@ export default class BudgetList {
     });
   }
 
-  removeBudget(array, instance) {
-    if (instance.budgetRemoved) {
-      //remove the things
+  removeBudget(array, budget) {
+    if (budget.budgetRemoved) {
+      this.service.deleteBorderStationBudget(budget.id).then((response) => {
+        if (response.status == 204 || response.status == 200) {
+          toastr.success("Form Successfully Deleted");
+          var index = this.listOfBudgets.indexOf(budget);
+          this.listOfBudgets.splice(index, 1);
+        } else {
+          toastr.error("Unable to Delete Budget Form");
+        }
+      });
     } else {
-      instance.budgetRemoved = true;
+      budget.budgetRemoved = true;
     }
   }
 

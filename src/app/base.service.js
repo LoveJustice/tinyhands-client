@@ -75,7 +75,17 @@ class BaseService {
 		}
 
 		return this.$http.put(this.baseUrl + url, data, { headers: headers });
-	}
+  }
+
+  delete(url, data, userHeaders) {
+    var headers = {};
+    angular.copy(userHeaders, headers);
+    if (sessionStorage.getItem('token')) {
+      headers.Authorization = sessionStorage.token;
+    }
+
+    return this.$http.delete(this.baseUrl + url, data, { headers: headers });
+  }
 }
 
 export default BaseService;

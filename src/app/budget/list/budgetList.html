@@ -25,11 +25,10 @@
         <td>
           <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary">View</a>
           <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary">Edit</a>
-          <a ui-sref=""></a>
-          <a href="{% url 'money_distribution_view' form.id %}" class="btn btn-sm btn-primary">Resend MDF</a>
-          <!--{#                        {% if request.user.is_superuser %}#}
-{#                        {% include "delete_modal_forms.html" with form=form url_string="budget_delete"%}#}-->
-          <button class="btn btn-sm btn-danger animated"
+          <a ui-sref="#" class="btn btn-sm btn-primary">Resend MDF</a>
+
+          <button ng-if="budgetListCtrl.session.user.permission_border_stations_delete"
+                  class="btn btn-sm btn-danger animated"
                   ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
                   ng-class="{fadeIn: form.hover && !form.budgetRemoved, fadeOut: !form.hover, pulse: form.budgetRemoved}">
             {{ form.budgetRemoved ? "Are you sure?" : "Remove Budget" }}

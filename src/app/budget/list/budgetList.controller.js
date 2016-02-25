@@ -1,14 +1,12 @@
 export default class BudgetList {
-  constructor($uibModal, BudgetListService) {
+  constructor($uibModal, BudgetListService, session) {
     'ngInject';
 
     this.$uibModal = $uibModal;
     this.service = BudgetListService;
+    this.session = session;
 
     this.getBudgetList();
-  }
-
-  deleteBorderStationBudget(id) {
   }
 
   getBudgetList() {
@@ -20,12 +18,12 @@ export default class BudgetList {
   removeBudget(array, budget) {
     if (budget.budgetRemoved) {
       this.service.deleteBorderStationBudget(budget.id).then((response) => {
-        if (response.status == 204 || response.status == 200) {
-          toastr.success("Form Successfully Deleted");
+        if (response.status === 204 || response.status === 200) {
+          window.toastr.success("Form Successfully Deleted");
           var index = this.listOfBudgets.indexOf(budget);
           this.listOfBudgets.splice(index, 1);
         } else {
-          toastr.error("Unable to Delete Budget Form");
+          window.toastr.error("Unable to Delete Budget Form");
         }
       });
     } else {

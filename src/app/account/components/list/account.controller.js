@@ -4,7 +4,7 @@ export default class AccountController {
 
     this.AccountsService = AccountService
     this.PermissionsSetsService = PermissionsSetsService
-    this.modal = $uibModal
+    this.$uibModal = $uibModal
     this.activate();
   }
 
@@ -23,12 +23,12 @@ export default class AccountController {
 
   resendActivationEmail(accountID) {
     this.AccountsService.resendActivationEmail({id:accountID});
-  };
+  }
 
   openModal(account) {
     var user_name = account.first_name+" "+account.last_name;
-    var deleteModal = this.modal.open({
-      templateUrl:'app/account/components/list/accountModal.html',
+    var deleteModal = this.$uibModal.open({
+      templateUrl:'app/account/components/defaults/accountModal.html',
       controller: 'AccountModalController',
       controllerAs: 'AccountModalCtrl',
       resolve: {
@@ -42,8 +42,8 @@ export default class AccountController {
         this.AccountsService.getAccounts().then((response) => {
           this.accounts = response.data;
         });
-      })
-    })
+      });
+    });
   }
 
 }

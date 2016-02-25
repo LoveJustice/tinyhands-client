@@ -1,0 +1,90 @@
+<style>
+input[type="checkbox"] {
+    display: none;
+}
+label {
+    width: 100% !important;
+}
+td {
+}
+td:first-child {
+}
+table {
+}
+table, th, td {
+    border: 2px solid #ddd;
+}
+th, td {
+    text-align: center;
+}
+</style>
+
+<h1>Access Control</h1>
+
+<div class="container" ng-controller="AccessCtrl as accessCtrl" ng-cloak>
+    <div method="POST" class="row">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th colspan="4">Interception Record Forms</th>
+                    <th colspan="4">Victim Interview Forms</th>
+                    <th colspan="4">Border Stations</th>
+                    <th>Accounts</th>
+                    <th>Alerts</th>
+                    <th>VDC</th>
+                    <th>Budget</th>
+                </tr>
+                <tr>
+                    <th>User</th>
+                    <th>View</th> <!--IRF-->
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>View</th> <!--VIF-->
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>View</th> <!--Border Stations-->
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Manage</th> <!--Accounts-->
+                    <th>Can Receive</th> <!--Alerts-->
+                    <th>Manage</th> <!--VDC-->
+                    <th>Manage</th> <!--Budget-->
+                </tr>
+            </thead>
+            <tbody>
+                    <tr ng-repeat="account in accessCtrl.accounts.results">
+                        <td>
+                          <span>{{account.first_name+" "+account.last_name}}</span>
+                          <br/>
+                          <select  ng-change="accessCtrl.changeUserRole(account)" ng-model="account.user_designation" ng-options="p.id as p.name for p in accessCtrl.permissions.results">
+                          </select>
+                        </td>
+                        <td><label ng-click="account.permission_irf_view = !account.permission_irf_view" ng-class="account.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_view ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_add = !account.permission_irf_add" ng-class="account.permission_irf_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_add ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_edit = !account.permission_irf_edit" ng-class="account.permission_irf_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_edit ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_delete = !account.permission_irf_delete" ng-class="account.permission_irf_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_delete ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_view = !account.permission_vif_view" ng-class="account.permission_vif_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_view ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_add = !account.permission_vif_add" ng-class="account.permission_vif_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_add ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_edit = !account.permission_vif_edit" ng-class="account.permission_vif_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_edit ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_delete = !account.permission_vif_delete" ng-class="account.permission_vif_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_delete ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_view = !account.permission_border_stations_view" ng-class="account.permission_border_stations_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_view ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_add = !account.permission_border_stations_add" ng-class="account.permission_border_stations_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_add ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_edit = !account.permission_border_stations_edit" ng-class="account.permission_border_stations_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_edit ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_delete = !account.permission_border_stations_delete" ng-class="account.permission_border_stations_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_delete ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_accounts_manage = !account.permission_accounts_manage" ng-class="account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_accounts_manage ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_receive_email = !account.permission_receive_email" ng-class="account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_receive_email ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vdc_manage = !account.permission_vdc_manage" ng-class="account.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vdc_manage ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_budget_manage = !account.permission_budget_manage" ng-class="account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_budget_manage ? "Yes" : "No" }}</label></td>
+
+
+
+                    </tr>
+            </tbody>
+        </table>
+        <button class="clear btn btn-primary btn-lg" ng-click="accessCtrl.update()">Update</button>
+    </div>
+</div>

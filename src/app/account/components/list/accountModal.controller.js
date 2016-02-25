@@ -2,14 +2,14 @@ export default class AccountModalController {
   constructor($scope, $uibModalInstance, user_name) {
     
     this.user_name = user_name
-    this.modalInstance = $uibModalInstance
+    this.$uibModalInstance = $uibModalInstance
   }
 
   delete() {
-    this.modalInstance.close(true);
+    this.$uibModalInstance.close(true);
   };
 
   cancel() {
-    this.modalInstance.dismiss("cancel");
+    this.$uibModalInstance.dismiss("cancel");
   };
 }

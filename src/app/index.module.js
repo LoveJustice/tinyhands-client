@@ -29,6 +29,8 @@ import TallyDirective from './components/tally/tally.directive';
 
 // REGION: Controllers
 import AccountController from './account/components/list/account.controller';
+import AccountDefaultsController from './account/components/defaults/accountDefaults.controller';
+import AccountModalController from './account/components/list/accountModal.controller';
 import AccountNavController from './account/accountNav.controller';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
@@ -38,6 +40,7 @@ import BorderStationController from './border-station/borderStation.controller';
 import BudgetController from './budget/form/budget.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
+import UnsavedChangesModalController from './account/components/defaults/unsavedChangesModal.controller.js'
 // ENDREGION: Controllers
 
 // REGION: Factories
@@ -80,7 +83,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
 
   // REGION: Controllers
+  .controller('AccountDefaultsController', AccountDefaultsController)
   .controller('AccountController', AccountController)
+  .controller('AccountModalController', AccountModalController)
   .controller('AccountNavController', AccountNavController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)
@@ -90,5 +95,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('BudgetController', BudgetController)
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
+  .controller('UnsavedChangesModalController', UnsavedChangesModalController)
   // ENDREGION: Controllers
 ;

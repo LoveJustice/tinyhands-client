@@ -8,7 +8,7 @@
 3. Install dependencies: `npm install`
 4. Install more dependencies: `bower install`
 
-**Note**: if `npm install -g` fails because of permission errors (trying to install in /usr/local), run `echo prefix = \${HOME}/.npm-packages >> ~/.npmrc`
+**Note**: if `npm install -g` fails because of permission errors (trying to install in /usr/local), run `echo 'prefix = ${HOME}/.npm-packages' >> ~/.npmrc`
 
 --------------------
 ### Gulp Usage

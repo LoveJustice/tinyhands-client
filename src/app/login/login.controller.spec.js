@@ -1,15 +1,36 @@
-(function() {
-  'use strict';
+import LoginController from './login.controller';
+import SessionService from '../utils/session.service';
 
-  describe('controllers', function(){
+describe('LoginController', () => {
 
-    beforeEach(module('tinyhandsFrontend'));
+  let vm;
 
-    it('should define more than 5 awesome things', inject(function($controller) {
-      // var vm = $controller('MainController');
+  beforeEach(inject(($http, $rootScope, $timeout) => {
+    // FIXME can't inject $state
+    let $state = {go: () => {}};
+    let service = new SessionService($http, $rootScope, $state, $timeout);
+    vm = new LoginController(service);
+  }));
 
-      // expect(angular.isArray(vm.awesomeThings)).toBeTruthy();
-      // expect(vm.awesomeThings.length > 5).toBeTruthy();
-    }));
+  describe('function constructor', () => {
+
+    it('password should be empty string', () => {
+      expect(vm.password).toEqual('');
+    });
+
+    it('username should be empty string', () => {
+      expect(vm.password).toEqual('');
+    });
+
   });
-})();
+
+  describe('function attemptLogin', () => {
+    it('should call sesssion attemptLogin with username and password', () => {
+      spyOn(vm.session, 'attemptLogin');
+
+      vm.attemptLogin();
+
+      expect(vm.session.attemptLogin).toHaveBeenCalledWith(vm.username, vm.password);
+    });
+  });
+});

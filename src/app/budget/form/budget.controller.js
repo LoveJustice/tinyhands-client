@@ -187,7 +187,9 @@ export default class BudgetController {
     var amount = 0;
 
     this.form.staff.forEach((staff) => {
-      amount += staff.salaryInfo.salary;
+      if (staff.salaryInfo) {
+        amount += staff.salaryInfo.salary;
+      }
     });
 
     this.form.otherStaff.forEach((otherStaff) => {
@@ -335,8 +337,8 @@ export default class BudgetController {
   }
 
   getPreviousData() {
-    let month = moment(this.form.month_year).format('M');
-    let year = moment(this.form.month_year).format('YYYY');
+    let month = window.moment(this.form.month_year).format('M');
+    let year = window.moment(this.form.month_year).format('YYYY');
     this.service.getPreviousData(this.form.border_station, month, year).then((response) => {
       this.form.previousData = response.data;
     });
@@ -445,7 +447,7 @@ export default class BudgetController {
 
   resetValues() {
     for (let key in this.form) {
-      if (key != 'border_station' || key != 'id') {
+      if (key !== 'border_station' || key !== 'id') {
         this.form[key] = this.resetValue(this.form[key]);
       }
     }

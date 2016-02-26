@@ -1,0 +1,47 @@
+<div class="container">
+    <h1 class="text-center">All VIFs</h1>
+    <br/>
+
+    <table ng-if="vifListCtrl.listOfVifs.length > 0" class="table table-striped table-condensed crud-datatable">
+        <thead>
+            <tr>
+                <th class="text-center">VIF #</th>
+                <th class="text-center">Interviewer</th>
+                <th class="text-center"># of Victims</th>
+                <th class="text-center"># of Traffickers</th>
+                <th class="text-center">Date of Interview</th>
+                <th class="text-center">Time Entered Into System</th>
+                <th class="text-center">Time Last Edited</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            <tr ng-repeat="form in vifListCtrl.listOfVifs">
+                <td>{{ form.vif_number }}</td>
+                <td>{{ form.interviewer }}</td>
+                <td>{{ form.number_of_victims }}</td>
+                <td>{{ form.number_of_traffickers }}</td>
+                <td>{{ form.date_time_of_interception | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
+                <td ng-show="vifListCtrl.user.permission_vif_view"><a class="btn btn-sm btn-primary"
+                                                                      href="{{ vif.view_url }}">View</a></td>
+                <td ng-show="vifListCtrl.user.permission_vif_edit"><a class="btn btn-sm btn-primary"
+                                                                      id="id_edit_vif_button"
+                                                                      href="{{ vif.edit_url }}">Edit</a></td>
+                <td ng-show="vifListCtrl.user.permission_vif_delete"><a class="btn btn-sm btn-danger"
+                                                                        ng-click="vifListCtrl.deleteVif(vif)">
+                    {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}
+                </a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <button ng-disabled="!vifListCtrl.nextPageUrl" ng-click="vifListCtrl.loadMoreVifs()" class="btn btn-primary" style="...">
+            Load more results
+        </button>
+    </div>
+
+    <div ng-show="vifListCtrl.loading" class="loader-container">
+        <div class="loader">Loading...</div>
+    </div>
+</div>

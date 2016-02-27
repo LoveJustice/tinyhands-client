@@ -64,7 +64,7 @@ th, td {
             </thead>
 
             <tbody id="permissions-rows-container">
-                <tr ng-repeat="permissionsSet in defaultsCtrl.permissionsSets">
+                <tr ng-repeat="permissionsSet in defaultsCtrl.permissionsSets" ng-show="!permissionsSet.delete">
                     <td style="width: 25px">
                         <div tooltip="This designation is used by one or more accounts and cannot be deleted."
                             tooltip-enable="permissionsSet.is_used_by_accounts">
@@ -99,7 +99,8 @@ th, td {
                 </tr>
             </tbody>
         </table>
-        <button ng-click="defaultsCtrl.addAnother()" class="clear btn btn-primary btn-lg pull-left">Add Another</button>
-        <button ng-click="defaultsCtrl.saveAll()" class="clear btn btn-success btn-lg pull-right">Save All</button>
+        <button ng-click="defaultsCtrl.addAnother()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-left">Add Another</button>
+        <button ng-click="defaultsCtrl.saveAll()" class="col-xs-offset-6 col-xs-2 col-md-offset-6 col-md-2 col-lg-offset-6 col-lg-2 clear btn {{defaultsCtrl.saveButtonColor}} btn-lg">{{defaultsCtrl.saveButtonText}}</button>
+        <button ng-click="defaultsCtrl.discardChanges()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Revert</button>
     </div>
 </div>

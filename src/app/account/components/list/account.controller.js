@@ -28,7 +28,7 @@ export default class AccountController {
   openModal(account) {
     var user_name = account.first_name+" "+account.last_name;
     var deleteModal = this.$uibModal.open({
-      templateUrl:'app/account/components/defaults/accountModal.html',
+      templateUrl:'app/account/components/list/accountModal.html',
       controller: 'AccountModalController',
       controllerAs: 'AccountModalCtrl',
       resolve: {

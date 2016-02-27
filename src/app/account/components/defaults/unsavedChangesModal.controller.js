@@ -5,8 +5,12 @@ export default class UnsavedChangesModalController {
   }
 
   saveAndContinue() {
-    this.$uibModalInstance.close(true);
+    this.$uibModalInstance.close('save');
   };
+
+  discardAndContinue() {
+    this.$uibModalInstance.close('discard');
+  }
 
   cancel() {
     this.$uibModalInstance.dismiss("cancel");

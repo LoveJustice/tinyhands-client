@@ -4,6 +4,12 @@ describe('BorderStationService', () => {
 
   let service;
 
+  let data = 'abcdef',
+      borderStationId = 0, // see borderStation.service.js
+      bsId = 123,
+      locationId = 123,
+      staffId = 123;
+
   beforeEach(inject(($http, $q) => {
     service = new BorderStationService($http, $q);
   }));
@@ -17,7 +23,6 @@ describe('BorderStationService', () => {
 
   describe('function createBorderStation with data', () => {
     let url = 'api/border-station/';
-    let data = 'abcdef';
     it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
       service.createBorderStation(data);
@@ -27,7 +32,6 @@ describe('BorderStationService', () => {
 
   describe('function createCommitteeMember with data', () => {
     let url = 'api/committee-member/';
-    let data = 'abcdef';
     it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
       service.createCommitteeMember(data);
@@ -37,7 +41,6 @@ describe('BorderStationService', () => {
 
   describe('function createLocation with data', () => {
     let url = 'api/location/';
-    let data = 'abcdef';
     it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
       service.createLocation(data);
@@ -47,7 +50,6 @@ describe('BorderStationService', () => {
 
   describe('function createStaff with data', () => {
     let url = 'api/staff/';
-    let data = 'abcdef';
     it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
       service.createStaff(data);
@@ -69,7 +71,6 @@ describe('BorderStationService', () => {
   });
 
   describe('function getCommitteeMembers', () => {
-    let borderStationId = 0; // see borderStation.service.js
     let url = 'api/committee-member/?border_station=' + borderStationId;
     it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
@@ -79,7 +80,6 @@ describe('BorderStationService', () => {
   });
 
   describe('function getCommitteeMembers with bsId', () => {
-    let bsId = 123;
     let url = 'api/committee-member/?border_station=' + bsId;
     it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
@@ -89,7 +89,6 @@ describe('BorderStationService', () => {
   });
 
   describe('function getDetails', () => {
-    let borderStationId = 0; // see borderStation.service.js
     let url = 'api/border-station/' + borderStationId + '/';
     it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
@@ -99,7 +98,6 @@ describe('BorderStationService', () => {
   });
 
   describe('function getLocations', () => {
-    let borderStationId = 0; // see borderStation.service.js
     let url = 'api/location/?border_station=' + borderStationId;
     it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
@@ -109,7 +107,6 @@ describe('BorderStationService', () => {
   });
 
   describe('function getStaff', () => {
-    let borderStationId = 0; // see borderStation.service.js
     let url = 'api/staff/?border_station=' + borderStationId;
     it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
@@ -119,7 +116,6 @@ describe('BorderStationService', () => {
   });
 
   describe('function getStaff with bsId', () => {
-    let bsId = 123;
     let url = 'api/staff/?border_station=' + bsId;
     it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
@@ -181,7 +177,6 @@ describe('BorderStationService', () => {
   describe('function updateCommitteeMembers with memberId and data', () => {
     let memberId = 10;
     let url = 'api/committee-member/' + memberId + '/';
-    let data = 'abcdef';
     it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
       service.updateCommitteeMembers(memberId, data);
@@ -190,20 +185,16 @@ describe('BorderStationService', () => {
   });
 
   describe('function updateDetails borderStationId and data', () => {
-    let borderStationId = 123;
-    let url = 'api/border-station/' + borderStationId + '/';
-    let data = 'abcdef';
+    let url = 'api/border-station/' + bsId + '/';
     it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
-      service.updateDetails(borderStationId, data);
+      service.updateDetails(bsId, data);
       expect(service.put).toHaveBeenCalledWith(url, data);
     });
   });
 
   describe('function updateLocations with locationId and data', () => {
-    let locationId = 123;
     let url = 'api/location/' + locationId + '/';
-    let data = 'abcdef';
     it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
       service.updateLocations(locationId, data);
@@ -216,9 +207,7 @@ describe('BorderStationService', () => {
   });
 
   describe('function updateStaff with staffId and data', () => {
-    let staffId = 123;
     let url = 'api/staff/' + staffId + '/';
-    let data = 'abcdef';
     it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
       service.updateStaff(staffId, data);

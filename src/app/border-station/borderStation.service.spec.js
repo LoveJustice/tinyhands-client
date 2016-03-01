@@ -15,39 +15,43 @@ describe('BorderStationService', () => {
     });
   });
 
-  describe('function createBorderStation', () => {
-    it('should call post with "api/border-station/" and data', () => {
+  describe('function createBorderStation with data', () => {
+    let url = 'api/border-station/';
+    let data = 'abcdef';
+    it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
-      let data = {'test': 'data'};
       service.createBorderStation(data);
-      expect(service.post).toHaveBeenCalledWith('api/border-station/', data);
+      expect(service.post).toHaveBeenCalledWith(url, data);
     });
   });
 
-  describe('function createCommitteeMember', () => {
-    it('should call post with "api/committee-member" and data', () => {
+  describe('function createCommitteeMember with data', () => {
+    let url = 'api/committee-member/';
+    let data = 'abcdef';
+    it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
-      let data = {'test': 'data'};
       service.createCommitteeMember(data);
-      expect(service.post).toHaveBeenCalledWith('api/committee-member/', data);
+      expect(service.post).toHaveBeenCalledWith(url, data);
     });
   });
 
-  describe('function createLocation', () => {
-    it('should call post with "api/location/" and data', () => {
+  describe('function createLocation with data', () => {
+    let url = 'api/location/';
+    let data = 'abcdef';
+    it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
-      let data = {'test': 'data'};
       service.createLocation(data);
-      expect(service.post).toHaveBeenCalledWith('api/location/', data);
+      expect(service.post).toHaveBeenCalledWith(url, data);
     });
   });
 
-  describe('function createStaff', () => {
-    it('should call post with "api/staff/" and data', () => {
+  describe('function createStaff with data', () => {
+    let url = 'api/staff/';
+    let data = 'abcdef';
+    it(`should call post with '${url}' and '${data}'`, () => {
       spyOn(service, 'post');
-      let data = {'test': 'data'};
       service.createStaff(data);
-      expect(service.post).toHaveBeenCalledWith('api/staff/', data);
+      expect(service.post).toHaveBeenCalledWith(url, data);
     });
   });
 
@@ -56,42 +60,71 @@ describe('BorderStationService', () => {
   });
 
   describe('function getBorderStations', () => {
-    it('should call get with "api/border-station/"', () => {
+    let url = 'api/border-station/';
+    it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
       service.getBorderStations();
-      expect(service.get).toHaveBeenCalledWith('api/border-station/');
+      expect(service.get).toHaveBeenCalledWith(url);
     });
   });
 
   describe('function getCommitteeMembers', () => {
-    it('should call get with "api/committee-member/..."', () => {
+    let borderStationId = 0; // see borderStation.service.js
+    let url = 'api/committee-member/?border_station=' + borderStationId;
+    it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
-      service.getCommitteeMembers('testid');
-      expect(service.get).toHaveBeenCalledWith('api/committee-member/?border_station=testid');
+      service.getCommitteeMembers();
+      expect(service.get).toHaveBeenCalledWith(url);
+    });
+  });
+
+  describe('function getCommitteeMembers with bsId', () => {
+    let bsId = 123;
+    let url = 'api/committee-member/?border_station=' + bsId;
+    it(`should call get with '${url}'`, () => {
+      spyOn(service, 'get');
+      service.getCommitteeMembers(bsId);
+      expect(service.get).toHaveBeenCalledWith(url);
     });
   });
 
   describe('function getDetails', () => {
-    it('should call get with "api/border-station/..."', () => {
+    let borderStationId = 0; // see borderStation.service.js
+    let url = 'api/border-station/' + borderStationId + '/';
+    it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
       service.getDetails();
-      expect(service.get).toHaveBeenCalledWith('api/border-station/' + service.borderStationId + '/');
+      expect(service.get).toHaveBeenCalledWith(url);
     });
   });
 
   describe('function getLocations', () => {
-    it('should call get with "api/location/..."', () => {
+    let borderStationId = 0; // see borderStation.service.js
+    let url = 'api/location/?border_station=' + borderStationId;
+    it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
       service.getLocations();
-      expect(service.get).toHaveBeenCalledWith('api/location/?border_station=' + service.borderStationId);
+      expect(service.get).toHaveBeenCalledWith(url);
     });
   });
 
   describe('function getStaff', () => {
-    it('should call get with "api/staff/..."', () => {
+    let borderStationId = 0; // see borderStation.service.js
+    let url = 'api/staff/?border_station=' + borderStationId;
+    it(`should call get with '${url}'`, () => {
       spyOn(service, 'get');
       service.getStaff();
-      expect(service.get).toHaveBeenCalledWith('api/staff/?border_station=' + service.borderStationId);
+      expect(service.get).toHaveBeenCalledWith(url);
+    });
+  });
+
+  describe('function getStaff with bsId', () => {
+    let bsId = 123;
+    let url = 'api/staff/?border_station=' + bsId;
+    it(`should call get with '${url}'`, () => {
+      spyOn(service, 'get');
+      service.getStaff(bsId);
+      expect(service.get).toHaveBeenCalledWith(url);
     });
   });
 
@@ -145,33 +178,36 @@ describe('BorderStationService', () => {
     // TODO
   });
 
-  describe('function updateCommitteeMembers', () => {
-    it('should call put with api string', () => {
+  describe('function updateCommitteeMembers with memberId and data', () => {
+    let memberId = 10;
+    let url = 'api/committee-member/' + memberId + '/';
+    let data = 'abcdef';
+    it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
-      let memberId = 10;
-      let data = {'test': 'data'};
       service.updateCommitteeMembers(memberId, data);
-      expect(service.put).toHaveBeenCalledWith('api/committee-member/' + memberId + '/', data);
+      expect(service.put).toHaveBeenCalledWith(url, data);
     });
   });
 
-  describe('function updateDetails', () => {
-    it('should call put with api string', () => {
+  describe('function updateDetails borderStationId and data', () => {
+    let borderStationId = 123;
+    let url = 'api/border-station/' + borderStationId + '/';
+    let data = 'abcdef';
+    it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
-      let memberId = 10;
-      let data = {'test': 'data'};
-      service.updateDetails(memberId, data);
-      expect(service.put).toHaveBeenCalledWith('api/border-station/' + memberId + '/', data);
+      service.updateDetails(borderStationId, data);
+      expect(service.put).toHaveBeenCalledWith(url, data);
     });
   });
 
-  describe('function updateLocations', () => {
-    it('should call put with api string', () => {
+  describe('function updateLocations with locationId and data', () => {
+    let locationId = 123;
+    let url = 'api/location/' + locationId + '/';
+    let data = 'abcdef';
+    it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
-      let locationId = 10;
-      let data = {'test': 'data'};
       service.updateLocations(locationId, data);
-      expect(service.put).toHaveBeenCalledWith('api/location/' + locationId + '/', data);
+      expect(service.put).toHaveBeenCalledWith(url, data);
     });
   });
 
@@ -179,13 +215,14 @@ describe('BorderStationService', () => {
     // TODO
   });
 
-  describe('function updateStaff', () => {
-    it('should call put with api string', () => {
+  describe('function updateStaff with staffId and data', () => {
+    let staffId = 123;
+    let url = 'api/staff/' + staffId + '/';
+    let data = 'abcdef';
+    it(`should call put with '${url}' and '${data}'`, () => {
       spyOn(service, 'put');
-      let staffId = 10;
-      let data = {'test': 'data'};
-      service.updateLocations(staffId, data);
-      expect(service.put).toHaveBeenCalledWith('api/location/' + staffId + '/', data);
+      service.updateStaff(staffId, data);
+      expect(service.put).toHaveBeenCalledWith(url, data);
     });
   });
 

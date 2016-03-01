@@ -3,15 +3,14 @@
 **Note:** Used [Generator-gulp-angular](https://github.com/Swiip/generator-gulp-angular) to generate project
 
 ### Front-End Installation
-1. `npm install -g yo gulp bower`
-2. Install generator-gulp-angular: `npm install -g generator-gulp-angular`
-3. Install dependencies: `npm install`
-4. Install more dependencies: `bower install`
+1. `npm install -g gulp bower`
+2. Install dependencies: `npm install`
+3. Install more dependencies: `bower install`
 
-**Note**: if `npm install -g` fails because of permission errors (trying to install in /usr/local), run the following commands:
-
-1. `echo 'prefix = ${HOME}/.npm-packages' >> ~/.npmrc`
-2. `echo 'export PATH="$PATH:$HOME/.npm-packages/bin"' >> ~/.bashrc`
+#### Troubleshooting Installation
+- If `npm install -g` fails because of permission errors (it's most likely trying to install in `/usr/local`), run the following commands. This makes it so the global (`-g`) node packages are installed on your home directory instead of attempting to install it for the whole computer:
+  1. `echo 'prefix = ${HOME}/.npm-packages' >> ~/.npmrc`
+  2. `echo 'export PATH="$PATH:$HOME/.npm-packages/bin"' >> ~/.bashrc`
 
 --------------------
 ### Gulp Usage

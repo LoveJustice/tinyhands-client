@@ -8,7 +8,7 @@
             <a class="btn btn-primary" id="export" href="#" download>
                 Export as CSV
             </a>
-            <a style="margin-left:5px;" id="id_input_new_vif" class="btn btn-success pull-right" href="#">
+            <a style="margin-left:5px;" id="id_input_new_vif" class="btn btn-success pull-right" href="/vif/create">
                 Input A New VIF
             </a>
         </div>
@@ -64,8 +64,8 @@
                 <td>{{ form.date_time_of_interception | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
-                <td><a class="btn btn-sm btn-primary" href="{{ vif.view_url }}">View</a></td>
-                <td><a class="btn btn-sm btn-primary" id="id_edit_vif_button" href="{{ vif.edit_url }}">Edit</a></td>
+                <td><a class="btn btn-sm btn-primary" href="#">View</a></td>
+                <td><a class="btn btn-sm btn-primary" id="id_edit_vif_button" href="#">Edit</a></td>
                 <td><a class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif(vif)">
                     {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>

@@ -7,6 +7,6 @@ export default class VifListService extends BaseService {
     }
 
     getVifList() {
-        return this.get('/api/budget/');
+        return this.get('/api/vif/');
     }
 }

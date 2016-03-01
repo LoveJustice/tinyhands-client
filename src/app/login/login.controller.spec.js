@@ -5,12 +5,14 @@ describe('LoginController', () => {
 
   let vm;
 
-  beforeEach(inject(($http, $rootScope, $timeout) => {
-    // FIXME can't inject $state
+  beforeEach(() => {
+    let $http = null;
+    let $rootScope = null;
     let $state = {go: () => {}};
+    let $timeout = null;
     let service = new SessionService($http, $rootScope, $state, $timeout);
     vm = new LoginController(service);
-  }));
+  });
 
   describe('function constructor', () => {
 

@@ -4,11 +4,13 @@ describe('SessionService', () => {
 
   let service;
 
-  beforeEach(inject(($http, $rootScope, $timeout) => {
-    // FIXME can't inject $state
+  beforeEach(() => {
+    let $http = null;
+    let $rootScope = {authenticated: null};
     let $state = {go: () => {}};
+    let $timeout = null;
     service = new SessionService($http, $rootScope, $state, $timeout);
-  }));
+  });
 
 
   describe('function constructor', () => {

@@ -95,8 +95,10 @@ class Address1Controller {
 
     nextUrl(url){
         if(url) {
-            url = url.match(/page=\d+/)[0];
-            url = url.match(/\d+/)[0];
+            url = url.match(/page=\d+/);
+            if (url) {
+                url = url[0].match(/\d+/)[0];
+            }
         }
         return url;
     }

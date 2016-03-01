@@ -105,9 +105,34 @@
             });
         });
 
-        describe('editAddress1', function(){
-            
+        //TODO: write tests for editAddress1(address)
+        /*describe('editAddress1', function(){
+            it("param modalInstance should not be null and should contain URL", function(){
+
+            });
+        });*/
+
+        describe('nextUrl tests', function(){
+           it("if url is null, should return null", function(){
+               var emptyString = null;
+               var url = vm.nextUrl(emptyString);
+               expect(url).toBe(null);
+            });
+
+            it("Passes regex", function(){
+                var testURL = "test.com/page=469876";
+                var url = vm.nextUrl(testURL);
+                expect(url).toBe("469876");
+            });
+
+
+            it("Regex Failure", function(){
+                var testURL = "test.com";
+                var url = vm.nextUrl(testURL);
+                expect(url).toBe(null);
+            });
         });
+
     });
 
 })();

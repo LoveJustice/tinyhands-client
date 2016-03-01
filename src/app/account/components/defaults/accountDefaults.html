@@ -99,8 +99,13 @@ th, td {
                 </tr>
             </tbody>
         </table>
-        <button ng-click="defaultsCtrl.addAnother()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-left">Add Another</button>
-        <button ng-click="defaultsCtrl.saveAll()" class="col-xs-offset-6 col-xs-2 col-md-offset-6 col-md-2 col-lg-offset-6 col-lg-2 clear btn {{defaultsCtrl.saveButtonColor}} btn-lg">{{defaultsCtrl.saveButtonText}}</button>
-        <button ng-click="defaultsCtrl.discardChanges()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Revert</button>
+        <div class="btn-toolbar">
+            <button ng-click="defaultsCtrl.addAnother()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-left">Add Another</button>
+            <button ng-disabled="!defaultsCtrl.unsavedChanges" ng-click="defaultsCtrl.discardChanges()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Discard Changes</button>
+            <button ng-disabled="!defaultsCtrl.unsavedChanges" ng-click="defaultsCtrl.saveAll()" class="col-xs-2  col-md-2  col-lg-2 clear btn {{defaultsCtrl.saveButtonColor}} btn-lg pull-right">{{defaultsCtrl.saveButtonText}}</button>
+        </div>
+        <!--col-xs-offset-6 col-xs-2 col-md-offset-6 col-md-2 col-lg-offset-6 col-lg-2
+        col-xs-2  col-md-2  col-lg-2-->
+
     </div>
 </div>

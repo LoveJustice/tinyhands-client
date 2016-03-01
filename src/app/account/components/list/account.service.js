@@ -18,6 +18,10 @@ export default class AccountService extends BaseService {
 		return this.get('/api/me/');
 	}
 
+  get(id) {
+    return this.get(`/api/account/${id}/`);
+  }
+
   // DELETE
   destroy(id) {
     return this.delete(`api/account/${id}/`);

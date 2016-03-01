@@ -26,13 +26,10 @@ export default class AccountDefaultsController {
     this.saveButtonText = this.savedText;
     this.saveButtonColor = this.savedColor;
     this.unsavedChanges = false;
+    this.canRevert = false;
 
     this.createListener();
     this.activate();
-
-    this.$scope.$watch('permissionsSets',function(newVal, oldVal){},true);
-
-
   }
 
   createListener() {

@@ -32,6 +32,7 @@ import AccountController from './account/components/list/account.controller';
 import AccountDefaultsController from './account/components/defaults/accountDefaults.controller';
 import AccountModalController from './account/components/list/accountModal.controller';
 import AccountNavController from './account/accountNav.controller';
+import AccountControlController from './account/components/control/accountControl.controller.js';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
@@ -87,6 +88,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('AccountController', AccountController)
   .controller('AccountModalController', AccountModalController)
   .controller('AccountNavController', AccountNavController)
+  .controller('AccountControlController,' AccountControlController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)
   .controller('Address1EditModalController', Address1EditModalController)

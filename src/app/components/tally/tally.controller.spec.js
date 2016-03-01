@@ -119,8 +119,7 @@ describe('TallyController', () => {
 
     it('should have days that have changed', () => {
         // REGION: Data Setup
-        httpBackend.whenGET(constants.BaseUrl + '/portal/tally/days/').respond(200, {
-        // httpBackend.whenGET(constants.BaseUrl + '/portal/tally/days/').respond(200, {
+        httpBackend.whenGET(constants.BaseUrl + 'portal/tally/days/').respond(200, {
         id: 0,
         days: [
             {date:'2015-05-02T02:11:49.556',interceptions: {'BSD':4}},
@@ -131,7 +130,7 @@ describe('TallyController', () => {
             {date:'2015-04-27T02:11:49.556',interceptions: {'ABC':2}},
             {date:'2015-04-26T02:11:49.556',interceptions: {'BSD':4}},
         ]});
-        httpBackend.expectGET(constants.BaseUrl + '/portal/tally/days/');
+        httpBackend.expectGET(constants.BaseUrl + 'portal/tally/days/');
         // ENDREGION: Data Setup
         expect(vm.days).toEqual([]);
 
@@ -147,7 +146,7 @@ describe('TallyController', () => {
 
     it('should have days that have not changed', () => {
         // REGION: Data Setup
-        httpBackend.whenGET(constants.BaseUrl + '/portal/tally/days/').respond(200, {
+        httpBackend.whenGET(constants.BaseUrl + 'portal/tally/days/').respond(200, {
             id: 0,
             days: [
                 {date:'2015-05-02T02:11:49.556',interceptions: {}},
@@ -158,7 +157,7 @@ describe('TallyController', () => {
                 {date:'2015-04-27T02:11:49.556',interceptions: {}},
                 {date:'2015-04-26T02:11:49.556',interceptions: {}},
             ]});
-        httpBackend.expectGET(constants.BaseUrl + '/portal/tally/days/');
+        httpBackend.expectGET(constants.BaseUrl + 'portal/tally/days/');
         // ENDREGION: Data Setup
         expect(vm.days).toEqual([]);
 

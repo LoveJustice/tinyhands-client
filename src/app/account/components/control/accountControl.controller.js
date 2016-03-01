@@ -11,50 +11,25 @@ export default class AccountControlController {
     this.PermissionsSetsService = PermissionsSetsService;
     // Scope Variables
 
-    this.activate;
+    this.activate();
   }
 
   activate() {
     this.emailError = '';
     this.userDesignationError = '';
 
-    if(this.$window.account_id !== undefined && $window.account_id > -1) {
-        this.editing = true;
-        var accountId = this.$window.account_id;
-        this.AccountsService.get(accountId).then((result) => {
-          this.account = result.data;
-        });
-    } else {
-        this.editing = false;
-        this.account = {
-            email: '',
-            first_name: '',
-            last_name: '',
-            user_designation: '',
-            permission_irf_view: false,
-            permission_irf_add: false,
-            permission_irf_edit: false,
-            permission_irf_delete: false,
-            permission_vif_view: false,
-            permission_vif_add: false,
-            permission_vif_edit: false,
-            permission_vif_delete: false,
-            permission_border_stations_view: false,
-            permission_border_stations_add: false,
-            permission_border_stations_edit: false,
-            permission_border_stations_delete: false,
-            permission_accounts_manage: false,
-            permission_receive_email: false,
-            permission_vdc_manage: false,
-            permission_budget_manage: false,
-        }
-    }
+    this.AccountService.getAccounts().then((result) => {
+      this.accounts = result.data;
+      console.log(this.accounts);
+    });
+    this.PermissionsSetsService.getPermissions().then((result) => {
+      this.permissionsSets = result.data
+    });
 
-    vm.permissionsSets = PermissionsSets.all();
   }
 }
 
-
+/*
 
         vm.update = function() {
             if(!vm.checkFields()){
@@ -133,4 +108,4 @@ export default class AccountControlController {
         }
 
         vm.activate();
-    }
+    }*/

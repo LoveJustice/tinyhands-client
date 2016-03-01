@@ -88,7 +88,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('AccountController', AccountController)
   .controller('AccountModalController', AccountModalController)
   .controller('AccountNavController', AccountNavController)
-  .controller('AccountControlController,' AccountControlController)
+  .controller('AccountControlController', AccountControlController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)
   .controller('Address1EditModalController', Address1EditModalController)

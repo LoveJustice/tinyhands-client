@@ -5,7 +5,8 @@ import constants from '../../constants';
 describe('TallyController', () => {
   let vm, httpBackend;
 
-  beforeEach(inject(($rootScope, $httpBackend, $http) => {
+  beforeEach(inject(($httpBackend, $http) => {
+    let $rootScope = null;
     let tallyService = new TallyService($http);
     vm = new TallyController($rootScope, tallyService);
     httpBackend = $httpBackend;

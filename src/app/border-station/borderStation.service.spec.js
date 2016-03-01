@@ -4,9 +4,11 @@ describe('BorderStationService', () => {
 
   let service;
 
-  beforeEach(inject(($http, $q) => {
+  beforeEach(() => {
+    let $http = null;
+    let $q = null;
     service = new BorderStationService($http, $q);
-  }));
+  });
 
 
   describe('function constructor', () => {

@@ -64,13 +64,7 @@ describe('BaseService', () => {
 
   describe('function handleErrors', () => {
     let error = {data: {a: 1, b: 2, c: 3}};
-    let finalErrors = [];
-		for (var key in error.data) {
-			finalErrors.push({
-				field: key,
-				messages: error.data[key]
-			});
-		};
+    let finalErrors = [{field: 'a', messages: 1}, {field: 'b', messages: 2}, {field: 'c', messages: 3}];
 
     it(`should set errors ${finalErrors}`, () => {
       service.handleErrors(error);

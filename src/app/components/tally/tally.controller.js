@@ -8,10 +8,6 @@ class TallyController {
 		this.days = [];
 		this.userId = null;
 
-		this.activate();
-	}
-
-	activate() {
 		this.getTallyData(true);
 	}
 

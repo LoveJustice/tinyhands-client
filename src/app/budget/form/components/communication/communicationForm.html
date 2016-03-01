@@ -1,97 +1,79 @@
-<div class="row">
-  <div class="col-lg-6">
-      <h2 class="background"><span>Communication</span></h2>
-
-      <div class="row">
-          <div class="col-lg-6">
-              <input style="margin-bottom: 0; margin-top: 10px" class="col-lg-3 col-lg-offset-1" type="checkbox" id="comm_chair_bool" ng-model="main.form.communication_chair"/>
-
-              <div class="col-lg-6 calc-form-input-no-width">
-                  <input class="text-right form-control" type="number" id="comm_chair_amount" ng-model="main.form.communication_chair_amount"/>
-                  <span><small>for chair</small></span>
-              </div>
-          </div>
-          <div class="col-lg-6 row">
-              <input style="margin-bottom: 0; margin-top: 10px" class="col-lg-3" type="checkbox" id="comm_manager_bool" ng-model="main.form.communication_manager"/>
-
-              <div class="col-lg-6 calc-form-input-no-width">
-                  <input class="text-right form-control" type="number" id="comm_manager_amount" ng-model="main.form.communication_manager_amount"/>
-                  <span><small>for manager</small></span>
-              </div>
-          </div>
+<div class="col-md-offset-3 col-md-6" ng-controller="BudgetCommunicationFormController as communicationCtrl">
+  <h2 class="text-center">Communication</h2>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+      <input class="col-md-2" type="checkbox" ng-model="budgetCtrl.form.communication_chair"/>
+      <div class="col-md-6 calc-form-input-no-width">
+        <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_chair_amount"/>
+        <small>for chair</small>
       </div>
-      <div class="row" style="margin-top: 20px">
-          <div class="col-lg-4 calc-form-input-no-width">
-              <input class="text-right form-control" type="number" id="comm_number_of_staff_wt" ng-model="main.form.communication_number_of_staff_with_walkie_talkies"/>
-              <small># of staff with walkie-talkies</small>
-          </div>
-          <div class="col-lg-1">
-              <h4 class="text-center">*</h4>
-          </div>
-          <div class="col-lg-3 calc-form-input-no-width">
-              <input class="text-right form-control" type="number" id="comm_number_of_staff_wt_multiplier" ng-model="main.form.communication_number_of_staff_with_walkie_talkies_multiplier"/>
-          </div>
-          <div class="col-lg-1">
-              <h4 class="text-center">=</h4>
-          </div>
-          <div class="col-lg-3 input-group">
-              <div class="input-group-addon">$</div>
-              <input class="form-control text-center" ng-value="main.commNumberOfStaffTotal()" disabled="disabled"/>
-          </div>
+    </div>
+    <div class="col-md-6">
+      <input class="col-md-2" type="checkbox" ng-model="budgetCtrl.form.communication_manager"/>
+      <div class="col-md-6 calc-form-input-no-width">
+        <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_manager_amount"/>
+        <small>for manager</small>
       </div>
-
-      <div class="row" style="margin-top: 20px">
-          <div class="col-lg-4 calc-form-input-no-width">
-              <input class="text-right form-control" type="number" id="comm_each_staff_wt" ng-model="main.form.communication_each_staff"/>
-              <small>Each Staff</small>
-          </div>
-          <div class="col-lg-1">
-              <h4 class="text-center">*</h4>
-          </div>
-          <div class="col-lg-3 calc-form-input-no-width">
-              <input class="text-right form-control" type="number" id="comm_each_staff_wt_multiplier" ng-model="main.form.communication_each_staff_multiplier"/>
-          </div>
-          <div class="col-lg-1">
-              <h4 class="text-center">=</h4>
-          </div>
-          <div class="col-lg-3 input-group">
-              <div class="input-group-addon">$</div>
-              <input class="form-control text-center" ng-value="main.commEachStaffTotal()" disabled="disabled"/>
-          </div>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies"/>
+      <small># of staff with walkie-talkies</small>
+    </div>
+    <operator>*</operator>
+    <div class="col-md-3 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies_multiplier"/>
+    </div>
+    <operator>=</operator>
+    <div class="col-md-3 input-group">
+      <div class="input-group-addon">$</div>
+      <input class="form-control text-center" ng-value="communicationCtrl.commNumberOfStaffTotal(budgetCtrl.form) | number" disabled="disabled" />
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-4 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff"/>
+      <small>Each Staff</small>
+    </div>
+    <operator>*</operator>
+    <div class="col-md-3 calc-form-input-no-width">
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff_multiplier"/>
+    </div>
+    <operator>=</operator>
+    <div class="col-md-3 input-group">
+      <div class="input-group-addon">$</div>
+      <input class="form-control text-center" ng-value="communicationCtrl.commEachStaffTotal(budgetCtrl.form) | number" disabled="disabled"/>
+    </div>
+  </div>
+  <hr>
+  <div class="row" ng-init="form_section = 7;">
+    <div ng-repeat="form in communicationCtrl.communicationForms">
+      <div class="col-md-4 col-md-offset-2">
+        <input class="form-control" type="text" ng-model="budgetCtrl.form.name" ng-disabled="budgetCtrl.view" />
       </div>
-
-      {% verbatim %}
-      <div class="row" ng-controller="otherBudgetItemsCtrl as communicationItemsCtrl" ng-init="form_section = 7;">
-          <div class="animated-budget-items" ng-repeat="form in communicationItemsCtrl.communicationForms">
-
-              <div class="col-lg-4 col-lg-offset-2">
-                  <input class="form-control" type="text" ng-model="form.name" ng-disabled="main.view"/>
-              </div>
-              <div class="col-lg-4">
-                  <input class="text-right form-control" type="number" ng-model="form.cost" ng-change="communicationItemsCtrl.otherItemsTotal()" ng-disabled="main.view"/>
-              </div>
-              <div class="col-lg-2">
-                  <a class="btn btn-danger" ng-click="communicationItemsCtrl.removeItem(form.id, $index)" ng-hide="main.view">Remove</a>
-              </div>
-              <br/>
-              <br/>
-          </div>
-          <div class="row">
-              <br/>
-              <div class="col-lg-4 col-lg-offset-5">
-                  <a class="btn btn-success" id="communication_add_item" ng-click="communicationItemsCtrl.addNewItem()" ng-hide="main.view">Add item</a>
-              </div>
-          </div>
+      <div class="col-md-4">
+        <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.cost" ng-change="communicationCtrl.otherItemsTotal()"
+        ng-disabled="budgetCtrl.view" />
       </div>
-      {% endverbatim %}
-
-      <div class="row center text-center" style="margin-top: 20px">
-
-          <div class="col-lg-4 col-lg-offset-4">
-              <label>Total Communication</label>
-              <input class="form-control text-center" ng-value="main.communicationTotalValue" disabled="disabled"/>
-          </div>
+      <div class="col-md-2">
+        <button class="btn btn-danger" ng-click="communicationCtrl.removeItem(budgetCtrl.form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
-
+      <br/>
+      <br/>
+    </div>
+    <div class="row">
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="communicationCtrl.addNewItem()" ng-hide="budgetCtrl.view">Add item</button>
+    </div>
+  </div>
+  <hr>
+  <div class="row center text-center">
+    <div class="col-md-4 col-md-offset-4">
+      <label>Total Communication</label>
+      <input class="form-control text-center" ng-value="communicationCtrl.commTotal(budgetCtrl.form) | currency" disabled="disabled" />
+    </div>
   </div>
 </div>

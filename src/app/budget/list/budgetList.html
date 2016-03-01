@@ -5,11 +5,31 @@
   <table ng-if="budgetListCtrl.listOfBudgets.length > 0" class="table table-striped table-condensed crud-datatable">
     <thead>
       <tr>
-        <th class="text-center" ng-click="orderBy = form.border_station.station_name">Station</th>
-        <th class="text-center" ng-click="orderBy = form.border_station.station_code">Station Code</th>
-        <th class="text-center" ng-click="orderBy = form.month_year">Budget For</th>
-        <th class="text-center" ng-click="orderBy = form.date_time_entered">Date Entered</th>
-        <th class="text-center" ng-click="orderBy = form.date_time_last_updated">Last Updated</th>
+        <th class="text-center" ng-click="sortType = 'border_station.station_name'; sortReverse = !sortReverse;">Station</th>
+        <span ng-show="sortType == 'border_station.station_name'"
+              ng-class="sortReverse ? 'glyphicon glyphicon-sort-by-attributes-alt' : 'glyphicon glyphicon-sort-by-attributes'"
+              ng-click="sortReverse = !sortReverse">
+        </span>
+        <th class="text-center" ng-click="sortType = 'border_station.station_code'">Station Code</th>
+        <span ng-show="sortType == 'border_station.station_code'"
+              ng-class="sortReverse ? 'glyphicon glyphicon-sort-by-attributes-alt' : 'glyphicon glyphicon-sort-by-attributes'"
+              ng-click="sortReverse = !sortReverse">
+        </span>
+        <th class="text-center" ng-click="sortType = 'month_year'">Budget For</th>
+        <span ng-show="sortType == 'month_year'"
+              ng-class="sortReverse ? 'glyphicon glyphicon-sort-by-attributes-alt' : 'glyphicon glyphicon-sort-by-attributes'"
+              ng-click="sortReverse = !sortReverse">
+        </span>
+        <th class="text-center" ng-click="sortType = 'date_time_entered'">Date Entered</th>
+        <span ng-show="sortType == 'date_time_entered'"
+              ng-class="sortReverse ? 'glyphicon glyphicon-sort-by-attributes-alt' : 'glyphicon glyphicon-sort-by-attributes'"
+              ng-click="sortReverse = !sortReverse">
+        </span>
+        <th class="text-center" ng-click="sortType = 'date_time_last_updated'">Last Updated</th>
+        <span ng-show="sortType == 'date_time_last_updated'"
+              ng-class="sortReverse ? 'glyphicon glyphicon-sort-by-attributes-alt' : 'glyphicon glyphicon-sort-by-attributes'"
+              ng-click="sortReverse = !sortReverse">
+        </span>
         <th class="text-center">&nbsp;</th>
       </tr>
     </thead>

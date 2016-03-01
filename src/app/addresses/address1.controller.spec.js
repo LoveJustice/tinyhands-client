@@ -74,8 +74,7 @@
                 expect(params).toContain({"name": "page_size", "value": vm.paginateBy});
             });
 
-            //TODO: fix if condition should result for the text of the it statement
-            it("param's nextPageUrl & loadMore are set", function(){
+            it("if param's nextPageURL is not null, params should contain {name: page, value: vm.nextPageUrl}", function(){
                 vm.nextPageUrl = 'testURL.html';
                 var loadMore = true;
                 var params = vm.getQueryParams(loadMore);
@@ -83,27 +82,31 @@
                 expect(params).toContain({"name": "page", "value": vm.nextPageUrl});
             });
 
-            it("param's searchValue is set", function(){
+            it("if param's searchVal is not null, params should contain {name: search, value: vm.searchValue}", function(){
                 vm.searchValue = "testString";
                 var params = vm.getQueryParams();
 
                 expect(params).toContain({"name": "search", "value": vm.searchValue});
             });
 
-            it("param's sortColumn is set & reverse is true", function(){
+            it("if param's sortColumn is not null AND reverse is true, params should contain {name: ordering, value: -sortColumn}", function(){
                 vm.sortColumn = "testString";
                 vm.reverse = true;
                 var params = vm.getQueryParams();
                 expect(params).toContain({"name": "ordering", "value": ("-" + vm.sortColumn.replace(".", "__"))});
             });
 
-            it("param's sortColumn is set & reverse is false", function(){
+            it("if param's sortColumn is not null AND reverse is false, params should contian {name: ordering, value: sortColumn}", function(){
                 vm.sortColumn = "testString2";
                 vm.reverse = false;
                 var params = vm.getQueryParams();
 
                 expect(params).toContain({"name": "ordering", "value": (vm.sortColumn.replace(".", "__"))});
             });
+        });
+
+        describe('editAddress1', function(){
+            
         });
     });
 

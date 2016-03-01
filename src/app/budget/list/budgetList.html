@@ -2,6 +2,16 @@
   <h1 class="text-center">All Budget Calculations</h1>
   <br/>
 
+  <form>
+    <div class="col-md-12">
+      <div class="form-group pull-right">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchForms">
+        </div>
+      </div>
+    </div>
+  </form>
+
   <table ng-if="budgetListCtrl.listOfBudgets.length > 0" class="table table-striped table-condensed crud-datatable">
     <thead>
       <tr>
@@ -39,7 +49,7 @@
       </tr>
     </thead>
     <tbody class="text-center">
-      <tr ng-repeat="form in budgetListCtrl.listOfBudgets | orderBy:sortType:sortReverse"
+      <tr ng-repeat="form in budgetListCtrl.listOfBudgets | orderBy:sortType:sortReverse | filter:budgetListCtrl.searchForms"
           ng-mouseenter="form.hover = true"
           ng-mouseleave="form.hover = false; form.budgetRemoved = false">
         <td>{{ form.border_station.station_name }}</td>

@@ -1,10 +1,15 @@
 export default class BudgetList {
-  constructor($uibModal, BudgetListService, session) {
+  constructor($uibModal, BudgetListService, session, $scope) {
     'ngInject';
 
+    this.$scope = $scope;
     this.$uibModal = $uibModal;
     this.service = BudgetListService;
     this.session = session;
+
+    $scope.sortType = form.date_time_last_updated;
+    $scope.sortReverse = false;
+    $scope.searchForms = '';
 
     this.getBudgetList();
   }

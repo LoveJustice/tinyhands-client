@@ -20,7 +20,6 @@ export default class AccountControlController {
 
     this.AccountService.getAccounts().then((result) => {
       this.accounts = result.data;
-      console.log(this.accounts);
     });
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissionsSets = result.data

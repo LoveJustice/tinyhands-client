@@ -10,7 +10,7 @@
 #### Troubleshooting Installation
 - If `npm install -g` fails because of permission errors (it's most likely trying to install in `/usr/local`), run the following commands. This makes it so the global (`-g`) node packages are installed on your home directory instead of attempting to install it for the whole computer:
   1. `echo 'prefix = ${HOME}/.npm-packages' >> ~/.npmrc`
-  2. `echo 'export PATH="$HOME/.npm-packages/bin:$PATH"' >> ~/.bashrc`
+  2. `echo 'export PATH="$PATH:$HOME/.npm-packages/bin"' >> ~/.bashrc`
 
 --------------------
 ### Gulp Usage

@@ -30,7 +30,7 @@ module.exports = function(config) {
 
     autoWatch: false,
 
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'browserify'],
 
     ngHtml2JsPreprocessor: {
       stripPrefix: 'src/',
@@ -42,11 +42,17 @@ module.exports = function(config) {
     plugins : [
       'karma-phantomjs-launcher',
       'karma-jasmine',
-      'karma-ng-html2js-preprocessor'
+      'karma-ng-html2js-preprocessor',
+      'karma-browserify'
     ],
 
     preprocessors: {
-      'src/**/*.html': ['ng-html2js']
+      'src/**/*.html': ['ng-html2js'],
+      'src/**/*.spec.js': ['browserify']
+    },
+
+    browserify: {
+      transform: ['babelify']
     }
   };
 

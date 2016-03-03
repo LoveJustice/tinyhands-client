@@ -1,0 +1,81 @@
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="col-xs-5">
+            <h1>All IRFs</h1>
+        </div>
+        <div class="pull-right" style="margin-top:20px;">
+            <a class="btn btn-primary" id="export" href="#" download>
+                Export as CSV
+            </a>
+            <a style="margin-left:5px;" id="id_input_new_irf" class="btn btn-success pull-right" href="/irf/create">
+                Input A New IRF
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Results per page dropdown -->
+        <div class="col-sm-2 col-xs-3">
+            <select class="form-control">
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+                <option>500</option>
+            </select>
+        </div>
+        <div class="col-sm-3 col-xs-1">
+            <p style="margin-top: 8px;">Results <span class="hidden-xs">per page</span></p>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input placeholder="by IRF number..." class="form-control">
+                  </label>
+                  <button class="btn btn-primary pull-right">Search</button>
+            </form>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <p>{{ irfListCtrl.listOfIrfs.count }}</p>
+    <table ng-if="irfListCtrl.listOfIrfs.length > 0" class="table table-striped table-condensed crud-datatable">
+        <thead>
+            <tr>
+                <th>IRF #</th>
+                <th>Staff Name</th>
+                <th># of Victims</th>
+                <th># of Traffickers</th>
+                <th>Time of Interception</th>
+                <th>Time Entered Into System</th>
+                <th>Time Last Edited</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="form in irfListCtrl.listOfIrfs">
+                <td>{{ form.irf_number }}</td>
+                <td>{{ form.staff_name }}</td>
+                <td>{{ form.number_of_victims }}</td>
+                <td>{{ form.number_of_traffickers }}</td>
+                <td>{{ form.date_time_of_interception | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
+                <td><a class="btn btn-sm btn-primary" href="#">View</a></td>
+                <td><a class="btn btn-sm btn-primary" id="id_edit_irf_button" href="#">Edit</a></td>
+                <td><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteirf(irf)">
+                    {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <button ng-disabled="!irfListCtrl.nextPageUrl" ng-click="irfListCtrl.loadMoreirfs()" class="btn btn-primary" style="...">
+            Load more results
+        </button>
+    </div>
+
+</div>

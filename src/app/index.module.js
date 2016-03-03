@@ -14,10 +14,11 @@ import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
+import IrfListService from './irf/list/irfList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
-import VifService from './vif/form/vif.service'
-import VifListService from './vif/list/vifList.service'
+import VifService from './vif/form/vif.service';
+import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -48,11 +49,11 @@ import BudgetShelterFormController from './budget/form/components/shelter/shelte
 import BudgetSuppliesFormController from './budget/form/components/supplies/suppliesForm.controller';
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
 import DashboardController from './dashboard/dashboard.controller';
+import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
 import VifController from './vif/form/vif.controller';
 import VifListController from './vif/list/vifList.controller';
-import irfListController from './irf/list/irfList.controller';
 // ENDREGION: Controllers
 
 // REGION: Factories
@@ -79,6 +80,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('IrfListService', IrfListService)
   .service('VifService', VifService)
   .service('VifListService', VifListService)
   // ENDREGION: Services
@@ -115,6 +117,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('BudgetSuppliesFormController', BudgetSuppliesFormController)
   .controller('BudgetTravelFormController', BudgetTravelFormController)
   .controller('DashboardController', DashboardController)
+  .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
   .controller('VifController', VifController)

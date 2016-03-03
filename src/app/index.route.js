@@ -81,6 +81,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: true
       }
+    })
+    .state('irfList', {
+      url: '/irf',
+      templateUrl: 'app/irf/list/irfList.html',
+      controller: 'irfListController',
+      controllerAs: 'irfListCtrl',
+      data: {
+        requireLogin: true
+      }
     });
 
   // Remove hash from url

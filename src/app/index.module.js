@@ -50,8 +50,9 @@ import BudgetTravelFormController from './budget/form/components/travel/travelFo
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
-import VifController from './vif/form/vif.controller'
+import VifController from './vif/form/vif.controller';
 import VifListController from './vif/list/vifList.controller';
+import irfListController from './irf/list/irfList.controller';
 // ENDREGION: Controllers
 
 // REGION: Factories

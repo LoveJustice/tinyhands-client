@@ -1,9 +1,9 @@
 export default class VifListController {
-  constructor(VifListService) {
-    'ngInject';
-    this.service = VifListService;
-
-    this.getVifList();
+  constructor(VifListService, session) {
+      'ngInject';
+      this.service = VifListService;
+      this.session = session;
+      this.getVifList();
   }
 
   getVifList() {

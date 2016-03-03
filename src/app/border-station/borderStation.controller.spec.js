@@ -34,20 +34,31 @@ describe('BorderStationController', () => {
             expect(vm.updatePeopleDone).toBeFalsy();
         });
 
-        it('updateStatusText should be constants.UpdateButtonText.Default',function(){
-            //needs the constant file to work
+        it('if $statsParams.id = an id updateStatusText should be constants.UpdateButtonText.Default',function(){
+            
+            if(vm.service.borderStationId){
+                vm.updateStatusText = constants.UpdateButtonText.Default;
+            };
         });
 
-        it('updateStatusText should be constants.UpdateButtonText.Create',function(){
-            //needs the constant file to work
+        it('if $statsParams.id = null updateStatusText should be constants.UpdateButtonText.Create',function(){
+            if(vm.service.borderStationId== null){
+                vm.updateStatusText = constants.UpdateButtonText.Create;
+            };
         });
 
     });
 
     describe('function checkDone', function(){
-        it('',function(){
-            //needs the constant file to work
-        });
+        pending("Not working Currently");
+        // it('',function(){
+        //     vm.checkDone();
+        //     if(vm.modifyDetailDone && vm.updateLocationDone && vm.updatePeopleDone){
+        //     //   vm.updateStatusText =  constants.UpdateButtonText.Default;
+        //       vm.updateStatusText = " fsfdasfa";
+        //       console.log(vm.updaterStatusText);
+        //     };
+        // });
     });
 
     describe('function createListeners', function(){
@@ -73,24 +84,25 @@ describe('BorderStationController', () => {
         });
 
         it('listener.status should be true',function(){
-            //needs the constant file to work
-            //spyOn(vm.$scope,"$on");
-            //vm.createModifyDoneListeners();
-            //expect(vm["modifyDetailDone"]).toEqual(true);
+            pending('Have troubles with $on function');
+            spyOn(vm.$scope,"$on");
+            vm.createModifyDoneListeners();
+            expect(vm["modifyDetailDone"]).toEqual(true);
         });
 
 
     });
 
     describe('function createUpdateErrorListeners', function(){
-        it('$on should be called 4 times',function(){
+        it('$on should be called 4 times',() => {
             spyOn(vm.$scope,"$on");
             vm.createUpdateErrorListeners();
             expect(vm.$scope.$on).toHaveBeenCalledTimes(4);
         });
 
         it('updateStatusText should be equal to constants.UpdateButtonText.Error', function(){
-            pending('Have troubles with $on function');
+            // pending('Have troubles with $on function');
+            vm.$scope.$on = (listener, f) => {f()};
             vm.createUpdateErrorListeners();
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Error);
         });
@@ -104,7 +116,6 @@ describe('BorderStationController', () => {
         });
 
         it("$scope.$broadcast should be constants.Events.Get.BorderStation",function(){
-
             spyOn(vm.$scope,"$broadcast");
             vm.getBorderStationData();
             expect(vm.$scope.$broadcast).toHaveBeenCalledWith(constants.Events.Get.BorderStation);

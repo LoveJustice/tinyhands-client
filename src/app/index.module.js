@@ -16,6 +16,8 @@ import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
+import VifService from './vif/form/vif.service'
+import VifListService from './vif/list/vifList.service'
 // ENDREGION: Services
 
 // REGION: Directives
@@ -48,7 +50,8 @@ import BudgetTravelFormController from './budget/form/components/travel/travelFo
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
-// import VifListController from './vif/list/vifList.controller';
+import VifController from './vif/form/vif.controller'
+import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
 // REGION: Factories
@@ -75,6 +78,8 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('VifService', VifService)
+  .service('VifListService', VifListService)
   // ENDREGION: Services
 
   // REGION: Factories
@@ -111,6 +116,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
-  // .controller('VifListController', VifListController)
+  .controller('VifController', VifController)
+  .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

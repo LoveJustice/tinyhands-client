@@ -42,16 +42,16 @@
     </div>
   </div>
   <hr>
-  <div class="row" ng-init="form_section = 4;">
-    <div class="form-group" ng-repeat="form in budgetCtrl.suppliesForms">
+  <div class="row">
+    <div ng-repeat="otherSuppliesItem in budgetCtrl.form.otherSupplies">
       <div class="col-md-4 col-md-offset-2">
-        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="form.name" ng-disabled="budgetCtrl.view" />
+        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSuppliesItem.name" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-4">
-        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="form.cost" ng-disabled="budgetCtrl.view" />
+        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSuppliesItem.cost" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(form.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherSuppliesItem.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>

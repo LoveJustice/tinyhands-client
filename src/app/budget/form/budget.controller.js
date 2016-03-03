@@ -4,7 +4,6 @@ export default class BudgetController {
   constructor($scope, $http, $location, $stateParams, $window, BudgetService) {
     'ngInject';
 
-    this.formSections = Constants.FormSections;
     this.service = BudgetService;
 
 
@@ -28,37 +27,6 @@ export default class BudgetController {
     this.sectionTemplateUrl = null;
     this.total = 0;
 
-
-    // Budget Calc sheets are for the 15th of every month
-    this.date =  new Date();
-    var thisMonth = this.date.getMonth();
-    this.date.setMonth(thisMonth + 1);
-
-    this.form.station_name = window.station_name;
-
-    this.otherItemsTotals = [this.otherTravelTotalValue,
-                            this.otherMiscTotalValue,
-                            this.otherAwarenessTotalValue,
-                            this.otherSuppliesTotalValue,
-                            this.otherShelterTotalValue,
-                            this.otherFoodGasTotalValue,
-                            this.otherCommunicationTotalValue,
-                            this.otherStaffTotalValue];
-
-
-    // Event Listeners
-    // $scope.$on('handleOtherItemsTotalChangeBroadcast', (event, args) => {
-    //   this.otherItemsTotals[args['form_section'] - 1][0] = args['total'];
-    //   this.callTotals();
-    // });
-
-    // $scope.$on('handleSalariesTotalChangeBroadcast', (event, args) => {
-    //   this.salariesTotal = args['total'];
-    // });
-
-    // $scope.$on('lastBudgetTotalBroadcast', (event, args) => {
-    //   this.last_months_total_cost = args['total'];
-    // });
 
     this.getBudgetForm();
   }
@@ -192,8 +160,8 @@ export default class BudgetController {
       }
     });
 
-    this.form.otherStaff.forEach((otherStaff) => {
-      amount += otherStaff.cost;
+    this.form.otherSalaries.forEach((otherSalaries) => {
+      amount += otherSalaries.cost;
     });
 
     this.form.totals.borderMonitoringStation.salaries = amount;
@@ -283,6 +251,8 @@ export default class BudgetController {
   // ENDREGION: Travel
 
 
+
+  // REGION: Functions that handle totals
   setBorderMonitoringStationTotals() {
     let amount = this.adminTotal() +
       this.communicationTotal() +
@@ -307,9 +277,18 @@ export default class BudgetController {
       this.suppliesTotal();
     this.total = amount;
   }
+  // ENDREGION: Functions that handle totals
+
 
 
   // REGION: Call to Service Functions
+  getAllData() {
+    this.getStaff();
+    this.getBorderStation();
+    this.getPreviousData();
+    this.getOtherData();
+  }
+
   getBorderStation() {
     this.service.getBorderStation(this.form.border_station).then((response) => {
       this.form.station_name = response.data.station_name;
@@ -323,17 +302,16 @@ export default class BudgetController {
         other: {},
         safeHouse: {}
       };
-      this.getStaff();
-      this.getBorderStation();
-      this.getPreviousData();
+      this.getAllData();
     });
   }
 
-  getOtherStaff() {
-    this.service.getOtherItems(this.budgetId, this.formSections.Salaries).then((response) => {
-      this.form.otherStaff = response.data.results;
-      this.getStaffSalaries();
-    });
+  getOtherData() {
+    for (let key in Constants.FormSections) {
+      this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
+        this.form[`other${key}`] = response.data.results;
+      });
+    }
   }
 
   getPreviousData() {
@@ -347,7 +325,7 @@ export default class BudgetController {
   getStaff() {
     this.service.getStaff(this.form.border_station).then((response) => {
       this.form.staff = response.data.results;
-      this.getOtherStaff();
+      this.getStaffSalaries();
     });
   }
 
@@ -365,23 +343,6 @@ export default class BudgetController {
   }
   // ENDREGION: Call to Service Functions
 
-  //Determine the kind of functionality...view/create/edit
-  // main (){
-  //   if( (window.submit_type) == 1 ) {
-  //       this.create = true;
-  //       this.retrieveNewForm();
-  //   }
-  //   else if( (window.submit_type) == 2)  {
-  //       this.update = true;
-  //       this.retrieveForm(window.budget_calc_id);
-  //   }
-  //   else if( (window.submit_type) == 3) {
-  //       this.view = true;
-  //       $('input').prop('disabled', true);
-  //       this.retrieveForm(window.budget_calc_id);
-
-  //   }
-  // }
 
   // //CRUD Functions
   // updateForm() {

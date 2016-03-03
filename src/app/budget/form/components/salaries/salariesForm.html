@@ -14,15 +14,15 @@
     </div>
     <hr>
     <div class="row">
-      <div ng-repeat="otherStaff in budgetCtrl.form.otherStaff | orderBy:'name'">
+      <div ng-repeat="otherSalaryItem in budgetCtrl.form.otherSalaries | orderBy:'name'">
         <div class="col-md-6">
-          <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherStaff.name" ng-disabled="budgetCtrl.view" />
+          <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.name" ng-disabled="budgetCtrl.view" />
         </div>
         <div class="col-md-4">
-          <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherStaff.cost" ng-disabled="budgetCtrl.view"/>
+          <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.view"/>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherStaff.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherSalaryItem.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
         </div>
         <br/>
         <br/>

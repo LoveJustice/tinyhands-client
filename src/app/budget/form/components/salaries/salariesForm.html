@@ -22,13 +22,13 @@
           <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.view"/>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherSalaryItem.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherSalaries, $index)" ng-hide="budgetCtrl.view">Remove</button>
         </div>
         <br/>
         <br/>
       </div>
       <div class="row">
-        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.addNewItem()" ng-hide="budgetCtrl.view">Add staff</button>
+        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.otherSalaries.push({})" ng-hide="budgetCtrl.view">Add staff</button>
       </div>
     </div>
     <hr>

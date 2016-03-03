@@ -34,6 +34,18 @@ export default class BudgetController {
 
   // Functions
 
+  getOtherCost(otherItems) {
+    let amount = 0;
+    for (let i in otherItems) {
+      amount += otherItems[i].cost;
+    }
+    return amount;
+  }
+
+  removeItem(otherArray, idx) {
+    otherArray.splice(idx, 1);
+  }
+
   // REGION: Administration
   adminStationaryTotal() {
     return (this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.form.administration_number_of_intercepts_last_month_adder;
@@ -73,7 +85,7 @@ export default class BudgetController {
     if (this.form.awareness_sign_boards_boolean) {
       amount += this.form.awareness_sign_boards;
     }
-    // this.awarenessTotalValue = amount + this.otherAwarenessTotalValue[0];
+    amount += this.getOtherCost(this.form.otherAwareness);
     this.form.totals.other.awareness = amount;
     return amount;
   }
@@ -88,7 +100,6 @@ export default class BudgetController {
     }
     if (this.form.communication_manager) {
       amount += this.form.communication_manager_amount;
-
     }
     return amount;
   }
@@ -105,7 +116,7 @@ export default class BudgetController {
 
   communicationTotal() {
     let amount = this.communicationManagerTotal() + this.communicationNumberOfStaffTotal() + this.communicationEachStaffTotal();
-    // this.communicationTotalValue = amount + this.otherCommunicationTotalValue[0];
+    amount += this.getOtherCost(this.form.otherCommunication);
     this.form.totals.borderMonitoringStation.communication = amount;
     return amount;
   }
@@ -126,7 +137,7 @@ export default class BudgetController {
 
   foodAndGasTotal() {
     let amount = this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
-    // this.otherfoodGasTotalValue = amount + this.otherFoodGasTotalValue[0];
+    amount += this.getOtherCost(this.form.otherFoodAndGas);
     this.form.totals.safeHouse.foodAndGas = amount;
     return amount;
   }
@@ -145,8 +156,9 @@ export default class BudgetController {
   }
 
   miscellaneousTotal() {
-    this.form.totals.borderMonitoringStation.miscellaneous = this.miscellaneousMaximum();// + this.otherMiscTotalValue[0];
-    return this.miscellaneousMaximum();
+    let amount = this.miscellaneousMaximum() + this.getOtherCost(this.formMiscellaneous);
+    this.form.totals.borderMonitoringStation.miscellaneous = amount;
+    return amount;
   }
   // ENDREGION: Miscellaneous
 
@@ -163,6 +175,8 @@ export default class BudgetController {
     this.form.otherSalaries.forEach((otherSalaries) => {
       amount += otherSalaries.cost;
     });
+
+    amount += this.getOtherCost(this.form.otherSalaries);
 
     this.form.totals.borderMonitoringStation.salaries = amount;
 
@@ -192,8 +206,8 @@ export default class BudgetController {
             this.form.shelter_water +
             this.form.shelter_electricity +
             this.shelterCheckboxTotal(this.form);
+    amount += this.getOtherCost(this.form.otherShelter);
     this.form.totals.safeHouse.shelter = amount;
-    // this.shelterTotalValue = amount + this.otherShelterTotalValue[0];
     return amount;
   }
   // ENDREGION: Shelter
@@ -213,7 +227,7 @@ export default class BudgetController {
     if(this.form.supplies_flashlights_boolean) {
         amount += this.form.supplies_flashlights_amount;
     }
-    // this.suppliesTotalValue = amount + this.otherSuppliesTotalValue[0];
+    amount += this.getOtherCost(this.form.otherSupplies);
     this.form.totals.other.supplies = amount;
     return amount;
   }
@@ -243,8 +257,7 @@ export default class BudgetController {
     if(this.form.travel_motorbike) {
         amount += this.form.travel_motorbike_amount;
     }
-    // this.travelTotalValue = amount + this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier) + this.otherTravelTotalValue[0];
-    amount += this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier);
+    amount += this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier) + this.getOtherCost(this.form.otherTravel);
     this.form.totals.borderMonitoringStation.travel = amount;
     return amount;
   }

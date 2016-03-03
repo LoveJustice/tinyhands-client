@@ -60,13 +60,13 @@
         ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherCommunicationItem.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherCommunication, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.addNewItem()" ng-hide="budgetCtrl.view">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.otherCommunication.push({})" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>

@@ -26,13 +26,13 @@
         <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherMiscellaneousItem.cost" ng-disabled="budgetCtrl.view"/>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherMiscellaneousItem.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherMiscellaneous, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.addNewItem();" ng-hide="budgetCtrl.view">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.otherMiscellaneous.push({})" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>

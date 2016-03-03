@@ -43,13 +43,13 @@
         <input class="text-right awareness-extra-item-value form-control" type="number" ng-model="otherAwarenessItem.cost" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(otherAwarenessItem.id, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherAwareness, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-offset-4 col-xs-4" ng-click="budgetCtrl.addNewItem()" ng-hide="budgetCtrl.view">Add item</button>
+      <button class="btn btn-success col-xs-offset-4 col-xs-4" ng-click="budgetCtrl.form.otherAwareness.push({})" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>

@@ -16,7 +16,7 @@
     <div class="row">
         <!-- Results per page dropdown -->
         <div class="col-sm-2 col-xs-3">
-            <select ng-model="vifListCtrl.paginateBy" ng-change="vifListCtrl.getVifList()" class="form-control">
+            <select ng-init="vifListCtrl.paginateBy='25'" ng-model="vifListCtrl.paginateBy" ng-change="vifListCtrl.getVifList()" class="form-control">
                 <option>25</option>
                 <option>50</option>
                 <option>100</option>
@@ -39,7 +39,7 @@
         <!-- End search -->
     </div>
     <br/>
-    
+
     <table ng-if="vifListCtrl.listOfVifs.length > 0" class="table table-striped table-condensed crud-datatable">
         <thead>
             <tr>

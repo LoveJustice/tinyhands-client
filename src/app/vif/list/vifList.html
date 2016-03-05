@@ -32,9 +32,8 @@
         <div class="col-md-3 search-bar pull-right">
             <form>
                   <label class="pull-right">
-                      <input placeholder="by VIF number..." class="form-control">
+                      <input ng-model="vifListCtrl.searchValue" placeholder="Search" class="form-control" style="font-weight: normal;">
                   </label>
-                  <button class="btn btn-primary pull-right">Search</button>
             </form>
         </div>
         <!-- End search -->
@@ -85,7 +84,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="form in vifListCtrl.listOfVifs | orderBy: vifListCtrl.getSort()">
+            <tr ng-repeat="form in vifListCtrl.listOfVifs | filter: vifListCtrl.searchValue | orderBy: vifListCtrl.getSort()">
                 <td>{{ form.vif_number }}</td>
                 <td>{{ form.interviewer }}</td>
                 <td>{{ form.number_of_victims }}</td>

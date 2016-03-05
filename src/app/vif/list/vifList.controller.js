@@ -5,6 +5,7 @@ export default class VifListController {
     this.session = session;
     this.sort = 'vif_number';
     this.reverse = false;
+    this.searchValue = "";
 
     this.getVifList();
   }

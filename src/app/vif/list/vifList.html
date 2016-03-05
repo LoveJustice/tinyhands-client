@@ -16,7 +16,7 @@
     <div class="row">
         <!-- Results per page dropdown -->
         <div class="col-sm-2 col-xs-3">
-            <select class="form-control">
+            <select ng-model="vifListCtrl.paginateBy" ng-change="vifListCtrl.getVifList()" class="form-control">
                 <option>25</option>
                 <option>50</option>
                 <option>100</option>
@@ -84,7 +84,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="form in vifListCtrl.listOfVifs | filter: vifListCtrl.searchValue | orderBy: vifListCtrl.getSort()">
+            <tr ng-repeat="form in vifListCtrl.showingVifs | filter: vifListCtrl.searchValue | orderBy: vifListCtrl.getSort()">
                 <td>{{ form.vif_number }}</td>
                 <td>{{ form.interviewer }}</td>
                 <td>{{ form.number_of_victims }}</td>
@@ -100,7 +100,7 @@
         </tbody>
     </table>
     <div class="row text-center">
-        <button ng-disabled="!vifListCtrl.nextPageUrl" ng-click="vifListCtrl.loadMoreVifs()" class="btn btn-primary" style="...">
+        <button ng-show="vifListCtrl.showingVifs.length < vifListCtrl.listOfVifs.length" ng-click="vifListCtrl.showMoreVifs()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">
             Load more results
         </button>
     </div>

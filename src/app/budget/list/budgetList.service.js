@@ -7,7 +7,7 @@ export default class BudgetListService extends BaseService {
   }
 
   getBudgetList() {
-    return this.get('/api/budget/');
+    return this.get('/api/budget/',['page_size=2']);
   }
 
   deleteBorderStationBudget(id) {

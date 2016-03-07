@@ -1,15 +1,28 @@
 export default class AccountControlController {
 
-  constructor($scope, $window, AccountService, PermissionsSetsService) {
+  constructor($q, $scope, $timeout, $window, AccountService, PermissionsSetsService) {
     'ngInject';
 
     // Modules
+
     this.$scope = $scope;
     this.$window = $window;
+    this.$q = $q;
+    this.$timeout = $timeout;
     // Services
+
     this.AccountService = AccountService;
     this.PermissionsSetsService = PermissionsSetsService;
     // Scope Variables
+
+    this.saveText= "Update";
+    this.savingText = "Updating...";
+    this.savedText = "Updated";
+    this.saveColor = "btn-success";
+    this.savingColor = "btn-success";
+    this.savedColor = "btn-primary";
+    this.saveButtonText = this.saveText;
+    this.saveButtonColor = this.saveColor;
 
     this.activate();
   }
@@ -20,17 +33,37 @@ export default class AccountControlController {
 
     this.AccountService.getAccounts().then((result) => {
       this.accounts = result.data;
-      console.log(this.accounts);
     });
     this.PermissionsSetsService.getPermissions().then((result) => {
-      this.permissionsSets = result.data
+      this.permissionsSets = result.data;
     });
-
   }
+
+  update() {
+      this.updateSaveButton(this.savingText, this.savingColor)
+      return this.$q((resolce, reject) => {
+          var promises = [];
+          this.accounts.forEach((elm, idx) => {
+              promises.push(this.AccountService.update(this.accounts[idx].id, this.accounts[idx]));
+          });
+          this.$q.all(promises).then(() => {
+              this.updateSaveButton(this.saveText, this.saveColor, 800)
+          });
+      });
+    }
+
+  updateSaveButton(text, color, time) {
+    this.$timeout(() => {
+      this.saveButtonText = text;
+      this.saveButtonColor = color;
+    }, time);
+  }
+
 }
 
-/*
 
+
+/*
         vm.update = function() {
             if(!vm.checkFields()){
                 return;

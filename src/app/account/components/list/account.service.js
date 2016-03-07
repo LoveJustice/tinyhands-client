@@ -18,6 +18,10 @@ export default class AccountService extends BaseService {
 		return this.get('/api/me/');
 	}
 
+	update(id, data) {
+		return this.put(`/api/account/${id}/`, data)
+	}
+
   getAccount(id) {
     return this.get(`/api/account/${id}/`);
   }

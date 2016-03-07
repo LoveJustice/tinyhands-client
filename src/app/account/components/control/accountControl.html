@@ -59,7 +59,7 @@ th, td {
                         <td>
                           <span>{{account.first_name+" "+account.last_name}}</span>
                           <br/>
-                          <select  ng-change="AccountControlCtrl.changeUserRole(account)" ng-model="account.user_designation" ng-options="p.id as p.name for p in AccountControlCtrl.permissions.results">
+                          <select  ng-change="AccountControlCtrl.changeUserRole(account)" ng-model="account.user_designation" ng-options="p.id as p.name for p in AccountControlCtrl.permissionsSets.results">
                           </select>
                         </td>
                         <td><label ng-click="account.permission_irf_view = !account.permission_irf_view" ng-class="account.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_view ? "Yes" : "No" }}</label></td>
@@ -84,6 +84,6 @@ th, td {
                     </tr>
             </tbody>
         </table>
-        <button class="clear btn btn-primary btn-lg" ng-click="AccountControlCtrl.update()">Update</button>
+        <button class="col-xs-2  col-md-2  col-lg-2 clear btn {{AccountControlCtrl.saveButtonColor}} btn-lg pull-right" ng-click="AccountControlCtrl.update()">{{AccountControlCtrl.saveButtonText}}</button>
     </div>
 </div>

@@ -9,4 +9,9 @@ export default class VifListService extends BaseService {
     getVifList() {
         return this.get('/api/vif/');
     }
+
+    deleteVif(id) {
+        return this.delete(`/api/vif/${id}/`);
+  }
+
 }

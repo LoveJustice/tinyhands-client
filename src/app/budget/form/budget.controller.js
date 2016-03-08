@@ -36,9 +36,9 @@ export default class BudgetController {
 
   getOtherCost(otherItems) {
     let amount = 0;
-    otherItems.forEach((item) => {
-      amount += item.cost;
-    });
+    for (let i in otherItems) {
+      amount += otherItems[i].cost;
+    }
     return amount;
   }
 

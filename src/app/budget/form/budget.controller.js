@@ -46,6 +46,7 @@ export default class BudgetController {
     otherArray.splice(idx, 1);
   }
 
+
   // REGION: Administration
   adminStationaryTotal() {
     return (this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.form.administration_number_of_intercepts_last_month_adder;
@@ -73,6 +74,7 @@ export default class BudgetController {
   }
   // ENDREGION: Administration
 
+
   // REGION: Awareness
   awarenessTotal() {
     var amount = 0;
@@ -90,6 +92,7 @@ export default class BudgetController {
     return amount;
   }
   // ENDREGION: Awareness
+
 
   // REGION: Communication
   communicationManagerTotal() {
@@ -122,6 +125,7 @@ export default class BudgetController {
   }
   // ENDREGION: Communication
 
+
   // REGION: Food And Gas
   foodGasInterceptedGirls() {
     return this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
@@ -143,12 +147,14 @@ export default class BudgetController {
   }
   // ENDREGION: Food And Gas
 
+
   // REGION: Medical
   medicalTotal() {
     this.form.totals.borderMonitoringStation.medical = this.form.medical_last_months_expense;
     return this.form.medical_last_months_expense;
   }
   // ENDREGION: Medical
+
 
   // REGION: Miscellaneous
   miscellaneousMaximum() {
@@ -161,6 +167,7 @@ export default class BudgetController {
     return amount;
   }
   // ENDREGION: Miscellaneous
+
 
   // REGION: Salaries
   salariesTotal() {
@@ -179,6 +186,7 @@ export default class BudgetController {
     return amount;
   }
   // ENDREGION: Salaries
+
 
   // REGION: Shelter
   shelterUtilTotal() {
@@ -208,6 +216,7 @@ export default class BudgetController {
   }
   // ENDREGION: Shelter
 
+
   // REGION: Supplies
   suppliesTotal() {
     var amount = 0;
@@ -228,6 +237,7 @@ export default class BudgetController {
     return amount;
   }
   // ENDREGION: Supplies
+
 
   // REGION: Travel
   travelMotorbikeOtherTotal() {
@@ -357,6 +367,19 @@ export default class BudgetController {
   updateForm() {
     this.service.updateForm(this.budgetId, this.form).then(() => {
       window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+    });
+    this.updateSalaries();
+  }
+
+  updateSalaries() {
+    this.form.staff.forEach((staff) => {
+      if (staff.salaryInfo && staff.salaryInfo.id) {
+        this.service.updateSalary(this.budgetId, staff.salaryInfo);
+      } else if (staff.salaryInfo && !staff.salaryInfo.id) {
+        staff.salaryInfo.staff_person = staff.id;
+        staff.salaryInfo.budget_calc_sheet = this.budgetId;
+        this.service.createSalary(staff.salaryInfo);
+      }
     });
   }
   // updateForm() {

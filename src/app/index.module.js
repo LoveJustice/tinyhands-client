@@ -10,6 +10,7 @@ import runBlock from './index.run';
 
 // REGION: Services
 import AccountService from './account/components/list/account.service';
+import AccountUtilities from './account/accountUtilities.service'
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
@@ -62,6 +63,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
 
   // REGION: Services
   .service('AccountService', AccountService)
+  .service('AccountUtilities', AccountUtilities)
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)

@@ -84,6 +84,9 @@ th, td {
                     </tr>
             </tbody>
         </table>
-        <button class="col-xs-2  col-md-2  col-lg-2 clear btn {{AccountControlCtrl.saveButtonColor}} btn-lg pull-right" ng-click="AccountControlCtrl.update()">{{AccountControlCtrl.saveButtonText}}</button>
+        <div class="btn-toolbar">
+            <button ng-disabled="!AccountControlCtrl.unsavedChanges" ng-click="AccountControlCtrl.discardChanges()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Discard Changes</button>
+            <button ng-disabled="!AccountControlCtrl.unsavedChanges" ng-click="AccountControlCtrl.saveAll()" class="col-xs-2  col-md-2  col-lg-2 clear btn {{AccountControlCtrl.saveButtonColor}} btn-lg pull-right">{{AccountControlCtrl.saveButtonText}}</button>
+        </div>
     </div>
 </div>

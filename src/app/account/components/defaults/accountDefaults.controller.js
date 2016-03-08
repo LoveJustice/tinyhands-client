@@ -1,6 +1,6 @@
 export default class AccountDefaultsController {
 
-  constructor($q, $scope, $state, $timeout, $uibModal, AccountService, PermissionsSetsService) {
+  constructor($q, $scope, $state, $timeout, $uibModal, AccountService, PermissionsSetsService, AccountUtilities) {
     'ngInject';
 
     // Modules
@@ -26,7 +26,6 @@ export default class AccountDefaultsController {
     this.saveButtonText = this.savedText;
     this.saveButtonColor = this.savedColor;
     this.unsavedChanges = false;
-    this.canRevert = false;
 
     this.createListener();
     this.activate();
@@ -130,42 +129,8 @@ export default class AccountDefaultsController {
   toggleModified(index) {
     // Checks if pSet is new. If it is, there is no need to check if it has been modified.
     if (!this.permissionsSets[index].hasOwnProperty('is_new')) {
-      var modified = false;
-      var keys = Object.keys(this.permissionsSets[index]);
-      keys.forEach((key) => {
-        // Checks if a permission value on local copy differs from a permission value in database
-        // Ignores '$$hashKey' key, which angular adds when copying an object.
-        // It also ignores 'is_modified', since savedPermissionsSets does not have that property.
-        if (key != '$$hashKey' && key != 'is_modified' && this.permissionsSets[index][key] != this.savedPermissionsSets[index][key]) {
-          modified = true;
-          return;
-        }
-      });
-      if (modified) {
-        this.permissionsSets[index].is_modified = true;
-      } else {
-        this.permissionsSets[index].is_modified = false;
-      }
-      this.checkForUnsavedChanges();
-    }
-  }
-
-  checkForUnsavedChanges() {
-    var unsaved = false;
-    if (this.permissionsSets.length > this.savedPermissionsSets.length){
-        unsaved = true;
-    } else {
-        this.permissionsSets.forEach((pSet) => {
-          if (pSet.is_modified) { unsaved = true; return; }
-        });
-    }
-
-    if (unsaved){
-        this.updateSaveButton(this.saveText, this.saveColor);
-        this.unsavedChanges = true;
-    } else {
-        this.updateSaveButton(this.savedText, this.savedColor);
-        this.unsavedChanges = false;
+      this.permissionsSets[index].is_modified = AccountUtilities.toggleModified(this.permissionsSets, index, this.savedPermissionsSets);
+      AccountUtilities.checkForUnsavedChanges();
     }
   }
 

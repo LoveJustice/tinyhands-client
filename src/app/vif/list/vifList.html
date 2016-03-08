@@ -5,9 +5,9 @@
             <h1>All VIFs</h1>
         </div>
         <div class="pull-right" style="margin-top:20px;">
-            <a class="btn btn-primary" id="export" href="#" download>
+            <button ng-if="vifListCtrl.showingVifs.length > 0" class="btn btn-primary" id="export" csv-header="vifListCtrl.getCsvHeader()" field-separator="," decimal-separator="." ng-csv="vifListCtrl.getCsvArray()" >
                 Export as CSV
-            </a>
+            </button>
             <a style="margin-left:5px;" id="id_input_new_vif" class="btn btn-success pull-right" href="/vif/create">
                 Input A New VIF
             </a>

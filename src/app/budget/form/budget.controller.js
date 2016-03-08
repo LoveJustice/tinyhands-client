@@ -22,6 +22,7 @@ export default class BudgetController {
     this.active = null;
     this.borderMonitoringStationTotal = 0;
     this.budgetId = $stateParams.id;
+    this.deletedItems = [];
     this.form = {};
     this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;
@@ -43,6 +44,10 @@ export default class BudgetController {
   }
 
   removeItem(otherArray, idx) {
+    let item = otherArray[idx];
+    if (item.id) {
+      this.deletedItems.push(item);
+    }
     otherArray.splice(idx, 1);
   }
 
@@ -301,6 +306,16 @@ export default class BudgetController {
 
 
   // REGION: Call to Service Functions
+
+  // REGION: DELETE Calls
+  deleteOtherItems() {
+    for (let i in this.deletedItems) {
+      this.service.deleteOtherItem(this.budgetId, this.deletedItems[i]);
+    }
+  }
+  // ENDREGION: DELETE Calls
+
+  // REGION: GET Calls
   getAllData() {
     this.getStaff();
     this.getBorderStation();
@@ -361,16 +376,17 @@ export default class BudgetController {
       this.setTotals();
     });
   }
-  // ENDREGION: Call to Service Functions
+  // ENDREGION: GET Calls
 
 
-  // CRUD Functions
+  // REGION: PUT Calls
   updateForm() {
     this.service.updateForm(this.budgetId, this.form).then(() => {
       window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
     });
     this.updateSalaries();
     this.updateOtherItems();
+    this.deleteOtherItems();
   }
 
   updateOtherItems() {
@@ -392,15 +408,9 @@ export default class BudgetController {
       }
     });
   }
-  // updateForm() {
-  //   this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
-  //   this.mainCtrlService.updateForm(this.form.id, this.form).then((promise) => {
-  //     this.id = promise.data.id;
-  //     //Broadcast event to call the saveAllItems function in the otherItems controller
-  //     this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'});
-  //     this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
-  //   });
-  // }
+  // ENDREGION: PUT Calls
+  // ENDREGION: Call to Service Functions
+
 
   // createForm() {
   //   this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
@@ -410,34 +420,6 @@ export default class BudgetController {
   //     window.budget_calc_id = data.id;
   //     this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'}); //Broadcast event to call the saveAllItems function in the otherItems controller
   //     this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
-  //   });
-  // }
-
-  // retrieveForm(id) {
-  //   this.mainCtrlService.retrieveForm(id).then((promise) => {
-  //     this.form = promise.data;
-  //     this.form.month_year = new Date(promise.data.month_year);
-  //     this.form.station_name = window.station_name;
-  //     this.$scope.$emit('dateSetEmit', {date: promise.data.month_year});
-  //     this.callTotals();
-  //   });
-  // }
-
-  // retrieveNewForm() {
-  //   this.mainCtrlService.retrieveNewForm(window.budget_calc_id).then((promise) => {
-  //     var data = promise.data.budget_form;
-  //     if (promise.data.None) {
-  //       this.resetValuesToZero();
-  //     }
-  //     else {
-  //       this.form = data;
-  //     }
-  //     this.form.station_name = window.station_name;
-  //     this.form.month_year = this.date;
-  //     this.form.next_month = this.next_month;
-  //     data.members = [];
-  //     data.id = undefined;
-  //     this.callTotals();
   //   });
   // }
 

@@ -31,6 +31,10 @@ export default class BudgetService extends BaseService {
     return this.post('api/budget/staff_salary/', salaryData);
   }
 
+  deleteOtherItem(budgetId, otherItem) {
+    return this.delete(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
+  }
+
   /**
    * Function to get borderstation information.
    *

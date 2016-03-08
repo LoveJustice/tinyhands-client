@@ -27,7 +27,6 @@ export default class BudgetList {
     this.service.getBudgetList().then((response) => {
       this.listOfBudgets = response.data.results;
       this.nextBudgetPage = response.data.next;
-      console.log(this.nextBudgetPage);
       this.listOfBudgets.map(
         (form) => {
           form.month_year = window.moment(form.month_year).format('MMMM YYYY');
@@ -50,7 +49,7 @@ export default class BudgetList {
             form.date_time_entered = window.moment(form.date_time_entered).format('LLL');
             form.date_time_last_updated = window.moment(form.date_time_last_updated).format('LLL');
           });
-      })
+      });
     }
   }
 

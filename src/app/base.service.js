@@ -37,12 +37,12 @@ class BaseService {
    * HTTP delete function
    *
 	 * @param {string} url Url string for api endpoint
-	 * @param data Data that is being updated.
+	 * @param {Object} data Data that is being updated.
 	 * @param {Object} [headers] JSON object containing header options.
 	 * @returns Promise of http response.
    */
   delete(url, data, headers = {}) {
-    if (sessionStorage.getItem('token')) {this.addToken(headers);}
+    this.addToken(headers);
 
     return this.$http.delete(this.baseUrl + url, data, { headers: headers });
   }

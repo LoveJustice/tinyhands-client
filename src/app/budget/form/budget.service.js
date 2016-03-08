@@ -22,6 +22,17 @@ export default class BudgetService extends BaseService {
   }
 
   /**
+   * Function to create other items for a budget form.
+   *
+   * @param {number} budgetId The id of the target budget.
+   * @param {Object} otherItem The data to create.
+   * @returns Promise that provides the status and data of the request.
+   */
+  createOtherItem(budgetId, otherItem) {
+    return this.post(`api/budget/${budgetId}/item/`, otherItem);
+  }
+
+  /**
    * Function to create salary information for a staff member.
    *
    * @param {Object} salaryData Object containing salary information
@@ -31,6 +42,13 @@ export default class BudgetService extends BaseService {
     return this.post('api/budget/staff_salary/', salaryData);
   }
 
+  /**
+   * Function to delete an other item.
+   *
+   * @param {number} budgetId The id of the target budget.
+   * @param {Object} otherItem The data to delete.
+   * @returns Promise that provides the status and data of the request.
+   */
   deleteOtherItem(budgetId, otherItem) {
     return this.delete(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
   }

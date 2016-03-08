@@ -385,14 +385,21 @@ export default class BudgetController {
       window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
     });
     this.updateSalaries();
-    this.updateOtherItems();
+    this.updateOrCreateOtherItems();
     this.deleteOtherItems();
   }
 
-  updateOtherItems() {
+  updateOrCreateOtherItems() {
     for (let section in this.form.other) {
       for (let i in this.form.other[section]) {
-        this.service.updateOtherItem(this.budgetId, this.form.other[section][i]);
+        let item = this.form.other[section][i];
+        if (item.id) {
+          this.service.updateOtherItem(this.budgetId, item);
+        } else {
+          item.budget_item_parent = this.budgetId;
+          item.form_section = Constants.FormSections[section];
+          this.service.createOtherItem(this.budgetId, item);
+        }
       }
     }
   }

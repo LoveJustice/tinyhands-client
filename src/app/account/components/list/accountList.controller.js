@@ -1,4 +1,4 @@
-export default class AccountController {
+export default class AccountListController {
   constructor($scope, $http, $location, $window, $uibModal, AccountService, PermissionsSetsService) {
     'ngInject';
 

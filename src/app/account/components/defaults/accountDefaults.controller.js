@@ -1,6 +1,6 @@
 export default class AccountDefaultsController {
 
-  constructor($q, $scope, $state, $timeout, $uibModal, AccountService, PermissionsSetsService, AccountUtilities) {
+  constructor($q, $scope, $state, $timeout, $uibModal, AccountService, PermissionsSetsService) {
     'ngInject';
 
     // Modules
@@ -13,8 +13,8 @@ export default class AccountDefaultsController {
     this.AccountService = AccountService;
     this.PermissionsSetsService = PermissionsSetsService;
     // Scope Variables
-    this.permissionsSets = {};
-    this.savedPermissionsSets = {};
+    this.permissionsSets = [];
+    this.savedPermissionsSets = [];
     this.show = true;
 
     this.saveText= "Save All";
@@ -85,16 +85,17 @@ export default class AccountDefaultsController {
       // Waiting for all permissionsSets to be saved via saveSet()
       this.$q.all(promises).then(() => {
           this.savedPermissionsSets = angular.copy(this.permissionsSets);
-          this.updateSaveButton(this.savedText, this.savedColor, 800);
-          this.unsavedChanges = false;
-          resolve();
+          this.$timeout(() => {
+              this.updateSaveButton(this.savedText, this.savedColor, 0);
+              this.unsavedChanges = false;
+              resolve();
+          }, 800);
       }, (error) => {
           this.savedPermissionsSets = angular.copy(this.permissionsSets);
           this.updateSaveButton(this.saveText, this.saveColor, 800);
           reject(error);
       });
     });
-
   }
 
   saveSet(index) {
@@ -129,8 +130,41 @@ export default class AccountDefaultsController {
   toggleModified(index) {
     // Checks if pSet is new. If it is, there is no need to check if it has been modified.
     if (!this.permissionsSets[index].hasOwnProperty('is_new')) {
-      this.permissionsSets[index].is_modified = AccountUtilities.toggleModified(this.permissionsSets, index, this.savedPermissionsSets);
-      AccountUtilities.checkForUnsavedChanges();
+      var modified = false;
+      var keys = Object.keys(this.permissionsSets[index]);
+      keys.forEach((key) => {
+        // Checks if a permission value on local copy differs from a permission value in database
+        // Ignores '$$hashKey' key, which angular adds when copying an object.
+        // It also ignores 'is_modified', since savedPermissionsSets does not have that property.
+        if (key != '$$hashKey' && key != 'is_modified' && this.permissionsSets[index][key] != this.savedPermissionsSets[index][key]) {
+          modified = true;
+        }
+      });
+      if (modified){
+        this.permissionsSets[index].is_modified = true;
+      } else {
+        this.permissionsSets[index].is_modified = false;
+      }
+      this.checkForUnsavedChanges();
+    }
+  }
+
+  checkForUnsavedChanges() {
+    var unsaved = false;
+    if (this.permissionsSets.length > this.savedPermissionsSets.length){
+        unsaved = true;
+    } else {
+        this.permissionsSets.forEach((pSet) => {
+          if (pSet.is_modified) { unsaved = true; return;}
+        });
+    }
+
+    if (unsaved){
+        this.updateSaveButton(this.saveText, this.saveColor);
+        this.unsavedChanges = true;
+    } else {
+        this.updateSaveButton(this.savedText, this.savedColor);
+        this.unsavedChanges = false;
     }
   }
 
@@ -184,7 +218,6 @@ export default class AccountDefaultsController {
           this.discardChanges()
           this.$state.go(toStateName);
       }
-
     });
   }
 
@@ -193,5 +226,4 @@ export default class AccountDefaultsController {
     this.updateSaveButton(this.savedText, this.savedColor);
     this.unsavedChanges = false;
   }
-
 }

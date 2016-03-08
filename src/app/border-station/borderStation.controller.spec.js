@@ -5,138 +5,155 @@ import constants from './constants'
 describe('BorderStationController', () => {
     let vm;
 
-    beforeEach(inject(function($rootScope, $timeout, $http, $q){
-        //let scope = $rootScope.$new();
-        let $state = null,
-            $stateParams = {id: true},
+    beforeEach(inject(($rootScope, $timeout, $http, $q) => {
+        let $state = { go: () => { } },
+            $stateParams = { id: true },
             bss = new BorderStationService($http, $q);
-
         vm = new BorderStationController($rootScope, $state, $stateParams, $timeout, bss);
-
-        //vm = new BorderStationController('BorderStationController', {$scope: scope});
     }));
 
-    describe('function constructor', function(){
 
-        it('loading should be false',function(){
-            expect(vm.loading).toBeFalsy();
+    describe('function constructor', () => {
+
+        it('loading should be false', () => {
+            expect(vm.loading).toBe(false);
         });
 
-        it('modifyDetailDone should be false',function(){
-            expect(vm.modifyDetailDone).toBeFalsy();
+        it('modifyDetailDone should be false', () => {
+            expect(vm.modifyDetailDone).toBe(false);
         });
 
-        it('updateLocationDone should be false',function(){
-            expect(vm.updateLocationDone).toBeFalsy();
+        it('updateLocationDone should be false', () => {
+            expect(vm.updateLocationDone).toBe(false);
         });
 
-        it('updatePeopleDone should be false',function(){
-            expect(vm.updatePeopleDone).toBeFalsy();
+        it('updatePeopleDone should be false', () => {
+            expect(vm.updatePeopleDone).toBe(false);
         });
 
-        it('if $statsParams.id = an id updateStatusText should be constants.UpdateButtonText.Default',function(){
-            
-            if(vm.service.borderStationId){
+        it('when stateParams id is not null then updateStatusText should be "Update Station"', () => {
+            if (vm.service.borderStationId) {
+                vm.updateStatusText = null;
                 vm.updateStatusText = constants.UpdateButtonText.Default;
             };
         });
 
-        it('if $statsParams.id = null updateStatusText should be constants.UpdateButtonText.Create',function(){
-            if(vm.service.borderStationId== null){
+        it('when stateParams id is equal to null then updateStatusText should be "Create Station"', () => {
+            if (vm.service.borderStationId == null) {
+                vm.updateStatusText = null;
                 vm.updateStatusText = constants.UpdateButtonText.Create;
             };
         });
 
     });
 
-    describe('function checkDone', function(){
-        pending("Not working Currently");
-        // it('',function(){
-        //     vm.checkDone();
-        //     if(vm.modifyDetailDone && vm.updateLocationDone && vm.updatePeopleDone){
-        //     //   vm.updateStatusText =  constants.UpdateButtonText.Default;
-        //       vm.updateStatusText = " fsfdasfa";
-        //       console.log(vm.updaterStatusText);
-        //     };
-        // });
+    describe('function checkDone', () => {
+        it('when modifyDetailDone, updateLocationDone and updatePeopleDone are true then updateStatusText should equal to "Update Station"', () => {
+            vm.modifyDetailDone = true;
+            vm.updateLocationDone = true;
+            vm.updatePeopleDone = true;
+            vm.$timeout = (f) => { f() };
+            vm.updateStatusText = null;
+            vm.checkDone();
+            expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Default);
+        });
+
+        it('when modifyDetailDone, updateLocationDone and updatePeopleDone are true then go should be called with "dashboard" ', () => {
+            vm.modifyDetailDone = true;
+            vm.updateLocationDone = true;
+            vm.updatePeopleDone = true;
+            vm.$timeout = (f) => { f() };
+            spyOn(vm.$state, 'go');
+            vm.checkDone();
+            expect(vm.$state.go).toHaveBeenCalled();
+            expect(vm.$state.go).toHaveBeenCalledWith('dashboard');
+        });
+
+
     });
 
-    describe('function createListeners', function(){
-        it('createModifyDoneListeners should have been called',function(){
-            spyOn(vm,"createModifyDoneListeners");
+    describe('function createListeners', () => {
+        it('createModifyDoneListeners should have been called', () => {
+            spyOn(vm, "createModifyDoneListeners");
             vm.createListeners();
             expect(vm.createModifyDoneListeners).toHaveBeenCalled();
         });
 
-        it('createUpdateErrorListeners should have been called',function(){
-            spyOn(vm,"createUpdateErrorListeners");
+        it('createUpdateErrorListeners should have been called', () => {
+            spyOn(vm, "createUpdateErrorListeners");
             vm.createListeners();
             expect(vm.createUpdateErrorListeners).toHaveBeenCalled();
         });
 
     });
 
-    describe('function createModifyDoneListeners', function(){
-        it('$on should be called 4 times',function(){
-            spyOn(vm.$scope,"$on");
+    describe('function createModifyDoneListeners', () => {
+        it('function on should be called 4 times', () => {
+            spyOn(vm.$scope, "$on");
             vm.createModifyDoneListeners();
             expect(vm.$scope.$on).toHaveBeenCalledTimes(4);
         });
 
-        it('listener.status should be true',function(){
-            pending('Have troubles with $on function');
-            spyOn(vm.$scope,"$on");
+        it('modifyDetailDone, updateLocationDone, and updatePeopleDone should equal to true', () => {
+            spyOn(vm.$scope, "$on");
+            vm.$scope.$on = (listener, f) => { f() };
+            vm.modifyDetailDone = false;
+            vm.updateLocationDone = false;
+            vm.updatePeopleDone = false;
             vm.createModifyDoneListeners();
-            expect(vm["modifyDetailDone"]).toEqual(true);
+            expect(vm.modifyDetailDone).toEqual(true);
+            expect(vm.updateLocationDone).toEqual(true);
+            expect(vm.updatePeopleDone).toEqual(true);
         });
 
 
     });
 
-    describe('function createUpdateErrorListeners', function(){
-        it('$on should be called 4 times',() => {
-            spyOn(vm.$scope,"$on");
+    describe('function createUpdateErrorListeners', () => {
+        it('function on should be called 4 times', () => {
+            spyOn(vm.$scope, "$on");
             vm.createUpdateErrorListeners();
             expect(vm.$scope.$on).toHaveBeenCalledTimes(4);
         });
 
-        it('updateStatusText should be equal to constants.UpdateButtonText.Error', function(){
-            // pending('Have troubles with $on function');
-            vm.$scope.$on = (listener, f) => {f()};
+        it('updateStatusText should be equal to "Error"', () => {
+            vm.$scope.$on = (listener, f) => { f() };
+            vm.updateStatusText = null;
             vm.createUpdateErrorListeners();
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Error);
         });
 
     });
 
-    describe('function getBorderStationData', function(){
-        it("loading should be true",function(){
+    describe('function getBorderStationData', () => {
+        it("loading should be equal to true", () => {
             vm.getBorderStationData();
             expect(vm.loading).toBe(true);
         });
 
-        it("$scope.$broadcast should be constants.Events.Get.BorderStation",function(){
-            spyOn(vm.$scope,"$broadcast");
+        it('$scope.$broadcast should be equal to "Get.BorderStation"', () => {
+            spyOn(vm.$scope, "$broadcast");
             vm.getBorderStationData();
             expect(vm.$scope.$broadcast).toHaveBeenCalledWith(constants.Events.Get.BorderStation);
         });
     });
 
-    describe('function updateStation', function(){
-        it("updateStatusText should be Saving...", function(){
+    describe('function updateStation', () => {
+        it('updateStatusText should be equal to "Saving..."', () => {
+            vm.updateStatusText = null;
             vm.updateStation();
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Saving);
         });
 
-        it("when service.borderStationId == true $scope.$broadcast should be constants.Events.Update.BorderStation",function(){
-            spyOn(vm.$scope,"$broadcast");
+        it('when service borderStationId is equal to true scope broadcast should be equal to "Update.BorderStation"', () => {
+            spyOn(vm.$scope, "$broadcast");
             vm.service.borderStationId = true;
             vm.updateStation();
             expect(vm.$scope.$broadcast).toHaveBeenCalledWith(constants.Events.Update.BorderStation);
         });
 
-        it("when service.borderStationId == null $scope.$broadcast should be constants.Events.Create.BorderStation",function(){
-            spyOn(vm.$scope,"$broadcast");
+        it('when service borderStationId is equal to null scope broadcast should be equal to "Create.BorderStation"', () => {
+            spyOn(vm.$scope, "$broadcast");
             vm.service.borderStationId = null;
             vm.updateStation();
             expect(vm.$scope.$broadcast).toHaveBeenCalledWith(constants.Events.Create.BorderStation.Start);

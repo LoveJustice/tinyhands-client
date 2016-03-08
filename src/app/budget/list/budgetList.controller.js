@@ -26,6 +26,8 @@ export default class BudgetList {
   getBudgetList() {
     this.service.getBudgetList().then((response) => {
       this.listOfBudgets = response.data.results;
+      this.nextBudgetPage = response.data.next;
+      console.log(this.nextBudgetPage);
       this.listOfBudgets.map(
         (form) => {
           form.month_year = window.moment(form.month_year).format('MMMM YYYY');
@@ -35,11 +37,28 @@ export default class BudgetList {
     });
   }
 
+  getNextBudgetPage() {
+    if (this.nextBudgetPage) {
+      this.service.getNextBudgetPage(this.nextBudgetPage).then((response) => {
+        response.data.results.forEach(function(element) {
+          this.listOfBudgets.push(element);
+        }, this);
+        this.nextBudgetPage = response.data.next;
+        this.listOfBudgets.map(
+          (form) => {
+            form.month_year = window.moment(form.month_year).format('MMMM YYYY');
+            form.date_time_entered = window.moment(form.date_time_entered).format('LLL');
+            form.date_time_last_updated = window.moment(form.date_time_last_updated).format('LLL');
+          });
+      })
+    }
+  }
+
   /**
    * Removes a budget from the Database if it has been confirmed.
    *
    * @param array (list of all budgets from database)
-   * @param budget (budget to be removed)
+   * @param budget (budget to be removedd)
    */
   removeBudget(array, budget) {
     if (budget.budgetRemoved) {

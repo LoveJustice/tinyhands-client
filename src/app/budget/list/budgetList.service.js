@@ -6,11 +6,15 @@ export default class BudgetListService extends BaseService {
     super($http);
   }
 
-  getBudgetList() {
-    return this.get('/api/budget/',['page_size=2']);
-  }
-
   deleteBorderStationBudget(id) {
     return this.delete(`/api/budget/${id}/`);
+  }
+
+  getBudgetList() {
+    return this.get('/api/budget/',[{ name: "page_size", value: "20" }]);
+  }
+
+  getNextBudgetPage(nextPageUrl) {
+    return this.$http.get(nextPageUrl);
   }
 }

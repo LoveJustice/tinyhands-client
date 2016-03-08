@@ -1,14 +1,28 @@
+/**
+ * (description)
+ *
+ * @export
+ * @class BudgetList
+ */
 export default class BudgetList {
-  constructor($uibModal, BudgetListService, session) {
+  /**
+   * Creates an instance of BudgetList.
+   *
+   * @param BudgetListService (set of functions that controls data flow from front-end to back-end)
+   * @param session (user session data)
+   */
+  constructor(BudgetListService, session) {
     'ngInject';
 
-    this.$uibModal = $uibModal;
     this.service = BudgetListService;
     this.session = session;
 
     this.getBudgetList();
   }
 
+  /**
+   * Gets list of budgets from API.
+   */
   getBudgetList() {
     this.service.getBudgetList().then((response) => {
       this.listOfBudgets = response.data.results;
@@ -21,6 +35,12 @@ export default class BudgetList {
     });
   }
 
+  /**
+   * Removes a budget from the Database if it has been confirmed.
+   *
+   * @param array (list of all budgets from database)
+   * @param budget (budget to be removed)
+   */
   removeBudget(array, budget) {
     if (budget.budgetRemoved) {
       this.service.deleteBorderStationBudget(budget.id).then((response) => {

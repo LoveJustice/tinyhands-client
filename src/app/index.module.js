@@ -46,7 +46,7 @@ import TallyController from './components/tally/tally.controller';
 import ErrorFactory from './error/error.factory';
 // ENDREGION: Factories
 
-angular.module(['tinyhandsFrontend', 'ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
+angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)

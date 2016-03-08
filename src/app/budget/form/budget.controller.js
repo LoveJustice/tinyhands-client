@@ -36,9 +36,9 @@ export default class BudgetController {
 
   getOtherCost(otherItems) {
     let amount = 0;
-    for (let i in otherItems) {
-      amount += otherItems[i].cost;
-    }
+    otherItems.forEach((item) => {
+      amount += item.cost;
+    });
     return amount;
   }
 
@@ -170,10 +170,6 @@ export default class BudgetController {
       if (staff.salaryInfo) {
         amount += staff.salaryInfo.salary;
       }
-    });
-
-    this.form.otherSalaries.forEach((otherSalaries) => {
-      amount += otherSalaries.cost;
     });
 
     amount += this.getOtherCost(this.form.otherSalaries);
@@ -322,7 +318,7 @@ export default class BudgetController {
   getOtherData() {
     for (let key in Constants.FormSections) {
       this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
-        this.form[`other${key}`] = response.data.results;
+        this.form[`other${key}`] = response.data;
       });
     }
   }
@@ -357,7 +353,12 @@ export default class BudgetController {
   // ENDREGION: Call to Service Functions
 
 
-  // //CRUD Functions
+  // CRUD Functions
+  updateForm() {
+    this.service.updateForm(this.budgetId, this.form).then(() => {
+      window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+    });
+  }
   // updateForm() {
   //   this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
   //   this.mainCtrlService.updateForm(this.form.id, this.form).then((promise) => {

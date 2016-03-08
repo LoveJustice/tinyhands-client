@@ -33,4 +33,8 @@ export default class BudgetService extends BaseService {
   getStaffSalaries(budgetId) {
     return this.get(`api/budget/staff_salary/${budgetId}/`);
   }
+
+  updateForm(budgetId, form) {
+    return this.put(`api/budget/${budgetId}/`, form);
+  }
 }

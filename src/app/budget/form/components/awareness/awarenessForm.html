@@ -35,7 +35,7 @@
   </div>
   <hr>
   <div class="row">
-    <div ng-repeat="otherAwarenessItem in budgetCtrl.form.otherAwareness">
+    <div ng-repeat="otherAwarenessItem in budgetCtrl.form.other.Awareness">
       <div class="col-md-4 col-md-offset-2">
         <input class="form-control awareness-extra-item-name" type="text" ng-model="otherAwarenessItem.name" ng-disabled="budgetCtrl.view" />
       </div>
@@ -43,13 +43,13 @@
         <input class="text-right awareness-extra-item-value form-control" type="number" ng-model="otherAwarenessItem.cost" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherAwareness, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Awareness, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-offset-4 col-xs-4" ng-click="budgetCtrl.form.otherAwareness.push({})" ng-hide="budgetCtrl.view">Add item</button>
+      <button class="btn btn-success col-xs-offset-4 col-xs-4" ng-click="budgetCtrl.form.other.Awareness.push({})" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>

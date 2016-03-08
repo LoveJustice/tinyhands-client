@@ -11,7 +11,7 @@ export default class BudgetListService extends BaseService {
   }
 
   getBudgetList() {
-    return this.get('/api/budget/',[{ name: "page_size", value: "20" }]);
+    return this.get('/api/budget/',[{ name: "page_size", value: "25" }]);
   }
 
   getNextBudgetPage(nextPageUrl) {

@@ -1,7 +1,7 @@
 import Constants from './constants.js';
 
 export default class BudgetController {
-  constructor($scope, $http, $location, $stateParams, $window, BudgetService) {
+  constructor($stateParams, BudgetService) {
     'ngInject';
 
     this.service = BudgetService;
@@ -87,7 +87,7 @@ export default class BudgetController {
     if (this.form.awareness_sign_boards_boolean) {
       amount += this.form.awareness_sign_boards;
     }
-    amount += this.getOtherCost(this.form.otherAwareness);
+    amount += this.getOtherCost(this.form.other.Awareness);
     this.form.totals.other.awareness = amount;
     return amount;
   }
@@ -119,7 +119,7 @@ export default class BudgetController {
 
   communicationTotal() {
     let amount = this.communicationManagerTotal() + this.communicationNumberOfStaffTotal() + this.communicationEachStaffTotal();
-    amount += this.getOtherCost(this.form.otherCommunication);
+    amount += this.getOtherCost(this.form.other.Communication);
     this.form.totals.borderMonitoringStation.communication = amount;
     return amount;
   }
@@ -141,7 +141,7 @@ export default class BudgetController {
 
   foodAndGasTotal() {
     let amount = this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
-    amount += this.getOtherCost(this.form.otherFoodAndGas);
+    amount += this.getOtherCost(this.form.other.FoodAndGas);
     this.form.totals.safeHouse.foodAndGas = amount;
     return amount;
   }
@@ -162,7 +162,7 @@ export default class BudgetController {
   }
 
   miscellaneousTotal() {
-    let amount = this.miscellaneousMaximum() + this.getOtherCost(this.formMiscellaneous);
+    let amount = this.miscellaneousMaximum() + this.getOtherCost(this.form.other.Miscellaneous);
     this.form.totals.borderMonitoringStation.miscellaneous = amount;
     return amount;
   }
@@ -179,7 +179,7 @@ export default class BudgetController {
       }
     });
 
-    amount += this.getOtherCost(this.form.otherSalaries);
+    amount += this.getOtherCost(this.form.other.Salaries);
 
     this.form.totals.borderMonitoringStation.salaries = amount;
 
@@ -210,7 +210,7 @@ export default class BudgetController {
             this.form.shelter_water +
             this.form.shelter_electricity +
             this.shelterCheckboxTotal(this.form);
-    amount += this.getOtherCost(this.form.otherShelter);
+    amount += this.getOtherCost(this.form.other.Shelter);
     this.form.totals.safeHouse.shelter = amount;
     return amount;
   }
@@ -232,7 +232,7 @@ export default class BudgetController {
     if(this.form.supplies_flashlights_boolean) {
         amount += this.form.supplies_flashlights_amount;
     }
-    amount += this.getOtherCost(this.form.otherSupplies);
+    amount += this.getOtherCost(this.form.other.Supplies);
     this.form.totals.other.supplies = amount;
     return amount;
   }
@@ -263,7 +263,7 @@ export default class BudgetController {
     if(this.form.travel_motorbike) {
         amount += this.form.travel_motorbike_amount;
     }
-    amount += this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier) + this.getOtherCost(this.form.otherTravel);
+    amount += this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier) + this.getOtherCost(this.form.other.Travel);
     this.form.totals.borderMonitoringStation.travel = amount;
     return amount;
   }
@@ -326,9 +326,10 @@ export default class BudgetController {
   }
 
   getOtherData() {
+    this.form.other = {};
     for (let key in Constants.FormSections) {
       this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
-        this.form[`other${key}`] = response.data;
+        this.form.other[key] = response.data;
       });
     }
   }
@@ -369,6 +370,15 @@ export default class BudgetController {
       window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
     });
     this.updateSalaries();
+    this.updateOtherItems();
+  }
+
+  updateOtherItems() {
+    for (let section in this.form.other) {
+      for (let i in this.form.other[section]) {
+        this.service.updateOtherItem(this.budgetId, this.form.other[section][i]);
+      }
+    }
   }
 
   updateSalaries() {

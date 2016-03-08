@@ -14,7 +14,7 @@
     </div>
     <hr>
     <div class="row">
-      <div ng-repeat="otherSalaryItem in budgetCtrl.form.otherSalaries | orderBy:'name'">
+      <div ng-repeat="otherSalaryItem in budgetCtrl.form.other.Salaries | orderBy:'name'">
         <div class="col-md-6">
           <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.name" ng-disabled="budgetCtrl.view" />
         </div>
@@ -22,13 +22,13 @@
           <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.view"/>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherSalaries, $index)" ng-hide="budgetCtrl.view">Remove</button>
+          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Salaries, $index)" ng-hide="budgetCtrl.view">Remove</button>
         </div>
         <br/>
         <br/>
       </div>
       <div class="row">
-        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.otherSalaries.push({})" ng-hide="budgetCtrl.view">Add staff</button>
+        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Salaries.push({})" ng-hide="budgetCtrl.view">Add staff</button>
       </div>
     </div>
     <hr>

@@ -51,7 +51,7 @@
   </div>
   <hr>
   <div class="row">
-    <div ng-repeat="otherCommunicationItem in budgetCtrl.form.otherCommunication">
+    <div ng-repeat="otherCommunicationItem in budgetCtrl.form.other.Communication">
       <div class="col-md-4 col-md-offset-2">
         <input class="form-control" type="text" ng-model="otherCommunicationItem.name" ng-disabled="budgetCtrl.view" />
       </div>
@@ -60,13 +60,13 @@
         ng-disabled="budgetCtrl.view" />
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.otherCommunication, $index)" ng-hide="budgetCtrl.view">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Communication, $index)" ng-hide="budgetCtrl.view">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.otherCommunication.push({})" ng-hide="budgetCtrl.view">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Communication.push({})" ng-hide="budgetCtrl.view">Add item</button>
     </div>
   </div>
   <hr>

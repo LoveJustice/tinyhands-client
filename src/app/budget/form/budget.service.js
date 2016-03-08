@@ -108,6 +108,17 @@ export default class BudgetService extends BaseService {
   }
 
   /**
+   * Function that updates the data for an other item for this budget form.
+   *
+   * @param {number} budgetId The id of the budget form being updated.
+   * @param {Object} otherItem The updated data.
+   * @returns Promise that provides the status and data of the request.
+   */
+  updateOtherItem(budgetId, otherItem) {
+    return this.put(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
+  }
+
+  /**
    * Function that updates the salary information for a particular salary object that is linked to a staff member.
    *
    * @param {number} budgetId The id of the budget form being updated.

@@ -70,7 +70,7 @@
 
   <div class="col-xs-12 text-center">
     <br>
-    <button class="btn btn-lg btn-primary" ng-click="budgetCtrl.updateForm()">Update</button>
+    <button class="btn btn-lg" ng-class="{'btn-primary': !budgetCtrl.isCreating, 'btn-success': budgetCtrl.isCreating}" ng-click="budgetCtrl.updateForm()">{{budgetCtrl.isCreating ? "Create" : "Update"}}</button>
   </div>
 
 

@@ -30,7 +30,7 @@ export default class BudgetController {
         other: {},
         safeHouse: {}
       }
-    }
+    };
     this.isCreating = this.budgetId ? false : true;
     this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;
@@ -279,10 +279,10 @@ export default class BudgetController {
     if(this.form.travel_manager_with_bike) {
         amount += this.form.travel_manager_with_bike_amount;
     }
-    amount += this.travelNumberOfStaffUsingBikesTotal()
-      + this.validAmount(this.form.travel_last_months_expense_for_sending_girls_home)
-      + this.travelMotorbikeOtherTotal()
-      + this.getOtherCost(this.form.other.Travel);
+    amount += this.travelNumberOfStaffUsingBikesTotal() +
+      this.validAmount(this.form.travel_last_months_expense_for_sending_girls_home) +
+      this.travelMotorbikeOtherTotal() +
+      this.getOtherCost(this.form.other.Travel);
     this.form.totals.borderMonitoringStation.travel = amount;
     return amount;
   }

@@ -92,10 +92,10 @@
                 <td>{{ form.date_time_of_interception | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_view == true"><a class="btn btn-sm btn-primary" href="{{form.view_url}}">View</a></td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_vif_button" href="{{form.edit_url}}">Edit</a></td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_delete == true"><a class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif({{form.id}})">
-                    {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+                <td ng-if="vifListCtrl.session.user.permission_vif_view == true"><a class="btn btn-sm btn-primary" ng-href="{{form.view_url}}">View</a></td>
+                <td ng-if="vifListCtrl.session.user.permission_vif_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_vif_button" ng-href="{{form.edit_url}}">Edit</a></td>
+                <td ng-if="vifListCtrl.session.user.permission_vif_delete == true"><button class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif({{form.id}})">
+                    {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}</button></td>
             </tr>
         </tbody>
     </table>

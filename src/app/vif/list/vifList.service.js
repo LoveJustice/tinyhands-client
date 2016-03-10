@@ -13,5 +13,4 @@ export default class VifListService extends BaseService {
     deleteVif(id) {
         return this.delete(`/api/vif/${id}/`);
   }
-
 }

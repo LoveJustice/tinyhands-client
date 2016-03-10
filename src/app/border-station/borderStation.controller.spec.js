@@ -4,12 +4,20 @@ import constants from './constants'
 
 describe('BorderStationController', () => {
     let vm;
+    let rootScope,
+        state,
+        stateParams,
+        timeout,
+        borderss;
 
     beforeEach(inject(($rootScope, $timeout, $http, $q) => {
-        let $state = { go: () => { } },
-            $stateParams = { id: true },
-            bss = new BorderStationService($http, $q);
-        vm = new BorderStationController($rootScope, $state, $stateParams, $timeout, bss);
+        state = { go: () => { } };
+        rootScope = $rootScope;
+        borderss = new BorderStationService($http, $q);
+        stateParams = { id: true };
+        timeout = $timeout;
+        borderss = new BorderStationService($http, $q);
+        vm = new BorderStationController(rootScope, state, stateParams, timeout, borderss);
     }));
 
 
@@ -32,17 +40,16 @@ describe('BorderStationController', () => {
         });
 
         it('when stateParams id is not null then updateStatusText should be "Update Station"', () => {
-            if (vm.service.borderStationId) {
-                vm.updateStatusText = null;
-                vm.updateStatusText = constants.UpdateButtonText.Default;
-            };
+            vm.updateStatusText = null;
+            vm.constructor(rootScope, state, { id: 1 }, timeout, borderss);
+            expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Default);
         });
 
         it('when stateParams id is equal to null then updateStatusText should be "Create Station"', () => {
-            if (vm.service.borderStationId == null) {
-                vm.updateStatusText = null;
-                vm.updateStatusText = constants.UpdateButtonText.Create;
-            };
+            vm.updateStatusText = null;
+            vm.constructor(rootScope, state, { id: null }, timeout, borderss);
+            expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Create);
+
         });
 
     });
@@ -65,7 +72,6 @@ describe('BorderStationController', () => {
             vm.$timeout = (f) => { f() };
             spyOn(vm.$state, 'go');
             vm.checkDone();
-            expect(vm.$state.go).toHaveBeenCalled();
             expect(vm.$state.go).toHaveBeenCalledWith('dashboard');
         });
 
@@ -127,6 +133,7 @@ describe('BorderStationController', () => {
 
     describe('function getBorderStationData', () => {
         it("loading should be equal to true", () => {
+            vm.loading = null;
             vm.getBorderStationData();
             expect(vm.loading).toBe(true);
         });

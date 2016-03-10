@@ -23,17 +23,31 @@ export default class BudgetController {
     this.borderMonitoringStationTotal = 0;
     this.budgetId = $stateParams.id;
     this.deletedItems = [];
-    this.form = {};
+    this.form = {
+      other: {},
+      totals: {
+        borderMonitoringStation: {},
+        other: {},
+        safeHouse: {}
+      }
+    };
+    this.isCreating = this.budgetId ? false : true;
     this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;
     this.total = 0;
-
 
     this.getBudgetForm();
   }
 
 
   // Functions
+
+  validAmount(amount) {
+    if (amount) {
+      return amount;
+    }
+    return 0;
+  }
 
   getOtherCost(otherItems) {
     let amount = 0;
@@ -54,20 +68,20 @@ export default class BudgetController {
 
   // REGION: Administration
   adminStationaryTotal() {
-    return (this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.form.administration_number_of_intercepts_last_month_adder;
+    return this.validAmount(this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.validAmount(this.form.administration_number_of_intercepts_last_month_adder);
   }
 
   adminMeetingsTotal() {
-    return this.form.administration_number_of_meetings_per_month * this.form.administration_number_of_meetings_per_month_multiplier;
+    return this.validAmount(this.form.administration_number_of_meetings_per_month * this.form.administration_number_of_meetings_per_month_multiplier);
   }
 
   adminBoothRentalTotal() {
     var amount = 0;
     if (this.form.administration_booth) {
-      amount += this.form.administration_booth_amount;
+      amount += this.validAmount(this.form.administration_booth_amount);
     }
     if (this.form.administration_registration) {
-      amount += this.form.administration_registration_amount;
+      amount += this.validAmount(this.form.administration_registration_amount);
     }
     return amount;
   }
@@ -84,13 +98,13 @@ export default class BudgetController {
   awarenessTotal() {
     var amount = 0;
     if (this.form.awareness_contact_cards) {
-      amount += this.form.awareness_contact_cards_amount;
+      amount += this.validAmount(this.form.awareness_contact_cards_amount);
     }
     if (this.form.awareness_awareness_party_boolean) {
-      amount += this.form.awareness_awareness_party;
+      amount += this.validAmount(this.form.awareness_awareness_party);
     }
     if (this.form.awareness_sign_boards_boolean) {
-      amount += this.form.awareness_sign_boards;
+      amount += this.validAmount(this.form.awareness_sign_boards);
     }
     amount += this.getOtherCost(this.form.other.Awareness);
     this.form.totals.other.awareness = amount;
@@ -104,22 +118,22 @@ export default class BudgetController {
     var amount = 0;
 
     if (this.form.communication_chair) {
-      amount += this.form.communication_chair_amount;
+      amount += this.validAmount(this.form.communication_chair_amount);
     }
     if (this.form.communication_manager) {
-      amount += this.form.communication_manager_amount;
+      amount += this.validAmount(this.form.communication_manager_amount);
     }
     return amount;
   }
 
   communicationNumberOfStaffTotal() {
-    return this.form.communication_number_of_staff_with_walkie_talkies *
-      this.form.communication_number_of_staff_with_walkie_talkies_multiplier;
+    return this.validAmount(this.form.communication_number_of_staff_with_walkie_talkies *
+      this.form.communication_number_of_staff_with_walkie_talkies_multiplier);
   }
 
   communicationEachStaffTotal() {
-    return this.form.communication_each_staff *
-      this.form.communication_each_staff_multiplier;
+    return this.validAmount(this.form.communication_each_staff *
+      this.form.communication_each_staff_multiplier);
   }
 
   communicationTotal() {
@@ -133,15 +147,15 @@ export default class BudgetController {
 
   // REGION: Food And Gas
   foodGasInterceptedGirls() {
-    return this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
+    return this.validAmount(this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
       this.form.food_and_gas_number_of_intercepted_girls *
-      this.form.food_and_gas_number_of_intercepted_girls_multiplier_after;
+      this.form.food_and_gas_number_of_intercepted_girls_multiplier_after);
   }
 
   foodGasLimboGirls() {
-    return this.form.food_and_gas_limbo_girls_multiplier *
+    return this.validAmount(this.form.food_and_gas_limbo_girls_multiplier *
       this.form.food_and_gas_number_of_limbo_girls *
-      this.form.food_and_gas_number_of_days;
+      this.form.food_and_gas_number_of_days);
   }
 
   foodAndGasTotal() {
@@ -163,7 +177,7 @@ export default class BudgetController {
 
   // REGION: Miscellaneous
   miscellaneousMaximum() {
-    return this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier;
+    return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
   }
 
   miscellaneousTotal() {
@@ -178,11 +192,12 @@ export default class BudgetController {
   salariesTotal() {
     var amount = 0;
 
-    this.form.staff.forEach((staff) => {
+    for (let i in this.form.staff) {
+      let staff = this.form.staff[i];
       if (staff.salaryInfo) {
         amount += staff.salaryInfo.salary;
       }
-    });
+    }
 
     amount += this.getOtherCost(this.form.other.Salaries);
 
@@ -195,26 +210,23 @@ export default class BudgetController {
 
   // REGION: Shelter
   shelterUtilTotal() {
-    return (this.form.shelter_rent + this.form.shelter_water + this.form.shelter_electricity);
+    return this.validAmount(this.form.shelter_rent) + this.validAmount(this.form.shelter_water) + this.validAmount(this.form.shelter_electricity);
   }
 
   shelterCheckboxTotal() {
     var totalAmount = 0;
     if (this.form.shelter_shelter_startup) {
-        totalAmount += this.form.shelter_shelter_startup_amount;
+        totalAmount += this.validAmount(this.form.shelter_shelter_startup_amount);
     }
     if (this.form.shelter_shelter_two) {
-        totalAmount += this.form.shelter_shelter_two_amount;
+        totalAmount += this.validAmount(this.form.shelter_shelter_two_amount);
     }
     return totalAmount;
   }
 
   shelterTotal() {
     var amount = 0;
-    amount += this.form.shelter_rent +
-            this.form.shelter_water +
-            this.form.shelter_electricity +
-            this.shelterCheckboxTotal(this.form);
+    amount += this.shelterUtilTotal() + this.shelterCheckboxTotal(this.form);
     amount += this.getOtherCost(this.form.other.Shelter);
     this.form.totals.safeHouse.shelter = amount;
     return amount;
@@ -226,16 +238,16 @@ export default class BudgetController {
   suppliesTotal() {
     var amount = 0;
     if(this.form.supplies_walkie_talkies_boolean) {
-        amount += this.form.supplies_walkie_talkies_amount;
+        amount += this.validAmount(this.form.supplies_walkie_talkies_amount);
     }
     if(this.form.supplies_recorders_boolean) {
-        amount += this.form.supplies_recorders_amount;
+        amount += this.validAmount(this.form.supplies_recorders_amount);
     }
     if(this.form.supplies_binoculars_boolean) {
-        amount += this.form.supplies_binoculars_amount;
+        amount += this.validAmount(this.form.supplies_binoculars_amount);
     }
     if(this.form.supplies_flashlights_boolean) {
-        amount += this.form.supplies_flashlights_amount;
+        amount += this.validAmount(this.form.supplies_flashlights_amount);
     }
     amount += this.getOtherCost(this.form.other.Supplies);
     this.form.totals.other.supplies = amount;
@@ -248,13 +260,14 @@ export default class BudgetController {
   travelMotorbikeOtherTotal() {
     var returnVal = 0;
     if(this.form.travel_motorbike) {
-        returnVal = this.form.travel_motorbike_amount;
+        returnVal = this.validAmount(this.form.travel_motorbike_amount);
     }
-    return returnVal + this.form.travel_plus_other;
+    returnVal += this.validAmount(this.form.travel_plus_other);
+    return returnVal;
   }
 
   travelNumberOfStaffUsingBikesTotal() {
-    return this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier;
+    return this.validAmount(this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier);
   }
 
   travelTotal() {
@@ -265,10 +278,10 @@ export default class BudgetController {
     if(this.form.travel_manager_with_bike) {
         amount += this.form.travel_manager_with_bike_amount;
     }
-    if(this.form.travel_motorbike) {
-        amount += this.form.travel_motorbike_amount;
-    }
-    amount += this.form.travel_plus_other + this.form.travel_last_months_expense_for_sending_girls_home + (this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier) + this.getOtherCost(this.form.other.Travel);
+    amount += this.travelNumberOfStaffUsingBikesTotal() +
+      this.validAmount(this.form.travel_last_months_expense_for_sending_girls_home) +
+      this.travelMotorbikeOtherTotal() +
+      this.getOtherCost(this.form.other.Travel);
     this.form.totals.borderMonitoringStation.travel = amount;
     return amount;
   }
@@ -330,14 +343,16 @@ export default class BudgetController {
   }
 
   getBudgetForm() {
-    this.service.getBudgetForm(this.budgetId).then((response) => {
-      this.form = response.data;
-      this.form.totals = { borderMonitoringStation: {},
-        other: {},
-        safeHouse: {}
-      };
-      this.getAllData();
-    });
+    if (this.budgetId) {
+      this.service.getBudgetForm(this.budgetId).then((response) => {
+        this.form = response.data;
+        this.form.totals = { borderMonitoringStation: {},
+          other: {},
+          safeHouse: {}
+        };
+        this.getAllData();
+      });
+    }
   }
 
   getOtherData() {

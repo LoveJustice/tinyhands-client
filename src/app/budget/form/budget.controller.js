@@ -36,7 +36,6 @@ export default class BudgetController {
     this.sectionTemplateUrl = null;
     this.total = 0;
 
-
     this.getBudgetForm();
   }
 

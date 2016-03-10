@@ -28,12 +28,12 @@
 `gulp protractor:dist`	-> To run Protractor e2e tests from compiled build
 
 #### Misc
-`gulp build`	-> To Build project
-`gulp inject`	-> UNKOWN
-`gulp scripts`	-> UNKOWN
-`gulp scripts`  -> UNKOWN
-`gulp styles`	-> UNKOWN
-`gulp watch`	-> UNKOWN
+`gulp build`	-> To Build project  
+`gulp inject`	-> UNKNOWN  
+`gulp scripts`	-> UNKNOWN  
+`gulp scripts`  -> UNKNOWN  
+`gulp styles`	-> UNKNOWN  
+`gulp watch`	-> UNKNOWN  
 
 --------------------
 ### Frameworks Used

@@ -41,9 +41,9 @@ describe('Address2Service', () => {
     let address = {id: 123},
         url = 'api/address2/' + address.id + '/';
     it(`should call get with '${url}' and '${address}'`, () => {
-      spyOn(service, 'get');
-      service.saveAddress(queryParams);
-      expect(service.get).toHaveBeenCalledWith(url, address);
+      spyOn(service, 'put');
+      service.saveAddress(address);
+      expect(service.put).toHaveBeenCalledWith(url, address);
     });
   });
 

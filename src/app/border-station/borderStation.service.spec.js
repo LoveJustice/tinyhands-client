@@ -10,9 +10,11 @@ describe('BorderStationService', () => {
       locationId = 123,
       staffId = 123;
 
-  beforeEach(inject(($http, $q) => {
+  beforeEach(() => {
+    let $http ,
+        $q;
     service = new BorderStationService($http, $q);
-  }));
+  });
 
 
   describe('function constructor', () => {

@@ -4,9 +4,10 @@ describe('DashboardController', () => {
 
   let vm;
 
-  beforeEach(inject(($rootScope) => {
+  beforeEach(() => {
+    let $rootScope = {$emit: () => {}};
     vm = new DashboardController($rootScope);
-  }));
+  });
 
   describe('function constructor', () => {
     it('showEvents should be true', () => {

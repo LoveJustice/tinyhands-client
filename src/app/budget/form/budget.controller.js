@@ -24,7 +24,7 @@ export default class BudgetController {
     this.active = null;
     this.sectionTemplateUrl = null;
 
-    this.budgetId = $stateParams.id
+    this.budgetId = $stateParams.id;
     this.form = {};
     this.salariesTotal = 0;
 
@@ -115,22 +115,22 @@ export default class BudgetController {
   getStaffSalaries() {
     this.service.getStaffSalaries(this.form.border_station).then((response) => {
       this.form.staff.map((staff) => {
-        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person == staff.id })[0];
+        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
       });
     });
   }
 
   //Determine the kind of functionality...view/create/edit
   main (){
-    if( (window.submit_type) == 1 ) {
+    if( (window.submit_type) === 1 ) {
         this.create = true;
         this.retrieveNewForm();
     }
-    else if( (window.submit_type) == 2)  {
+    else if( (window.submit_type) === 2)  {
         this.update = true;
         this.retrieveForm(window.budget_calc_id);
     }
-    else if( (window.submit_type) == 3) {
+    else if( (window.submit_type) === 3) {
         this.view = true;
         $('input').prop('disabled', true);
         this.retrieveForm(window.budget_calc_id);
@@ -281,7 +281,7 @@ export default class BudgetController {
       supplies_binoculars_amount: 0,
       supplies_flashlights_boolean: false,
       supplies_flashlights_amount: 0
-    }
+    };
   }
 
 }

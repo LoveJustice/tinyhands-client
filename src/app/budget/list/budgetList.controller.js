@@ -52,7 +52,6 @@ export default class BudgetList {
   }
 
   mapDatesToText(array) {
-    console.log(array);
     array.map(
       (form) => {
         form.month_year = window.moment(form.month_year).format('MMMM YYYY');

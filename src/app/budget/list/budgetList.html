@@ -60,7 +60,7 @@
         <td>{{ form.date_time_entered }}</td>
         <td>{{ form.date_time_last_updated }}</td>
         <td>
-          <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary">View</a>
+          <a ui-sref="budget({id:form.id, isViewing:true})" class="btn btn-sm btn-primary">View</a>
           <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary">Edit</a>
           <a ui-sref="#" class="btn btn-sm btn-primary">Resend MDF</a>
 

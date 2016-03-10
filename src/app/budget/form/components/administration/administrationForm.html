@@ -3,16 +3,16 @@
   <hr>
   <div class="row">
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
           <small># of intercepts last month</small>
       </div>
       <operator>*</operator>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_multiplier" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_multiplier" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <operator>+</operator>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_adder" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_adder" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <operator>=</operator>
       <div class="col-md-3 input-group">
@@ -24,12 +24,12 @@
   <div class="row">
       <div class="col-md-offset-2 col-md-1"></div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
           <small># of meetings per month</small>
       </div>
       <operator>*</operator>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month_multiplier" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month_multiplier" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <operator>=</operator>
       <div class="col-md-3 input-group">
@@ -40,18 +40,18 @@
   <hr>
   <div class="row">
       <div class="col-md-1 col-md-offset-1">
-          <input type="checkbox" ng-model="budgetCtrl.form.administration_booth" ng-change="budgetCtrl.setTotals()"/>
+          <input type="checkbox" ng-model="budgetCtrl.form.administration_booth" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_booth_amount" ng-disabled="!budgetCtrl.form.administration_booth" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_booth_amount" ng-disabled="!budgetCtrl.form.administration_booth || budgetCtrl.isViewing" ng-change="budgetCtrl.setTotals()"/>
           <small>Booth</small>
       </div>
       <operator>+</operator>
       <div class="col-md-1">
-          <input type="checkbox" ng-model="budgetCtrl.form.administration_registration" ng-change="budgetCtrl.setTotals()"/>
+          <input type="checkbox" ng-model="budgetCtrl.form.administration_registration" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_registration_amount" ng-disabled="!budgetCtrl.form.administration_registration" ng-change="budgetCtrl.setTotals()"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_registration_amount" ng-disabled="!budgetCtrl.form.administration_registration || budgetCtrl.isViewing" ng-change="budgetCtrl.setTotals()"/>
           <small>Registration</small>
       </div>
       <operator>=</operator>

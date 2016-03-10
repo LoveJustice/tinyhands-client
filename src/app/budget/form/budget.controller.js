@@ -32,6 +32,7 @@ export default class BudgetController {
       }
     };
     this.isCreating = this.budgetId ? false : true;
+    this.isViewing = $stateParams.isViewing === "true";
     this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;
     this.total = 0;

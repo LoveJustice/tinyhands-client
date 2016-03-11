@@ -31,11 +31,10 @@ export default class BudgetList {
     });
   }
 
-  getBudgetListForSorting(sortParam) {
+  getBudgetListForSorting() {
     this.service.getBudgetList().then((response) => {
       this.listOfBudgets = response.data.results;
       this.nextBudgetPage = response.data.next;
-      
     });
   }
 

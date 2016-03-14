@@ -50,7 +50,8 @@
         <th class="text-center">&nbsp;</th>
       </tr>
     </thead>
-    <tbody class="text-center">
+    <tbody class="text-center"
+           ng-init="sortType = 'month_year'">
       <tr ng-repeat="form in budgetListCtrl.listOfBudgets | orderBy:sortType:sortReverse | filter:budgetListCtrl.searchForms"
           ng-mouseenter="form.hover = true"
           ng-mouseleave="form.hover = false; form.budgetRemoved = false">

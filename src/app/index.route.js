@@ -38,7 +38,7 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       }
     })
     .state('budget', {
-      url: '/budget/:id',
+      url: '/budget/:id?borderStationId&isViewing',
       templateUrl: 'app/budget/form/budget.html',
       controller: 'BudgetController',
       controllerAs: 'budgetCtrl',

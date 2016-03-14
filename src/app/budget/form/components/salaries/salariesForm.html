@@ -7,7 +7,7 @@
         <span>{{ staff.first_name + ' ' + staff.last_name }}</span>
       </div>
       <div class="col-md-6">
-        <input class="form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="staff.salaryInfo.salary" ng-disabled="budgetCtrl.view"/>
+        <input class="form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="staff.salaryInfo.salary" ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <br>
       <br>
@@ -16,19 +16,19 @@
     <div class="row">
       <div ng-repeat="otherSalaryItem in budgetCtrl.form.other.Salaries | orderBy:'name'">
         <div class="col-md-6">
-          <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.name" ng-disabled="budgetCtrl.view" />
+          <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.name" ng-disabled="budgetCtrl.isViewing" />
         </div>
         <div class="col-md-4">
-          <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.view"/>
+          <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.isViewing"/>
         </div>
         <div class="col-md-2">
-          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Salaries, $index)" ng-hide="budgetCtrl.view">Remove</button>
+          <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Salaries, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>
         </div>
         <br/>
         <br/>
       </div>
       <div class="row">
-        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Salaries.push({})" ng-hide="budgetCtrl.view">Add staff</button>
+        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Salaries.push({})" ng-hide="budgetCtrl.isViewing">Add staff</button>
       </div>
     </div>
     <hr>

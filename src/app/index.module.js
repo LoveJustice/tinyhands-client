@@ -81,13 +81,13 @@ angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies'
 // ENDREGION: Factories
 
 // REGION: Directives
-  .directive('borderStationDetail', () => new DetailDirective())
-  .directive('borderStationLocation', () => new LocationDirective())
-  .directive('borderStationPerson', () => new PersonDirective())
-  .directive('googlemap', () => new MapDirective())
-  .directive('navbar', () => new NavbarDirective())
-  .directive('operator', () => new MathOperator())
-  .directive('tally', () => new TallyDirective())
+  .directive('borderStationDetail', DetailDirective)
+  .directive('borderStationLocation', LocationDirective)
+  .directive('borderStationPerson', PersonDirective)
+  .directive('googlemap', MapDirective)
+  .directive('navbar', NavbarDirective)
+  .directive('operator', MathOperator)
+  .directive('tally', TallyDirective)
 // ENDREGION: Directives
 
 // REGION: Controllers

@@ -31,11 +31,10 @@ export default class BudgetList {
     });
   }
 
-  getBudgetListForSorting(sortParam) {
+  getBudgetListForSorting() {
     this.service.getBudgetList().then((response) => {
       this.listOfBudgets = response.data.results;
       this.nextBudgetPage = response.data.next;
-      
     });
   }
 
@@ -52,7 +51,6 @@ export default class BudgetList {
   }
 
   mapDatesToText(array) {
-    console.log(array);
     array.map(
       (form) => {
         form.month_year = window.moment(form.month_year).format('MMMM YYYY');

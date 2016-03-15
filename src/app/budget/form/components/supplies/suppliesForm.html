@@ -4,41 +4,41 @@
   <div class="row form-group">
     <div class="col-md-4 col-md-offset-2 checkbox">
       <label>
-        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_walkie_talkies_boolean"/>Walkie Talkies
+        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_walkie_talkies_boolean" ng-disabled="budgetCtrl.isViewing"/>Walkie Talkies
       </label>
     </div>
     <div class="col-md-4">
-      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_walkie_talkies_boolean" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_walkie_talkies_amount"/>
+      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_walkie_talkies_boolean || budgetCtrl.isViewing" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_walkie_talkies_amount"/>
     </div>
   </div>
   <div class="row form-group">
     <div class="col-md-4 col-md-offset-2 checkbox">
       <label>
-        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_recorders_boolean" />Recorders
+        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_recorders_boolean" ng-disabled="budgetCtrl.isViewing"/>Recorders
       </label>
     </div>
     <div class="col-md-4">
-      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_recorders_boolean" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_recorders_amount"/>
+      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_recorders_boolean || budgetCtrl.isViewing" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_recorders_amount"/>
     </div>
   </div>
   <div class="row form-group">
     <div class="col-md-4 col-md-offset-2 checkbox">
       <label>
-        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_binoculars_boolean" />Binoculars
+        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_binoculars_boolean" ng-disabled="budgetCtrl.isViewing"/>Binoculars
       </label>
     </div>
     <div class="col-md-4">
-      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_binoculars_boolean" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_binoculars_amount"/>
+      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_binoculars_boolean || budgetCtrl.isViewing" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_binoculars_amount"/>
     </div>
   </div>
   <div class="row form-group">
     <div class="col-md-4 col-md-offset-2 checkbox">
       <label>
-        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_flashlights_boolean" />Flashlights
+        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_flashlights_boolean" ng-disabled="budgetCtrl.isViewing"/>Flashlights
       </label>
     </div>
     <div class="col-md-4">
-      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_flashlights_boolean" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_flashlights_amount"/>
+      <input class="text-right form-control" type="number" ng-disabled="!budgetCtrl.form.supplies_flashlights_boolean || budgetCtrl.isViewing" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.supplies_flashlights_amount"/>
     </div>
   </div>
   <hr>

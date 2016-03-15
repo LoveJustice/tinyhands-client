@@ -3,14 +3,14 @@
   <hr>
   <div class="row">
     <div class="col-md-6">
-      <input class="col-md-2" type="checkbox" ng-model="budgetCtrl.form.communication_chair" ng-change="budgetCtrl.setTotals()"/>
+      <input class="col-md-2" type="checkbox" ng-model="budgetCtrl.form.communication_chair" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       <div class="col-md-6 calc-form-input-no-width">
         <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_chair_amount" ng-disabled="!budgetCtrl.form.communication_chair" ng-change="budgetCtrl.setTotals()"/>
         <small>for chair</small>
       </div>
     </div>
     <div class="col-md-6">
-      <input class="col-md-2" type="checkbox" ng-model="budgetCtrl.form.communication_manager" ng-change="budgetCtrl.setTotals()"/>
+      <input class="col-md-2" type="checkbox" ng-model="budgetCtrl.form.communication_manager" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       <div class="col-md-6 calc-form-input-no-width">
         <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_manager_amount" ng-disabled="!budgetCtrl.form.communication_manager" ng-change="budgetCtrl.setTotals()"/>
         <small>for manager</small>
@@ -20,12 +20,12 @@
   <hr>
   <div class="row">
     <div class="col-md-4 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies" ng-change="budgetCtrl.setTotals()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       <small># of staff with walkie-talkies</small>
     </div>
     <operator>*</operator>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies_multiplier" ng-change="budgetCtrl.setTotals()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies_multiplier" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
@@ -36,12 +36,12 @@
   <hr>
   <div class="row">
     <div class="col-md-4 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff" ng-change="budgetCtrl.setTotals()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
       <small>Each Staff</small>
     </div>
     <operator>*</operator>
     <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff_multiplier" ng-change="budgetCtrl.setTotals()"/>
+      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff_multiplier" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">

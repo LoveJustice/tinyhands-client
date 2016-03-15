@@ -3,17 +3,17 @@
   <hr>
   <div class="row">
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_rent" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_rent" ng-disabled="budgetCtrl.isViewing"/>
       <small>Rent</small>
     </div>
     <operator>+</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_water" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_water" ng-disabled="budgetCtrl.isViewing"/>
       <small>Water</small>
     </div>
     <operator>+</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_electricity" />
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_electricity" ng-disabled="budgetCtrl.isViewing"/>
       <small>Electricity</small>
     </div>
     <operator>=</operator>
@@ -25,18 +25,18 @@
   <hr>
   <div class="row">
     <div class="col-md-1 col-md-offset-1">
-      <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_startup"/>
+      <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_startup" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <div class="col-md-2 input-with-text calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_startup_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_startup"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_startup_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_startup || budgetCtrl.isViewing"/>
       <small>Shelter Startup</small>
     </div>
     <operator>+</operator>
     <div class="col-md-1">
-      <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_two"/>
+      <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_two" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <div class="col-md-2 input-with-text calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_two_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_two"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.shelter_shelter_two_amount" ng-disabled="!budgetCtrl.form.shelter_shelter_two || budgetCtrl.isViewing"/>
       <small>Shelter 2</small>
     </div>
     <operator>=</operator>

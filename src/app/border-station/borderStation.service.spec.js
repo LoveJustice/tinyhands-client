@@ -60,7 +60,49 @@ describe('BorderStationService', () => {
   });
 
   describe('function createRelationship', () => {
-    // TODO
+
+    let deferred = {
+      resolve: () => {},
+      promise: 'foo',
+    };
+
+    beforeEach(() => {
+      service.$q = {defer: () => { return deferred;}};
+      service.post = () => {return {then: (f) => {
+        f({data: 'foo'});
+      }};};
+    });
+
+    it("should call createBorderStation with 'bar' if createApiFunction is 'createBorderStation'", () => {
+      spyOn(service, 'createBorderStation').and.callThrough();
+      service.createRelationship(['bar'], 'createBorderStation');
+      expect(service.createBorderStation).toHaveBeenCalledWith('bar');
+    });
+
+    it("should call createStaff with 'bar' if createApiFunction is 'createStaff'", () => {
+      spyOn(service, 'createStaff').and.callThrough();
+      service.createRelationship(['bar'], 'createStaff');
+      expect(service.createStaff).toHaveBeenCalledWith('bar');
+    });
+
+    let finishedCallsMessage = 'Finished sending create calls';
+    it(`should call deferred.resolve with ${finishedCallsMessage} if createArray not empty`, () => {
+      spyOn(deferred, 'resolve');
+      service.createRelationship([1,2,3], 'createBorderStation');
+      expect(deferred.resolve).toHaveBeenCalledWith(finishedCallsMessage);
+    });
+
+    let noCallsMessage = 'No create calls needed';
+    it(`should call deferred.resolve with ${noCallsMessage} if createArray empty`, () => {
+      spyOn(deferred, 'resolve');
+      service.createRelationship([], null);
+      expect(deferred.resolve).toHaveBeenCalledWith(noCallsMessage);
+    });
+
+    it("should return 'foo'", () => {
+      expect(service.createRelationship([], null)).toEqual('foo');
+    });
+
   });
 
   describe('function getBorderStations', () => {
@@ -173,7 +215,22 @@ describe('BorderStationService', () => {
  });
 
   describe('function setBorderStationIdOfData', () => {
-    // TODO
+    let data = [
+      { border_station: 1 },
+      { border_station: 2 },
+      { border_station: 3 }
+    ];
+    let finalData = [
+      { border_station: 123 },
+      { border_station: 123 },
+      { border_station: 123 }
+    ];
+
+    it(`should set ${data} to ${finalData}`, () => {
+      service.borderStationId = 123;
+      service.setBorderStationIdOfData(data);
+      expect(data).toEqual(finalData);
+    });
   });
 
   describe('function updateCommitteeMembers with memberId and data', () => {
@@ -205,7 +262,51 @@ describe('BorderStationService', () => {
   });
 
   describe('function updateRelationship', () => {
-    // TODO
+
+    let deferred = {
+      resolve: () => {},
+      promise: 'foo',
+    };
+
+    beforeEach(() => {
+      service.$q = {defer: () => { return deferred;}};
+      service.put = () => {return {then: (f) => {
+        f({data: 'foo'});
+      }};};
+    });
+
+    it("should call updateDetails with 'bar' if createApiFunction is 'updateDetails'", () => {
+      spyOn(service, 'updateDetails').and.callThrough();
+      let obj = {id: 123};
+      service.updateRelationship([obj], 'updateDetails');
+      expect(service.updateDetails).toHaveBeenCalledWith(obj.id, obj);
+    });
+
+    it("should call updateLocations with 'bar' if createApiFunction is 'updateLocations'", () => {
+      spyOn(service, 'updateLocations').and.callThrough();
+      let obj = {id: 123};
+      service.updateRelationship([obj], 'updateLocations');
+      expect(service.updateLocations).toHaveBeenCalledWith(obj.id, obj);
+    });
+
+    let finishedCallsMessage = 'Finished sending update calls';
+    it(`should call deferred.resolve with ${finishedCallsMessage} if createArray not empty`, () => {
+      spyOn(deferred, 'resolve');
+      service.updateRelationship([{id: 2}], 'updateDetails');
+      expect(deferred.resolve).toHaveBeenCalledWith(finishedCallsMessage);
+    });
+
+    let noCallsMessage = 'No update calls needed';
+    it(`should call deferred.resolve with ${noCallsMessage} if createArray empty`, () => {
+      spyOn(deferred, 'resolve');
+      service.updateRelationship([], null);
+      expect(deferred.resolve).toHaveBeenCalledWith(noCallsMessage);
+    });
+
+    it("should return 'foo'", () => {
+      expect(service.updateRelationship([], null)).toEqual('foo');
+    });
+
   });
 
   describe('function updateStaff with staffId and data', () => {

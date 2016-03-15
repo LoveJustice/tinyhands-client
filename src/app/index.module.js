@@ -14,8 +14,9 @@ import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
-import SessionService from './utils/session.service';
+import SessionService from './session/session.service';
 import TallyService from './components/tally/tally.service';
+import UtilService from './util/util.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -74,6 +75,7 @@ angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies'
   .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('utils', UtilService)
 // ENDREGION: Services
 
 // REGION: Factories

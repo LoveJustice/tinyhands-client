@@ -1,5 +1,5 @@
 import LoginController from './login.controller';
-import SessionService from '../utils/session.service';
+import SessionService from '../session/session.service';
 
 describe('LoginController', () => {
 

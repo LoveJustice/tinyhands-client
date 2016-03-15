@@ -1,6 +1,6 @@
 import BaseService from '../base.service';
 
-class SessionService extends BaseService {
+export default class SessionService extends BaseService {
   constructor($http, $rootScope, $state, $timeout) {
     'ngInject';
     super($http);
@@ -65,5 +65,3 @@ class SessionService extends BaseService {
     this.routeState.go('login');
   }
 }
-
-export default SessionService;

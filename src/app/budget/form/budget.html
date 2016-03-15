@@ -68,9 +68,9 @@
   <!-- End Section Area -->
 
 
-  <div class="col-xs-12 text-center">
+  <div class="col-xs-12 text-center" ng-if="!budgetCtrl.isViewing">
     <br>
-    <button class="btn btn-lg" ng-class="{'btn-primary': !budgetCtrl.isCreating, 'btn-success': budgetCtrl.isCreating}" ng-click="budgetCtrl.updateForm()">{{budgetCtrl.isCreating ? "Create" : "Update"}}</button>
+    <button class="btn btn-lg" ng-class="{'btn-primary': !budgetCtrl.isCreating, 'btn-success': budgetCtrl.isCreating}" ng-click="budgetCtrl.updateOrCreateForm()">{{budgetCtrl.isCreating ? "Create" : "Update"}}</button>
   </div>
 
 

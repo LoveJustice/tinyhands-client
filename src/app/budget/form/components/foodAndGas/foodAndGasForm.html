@@ -3,16 +3,16 @@
     <h2 class="text-center">Food & Gas</h2>
     <hr>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number"  ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_before"/>
+      <input class="text-right form-control" type="number"  ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_before" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls" ng-disabled="budgetCtrl.isViewing"/>
       <small># of Girls</small>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number"  ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_after"/>
+      <input class="text-right form-control" type="number"  ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_after" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group text-center">
@@ -24,16 +24,16 @@
   <hr>
   <div class="row">
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_limbo_girls_multiplier"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_limbo_girls_multiplier" ng-disabled="budgetCtrl.isViewing"/>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_limbo_girls"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_limbo_girls" ng-disabled="budgetCtrl.isViewing"/>
       <small># of Girls</small>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_days"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_days" ng-disabled="budgetCtrl.isViewing"/>
       <small># of Days</small>
     </div>
     <operator>=</operator>
@@ -59,7 +59,7 @@
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.FoodAndGas.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-init="budgetCtrl.form.other.FoodAndGas = []" ng-click="budgetCtrl.form.other.FoodAndGas.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
     </div>
   </div>
   <hr>

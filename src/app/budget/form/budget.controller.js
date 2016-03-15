@@ -1,10 +1,11 @@
 import Constants from './constants.js';
 
 export default class BudgetController {
-  constructor($stateParams, BudgetService) {
+  constructor($state, $stateParams, BudgetService) {
     'ngInject';
 
     this.service = BudgetService;
+    this.$state = $state;
 
 
     // Variable Declarations
@@ -21,6 +22,7 @@ export default class BudgetController {
                                    { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }]};
     this.active = null;
     this.borderMonitoringStationTotal = 0;
+    this.borderStationId = $stateParams.borderStationId;
     this.budgetId = $stateParams.id;
     this.deletedItems = [];
     this.form = {
@@ -31,29 +33,23 @@ export default class BudgetController {
         safeHouse: {}
       }
     };
-    this.isCreating = this.budgetId ? false : true;
+    this.isCreating = !this.budgetId && this.borderStationId ? true : false;
     this.isViewing = $stateParams.isViewing === "true";
     this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;
     this.total = 0;
 
+    this.validRoute();
     this.getBudgetForm();
   }
 
 
   // Functions
 
-  validAmount(amount) {
-    if (amount) {
-      return amount;
-    }
-    return 0;
-  }
-
   getOtherCost(otherItems) {
     let amount = 0;
     for (let i in otherItems) {
-      amount += otherItems[i].cost;
+      amount += this.validAmount(otherItems[i].cost);
     }
     return amount;
   }
@@ -66,8 +62,21 @@ export default class BudgetController {
     otherArray.splice(idx, 1);
   }
 
+  validAmount(amount) {
+    if (amount) {
+      return amount;
+    }
+    return 0;
+  }
 
-  // REGION: Administration
+  validRoute() {
+    if (!this.budgetId && !this.isCreating && !this.isViewing) {
+      this.$state.go('budgetList');
+    }
+  }
+
+
+// REGION: Administration
   adminStationaryTotal() {
     return this.validAmount(this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.validAmount(this.form.administration_number_of_intercepts_last_month_adder);
   }
@@ -92,10 +101,10 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.administration = amount;
     return amount;
   }
-  // ENDREGION: Administration
+// ENDREGION: Administration
 
 
-  // REGION: Awareness
+// REGION: Awareness
   awarenessTotal() {
     var amount = 0;
     if (this.form.awareness_contact_cards) {
@@ -111,10 +120,10 @@ export default class BudgetController {
     this.form.totals.other.awareness = amount;
     return amount;
   }
-  // ENDREGION: Awareness
+// ENDREGION: Awareness
 
 
-  // REGION: Communication
+// REGION: Communication
   communicationManagerTotal() {
     var amount = 0;
 
@@ -143,10 +152,10 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.communication = amount;
     return amount;
   }
-  // ENDREGION: Communication
+// ENDREGION: Communication
 
 
-  // REGION: Food And Gas
+// REGION: Food And Gas
   foodGasInterceptedGirls() {
     return this.validAmount(this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
       this.form.food_and_gas_number_of_intercepted_girls *
@@ -165,18 +174,18 @@ export default class BudgetController {
     this.form.totals.safeHouse.foodAndGas = amount;
     return amount;
   }
-  // ENDREGION: Food And Gas
+// ENDREGION: Food And Gas
 
 
-  // REGION: Medical
+// REGION: Medical
   medicalTotal() {
     this.form.totals.borderMonitoringStation.medical = this.form.medical_last_months_expense;
     return this.form.medical_last_months_expense;
   }
-  // ENDREGION: Medical
+// ENDREGION: Medical
 
 
-  // REGION: Miscellaneous
+// REGION: Miscellaneous
   miscellaneousMaximum() {
     return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
   }
@@ -186,10 +195,10 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.miscellaneous = amount;
     return amount;
   }
-  // ENDREGION: Miscellaneous
+// ENDREGION: Miscellaneous
 
 
-  // REGION: Salaries
+// REGION: Salaries
   salariesTotal() {
     var amount = 0;
 
@@ -206,10 +215,10 @@ export default class BudgetController {
 
     return amount;
   }
-  // ENDREGION: Salaries
+// ENDREGION: Salaries
 
 
-  // REGION: Shelter
+// REGION: Shelter
   shelterUtilTotal() {
     return this.validAmount(this.form.shelter_rent) + this.validAmount(this.form.shelter_water) + this.validAmount(this.form.shelter_electricity);
   }
@@ -232,10 +241,10 @@ export default class BudgetController {
     this.form.totals.safeHouse.shelter = amount;
     return amount;
   }
-  // ENDREGION: Shelter
+// ENDREGION: Shelter
 
 
-  // REGION: Supplies
+// REGION: Supplies
   suppliesTotal() {
     var amount = 0;
     if(this.form.supplies_walkie_talkies_boolean) {
@@ -254,10 +263,10 @@ export default class BudgetController {
     this.form.totals.other.supplies = amount;
     return amount;
   }
-  // ENDREGION: Supplies
+// ENDREGION: Supplies
 
 
-  // REGION: Travel
+// REGION: Travel
   travelMotorbikeOtherTotal() {
     var returnVal = 0;
     if(this.form.travel_motorbike) {
@@ -286,11 +295,11 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.travel = amount;
     return amount;
   }
-  // ENDREGION: Travel
+// ENDREGION: Travel
 
 
 
-  // REGION: Functions that handle totals
+// REGION: Functions that handle totals
   setBorderMonitoringStationTotals() {
     let amount = this.adminTotal() +
       this.communicationTotal() +
@@ -315,12 +324,11 @@ export default class BudgetController {
       this.suppliesTotal();
     this.total = amount;
   }
-  // ENDREGION: Functions that handle totals
+// ENDREGION: Functions that handle totals
 
 
 
-  // REGION: Call to Service Functions
-
+// REGION: Call to Service Functions
   // REGION: DELETE Calls
   deleteOtherItems() {
     for (let i in this.deletedItems) {
@@ -338,7 +346,7 @@ export default class BudgetController {
   }
 
   getBorderStation() {
-    this.service.getBorderStation(this.form.border_station).then((response) => {
+    this.service.getBorderStation(this.borderStationId).then((response) => {
       this.form.station_name = response.data.station_name;
     });
   }
@@ -351,58 +359,80 @@ export default class BudgetController {
           other: {},
           safeHouse: {}
         };
+        this.borderStationId = this.form.border_station;
         this.getAllData();
       });
+    } else {
+      this.form.month_year = moment().format();
+      this.form.border_station = this.borderStationId;
+      this.getAllData();
     }
   }
 
   getOtherData() {
     this.form.other = {};
-    for (let key in Constants.FormSections) {
-      this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
-        this.form.other[key] = response.data;
-      });
+    if (this.budgetId) {
+      for (let key in Constants.FormSections) {
+        this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
+          this.form.other[key] = response.data;
+        });
+      }
     }
   }
 
   getPreviousData() {
     let month = window.moment(this.form.month_year).format('M');
     let year = window.moment(this.form.month_year).format('YYYY');
-    this.service.getPreviousData(this.form.border_station, month, year).then((response) => {
+    this.service.getPreviousData(this.borderStationId, month, year).then((response) => {
       this.form.previousData = response.data;
     });
   }
 
   getStaff() {
-    this.service.getStaff(this.form.border_station).then((response) => {
+    this.service.getStaff(this.borderStationId).then((response) => {
       this.form.staff = response.data.results;
       this.getStaffSalaries();
     });
   }
 
   getStaffSalaries() {
-    this.service.getStaffSalaries(this.budgetId).then((response) => {
-      this.form.staff.map((staff) => {
-        if (response.data.length > 0) {
-          staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
-        } else {
-          staff.salaryInfo = { salary: 0 };
-        }
+    if (this.budgetId) {
+      this.service.getStaffSalaries(this.budgetId).then((response) => {
+        this.form.staff.map((staff) => {
+          if (response.data.length > 0) {
+            staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
+          } else {
+            staff.salaryInfo = { salary: 0 };
+          }
+        });
+        this.setTotals();
       });
-      this.setTotals();
-    });
+    }
   }
   // ENDREGION: GET Calls
 
 
   // REGION: PUT Calls
-  updateForm() {
-    this.service.updateForm(this.budgetId, this.form).then(() => {
-      window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
-    });
-    this.updateSalaries();
+  updateOrCreateAll() {
+    this.updateOrCreateSalaries();
     this.updateOrCreateOtherItems();
     this.deleteOtherItems();
+    this.$state.go('budgetList');
+  }
+
+  updateOrCreateForm() {
+    if (this.isCreating) {
+      this.service.createForm(this.form).then((response) => {
+        this.budgetId = response.data.id;
+        this.updateOrCreateAll();
+        window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+      });
+    } else {
+      this.service.updateForm(this.budgetId, this.form).then(() => {
+        window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+      });
+      this.updateOrCreateAll();
+    }
   }
 
   updateOrCreateOtherItems() {
@@ -420,7 +450,7 @@ export default class BudgetController {
     }
   }
 
-  updateSalaries() {
+  updateOrCreateSalaries() {
     this.form.staff.forEach((staff) => {
       if (staff.salaryInfo && staff.salaryInfo.id) {
         this.service.updateSalary(this.budgetId, staff.salaryInfo);
@@ -432,21 +462,9 @@ export default class BudgetController {
     });
   }
   // ENDREGION: PUT Calls
-  // ENDREGION: Call to Service Functions
+// ENDREGION: Call to Service Functions
 
-
-  // createForm() {
-  //   this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
-  //   this.mainCtrlService.createForm(this.form).then((promise) => {
-  //     var data = promise.data;
-  //     this.id = data.id;
-  //     window.budget_calc_id = data.id;
-  //     this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'}); //Broadcast event to call the saveAllItems function in the otherItems controller
-  //     this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
-  //   });
-  // }
-
-  resetValue(value) {
+  clearValue(value) {
     let returnValue;
     if (typeof value === 'boolean') {
       returnValue = false;
@@ -458,15 +476,15 @@ export default class BudgetController {
     return returnValue;
   }
 
-  resetValues() {
+  clearValues() {
     for (let key in this.form) {
       if (key !== 'border_station' || key !== 'id') {
-        this.form[key] = this.resetValue(this.form[key]);
+        this.form[key] = this.clearValue(this.form[key]);
       }
     }
 
     for (let index in this.form.staff) {
-      this.form.staff[index].salaryInfo.salary = this.resetValue(this.form.staff[index].salaryInfo.salary);
+      this.form.staff[index].salaryInfo.salary = this.clearValue(this.form.staff[index].salaryInfo.salary);
     }
     this.setTotals();
   }

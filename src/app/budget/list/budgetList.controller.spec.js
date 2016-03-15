@@ -29,27 +29,24 @@ describe('budgetList Controller',() => {
             {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
             {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'} ], 'next':'page2'}};    
         
-        //This might break other tests, I don't know without writing other tests
-        beforeEach( () => {          
+        describe('tests for getBudgetList', () => {
+            
+            beforeEach( () => {          
             vm.service.getBudgetList = () => {
                 return {
                     then: (f) => {
                         f(response);
                     }
-                }
-            }
-        });
-        
-        describe('tests for getBudgetList', () => {
-            beforeEach( () => {
-                vm.getBudgetList();
+                };
+            };
+            vm.getBudgetList();
             });
-        
-            it('listOfBudgets should be tested response', () => {
+            
+            it('listOfBudgets should be the tested response[results]', () => {
                 expect(vm.listOfBudgets).toEqual(response.data.results);
             });
 
-            it('nextBudgetPage should be tested response', () => {
+            it('nextBudgetPage should be the tested response[next]', () => {
                 expect(vm.nextBudgetPage).toEqual(response.data.next);
             });
 
@@ -64,12 +61,49 @@ describe('budgetList Controller',() => {
             pending("Waiting to write tests for the actual code -- Jordan is writing");
         });
         
-        describe('tests for getNextBudgetPage', () => {
-           it("if nextBudgetpage set, should push on the next page of results to list of budgets", () => {
-               vm.nextBudgetPage = true;
-               vm.getNextBudgetPage();
-               //need to finish test with expect statement and checking when receiving results from the nextBudgetPage
+        describe('tests for getNextBudgetPage', () => {   
+            
+            beforeEach( () => {
+            
+            vm.service.getBudgetList = () => {
+                return {
+                    then: (f) => {
+                        f(response);
+                    }
+                };
+            };
+            vm.getBudgetList();
+                 
+            vm.service.getNextBudgetPage = () => {
+                return {
+                    then: (f) => {
+                        f(response);
+                    }
+                };
+            };
+            
+            vm.nextBudgetPage = true;
+            });
+            
+           it("mapDatesToText should be called with nextBudgetPage appended to this.listOfBudgets", () => {
+                spyOn(vm, 'mapDatesToText');
+                vm.getNextBudgetPage();
+                expect(vm.mapDatesToText).toHaveBeenCalledWith(response.data.results);
            }); 
+           
+           it('nextBudgetPage should be the tested response[next]', () => {
+                vm.getNextBudgetPage();
+                expect(vm.nextBudgetPage).toEqual(response.data.next);
+            });
+            
+            it('listOfBudgets should be the tested response[results]', () => {
+                expect(vm.listOfBudgets).toEqual(response.data.results);
+            });
+            
+            it('size of listOfBudgets after the function is called should equal 40 based on the tests', () => {
+                vm.getNextBudgetPage();
+                expect(vm.listOfBudgets.length).toEqual(40); 
+            });
         });
     });
 

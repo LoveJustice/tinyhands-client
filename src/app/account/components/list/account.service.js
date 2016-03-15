@@ -1,12 +1,13 @@
 import BaseService from '../../../base.service';
 
 export default class AccountService extends BaseService {
-	constructor($http, $q) {
+	constructor($http, $q, $timeout) {
 		'ngInject';
 		super();
 
 		this.$http = $http;
 		this.$q = $q;
+    this.$timeout = $timeout;
 	}
 
 	// GETs
@@ -31,4 +32,5 @@ export default class AccountService extends BaseService {
   destroy(id) {
     return this.delete(`api/account/${id}/`);
   }
+
 }

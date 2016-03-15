@@ -28,10 +28,10 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
-import AccountController from './account/components/list/account.controller';
+import AccountController from './account/account.controller';
+import AccountListController from './account/components/list/accountList.controller';
 import AccountDefaultsController from './account/components/defaults/accountDefaults.controller';
 import AccountModalController from './account/components/list/accountModal.controller';
-import AccountNavController from './account/accountNav.controller';
 import AccountControlController from './account/components/control/accountControl.controller.js';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
@@ -84,10 +84,10 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
 
   // REGION: Controllers
-  .controller('AccountDefaultsController', AccountDefaultsController)
   .controller('AccountController', AccountController)
+  .controller('AccountDefaultsController', AccountDefaultsController)
+  .controller('AccountListController', AccountListController)
   .controller('AccountModalController', AccountModalController)
-  .controller('AccountNavController', AccountNavController)
   .controller('AccountControlController', AccountControlController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)

@@ -14,12 +14,10 @@ export default class AccountController {
                                    { name: 'Accounts Access Control', templateUrl: `${accountOptionsPath}control/accountControl.html` },
                                    { name: 'Accounts Defaults', templateUrl: `${accountOptionsPath}defaults/accountDefaults.html` }]}
 
-    this.$scope.tabInfo = {'unsavedChanges': false,
-                    'active': 0,
-                    'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
+    this.tabInfo = {'active': 0, 'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
+    this.$scope.saveInfo = {'arrays': null, 'serviceToUse': null, 'saveAll': null};
 
-    this.$scope.saveInfo = {'arrays': null, 'saveButtonInfo': null, 'serviceToUse': null, 'saveAll': null};
-
+    this.saveButtonInfo = {"saveButtonText":"Saved", "saveButtonColor":"btn-primary", "unsavedChanges": false};
     this.saveText= "Save All";
     this.savingText = "Saving...";
     this.savedText = "Saved";
@@ -29,19 +27,19 @@ export default class AccountController {
     this.index = null;
     this.toStateName = null;
 
+    //This block is executed after user saves or discards changes via unsavedChangesModal
     this.$scope.$watchCollection(() => this.$scope.saveInfo, (newValue, oldValue)=> {
       if (newValue != oldValue){
-        console.log('here');
         if (this.$scope.saveInfo.saveAll) {
-            var promise = this.saveAll(this.$scope.saveInfo.arrays, this.$scope.saveInfo.saveButtonInfo, this.$scope.saveInfo.serviceToUse);
+            var promise = this.saveAll(this.$scope.saveInfo.arrays, this.$scope.saveInfo.serviceToUse);
         } else {
-            this.discardChanges(this.$scope.saveInfo.arrays, this.$scope.saveInfo.saveButtonInfo);
+            this.discardChanges(this.$scope.saveInfo.arrays);
             var promise = this.$q.resolve();
         }
         promise.then((reason) => {
            //Beginning of promise chain (saveAll() => saveSet())
           //If saving was successful, redirect to desired page.
-          this.$scope.tabInfo.unsavedChanges = false;
+          this.saveButtonInfo.unsavedChanges = false;
           if (this.toStateName != null) {
               this.$state.go(this.toStateName);
               this.toStateName = null;
@@ -52,24 +50,21 @@ export default class AccountController {
       }
     });
 
-    this.createListener();
-  }
-  createListener() {
     this.$scope.$on('$stateChangeStart', (e, toState) => {
-      if (this.$scope.tabInfo.unsavedChanges) {
+      if (this.saveButtonInfo.unsavedChanges) {
         e.preventDefault();
         this.toStateName = toState.name;
         this.openUnsavedChangesModal();
       }
     });
 
-    this.$scope.$on('checkForUnsavedChange()', (event, data) => {
-      this.checkForUnsavedChanges(data[0], data[1]);
+    this.$scope.$on('checkForUnsavedChange()', (event, arrays) => {
+      this.checkForUnsavedChanges(arrays);
     });
   }
 
   switchActive(index){
-    if (this.$scope.tabInfo.unsavedChanges == true) {
+    if (this.saveButtonInfo.unsavedChanges == true) {
         this.index = index;
         this.openUnsavedChangesModal();
     } else {
@@ -78,13 +73,12 @@ export default class AccountController {
   }
 
   activate(index){
-    this.$scope.tabInfo.active = index;
-    this.$scope.tabInfo.sectionTemplateUrl = this.sections.allSections[index].templateUrl;
+    this.tabInfo.active = index;
+    this.tabInfo.sectionTemplateUrl = this.sections.allSections[index].templateUrl;
   }
 
-  saveAll(arrays, saveButtonInfo, serviceToUse) {
-    saveButtonInfo.unsavedChanges = true;
-    this.updateSaveButton(saveButtonInfo, this.savingText, this.savingColor);
+  saveAll(arrays, serviceToUse) {
+    this.updateSaveButton(this.savingText, this.savingColor, true);
     return this.$q((resolve, reject) => {
       var promises = [];
       arrays.local.forEach((elm) => {
@@ -95,13 +89,12 @@ export default class AccountController {
       this.$q.all(promises).then(() => {
           arrays.saved = angular.copy(arrays.local);
           this.$timeout(() => {
-              this.updateSaveButton(saveButtonInfo, this.savedText, this.savedColor);
-              saveButtonInfo.unsavedChanges = false;
+              this.updateSaveButton(this.savedText, this.savedColor, false);
               resolve();
           }, 800);
       }, (error) => {
           arrays.saved = angular.copy(arrays.local);
-          this.updateSaveButton(saveButtonInfo, this.saveText, this.saveColor, 800);
+          this.updateSaveButton(this.saveText, this.saveColor, null, 800);
           reject(error);
       });
     });
@@ -129,7 +122,7 @@ export default class AccountController {
       });
   }
 
-  checkIfModified(index, arrays, saveButtonInfo) {
+  checkIfModified(index, arrays) {
     // Checks if pSet is new. If it is, there is no need to check if it has been modified.
     if (!arrays.local[index].hasOwnProperty('is_new')) {
       var modified = false;
@@ -147,12 +140,12 @@ export default class AccountController {
       } else {
         arrays.local[index].is_modified = false;
       }
-      this.checkForUnsavedChanges(arrays, saveButtonInfo);
+      this.checkForUnsavedChanges(arrays);
     }
   }
 
 
-  checkForUnsavedChanges(arrays, saveButtonInfo) {
+  checkForUnsavedChanges(arrays) {
     var unsaved = false;
     if (arrays.local.length > arrays.saved.length){
         unsaved = true;
@@ -163,25 +156,25 @@ export default class AccountController {
     }
 
     if (unsaved){
-        this.updateSaveButton(saveButtonInfo, this.saveText, this.saveColor);
-        saveButtonInfo.unsavedChanges = true;
+        this.updateSaveButton(this.saveText, this.saveColor, true);
     } else {
-        this.updateSaveButton(saveButtonInfo, this.savedText, this.savedColor);
-        saveButtonInfo.unsavedChanges = false;
+        this.updateSaveButton(this.savedText, this.savedColor, false);
     }
   }
 
-  updateSaveButton(saveButtonInfo, text, color, time) {
+  updateSaveButton(text, color, changes, time) {
     this.$timeout(() => {
-      saveButtonInfo.saveButtonText = text;
-      saveButtonInfo.saveButtonColor = color;
+      this.saveButtonInfo.saveButtonText = text;
+      this.saveButtonInfo.saveButtonColor = color;
+      if (changes != null) {
+        this.saveButtonInfo.unsavedChanges = changes;
+      }
     }, time);
   }
 
-  discardChanges(arrays, saveButtonInfo) {
+  discardChanges(arrays) {
     arrays.local = angular.copy(arrays.saved);
-    this.updateSaveButton(saveButtonInfo, this.savedText, this.savedColor);
-    saveButtonInfo.unsavedChanges = false;
+    this.updateSaveButton(this.savedText, this.savedColor, false);
   }
 
   openUnsavedChangesModal() {
@@ -192,9 +185,9 @@ export default class AccountController {
     });
     selection.result.then((result) => {
       if (result == 'save') {
-          this.$scope.$broadcast('getSaveAllParameters');
+          this.$scope.$broadcast('getSaveAllParameters', this.sections.allSections[this.tabInfo.active].name);
       } else {
-          this.$scope.$broadcast('getDiscardChangesParameters');
+          this.$scope.$broadcast('getDiscardChangesParameters', this.sections.allSections[this.tabInfo.active].name);
       }
     });
   }

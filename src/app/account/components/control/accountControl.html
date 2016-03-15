@@ -8,6 +8,7 @@ label {
 td {
 }
 td:first-child {
+
 }
 table {
 }
@@ -20,7 +21,7 @@ th, td {
 </style>
 
 <h1>Access Control</h1>
-<div class="container" ng-controller="AccountControlController as AccountControlCtrl" ng-cloak>
+<div class="container" ng-controller="AccountControlController as accountControlCtrl" ng-cloak>
     <div method="POST" class="row">
         <table class="table table-condensed">
             <thead>
@@ -55,29 +56,29 @@ th, td {
                 </tr>
             </thead>
             <tbody>
-                    <tr ng-repeat="account in AccountControlCtrl.accounts.local">
+                    <tr ng-repeat="account in accountControlCtrl.accounts.local">
                         <td>
                           <span>{{account.first_name+" "+account.last_name}}</span>
                           <br/>
-                          <select  ng-change="AccountControlCtrl.changeUserRole(account)" ng-model="account.user_designation" ng-options="p.id as p.name for p in AccountControlCtrl.permissions">
+                          <select  ng-change="accountControlCtrl.changeUserRole(account)" ng-model="account.user_designation" ng-options="p.id as p.name for p in accountControlCtrl.permissions">
                           </select>
                         </td>
-                        <td><label ng-click="account.permission_irf_view = !account.permission_irf_view; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_view ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_irf_add = !account.permission_irf_add; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_irf_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_add ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_irf_edit = !account.permission_irf_edit; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_irf_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_edit ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_irf_delete = !account.permission_irf_delete; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_irf_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_delete ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_vif_view = !account.permission_vif_view; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_vif_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_view ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_vif_add = !account.permission_vif_add; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_vif_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_add ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_vif_edit = !account.permission_vif_edit; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_vif_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_edit ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_vif_delete = !account.permission_vif_delete; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_vif_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_delete ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_border_stations_view = !account.permission_border_stations_view; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_border_stations_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_view ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_border_stations_add = !account.permission_border_stations_add; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_border_stations_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_add ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_border_stations_edit = !account.permission_border_stations_edit; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_border_stations_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_edit ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_border_stations_delete = !account.permission_border_stations_delete; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_border_stations_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_delete ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_accounts_manage = !account.permission_accounts_manage; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_accounts_manage ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_receive_email = !account.permission_receive_email; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_receive_email ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_vdc_manage = !account.permission_vdc_manage; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vdc_manage ? "Yes" : "No" }}</label></td>
-                        <td><label ng-click="account.permission_budget_manage = !account.permission_budget_manage; accountCtrl.checkIfModified($index, AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" ng-class="account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_budget_manage ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_view = !account.permission_irf_view; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_view ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_add = !account.permission_irf_add; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_irf_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_add ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_edit = !account.permission_irf_edit; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_irf_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_edit ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_irf_delete = !account.permission_irf_delete; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_irf_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_irf_delete ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_view = !account.permission_vif_view; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_vif_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_view ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_add = !account.permission_vif_add; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_vif_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_add ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_edit = !account.permission_vif_edit; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_vif_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_edit ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vif_delete = !account.permission_vif_delete; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_vif_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vif_delete ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_view = !account.permission_border_stations_view; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_border_stations_view ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_view ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_add = !account.permission_border_stations_add; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_border_stations_add ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_add ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_edit = !account.permission_border_stations_edit; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_border_stations_edit ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_edit ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_border_stations_delete = !account.permission_border_stations_delete; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_border_stations_delete ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_border_stations_delete ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_accounts_manage = !account.permission_accounts_manage; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_accounts_manage ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_receive_email = !account.permission_receive_email; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_receive_email ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_vdc_manage = !account.permission_vdc_manage; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vdc_manage ? "Yes" : "No" }}</label></td>
+                        <td><label ng-click="account.permission_budget_manage = !account.permission_budget_manage; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_budget_manage ? "Yes" : "No" }}</label></td>
 
 
 
@@ -85,8 +86,8 @@ th, td {
             </tbody>
         </table>
         <div class="btn-toolbar">
-            <button ng-disabled="!AccountControlCtrl.saveButtonInfo.unsavedChanges" ng-click="accountCtrl.discardChanges(AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo)" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Discard Changes</button>
-            <button ng-disabled="!AccountControlCtrl.saveButtonInfo.unsavedChanges" ng-click="accountCtrl.saveAll(AccountControlCtrl.accounts, AccountControlCtrl.saveButtonInfo, AccountControlCtrl.AccountService)" class="col-xs-2  col-md-2  col-lg-2 clear btn {{AccountControlCtrl.saveButtonInfo.saveButtonColor}} btn-lg pull-right">{{AccountControlCtrl.saveButtonInfo.saveButtonText}}</button>
+            <button ng-disabled="!accountCtrl.saveButtonInfo.unsavedChanges" ng-click="accountCtrl.discardChanges(accountControlCtrl.accounts)" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Discard Changes</button>
+            <button ng-disabled="!accountCtrl.saveButtonInfo.unsavedChanges" ng-click="accountCtrl.saveAll(accountControlCtrl.accounts, accountControlCtrl.AccountService)" class="col-xs-2  col-md-2  col-lg-2 clear btn {{accountCtrl.saveButtonInfo.saveButtonColor}} btn-lg pull-right">{{accountCtrl.saveButtonInfo.saveButtonText}}</button>
         </div>
     </div>
 </div>

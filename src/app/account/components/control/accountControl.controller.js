@@ -15,7 +15,6 @@ export default class AccountControlController {
     this.PermissionsSetsService = PermissionsSetsService;
 
     // Scope Variables
-    this.saveButtonInfo = {"saveButtonText": "Saved", "saveButtonColor": "btn-primary", "unsavedChanges": false};
     this.accounts = {};
     this.permissions = {};
 
@@ -27,23 +26,20 @@ export default class AccountControlController {
       this.permissions = result.data.results;
     });
 
-    this.$scope.$watch( () => this.saveButtonInfo.unsavedChanges, (newValue)=>{
-      this.$scope.tabInfo.unsavedChanges = newValue;
+    this.$scope.$on('getSaveAllParameters', (event, name) => {
+      this.updateSaveInfo(true, name);
     });
-
-    this.$scope.$on('getSaveAllParameters', () => {
-      this.updateSaveInfo(true);
-    });
-    this.$scope.$on('getDiscardChangesParameters', () => {
-      this.updateSaveInfo(false);
+    this.$scope.$on('getDiscardChangesParameters', (event, name) => {
+      this.updateSaveInfo(false, name);
     });
   }
 
-  updateSaveInfo(saveAll) {
-    this.$scope.saveInfo.arrays = this.accounts;
-    this.$scope.saveInfo.saveButtonInfo = this.saveButtonInfo;
-    this.$scope.saveInfo.serviceToUse = this.AccountService;
-    this.$scope.saveInfo.saveAll = saveAll;
+  updateSaveInfo(saveAll, name) {
+    if (name = 'Accounts Access Control'){
+      this.$scope.saveInfo.arrays = this.accounts;
+      this.$scope.saveInfo.serviceToUse = this.AccountService;
+      this.$scope.saveInfo.saveAll = saveAll;
+    }
   }
   changeUserRole(account) {
       this.PermissionsSetsService.getPermission(account.user_designation).then((result) => {

@@ -14,9 +14,7 @@ export default class AccountDefaultsController {
     this.AccountService = AccountService;
     this.PermissionsSetsService = PermissionsSetsService;
     // Scope Variables
-    this.saveButtonInfo = {"saveButtonText":"Saved", "saveButtonColor":"btn-primary", "unsavedChanges": false};
     this.permissions = {}
-
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissions.local = result.data.results;
       // Creates a deep copy of permissionsSets
@@ -24,24 +22,21 @@ export default class AccountDefaultsController {
       // permissions.local is compared against permissions.saved to check for unsaved changes.
     });
 
-    this.$scope.$watch( () => this.saveButtonInfo.unsavedChanges, (newValue)=>{
-      this.$scope.tabInfo.unsavedChanges = newValue;
+    this.$scope.$on('getSaveAllParameters', (event, name) => {
+      this.updateSaveInfo(true, name);
     });
-
-    this.$scope.$on('getSaveAllParameters', () => {
-      this.updateSaveInfo(true);
-    });
-    this.$scope.$on('getDiscardChangesParameters', () => {
-      this.updateSaveInfo(false);
+    this.$scope.$on('getDiscardChangesParameters', (event, name) => {
+      this.updateSaveInfo(false, name);
     });
 
   }
 
-  updateSaveInfo(saveAll) {
-    this.$scope.saveInfo.arrays = this.permissions;
-    this.$scope.saveInfo.saveButtonInfo = this.saveButtonInfo;
-    this.$scope.saveInfo.serviceToUse = this.PermissionsSetsService;
-    this.$scope.saveInfo.saveAll = saveAll;
+  updateSaveInfo(saveAll, name) {
+    if (name == 'Accounts Defaults'){
+      this.$scope.saveInfo.arrays = this.permissions;
+      this.$scope.saveInfo.serviceToUse = this.PermissionsSetsService;
+      this.$scope.saveInfo.saveAll = saveAll;
+    }
   }
 
   addAnother() {
@@ -66,7 +61,7 @@ export default class AccountDefaultsController {
       permission_vif_edit: false,
       permission_vif_view: false
     });
-    this.$scope.$emit('checkForUnsavedChange()', [this.permissions, this.saveButtonInfo]);
+    this.$scope.$emit('checkForUnsavedChange()', this.permissions);
   }
 
   delete(index) {
@@ -90,7 +85,7 @@ export default class AccountDefaultsController {
         if (pSet.is_new) {
             // Local delete
             this.permissions.local.splice(index, 1);
-            this.$scope.$emit('checkForUnsavedChange()', [this.permissions, this.saveButtonInfo]);
+            this.$scope.$emit('checkForUnsavedChange()', this.permissions);
         } else {
             // Database delete
             this.permissions.local.splice(index, 1);

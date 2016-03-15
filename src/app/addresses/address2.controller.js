@@ -41,7 +41,7 @@ class Address2Controller {
     getAddresses() {
         this.loading = true;
         this.address2Service.listAddresses(this.getQueryParams())
-            .success((data) => {
+            .then((data) => {
                 this.addresses = data.results;
                 this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
@@ -51,7 +51,7 @@ class Address2Controller {
     loadMoreAddresses() {
         this.loading = true;
         this.address2Service.loadMoreAddresses(this.getQueryParams(true))
-            .success((data) => {
+            .then((data) => {
                 this.addresses = this.addresses.concat(data.results);
                 this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
@@ -61,7 +61,7 @@ class Address2Controller {
     searchAddresses() {
         this.loading = true;
         this.address2Service.searchAddresses(this.getQueryParams())
-            .success((data) => {
+            .then((data) => {
                 this.addresses = data.results;
                 this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
@@ -101,7 +101,7 @@ class Address2Controller {
         });
         modalInstance.result.then((address) => {
             this.address2Service.saveAddress(address)
-                .success(() => {
+                .then(() => {
                     this.getAddresses();
                 });
         });

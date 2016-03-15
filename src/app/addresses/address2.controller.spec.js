@@ -73,7 +73,7 @@ describe('Address2Controller', () => {
     it('should return "glyphicon-sort" if column does not equal sortColumn', () => {
       let column = 'a';
       vm.sortColumn = 'b';
-      expect(vm.sortIcon()).toEqual('glyphicon-sort');
+      expect(vm.sortIcon(column)).toEqual('glyphicon-sort');
     });
 
     describe('if column equals sortColumn', () => {
@@ -84,47 +84,45 @@ describe('Address2Controller', () => {
           vm.reverse = true;
         });
 
-        {
+        let ret = "glyphicon-sort-by-order-alt";
+        describe(`should return '${ret}'`, () => {
 
-          let ret = "glyphicon-sort-by-order-alt";
-
-          it(`should return '${ret}' if column equals "latitude"`, () => {
+          it(`if column equals "latitude"`, () => {
             vm.sortColumn = 'latitude';
             expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
           });
 
-          it(`should return '${ret}' if column equals "longitude"`, () => {
+          it(`if column equals "longitude"`, () => {
             vm.sortColumn = 'longitude';
             expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
           });
 
-        }
+        });
 
-        {
+        let retAlt = "glyphicon-sort-by-alphabet-alt";
+        describe(`should return '${retAlt}'`, () => {
 
-          let ret = "glyphicon-sort-by-alphabet-alt";
-
-          it(`should return '${ret}' if column equals "name"`, () => {
+          it(`if column equals "name"`, () => {
             vm.sortColumn = 'name';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
-          it(`should return '${ret}' if column equals "cannonical_name.name"`, () => {
+          it(`if column equals "cannonical_name.name"`, () => {
             vm.sortColumn = 'cannonical_name.name';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
-          it(`should return '${ret}' if column equals "district.name"`, () => {
+          it(`if column equals "district.name"`, () => {
             vm.sortColumn = 'district.name';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
-          it(`should return '${ret}' if column equals "verified"`, () => {
+          it(`if column equals "verified"`, () => {
             vm.sortColumn = 'verified';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
-        }
+        });
 
       });
 
@@ -134,43 +132,43 @@ describe('Address2Controller', () => {
           vm.reverse = false;
         });
 
-        {
-          let ret = "glyphicon-sort-by-order";
+        let retOrder = "glyphicon-sort-by-order";
+        describe(`should return '${retOrder}'`, () => {
 
-          it(`should return '${ret}' if column equals "latitude"`, () => {
+          it(`if column equals "latitude"`, () => {
             vm.sortColumn = 'latitude';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retOrder);
           });
 
-          it(`should return '${ret}' if column equals "longitude"`, () => {
+          it(`if column equals "longitude"`, () => {
             vm.sortColumn = 'longitude';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retOrder);
           });
-        }
+        });
 
-        {
-          let ret = "glyphicon-sort-by-alphabet";
+        let retAlphabet = "glyphicon-sort-by-alphabet";
+        describe(`should return '${retAlphabet}'`, () => {
 
-          it(`should return '${ret}' if column equals "name"`, () => {
+          it(`if column equals "name"`, () => {
             vm.sortColumn = 'name';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
 
-          it(`should return '${ret}' if column equals "cannonical_name.name"`, () => {
+          it(`if column equals "cannonical_name.name"`, () => {
             vm.sortColumn = 'cannonical_name.name';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
 
-          it(`should return '${ret}' if column equals "district.name"`, () => {
+          it(`if column equals "district.name"`, () => {
             vm.sortColumn = 'district.name';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
 
-          it(`should return '${ret}' if column equals "verified"`, () => {
+          it(`if column equals "verified"`, () => {
             vm.sortColumn = 'verified';
-            expect(vm.sortIcon(vm.sortColumn)).toEqual(ret);
+            expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
-        }
+        });
 
       });
 
@@ -204,18 +202,21 @@ describe('Address2Controller', () => {
       beforeEach(() => {
         vm.address2Service.listAddresses = mockThen(data);
         nextPageUrl = vm.nextUrl(data.next);
-        vm.getAddresses();
       });
 
       it(`should set addresses to '${data.results}'`, () => {
+        vm.getAddresses();
         expect(vm.addresses).toEqual(data.results);
       });
 
       it(`should set nextPageUrl to '${nextPageUrl}'`, () => {
+        vm.getAddresses();
         expect(vm.nextPageUrl).toEqual(nextPageUrl);
       });
 
       it('should set loading to false', () => {
+        vm.loading = true;
+        vm.getAddresses();
         expect(vm.loading).toBe(false);
       });
 
@@ -226,6 +227,7 @@ describe('Address2Controller', () => {
   describe('function loadMoreAddresses', () => {
 
     it('should set loading to true', () => {
+      vm.loading = false;
       vm.loadMoreAddresses();
       expect(vm.loading).toBe(true);
     });

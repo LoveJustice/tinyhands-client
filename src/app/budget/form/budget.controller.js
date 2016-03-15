@@ -76,7 +76,7 @@ export default class BudgetController {
   }
 
 
-  // REGION: Administration
+// REGION: Administration
   adminStationaryTotal() {
     return this.validAmount(this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.validAmount(this.form.administration_number_of_intercepts_last_month_adder);
   }
@@ -101,10 +101,10 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.administration = amount;
     return amount;
   }
-  // ENDREGION: Administration
+// ENDREGION: Administration
 
 
-  // REGION: Awareness
+// REGION: Awareness
   awarenessTotal() {
     var amount = 0;
     if (this.form.awareness_contact_cards) {
@@ -120,10 +120,10 @@ export default class BudgetController {
     this.form.totals.other.awareness = amount;
     return amount;
   }
-  // ENDREGION: Awareness
+// ENDREGION: Awareness
 
 
-  // REGION: Communication
+// REGION: Communication
   communicationManagerTotal() {
     var amount = 0;
 
@@ -152,10 +152,10 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.communication = amount;
     return amount;
   }
-  // ENDREGION: Communication
+// ENDREGION: Communication
 
 
-  // REGION: Food And Gas
+// REGION: Food And Gas
   foodGasInterceptedGirls() {
     return this.validAmount(this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
       this.form.food_and_gas_number_of_intercepted_girls *
@@ -174,18 +174,18 @@ export default class BudgetController {
     this.form.totals.safeHouse.foodAndGas = amount;
     return amount;
   }
-  // ENDREGION: Food And Gas
+// ENDREGION: Food And Gas
 
 
-  // REGION: Medical
+// REGION: Medical
   medicalTotal() {
     this.form.totals.borderMonitoringStation.medical = this.form.medical_last_months_expense;
     return this.form.medical_last_months_expense;
   }
-  // ENDREGION: Medical
+// ENDREGION: Medical
 
 
-  // REGION: Miscellaneous
+// REGION: Miscellaneous
   miscellaneousMaximum() {
     return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
   }
@@ -195,10 +195,10 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.miscellaneous = amount;
     return amount;
   }
-  // ENDREGION: Miscellaneous
+// ENDREGION: Miscellaneous
 
 
-  // REGION: Salaries
+// REGION: Salaries
   salariesTotal() {
     var amount = 0;
 
@@ -215,10 +215,10 @@ export default class BudgetController {
 
     return amount;
   }
-  // ENDREGION: Salaries
+// ENDREGION: Salaries
 
 
-  // REGION: Shelter
+// REGION: Shelter
   shelterUtilTotal() {
     return this.validAmount(this.form.shelter_rent) + this.validAmount(this.form.shelter_water) + this.validAmount(this.form.shelter_electricity);
   }
@@ -241,10 +241,10 @@ export default class BudgetController {
     this.form.totals.safeHouse.shelter = amount;
     return amount;
   }
-  // ENDREGION: Shelter
+// ENDREGION: Shelter
 
 
-  // REGION: Supplies
+// REGION: Supplies
   suppliesTotal() {
     var amount = 0;
     if(this.form.supplies_walkie_talkies_boolean) {
@@ -263,10 +263,10 @@ export default class BudgetController {
     this.form.totals.other.supplies = amount;
     return amount;
   }
-  // ENDREGION: Supplies
+// ENDREGION: Supplies
 
 
-  // REGION: Travel
+// REGION: Travel
   travelMotorbikeOtherTotal() {
     var returnVal = 0;
     if(this.form.travel_motorbike) {
@@ -295,11 +295,11 @@ export default class BudgetController {
     this.form.totals.borderMonitoringStation.travel = amount;
     return amount;
   }
-  // ENDREGION: Travel
+// ENDREGION: Travel
 
 
 
-  // REGION: Functions that handle totals
+// REGION: Functions that handle totals
   setBorderMonitoringStationTotals() {
     let amount = this.adminTotal() +
       this.communicationTotal() +
@@ -324,21 +324,20 @@ export default class BudgetController {
       this.suppliesTotal();
     this.total = amount;
   }
-  // ENDREGION: Functions that handle totals
+// ENDREGION: Functions that handle totals
 
 
 
-  // REGION: Call to Service Functions
-
-  // REGION: DELETE Calls
+// REGION: Call to Service Functions
+// REGION: DELETE Calls
   deleteOtherItems() {
     for (let i in this.deletedItems) {
       this.service.deleteOtherItem(this.budgetId, this.deletedItems[i]);
     }
   }
-  // ENDREGION: DELETE Calls
+// ENDREGION: DELETE Calls
 
-  // REGION: GET Calls
+// REGION: GET Calls
   getAllData() {
     this.getStaff();
     this.getBorderStation();
@@ -410,10 +409,10 @@ export default class BudgetController {
       });
     }
   }
-  // ENDREGION: GET Calls
+// ENDREGION: GET Calls
 
 
-  // REGION: PUT Calls
+// REGION: PUT Calls
   updateOrCreateForm() {
     if (this.isCreating) {
       this.service.createForm(this.form).then(() => {
@@ -456,8 +455,8 @@ export default class BudgetController {
       }
     });
   }
-  // ENDREGION: PUT Calls
-  // ENDREGION: Call to Service Functions
+// ENDREGION: PUT Calls
+// ENDREGION: Call to Service Functions
 
   clearValue(value) {
     let returnValue;

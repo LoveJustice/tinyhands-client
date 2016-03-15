@@ -49,7 +49,7 @@ export default class BudgetController {
   getOtherCost(otherItems) {
     let amount = 0;
     for (let i in otherItems) {
-      amount += otherItems[i].cost;
+      amount += this.validAmount(otherItems[i].cost);
     }
     return amount;
   }
@@ -329,15 +329,15 @@ export default class BudgetController {
 
 
 // REGION: Call to Service Functions
-// REGION: DELETE Calls
+  // REGION: DELETE Calls
   deleteOtherItems() {
     for (let i in this.deletedItems) {
       this.service.deleteOtherItem(this.budgetId, this.deletedItems[i]);
     }
   }
-// ENDREGION: DELETE Calls
+  // ENDREGION: DELETE Calls
 
-// REGION: GET Calls
+  // REGION: GET Calls
   getAllData() {
     this.getStaff();
     this.getBorderStation();
@@ -409,24 +409,30 @@ export default class BudgetController {
       });
     }
   }
-// ENDREGION: GET Calls
+  // ENDREGION: GET Calls
 
 
-// REGION: PUT Calls
+  // REGION: PUT Calls
+  updateOrCreateAll() {
+    this.updateOrCreateSalaries();
+    this.updateOrCreateOtherItems();
+    this.deleteOtherItems();
+    this.$state.go('budgetList');
+  }
+
   updateOrCreateForm() {
     if (this.isCreating) {
-      this.service.createForm(this.form).then(() => {
+      this.service.createForm(this.form).then((response) => {
+        this.budgetId = response.data.id;
+        this.updateOrCreateAll();
         window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
       });
     } else {
       this.service.updateForm(this.budgetId, this.form).then(() => {
         window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
       });
+      this.updateOrCreateAll();
     }
-    this.updateOrCreateSalaries();
-    this.updateOrCreateOtherItems();
-    this.deleteOtherItems();
-    this.$state.go('budgetList');
   }
 
   updateOrCreateOtherItems() {
@@ -455,7 +461,7 @@ export default class BudgetController {
       }
     });
   }
-// ENDREGION: PUT Calls
+  // ENDREGION: PUT Calls
 // ENDREGION: Call to Service Functions
 
   clearValue(value) {

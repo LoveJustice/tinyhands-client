@@ -22,6 +22,16 @@ export default class BudgetService extends BaseService {
   }
 
   /**
+   * Function that sends the data to be created for a new budget form.
+   *
+   * @param {Object} form The data to be created.
+   * @returns Promise that provides the status and data of the request.
+   */
+  createForm(form) {
+    return this.post('api/budget/', form);
+  }
+
+  /**
    * Function to create other items for a budget form.
    *
    * @param {number} budgetId The id of the target budget.

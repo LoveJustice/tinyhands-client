@@ -28,7 +28,7 @@
         <br/>
       </div>
       <div class="row">
-        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Salaries.push({})" ng-hide="budgetCtrl.isViewing">Add staff</button>
+        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-init="budgetCtrl.form.other.Salaries = []" ng-click="budgetCtrl.form.other.Salaries.push({})" ng-hide="budgetCtrl.isViewing">Add staff</button>
       </div>
     </div>
     <hr>

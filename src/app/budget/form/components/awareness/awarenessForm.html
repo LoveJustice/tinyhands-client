@@ -15,7 +15,7 @@
   <div class="row form-group">
     <div class="col-md-4 col-md-offset-2 checkbox">
       <label>
-        <input type="checkbox" ng-model="budgetCtrl.form.awareness_awareness_party_boolean" ng-change="budgetCtrl.setTotals(budgetCtrl" ng-disabled="budgetCtrl.isViewing"/>Awareness Party
+        <input type="checkbox" ng-model="budgetCtrl.form.awareness_awareness_party_boolean" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>Awareness Party
       </label>
     </div>
     <div class="col-md-4">
@@ -49,7 +49,7 @@
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-offset-4 col-xs-4" ng-click="budgetCtrl.form.other.Awareness.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+      <button class="btn btn-success col-xs-offset-4 col-xs-4" ng-init="budgetCtrl.form.other.Awareness = []" ng-click="budgetCtrl.form.other.Awareness.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
     </div>
   </div>
   <hr>

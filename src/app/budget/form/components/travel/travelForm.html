@@ -10,6 +10,7 @@
       </div>
       <div class="col-md-6 calc-form-input-no-width">
         <input class="form-control text-right" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_chair_with_bike_amount" ng-disabled="!budgetCtrl.form.travel_chair_with_bike || budgetCtrl.isViewing"/>
+        <small>for chair</small>
       </div>
     </div>
     <div class="col-md-6">
@@ -20,6 +21,7 @@
       </div>
       <div class="col-md-6 calc-form-input-no-width">
         <input class="form-control text-right" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_manager_with_bike_amount" ng-disabled="!budgetCtrl.form.travel_manager_with_bike || budgetCtrl.isViewing"/>
+        <small>for manager</small>
       </div>
     </div>
   </div>
@@ -85,7 +87,7 @@
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Travel.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-init="budgetCtrl.form.other.Travel = []" ng-click="budgetCtrl.form.other.Travel.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
     </div>
   </div>
   <hr>

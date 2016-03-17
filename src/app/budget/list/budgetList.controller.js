@@ -17,10 +17,10 @@ export default class BudgetList {
     this.service = BudgetListService;
     this.session = session;
 
-    this.searchTerm = "";
-    this.sortValue = "";
+    this.searchTerm = '';
+    this.sortValue = 'month_year';
 
-    this.getBudgetList();
+    this.getBudgetList(this.searchTerm, this.sortValue);
   }
 
   /**
@@ -28,8 +28,12 @@ export default class BudgetList {
    */
   getBudgetList(searchTerm, sortValue) {
     this.searchTerm = searchTerm;
-    this.sortValue = sortValue;
-    this.service.getBudgetList(searchTerm, sortValue).then((response) => {
+    if (this.sortValue === sortValue) {
+      this.sortValue = `-${sortValue}`;
+    } else {
+      this.sortValue = sortValue;
+    }
+    this.service.getBudgetList(this.searchTerm, this.sortValue).then((response) => {
       this.listOfBudgets = response.data.results;
       this.nextBudgetPage = response.data.next;
     });

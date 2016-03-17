@@ -18,23 +18,23 @@
     <thead>
       <tr>
         <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','border_station__station_name');">Station
-          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'border_station__station_name'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'border_station__station_name' || budgetListCtrl.sortValue === '-border_station__station_name'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-border_station__station_name', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'border_station__station_name'}">
         </i>
         </th>
         <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','border_station__station_code');">Station Code
-          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'border_station__station_code'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'border_station__station_code' || budgetListCtrl.sortValue === '-border_station__station_code'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-border_station__station_code', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'border_station__station_code'}">
         </i>
         </th>
         <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','month_year');">Budget For
-          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'month_year'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'month_year' || budgetListCtrl.sortValue === '-month_year'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-month_year', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'month_year'}">
         </i>
         </th>
         <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','date_time_entered');">Date Entered
-          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'date_time_entered'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'date_time_entered' || budgetListCtrl.sortValue === '-date_time_entered'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-date_time_entered', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'date_time_entered'}">
         </i>
         </th>
         <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','date_time_last_updated');">Last Updated
-          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'date_time_last_updated'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'date_time_last_updated' || budgetListCtrl.sortValue === '-date_time_last_updated'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-date_time_last_updated', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'date_time_last_updated'}">
         </i>
         </th>
         <th class="text-center">&nbsp;</th>

@@ -14,11 +14,12 @@ export default class BudgetService extends BaseService {
    *
    * @param $http Angular http service
    */
-  constructor($http) {
+  constructor($http, utils) {
     'ngInject';
     super();
 
     this.$http = $http;
+    this.utils = utils;
   }
 
   /**
@@ -113,7 +114,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   getStaff(borderStationId) {
-    if (borderStationId) {
+    if (this.utils.validId(borderStationId)) {
       return this.get(`api/staff/?border_station=${borderStationId}`);
     }
   }

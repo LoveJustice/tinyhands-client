@@ -3,72 +3,64 @@
   <br/>
 
   <form>
-    <div class="col-md-12">
-      <div class="form-group pull-right">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchForms">
-        </div>
+    <div class="form-group pull-right col-md-4">
+      <div class="input-group">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="budgetListCtrl.searchBudgets()">Go!</button>
+          </span>
+        <input type="text" class="form-control" placeholder="Search Forms"
+          ng-model="budgetListCtrl.searchForms"
+          ng-model-options="{ debounce: 500 }"
+          ng-change="budgetListCtrl.searchBudgets()"
+        >
       </div>
     </div>
   </form>
 
   <table ng-if="budgetListCtrl.listOfBudgets.length > 0" class="table table-striped table-condensed crud-datatable"
-         infinite-scroll="budgetListCtrl.getNextBudgetPage()"
-         infinite-scroll-distance="3">
+    infinite-scroll="budgetListCtrl.getNextBudgetPage()"
+    infinite-scroll-distance="3"
+  >
     <thead>
       <tr>
         <th class="text-center" ng-click="sortType = 'border_station.station_name'; sortReverse = !sortReverse">Station
-        <i class="glyphicon"
-              ng-show="sortType === 'border_station.station_name'"
-              ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="sortType === 'border_station.station_name'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
         </i>
         </th>
         <th class="text-center" ng-click="sortType = 'border_station.station_code'; sortReverse = !sortReverse">Station Code
-        <i class="glyphicon"
-              ng-show="sortType === 'border_station.station_code'"
-              ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="sortType === 'border_station.station_code'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
         </i>
         </th>
         <th class="text-center" ng-click="sortType = 'month_year'; sortReverse = !sortReverse">Budget For
-        <i class="glyphicon"
-              ng-show="sortType === 'month_year'"
-              ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="sortType === 'month_year'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
         </i>
         </th>
         <th class="text-center" ng-click="sortType = 'date_time_entered'; sortReverse = !sortReverse">Date Entered
-        <i class="glyphicon"
-              ng-show="sortType === 'date_time_entered'"
-              ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="sortType === 'date_time_entered'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
         </i>
         </th>
         <th class="text-center" ng-click="sortType = 'date_time_last_updated'; sortReverse = !sortReverse">Last Updated
-        <i class="glyphicon"
-              ng-show="sortType === 'date_time_last_updated'"
-              ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
+          <i class="glyphicon" ng-show="sortType === 'date_time_last_updated'" ng-class="{'glyphicon-sort-by-attributes-alt': sortReverse, 'glyphicon-sort-by-attributes': !sortReverse}">
         </i>
         </th>
         <th class="text-center">&nbsp;</th>
       </tr>
     </thead>
-    <tbody class="text-center"
-           ng-init="sortType = 'month_year'">
-      <tr ng-repeat="form in budgetListCtrl.listOfBudgets | orderBy:sortType:sortReverse | filter:budgetListCtrl.searchForms"
-          ng-mouseenter="form.hover = true"
-          ng-mouseleave="form.hover = false; form.budgetRemoved = false">
+    <tbody class="text-center" ng-init="sortType = 'month_year'">
+      <tr ng-repeat="form in budgetListCtrl.listOfBudgets | orderBy:sortType:!sortReverse | filter:budgetListCtrl.searchForms" ng-mouseenter="form.hover = true"
+      ng-mouseleave="form.hover = false; form.budgetRemoved = false">
         <td>{{ form.border_station.station_name }}</td>
         <td>{{ form.border_station.station_code }}</td>
-        <td>{{ form.month_year }}</td>
-        <td>{{ form.date_time_entered }}</td>
-        <td>{{ form.date_time_last_updated }}</td>
+        <td>{{ form.month_year | date:'MMMM, y' }}</td>
+        <td>{{ form.date_time_entered | date:'MMM d, y hh:mm:ss a' }}</td>
+        <td>{{ form.date_time_last_updated | date:'MMM d, y hh:mm:ss a' }}</td>
         <td>
           <a ui-sref="budget({id:form.id, isViewing:true})" class="btn btn-sm btn-primary">View</a>
           <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary">Edit</a>
           <a ui-sref="#" class="btn btn-sm btn-primary">Resend MDF</a>
 
-          <button ng-if="budgetListCtrl.session.user.permission_border_stations_delete"
-                  class="btn btn-sm btn-danger animated"
-                  ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
-                  ng-class="{fadeIn: form.hover && !form.budgetRemoved, fadeOut: !form.hover, pulse: form.budgetRemoved}">
+          <button ng-if="budgetListCtrl.session.user.permission_border_stations_delete" class="btn btn-sm btn-danger animated" ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
+          ng-class="{fadeIn: form.hover && !form.budgetRemoved, fadeOut: !form.hover, pulse: form.budgetRemoved}">
             {{ form.budgetRemoved ? "Are you sure?" : "Remove Budget" }}
           </button>
         </td>

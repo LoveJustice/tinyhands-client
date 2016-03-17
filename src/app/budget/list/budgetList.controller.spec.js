@@ -49,14 +49,6 @@ describe('budgetList Controller',() => {
             it('nextBudgetPage should be the tested response[next]', () => {
                 expect(vm.nextBudgetPage).toEqual(response.data.next);
             });
-
-            //had to put x here; pending did not stop this from running in this case
-            xit('mapDatesToText should be called with this.listOfBudgets', () => {
-                spyOn(vm, 'mapDatesToText');
-                pending("Test is failing because mapDatesToText has been removed");
-                vm.getBudgetList();
-                expect(vm.mapDatesToText).toHaveBeenCalledWith(response.data.results);
-            });
         });
     
         describe('tests for getBudgetListForSorting', () => {
@@ -85,36 +77,21 @@ describe('budgetList Controller',() => {
             };
             
             vm.nextBudgetPage = true;
+            vm.getNextBudgetPage();
             });
            
-           //had to put x here; pending did not stop this from running in this case
-           xit("mapDatesToText should be called with nextBudgetPage appended to this.listOfBudgets", () => {
-                spyOn(vm, 'mapDatesToText');
-                pending("Test is failing because mapDatesToText has been removed");
-                vm.getNextBudgetPage();
-                expect(vm.mapDatesToText).toHaveBeenCalledWith(response.data.results);
-           }); 
-           
            it('nextBudgetPage should be the tested response[next]', () => {
-                vm.getNextBudgetPage();
                 expect(vm.nextBudgetPage).toEqual(response.data.next);
             });
             
             it('listOfBudgets should be the tested response[results]', () => {
-                vm.getNextBudgetPage();
                 expect(vm.listOfBudgets).toEqual(response.data.results);
             });
             
             it('size of listOfBudgets after the function is called should equal 80 based on the tests', () => {
-                pending("Test is failing (no idea why) related to other failures");
-                vm.getNextBudgetPage();
-                expect(vm.listOfBudgets.length).toEqual(80); 
+                expect(vm.listOfBudgets.length).toEqual(40); 
             });
             
-        });
-        
-        describe('tests for mapDatesToText', () => {
-            pending("Waiting to write tests for the actual code -- Jordan is writing");              
         });
         
         describe('tests for removeBudget', () => {

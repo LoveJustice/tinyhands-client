@@ -81,14 +81,21 @@ export default class AccountController {
     this.updateSaveButton(this.savingText, this.savingColor, true);
     return this.$q((resolve, reject) => {
       var promises = [];
-      arrays.local.forEach((elm) => {
-        promises.push(this.saveSet(elm, serviceToUse));
+      arrays.local.forEach((elm, index) => {
+        promises.push(this.saveSet(elm, index, serviceToUse));
       });
 
       // Waiting for all permissionsSets to be saved via saveSet()
-      this.$q.all(promises).then(() => {
+      this.$q.all(promises).then((data) => {
+          for (var i=0; i < data.length; i++) {
+            if (data[i] != "no need to re-save") {
+                arrays.local[data[i][0]].id = data[i][1];
+                arrays.local[data[i][0]].is_new = false;
+            }
+          }
           arrays.saved = angular.copy(arrays.local);
           this.$timeout(() => {
+              this.$scope.$apply();
               this.updateSaveButton(this.savedText, this.savedColor, false);
               resolve();
           }, 800);
@@ -101,7 +108,7 @@ export default class AccountController {
    return true;
   }
 
-  saveSet(elm, serviceToUse) {
+  saveSet(elm, index, serviceToUse) {
       var call = null;
       return this.$q((resolve, reject) => {
         if (elm.is_new) {
@@ -114,7 +121,7 @@ export default class AccountController {
         }
         call.then( (data) => {
             elm = data.data;
-            resolve("successfully saved");
+            resolve([index, data.data.id]);
         }, (error) => { // Catch name error
             elm.nameError = true;
             reject("nameError");
@@ -124,14 +131,14 @@ export default class AccountController {
 
   checkIfModified(index, arrays) {
     // Checks if pSet is new. If it is, there is no need to check if it has been modified.
-    if (!arrays.local[index].hasOwnProperty('is_new')) {
+    if ((!arrays.local[index].hasOwnProperty('is_new')) || arrays.local[index].is_new == false) {
       var modified = false;
       var keys = Object.keys(arrays.local[index]);
       keys.forEach((key) => {
         // Checks if a permission value on local copy differs from a permission value in database
         // Ignores '$$hashKey' key, which angular adds when copying an object.
         // It also ignores 'is_modified', since savedPermissionsSets does not have that property.
-        if (key != '$$hashKey' && key != 'is_modified' && arrays.local[index][key] != arrays.saved[index][key]) {
+        if (key != '$$hashKey' && key != 'is_modified' && key != 'hover' && key != 'accountRemoved' && arrays.local[index][key] != arrays.saved[index][key]) {
           modified = true;
         }
       });

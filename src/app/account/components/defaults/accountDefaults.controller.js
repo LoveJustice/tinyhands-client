@@ -29,6 +29,10 @@ export default class AccountDefaultsController {
       this.updateSaveInfo(false, name);
     });
 
+    this.$scope.$watchCollection(() => this.permissions, (newValue, oldValue)=> {
+        this.permissions = newValue;
+      }, true);
+
   }
 
   updateSaveInfo(saveAll, name) {
@@ -66,9 +70,32 @@ export default class AccountDefaultsController {
 
   delete(index) {
     var pSet = this.permissions.local[index];
-    if (!pSet.is_used_by_accounts) this.openDeleteModal(pSet, index);
-  }
+    if (!pSet.is_used_by_accounts){
+      if(pSet.accountRemoved){
+        if (pSet.is_new) {
+            // Local delete
+          window.toastr.success("Account Role Successfully Deleted");
+          this.permissions.local.splice(index, 1);
+          this.$scope.$emit('checkForUnsavedChange()', this.permissions);
+        } else {
+            // Database delete
+            this.permissions.local.splice(index, 1);
+            this.PermissionsSetsService.destroy(pSet.id).then(() => {
+                window.toastr.success("Account Role Successfully Deleted");
+                this.permissions.saved = angular.copy(this.permissions.local);
+                this.$scope.$emit('checkForUnsavedChange()', this.permissions);
 
+            });
+        }
+      }
+      else{
+        pSet.accountRemoved = true;
+      }
+    }
+  }
+}
+
+/*
   openDeleteModal(pSet, index) {
     var user_name = pSet.name;
     var deleteModal = this.$uibModal.open({
@@ -95,5 +122,5 @@ export default class AccountDefaultsController {
             })
         }
     });
-  }
-}
+  }*/
+

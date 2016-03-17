@@ -25,6 +25,22 @@ export default class AccountListController {
     this.AccountsService.resendActivationEmail({id:accountID});
   }
 
+  deleteAccount(account){
+    if(this.currentuser.id != account.id){
+      if(account.accountdelete){
+        this.AccountsService.destroy(account.id).then(() =>{
+            window.toastr.success("Account Role Successfully Deleted");
+            this.AccountsService.getAccounts().then((response) =>{
+            this.accounts = response.data;
+          });
+        });
+      }
+      else{
+        account.accountdelete = true;
+      }
+    }
+  }
+
   openModal(account) {
     var user_name = account.first_name+" "+account.last_name;
     var deleteModal = this.$uibModal.open({
@@ -45,5 +61,4 @@ export default class AccountListController {
       });
     });
   }
-
 }

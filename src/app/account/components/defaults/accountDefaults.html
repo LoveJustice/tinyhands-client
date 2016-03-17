@@ -1,27 +1,3 @@
-<style>
-input[type="checkbox"] {
-    display: none;
-}
-.form-group {
-    margin-bottom: 0 !important;
-}
-label {
-    width: 100% !important;
-}
-td {
-}
-td:first-child {
-}
-table {
-}
-table, th, td {
-    border: 2px solid #ddd;
-}
-th, td {
-    text-align: center;
-}
-</style>
-
 <h1>Access Defaults</h1>
 
 <div class="container" ng-controller="AccountDefaultsController as accountDefaultsCtrl" ng-cloak>
@@ -31,19 +7,20 @@ th, td {
         <table class="table table-condensed">
             <thead>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th colspan="4">Interception Record Forms</th>
-                    <th colspan="4">Victim Interview Forms</th>
-                    <th colspan="4">Border Stations</th>
-                    <th>Accounts</th>
-                    <th>Alerts</th>
-                    <th>VDC</th>
-                    <th>Budget</th>
+
+                    <th style="border: none">&nbsp;</th>
+                    <th colspan="4" style="border: none">Interception Record Forms</th>
+                    <th colspan="4" style="border: none">Victim Interview Forms</th>
+                    <th colspan="4" style="border: none">Border Stations</th>
+                    <th style="border: none">Accounts</th>
+                    <th style="border: none">Alerts</th>
+                    <th style="border: none">VDC</th>
+                    <th style="border: none">Budget</th>
+                    <!--<th>&nbsp;</th>-->
                 </tr>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th>Designation</th>
+
+                    <th style="white-space: nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
                     <th>View</th>
                     <th>Add</th>
                     <th>Edit</th>
@@ -60,24 +37,16 @@ th, td {
                     <th>Can Receive</th>
                     <th>Manage</th>
                     <th>Manage</th>
+                    <!--<th>&nbsp;</th>-->
                 </tr>
             </thead>
 
             <tbody id="permissions-rows-container">
-                <tr ng-repeat="permissionsSet in accountDefaultsCtrl.permissions.local" ng-show="!permissionsSet.delete">
-                    <td style="width: 25px">
-                        <div tooltip="This designation is used by one or more accounts and cannot be deleted."
-                            tooltip-enable="permissionsSet.is_used_by_accounts">
-                        <button type="button"
-                            class="btn btn-xs"
-                            ng-class="permissionsSet.is_used_by_accounts ? 'btn-default' : 'btn-danger'"
-                            ng-click="accountDefaultsCtrl.delete($index); accountCtrl.checkForUnsavedChanges(accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)"
-                            ng-disabled="permissionsSet.is_used_by_accounts">X</button>
-                        </div>
-                    </td>
+                <tr ng-repeat="permissionsSet in accountDefaultsCtrl.permissions.local" ng-show="!permissionsSet.delete" ng-mouseenter="permissionsSet.hover = true" ng-mouseleave="permissionsSet.hover = false; permissionsSet.accountRemoved = false">
+
                     <td>
                         <div ng-class="{'has-error': permissionsSet.nameError}">
-                            <input type="text" class="form-control" ng-model="permissionsSet.name"/>
+                            <input style="width:100%" type="text" class="form-control" ng-model="permissionsSet.name"/>
                         </div>
                     </td>
                     <td><label ng-click="permissionsSet.permission_irf_view = !permissionsSet.permission_irf_view; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_irf_view ? "Yes" : "No" }}</label></td>
@@ -96,11 +65,24 @@ th, td {
                     <td><label ng-click="permissionsSet.permission_receive_email = !permissionsSet.permission_receive_email; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_receive_email ? "Yes" : "No" }}</label></td>
                     <td><label ng-click="permissionsSet.permission_vdc_manage = !permissionsSet.permission_vdc_manage; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_vdc_manage ? "Yes" : "No" }}</label></td>
                     <td><label ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_budget_manage ? "Yes" : "No" }}</label></td>
+                    <td style="width: 25px; border: none">
+                        <div tooltip="This designation is used by one or more accounts and cannot be deleted."
+                            tooltip-enable="permissionsSet.is_used_by_accounts">
+                        <button type="button"
+                            class="btn btn-sm btn-danger animated"
+                            ng-disabled="permissionsSet.is_used_by_accounts"
+                            ng-click="accountDefaultsCtrl.delete($index)";
+                            ng-class="{fadeIn: permissionsSet.hover && permissionsSet.accountRemoved, fadeOut: !permissionsSet.hover, pulse: permissionsSet.accountRemoved}">
+                            {{ permissionsSet.accountRemoved ? "Are you sure?" : "Remove Role" }}</button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
         <div class="btn-toolbar">
-            <button ng-click="accountDefaultsCtrl.addAnother()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-left">Add Another</button>
+            <button
+             ng-click="accountDefaultsCtrl.addAnother()" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-left">Add Another</button>
+
             <button ng-disabled="!accountCtrl.saveButtonInfo.unsavedChanges" ng-click="accountCtrl.discardChanges(accountDefaultsCtrl.permissions)" class="col-xs-2  col-md-2  col-lg-2 clear btn btn-primary btn-lg pull-right">Discard Changes</button>
             <button ng-disabled="!accountCtrl.saveButtonInfo.unsavedChanges" ng-click="accountCtrl.saveAll(accountDefaultsCtrl.permissions, accountDefaultsCtrl.PermissionsSetsService)" class="col-xs-2  col-md-2  col-lg-2 clear btn {{accountCtrl.saveButtonInfo.saveButtonColor}} btn-lg pull-right">{{accountCtrl.saveButtonInfo.saveButtonText}}</button>
         </div>

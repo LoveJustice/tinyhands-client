@@ -17,14 +17,19 @@ export default class BudgetList {
     this.service = BudgetListService;
     this.session = session;
 
+    this.searchTerm = "";
+    this.sortValue = "";
+
     this.getBudgetList();
   }
 
   /**
    * Gets list of budgets from API.
    */
-  getBudgetList() {
-    this.service.getBudgetList().then((response) => {
+  getBudgetList(searchTerm, sortValue) {
+    this.searchTerm = searchTerm;
+    this.sortValue = sortValue;
+    this.service.getBudgetList(searchTerm, sortValue).then((response) => {
       this.listOfBudgets = response.data.results;
       this.nextBudgetPage = response.data.next;
     });

@@ -10,8 +10,8 @@ export default class BudgetListService extends BaseService {
     return this.delete(`/api/budget/${id}/`);
   }
 
-  getBudgetList() {
-    return this.get('/api/budget/',[{ name: "page_size", value: "25" }]);
+  getBudgetList(searchTerm, sortValue) {
+    return this.get('/api/budget/', [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, {name: "ordering", value: sortValue }]);
   }
 
   getNextBudgetPage(nextPageUrl) {

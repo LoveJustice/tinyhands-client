@@ -1,14 +1,16 @@
 export default class VifListController {
     constructor(VifListService, session) {
         'ngInject';
+
         this.service = VifListService;
         this.session = session;
+
+        this.numShowing = 25;
+        this.paginateBy = 25;
+        this.reverse = false;
+        this.searchValue = "";
         this.sort = 'vif_number';
         this.showingVifs = [];
-        this.reverse = false;
-        this.paginateBy = 25;
-        this.numShowing = 25;
-        this.searchValue = "";
 
         this.getVifList();
     }
@@ -30,26 +32,16 @@ export default class VifListController {
         }
     }
 
-    reverseList() {
-        this.reverse = !this.reverse;
-    }
-
     showMoreVifs() {
         this.numShowing = parseInt(this.numShowing) + parseInt(this.paginateBy);
         this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
-
     }
 
     deleteVif(id) {
         this.service.deleteVif(id);
     }
 
-    cleanDeleteUrl(url) {
-        return String(url).replace("http/:","");
-    }
-
     getCsvArray() {
-        //[{'Vif #'}, {'Interviewer'}, {'# of Victims'}, {'# of Traffickers'}, {'Date of Interview'}, {'Time Entered Into System'}, {'Time Last Edited'}];
         this.getArray = [];
         var i;
         for (i = 0; i < this.showingVifs.length; i++) {

@@ -58,7 +58,7 @@ import VifListController from './vif/list/vifList.controller';
 import ErrorFactory from './error/error.factory';
 // ENDREGION: Factories
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -71,15 +71,15 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .run(runBlock)
 
   // REGION: Services
+  .service('address1Service', Address1Service)
+  .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
-  .service('address1Service', Address1Service)
-  .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
-  .service('VifService', VifService)
   .service('VifListService', VifListService)
+  .service('VifService', VifService)
   // ENDREGION: Services
 
   // REGION: Factories

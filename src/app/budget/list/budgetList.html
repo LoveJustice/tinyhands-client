@@ -6,10 +6,9 @@
     <div class="form-group pull-right col-md-4">
       <div class="input-group">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button" ng-click="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, '');">Go!</button>
-          </span>
-        <input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchTerm" ng-model-options="{ debounce: 500 }"
-        ng-change="budgetListCtrl.searchBudgets()">
+          <button class="btn btn-default" type="button" ng-click="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, '')">Go!</button>
+        </span>
+        <input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, '')">
       </div>
     </div>
   </form>
@@ -63,9 +62,9 @@
   </table>
 
 
-  <div ng-if="budgetListCtrl.listOfBudgets.length == 0" class="row text-center">
-    <h3>There are no saved Budget Sheets in the system</h3>
-    <h4>To add one, go to the detail page of a border station, and click the New Budget Calculation Form</h4>
+  <div ng-if="budgetListCtrl.listOfBudgets.length == 0" class="row col-xs-12 text-center">
+    <h3>No Budget Forms</h3>
+    <h4>Go to a Border Station Form to create one.</h4>
   </div>
 
 </div>

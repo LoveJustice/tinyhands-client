@@ -140,7 +140,7 @@ describe('Address1Controller', () => {
         });
     });
 
-    describe('editAddress1', => () {
+    describe('editAddress1', () => {
        /* beforeEach(() => {
             modalInstance.result = () => {
                 return {

@@ -72,7 +72,7 @@ describe('DetailController', () => {
     });
 
     it('should set service.borderStationId to response.data.id', () => {
-      vm.details = null;
+      vm.service.borderStationId = null;
       vm.create();
       expect(vm.service.borderStationId).toEqual(response.data.id);
     });

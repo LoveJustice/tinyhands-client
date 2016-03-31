@@ -48,10 +48,10 @@
                     <i ng-show="irfListCtrl.getSort() == 'irf_number'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="irfListCtrl.getSort() == '-irf_number'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="irfListCtrl.sort='Staff Name'; irfListCtrl.reverseList()">Staff Name
-                    <i ng-hide="irfListCtrl.getSort() == 'Staff Name' || irfListCtrl.getSort() == '-Staff Name'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'Staff Name'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-Staff Name'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                <th ng-click="irfListCtrl.sort='staff_name'; irfListCtrl.reverseList()">Staff Name
+                    <i ng-hide="irfListCtrl.getSort() == 'staff_name' || irfListCtrl.getSort() == '-Staff Name'" class="glyphicon glyphicon-sort"></i>
+                    <i ng-show="irfListCtrl.getSort() == 'staff_name'" class="glyphicon glyphicon-sort-by-alphabet"></i>
+                    <i ng-show="irfListCtrl.getSort() == '-staff_name'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='number_of_victims'; irfListCtrl.reverseList()"># of Victims
                     <i ng-hide="irfListCtrl.getSort() == 'number_of_victims' || irfListCtrl.getSort() == '-number_of_victims'" class="glyphicon glyphicon-sort"></i>
@@ -63,10 +63,10 @@
                     <i ng-show="irfListCtrl.getSort() == 'number_of_traffickers'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="irfListCtrl.getSort() == '-number_of_traffickers'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="irfListCtrl.sort='time_of_interception'; irfListCtrl.reverseList()">Time of Interception
-                    <i ng-hide="irfListCtrl.getSort() == 'time_of_interception' || irfListCtrl.getSort() == '-time_of_interception'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'time_of_interception'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-time_of_interception'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                <th ng-click="irfListCtrl.sort='date_time_of_interception'; irfListCtrl.reverseList()">Time of Interception
+                    <i ng-hide="irfListCtrl.getSort() == 'date_time_of_interception' || irfListCtrl.getSort() == '-time_of_interception'" class="glyphicon glyphicon-sort"></i>
+                    <i ng-show="irfListCtrl.getSort() == 'date_time_of_interception'" class="glyphicon glyphicon-sort-by-alphabet"></i>
+                    <i ng-show="irfListCtrl.getSort() == '-date_time_of_interception'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='date_time_entered_into_system'; irfListCtrl.reverseList()">Time Entered Into System
                     <i ng-hide="irfListCtrl.getSort() == 'date_time_entered_into_system' || irfListCtrl.getSort() == '-date_time_entered_into_system'" class="glyphicon glyphicon-sort"></i>
@@ -84,7 +84,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="form in irfListCtrl.listOfIrfs">
+            <tr ng-repeat="form in irfListCtrl.showingIrfs | filter: irfListCtrl.searchValue | orderBy: irfListCtrl.getSort()">
                 <td>{{ form.irf_number }}</td>
                 <td>{{ form.staff_name }}</td>
                 <td>{{ form.number_of_victims }}</td>
@@ -92,9 +92,9 @@
                 <td>{{ form.date_time_of_interception | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
-                <td><a class="btn btn-sm btn-primary" href="#">View</a></td>
-                <td><a class="btn btn-sm btn-primary" id="id_edit_irf_button" href="#">Edit</a></td>
-                <td><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteirf(irf)">
+                <td ng-if="irfListCtrl.session.user.permission_irf_view == true"><a class="btn btn-sm btn-primary" href="{{form.view_url}}">View</a></td>
+                <td ng-if="irfListCtrl.session.user.permission_irf_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_irf_button" href="{{form.edit_url}}">Edit</a></td>
+                <td ng-if="irfListCtrl.session.user.permission_irf_delete == true"><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteIrf({{form.id}})">
                     {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>
         </tbody>

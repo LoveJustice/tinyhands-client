@@ -54,11 +54,11 @@ export default class IrfListController {
         var i;
         for (i = 0; i < this.showingIrfs.length; i++) {
             this.getArray.push(
-                {'Vif #': this.showingIrfs[i].irf_number,
-                'Interviewer': this.showingIrfs[i].staff_name,
+                {'Irf #': this.showingIrfs[i].irf_number,
+                'Staff Name': this.showingIrfs[i].staff_name,
                 '# of Victims': this.showingIrfs[i].number_of_victims,
                 '# of Traffickers': this.showingIrfs[i].number_of_traffickers,
-                'Date of Interview': this.showingIrfs[i].date,
+                'Date of Interception': this.showingIrfs[i].date,
                 'Time Entered Into System': this.showingIrfs[i].date_time_entered_into_system,
                 'Time Last Edited': this.showingIrfs[i].date_time_last_updated}
             );
@@ -67,6 +67,6 @@ export default class IrfListController {
     }
 
     getCsvHeader() {
-        return ['Vif #', 'Staff Name', '# of Victims', '# of Traffickers', 'Date of Interception', 'Time Entered Into System', 'Time Last Edited'];
+        return ['Irf #', 'Staff Name', '# of Victims', '# of Traffickers', 'Date of Interception', 'Time Entered Into System', 'Time Last Edited'];
     }
 }

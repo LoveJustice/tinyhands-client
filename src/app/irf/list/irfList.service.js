@@ -9,4 +9,8 @@ export default class IrfListService extends BaseService {
     getIrfList() {
         return this.get('/api/irf/');
     }
+
+    deleteIrf(id){
+        return this.delete('/api/irf/${id}/');
+    }
 }

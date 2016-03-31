@@ -2,7 +2,6 @@
 import config from './index.config';
 
 import routerConfig from './index.route';
-import errorRoutes from './error/error.route';
 
 import googleMapsConfig from './components/map/map.config';
 
@@ -51,9 +50,6 @@ import TallyController from './components/tally/tally.controller';
 // import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
-// REGION: Factories
-import ErrorFactory from './error/error.factory';
-// ENDREGION: Factories
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
@@ -61,7 +57,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .config(config)
 
   .config(routerConfig)
-  .config(errorRoutes)
 
   .config(googleMapsConfig) // Pass google maps config
 
@@ -76,10 +71,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('session', SessionService)
   .service('tallyService', TallyService)
   // ENDREGION: Services
-
-  // REGION: Factories
-  .factory('ErrorHandler', ErrorFactory.errorFactory)
-  // ENDREGION: Factories
 
   // REGION: Directives
   .directive('borderStationDetail', () => new DetailDirective())

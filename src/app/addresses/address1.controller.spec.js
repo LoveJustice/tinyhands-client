@@ -4,10 +4,10 @@ import Address1Service from './address1.service';
 describe('Address1Controller', () => {
     let vm;
     let $rootScope,
-            $scope,
-            $timeout,
-            address1Service,
-            $uibModal;
+        $scope,
+        $timeout,
+        address1Service,
+        $uibModal;
 
     beforeEach(inject(($http) => {
         address1Service = new Address1Service($http);
@@ -78,6 +78,20 @@ describe('Address1Controller', () => {
         });
     });
 
+    describe("sortIcon", () => {
+        it("if reverse is true, should return string: glyphicon-sort-by-alphabet-alt", () => {
+            vm.reverse = true;
+            let fetchedStr = vm.sortIcon();
+            expect(fetchedStr).toEqual('glyphicon-sort-by-alphabet-alt');
+        });
+        
+        it("if reverse is false, should return string: glyphicon-sort-by-alphabet", () => {
+            vm.reverse = false;
+            let fetchedStr = vm.sortIcon();
+            expect(fetchedStr).toEqual('glyphicon-sort-by-alphabet'); 
+        });
+    });
+
     describe("search addresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
 
@@ -142,7 +156,7 @@ describe('Address1Controller', () => {
             expect(params).toContain({ "name": "ordering", "value": (vm.sortColumn.replace(".", "__")) });
         });
     });
-    
+
     describe("getAddresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
 
@@ -171,16 +185,46 @@ describe('Address1Controller', () => {
     });
 
     describe('editAddress1', () => {
-        /* beforeEach(() => {
-             modalInstance.result = () => {
-                 return {
-                     then: (f) => {
-                         f(response);
-                     }
-                 };
-             };
-             vm.searchAddresses();
-         });*/
+        let address = 'foo';
+        let modal = {open: ()=> {
+            return {
+                result: {
+                    then: (f) => {
+                        f(address);
+                    }  
+                } 
+            }
+        }};
+        
+        let saveAddress = () => {
+            return {
+                then: (f) => {
+                f();
+                }
+            }
+        };      
+        beforeEach(() => {
+           vm.modal = modal;
+           vm.address1Service.saveAddress = saveAddress; 
+        });
+        
+        it("Get Address should be called", () => {
+            spyOn(vm, "getAddresses").and.callThrough();
+            vm.editAddress1();
+            expect(vm.getAddresses).toHaveBeenCalled();
+        });
+        
+        it("Open should be called", () => {
+          spyOn(vm.modal, "open").and.callThrough();
+          vm.editAddress1(address);
+          expect(vm.modal.open).toHaveBeenCalled();
+        });
+        it("saveAttributes should be called", () => {
+          spyOn(vm.address1Service, "saveAddress").and.callThrough();
+          vm.editAddress1(address);
+          expect(vm.address1Service.saveAddress).toHaveBeenCalled();
+        });
+    
     });
 
     describe('nextUrl tests', () => {

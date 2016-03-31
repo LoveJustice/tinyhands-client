@@ -54,7 +54,7 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: true
       }
-    })    
+    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',
@@ -73,9 +73,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     });
-
-  // Remove hash from url
-  $locationProvider.html5Mode(true);
 
   $urlRouterProvider.otherwise('/');
 }

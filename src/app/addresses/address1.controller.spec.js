@@ -142,6 +142,33 @@ describe('Address1Controller', () => {
             expect(params).toContain({ "name": "ordering", "value": (vm.sortColumn.replace(".", "__")) });
         });
     });
+    
+    describe("getAddresses", () => {
+        let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+
+        it("loading should be false after .then", () => {
+            expect(vm.loading).toBe(false);
+        });
+
+        it("addresses should append the test results to the test addresses", () => {
+            expect(vm.addresses).toEqual('page1');
+        });
+
+        it("addresses should append the test next to the test nextPageUrl", () => {
+            expect(vm.nextPageUrl).toEqual('469876');
+        });
+
+        beforeEach(() => {
+            vm.address1Service.listAddresses = () => {
+                return {
+                    then: (f) => {
+                        f(response);
+                    }
+                };
+            };
+            vm.getAddresses();
+        });
+    });
 
     describe('editAddress1', () => {
         /* beforeEach(() => {

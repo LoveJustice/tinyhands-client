@@ -66,11 +66,13 @@ describe('DetailController', () => {
     });
 
     it('should set details to response.data', () => {
+      vm.details = null;
       vm.create();
       expect(vm.details).toEqual(response.data);
     });
 
     it('should set service.borderStationId to response.data.id', () => {
+      vm.details = null;
       vm.create();
       expect(vm.service.borderStationId).toEqual(response.data.id);
     });
@@ -147,6 +149,7 @@ describe('DetailController', () => {
       vm.service.getDetails = () => { return {
         then: (f) => { f(response) }
       };};
+      vm.details = null;
       vm.getDetails();
       expect(vm.details).toEqual(response.data);
     });

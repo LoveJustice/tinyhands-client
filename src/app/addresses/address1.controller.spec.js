@@ -3,20 +3,26 @@ import Address1Service from './address1.service';
 
 describe('Address1Controller', () => {
     let vm;
-
-    beforeEach(inject(($http) => {
-        let $rootScope,
+    let $rootScope,
             $scope,
             $timeout,
-            address1Service = new Address1Service($http),
+            address1Service,
             $uibModal;
+
+    beforeEach(inject(($http) => {
+        address1Service = new Address1Service($http);
         vm = new Address1Controller($rootScope, $scope, $http, $timeout, address1Service, $uibModal);
     }));
 
     describe('function constructor', () => {
-        it('loading should be true', () => {
-            expect(vm.loading).toBe(true);
-            pending("TODO: will fail later - not retrieving data on getAddresses()");
+
+        beforeEach(() => {
+            vm.getAddresses = () => { };
+            vm.constructor();
+        });
+
+        it('loading should be false', () => {
+            expect(vm.loading).toBe(false);
         });
 
         it('reverse should be false', () => {
@@ -29,7 +35,6 @@ describe('Address1Controller', () => {
 
         it('addresses should be an empty array', () => {
             expect(vm.addresses).toEqual([]);
-            pending("TODO: will fail later - not retrieving data on getAddresses()");
         });
 
         it('searchValue should be an empty string', () => {
@@ -38,14 +43,12 @@ describe('Address1Controller', () => {
 
         it('nextPageUrl should be an empty string', () => {
             expect(vm.nextPageUrl).toEqual("");
-            pending("TODO: will fail later - not retrieving data on getAddresses()");
         });
 
         it('sortColumn should be an empty string', () => {
             expect(vm.sortColumn).toEqual("");
         });
 
-        //TODO: add more tests when able to getAddresses() working
     });
 
     describe("loadMoreAddresses", () => {
@@ -141,16 +144,16 @@ describe('Address1Controller', () => {
     });
 
     describe('editAddress1', () => {
-       /* beforeEach(() => {
-            modalInstance.result = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
-                };
-            };
-            vm.searchAddresses();
-        });*/
+        /* beforeEach(() => {
+             modalInstance.result = () => {
+                 return {
+                     then: (f) => {
+                         f(response);
+                     }
+                 };
+             };
+             vm.searchAddresses();
+         });*/
     });
 
     describe('nextUrl tests', () => {

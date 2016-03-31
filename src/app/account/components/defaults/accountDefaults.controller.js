@@ -69,7 +69,9 @@ export default class AccountDefaultsController {
   }
 
   delete(index) {
+    console.log("Index",index);
     var pSet = this.permissions.local[index];
+    console.log("pSet",pSet);
     if (!pSet.is_used_by_accounts){
       if(pSet.accountRemoved){
         if (pSet.is_new) {
@@ -80,6 +82,7 @@ export default class AccountDefaultsController {
         } else {
             // Database delete
             this.permissions.local.splice(index, 1);
+            console.log("pSet id",pSet.id);
             this.PermissionsSetsService.destroy(pSet.id).then(() => {
                 window.toastr.success("Account Role Successfully Deleted");
                 this.permissions.saved = angular.copy(this.permissions.local);
@@ -94,33 +97,4 @@ export default class AccountDefaultsController {
     }
   }
 }
-
-/*
-  openDeleteModal(pSet, index) {
-    var user_name = pSet.name;
-    var deleteModal = this.$uibModal.open({
-      templateUrl:'app/account/components/list/accountModal.html',
-      controller: 'AccountModalController',
-      controllerAs: 'AccountModalCtrl',
-      resolve: {
-        user_name:() => {
-          return user_name;
-        }
-      }
-    });
-    deleteModal.result.then(() => {
-        if (pSet.is_new) {
-            // Local delete
-            this.permissions.local.splice(index, 1);
-            this.$scope.$emit('checkForUnsavedChange()', this.permissions);
-        } else {
-            // Database delete
-            this.permissions.local.splice(index, 1);
-            this.PermissionsSetsService.destroy(pSet.id).then(() => {
-              this.permissions.saved = angular.copy(this.permissions.local);
-              this.$scope.$emit('checkForUnsavedChange()', [this.permissions, this.saveButtonInfo]);
-            })
-        }
-    });
-  }*/
 

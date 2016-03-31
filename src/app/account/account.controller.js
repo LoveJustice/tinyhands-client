@@ -82,17 +82,11 @@ export default class AccountController {
     return this.$q((resolve, reject) => {
       var promises = [];
       arrays.local.forEach((elm, index) => {
-        promises.push(this.saveSet(elm, index, serviceToUse));
+        promises.push(this.saveSet(index, arrays.local, serviceToUse));
       });
 
       // Waiting for all permissionsSets to be saved via saveSet()
       this.$q.all(promises).then((data) => {
-          for (var i=0; i < data.length; i++) {
-            if (data[i] != "no need to re-save") {
-                arrays.local[data[i][0]].id = data[i][1];
-                arrays.local[data[i][0]].is_new = false;
-            }
-          }
           arrays.saved = angular.copy(arrays.local);
           this.$timeout(() => {
               this.$scope.$apply();
@@ -108,8 +102,9 @@ export default class AccountController {
    return true;
   }
 
-  saveSet(elm, index, serviceToUse) {
+  saveSet(index, local, serviceToUse) {
       var call = null;
+      var elm = local[index];
       return this.$q((resolve, reject) => {
         if (elm.is_new) {
             call = serviceToUse.create(elm);
@@ -120,14 +115,15 @@ export default class AccountController {
             return;
         }
         call.then( (data) => {
-            elm = data.data;
-            resolve([index, data.data.id]);
+            local[index] = data.data;
+            resolve();
         }, (error) => { // Catch name error
             elm.nameError = true;
             reject("nameError");
         });
       });
   }
+  //[index, data.data.id]
 
   checkIfModified(index, arrays) {
     // Checks if pSet is new. If it is, there is no need to check if it has been modified.

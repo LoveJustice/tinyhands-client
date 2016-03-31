@@ -53,6 +53,16 @@ describe('Address1Controller', () => {
 
     describe("loadMoreAddresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+        beforeEach(() => {
+            vm.address1Service.loadMoreAddresses = () => {
+                return {
+                    then: (f) => {
+                        f(response);
+                    }
+                };
+            };
+            vm.loadMoreAddresses();
+        });
 
         it("loading should be true after .then", () => {
             expect(vm.loading).toBe(false);
@@ -64,17 +74,6 @@ describe('Address1Controller', () => {
 
         it("addresses should append the test next to the test nextPageUrl", () => {
             expect(vm.nextPageUrl).toEqual('469876');
-        });
-
-        beforeEach(() => {
-            vm.address1Service.loadMoreAddresses = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
-                };
-            };
-            vm.loadMoreAddresses();
         });
     });
 
@@ -94,6 +93,16 @@ describe('Address1Controller', () => {
 
     describe("search addresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+        beforeEach(() => {
+            vm.address1Service.searchAddresses = () => {
+                return {
+                    then: (f) => {
+                        f(response);
+                    }
+                };
+            };
+            vm.searchAddresses();
+        });
 
         it("loading should be false after .then", () => {
             expect(vm.loading).toBe(false);
@@ -106,23 +115,11 @@ describe('Address1Controller', () => {
         it("addresses should append the test next to the test nextPageUrl", () => {
             expect(vm.nextPageUrl).toEqual('469876');
         });
-
-        beforeEach(() => {
-            vm.address1Service.searchAddresses = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
-                };
-            };
-            vm.searchAddresses();
-        });
     });
 
     describe("getQueryParams", () => {
         it("should push onto params page_size & paginateBy with their respective values", () => {
             let params = vm.getQueryParams();
-
             expect(params).toContain({ "name": "page_size", "value": vm.paginateBy });
         });
 
@@ -130,14 +127,12 @@ describe('Address1Controller', () => {
             vm.nextPageUrl = 'testURL.html';
             let loadMore = true;
             let params = vm.getQueryParams(loadMore);
-
             expect(params).toContain({ "name": "page", "value": vm.nextPageUrl });
         });
 
         it("if param's searchVal is not null, params should contain {name: search, value: vm.searchValue}", function () {
             vm.searchValue = "testString";
             let params = vm.getQueryParams();
-
             expect(params).toContain({ "name": "search", "value": vm.searchValue });
         });
 
@@ -152,13 +147,22 @@ describe('Address1Controller', () => {
             vm.sortColumn = "testString2";
             vm.reverse = false;
             let params = vm.getQueryParams();
-
             expect(params).toContain({ "name": "ordering", "value": (vm.sortColumn.replace(".", "__")) });
         });
     });
 
     describe("getAddresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+        beforeEach(() => {
+            vm.address1Service.listAddresses = () => {
+                return {
+                    then: (f) => {
+                        f(response);
+                    }
+                };
+            };
+            vm.getAddresses();
+        });
 
         it("loading should be false after .then", () => {
             expect(vm.loading).toBe(false);
@@ -170,17 +174,6 @@ describe('Address1Controller', () => {
 
         it("addresses should append the test next to the test nextPageUrl", () => {
             expect(vm.nextPageUrl).toEqual('469876');
-        });
-
-        beforeEach(() => {
-            vm.address1Service.listAddresses = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
-                };
-            };
-            vm.getAddresses();
         });
     });
 

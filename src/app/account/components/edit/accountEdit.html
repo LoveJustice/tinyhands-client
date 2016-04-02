@@ -1,30 +1,3 @@
-<style>
-input[type="checkbox"] {
-    display: none;
-}
-label {
-    width: 100% !important;
-}
-table {
-}
-table, th, td {
-    border: 2px solid #ddd;
-}
-th, td {
-    text-align: center;
-}
-td {
-    width: 75px !important;
-}
-table {
-    width: 300px !important;
-}
-</style>
-
-<script>
-  //window.account_id = {{account.id}}
-</script>
-
 <div class="container" ng-controller="AccountEditController as editCtrl" ng-cloak>
   <h1>{{editCtrl.getTitle()}}</h1>
   <div class="row">
@@ -58,7 +31,7 @@ table {
     </div>
   </div>
   <div class="clearfix">
-    <table class="table table-condensed">
+    <table class="table table-condensed editTable">
       <thead>
         <tr>
           <th colspan="4">Interception Record Forms</th>
@@ -87,7 +60,7 @@ table {
         </tr>
       </tbody>
     </table>
-    <table class="table table-condensed">
+    <table class="table table-condensed editTable">
       <thead>
         <tr>
           <th colspan="4">Victim Interview Forms</th>
@@ -116,7 +89,7 @@ table {
         </tr>
       </tbody>
     </table>
-    <table class="table table-condensed">
+    <table class="table table-condensed editTable">
       <thead>
         <tr>
           <th colspan="4">Border Stations</th>
@@ -145,7 +118,7 @@ table {
         </tr>
       </tbody>
     </table>
-    <table class="table table-condensed">
+    <table class="table table-condensed editTable">
       <thead>
         <tr>
           <th>Account Management</th>
@@ -159,7 +132,7 @@ table {
         </tr>
       </tbody>
     </table>
-    <table class="table table-condensed">
+    <table class="table table-condensed editTable">
       <thead>
         <tr>
           <th>Alerts</th>

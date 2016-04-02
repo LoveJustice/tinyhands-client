@@ -21,7 +21,7 @@ export default class AccountListController {
   }
 
   resendActivationEmail(accountID) {
-    this.AccountsService.resendActivationEmail({id:accountID});
+    this.AccountsService.resendActivationEmail(accountID);
   }
 
   deleteAccount(account){

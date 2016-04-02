@@ -1,19 +1,19 @@
 <h1>Access Control</h1>
 <div class="container" ng-controller="AccountControlController as accountControlCtrl" ng-cloak>
     <div method="POST" class="row">
-        <table class="table table-condensed">
+        <table class="table table-condensed controlTable">
             <thead>
                 <tr>
-                    <th style="border: none">&nbsp;</th>
-                    <th colspan="4" style="border: none">Interception Record Forms</th>
-                    <th colspan="4" style="border: none">Victim Interview Forms</th>
-                    <th colspan="4" style="border: none">Border Stations</th>
-                    <th style="border: none">Accounts</th>
-                    <th style="border: none">Alerts</th>
-                    <th style="border: none">VDC</th>
-                    <th style="border: none">Budget</th>
+                    <th class="firstRow">&nbsp;</th>
+                    <th colspan="4" class="firstRow">Interception Record Forms</th>
+                    <th colspan="4" class="firstRow">Victim Interview Forms</th>
+                    <th colspan="4" class="firstRow">Border Stations</th>
+                    <th class="firstRow">Accounts</th>
+                    <th class="firstRow">Alerts</th>
+                    <th class="firstRow">VDC</th>
+                    <th class="firstRow">Budget</th>
                 </tr>
-                <tr>
+                <tr class="secondRow">
                     <th>User</th>
                     <th>View</th> <!--IRF-->
                     <th>Add</th>
@@ -57,9 +57,6 @@
                         <td><label ng-click="account.permission_receive_email = !account.permission_receive_email; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_receive_email ? "Yes" : "No" }}</label></td>
                         <td><label ng-click="account.permission_vdc_manage = !account.permission_vdc_manage; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_vdc_manage ? "Yes" : "No" }}</label></td>
                         <td><label ng-click="account.permission_budget_manage = !account.permission_budget_manage; accountCtrl.checkIfModified($index, accountControlCtrl.accounts)" ng-class="account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"><span class="yesno"></span>{{ account.permission_budget_manage ? "Yes" : "No" }}</label></td>
-
-
-
                     </tr>
             </tbody>
         </table>

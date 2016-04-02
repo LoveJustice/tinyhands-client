@@ -1,26 +1,23 @@
 <h1>Access Defaults</h1>
 
 <div class="container" ng-controller="AccountDefaultsController as accountDefaultsCtrl" ng-cloak>
-    <div class="row">
+    < class="row">
         <p>Use this form to designate default access for each type of user.<br/>For instance: what default permissions ought to be given to a new user designated as &quot;Field Staff?&quot;</p>
         <p ng-show="accountDefaultsCtrl.nameError" class="text-danger">All access defaults must have a designation.</p>
-        <table class="table table-condensed">
+        <table class="table table-condensed defaultsTable">
             <thead>
                 <tr>
-
-                    <th style="border: none">&nbsp;</th>
-                    <th colspan="4" style="border: none">Interception Record Forms</th>
-                    <th colspan="4" style="border: none">Victim Interview Forms</th>
-                    <th colspan="4" style="border: none">Border Stations</th>
-                    <th style="border: none">Accounts</th>
-                    <th style="border: none">Alerts</th>
-                    <th style="border: none">VDC</th>
-                    <th style="border: none">Budget</th>
-                    <!--<th>&nbsp;</th>-->
+                    <th>&nbsp;</th>
+                    <th colspan="4">Interception Record Forms</th>
+                    <th colspan="4">Victim Interview Forms</th>
+                    <th colspan="4">Border Stations</th>
+                    <th>Accounts</th>
+                    <th>Alerts</th>
+                    <th>VDC</th>
+                    <th>Budget</th>
                 </tr>
-                <tr>
-
-                    <th style="white-space: nowrap">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Designation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <tr class="secondRow">
+                    <th>Designation</th>
                     <th>View</th>
                     <th>Add</th>
                     <th>Edit</th>
@@ -37,7 +34,6 @@
                     <th>Can Receive</th>
                     <th>Manage</th>
                     <th>Manage</th>
-                    <!--<th>&nbsp;</th>-->
                 </tr>
             </thead>
 
@@ -65,16 +61,13 @@
                     <td><label ng-click="permissionsSet.permission_receive_email = !permissionsSet.permission_receive_email; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_receive_email ? "Yes" : "No" }}</label></td>
                     <td><label ng-click="permissionsSet.permission_vdc_manage = !permissionsSet.permission_vdc_manage; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_vdc_manage ? "Yes" : "No" }}</label></td>
                     <td><label ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage; accountCtrl.checkIfModified($index, accountDefaultsCtrl.permissions, accountDefaultsCtrl.saveButtonInfo)" ng-class="permissionsSet.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'">{{ permissionsSet.permission_budget_manage ? "Yes" : "No" }}</label></td>
-                    <td style="width: 25px; border: none">
-                        <div tooltip="This designation is used by one or more accounts and cannot be deleted."
-                            tooltip-enable="permissionsSet.is_used_by_accounts">
-                        <button type="button"
-                            class="btn btn-sm btn-danger animated"
-                            ng-disabled="permissionsSet.is_used_by_accounts"
-                            ng-click="accountDefaultsCtrl.delete($index)";
-                            ng-class="{fadeIn: permissionsSet.hover && permissionsSet.accountRemoved, fadeOut: !permissionsSet.hover, pulse: permissionsSet.accountRemoved}">
-                            {{ permissionsSet.accountRemoved ? "Are you sure?" : "Remove Role" }}</button>
-                        </div>
+                    <td id="removeButton">
+                            <button type="button"
+                                class="btn btn-sm btn-danger animated"
+                                ng-show="!permissionsSet.is_used_by_accounts"
+                                ng-click="accountDefaultsCtrl.delete($index)"
+                                ng-class="{fadeIn: permissionsSet.hover && permissionsSet.accountRemoved, fadeOut: !permissionsSet.hover, pulse: permissionsSet.accountRemoved}">
+                                {{ permissionsSet.accountRemoved ? "Are you sure?" : "Remove Role" }}</button>
                     </td>
                 </tr>
             </tbody>

@@ -20,9 +20,13 @@ export default class AccountService extends BaseService {
 	}
 
 	update(id, data) {
-    console.log("updating");
-		return this.put(`/api/account/${id}/`, data)
+		return this.put(`/api/account/${id}/`, data);
 	}
+
+  // POSTs
+  create(data) {
+    return this.post('/api/account/', data);
+  }
 
   getAccount(id) {
     return this.get(`/api/account/${id}/`);

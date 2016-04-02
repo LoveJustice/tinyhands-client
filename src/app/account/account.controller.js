@@ -10,9 +10,10 @@ export default class AccountController {
 
     //Scope variables
     let accountOptionsPath = 'app/account/components/';
+    this.editAccountPath = `${accountOptionsPath}edit/accountEdit.html`;
     this.sections = {allSections: [{ name: 'Accounts List', templateUrl: `${accountOptionsPath}list/accountList.html` },
                                    { name: 'Accounts Access Control', templateUrl: `${accountOptionsPath}control/accountControl.html` },
-                                   { name: 'Accounts Defaults', templateUrl: `${accountOptionsPath}defaults/accountDefaults.html` }]}
+                                   { name: 'Accounts Defaults', templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]}
 
     this.tabInfo = {'active': 0, 'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
     this.$scope.saveInfo = {'arrays': null, 'serviceToUse': null, 'saveAll': null};
@@ -26,6 +27,8 @@ export default class AccountController {
     this.savedColor = "btn-primary";
     this.index = null;
     this.toStateName = null;
+
+    this.$scope.accountToEdit = null;
 
     //This block is executed after user saves or discards changes via unsavedChangesModal
     this.$scope.$watchCollection(() => this.$scope.saveInfo, (newValue, oldValue)=> {
@@ -61,6 +64,12 @@ export default class AccountController {
     this.$scope.$on('checkForUnsavedChange()', (event, arrays) => {
       this.checkForUnsavedChanges(arrays);
     });
+  }
+
+  selectUser(account){
+    this.$scope.accountToEdit = account;
+    this.tabInfo.sectionTemplateUrl = this.editAccountPath;
+    this.tabInfo.active = null;
   }
 
   switchActive(index){

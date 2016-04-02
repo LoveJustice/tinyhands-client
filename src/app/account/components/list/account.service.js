@@ -24,13 +24,16 @@ export default class AccountService extends BaseService {
 		return this.put(`/api/account/${id}/`, data)
 	}
 
-  getAccount(id) {
-    return this.get(`/api/account/${id}/`);
-  }
+	getAccount(id) {
+		return this.get(`/api/account/${id}/`);
+	}
 
-  // DELETE
-  destroy(id) {
-    return this.delete(`api/account/${id}/`);
-  }
+    // DELETE
+    destroy(id) {
+      	return this.delete(`api/account/${id}/`);
+    }
 
+	resendActivationEmail(id){
+		return this.post(`/api/account/resend-activation-email/${id}/`)
+	}
 }

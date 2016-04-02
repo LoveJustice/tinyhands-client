@@ -4,7 +4,6 @@
     <table class="table table-striped table-condensed listTable">
       <thead>
         <tr class="listTable">
-          <th class="listTable">&nbsp;</th>
           <th class="listTable">Email</th>
           <th class="listTable">First Name</th>
           <th class="listTable">Last Name</th>
@@ -13,16 +12,13 @@
           <th class="listTable">Last Login</th>
           <th class="listTable">&nbsp;</th>
           <th class="listTable">&nbsp;</th>
+          <th class="listTable">&nbsp;</th>
         </tr>
       </thead>
 
       <tbody>
         <tr class="listTable" ng-repeat="account in accountListCtrl.accounts" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
-          <td class="listTable"><button type="button" class="btn btn-sm btn-danger animated"
-                      ng-click="accountListCtrl.deleteAccount(account)"
-                      ng-show="accountListCtrl.currentuser.id != account.id"
-                      ng-class="{fadeIn: account.hover && account.accountdelete, fadeOut: !account.hover, pulse: account.accountdelete}">
-                {{account.accountdelete ? "Are you sure" : "Delete Account"}}</button></td>
+
           <td class="listTable">{{account.email}}</td>
           <td class="listTable">{{account.first_name}}</td>
           <td class="listTable">{{account.last_name}}</td>
@@ -35,6 +31,11 @@
           <td class="listTable">
             <button type="submit" class="btn btn-sm btn-primary" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
           </td>
+          <td class="listTable"><button type="button" class="btn btn-sm btn-danger animated"
+                      ng-click="accountListCtrl.deleteAccount(account)"
+                      ng-show="accountListCtrl.currentuser.id != account.id"
+                      ng-class="{fadeIn: account.hover && account.accountdelete, fadeOut: !account.hover, pulse: account.accountdelete}">
+                {{account.accountdelete ? "Are you sure" : "Delete Account"}}</button></td>
         </tr>
       </tbody>
     </table>

@@ -22,40 +22,64 @@ describe('budgetList Controller',() => {
 
     });
     
-    describe('Get listofBudgets from API tests', () => {
+    describe('function listofBudgets', () => {
         let response = {'data':{'results':[{'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'}, 
             {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
             {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
             {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
             {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'} ], 'next':'page2'}};    
         
-        describe('tests for getBudgetList', () => {
-            
-            beforeEach( () => {          
-            vm.service.getBudgetList = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
+        describe('function getBudgetList', () => {
+            beforeEach(() => {
+                vm.service.getBudgetList = () => {
+                    return {
+                        then: (f) => {
+                            f(response);
+                        }
+                    };
                 };
-            };
-            vm.getBudgetList();
             });
             
-            it('listOfBudgets should be the tested response[results]', () => {
-                expect(vm.listOfBudgets).toEqual(response.data.results);
-            });
+            describe('tests that getBudgetList sets responses', () => {
+                it('listOfBudgets should be the tested response[results]', () => {
+                    vm.getBudgetList();
+                    expect(vm.listOfBudgets).toEqual(response.data.results);
+                });
 
-            it('nextBudgetPage should be the tested response[next]', () => {
-                expect(vm.nextBudgetPage).toEqual(response.data.next);
+                it('nextBudgetPage should be the tested response[next]', () => {
+                    vm.getBudgetList();
+                    expect(vm.nextBudgetPage).toEqual(response.data.next);
+                });
             });
-        });
-    
-        describe('tests for getBudgetListForSorting', () => {
-            pending("Waiting to write tests for the actual code -- Jordan is writing");
+            
+            describe('tests all possible combinations of sortValue', () => {
+                it('tests that sortValue gets set', () => {
+                    vm.getBudgetList(null, 'month_year');
+                    expect(vm.sortValue).toBe('month_year');
+                });
+                it('sets sortValue is set to be in reverse', () => {
+                    vm.sortValue = '-month_year';
+                    vm.getBudgetList(null, 'month_year');
+                    expect(vm.sortValue).toBe('month_year');
+                });
+                it('tests that sortValue gets set', () => {
+                    vm.getBudgetList(null, 'border_station__station_name');
+                    expect(vm.sortValue).toBe('border_station__station_name');
+                });
+                it('sets sortValue to set to be in reverse', () => {
+                    vm.sortValue = '-border_station__station_name';
+                    vm.getBudgetList(null, 'border_station__station_name');
+                    expect(vm.sortValue).toBe('border_station__station_name');
+                });
+                it('sets sortValue to set to be in reverse', () => {
+                    vm.sortValue = 'border_station__station_name';
+                    vm.getBudgetList(null, '-border_station__station_name');
+                    expect(vm.sortValue).toBe('-border_station__station_name');
+                });
+            });
         });
         
-        describe('tests for getNextBudgetPage', () => {   
+        describe('function getNextBudgetPage', () => {   
             
             beforeEach( () => {
             
@@ -94,7 +118,7 @@ describe('budgetList Controller',() => {
             
         });
         
-        describe('tests for removeBudget', () => {
+        describe('function removeBudget', () => {
             let array = [
                 {
                     "id": 8,

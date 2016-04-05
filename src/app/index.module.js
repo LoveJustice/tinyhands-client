@@ -15,6 +15,8 @@ import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
+import VifService from './vif/form/vif.service';
+import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -47,11 +49,12 @@ import BudgetTravelFormController from './budget/form/components/travel/travelFo
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
-// import VifListController from './vif/list/vifList.controller';
+import VifController from './vif/form/vif.controller';
+import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -63,13 +66,15 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .run(runBlock)
 
   // REGION: Services
+  .service('address1Service', Address1Service)
+  .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
-  .service('address1Service', Address1Service)
-  .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('VifListService', VifListService)
+  .service('VifService', VifService)
   // ENDREGION: Services
 
   // REGION: Directives
@@ -102,6 +107,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('DashboardController', DashboardController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
-  // .controller('VifListController', VifListController)
+  .controller('VifController', VifController)
+  .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

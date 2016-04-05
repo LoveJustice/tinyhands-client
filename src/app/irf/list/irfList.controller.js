@@ -1,14 +1,16 @@
 export default class IrfListController {
     constructor(IrfListService, session) {
         'ngInject';
+
+        this.numShowing = 25;
+        this.paginateBy = 25;
+        this.reverse = false;
+        this.searchValue = "";
         this.service = IrfListService;
         this.session = session;
-        this.sort = 'irf_number';
         this.showingIrfs = [];
-        this.reverse = false;
-        this.paginateBy = 25;
-        this.numShowing = 25;
-        this.searchValue = "";
+        this.sort = 'irf_number';
+
 
         this.getIrfList();
     }
@@ -26,7 +28,7 @@ export default class IrfListController {
         if (this.reverse == false) {
             return this.sort;
         } else {
-            return "-" + this.sort;
+            return '-' + this.sort;
         }
     }
 
@@ -45,7 +47,7 @@ export default class IrfListController {
     }
 
     cleanDeleteUrl(url) {
-        return String(url).replace("http/:","");
+        return String(url).replace('http/:','');
     }
 
     getCsvArray() {

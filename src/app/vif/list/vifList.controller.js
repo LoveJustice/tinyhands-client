@@ -50,15 +50,11 @@ export default class VifListController {
     }
 
     getSort() {
-        if (this.reverse == false) {
+        if (this.reverse === false) {
             return this.sort;
         } else {
             return "-" + this.sort;
         }
-    }
-
-    isSorted(column) {
-        return this.getSort() == column || this.getSort() == '-' + column;
     }
 
     showMoreVifs() {

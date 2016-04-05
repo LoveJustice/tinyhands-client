@@ -1,4 +1,4 @@
-<div  class="verticalOffset accounts">
+<div id="accountEdit" class="container verticalOffset" ng-controller="AccountEditController as editCtrl" ng-cloak>
     <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
         <ul class="nav nav-tabs">
             <li ng-repeat="section in editCtrl.sections.allSections" ng-class="{active: editCtrl.active == $index}" ng-click="editCtrl.active = $index"; >

@@ -43,38 +43,38 @@
     <table ng-if="vifListCtrl.listOfVifs.length > 0" class="table table-striped table-condensed crud-datatable">
         <thead>
             <tr>
-                <th ng-click="vifListCtrl.sort='vif_number'; vifListCtrl.reverse = !vifListCtrl.reverse">VIF #
-                    <i ng-hide="vifListCtrl.getSort() == 'vif_number' || vifListCtrl.getSort() == '-vif_number'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('vif_number')">VIF #
+                    <i ng-hide="vifListCtrl.isSorted('vif_number')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'vif_number'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-vif_number'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="vifListCtrl.sort='interviewer'; vifListCtrl.reverse = !vifListCtrl.reverse">Interviewer
-                    <i ng-hide="vifListCtrl.getSort() == 'interviewer' || vifListCtrl.getSort() == '-interviewer'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('interviewer')">Interviewer
+                    <i ng-hide="vifListCtrl.isSorted('interviewer')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'interviewer'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-interviewer'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="vifListCtrl.sort='number_of_victims'; vifListCtrl.reverse = !vifListCtrl.reverse"># of Victims
-                    <i ng-hide="vifListCtrl.getSort() == 'number_of_victims' || vifListCtrl.getSort() == '-number_of_victims'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('number_of_victims')"># of Victims
+                    <i ng-hide="vifListCtrl.isSorted('number_of_victims')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'number_of_victims'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-number_of_victims'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="vifListCtrl.sort='number_of_traffickers'; vifListCtrl.reverse = !vifListCtrl.reverse"># of Traffickers
-                    <i ng-hide="vifListCtrl.getSort() == 'number_of_traffickers' || vifListCtrl.getSort() == '-number_of_traffickers'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('number_of_traffickers')"># of Traffickers
+                    <i ng-hide="vifListCtrl.isSorted('number_of_traffickers')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'number_of_traffickers'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-number_of_traffickers'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="vifListCtrl.sort='date_of_interview'; vifListCtrl.reverse = !vifListCtrl.reverse">Date of Interview
-                    <i ng-hide="vifListCtrl.getSort() == 'date_of_interview' || vifListCtrl.getSort() == '-date_of_interview'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('date_of_interview')">Date of Interview
+                    <i ng-hide="vifListCtrl.isSorted('date_of_interview')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'date_of_interview'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-date_of_interview'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="vifListCtrl.sort='date_time_entered_into_system'; vifListCtrl.reverse = !vifListCtrl.reverse">Time Entered Into System
-                    <i ng-hide="vifListCtrl.getSort() == 'date_time_entered_into_system' || vifListCtrl.getSort() == '-date_time_entered_into_system'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('date_time_entered_into_system')">Time Entered Into System
+                    <i ng-hide="vifListCtrl.isSorted('date_time_entered_into_system')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'date_time_entered_into_system'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-date_time_entered_into_system'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>
-                <th ng-click="vifListCtrl.sort='date_time_last_updated'; vifListCtrl.reverse = !vifListCtrl.reverse">Time Last Edited
-                    <i ng-hide="vifListCtrl.getSort() == 'date_time_last_updated' || vifListCtrl.getSort() == '-date_time_last_updated'" class="glyphicon glyphicon-sort"></i>
+                <th ng-click="vifListCtrl.sortCol('date_time_last_updated')">Time Last Edited
+                    <i ng-hide="vifListCtrl.isSorted('date_time_last_updated')" class="glyphicon glyphicon-sort"></i>
                     <i ng-show="vifListCtrl.getSort() == 'date_time_last_updated'" class="glyphicon glyphicon-sort-by-alphabet"></i>
                     <i ng-show="vifListCtrl.getSort() == '-date_time_last_updated'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
                 </th>

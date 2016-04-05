@@ -9,32 +9,10 @@ export default class VifListController {
         this.paginateBy = 25;
         this.reverse = false;
         this.searchValue = "";
-        this.sort = 'vif_number';
         this.showingVifs = [];
+        this.sort = 'vif_number';
 
         this.getVifList();
-    }
-
-    getVifList() {
-        this.numShowing = this.paginateBy;
-
-        this.service.getVifList().then((response) => {
-            this.listOfVifs = response.data.results;
-            this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
-        });
-    }
-
-    getSort() {
-        if (this.reverse == false) {
-            return this.sort;
-        } else {
-            return "-" + this.sort;
-        }
-    }
-
-    showMoreVifs() {
-        this.numShowing = parseInt(this.numShowing) + parseInt(this.paginateBy);
-        this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
     }
 
     deleteVif(id) {
@@ -60,5 +38,36 @@ export default class VifListController {
 
     getCsvHeader() {
         return ['Vif #', 'Interviewer', '# of Victims', '# of Traffickers', 'Date of Interview', 'Time Entered Into System', 'Time Last Edited'];
+    }
+
+    getVifList() {
+        this.numShowing = this.paginateBy;
+
+        this.service.getVifList().then((response) => {
+            this.listOfVifs = response.data.results;
+            this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
+        });
+    }
+
+    getSort() {
+        if (this.reverse == false) {
+            return this.sort;
+        } else {
+            return "-" + this.sort;
+        }
+    }
+
+    isSorted(column) {
+        return this.getSort() == column || this.getSort() == '-' + column;
+    }
+
+    showMoreVifs() {
+        this.numShowing = parseInt(this.numShowing) + parseInt(this.paginateBy);
+        this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
+    }
+
+    sortCol(column) {
+        this.sort = column;
+        this.reverse = !this.reverse;
     }
 }

@@ -6,11 +6,11 @@ export default class VifListService extends BaseService {
         super($http);
     }
 
+    deleteVif(id) {
+        return this.delete(`api/vif/${id}/`);
+    }
+
     getVifList() {
         return this.get('api/vif/');
     }
-
-    deleteVif(id) {
-        return this.delete(`api/vif/${id}/`);
-  }
 }

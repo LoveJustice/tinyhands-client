@@ -14,6 +14,7 @@ import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
 import IrfListService from './irf/list/irfList.service';
+import IrfService from './irf/form/irf.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 import VifService from './vif/form/vif.service';
@@ -74,6 +75,8 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
+  .service('IrfListService', IrfListService)
+  .service('IrfService', IrfService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
   .service('VifListService', VifListService)

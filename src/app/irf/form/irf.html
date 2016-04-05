@@ -1,7 +1,41 @@
-<div class="container">
-  <div class="panel panel-default">
-    <div class="panel-body" ng-repeat="section in irfCtrl.sections">
-      <div ng-include="section"></div>
+<div id="irfForm" class="container-fluid text-center">
+  <div class="container-fluid" ng-if="irfCtrl.sections.length > 0">
+    <br>
+    <!--REGION: Progress Bar-->
+    <div>
+      <div class="col-xs-offset-1 col-xs-2 text-right"><b>Red Flags:</b></div>
+      <div class="col-xs-6">
+        <div class="progress">
+          <div class="progress-bar progress-bar-danger" role="progressbar" style="width: 50%">
+            25
+          </div>
+        </div>
+      </div>
     </div>
+    <!--ENDREGION: Progress Bar-->
+    <!--REGION: SECTION-->
+    <div class="panel panel-default col-xs-offset-1 col-xs-10">
+      <div class="panel-body" ng-repeat="section in irfCtrl.sections" ng-if="$index == irfCtrl.selectedSectionIndex">
+        <div ng-include="section"></div>
+      </div>
+    </div>
+    <!--ENDREGION: SECTION-->
+    <!--REGION: PAGER-->
+    <nav class="col-xs-12">
+      <ul class="pagination">
+        <li ng-click="irfCtrl.previousSection()">
+          <a>
+            <span>Previous</span>
+          </a>
+        </li>
+        <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectedSectionIndex = $index"><a>{{$index}}</a></li>
+        <li ng-click="irfCtrl.nextSection()">
+          <a>
+            <span>Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!--ENDREGION: PAGER-->
   </div>
 </div>

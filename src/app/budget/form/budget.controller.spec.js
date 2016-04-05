@@ -167,29 +167,26 @@ describe('BudgetController', () => {
     });
     
     describe(`function adminBoothRentalTotal`,()=>{
-        it(`if administration_booth is true and administration_registration is false return 2`,()=>{
-            vm.form.administration_booth= true;
+        beforeEach(()=>{
+            vm.form.administration_booth = true;
             vm.form.administration_booth_amount = 2;
             vm.form.administration_registration = false;
             vm.form.administration_registration_amount =3;
+        });
+        it(`if administration_booth is true and administration_registration is false return 2`,()=>{
             let result = vm.adminBoothRentalTotal();
             expect(result).toEqual(2);
         });
         
         it(`if administration_booth is false and administration_registration is true return 3`,()=>{
-            vm.form.administration_booth= false;
-            vm.form.administration_booth_amount = 2;
+            vm.form.administration_booth = false;
             vm.form.administration_registration = true;
-            vm.form.administration_registration_amount =3;
             let result = vm.adminBoothRentalTotal();
             expect(result).toEqual(3);
         });
         
         it(`if administration_booth is true and administration_registration is true return 5`,()=>{
-            vm.form.administration_booth= true;
-            vm.form.administration_booth_amount = 2;
             vm.form.administration_registration = true;
-            vm.form.administration_registration_amount =3;
             let result = vm.adminBoothRentalTotal();
             expect(result).toEqual(5);         
         });
@@ -227,11 +224,27 @@ describe('BudgetController', () => {
     });
     
     describe(`function awarenessTotal`,()=>{
-    
+        it(`if awareness_contact_cards is true and awareness_awareness_party_boolean is true and awareness_sign_boards_boolean is true`,()=>{
+            vm.form.awareness_contact_cards = true;
+            vm.form.awareness_awareness_party_boolean = true;
+            vm.form.awareness_sign_boards_boolean = true;
+            vm.form.awareness_contact_cards_amount = 1;
+            vm.form.awareness_awareness_party_amount = 1;
+            vm.form.awareness_sign_boards= 1; 
+        });
     });
     
     describe(`function communicationManagerTotal`,()=>{
-    
+        beforeEach(()=>{
+            vm.form.communication_chair = true;
+            vm.form.communication_manager = true;
+            vm.form.communication_chair_amount = 1;
+            vm.form.communication_manager_amount = 1;
+        });
+        it(`if communication_chair is true and communication_manager is true return 2`,()=>{
+            let result = vm.communicationManagerTotal();
+            expect(result).toEqual(2);
+        });
     });
     
     describe(`function communicationEachStaffTotal`,()=>{

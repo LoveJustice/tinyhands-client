@@ -51,7 +51,7 @@ describe('Address1Controller', () => {
 
     });
 
-    describe("loadMoreAddresses", () => {
+    describe("function loadMoreAddresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
         beforeEach(() => {
             vm.address1Service.loadMoreAddresses = () => {
@@ -64,20 +64,20 @@ describe('Address1Controller', () => {
             vm.loadMoreAddresses();
         });
 
-        it("loading should be true after .then", () => {
+        it("loading should be true", () => {
             expect(vm.loading).toBe(false);
         });
 
-        it("addresses should append the test results to the test addresses", () => {
+        it("addresses should append onto addresses[]", () => {
             expect(vm.addresses).toEqual(['page1']);
         });
 
-        it("addresses should append the test next to the test nextPageUrl", () => {
+        it("addresses should change nextPageUrl", () => {
             expect(vm.nextPageUrl).toEqual('469876');
         });
     });
 
-    describe("sortIcon", () => {
+    describe("function sortIcon", () => {
         it("if reverse is true, should return string: glyphicon-sort-by-alphabet-alt", () => {
             vm.reverse = true;
             let fetchedStr = vm.sortIcon();
@@ -91,7 +91,7 @@ describe('Address1Controller', () => {
         });
     });
 
-    describe("search addresses", () => {
+    describe("function search addresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
         beforeEach(() => {
             vm.address1Service.searchAddresses = () => {
@@ -104,21 +104,21 @@ describe('Address1Controller', () => {
             vm.searchAddresses();
         });
 
-        it("loading should be false after .then", () => {
+        it("loading should be false", () => {
             expect(vm.loading).toBe(false);
         });
 
-        it("addresses should append the test results to the test addresses", () => {
+        it("addresses should append onto addresses[]", () => {
             expect(vm.addresses).toEqual('page1');
         });
 
-        it("addresses should append the test next to the test nextPageUrl", () => {
+        it("addresses should change nextPageUrl", () => {
             expect(vm.nextPageUrl).toEqual('469876');
         });
     });
 
-    describe("getQueryParams", () => {
-        it("should push onto params page_size & paginateBy with their respective values", () => {
+    describe("function getQueryParams", () => {
+        it("if param's nextPageURL is not null, should push onto params page_size & paginateBy with their respective values", () => {
             let params = vm.getQueryParams();
             expect(params).toContain({ "name": "page_size", "value": vm.paginateBy });
         });
@@ -151,7 +151,7 @@ describe('Address1Controller', () => {
         });
     });
 
-    describe("getAddresses", () => {
+    describe("function getAddresses", () => {
         let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
         beforeEach(() => {
             vm.address1Service.listAddresses = () => {
@@ -164,20 +164,20 @@ describe('Address1Controller', () => {
             vm.getAddresses();
         });
 
-        it("loading should be false after .then", () => {
+        it("loading should be false", () => {
             expect(vm.loading).toBe(false);
         });
 
-        it("addresses should append the test results to the test addresses", () => {
+        it("addresses should append onto addresses[]", () => {
             expect(vm.addresses).toEqual('page1');
         });
 
-        it("addresses should append the test next to the test nextPageUrl", () => {
+        it("addresses should change nextPageUrl", () => {
             expect(vm.nextPageUrl).toEqual('469876');
         });
     });
 
-    describe('editAddress1', () => {
+    describe('function editAddress1', () => {
         let address = 'foo';
         let modal = {open: ()=> {
             return {
@@ -195,24 +195,26 @@ describe('Address1Controller', () => {
                 f();
                 }
             }
-        };      
+        };
+        
         beforeEach(() => {
            vm.modal = modal;
            vm.address1Service.saveAddress = saveAddress; 
         });
         
-        it("Get Address should be called", () => {
+        it("function getAddresses should be called", () => {
             spyOn(vm, "getAddresses").and.callThrough();
             vm.editAddress1();
             expect(vm.getAddresses).toHaveBeenCalled();
         });
         
-        it("Open should be called", () => {
+        it("function open should be called", () => {
           spyOn(vm.modal, "open").and.callThrough();
           vm.editAddress1(address);
           expect(vm.modal.open).toHaveBeenCalled();
         });
-        it("saveAttributes should be called", () => {
+        
+        it("function saveAttributes should be called", () => {
           spyOn(vm.address1Service, "saveAddress").and.callThrough();
           vm.editAddress1(address);
           expect(vm.address1Service.saveAddress).toHaveBeenCalled();
@@ -220,21 +222,21 @@ describe('Address1Controller', () => {
     
     });
 
-    describe('nextUrl tests', () => {
+    describe('function nextUrl', () => {
         it("if url is null, should return null", () => {
             let emptyString = null;
             let url = vm.nextUrl(emptyString);
             expect(url).toBe(null);
         });
 
-        it("Checks the Regex with a valid input", () => {
+        it("Checks that the regex passes with a valid input", () => {
             let testURL = "test.com/page=469876";
             let url = vm.nextUrl(testURL);
             expect(url).toBe("469876");
         });
 
 
-        it("Checks the Regex with an invalid input", () => {
+        it("Checks that the regex fails with an invalid input", () => {
             let testURL = "test.com";
             let url = vm.nextUrl(testURL);
             expect(url).toBe(null);

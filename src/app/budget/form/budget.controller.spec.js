@@ -193,21 +193,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function adminTotal`,()=>{
-        it(`result should be 15`,()=>{
-          vm.form.administration_number_of_intercepts_last_month = 2;
-          vm.form.administration_number_of_intercepts_last_month_multiplier = 2;
-          vm.form.administration_number_of_intercepts_last_month_adder = 2;
-          vm.form.administration_number_of_meetings_per_month = 2;
-          vm.form.administration_number_of_meetings_per_month_multiplier = 2;
-          vm.form.administration_booth= true;
-          vm.form.administration_booth_amount = 2;
-          vm.form.administration_registration = true;
-          vm.form.administration_registration_amount =3;
-          let result = vm.adminTotal();
-          expect(result).toEqual(15);
-        });
-        
-        it(`bMS_administration should be 15 `,()=>{
+        beforeEach( ()=>{
           vm.form.administration_number_of_intercepts_last_month = 2;
           vm.form.administration_number_of_intercepts_last_month_multiplier = 2;
           vm.form.administration_number_of_intercepts_last_month_adder = 2;
@@ -218,6 +204,13 @@ describe('BudgetController', () => {
           vm.form.administration_registration = true;
           vm.form.administration_registration_amount =3;
           vm.form.totals.borderMonitoringStation.administration = 0;
+        });
+        it(`result should be 15`,()=>{
+          let result = vm.adminTotal();
+          expect(result).toEqual(15);
+        });
+        
+        it(`bMS_administration should be 15 `,()=>{
           vm.adminTotal();
           expect(vm.form.totals.borderMonitoringStation.administration).toEqual(15);
         });

@@ -1,9 +1,11 @@
 <div  class="verticalOffset accounts">
     <div class="col-xs-12 col-md-offset-2 col-md-8 col-lg-offset-2 col-lg-8">
         <ul class="nav nav-tabs">
-            <li ng-repeat="section in accountCtrl.sections.allSections" ng-class="{active: accountCtrl.tabInfo.active == $index}" ng-click="accountCtrl.switchActive($index)"; ><a href="">{{section.name}}</a></li>
+            <li ng-repeat="section in accountCtrl.sections.allSections" ng-class="{active: accountCtrl.tabInfo.active == $index}" ng-click="accountCtrl.switchActive($index)"; >
+                <a href="">{{section.name}}</a>
+            </li>
         </ul>
 
-        <div class="verticalOffset" ng-include="accountCtrl.tabInfo.sectionTemplateUrl"></div>
+        <div ng-include="accountCtrl.tabInfo.sectionTemplateUrl"></div>
     </div>
 </div>

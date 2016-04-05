@@ -1,23 +1,22 @@
 export default class AccountController {
-  constructor($q, $scope, $timeout, $uibModal, $state) {
+  constructor($q, $scope, $timeout, $uibModal, $state, $stateParams) {
     'ngInject';
     // Modules
+    console.log('controller initialzed');
     this.$q = $q;
     this.$scope = $scope;
     this.$state = $state;
+    this.$stateParams = $stateParams;
     this.$timeout = $timeout;
     this.$uibModal = $uibModal;
-
     //Scope variables
     let accountOptionsPath = 'app/account/components/';
     this.editAccountPath = `${accountOptionsPath}edit/accountEdit.html`;
     this.sections = {allSections: [{ name: 'Accounts List', templateUrl: `${accountOptionsPath}list/accountList.html` },
                                    { name: 'Accounts Access Control', templateUrl: `${accountOptionsPath}control/accountControl.html` },
                                    { name: 'Accounts Defaults', templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]}
-
-    this.tabInfo = {'active': 0, 'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
+    this.tabInfo = {'active': null, 'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
     this.$scope.saveInfo = {'arrays': null, 'serviceToUse': null, 'saveAll': null};
-
     this.saveButtonInfo = {"saveButtonText":"Saved", "saveButtonColor":"btn-primary", "unsavedChanges": false};
     this.saveText= "Save All";
     this.savingText = "Saving...";
@@ -27,7 +26,6 @@ export default class AccountController {
     this.savedColor = "btn-primary";
     this.index = null;
     this.toStateName = null;
-
     this.$scope.accountToEdit = null;
 
     //This block is executed after user saves or discards changes via unsavedChangesModal
@@ -64,12 +62,8 @@ export default class AccountController {
     this.$scope.$on('checkForUnsavedChange()', (event, arrays) => {
       this.checkForUnsavedChanges(arrays);
     });
-  }
 
-  selectUser(account){
-    this.$scope.accountToEdit = account;
-    this.tabInfo.sectionTemplateUrl = this.editAccountPath;
-    this.tabInfo.active = null;
+    this.switchActive(this.$stateParams.activeTab);
   }
 
   switchActive(index){
@@ -77,13 +71,19 @@ export default class AccountController {
         this.index = index;
         this.openUnsavedChangesModal();
     } else {
-        this.activate(index);
+        this.activateTab(index);
     }
   }
 
-  activate(index){
+  activateTab(index){
     this.tabInfo.active = index;
     this.tabInfo.sectionTemplateUrl = this.sections.allSections[index].templateUrl;
+    this.$state.transitionTo('account', {activeTab: index}, {
+    location: true,
+    inherit: true,
+    relative: this.$state.$current,
+    notify: false
+    });
   }
 
   saveAll(arrays, serviceToUse) {

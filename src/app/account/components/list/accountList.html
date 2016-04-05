@@ -26,7 +26,7 @@
           <td class="listTable">{{account.date_joined | date:"yyyy/MM/dd h:mm:ssa"}}</td>
           <td class="listTable">{{account.last_login | date:"yyyy/MM/dd h:mm:ssa"}}</td>
           <td class="listTable">
-            <a class="btn btn-sm btn-primary pull-left" id="edit" ng-click="accountCtrl.selectUser(account)">Edit</a>
+            <a class="btn btn-sm btn-primary pull-left" id="edit" ui-sref="account/:id({id: account.id})">Edit</a>
           </td>
           <td class="listTable">
             <button type="submit" class="btn btn-sm btn-primary" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
@@ -40,4 +40,4 @@
       </tbody>
     </table>
   </div>
-<p class="pull-right"><a class="btn btn-success" id="create" ng-click="accountCtrl.selectUser({'id': -1})">Create A New Account</a></p>
+<p class="pull-right"><a class="btn btn-success" id="create"  ui-sref="account/:id()">Create A New Account</a></p>

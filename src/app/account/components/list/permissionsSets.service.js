@@ -5,7 +5,6 @@ export default class PermissionsSetsService extends BaseService {
 		'ngInject';
 		super();
 
-
 		this.$http = $http;
 		this.$q = $q;
 	}

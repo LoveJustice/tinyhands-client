@@ -5,10 +5,7 @@ export default class AccountListController {
     this.AccountsService = AccountService
     this.PermissionsSetsService = PermissionsSetsService
     this.$uibModal = $uibModal
-    this.activate();
-  }
 
-  activate() {
     this.AccountsService.getAccounts().then((response) => {
       this.accounts = response.data;
     });

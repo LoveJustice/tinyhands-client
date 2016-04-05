@@ -1,20 +1,28 @@
 export default class AccountEditController {
-  constructor($q, $scope, $timeout, $uibModal, $state, $window, AccountService, PermissionsSetsService) {
+  constructor($scope, $state, $stateParams ,AccountService, PermissionsSetsService) {
     'ngInject';
     // Modules
     this.$scope = $scope;
-    this.$window = $window;
+    this.$state = $state;
+    this.$stateParams = $stateParams;
     //Services
     this.AccountService = AccountService;
     this.PermissionsSetsService = PermissionsSetsService;
-
     //Scope Variables
     this.emailError = '';
     this.userDesignationError = '';
 
-    if(this.$scope.accountToEdit.id != undefined && this.$scope.accountToEdit.id > -1) {
-          this.editing = true;
-          this.account = this.$scope.accountToEdit;
+    let accountOptionsPath = 'app/account/components/';
+    this.sections = {allSections: [{ name: 'Accounts List', templateUrl: `${accountOptionsPath}list/accountList.html` },
+                                   { name: 'Accounts Access Control', templateUrl: `${accountOptionsPath}control/accountControl.html` },
+                                   { name: 'Accounts Defaults', templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]}
+
+    if(this.$stateParams.id != undefined && this.$stateParams.id > 0) {
+          this.AccountService.getAccount(this.$stateParams.id).then((result) => {
+            this.account = result.data;
+            this.editing = true;
+          });
+
     } else {
           this.editing = false;
           this.account = {
@@ -40,12 +48,9 @@ export default class AccountEditController {
               permission_budget_manage: false,
           }
     }
-
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissionsSets = result.data.results;
     });
-
-
   }
 
   update() {
@@ -59,7 +64,7 @@ export default class AccountEditController {
           call= this.AccountService.create(this.account);
       }
       call.then(() => {
-          this.$window.location.href = "/account";
+          this.$state.go("account");
       }, (err) => {
           if(err.data.email){
               this.emailError = err.data.email[0];
@@ -90,7 +95,8 @@ export default class AccountEditController {
   }
 
   onUserDesignationChanged(permissionSetId) {
-     this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
+    if (permissionSetId){
+      this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
           this.account.permission_irf_view = permissions.data.permission_irf_view;
           this.account.permission_irf_add = permissions.data.permission_irf_add;
           this.account.permission_irf_edit = permissions.data.permission_irf_edit;
@@ -108,14 +114,15 @@ export default class AccountEditController {
           this.account.permission_address2_manage = permissions.data.permission_address2_manage;
           this.account.permission_budget_manage = permissions.data.permission_budget_manage;
       });
+    }
   }
 
   getButtonText(has_permission) {
-            if(has_permission) {
-                return "Yes";
-            }
-            return "No";
-        }
+      if(has_permission) {
+          return "Yes";
+      }
+      return "No";
+  }
 
   getUpdateButtonText() {
       if(this.editing) {

@@ -42,10 +42,11 @@ export default class AccountController {
           //If saving was successful, redirect to desired page.
           this.saveButtonInfo.unsavedChanges = false;
           if (this.toStateName != null) {
+              console.log('here');
               this.$state.go(this.toStateName);
               this.toStateName = null;
           } else {
-              this.activate(this.index);
+              this.activateTab(this.index);
           }
         });
       }

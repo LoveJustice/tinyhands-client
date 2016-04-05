@@ -1,10 +1,13 @@
+import constants from './constants';
+
 class BaseService {
 	constructor($http) {
 		'ngInject';
 
 		this.$http = $http;
+		
+		this.baseUrl = constants.BaseUrl;
 
-		this.baseUrl = "http://edwards.cse.taylor.edu:80/";
 		this.errors = [];
 	}
 

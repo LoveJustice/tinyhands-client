@@ -44,39 +44,32 @@
         <thead>
             <tr>
                 <th ng-click="irfListCtrl.sort='irf_number'; irfListCtrl.reverseList()">IRF #
-                    <i ng-hide="irfListCtrl.getSort() == 'irf_number' || irfListCtrl.getSort() == '-irf_number'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'irf_number'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-irf_number'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'irf_number',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-irf_number' }"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='staff_name'; irfListCtrl.reverseList()">Staff Name
-                    <i ng-hide="irfListCtrl.getSort() == 'staff_name' || irfListCtrl.getSort() == '-Staff Name'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'staff_name'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-staff_name'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'staff_name',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-staff_name' }"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='number_of_victims'; irfListCtrl.reverseList()"># of Victims
-                    <i ng-hide="irfListCtrl.getSort() == 'number_of_victims' || irfListCtrl.getSort() == '-number_of_victims'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'number_of_victims'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-number_of_victims'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'number_of_victims',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-number_of_victims' }"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='number_of_traffickers'; irfListCtrl.reverseList()"># of Traffickers
-                    <i ng-hide="irfListCtrl.getSort() == 'number_of_traffickers' || irfListCtrl.getSort() == '-number_of_traffickers'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'number_of_traffickers'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-number_of_traffickers'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'number_of_traffickers',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-number_of_traffickers' }"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='date_time_of_interception'; irfListCtrl.reverseList()">Time of Interception
-                    <i ng-hide="irfListCtrl.getSort() == 'date_time_of_interception' || irfListCtrl.getSort() == '-time_of_interception'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'date_time_of_interception'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-date_time_of_interception'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'date_time_of_interception',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-date_time_of_interception' }"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='date_time_entered_into_system'; irfListCtrl.reverseList()">Time Entered Into System
-                    <i ng-hide="irfListCtrl.getSort() == 'date_time_entered_into_system' || irfListCtrl.getSort() == '-date_time_entered_into_system'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'date_time_entered_into_system'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-date_time_entered_into_system'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'date_time_entered_into_system',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-date_time_entered_into_system' }"></i>
                 </th>
                 <th ng-click="irfListCtrl.sort='date_time_last_updated'; irfListCtrl.reverseList()">Time Last Edited
-                    <i ng-hide="irfListCtrl.getSort() == 'date_time_last_updated' || irfListCtrl.getSort() == '-date_time_last_updated'" class="glyphicon glyphicon-sort"></i>
-                    <i ng-show="irfListCtrl.getSort() == 'date_time_last_updated'" class="glyphicon glyphicon-sort-by-alphabet"></i>
-                    <i ng-show="irfListCtrl.getSort() == '-date_time_last_updated'" class="glyphicon glyphicon-sort-by-alphabet-alt"></i>
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'date_time_last_updated',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-date_time_last_updated' }"></i>
                 </th>
                 <th></th>
                 <th></th>

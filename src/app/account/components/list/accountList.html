@@ -1,37 +1,37 @@
 <h1>All Accounts</h1>
 
-  <div ng-controller="AccountListController as accountListCtrl" ng-cloak>
-    <table class="table table-striped table-condensed listTable">
+  <div id="accountList" ng-controller="AccountListController as accountListCtrl" ng-cloak>
+    <table class="table table-striped table-condensed">
       <thead>
-        <tr class="listTable">
-          <th class="listTable">Email</th>
-          <th class="listTable">First Name</th>
-          <th class="listTable">Last Name</th>
-          <th class="listTable">User Designation</th>
-          <th class="listTable">Date Created</th>
-          <th class="listTable">Last Login</th>
-          <th class="listTable">&nbsp;</th>
-          <th class="listTable">&nbsp;</th>
-          <th class="listTable">&nbsp;</th>
+        <tr>
+          <th>Email</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>User Designation</th>
+          <th>Date Created</th>
+          <th>Last Login</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr class="listTable" ng-repeat="account in accountListCtrl.accounts" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
+        <tr ng-repeat="account in accountListCtrl.accounts" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
 
-          <td class="listTable">{{account.email}}</td>
-          <td class="listTable">{{account.first_name}}</td>
-          <td class="listTable">{{account.last_name}}</td>
-          <td class="listTable">{{account.user_designation}}</td>
-          <td class="listTable">{{account.date_joined | date:"yyyy/MM/dd h:mm:ssa"}}</td>
-          <td class="listTable">{{account.last_login | date:"yyyy/MM/dd h:mm:ssa"}}</td>
-          <td class="listTable">
+          <td>{{account.email}}</td>
+          <td>{{account.first_name}}</td>
+          <td>{{account.last_name}}</td>
+          <td>{{account.user_designation}}</td>
+          <td>{{account.date_joined | date:"yyyy/MM/dd h:mm:ssa"}}</td>
+          <td>{{account.last_login | date:"yyyy/MM/dd h:mm:ssa"}}</td>
+          <td>
             <a class="btn btn-sm btn-primary pull-left" id="edit" ng-click="accountCtrl.selectUser(account)">Edit</a>
           </td>
-          <td class="listTable">
+          <td>
             <button type="submit" class="btn btn-sm btn-primary" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
           </td>
-          <td class="listTable"><button type="button" class="btn btn-sm btn-danger animated"
+          <td><button type="button" class="btn btn-sm btn-danger animated"
                       ng-click="accountListCtrl.deleteAccount(account)"
                       ng-show="accountListCtrl.currentuser.id != account.id"
                       ng-class="{fadeIn: account.hover && account.accountdelete, fadeOut: !account.hover, pulse: account.accountdelete}">
@@ -39,5 +39,6 @@
         </tr>
       </tbody>
     </table>
+    <p class="pull-right"><a class="btn btn-success" id="create" ng-click="accountCtrl.selectUser({'id': -1})">Create A New Account</a></p>
   </div>
-<p class="pull-right"><a class="btn btn-success" id="create" ng-click="accountCtrl.selectUser({'id': -1})">Create A New Account</a></p>
+

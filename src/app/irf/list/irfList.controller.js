@@ -2,6 +2,7 @@ export default class IrfListController {
     constructor(IrfListService, session) {
         'ngInject';
 
+        this.getIrfList();
         this.numShowing = 25;
         this.paginateBy = 25;
         this.reverse = false;
@@ -10,9 +11,6 @@ export default class IrfListController {
         this.session = session;
         this.showingIrfs = [];
         this.sort = 'irf_number';
-
-
-        this.getIrfList();
     }
 
     getIrfList() {

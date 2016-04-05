@@ -4,8 +4,8 @@
         <div class="col-xs-5">
             <h1>All VIFs</h1>
         </div>
-        <div class="pull-right" style="margin-top:20px;">
-            <button ng-if="vifListCtrl.showingVifs.length > 0" class="btn btn-primary" id="export" csv-header="vifListCtrl.getCsvHeader()" field-separator="," decimal-separator="." ng-csv="vifListCtrl.getCsvArray()" >
+        <div class="pull-right">
+            <button ng-if="vifListCtrl.showingVifs.length > 0" class="btn btn-primary" csv-header="vifListCtrl.getCsvHeader()" field-separator="," decimal-separator="." ng-csv="vifListCtrl.getCsvArray()" >
                 Export as CSV
             </button>
             <a style="margin-left:5px;" id="id_input_new_vif" class="btn btn-success pull-right" href="/vif/create">
@@ -24,7 +24,7 @@
             </select>
         </div>
         <div class="col-sm-3 col-xs-1">
-            <p style="margin-top: 8px;">Results <span class="hidden-xs">per page</span></p>
+            <p>Results <span class="hidden-xs">per page</span></p>
         </div>
         <!-- End dropdown -->
 
@@ -32,7 +32,7 @@
         <div class="col-md-3 search-bar pull-right">
             <form>
                   <label class="pull-right">
-                      <input ng-model="vifListCtrl.searchValue" placeholder="Search" class="form-control" style="font-weight: normal;">
+                      <input ng-model="vifListCtrl.searchValue" placeholder="Search" class="form-control">
                   </label>
             </form>
         </div>
@@ -100,12 +100,8 @@
         </tbody>
     </table>
     <div class="row text-center">
-        <button ng-show="vifListCtrl.showingVifs.length < vifListCtrl.listOfVifs.length" ng-click="vifListCtrl.showMoreVifs()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">
+        <button ng-show="vifListCtrl.showingVifs.length < vifListCtrl.listOfVifs.length" ng-click="vifListCtrl.showMoreVifs()" class="btn btn-primary">
             Load more results
         </button>
     </div>
-
-    <!--<div ng-show="vifListCtrl.loading" class="loader-container">
-        <div class="loader">Loading...</div>
-    </div> -->
 </div>

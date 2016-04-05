@@ -1,16 +1,16 @@
 export default class VifListController {
     constructor(VifListService, session) {
         'ngInject';
-        this.service = VifListService;
-        this.session = session;
-        this.sort = 'vif_number';
-        this.showingVifs = [];
-        this.reverse = false;
-        this.paginateBy = 25;
-        this.numShowing = 25;
-        this.searchValue = "";
 
         this.getVifList();
+        this.numShowing = 25;
+        this.paginateBy = 25;
+        this.reverse = false;
+        this.searchValue = "";
+        this.service = VifListService;
+        this.session = session;
+        this.showingVifs = [];
+        this.sort = 'vif_number';
     }
 
     getVifList() {

@@ -47,6 +47,7 @@ import BudgetShelterFormController from './budget/form/components/shelter/shelte
 import BudgetSuppliesFormController from './budget/form/components/supplies/suppliesForm.controller';
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
 import DashboardController from './dashboard/dashboard.controller';
+import IrfController from './irf/form/irf.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
 import VifController from './vif/form/vif.controller';
@@ -105,6 +106,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .controller('BudgetSuppliesFormController', BudgetSuppliesFormController)
   .controller('BudgetTravelFormController', BudgetTravelFormController)
   .controller('DashboardController', DashboardController)
+  .controller('IrfController', IrfController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
   .controller('VifController', VifController)

@@ -13,6 +13,7 @@ import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
+import IrfListService from './irf/list/irfList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 import VifService from './vif/form/vif.service';
@@ -48,6 +49,7 @@ import BudgetSuppliesFormController from './budget/form/components/supplies/supp
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import IrfController from './irf/form/irf.controller';
+import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
 import VifController from './vif/form/vif.controller';
@@ -107,6 +109,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .controller('BudgetTravelFormController', BudgetTravelFormController)
   .controller('DashboardController', DashboardController)
   .controller('IrfController', IrfController)
+  .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
   .controller('VifController', VifController)

@@ -5,7 +5,9 @@ class BaseService {
 		'ngInject';
 
 		this.$http = $http;
+
 		this.baseUrl = constants.BaseUrl;
+		
 		this.errors = [];
 	}
 

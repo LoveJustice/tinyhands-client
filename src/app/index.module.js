@@ -2,7 +2,6 @@
 import config from './index.config';
 
 import routerConfig from './index.route';
-import errorRoutes from './error/error.route';
 
 import googleMapsConfig from './components/map/map.config';
 
@@ -56,38 +55,29 @@ import VifController from './vif/form/vif.controller';
 import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
-// REGION: Factories
-import ErrorFactory from './error/error.factory';
-// ENDREGION: Factories
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
 
   .config(routerConfig)
-  .config(errorRoutes)
 
   .config(googleMapsConfig) // Pass google maps config
 
   .run(runBlock)
 
   // REGION: Services
+  .service('address1Service', Address1Service)
+  .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
-  .service('address1Service', Address1Service)
-  .service('address2Service', Address2Service)
   .service('session', SessionService)
   .service('tallyService', TallyService)
-  .service('IrfListService', IrfListService)
-  .service('VifService', VifService)
   .service('VifListService', VifListService)
+  .service('VifService', VifService)
   // ENDREGION: Services
-
-  // REGION: Factories
-  .factory('ErrorHandler', ErrorFactory.errorFactory)
-  // ENDREGION: Factories
 
   // REGION: Directives
   .directive('borderStationDetail', () => new DetailDirective())

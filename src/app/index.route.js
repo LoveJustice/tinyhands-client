@@ -64,25 +64,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: false
       }
     })
-    .state('vifList', {
-      url: '/vif',
-      templateUrl: 'app/vif/list/vifList.html',
-      controller: 'VifListController',
-      controllerAs: 'vifListCtrl',
-      data: {
-        requireLogin: true
-      }
-    })
-    .state('vif', {
-      abstract: true,
-      url: '/vif/create',
-      templateUrl: 'app/vif/form/vif.html',
-      controller: 'VIFController',
-      controllerAs: 'vifCtrl',
-      data: {
-        requireLogin: true
-      }
-    })
     .state('irfList', {
       url: '/irf',
       templateUrl: 'app/irf/list/irfList.html',

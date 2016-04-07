@@ -1,5 +1,5 @@
 export default class VifListController {
-    constructor(VifListService, session) {
+    constructor(VifListService, Session) {
         'ngInject';
 
         this.service = VifListService;

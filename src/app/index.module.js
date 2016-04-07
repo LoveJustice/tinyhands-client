@@ -7,6 +7,10 @@ import googleMapsConfig from './components/map/map.config';
 
 import runBlock from './index.run';
 
+// REGION: Modules
+import VIFModule from './vif/vif.module';
+// ENDREGION:Modules
+
 // REGION: Services
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
@@ -16,8 +20,6 @@ import BudgetService from './budget/form/budget.service';
 import IrfListService from './irf/list/irfList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
-import VifService from './vif/form/vif.service';
-import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -51,12 +53,10 @@ import DashboardController from './dashboard/dashboard.controller';
 import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
-import VifController from './vif/form/vif.controller';
-import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'tinyhands.VIF'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -75,8 +75,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .service('BudgetService', BudgetService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
-  .service('VifListService', VifListService)
-  .service('VifService', VifService)
   // ENDREGION: Services
 
   // REGION: Directives
@@ -110,7 +108,5 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
-  .controller('VifController', VifController)
-  .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

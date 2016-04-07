@@ -1,4 +1,5 @@
-import BudgetService from './budget.service'
+import BudgetService from './budget.service';
+import UtilService from '../../util/util.service';
 
 describe('BudgetService', () => {
     let service;
@@ -15,7 +16,8 @@ describe('BudgetService', () => {
 
 
     beforeEach(inject(($http) => {
-        service = new BudgetService($http);
+        let utils = new UtilService();
+        service = new BudgetService($http, utils);
     }));
 
     describe('function createOtherItem', () => {

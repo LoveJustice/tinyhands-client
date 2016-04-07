@@ -38,8 +38,8 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                ng-click="formsOpen=!formsOpen">Forms<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a ng-show="navbarCtrl.session.user.permission_irf_view" href="#">IRFs</a></li>
-                <li><a ng-show="navbarCtrl.session.user.permission_vif_view" href="#">VIFs</a></li>
+                <li><a ng-show="navbarCtrl.session.user.permission_irf_view" ui-sref="irfList">IRFs</a></li>
+                <li><a ng-show="navbarCtrl.session.user.permission_vif_view" ui-sref="vifList">VIFs</a></li>
             </ul>
         </li>
         <!-- END: FORMS -->

@@ -5,7 +5,7 @@ import constants from './constants';
  *
  * @class BaseService
  */
-class BaseService {
+export default class BaseService {
 	/**
 	 * Creates an instance of BaseService.
 	 *
@@ -115,5 +115,3 @@ class BaseService {
     return this.$http.put(this.baseUrl + url, data, { headers: headers });
   }
 }
-
-export default BaseService;

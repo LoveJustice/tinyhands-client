@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block html %}<html ng-app="EventsMod">{% endblock %}
+{% block angular %}{% endblock %}
+
+
+{% block tab_block %}
+
+  {% block content %}
+  {% endblock %}
+
+    {% load static from staticfiles %}
+    <script src="{% static "events/js/events.module.js" %}"></script>
+    <script src="{% static "events/js/services/events.service.js" %}"></script>
+    <script src="{% static "events/js/controllers/eventsCtrl.js" %}"></script>
+    <script src="{% static "events/js/controllers/editEventCtrl.js" %}"></script>
+    <script src="{% static "events/js/controllers/modalCtrl.js" %}"></script>
+    <script src="{% static "events/js/controllers/dateSelectCtrl.js" %}"></script>
+    <script src="{% static "events/js/controllers/eventCalendarCtrl.js" %}"></script>
+    <script src="{% static "events/js/controllers/eventModalCtrl.js" %}"></script>
+
+{% endblock %}

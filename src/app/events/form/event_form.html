@@ -1,0 +1,186 @@
+{% extends 'events/event_base.html' %}
+
+{% block foot %}
+{% if event.id %}
+<script>
+  window.event_id = {{event.id}}
+
+</script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+{% verbatim %}
+<div ng-controller="EditEventCtrl as editCtrl" ng-cloak>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    {{editCtrl.getTitle()}}
+                </div>
+                <form method="post">
+                    <div class="panel-body">
+
+                        <div class="row form-group">
+                                <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.titleError != ''">
+                                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.titleError }}
+                               </div>
+
+                            <div class="col-md-3">
+                                <strong> Title: </strong>
+                            </div>
+                            <div class="col-md-9  ">
+                                <input class="form-control" id="id_title" maxlength="250" name="title" type="text" ng-model="editCtrl.event.title">
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <strong> Location: </strong>
+                            </div>
+                            <div class="col-md-9  ">
+                                <input class="form-control" id="id_location" maxlength="250" name="location" type="text" ng-model="editCtrl.event.location">
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="row ">
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.startDateError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.startDateError }}
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.startTimeError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.startTimeError }}
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.endDateError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.endDateError }}
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.endTimeError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.endTimeError }}
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.dateError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.dateError }}
+                            </div>
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.timeError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.timeError }}
+                            </div>
+
+
+
+
+                                <div class="col-md-3">
+                                    <strong> Date: </strong>
+                                </div>
+                                <div class="col-md-2  ">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="id_start_date" name="start_date" placeholder="Start date" datepicker-popup="{{editCtrl.date_format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.start_date_open()" is-open="editCtrl.start_date_popup.opened" ng-required="true" close-text="Close"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-2  ">
+                                        <span dropdown auto-close="outsideClick">
+                                          <input href dropdown-toggle value = "{{ editCtrl.display_start_time }}" class="form-control" id="id_start_time">
+
+                                          <ul class="dropdown-menu">
+                                             <li>
+                                                <timepicker ng-model="my_start_time" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                             </li>
+                                          </ul>
+                                        </span>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <strong> to </strong>
+                                </div>
+                                <div class="col-md-2  ">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.date_format}}" ng-model="editCtrl.event.end_date" ng-click="editCtrl.end_date_open()" is-open="editCtrl.end_date_popup.opened" ng-required="true" close-text="Close"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-2  ">
+                                    <span dropdown auto-close="outsideClick">
+                                      <input href dropdown-toggle value = "{{ editCtrl.display_end_time }}" class="form-control" id="id_end_time">
+
+                                      <ul class="dropdown-menu">
+                                         <li>
+                                            <timepicker ng-model="my_end_time" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                         </li>
+                                      </ul>
+                                    </span>
+                                </div>
+
+                        </div>
+
+
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <strong> Description: </strong>
+                            </div>
+                            <div class="col-md-9  ">
+                                <textarea class="form-control" cols="40" id="id_description" name="description" rows="10" ng-model="editCtrl.event.description"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <strong> Is Repeat: </strong>
+                            </div>
+                            <div class="col-md-9">
+                                <input id="id_is_repeat" name="is_repeat" type="checkbox" ng-model="editCtrl.event.is_repeat">
+                            </div>
+                        </div>
+
+                        <div class="row form-group optional"  ng-show="editCtrl.event.is_repeat == true">
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.noRepetitionError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.noRepetitionError }}
+                            </div>
+
+                            <div class="col-md-3">
+                                <strong> Repetition: </strong>
+                            </div>
+                            <div class="col-md-9  ">
+                                <select class="form-control" id="id_repetition" name="repetition" ng-model="editCtrl.event.repetition">
+                                <option value="D">Daily</option>
+                                <option value="W">Weekly</option>
+                                <option value="M">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row form-group optional"  ng-show="editCtrl.event.is_repeat == true">
+                            <div class="alert alert-danger alert-dismissible" role="alert" ng-show="editCtrl.endsError != ''">
+                                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                {{ editCtrl.endsError }}
+                            </div>
+                            <div class="col-md-3">
+                                <strong> Ends: </strong>
+                            </div>
+                            <div class="col-md-9  ">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" datepicker-popup="{{editCtrl.date_format}}" ng-model="editCtrl.event.ends" ng-click="editCtrl.end_repeat_open()" is-open="editCtrl.end_repeat_popup.opened" ng-required="true" close-text="Close"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input class="btn btn-primary pull-right" ng-click="editCtrl.update()" value="Save Event" />
+                        <a ng-href="/events/list/" class="btn btn-default pull-right" style="margin-right: 5px">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}
+
+
+{% endblock %}

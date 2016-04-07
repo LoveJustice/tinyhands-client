@@ -1,3 +1,5 @@
+import SharedModule from '../shared/shared.module';
+
 import BudgetListService from './list/budgetList.service';
 import BudgetService from './form/budget.service';
 
@@ -15,7 +17,7 @@ import BudgetTravelFormController from './form/components/travel/travelForm.cont
 
 import budgetRouteConfig from './budget.route';
 
-export default angular.module('tinyhands.Budget', ['ui.router'])
+export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Shared'])
     .config(budgetRouteConfig)
     .service('BudgetListService', BudgetListService)
     .service('BudgetService', BudgetService)

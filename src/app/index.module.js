@@ -1,7 +1,8 @@
 /* global toastr:false, moment:false */
 import config from './index.config';
 
-import budgetModule from './budget/budget.module'
+import SharedModule from './shared/shared.module';
+import budgetModule from './budget/budget.module';
 
 import routerConfig from './index.route';
 
@@ -46,7 +47,7 @@ import VifListController from './vif/list/vifList.controller';
 
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv', 'tinyhands.Budget'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv', 'tinyhands.Shared', 'tinyhands.Budget'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -61,7 +62,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
-  .service('session', SessionService)
   .service('tallyService', TallyService)
   .service('VifListService', VifListService)
   .service('VifService', VifService)

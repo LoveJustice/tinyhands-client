@@ -28,7 +28,7 @@ describe('LocationController', () => {
 
     it('should call getLocations if service.borderStationId', () => {
       spyOn(vm, 'getLocations');
-      vm.service.borderStationId = true;
+      vm.service.borderStationId = 1;
       vm.constructor(q, $scope, bss);
       expect(vm.getLocations).toHaveBeenCalled();
     });
@@ -44,17 +44,17 @@ describe('LocationController', () => {
   describe('function addLocation', () => {
 
     it('should add {border_station: 123} to newLocations', () => {
-      vm.newLocations = [1];
+      vm.locations = [];
       vm.service.borderStationId = 123;
       vm.addLocation();
-      expect(vm.newLocations).toEqual([1, {border_station: 123}]);
+      expect(vm.newLocations).toEqual([{border_station: 123}]);
     });
 
     it('should add {border_station: 123} to locations', () => {
-      vm.locations = [1];
+      vm.locations = [];
       vm.service.borderStationId = 123;
       vm.addLocation();
-      expect(vm.locations).toEqual([1, {border_station: 123}]);
+      expect(vm.locations).toEqual([{border_station: 123}]);
     });
 
   });

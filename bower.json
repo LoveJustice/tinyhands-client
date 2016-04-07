@@ -16,7 +16,7 @@
     "malarkey": "yuanqing/malarkey#~1.3.0",
     "moment": "~2.12.0",
     "toastr": "~2.1.2",
-    "moment-timezone": "~0.5.3"
+    "moment-timezone": "~0.5.3",
     "ng-csv": "~0.3.6"
   },
   "devDependencies": {

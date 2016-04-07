@@ -478,10 +478,60 @@ describe('BudgetController', () => {
     });
     
     describe(`function clearValue`,()=>{
+
+      it('should return false if type is boolean', () => {
+        expect(vm.clearValue(true)).toBe(false);
+      });
+    
+      it('should return 0 if type is number', () => {
+        expect(vm.clearValue(123)).toEqual(0);
+      });
+    
+      it('should return value if type is not boolean or number', () => {
+        expect(vm.clearValue("test")).toEqual("test");
+      });
+    
+      it('should return value if type is not boolean or number', () => {
+        expect(vm.clearValue({a: 'b'})).toEqual({a: 'b'});
+      });
     
     });
     
     describe(`function clearValues`,()=>{
+
+      beforeEach(() => {
+        vm.form = {
+          border_station: 123,
+          id: 321,
+          staff: [
+            {salaryInfo: {salary: 1}},
+            {salaryInfo: {salary: 2}},
+          ],
+          foo: 'bar',
+          totals: {
+            borderMonitoringStation: null,
+          },
+        };
+        vm.setTotals = () => {};
+      });
+
+      it('should call clearValues with form.foo', () => {
+        spyOn(vm, 'clearValue');
+        vm.clearValues();
+        expect(vm.clearValue).toHaveBeenCalledWith('bar');
+      });
+
+      it('should clear form.staff', () => {
+        vm.clearValues();
+        expect(vm.form.staff[1].salaryInfo.salary).toEqual(0);
+      });
+
+      it('should call setTotals', () => {
+        spyOn(vm, 'setTotals');
+        vm.clearValues();
+        expect(vm.setTotals).toHaveBeenCalled();
+      });
     
     });
+
 });

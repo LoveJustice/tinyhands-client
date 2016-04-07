@@ -1,0 +1,101 @@
+<div class="container">
+    <hr>
+    <div class="row">
+        <div class="col-xs-5">
+            <h1>All IRFs</h1>
+        </div>
+        <div class="pull-right">
+            <button ng-if="irfListCtrl.showingIrfs.length > 0" class="btn btn-primary" csv-header="irfListCtrl.getCsvHeader()" field-separator="," decimal-separator="." ng-csv="irfListCtrl.getCsvArray()" >
+                Export as CSV
+            </button>
+            <a id="id_input_new_irf" class="btn btn-success pull-right" href="/irf/create">
+                Input A New IRF
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Results per page dropdown -->
+        <div class="col-sm-2 col-xs-3">
+            <select ng-init="irfListCtrl.paginateBy='25'" ng-model="irfListCtrl.paginateBy" ng-change="irfListCtrl.getIrfList()" class="form-control">
+                <option>25</option>
+                <option>50</option>
+                <option>100</option>
+                <option>500</option>
+            </select>
+        </div>
+        <div class="col-sm-3 col-xs-1">
+            <p>Results <span class="hidden-xs">per page</span></p>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-model="irfListCtrl.searchValue" placeholder="Search" class="form-control">
+                  </label>
+            </form>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <p>{{ irfListCtrl.listOfIrfs.count }}</p>
+    <table ng-if="irfListCtrl.listOfIrfs.length > 0" class="table table-striped table-condensed crud-datatable">
+        <thead>
+            <tr>
+                <th ng-click="irfListCtrl.sort='irf_number'; irfListCtrl.reverseList()">IRF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'irf_number',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-irf_number' }"></i>
+                </th>
+                <th ng-click="irfListCtrl.sort='staff_name'; irfListCtrl.reverseList()">Staff Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'staff_name',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-staff_name' }"></i>
+                </th>
+                <th ng-click="irfListCtrl.sort='number_of_victims'; irfListCtrl.reverseList()"># of Victims
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'number_of_victims',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-number_of_victims' }"></i>
+                </th>
+                <th ng-click="irfListCtrl.sort='number_of_traffickers'; irfListCtrl.reverseList()"># of Traffickers
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'number_of_traffickers',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-number_of_traffickers' }"></i>
+                </th>
+                <th ng-click="irfListCtrl.sort='date_time_of_interception'; irfListCtrl.reverseList()">Time of Interception
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'date_time_of_interception',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-date_time_of_interception' }"></i>
+                </th>
+                <th ng-click="irfListCtrl.sort='date_time_entered_into_system'; irfListCtrl.reverseList()">Time Entered Into System
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'date_time_entered_into_system',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-date_time_entered_into_system' }"></i>
+                </th>
+                <th ng-click="irfListCtrl.sort='date_time_last_updated'; irfListCtrl.reverseList()">Time Last Edited
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSort() == 'date_time_last_updated',
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfListCtrl.getSort() == '-date_time_last_updated' }"></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="form in irfListCtrl.showingIrfs | filter: irfListCtrl.searchValue | orderBy: irfListCtrl.getSort()">
+                <td>{{ form.irf_number }}</td>
+                <td>{{ form.staff_name }}</td>
+                <td>{{ form.number_of_victims }}</td>
+                <td>{{ form.number_of_traffickers }}</td>
+                <td>{{ form.date_time_of_interception | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
+                <td ng-if="irfListCtrl.session.user.permission_irf_view == true"><a class="btn btn-sm btn-primary" href="{{form.view_url}}">View</a></td>
+                <td ng-if="irfListCtrl.session.user.permission_irf_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_irf_button" href="{{form.edit_url}}">Edit</a></td>
+                <td ng-if="irfListCtrl.session.user.permission_irf_delete == true"><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteIrf({{form.id}})">
+                    {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <button ng-show="irfListCtrl.showingIrfs.length < irfListCtrl.listOfIrfs.length" ng-click="irfListCtrl.showMoreirfs()" class="btn btn-primary">
+            Load more results
+        </button>
+    </div>
+
+</div>

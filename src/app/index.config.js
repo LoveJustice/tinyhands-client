@@ -10,8 +10,6 @@ function config ($httpProvider, $logProvider, toastr) {
   toastr.options.progressBar = true;
   toastr.options.showMethod = "slideDown";
   toastr.options.hideMethod = "slideUp";
-
-  $httpProvider.interceptors.push('ErrorHandler');
 }
 
 export default config;

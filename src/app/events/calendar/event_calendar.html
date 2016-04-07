@@ -1,38 +1,6 @@
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}full-calendar/fullcalendar.css">
+<link type="text/css" href="{{ STATIC_URL }}full-calendar/fullcalendar.print.css" media='print' >
 
-{% extends 'events/event_base.html' %}
-
-{% block includeCSS %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}full-calendar/fullcalendar.css">
-    <link type="text/css" href="{{ STATIC_URL }}full-calendar/fullcalendar.print.css" media='print' >
-{% endblock includeCSS %}
-
-{% block displayCSS %}
-
-	body {
-		margin: 40px 10px;
-		padding: 0;
-		<!--font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;-->
-		font-size: 14px;
-	}
-
-	#calendar {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-
-    .optional {
-        display: none;
-    }
-
-    .fc-content {
-        cursor: pointer
-    }
-
-{% endblock displayCSS %}
-
-
-{% block content %}
-{% verbatim %}
 <div  ng-controller="CalendarCtrl as calendarCtrl" ng-cloak>
     <div class="row" style="margin-top:30px; margin-bottom:15px">
         <div class="pull-right" style="margin-right:135px">
@@ -91,5 +59,3 @@
         </div>
     </div>
 </script>
-{% endverbatim %}
-{% endblock content %}

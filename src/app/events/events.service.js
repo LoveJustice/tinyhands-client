@@ -1,40 +1,34 @@
-'use strict';
+import BaseService from '../base.service'
 
-angular.module('EventsMod')
-  .factory('Events', function ($resource) {
-    return $resource('/api/event/:id/', {} ,
-      {
-        all: {
-          url: '/api/event/all/',
-          isArray: true,
-          method: 'GET'
-        },
-        get: {
-          method: 'GET',
-          params: {
-            id: '@id'
-          }
-        },
-        create: {
-          method: 'POST'
-        },
-        update: {
-          method: 'PUT',
-          params: {
-            id: '@id'
-          }
-        },
-        destroy: {
-          method: 'DELETE',
-          params: {
-            id: '@id'
-          }
-        },
-        dashboard: {
-          url: '/api/event/feed/dashboard',
-          method: 'GET',
-          isArray: true
-        }
-      }
-    );
-  });
+export default class EventsService extends BaseService {
+    constructor($http) {
+        'ngInject';
+        super();
+
+        this.$http = $http;
+    }
+
+    getAll() {
+        return this.get(`api/event/all/`);
+    }
+
+    getEvent(id) {
+        return this.get(`api/event/${id}/`);
+    }
+
+    createEvent(id) {
+        return this.post(`api/event/${id}/`);
+    }
+
+    updateEvent(id) {
+        return this.put(`api/event/${id}/`);
+    }
+
+    destroyEvent(id) {
+        return this.delete(`api/event/${id}/`);
+    }
+
+    getDashboard() {
+        return this.get(`api/event/feed/dashboard/`);
+    }
+}

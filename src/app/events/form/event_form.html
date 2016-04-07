@@ -1,18 +1,9 @@
-{% extends 'events/event_base.html' %}
-
-{% block foot %}
 {% if event.id %}
 <script>
   window.event_id = {{event.id}}
 
 </script>
-{% endif %}
-{% endblock %}
 
-{% block content %}
-
-
-{% verbatim %}
 <div ng-controller="EditEventCtrl as editCtrl" ng-cloak>
     <div class="row">
         <div class="col-md-10">
@@ -180,7 +171,3 @@
         </div>
     </div>
 </div>
-{% endverbatim %}
-
-
-{% endblock %}

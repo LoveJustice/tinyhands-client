@@ -1,40 +1,34 @@
-'use strict';
+import BaseService from '../base.service'
 
-angular.module('tinyhandsFrontend')
-  .factory('Events', function ($resource) {
-    return $resource('/api/event/:id/', {} ,
-      {
-        all: {
-          url: '/api/event/all/',
-          isArray: true,
-          method: 'GET'
-        },
-        get: {
-          method: 'GET',
-          params: {
-            id: '@id'
-          }
-        },
-        create: {
-          method: 'POST'
-        },
-        update: {
-          method: 'PUT',
-          params: {
-            id: '@id'
-          }
-        },
-        destroy: {
-          method: 'DELETE',
-          params: {
-            id: '@id'
-          }
-        },
-        dashboard: {
-          url: '/api/event/feed/dashboard',
-          method: 'GET',
-          isArray: true
-        }
-      }
-    );
-  });
+export default class EventsService extends BaseService {
+    constructor() {
+        'ngInject';
+        super();
+
+        this. = ;
+    }
+
+    getAll() {
+        return this.get();
+    }
+
+    getEvent(id) {
+        return this.get();
+    }
+
+    createEvent(id) {
+        return this.post();
+    }
+
+    updateEvent(id) {
+        return this.put();
+    }
+
+    destroyEvent(id) {
+        return this.delete();
+    }
+
+    getDashboard() {
+        return this.get();
+    }
+}

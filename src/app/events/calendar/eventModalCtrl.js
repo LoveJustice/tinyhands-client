@@ -1,15 +1,11 @@
-angular
-    .module('EventsMod')
-    .controller('EventModalCtrl', function($scope, $modalInstance, event) {
-        var vm = this;
+export default class EventModalCtrl {
+    constructor($scope, $modalInstance, event) {
+        'ngInject';
 
-        vm.close = function() {
-            $modalInstance.dismiss("cancel");
-        }
+        this.event = event;
+    }
 
-        vm.activate = function() {
-            vm.event = event;
-        }
-
-        vm.activate();
-    });
+    close () {
+        $modalInstance.dismiss('cancel');
+    }
+}

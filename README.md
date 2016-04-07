@@ -15,17 +15,17 @@
 --------------------
 ### Gulp Usage
 #### Running
-`gulp serve` 	  -> To run the project and watch file changes run  
+`gulp serve` 	  -> To run the project and watch file changes run
 `gulp serve:dist` -> To build the project, run the project and watch file changes run
 
 #### Unit Testing
-`gulp test`			  -> To run Karma tests  
-`gulp test:auto`	  -> To run Karma tests and watch changes  
+`gulp test`			  -> To run Karma tests
+`gulp test:auto`	  -> To run Karma tests and watch changes
 
 #### E2E Testing
-`gulp protractor`		-> To run Protractor e2e tests  
-`gulp protractor:src`	-> To run Protractor e2e tests from src  
-`gulp protractor:dist`	-> To run Protractor e2e tests from compiled build  
+`gulp protractor`		-> To run Protractor e2e tests
+`gulp protractor:src`	-> To run Protractor e2e tests from src
+`gulp protractor:dist`	-> To run Protractor e2e tests from compiled build
 
 #### Misc
 `gulp build`	-> To Build project  
@@ -41,6 +41,7 @@
 **UI**  
 [Angular UI Bootstrap](http://angular-ui.github.io/bootstrap/) UI Framework  
 [Bootstrap](http://getbootstrap.com/) UI Framework  
+[ngInfiniteScroll](https://sroze.github.io/ngInfiniteScroll/) Third-party tool for running functions when scrolling  
 [Less CSS](http://lesscss.org/) CSS Language  
 **Testing**  
 [Jasmine](http://jasmine.github.io/) JS Unit testing  

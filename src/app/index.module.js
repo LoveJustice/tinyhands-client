@@ -14,8 +14,9 @@ import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
 import IrfListService from './irf/list/irfList.service';
-import SessionService from './utils/session.service';
+import SessionService from './session/session.service';
 import TallyService from './components/tally/tally.service';
+import UtilService from './util/util.service';
 import VifService from './vif/form/vif.service';
 import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
@@ -36,17 +37,8 @@ import Address1EditModalController from './addresses/address1EditModal.controlle
 import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/address2EditModal.controller';
 import BorderStationController from './border-station/borderStation.controller';
-import BudgetAdministrationFormController from './budget/form/components/administration/administrationForm.controller';
-import BudgetAwarenessFormController from './budget/form/components/awareness/awarenessForm.controller';
-import BudgetCommunicationFormController from './budget/form/components/communication/communicationForm.controller';
 import BudgetController from './budget/form/budget.controller';
-import BudgetFoodAndGasFormController from './budget/form/components/foodAndGas/foodAndGasForm.controller';
 import BudgetListController from './budget/list/budgetList.controller';
-import BudgetMiscellaneousFormController from './budget/form/components/miscellaneous/miscellaneousForm.controller';
-import BudgetSalariesController from './budget/form/components/salaries/salariesForm.controller';
-import BudgetShelterFormController from './budget/form/components/shelter/shelterForm.controller';
-import BudgetSuppliesFormController from './budget/form/components/supplies/suppliesForm.controller';
-import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
@@ -56,7 +48,7 @@ import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
+angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -67,7 +59,15 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
 
   .run(runBlock)
 
-  // REGION: Services
+// REGION: Filter
+  .filter('capitalize', function () {
+    return function (input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    };
+  })
+// ENDREGION: Filter
+
+// REGION: Services
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
@@ -75,42 +75,34 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .service('BudgetService', BudgetService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('utils', UtilService)
   .service('VifListService', VifListService)
   .service('VifService', VifService)
-  // ENDREGION: Services
+// ENDREGION: Services
 
-  // REGION: Directives
-  .directive('borderStationDetail', () => new DetailDirective())
-  .directive('borderStationLocation', () => new LocationDirective())
-  .directive('borderStationPerson', () => new PersonDirective())
-  .directive('googlemap', () => new MapDirective())
-  .directive('navbar', () => new NavbarDirective())
-  .directive('operator', () => new MathOperator())
-  .directive('tally', () => new TallyDirective())
-  // ENDREGION: Directives
+// REGION: Directives
+  .directive('borderStationDetail', DetailDirective)
+  .directive('borderStationLocation', LocationDirective)
+  .directive('borderStationPerson', PersonDirective)
+  .directive('googlemap', MapDirective)
+  .directive('navbar', NavbarDirective)
+  .directive('operator', MathOperator)
+  .directive('tally', TallyDirective)
+// ENDREGION: Directives
 
-  // REGION: Controllers
+// REGION: Controllers
   .controller('Address1Controller', Address1Controller)
   .controller('Address1EditModalController', Address1EditModalController)
   .controller('Address2Controller', Address2Controller)
   .controller('Address2EditModalController', Address2EditModalController)
   .controller('BorderStationController', BorderStationController)
-  .controller('BudgetAdministrationFormController', BudgetAdministrationFormController)
-  .controller('BudgetAwarenessFormController', BudgetAwarenessFormController)
-  .controller('BudgetCommunicationFormController', BudgetCommunicationFormController)
   .controller('BudgetController', BudgetController)
-  .controller('BudgetFoodAndGasFormController', BudgetFoodAndGasFormController)
   .controller('BudgetListController', BudgetListController)
-  .controller('BudgetMiscellaneousFormController', BudgetMiscellaneousFormController)
-  .controller('BudgetSalariesController', BudgetSalariesController)
-  .controller('BudgetShelterFormController', BudgetShelterFormController)
-  .controller('BudgetSuppliesFormController', BudgetSuppliesFormController)
-  .controller('BudgetTravelFormController', BudgetTravelFormController)
   .controller('DashboardController', DashboardController)
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
   .controller('VifController', VifController)
   .controller('VifListController', VifListController)
-  // ENDREGION: Controllers
+// ENDREGION: Controllers
 ;

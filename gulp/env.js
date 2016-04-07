@@ -7,6 +7,6 @@ var replace = require('gulp-replace');
 
 gulp.task('templates', function(){
   gulp.src(['src/app/base.service.template.js'])
-    .pipe(replace('<-- BASE_URL -->', 'http://aylward.cse.taylor.edu:3389/'))
+    .pipe(replace('<-- BASE_URL -->', 'http://muller.cse.taylor.edu:80/'))
     .pipe(gulp.dest('src/app/'));
 });

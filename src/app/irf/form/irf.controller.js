@@ -4,6 +4,7 @@ export default class IrfController {
 
     this.service = IrfService;
 
+    this.flags = 0;
     this.form = {};
     this.irfId = $stateParams.id;
     this.sections = [];

@@ -74,9 +74,10 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       }
     })
     .state('vif', {
+      abstract: true,
       url: '/vif/create',
       templateUrl: 'app/vif/form/vif.html',
-      controller: 'VifController',
+      controller: 'VIFController',
       controllerAs: 'vifCtrl',
       data: {
         requireLogin: true

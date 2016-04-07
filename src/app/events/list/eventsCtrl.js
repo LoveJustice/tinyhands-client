@@ -1,11 +1,8 @@
-angular
-  .module('EventsMod')
-  .controller('EventsCtrl', ['Events', '$modal', function(Events, $modal) {
-    var vm = this;
-    vm.events = [];
-
-    vm.activate = function () {
-      Events.all().$promise.then(function(events) {
+export default class EventsController {
+  constructor(Events, $modal) {
+    "ngInject"
+    this.events = [];
+    Events.all().$promise.then(function(events) {
       for (var i = 0; i < events.length; i++) {
           if (events[i].repetition == "D") {
               events[i].get_repetition_display = "Daily";
@@ -15,11 +12,11 @@ angular
               events[i].get_repetition_display = "Monthly";
           }
       }
-      vm.events = events;
-  })
-    }
+      this.events = events;
+    })
+  }
 
-    vm.openModal = function(event) {
+    openModal(event) {
       var eventTitle = event.title;
       var deleteModal = $modal.open({
         templateUrl: 'modal.html',
@@ -33,10 +30,8 @@ angular
       });
       deleteModal.result.then( function() {
         Events.destroy({id: event.id}).$promise.then( function() {
-          vm.events = Events.all()
+          this.events = Events.all()
         })
       })
+    }
   }
-
-    vm.activate();
-  }]);

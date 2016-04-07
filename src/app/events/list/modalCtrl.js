@@ -1,19 +1,13 @@
-angular
-    .module('EventsMod')
-    .controller('ModalCtrl', function($scope, $modalInstance, eventTitle) {
-        var vm = this;
+export default class ModalController {
+    constructor($scope, $modalInstance, eventTitle) {
+        $scope.eventTitle = eventTitle;
+    }
 
-        vm.activate = function () {
-          $scope.eventTitle = eventTitle;
-        }
+    this.delete() {
+        $modalInstance.close(true);
+    };
 
-        vm.delete = function() {
-          $modalInstance.close(true);
-        };
-
-        vm.cancel = function () {
-          $modalInstance.dismiss("cancel");
-        };
-
-        vm.activate();
-    });
+    this.cancel() {
+        $modalInstance.dismiss("cancel");
+    };
+}

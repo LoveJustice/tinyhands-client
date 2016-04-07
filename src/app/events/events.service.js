@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('EventsMod')
+angular.module('tinyhandsFrontend')
   .factory('Events', function ($resource) {
     return $resource('/api/event/:id/', {} ,
       {

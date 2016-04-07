@@ -13,6 +13,7 @@ import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
+import EventService from './events/events.service';
 import IrfListService from './irf/list/irfList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
@@ -47,6 +48,12 @@ import BudgetSalariesController from './budget/form/components/salaries/salaries
 import BudgetShelterFormController from './budget/form/components/shelter/shelterForm.controller';
 import BudgetSuppliesFormController from './budget/form/components/supplies/suppliesForm.controller';
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
+import EventsModalListController from './events/list/modalCtrl';
+import EventsListController from './events/list/eventsCtrl';
+import EventsEditFormController from './events/form/editEventCtrl';
+import EventsCalendarController from './events/calendar/eventCalendarCtrl';
+import EventsModalCalendarController from './events/calendar/eventModalCtrl';
+
 import DashboardController from './dashboard/dashboard.controller';
 import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
@@ -73,6 +80,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
+  .service('EventService', EventService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
   .service('VifListService', VifListService)
@@ -106,6 +114,11 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .controller('BudgetShelterFormController', BudgetShelterFormController)
   .controller('BudgetSuppliesFormController', BudgetSuppliesFormController)
   .controller('BudgetTravelFormController', BudgetTravelFormController)
+  .controller('EventsModalListController', EventsModalListController)
+  .controller('EventsListController', EventsListController)
+  .controller('EventsEditFormController', EventsEditFormController)
+  .controller('EventsCalendarController', EventsCalendarController)
+  .controller('EventsModalCalendarController', EventsModalCalendarController) 
   .controller('DashboardController', DashboardController)
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)

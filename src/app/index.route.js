@@ -55,6 +55,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
+    .state('events', {
+      url: '/events',
+      templateUrl: 'app/events/events.html',
+      controller: 'EventsController',
+      controllerAs: 'events',
+      data: {
+        requireLogin: true
+      }
+    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',

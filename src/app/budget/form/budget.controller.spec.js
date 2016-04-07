@@ -378,7 +378,11 @@ describe('BudgetController', () => {
     });
     
     describe(`function medicalTotal`,()=>{
-    
+        it(`madical_last_months_expense should be 2`,()=>{
+            vm.form.medical_last_months_expense = 2;
+            vm.medicalTotal();
+            expect(vm.form.medical_last_months_expense).toEqual(2);
+        });
     });
     
     describe(`function miscellaneousMaximum`,()=>{

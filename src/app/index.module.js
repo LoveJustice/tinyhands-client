@@ -3,6 +3,7 @@ import config from './index.config';
 
 import SharedModule from './shared/shared.module';
 import budgetModule from './budget/budget.module';
+import VIFModule from './vif/vif.module';
 
 import routerConfig from './index.route';
 
@@ -17,8 +18,6 @@ import BorderStationService from './border-station/borderStation.service';
 import IrfListService from './irf/list/irfList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
-import VifService from './vif/form/vif.service';
-import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -41,13 +40,11 @@ import DashboardController from './dashboard/dashboard.controller';
 import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
-import VifController from './vif/form/vif.controller';
-import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv', 'tinyhands.Shared', 'tinyhands.Budget'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv', 'tinyhands.Shared', 'tinyhands.Budget', 'tinyhands.VIF'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -63,8 +60,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('tallyService', TallyService)
-  .service('VifListService', VifListService)
-  .service('VifService', VifService)
   // ENDREGION: Services
 
   // REGION: Directives
@@ -87,7 +82,5 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
-  .controller('VifController', VifController)
-  .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

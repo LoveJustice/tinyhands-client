@@ -235,24 +235,24 @@ describe('BudgetController', () => {
             vm.form.communication_manager_amount = 1;
         });
         
-        it(`if communication_chair is true and communication_manager is true return 2`,()=>{
+        it(`if communication_chair is true and communication_manager is true result should be 2`,()=>{
             let result = vm.communicationManagerTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if communication_chair is false and communication_manager is true return 2`,()=>{
+        it(`if communication_chair is false and communication_manager is true result should be 1`,()=>{
             vm.form.communication_chair = false;
             let result = vm.communicationManagerTotal();
             expect(result).toEqual(1);
         });
         
-        it(`if communication_chair is true and communication_manager is false return 2`,()=>{
+        it(`if communication_chair is true and communication_manager is false result should be 1`,()=>{
             vm.form.communication_manager = false;
             let result = vm.communicationManagerTotal();
             expect(result).toEqual(1);
         });
         
-        it(`if communication_chair is false and communication_manager is false return 2`,()=>{
+        it(`if communication_chair is false and communication_manager is false result should be 0`,()=>{
             vm.form.communication_chair = false;
             vm.form.communication_manager = false;
             let result = vm.communicationManagerTotal();
@@ -266,24 +266,24 @@ describe('BudgetController', () => {
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 2;
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid return 4`,()=>{
+        it(`if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid result should be 4`,()=>{
             let result = vm.communicationNumberOfStaffTotal();
             expect(result).toEqual(4);
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid return 4`,()=>{
+        it(`if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid result should be 4`,()=>{
             vm.form.communication_number_of_staff_with_walkie_talkies = 0;
             let result = vm.communicationNumberOfStaffTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid return 4`,()=>{
+        it(`if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid result should be 4`,()=>{
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 0;
             let result = vm.communicationNumberOfStaffTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid return 4`,()=>{
+        it(`if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid result should be 4`,()=>{
             vm.form.communication_number_of_staff_with_walkie_talkies = 0;
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 0;
             let result = vm.communicationNumberOfStaffTotal();
@@ -296,10 +296,50 @@ describe('BudgetController', () => {
             vm.form.communication_each_staff = 2;
             vm.form.communication_each_staff_multiplier = 2;
         });
+        
+        it(`if communication_each_staff is valid and communication_each_staff_multiplier is valid `,()=>{
+            let result = vm.communicationEachStaffTotal();
+            expect(result).toEqual(4);
+        });
+        
+        it(`if communication_each_staff isn't valid and communication_each_staff_multiplier is valid `,()=>{
+            vm.form.communication_each_staff = 0;
+            let result = vm.communicationEachStaffTotal();
+            expect(result).toEqual(0);
+        });
+        
+        it(`if communication_each_staff is valid and communication_each_staff_multiplier isn't valid `,()=>{
+            vm.form.communication_each_staff_multiplier = 0;
+            let result = vm.communicationEachStaffTotal();
+            expect(result).toEqual(0);
+        });
+        
+        it(`if communication_each_staff isn't valid and communication_each_staff_multiplier isn't valid `,()=>{
+            vm.form.communication_each_staff = 0;
+            vm.form.communication_each_staff_multiplier = 0;
+            let result = vm.communicationEachStaffTotal();
+            expect(result).toEqual(0);
+        });
     });
     
     describe(`function communicationTotal`,()=>{
+        beforeEach(()=>{
+            vm.form.communication_chair = true;
+            vm.form.communication_manager = true;
+            vm.form.communication_chair_amount = 1;
+            vm.form.communication_manager_amount = 1;
+            vm.form.communication_number_of_staff_with_walkie_talkies = 2;
+            vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 2;
+            vm.form.communication_each_staff = 2;
+            vm.form.communication_each_staff_multiplier = 2;
+            vm.form.other.Communcation =  otherItems=[{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
+        });
         
+        it(`result should be 10`,()=>{
+            pending("stuff for getOtherItems doesn't work. Need help.")
+            let result = vm.communicationTotal();
+            expect(result).toEqual(14);
+        });
     });
     
     describe(`function foodGasInterceptedGirls`,()=>{

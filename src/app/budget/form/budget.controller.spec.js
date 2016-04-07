@@ -343,15 +343,38 @@ describe('BudgetController', () => {
     });
     
     describe(`function foodGasInterceptedGirls`,()=>{
-    
+        it(`result should be 8`,()=>{
+         vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = 2;
+         vm.form.food_and_gas_number_of_intercepted_girls = 2;
+         vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = 2;
+         let result = vm.foodGasInterceptedGirls();
+         expect(result).toEqual(8);
+        });
     });
     
     describe(`function foodGasLimboGirls`,()=>{
-    
+        it(`result should be 8`,()=>{
+         vm.form.food_and_gas_limbo_girls_multiplier = 2;
+         vm.form.food_and_gas_number_of_limbo_girls = 2;
+         vm.form.food_and_gas_number_of_days = 2; 
+         let result = vm.foodGasLimboGirls();
+         expect(result).toEqual(8);
+        });
     });
     
     describe(`function foodAndGasTotal`,()=>{
-    
+        beforeEach(()=>{
+         vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = 2;
+         vm.form.food_and_gas_number_of_intercepted_girls = 2;
+         vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = 2;
+         vm.form.food_and_gas_limbo_girls_multiplier = 2;
+         vm.form.food_and_gas_number_of_limbo_girls = 2;
+         vm.form.food_and_gas_number_of_days = 2; 
+        });
+        
+        it(``,()=>{
+         pending("Waiting on GetOtherCosts");
+        });
     });
     
     describe(`function medicalTotal`,()=>{

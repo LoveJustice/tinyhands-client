@@ -4,7 +4,7 @@ describe('PermissionsSetsService', () => {
     let service;
 
     let id = 234,
-        data = {id: 'dataId'};
+    data = {id: 'dataId'};
 
     beforeEach(inject(($http) => {
         service = new PermissionsSetsService($http);
@@ -15,7 +15,7 @@ describe('PermissionsSetsService', () => {
         it(`should get called with ${url}`, () => {
             spyOn(service, 'get');
             service.getPermissions();
-            expect(service.getPermissions).toHaveBeenCalledWith(url);
+            expect(service.get).toHaveBeenCalledWith(url);
         });
     });
 
@@ -24,34 +24,34 @@ describe('PermissionsSetsService', () => {
         it(`should get called with ${url}`, () => {
             spyOn(service, 'get');
             service.getPermission(id);
-            expect(service.getPermission).toHaveBeenCalledWith(url);
+            expect(service.get).toHaveBeenCalledWith(url);
         });
     });
 
     describe('function create', () => {
         let url = '/api/defaultPermissionsSet/';
-        it(`should get called with ${url} and ${data}, () => {
+        it(`should get called with ${url} and ${data}`, () => {
             spyOn(service, 'post');
             service.create(data);
-            expect(service.create).toHaveBeenCalledWith(url, data);
+            expect(service.post).toHaveBeenCalledWith(url, data);
         });
     });
 
     describe('function update', () => {
         let url = `/api/defaultPermissionsSet/${id}/`;
-        it(`should get called with ${url} and ${data}, () => {
+        it(`should get called with ${url} and ${data}`, () => {
             spyOn(service, 'put');
             service.update(id, data);
-            expect(service.update).toHaveBeenCalledWith(url, data);
+            expect(service.put).toHaveBeenCalledWith(url, data);
         });
     });
 
     describe('function destroy', () => {
         let url = `/api/defaultPermissionsSet/${id}/`;
-        it(`should get called with ${url}, () => {
+        it(`should get called with ${url}`, () => {
             spyOn(service, 'delete');
             service.destroy(id);
-            expect(service.destroy).toHaveBeenCalledWith(url);
+            expect(service.delete).toHaveBeenCalledWith(url);
         });
     });
 });

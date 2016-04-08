@@ -25,7 +25,7 @@ export default class IrfListController {
     }
 
     getSort() {
-        if (this.reverse == false) {
+        if (this.reverse === false) {
             return this.sort;
         } else {
             return '-' + this.sort;

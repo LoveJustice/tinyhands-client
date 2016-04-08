@@ -9,7 +9,7 @@ function borderStationRouteConfig ($stateProvider) {
           data: {
             requireLogin: true
           }
-        })
+        });
 }
 
 export default borderStationRouteConfig;

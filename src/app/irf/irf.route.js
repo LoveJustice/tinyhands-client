@@ -8,7 +8,7 @@ function IRFRoutes($stateProvider) {
       data: {
         requireLogin: true
       }
-    })
+    });
 }
 
 export default IRFRoutes;

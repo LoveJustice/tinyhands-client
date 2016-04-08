@@ -3,7 +3,7 @@ import config from './index.config';
 
 import SharedModule from './shared/shared.module';
 import budgetModule from './budget/budget.module';
-import borderStationModule from './border-station/borderStation.module'
+import borderStationModule from './border-station/borderStation.module';
 import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
 

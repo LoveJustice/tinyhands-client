@@ -45,15 +45,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: false
       }
-    })
-    .state('irfList', {
-      url: '/irf',
-      templateUrl: 'app/irf/list/irfList.html',
-      controller: 'IrfListController',
-      controllerAs: 'irfListCtrl',
-      data: {
-        requireLogin: true
-      }
     });
 
   $urlRouterProvider.otherwise('/');

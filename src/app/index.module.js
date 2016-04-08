@@ -4,6 +4,7 @@ import config from './index.config';
 import SharedModule from './shared/shared.module';
 import budgetModule from './budget/budget.module';
 import VIFModule from './vif/vif.module';
+import IRFModule from './irf/irf.module';
 
 import routerConfig from './index.route';
 
@@ -15,7 +16,6 @@ import runBlock from './index.run';
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
-import IrfListService from './irf/list/irfList.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 // ENDREGION: Services
@@ -37,14 +37,13 @@ import Address2Controller from './addresses/address2.controller';
 import Address2EditModalController from './addresses/address2EditModal.controller';
 import BorderStationController from './border-station/borderStation.controller';
 import DashboardController from './dashboard/dashboard.controller';
-import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
 // ENDREGION: Controllers
 
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv', 'tinyhands.Shared', 'tinyhands.Budget', 'tinyhands.VIF'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps', 'ngCsv', 'tinyhands.Shared', 'tinyhands.Budget', 'tinyhands.VIF', 'tinyhands.IRF'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
@@ -79,7 +78,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('Address2EditModalController', Address2EditModalController)
   .controller('BorderStationController', BorderStationController)
   .controller('DashboardController', DashboardController)
-  .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
   // ENDREGION: Controllers

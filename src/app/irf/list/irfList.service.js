@@ -1,16 +1,14 @@
-import BaseService from '../../base.service';
-
-export default class IrfListService extends BaseService {
-    constructor($http) {
+export default class IrfListService {
+    constructor(BaseService) {
         'ngInject';
-        super($http);
+        this.service = BaseService;
     }
 
     getIrfList() {
-        return this.get('api/irf/');
+        return this.service.get('api/irf/');
     }
 
     deleteIrf(id){
-        return this.delete('/api/irf/${id}/');
+        return this.service.delete('/api/irf/${id}/');
     }
 }

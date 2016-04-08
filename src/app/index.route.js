@@ -28,15 +28,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
-    .state('border-station', {
-      url: '/border-station/:id',
-      templateUrl: 'app/border-station/borderStation.html',
-      controller: 'BorderStationController',
-      controllerAs: 'bsCtrl',
-      data: {
-        requireLogin: true
-      }
-    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',

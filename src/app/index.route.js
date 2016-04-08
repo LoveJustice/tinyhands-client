@@ -1,15 +1,5 @@
-function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
+function routerConfig ($urlRouterProvider) {
   'ngInject';
-  $stateProvider
-    .state('login', {
-      url: '/login',
-      templateUrl: 'app/login/login.html',
-      controller: 'LoginController',
-      controllerAs: 'login',
-      data: {
-        requireLogin: false
-      }
-    });
 
   $urlRouterProvider.otherwise('/');
 }

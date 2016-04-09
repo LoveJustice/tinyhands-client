@@ -1,7 +1,8 @@
-import Session from '../utils/session.service';
 import BaseService from '../base.service';
+import SessionService from '../utils/session.service';
 
-export default angular.module('tinyhands.shared', [])
-  .service('BaseService', BaseService)
-  .service('Session', Session);
+export default angular.module('tinyhands.Shared', [])
+    .service('BaseService', BaseService)
+    .service('SessionService', SessionService)
+    .service('session', SessionService)
   

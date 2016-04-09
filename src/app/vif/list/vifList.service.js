@@ -1,7 +1,7 @@
-export default class VifListService{
+export default class VifListService {
     constructor(BaseService) {
         'ngInject';
-        this.service = baseService;
+        this.service = BaseService;
     }
 
     deleteVif(id) {

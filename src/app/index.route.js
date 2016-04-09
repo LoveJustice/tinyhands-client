@@ -37,24 +37,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
-    .state('budget', {
-      url: '/budget/:id',
-      templateUrl: 'app/budget/form/budget.html',
-      controller: 'BudgetController',
-      controllerAs: 'budgetCtrl',
-      data: {
-        requireLogin: true
-      }
-    })
-    .state('budgetList', {
-      url: '/budget',
-      templateUrl: 'app/budget/list/budgetList.html',
-      controller: 'BudgetListController',
-      controllerAs: 'budgetListCtrl',
-      data: {
-        requireLogin: true
-      }
-    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',
@@ -62,15 +44,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       controllerAs: 'login',
       data: {
         requireLogin: false
-      }
-    })
-    .state('irfList', {
-      url: '/irf',
-      templateUrl: 'app/irf/list/irfList.html',
-      controller: 'IrfListController',
-      controllerAs: 'irfListCtrl',
-      data: {
-        requireLogin: true
       }
     });
 

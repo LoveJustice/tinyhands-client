@@ -1,4 +1,4 @@
-function VIFRouteConfig($stateProvider) {
+function VIFRoutes($stateProvider) {
   'ngInject';
   $stateProvider
     .state('vifList', {
@@ -22,4 +22,4 @@ function VIFRouteConfig($stateProvider) {
     });
 }
 
-export default VIFRouteConfig;
+export default VIFRoutes;

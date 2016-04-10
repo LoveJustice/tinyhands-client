@@ -1,8 +1,14 @@
 <div class="container-fluid">
     <form>
-        <div class="form-group">
-            <h2>How did you make the interception?</h2>
-   
+        <div class="form-group text-left">
+            <h3>How did you make the interception?</h3>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="contact_noticed" name="contact_noticed">
+                    6.0 Contact
+                </label>
+            </div>
             <div class="checkbox">
                 <label>
                     <input type="checkbox" ng-model="which_contact_hotel_owner" name="which_contact_hotel_owner">
@@ -68,8 +74,8 @@
             </div>
          </div>
                     
-         <h3>Did you pay for this information?</h3>
-         <div class="form-group">
+         <div class="form-group text-left">
+            <h3>Did you pay for this information?</h3>
             <div class="checkbox-inline">
                 <label>
                     <input type="checkbox" ng-model="contact_paid" name="contact_paid" value="True">

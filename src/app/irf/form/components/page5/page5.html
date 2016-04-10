@@ -1,1 +1,94 @@
-5
+<div class="container-fluid">
+    <form>
+        <div class="form-group">
+            <h2>How did you make the interception?</h2>
+   
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_hotel_owner" name="which_contact_hotel_owner">
+                    6.1 Hotel Owner
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_rickshaw_driver" name="which_contact_rickshaw_driver">
+                    6.2 Rickshaw Driver
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_taxi_driver" name="which_contact_taxi_driver">
+                    6.3 Taxi Driver
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_bus_driver" name="which_contact_bus_driver">
+                    6.4 Bus Driver
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_church_member" name="which_contact_church_member">
+                    6.5 Church Member
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_other_ngo" name="which_contact_other_ngo">
+                    6.6 Other NGO
+                </label>
+            </div>
+            
+            <div class="checkbox">
+            <label>
+                    <input type="checkbox" ng-model="which_contact_police" name="which_contact_police">
+                    6.7 Police
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_subcommittee_member" name="which_contact_subcommittee_member">
+                    6.8 Subcommittee Member
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="which_contact_other" name="which_contact_other">
+                    6.9 Other
+                    <input type="text" ng-model="which_contact_other_value" name="which_contact_other_value" maxlength="255">
+                </label>
+            </div>
+         </div>
+                    
+         <h3>Did you pay for this information?</h3>
+         <div class="form-group">
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox" ng-model="contact_paid" name="contact_paid" value="True">
+                    Yes
+                </label>
+            </div>
+            
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox" ng-model="contact_paid" name="contact_paid" value="False">
+                    No
+                </label>
+            </div>
+            
+            <div class="checkbox-inline">
+                <label>How much?</label>
+                <input type="text" ng-model="contact_paid_how_much" name="contact_paid_how_much" maxlength="255">
+            </div>
+         </div>   
+        
+    </form>
+</div>

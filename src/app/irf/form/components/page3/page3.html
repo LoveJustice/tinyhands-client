@@ -1,68 +1,66 @@
-<form>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2>Where are you from?</h2>
-            <t>Ask her to describe in detail</t>
-        </div>
-        <div class="panel-body">
-            <table align="center">
-                <tr>
-                    <td align="left"><span class="red-flag"></span><input id="id_doesnt_know_villiage_details" name="doesnt_know_villiage_details" type="checkbox">Doesn't know details about village</td>
-                </tr>
-                <tr>
-                    <td align="left"><span class="red-flag"></span><input id="id_reluctant_villiage_info" name="reluctant_villiage_info" type="checkbox">Reluctant to give info about village</td>
-                </tr>
-            </table>
-        </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Where are you from?</h2>
+        <t>Ask her to describe in detail</t>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h2>Who is your family?</h2>
-            <t>Ask for family contact info</t>
-        </div>
-        <div class="panel-body">
-            <table align="center">
-                <tr>
-                    <td align="left"><span class="red-flag"></span><input id="id_reluctant_family_info" name="reluctant_family_info" type="checkbox">Reluctant to give family info</td>
-                </tr>
-                <tr>
-                    <td align="left"><span class="red-flag"></span><input id="id_refuses_family_info" name="refuses_family_info" type="checkbox">Will not give family info</td>
-                </tr>
-            </table>
-            <br>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2>Under 18 years old</h2>
-                </div>
-                <div class="panel-body">
-                    <table align="center">
-                        <tr>
-                            <td align="left"><span class="red-flag"></span><input id="id_under_18_cant_contact_family" name="under_18_cant_contact_family" type="checkbox">No family contact established</td>
-                        </tr>
-                        <tr>
-                            <td align="left"><span class="red-flag"></span><input id="id_under_18_family_doesnt_know" name="under_18_family_doesnt_know" type="checkbox">Family doesn't know she is going to India</td>
-                        </tr>
-                        <tr>
-                            <td align="left"><span class="red-flag"></span><input id="id_under_18_family_unwilling" name="under_18_family_unwilling" type="checkbox">Family unwilling to let her go</td>
-                        </tr>
-                    </table>
-                </div>
+    <div class="panel-body">
+        <table align="center">
+            <tr>
+                <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_doesnt_know_villiage_details')" id="id_doesnt_know_villiage_details" name="doesnt_know_villiage_details" type="checkbox">Doesn't know details about village</td>
+            </tr>
+            <tr>
+                <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_reluctant_villiage_info')" id="id_reluctant_villiage_info" name="reluctant_villiage_info" type="checkbox">Reluctant to give info about village</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h2>Who is your family?</h2>
+        <t>Ask for family contact info</t>
+    </div>
+    <div class="panel-body">
+        <table align="center">
+            <tr>
+                <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_reluctant_family_info')" id="id_reluctant_family_info" name="reluctant_family_info" type="checkbox">Reluctant to give family info</td>
+            </tr>
+            <tr>
+                <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_refuses_family_info')" id="id_refuses_family_info" name="refuses_family_info" type="checkbox">Will not give family info</td>
+            </tr>
+        </table>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>Under 18 years old</h2>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h2>18 years or older</h2>
-                </div>
-                <div class="panel-body">
-                    <table align="center">
-                        <tr>
-                            <td align="left"><span class="red-flag"></span><input id="id_over_18_family_doesnt_know" name="over_18_family_doesnt_know" type="checkbox">Family members do not know she is going to India</td>
-                        </tr>
-                        <tr>
-                            <td align="left"><span class="red-flag"></span><input id="id_over_18_family_unwilling" name="over_18_family_unwilling" type="checkbox">Family members unwilling to let her go</td>
-                        </tr>
-                    </table>
-                </div>
+            <div class="panel-body">
+                <table align="center">
+                    <tr>
+                        <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_under_18_cant_contact_family')" id="id_under_18_cant_contact_family" name="under_18_cant_contact_family" type="checkbox">No family contact established</td>
+                    </tr>
+                    <tr>
+                        <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_under_18_family_doesnt_know')" id="id_under_18_family_doesnt_know" name="under_18_family_doesnt_know" type="checkbox">Family doesn't know she is going to India</td>
+                    </tr>
+                    <tr>
+                        <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_under_18_family_unwilling')" id="id_under_18_family_unwilling" name="under_18_family_unwilling" type="checkbox">Family unwilling to let her go</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2>18 years or older</h2>
+            </div>
+            <div class="panel-body">
+                <table align="center">
+                    <tr>
+                        <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_over_18_family_doesnt_know')" id="id_over_18_family_doesnt_know" name="over_18_family_doesnt_know" type="checkbox">Family members do not know she is going to India</td>
+                    </tr>
+                    <tr>
+                        <td align="left"><span class="red-flag"></span><input ng-click="irfCtrl.AddorRemoveFlag('id_over_18_family_unwilling')" id="id_over_18_family_unwilling" name="over_18_family_unwilling" type="checkbox">Family members unwilling to let her go</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
-</form>
+</div>

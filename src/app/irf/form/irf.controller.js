@@ -38,4 +38,11 @@ export default class IrfController {
       this.selectedSectionIndex -= 1;
     }
   }
+
+  AddorRemoveFlag(id) {
+    if (document.getElementById(id).checked)
+      this.flags += 1;
+    else
+      this.flags -= 1;
+  }
 }

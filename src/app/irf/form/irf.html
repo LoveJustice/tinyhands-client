@@ -28,7 +28,7 @@
             <span>Previous</span>
           </a>
         </li>
-        <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectSection($index)"><a>{{$index}}</a></li>
+        <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectedSectionIndex = $index"><a>{{$index}}</a></li>
         <li ng-click="irfCtrl.nextSection()">
           <a>
             <span>Next</span>

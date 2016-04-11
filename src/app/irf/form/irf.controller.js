@@ -15,67 +15,44 @@ export default class IrfController {
     this.getIrf();
   }
 
-  addSections() {
-    this.sections.push('app/irf/form/components/metaData/metaData.html');
-    for (var pageNum = 1; pageNum <= 9; pageNum++) {
-      this.sections.push(`app/irf/form/components/page${pageNum}/page${pageNum}.html`);
-    }
-  }
-
-  getIrf() {
-    this.service.getIrf(this.irfId).then((response) => {
-      this.form = response.data;
-    });
-  }
-
-    loadedSection()
-    {
-        for (var flagID in this.selectedFlags)
-        {
-            var checkbox = document.getElementById(flagID);
-            console.log(checkbox);
-            if (checkbox !== null) {
-                checkbox.checked = true;
-                console.log(checkbox);
-            }
+    addSections() {
+        this.sections.push('app/irf/form/components/metaData/metaData.html');
+        for (var pageNum = 1; pageNum <= 9; pageNum++) {
+          this.sections.push(`app/irf/form/components/page${pageNum}/page${pageNum}.html`);
         }
     }
 
-  selectSection(index) {
-      this.selectedSectionIndex = index;
-      for (var flagID in this.selectedFlags)
-        {
-            var checkbox = document.getElementById(flagID);
-            console.log(checkbox);
-            if (checkbox !== null) {
-                checkbox.checked = true;
-            }
+    getIrf() {
+        this.service.getIrf(this.irfId).then((response) => {
+          this.form = response.data;
+        });
+    }
+
+    nextSection() {
+        if (this.selectedSectionIndex < (this.sections.length - 1)) {
+            this.selectedSectionIndex += 1;
         }
-        console.log(this.selectedFlags);
-  }
-
-  nextSection() {
-    if (this.selectedSectionIndex < (this.sections.length - 1)) {
-        this.selectSection(this.selectedSectionIndex + 1);
     }
-  }
 
-  previousSection() {
-    if (this.selectedSectionIndex > 0) {
-        this.selectedSectionIndex -= 1;
-        this.selectSection(this.selectedSectionIndex + 1);
+    previousSection() {
+        if (this.selectedSectionIndex > 0) {
+            this.selectedSectionIndex -= 1;
+        }
     }
-  }
 
-  AddorRemoveFlag(id) {
-      var indexofFlag = this.selectedFlags.indexOf(id);
-      if (indexofFlag !== -1) {
-          this.selectedFlags.splice(indexofFlag, 1);
-      }
-      else {
-          this.selectedFlags.push(id);
-      }
-      this.flags = this.selectedFlags.length;
-      console.log(this.selectedFlags);
-  }
+    AddorRemoveFlag(id) {
+        var indexofFlag = this.selectedFlags.indexOf(id);
+        if (indexofFlag !== -1) {
+            this.selectedFlags.splice(indexofFlag, 1);
+        }
+        else {
+            this.selectedFlags.push(id);
+        }
+        this.flags = this.selectedFlags.length;
+    }
+
+    FlagChecked(id) {
+        var indexofFlag = this.selectedFlags.indexOf(id);
+        return (indexofFlag > -1);
+    }
 }

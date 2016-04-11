@@ -28,6 +28,19 @@ export default class IrfController {
     });
   }
 
+    loadedSection()
+    {
+        for (var flagID in this.selectedFlags)
+        {
+            var checkbox = document.getElementById(flagID);
+            console.log(checkbox);
+            if (checkbox !== null) {
+                checkbox.checked = true;
+                console.log(checkbox);
+            }
+        }
+    }
+
   selectSection(index) {
       this.selectedSectionIndex = index;
       for (var flagID in this.selectedFlags)

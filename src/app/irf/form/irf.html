@@ -16,7 +16,7 @@
     <!--REGION: SECTION-->
     <div class="panel panel-default col-xs-offset-1 col-xs-10">
       <div class="panel-body" ng-repeat="section in irfCtrl.sections" ng-if="$index == irfCtrl.selectedSectionIndex">
-        <div ng-include="section"></div>
+        <div ng-include="section" onload="loaded = true"></div>
       </div>
     </div>
     <!--ENDREGION: SECTION-->
@@ -28,7 +28,7 @@
             <span>Previous</span>
           </a>
         </li>
-        <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectedSectionIndex = $index"><a>{{$index}}</a></li>
+        <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectSection($index)"><a>{{$index}}</a></li>
         <li ng-click="irfCtrl.nextSection()">
           <a>
             <span>Next</span>

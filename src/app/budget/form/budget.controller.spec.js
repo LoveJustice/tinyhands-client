@@ -9,7 +9,7 @@ describe(`function`,()=>{
 
 describe('BudgetController', () => {
     let vm;
-    let state,
+    let state = {go: () => {}},
         // stateParams = { borderStationId: 123, id: 1 },
         stateParams = { borderStationId: 123, id: 1 ,isViewing: "true"},
         budgetService,
@@ -595,69 +595,319 @@ describe('BudgetController', () => {
     });
     
     describe(`function deleteOtherItems`,()=>{
-    
+
     });
-    
+
     describe(`function getAllData`,()=>{
-    
+
     });
-    
+
     describe(`function getBorderStation`,()=>{
-    
+
     });
-    
+
     describe(`function getBudgetForm`,()=>{
-    
+
     });
-    
+
     describe(`function getOtherData`,()=>{
-    
+
+      let key = 'Supplies';
+      beforeEach(() => {
+        let response = {data: 'foo'};
+        vm.service.getOtherItems = () => {return {then: (f) => f(response)}};
+      });
+
+      it('should call service.getOtherItems several times', () => {
+        vm.budgetId = 123;
+        spyOn(vm.service, 'getOtherItems').and.callThrough();
+        vm.getOtherData();
+        expect(vm.service.getOtherItems).toHaveBeenCalledTimes(Object.keys(Constants.FormSections).length);
+      });
+
+      it('should set form.other.Supplies to "foo"', () => {
+        vm.budgetId = 123;
+        vm.form.other.Supplies = null;
+        vm.getOtherData();
+        expect(vm.form.other.Supplies).toEqual('foo');
+      });
+
+      it('should set form.other.Supplies to []', () => {
+        vm.budgetId = 0;
+        vm.getOtherData();
+        expect(vm.form.other.Supplies).toEqual('foo');
+      });
+
     });
-    
+
     describe(`function getPreviousData`,()=>{
-    
+
+      it('should call service.getPreviousData', () => {
+        spyOn(vm.service, 'getPreviousData').and.callThrough();
+        vm.getPreviousData();
+        expect(vm.service.getPreviousData).toHaveBeenCalled();
+      });
+
+      it('should set form.previousData to response.data', () => {
+        let response = {data: 123};
+        vm.service.getPreviousData = () => {return {then: (f) => { f(response) }}};
+        vm.getPreviousData();
+        expect(vm.form.previousData).toEqual(123);
+      });
+
     });
-    
+
+    describe('function getStaff', () => {
+
+      beforeEach(() => {
+        let response = {data: {results: 123}};
+        vm.service.getStaff = () => {return {then: (f) => f(response)}};
+      });
+
+      it('should set form.staff to 123', () => {
+        vm.form.staff = null;
+        vm.getStaff();
+        expect(vm.form.staff).toEqual(123);
+      });
+
+      it('should call getStaffSalaries', () => {
+        spyOn(vm, 'getStaffSalaries');
+        vm.getStaff();
+        expect(vm.getStaffSalaries).toHaveBeenCalled();
+      });
+
+    });
+
     describe(`function getStaffSalaries`,()=>{
-    
+
+      let response;
+      beforeEach(() => {
+        vm.budgetId = 123;
+        vm.form.staff = [
+          {salaryInfo: 1},
+          {salaryInfo: 2},
+          {salaryInfo: 3, id: 123},
+        ];
+        response = {data: [{staff_person: 123}, {staff_person: 321}]};
+        vm.service.getStaffSalaries = () => {return {then: (f) => { f(response) }}};
+      });
+
+      it('should call service.getStaffSalaries', () => {
+        spyOn(vm.service, 'getStaffSalaries').and.callThrough();
+        vm.getStaffSalaries();
+        expect(vm.service.getStaffSalaries).toHaveBeenCalledWith(vm.budgetId);
+      });
+
+      it('should set staff.salaryInfo to {salary: 0} if response.data not empty', () => {
+        vm.getStaffSalaries();
+        expect(vm.form.staff[2].salaryInfo).toEqual({staff_person: 123});
+      });
+
+      it('should set staff.salaryInfo to {salary: 0} if response.data empty', () => {
+        response.data = [];
+        vm.getStaffSalaries();
+        expect(vm.form.staff[0].salaryInfo).toEqual({salary: 0});
+      });
+
+      it('should call setTotals', () => {
+        spyOn(vm, 'setTotals');
+        vm.getStaffSalaries();
+        expect(vm.setTotals).toHaveBeenCalled();
+      });
+
     });
-    
+
     describe(`function updateOrCreateAll`,()=>{
-    
+
+      beforeEach(() => {
+        vm.form.staff = [];
+      });
+
+      it('should call updateOrCreateSalaries', () => {
+        spyOn(vm, 'updateOrCreateSalaries');
+        vm.updateOrCreateAll();
+        expect(vm.updateOrCreateSalaries).toHaveBeenCalled();
+      });
+
+      it('should call updateOrCreateOtherItems', () => {
+        spyOn(vm, 'updateOrCreateOtherItems');
+        vm.updateOrCreateAll();
+        expect(vm.updateOrCreateOtherItems).toHaveBeenCalled();
+      });
+
+      it('should call deleteOtherItems', () => {
+        spyOn(vm, 'deleteOtherItems');
+        vm.updateOrCreateAll();
+        expect(vm.deleteOtherItems).toHaveBeenCalled();
+      });
+
+      it('should call $state.go with "budgetList"', () => {
+        spyOn(vm.$state, 'go');
+        vm.updateOrCreateAll();
+        expect(vm.$state.go).toHaveBeenCalledWith('budgetList');
+      });
+
     });
-    
+
     describe(`function updateOrCreateForm`,()=>{
-    
+
+      describe('if isCreating ', () => {
+
+        let response;
+
+        beforeEach(() => {
+          vm.isCreating = true;
+          vm.service.createForm = () => {return {then: (f) => { f(response) }}};
+          vm.updateOrCreateAll = () => {};
+        });
+
+        it('should set budgetId to 123', () => {
+          response = {data: {id: 123}};
+          vm.updateOrCreateForm();
+          expect(vm.budgetId).toEqual(123);
+        });
+
+        it('should call updateOrCreateAll', () => {
+          spyOn(vm, 'updateOrCreateAll');
+          vm.updateOrCreateForm();
+          expect(vm.updateOrCreateAll).toHaveBeenCalled();
+        });
+
+        it('should call window.toastr.success', () => {
+          spyOn(window.toastr, 'success');
+          vm.updateOrCreateForm();
+          expect(window.toastr.success).toHaveBeenCalled();
+        });
+
+      });
+
+      describe('if not isCreating ', () => {
+
+        beforeEach(() => {
+          vm.isCreating = false;
+          vm.service.updateForm = () => {return {then: (f) => { f() }}};
+          vm.updateOrCreateAll = () => {};
+        });
+
+        it('should call updateOrCreateAll', () => {
+          spyOn(vm, 'updateOrCreateAll');
+          vm.updateOrCreateForm();
+          expect(vm.updateOrCreateAll).toHaveBeenCalled();
+        });
+
+        it('should call window.toastr.success', () => {
+          spyOn(window.toastr, 'success');
+          vm.updateOrCreateForm();
+          expect(window.toastr.success).toHaveBeenCalled();
+        });
+
+      });
+
     });
-    
+
     describe(`function updateOrCreateOtherItems`,()=>{
-    
+
+      beforeEach(() => {
+        vm.form.other = {
+          foo: [
+            {id: 1},
+            {id: 2},
+            {id: 3},
+          ],
+          Supplies: [ {}, {}, ], // see contants.js
+        };
+        spyOn(vm.service, 'updateOtherItem');
+        spyOn(vm.service, 'createOtherItem');
+        vm.updateOrCreateOtherItems();
+      });
+
+      it('should call service.updateOtherItem 3 times', () => {
+        expect(vm.service.updateOtherItem).toHaveBeenCalledTimes(3);
+      });
+
+      it('should call service.createOtherItem 2 times', () => {
+        expect(vm.service.createOtherItem).toHaveBeenCalledTimes(2);
+      });
+
+      it('should call updateOtherItem with budgetId and {id: 2}', () => {
+        expect(vm.service.updateOtherItem).toHaveBeenCalledWith(vm.budgetId, {id: 2});
+      });
+
+      it('should call createOtherItem with budgetId and item', () => {
+        let item = {
+          budget_item_parent: vm.budgetId,
+          form_section: Constants.FormSections['Supplies'],
+        };
+        expect(vm.service.createOtherItem).toHaveBeenCalledWith(vm.budgetId, item);
+      });
+
     });
-    
+
     describe(`function updateOrCreateSalaries`,()=>{
-    
+
+      beforeEach(() => {
+        vm.form.staff = [
+          {salaryInfo: {id: 1}},
+          {salaryInfo: {id: 2}},
+          {salaryInfo: {id: 3}},
+          {salaryInfo: {}, id: 1},
+          {salaryInfo: {}, id: 2},
+        ];
+        spyOn(vm.service, 'updateSalary');
+        spyOn(vm.service, 'createSalary');
+        vm.updateOrCreateSalaries();
+      });
+
+      it('should call service.updateSalary 3 times', () => {
+        expect(vm.service.updateSalary).toHaveBeenCalledTimes(3);
+      });
+
+      it('should call service.createSalary 2 times', () => {
+        expect(vm.service.createSalary).toHaveBeenCalledTimes(2);
+      });
+
+      it('should call service.updateSalary with budgetId and {id: 1}', () => {
+        expect(vm.service.updateSalary).toHaveBeenCalledWith(vm.budgetId, {id: 1});
+      });
+
+      it('should call service.updateSalary with budgetId and {id: 2}', () => {
+        expect(vm.service.updateSalary).toHaveBeenCalledWith(vm.budgetId, {id: 2});
+      });
+
+      it('should call service.updateSalary with budgetId and {id: 3}', () => {
+        expect(vm.service.updateSalary).toHaveBeenCalledWith(vm.budgetId, {id: 3});
+      });
+
+      it('should call service.createSalary with object', () => {
+        expect(vm.service.createSalary).toHaveBeenCalledWith({staff_person: 1, budget_calc_sheet: vm.budgetId});
+      });
+
+      it('should call service.createSalary with object', () => {
+        expect(vm.service.createSalary).toHaveBeenCalledWith({staff_person: 2, budget_calc_sheet: vm.budgetId});
+      });
+
     });
-    
+
     describe(`function clearValue`,()=>{
 
       it('should return false if type is boolean', () => {
         expect(vm.clearValue(true)).toBe(false);
       });
-    
+
       it('should return 0 if type is number', () => {
         expect(vm.clearValue(123)).toEqual(0);
       });
-    
+
       it('should return value if type is not boolean or number', () => {
         expect(vm.clearValue("test")).toEqual("test");
       });
-    
+
       it('should return value if type is not boolean or number', () => {
         expect(vm.clearValue({a: 'b'})).toEqual({a: 'b'});
       });
-    
+
     });
-    
+
     describe(`function clearValues`,()=>{
 
       beforeEach(() => {
@@ -692,7 +942,7 @@ describe('BudgetController', () => {
         vm.clearValues();
         expect(vm.setTotals).toHaveBeenCalled();
       });
-    
+
     });
 
 });

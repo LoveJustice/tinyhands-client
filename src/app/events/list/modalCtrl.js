@@ -1,7 +1,7 @@
 export default class ModalController {
-    constructor($scope, $modalInstance, eventTitle) {
+    constructor($scope, $modalInstance, $eventTitle) {
         $scope.eventTitle = eventTitle;
-    }
+    };
 
     this.delete() {
         $modalInstance.close(true);

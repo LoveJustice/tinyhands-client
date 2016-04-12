@@ -6,9 +6,9 @@
       </td>
       <td colspan="10">
         <h4>Where are you going, and for what?</h4>
-        <flag number="3.13">Doesn't know she's going to India</flag>
-        <flag number="3.14">Running away from home (18 years or older)</flag>
-        <flag number="3.15">Running away from home (under 18 years old)</flag>
+        <flag number="3.13" ng-model="irfCtrl.form.doesnt_know_going_to_india">Doesn't know she's going to India</flag>
+        <flag number="3.14" ng-model="irfCtrl.form.running_away_over_18">Running away from home (18 years or older)</flag>
+        <flag number="3.15" ng-model="irfCtrl.form.running_away_under_18">Running away from home (under 18 years old)</flag>
       </td>
     </tr>
     <tr>
@@ -16,25 +16,25 @@
         <vertical-word>A</vertical-word>
       </td>
       <td colspan="2">
-        <answer number="2.1">Job</answer>
-        <flag number="3.14">Going to Gulf for work through India</flag>
+        <answer number="2.1" ng-model="irfCtrl.form.where_going_job">Job</answer>
+        <flag number="3.16" ng-model="irfCtrl.form.going_to_gulf_for_work">Going to Gulf for work through India</flag>
       </td>
       <td>
-        <answer number="2.2">Visit/Family/Returning Home</answer>
+        <answer number="2.2" ng-model="irfCtrl.form.where_going_visit">Visit/Family/Returning Home</answer>
       </td>
       <td>
-        <answer number="2.3">Shopping</answer>
+        <answer number="2.3" ng-model="irfCtrl.form.where_going_shopping">Shopping</answer>
       </td>
       <td colspan="2">
-        <answer number="2.4">Study</answer>
+        <answer number="2.4" ng-model="irfCtrl.form.where_going_study">Study</answer>
       </td>
       <td colspan="3">
-        <answer number="2.5">Treatment</answer>
+        <answer number="2.5" ng-model="irfCtrl.form.where_going_treatment">Treatment</answer>
       </td>
     </tr>
     <tr>
       <td class="header bg-success">
-        <vertical-word>Act</vertical-word>
+        <vertical-word>ACT</vertical-word>
       </td>
       <td>
         <b>Check documents</b>
@@ -66,49 +66,54 @@
     </tr>
     <tr>
       <td class="header bg-danger">
-        <vertical-word>Red Flags</vertical-word>
+        <vertical-word>RED FLAGS</vertical-word>
       </td>
       <td>
-        <flag number="3.17">No address in India</flag>
-        <flag number="3.18">No company phone number</flag>
-        <flag number="3.19">No Appointment Letter</flag>
-        <flag number="3.20">Has a valid gulf country visa in passport</flag>
-        <flag number="3.21">Passport is with a broker</flag>
-        <flag number="3.22">Job is too good to be true</flag>
+        <flag number="3.17" ng-model="irfCtrl.form.no_address_in_india">No address in India</flag>
+        <flag number="3.18" ng-model="irfCtrl.form.no_company_phone">No company phone number</flag>
+        <flag number="3.19" ng-model="irfCtrl.form.no_appointment_letter">No Appointment Letter</flag>
+        <flag number="'3.20'" ng-model="irfCtrl.form.valid_gulf_country_visa">Has a valid gulf country visa in passport</flag>
+        <flag number="3.21" ng-model="irfCtrl.form.passport_with_broker">Passport is with a broker</flag>
+        <flag number="3.22" ng-model="irfCtrl.form.job_too_good_to_be_true">Job is too good to be true</flag>
       </td>
       <td>
-        <flag number="3.23">Not a real job</flag>
-        <flag number="3.24">Could not confirm job</flag>
         <green-light>Job Confirmed</green-light>
         <green-light>Going back to same job she was working previously</green-light>
+        <br>
+        <flag number="3.23" ng-model="irfCtrl.form.not_real_job">Not a real job</flag>
+        <flag number="3.24" ng-model="irfCtrl.form.couldnt_confirm_job">Could not confirm job</flag>
       </td>
       <td>
-        <flag number="3.25">No bags though claim to be going for a long time</flag>
+        <flag number="3.25" ng-model="irfCtrl.form.no_bags_long_trip">No bags though claim to be going for a long time</flag>
       </td>
       <td>
-        <flag number="3.26">Shopping - Stuff for overnight stay in bags</flag>
+        <flag number="3.26" ng-model="irfCtrl.form.shopping_overnight_stuff_in_bags">Shopping - Stuff for overnight stay in bags</flag>
       </td>
       <td>
-        <flag number="3.27">No documentation of enrollment</flag>
-        <flag number="3.28">Does not Know School's Name and location</flag>
-        <flag number="3.29">No phone number for School</flag>
         <green-light>Valid ID card or enrollment documents</green-light>
+        <br>
+        <flag number="3.27" ng-model="irfCtrl.form.no_enrollment_docs">No documentation of enrollment</flag>
+        <flag number="3.28" ng-model="irfCtrl.form.doesnt_know_school_name">Does not Know School's Name and location</flag>
+        <flag number="3.29" ng-model="irfCtrl.form.no_school_phone">No phone number for School</flag>
       </td>
       <td>
-         <flag number="3.30">Not enrolled in school</flag>
-         <green-light>Enrollment Confirmed</green-light>
+        <green-light>Enrollment Confirmed</green-light>
+        <br>
+        <flag number="'3.30'" ng-model="irfCtrl.form.not_enrolled_in_school">Not enrolled in school</flag>
       </td>
       <td>
-        <flag number="3.31">Reluctant to give info about treatment</flag>
+        <flag number="3.31" ng-model="irfCtrl.form.reluctant_treatment_info">Reluctant to give info about treatment</flag>
       </td>
       <td>
-        <flag number="3.32">Does not have medical documents</flag>
-        <flag number="3.33">Fake Medical documents</flag>
         <green-light>Valid Documents (Referring Doctor's report, prescription, x-ray, etc.)</green-light>
+        <br>
+        <flag number="3.32" ng-model="irfCtrl.form.no_medical_documents">Does not have medical documents</flag>
+        <flag number="3.33" ng-model="irfCtrl.form.fake_medical_documents">Fake Medical documents</flag>
       </td>
       <td>
-        <flag number="3.34">No medical appointment</flag>
         <green-light>Doctor confirms appointment</green-light>
+        <br>
+        <flag number="3.34" ng-model="irfCtrl.form.no_medical_appointment">No medical appointment</flag>
       </td>
     </tr>
   </tbody>

@@ -18,8 +18,9 @@
         <!-- START: BORDERSTATIONS -->
         <li class="dropdown"
             ng-class="{open:stationsOpen}"
-            ng-show="navbarCtrl.session.user.permission_border_stations_view">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
+            ng-show="navbarCtrl.session.user.permission_border_stations_view"
+            ng-mouseleave="stationsOpen = false">
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
                ng-click="stationsOpen=!stationsOpen">Stations<b class="caret"></b></a>
             <ul id="border-station-dropdown" class="dropdown-menu">
                 <li><a ui-sref="border-station({id: null})"
@@ -34,12 +35,13 @@
         <!-- START: FORMS -->
         <li class="dropdown"
             ng-class="{open:formsOpen}"
-            ng-hide="!navbarCtrl.session.user.permission_irf_view && !navbarCtrl.session.user.permission_vif_view">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            ng-hide="!navbarCtrl.session.user.permission_irf_view && !navbarCtrl.session.user.permission_vif_view"
+            ng-mouseleave="formsOpen = false">
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown"
                ng-click="formsOpen=!formsOpen">Forms<span class="caret"></span></a>
             <ul class="dropdown-menu">
-                <li><a ng-show="navbarCtrl.session.user.permission_irf_view" href="#">IRFs</a></li>
-                <li><a ng-show="navbarCtrl.session.user.permission_vif_view" href="#">VIFs</a></li>
+                <li><a ng-show="navbarCtrl.session.user.permission_irf_view" ui-sref="irfList">IRFs</a></li>
+                <li><a ng-show="navbarCtrl.session.user.permission_vif_view" ui-sref="vifList">VIFs</a></li>
             </ul>
         </li>
         <!-- END: FORMS -->
@@ -58,7 +60,7 @@
         <!-- START: USER SETTINGS -->
         <li class="dropdown"
             ng-class="{open:menuOpen}">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            <a ui-sref="#" class="dropdown-toggle" data-toggle="dropdown"
                ng-click="menuOpen=!menuOpen">Hello {{ navbarCtrl.session.user.first_name + " " + navbarCtrl.session.user.last_name }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
             <li><a href="#"

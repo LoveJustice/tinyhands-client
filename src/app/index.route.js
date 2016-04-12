@@ -54,7 +54,25 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       data: {
         requireLogin: true
       }
-    })    
+    })
+    .state('irf', {
+      url: '/irf/:id',
+      templateUrl: 'app/irf/form/irf.html',
+      controller: 'IrfController',
+      controllerAs: 'irfCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('irfList', {
+      url: '/irf',
+      templateUrl: 'app/irf/list/irfList.html',
+      controller: 'IrfListController',
+      controllerAs: 'irfListCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',
@@ -65,6 +83,15 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       }
     })
     .state('vif', {
+      url: '/vif/create',
+      templateUrl: 'app/vif/form/vif.html',
+      controller: 'VifController',
+      controllerAs: 'vifCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('vifList', {
       url: '/vif',
       templateUrl: 'app/vif/list/vifList.html',
       controller: 'VifListController',
@@ -73,9 +100,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     });
-
-  // Remove hash from url
-  $locationProvider.html5Mode(true);
 
   $urlRouterProvider.otherwise('/');
 }

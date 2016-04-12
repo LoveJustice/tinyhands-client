@@ -27,7 +27,7 @@ class Address1Controller {
     getAddresses() {
         this.loading = true;
         this.address1Service.listAddresses(this.getQueryParams())
-            .success((data) => {
+            .then((data) => {
                 this.addresses = data.results;
                 this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
@@ -37,7 +37,7 @@ class Address1Controller {
     loadMoreAddresses() {
         this.loading = true;
         this.address1Service.loadMoreAddresses(this.getQueryParams(true))
-            .success((data) => {
+            .then((data) => {
                 this.addresses = this.addresses.concat(data.results);
                 this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
@@ -47,7 +47,7 @@ class Address1Controller {
     searchAddresses() {
         this.loading = true;
         this.address1Service.searchAddresses(this.getQueryParams())
-            .success((data) => {
+            .then((data) => {
                 this.addresses = data.results;
                 this.nextPageUrl = this.nextUrl(data.next);
                 this.loading = false;
@@ -87,7 +87,7 @@ class Address1Controller {
         });
         modalInstance.result.then((address) => {
             this.address1Service.saveAddress(address)
-                .success(() => {
+                .then(() => {
                     this.getAddresses();
                 });
         });
@@ -95,8 +95,10 @@ class Address1Controller {
 
     nextUrl(url){
         if(url) {
-            url = url.match(/page=\d+/)[0];
-            url = url.match(/\d+/)[0];
+            url = url.match(/page=\d+/);
+            if (url) {
+                url = url[0].match(/\d+/)[0];
+            }
         }
         return url;
     }

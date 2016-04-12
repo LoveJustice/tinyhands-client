@@ -2,7 +2,6 @@
 import config from './index.config';
 
 import routerConfig from './index.route';
-import errorRoutes from './error/error.route';
 
 import googleMapsConfig from './components/map/map.config';
 
@@ -14,18 +13,26 @@ import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
+import IrfListService from './irf/list/irfList.service';
+import IrfService from './irf/form/irf.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
+import VifService from './vif/form/vif.service';
+import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
+import AnswerDirective from './components/answer/answer.directive';
 import DetailDirective from './border-station/detail/detail.directive';
+import FlagDirective from './components/flag/flag.directive';
+import GreenLightDirective from './components/greenLight/greenLight.directive';
 import LocationDirective from './border-station/location/location.directive';
 import MapDirective from './components/map/map.directive';
 import MathOperator from './components/mathOperator/mathOperator.directive';
 import NavbarDirective from './components/navbar/navbar.directive';
 import PersonDirective from './border-station/person/person.directive';
 import TallyDirective from './components/tally/tally.directive';
+import VerticalWordDirective from './components/verticalWord/verticalWord.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
@@ -46,49 +53,52 @@ import BudgetShelterFormController from './budget/form/components/shelter/shelte
 import BudgetSuppliesFormController from './budget/form/components/supplies/suppliesForm.controller';
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
 import DashboardController from './dashboard/dashboard.controller';
+import IrfController from './irf/form/irf.controller';
+import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
-// import VifListController from './vif/list/vifList.controller';
+import VifController from './vif/form/vif.controller';
+import VifListController from './vif/list/vifList.controller';
 // ENDREGION: Controllers
 
-// REGION: Factories
-import ErrorFactory from './error/error.factory';
-// ENDREGION: Factories
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap', 'uiGmapgoogle-maps'])
   .constant('toastr', toastr)
   .constant('moment', moment)
   .config(config)
 
   .config(routerConfig)
-  .config(errorRoutes)
 
   .config(googleMapsConfig) // Pass google maps config
 
   .run(runBlock)
 
   // REGION: Services
+  .service('address1Service', Address1Service)
+  .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
-  .service('address1Service', Address1Service)
-  .service('address2Service', Address2Service)
+  .service('IrfListService', IrfListService)
+  .service('IrfService', IrfService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('VifListService', VifListService)
+  .service('VifService', VifService)
   // ENDREGION: Services
 
-  // REGION: Factories
-  .factory('ErrorHandler', ErrorFactory.errorFactory)
-  // ENDREGION: Factories
-
   // REGION: Directives
+  .directive('answer', () => new AnswerDirective())
   .directive('borderStationDetail', () => new DetailDirective())
   .directive('borderStationLocation', () => new LocationDirective())
   .directive('borderStationPerson', () => new PersonDirective())
+  .directive('flag', () => new FlagDirective())
   .directive('googlemap', () => new MapDirective())
+  .directive('greenLight', () => new GreenLightDirective())
   .directive('navbar', () => new NavbarDirective())
   .directive('operator', () => new MathOperator())
   .directive('tally', () => new TallyDirective())
+  .directive('verticalWord', () => new VerticalWordDirective())
   // ENDREGION: Directives
 
   // REGION: Controllers
@@ -109,8 +119,11 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   .controller('BudgetSuppliesFormController', BudgetSuppliesFormController)
   .controller('BudgetTravelFormController', BudgetTravelFormController)
   .controller('DashboardController', DashboardController)
+  .controller('IrfController', IrfController)
+  .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)
-  // .controller('VifListController', VifListController)
+  .controller('VifController', VifController)
+  .controller('VifListController', VifListController)
   // ENDREGION: Controllers
 ;

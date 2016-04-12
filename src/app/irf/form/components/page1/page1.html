@@ -1,60 +1,72 @@
-<div id="irf-page1" class="container col-md-12">
-    <table class="table-bordered">
-      <tr>
-        <td>Question</td>
-        <td>
-          <p>Who is in the group?</p>
-          <div class="red-flag">
-            <input type="checkbox"> 3.1: Girl appears drugged or drowsy
-          </div>
-        </td>
-      </tr>
-    </table>
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Question</h3>
-      </div>
-      <div class="panel-body">
-        <p>Who is in the group?</p>
-        <div class="red-flag text-left">
-          <input type="checkbox"> 3.1: Girl appears drugged or drowsy
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Answer</h3>
-      </div>
-      <table class="table">
-        <tr class="text-left">
-          <td>
-            <input type="checkbox"> 1.1: Alone</td>
-        </tr>
-        <tr class="text-left">
-          <td>
-            <input type="checkbox"> 1.2: Husband/Wife
-            <br>
-            <span class="red-flag"><input type="checkbox"> 3.2: Wife is under 18</span>
-          </td>
-        </tr>
-        <tr class="text-left">
-          <td>
-            <input type="checkbox"> 1.3: Own Brother, Sister/Relative</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Action</h3>
-      </div>
-      <table class="table">
-
-      </table>
-    </div>
-  </div>
-</div>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <td class="header bg-info">
+        <vertical-word>Q</vertical-word>
+      </td>
+      <td colspan="10">
+        <h4>Who is in the group?</h4>
+        <flag number="3.1">Girl appears drugged or drowsy
+        </flag>
+      </td>
+    </tr>
+    <tr>
+      <td class="header bg-warning">
+        <vertical-word>A</vertical-word>
+      </td>
+      <td colspan="2">
+        <answer number="1.1">Alone</answer>
+      </td>
+      <td colspan="2">
+        <answer number="1.2">Husband/Wife</answer>
+        <flag number="3.2">Wife is under 18</flag>
+      </td>
+      <td>
+        <answer number="1.3">Own Brother, sister/relative</answer>
+      </td>
+    </tr>
+    <tr>
+      <td class="header bg-success">
+        <vertical-word>Act</vertical-word>
+      </td>
+      <td>
+        <b>"Are you meeting someone in India?"</b>
+      </td>
+      <td>
+        <b>Was she traveling with someone earlier?</b>
+      </td>
+      <td>
+        <b>Ask when she was married</b>
+      </td>
+      <td>
+        <b>Ask when they met</b>
+      </td>
+      <td>
+        <b>Check citizenship cards</b>
+      </td>
+    </tr>
+    <tr>
+      <td class="header bg-danger">
+        <vertical-word>Red Flags</vertical-word>
+      </td>
+      <td>
+        <flag number="3.3">Is meeting a someone just across border</flag>
+        <flag number="3.4">Meeting someone she's seen in Nepal in the last month</flag>
+      </td>
+      <td>
+        <flag number="3.5">Was travelling with someone not with her</flag>
+      </td>
+      <td>
+        <flag number="3.6">Married in the past 2 weeks</flag>
+        <flag number="3.7">Married within the past 2-8 weeks</flag>
+      </td>
+      <td>
+        <flag number="3.8">Less than 2 weeks before eloping</flag>
+        <flag number="3.9">2-12 weeks before eloping</flag>
+      </td>
+      <td>
+        <flag number="3.10">Caste not the same as alleged relative</flag>
+      </td>
+    </tr>
+  </tbody>
+</table>

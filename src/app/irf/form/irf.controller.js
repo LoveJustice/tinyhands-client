@@ -1,10 +1,10 @@
 export default class IrfController {
-  constructor($stateParams, IrfService) {
+  constructor($rootScope, $stateParams, IrfService) {
     'ngInject';
 
+    this.root = $rootScope;
     this.service = IrfService;
 
-    this.flags = 0;
     this.form = {};
     this.irfId = $stateParams.id;
     this.sections = [];
@@ -19,6 +19,17 @@ export default class IrfController {
     for (var pageNum = 1; pageNum <= 9; pageNum++) {
       this.sections.push(`app/irf/form/components/page${pageNum}/page${pageNum}.html`);
     }
+  }
+
+  getFlagText() {
+    if (this.root.flags) {
+      if (this.root.flags < 50) {
+        return this.root.flags;
+      } else {
+        return '50 or More Flags';
+      }
+    }
+    return '';
   }
 
   getIrf() {

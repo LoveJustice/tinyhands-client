@@ -2,12 +2,13 @@ import IrfController from './irf.controller';
 import IrfService from './irf.service';
 
 describe('IrfController', () => {
-  let service, stateParams, vm;
+  let service, stateParams, vm, rootScope;
 
-  beforeEach(inject(($http) => {
+  beforeEach(inject(($http, $rootScope) => {
     stateParams = { id: 1 };
+    rootScope = $rootScope;
     service = new IrfService($http);
-    vm = new IrfController(stateParams, service);
+    vm = new IrfController(rootScope, stateParams, service);
   }));
 
 
@@ -24,7 +25,7 @@ describe('IrfController', () => {
       vm.sections = [1, 2, 3, 4, 5, 6];
       spyOn(vm, 'addSections');
 
-      vm.constructor(stateParams, service);
+      vm.constructor(rootScope, stateParams, service);
 
       expect(vm.sections).toEqual([]);
     });
@@ -36,7 +37,7 @@ describe('IrfController', () => {
     it('should call addSections', () => {
       spyOn(vm, 'addSections');
 
-      vm.constructor(stateParams, service);
+      vm.constructor(rootScope, stateParams, service);
 
       expect(vm.addSections).toHaveBeenCalled();
     });

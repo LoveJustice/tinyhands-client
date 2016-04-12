@@ -7,8 +7,10 @@ export default class IrfController {
 
     this.form = {};
     this.irfId = $stateParams.id;
+    this.numPersonBoxes = 1;
     this.sections = [];
     this.selectedSectionIndex = 0;
+    this.selectedFlags = [];
 
     this.addSections();
     this.getIrf();
@@ -21,6 +23,12 @@ export default class IrfController {
     }
   }
 
+  getIrf() {
+    this.service.getIrf(this.irfId).then((response) => {
+      this.form = response.data;
+    });
+  }
+
   getFlagText() {
     if (this.root.flags) {
       if (this.root.flags < 50) {
@@ -30,12 +38,6 @@ export default class IrfController {
       }
     }
     return '';
-  }
-
-  getIrf() {
-    this.service.getIrf(this.irfId).then((response) => {
-      this.form = response.data;
-    });
   }
 
   nextSection() {

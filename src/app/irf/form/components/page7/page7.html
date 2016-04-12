@@ -1,12 +1,16 @@
-<div id="irf-page7">
+<div ng-app="irf.controller.js as irfCtrl" id="irf-page7">
     <div class="row header">
         <h1>Person Cards</h1>
     </div>
     <div class="row">
         <div ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" class="col-md-4">
-            <div class="panel panel-default">
+            <div ng-if="i <= irfCtrl.numPersonBoxes" class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Person Box {{ i }}</h3>
+                    <h3 class="panel-title">
+                        <button ng-if="i != 1" ng-click="irfCtrl.numPersonBoxes = irfCtrl.numPersonBoxes - 1" type="button" class="btn btn-danger btn-xs pull-left">
+                            <strong>-</strong>
+                        </button>
+                    Person Box {{ i }}</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -84,6 +88,7 @@
         </div>
     </div>
     <div class="row pull-right">
+        <button ng-click="irfCtrl.numPersonBoxes = irfCtrl.numPersonBoxes + 1" type="button" class="btn btn-success btn-lg">Add Person Box</button>
         <button type="button" class="btn btn-primary btn-lg">Save</button>
     </div>
 </div>

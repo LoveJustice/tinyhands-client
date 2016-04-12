@@ -16,7 +16,7 @@ export default class VIFController {
             'vif.people', 
             'vif.locations'
         ];
-        this.sectionIndex = 0;
+        this.sectionIndex = $state.current.data.index;
 	}
     
     goToSection(index) {

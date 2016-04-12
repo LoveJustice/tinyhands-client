@@ -2,6 +2,11 @@ import Constants from './constants.js';
 import BudgetService from './budget.service';
 import BudgetController from './budget.controller';
 
+describe(`function`,()=>{
+
+});
+
+
 describe('BudgetController', () => {
     let vm;
     let state,
@@ -386,31 +391,187 @@ describe('BudgetController', () => {
     });
     
     describe(`function miscellaneousMaximum`,()=>{
-    
+        beforeEach(()=>{
+        vm.form.miscellaneous_number_of_intercepts_last_month = 2;
+        vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 2;
+        });
+        
+        it(`if miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 2 result should be 4`,()=>{
+            let result = vm.miscellaneousMaximum();
+            expect(result).toEqual(4); 
+        });
+        
+        it(`if miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 2 result should be 4`,()=>{
+            vm.form.miscellaneous_number_of_intercepts_last_month = 0;
+            let result = vm.miscellaneousMaximum();
+            expect(result).toEqual(0);
+        });
+        
+        it(`if miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 0 result should be 4`,()=>{
+            vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
+            let result = vm.miscellaneousMaximum();
+            expect(result).toEqual(0);
+        });
+        
+        it(`if miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 0 result should be 4`,()=>{
+         vm.form.miscellaneous_number_of_intercepts_last_month = 0;
+         vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
+         let result = vm.miscellaneousMaximum();
+         expect(result).toEqual(0);
+        });
     });
     
     describe(`function miscellaneousTotal`,()=>{
-    
+        beforeEach(()=>{
+        vm.form.miscellaneous_number_of_intercepts_last_month = 2;
+        vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 2;
+        vm.form.other.Miscellaneous = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
+        });
+        
+        it(`result should be 9`,()=>{
+            let result = vm.miscellaneousTotal();
+            expect(result).toEqual(9);
+        });
     });
     
     describe(`function salariesTotal`,()=>{
+        beforeEach(()=>{
+            vm.form.staff = [{salaryInfo: {salary: 1}},{salaryInfo: {salary: 1}}];
+            vm.form.other.Salaries = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];      
+        });
+        
+        it(`result should be 7`,()=>{
+            let result = vm.salariesTotal();
+            expect(result).toEqual(7);
+        });
+    });
+    
+    describe(`function shelterUtilTotal`,()=>{
     
     });
     
     describe(`function shelterCheckboxTotal`,()=>{
-    
+        beforeEach(()=>{
+            vm.form.shelter_shelter_startup = true;
+            vm.form.shelter_shelter_startup_amount = 2;
+            vm.form.shelter_shelter_two = true;
+            vm.form.shelter_shelter_two_amount = 2;
+        });
+        
+        it(`if shelter_shelter_startup is true and shelter_shelter_two is true result should be 4`,()=>{
+            let result = vm.shelterCheckboxTotal();
+            expect(result).toEqual(4); 
+        });
+        
+        it(`if shelter_shelter_startup is false and shelter_shelter_two is true result should be 2`,()=>{
+            vm.form.shelter_shelter_startup = false;
+            let result = vm.shelterCheckboxTotal();
+            expect(result).toEqual(2); 
+        });
+        
+        it(`if shelter_shelter_startup is true and shelter_shelter_two is false result should be 2`,()=>{
+            vm.form.shelter_shelter_two = false;
+            let result = vm.shelterCheckboxTotal();
+            expect(result).toEqual(2); 
+        });
+        
+        it(`if shelter_shelter_startup is false and shelter_shelter_two is false result should be 0`,()=>{
+            vm.form.shelter_shelter_startup = false;
+            vm.form.shelter_shelter_two = false;
+            let result = vm.shelterCheckboxTotal();
+            expect(result).toEqual(0); 
+        });
     });
     
     describe(`function shelterTotal`,()=>{
-    
+        beforeEach(()=>{
+            vm.form.shelter_rent = 2;
+            vm.form.shelter_water = 2;
+            vm.form.shelter_electricity = 2;
+            vm.form.shelter_shelter_startup = true;
+            vm.form.shelter_shelter_startup_amount = 2;
+            vm.form.shelter_shelter_two = true;
+            vm.form.shelter_shelter_two_amount = 2;
+            vm.form.other.Shelter = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
+        });
+        
+        it(`result should be  15`,()=>{
+            let result = vm.shelterTotal();
+            expect(result).toEqual(15);
+        });
     });
     
     describe(`function suppliesTotal`,()=>{
-    
+        beforeEach(()=>{
+            vm.form.supplies_walkie_talkies_boolean = false;
+            vm.form.supplies_walkie_talkies_amount = 2;
+            vm.form.supplies_recorders_boolean = false;
+            vm.form.supplies_recorders_amount = 2;
+            vm.form.supplies_binoculars_boolean = false;
+            vm.form.supplies_binoculars_amount = 2;
+            vm.form.supplies_flashlights_boolean = false;
+            vm.form.supplies_flashlights_amount = 2;
+        });
+        
+        it(`if supplies_walkie_talkies_boolean is true`,()=>{
+            vm.form.supplies_walkie_talkies_boolean = true;
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(2);
+        });
+        
+        it(`if supplies_walkie_talkies_boolean is false`,()=>{
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(0);
+        });
+        
+        it(`if supplies_recorders_boolean is true`,()=>{
+            vm.form.supplies_recorders_boolean = true;
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(2);
+        });
+        
+        it(`if supplies_recorders_boolean is false`,()=>{
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(0);
+        });        
+        
+        it(`if supplies_binoculars_boolean is true`,()=>{
+            vm.form.supplies_binoculars_boolean = true;
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(2);
+        });
+        
+        it(`if supplies_binoculars_boolean is false`,()=>{
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(0);
+        });  
+        
+        it(`if supplies_flashlights_boolean is true`,()=>{
+            vm.form.supplies_flashlights_boolean = true;
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(2);
+        });
+        
+        it(`if supplies_flashlights_boolean is false`,()=>{
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(0);
+        });   
+        
+        it(`result should be 5`,()=>{
+            vm.form.other.Supplies = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
+            let result = vm.suppliesTotal();
+            expect(result).toEqual(5);
+        });      
     });
     
     describe(`function travelMotorbikeOtherTotal`,()=>{
-    
+        it(`result should be 4`,()=>{
+            vm.form.travel_motorbike = true;
+            vm.form.travel_motorbike_amount = 2;
+            vm.form.travel_plus_other = 2;
+            let result = vm.travelMotorbikeOtherTotal();
+            expect(result).toEqual(4);
+        });
     });
     
     describe(`function travelNumberOfStaffUsingBikesTotal`,()=>{

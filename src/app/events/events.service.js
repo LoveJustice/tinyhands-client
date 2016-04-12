@@ -5,7 +5,6 @@ export default class EventsService extends BaseService {
         'ngInject';
         super();
 
-        this. = ;
     }
 
     getAll() {

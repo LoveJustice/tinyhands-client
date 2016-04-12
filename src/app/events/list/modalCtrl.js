@@ -3,11 +3,11 @@ export default class ModalController {
         $scope.eventTitle = eventTitle;
     }
 
-    this.delete() {
+    delete() {
         $modalInstance.close(true);
-    };
+    }
 
-    this.cancel() {
+    cancel() {
         $modalInstance.dismiss("cancel");
-    };
+    }
 }

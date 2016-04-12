@@ -14,7 +14,8 @@ import BorderStationService from './border-station/borderStation.service';
 import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
 import IrfListService from './irf/list/irfList.service';
-import SessionService from './session/session.service';
+import IrfService from './irf/form/irf.service';
+import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 import UtilService from './util/util.service';
 import VifService from './vif/form/vif.service';
@@ -22,13 +23,17 @@ import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
+import AnswerDirective from './components/answer/answer.directive';
 import DetailDirective from './border-station/detail/detail.directive';
+import FlagDirective from './components/flag/flag.directive';
+import GreenLightDirective from './components/greenLight/greenLight.directive';
 import LocationDirective from './border-station/location/location.directive';
 import MapDirective from './components/map/map.directive';
 import MathOperator from './components/mathOperator/mathOperator.directive';
 import NavbarDirective from './components/navbar/navbar.directive';
 import PersonDirective from './border-station/person/person.directive';
 import TallyDirective from './components/tally/tally.directive';
+import VerticalWordDirective from './components/verticalWord/verticalWord.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
@@ -40,6 +45,7 @@ import BorderStationController from './border-station/borderStation.controller';
 import BudgetController from './budget/form/budget.controller';
 import BudgetListController from './budget/list/budgetList.controller';
 import DashboardController from './dashboard/dashboard.controller';
+import IrfController from './irf/form/irf.controller';
 import IrfListController from './irf/list/irfList.controller';
 import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
@@ -73,6 +79,8 @@ angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies'
   .service('BorderStationService', BorderStationService)
   .service('BudgetListService', BudgetListService)
   .service('BudgetService', BudgetService)
+  .service('IrfListService', IrfListService)
+  .service('IrfService', IrfService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
   .service('utils', UtilService)
@@ -81,13 +89,17 @@ angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies'
 // ENDREGION: Services
 
 // REGION: Directives
-  .directive('borderStationDetail', DetailDirective)
-  .directive('borderStationLocation', LocationDirective)
-  .directive('borderStationPerson', PersonDirective)
-  .directive('googlemap', MapDirective)
-  .directive('navbar', NavbarDirective)
-  .directive('operator', MathOperator)
-  .directive('tally', TallyDirective)
+  .directive('answer', () => new AnswerDirective())
+  .directive('borderStationDetail', () => new DetailDirective())
+  .directive('borderStationLocation', () => new LocationDirective())
+  .directive('borderStationPerson', () => new PersonDirective())
+  .directive('flag', () => new FlagDirective())
+  .directive('googlemap', () => new MapDirective())
+  .directive('greenLight', () => new GreenLightDirective())
+  .directive('navbar', () => new NavbarDirective())
+  .directive('operator', () => new MathOperator())
+  .directive('tally', () => new TallyDirective())
+  .directive('verticalWord', () => new VerticalWordDirective())
 // ENDREGION: Directives
 
 // REGION: Controllers
@@ -99,6 +111,7 @@ angular.module('tinyhandsFrontend', ['infinite-scroll', 'ngAnimate', 'ngCookies'
   .controller('BudgetController', BudgetController)
   .controller('BudgetListController', BudgetListController)
   .controller('DashboardController', DashboardController)
+  .controller('IrfController', IrfController)
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
   .controller('TallyController', TallyController)

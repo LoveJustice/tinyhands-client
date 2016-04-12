@@ -408,13 +408,21 @@ describe('BudgetController', () => {
          vm.form.food_and_gas_number_of_days = 2; 
         });
         
-        it(``,()=>{
-         pending("Waiting on GetOtherCosts");
+        it(`foodGasInterceptedGirls should have been called`,()=>{
+            spyOn(vm,'foodGasInterceptedGirls');
+            vm.foodAndGasTotal();
+            expect(vm.foodGasInterceptedGirls).toHaveBeenCalled();
+        });
+        
+        it(`foodGasLimboGirls should have been called`,()=>{
+            spyOn(vm,'foodGasLimboGirls');
+            vm.foodAndGasTotal();
+            expect(vm.foodGasLimboGirls).toHaveBeenCalled();
         });
     });
     
     describe(`function medicalTotal`,()=>{
-        it(`madical_last_months_expense should be 2`,()=>{
+        it(`medical_last_months_expense should be 2`,()=>{
             vm.form.medical_last_months_expense = 2;
             vm.medicalTotal();
             expect(vm.form.medical_last_months_expense).toEqual(2);

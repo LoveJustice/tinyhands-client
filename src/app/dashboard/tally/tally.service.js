@@ -1,13 +1,11 @@
-import BaseService from '../../base.service';
-
-class TallyService extends BaseService {
-	constructor($http) {
+class TallyService {
+	constructor(BaseService) {
 		'ngInject';
-		super($http);
+        this.service = BaseService;
 	}
 
 	getTallyDays() {
-		return super.get('portal/tally/days/').then((data) => {
+		return this.service.get('portal/tally/days/').then((data) => {
 			// Data should be:
 			// {0:{dayOfWeek:'Monday',
 			//     interceptions: {<String of StationCode>:<Num of Interceptions>}},

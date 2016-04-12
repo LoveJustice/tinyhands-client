@@ -1,21 +1,29 @@
 <div>
+    <p>Foo</p>
+    <input type="checkbox" ng-model="vifCtrl.VifBuilder.foo" />
 	<div ui-view></div>
 	
-	<div class="row">
+	<div class="row bottom-nav">
 		<nav class="text-center">
 			<ul class="pagination">
-				<li>
-					<a ui-sref="" aria-label="Previous">
+				<li ng-class="{disabled: vifCtrl.sectionIndex == 0}">
+					<a ng-click="vifCtrl.prevSection()" aria-label="Previous">
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
-				<li><a ui-sref="">1</a></li>
-				<li><a ui-sref="">2</a></li>
-				<li><a ui-sref="">3</a></li>
-				<li><a ui-sref="">4</a></li>
-				<li><a ui-sref="">5</a></li>
-				<li>
-					<a ui-sref="" aria-label="Next">
+                <li ng-class="{active: vifCtrl.sectionIndex == 0}"><a  ng-click="vifCtrl.goToSection(0)">Info</a></li>
+				<li ng-class="{active: vifCtrl.sectionIndex == 1}"><a ng-click="vifCtrl.goToSection(1)">1</a></li>
+				<li ng-class="{active: vifCtrl.sectionIndex == 2}"><a ng-click="vifCtrl.goToSection(2)">2</a></li>
+				<li ng-class="{active: vifCtrl.sectionIndex == 3}"><a ng-click="vifCtrl.goToSection(3)">3</a></li>
+				<li ng-class="{active: vifCtrl.sectionIndex == 4}"><a ng-click="vifCtrl.goToSection(4)">4</a></li>
+				<li ng-class="{active: vifCtrl.sectionIndex == 5}"><a ng-click="vifCtrl.goToSection(5)">5</a></li>
+                <li ng-class="{active: vifCtrl.sectionIndex == 6}"><a ng-click="vifCtrl.goToSection(6)">6</a></li>
+                <li ng-class="{active: vifCtrl.sectionIndex == 7}""><a ng-click="vifCtrl.goToSection(7)">7</a></li>
+                <li ng-class="{active: vifCtrl.sectionIndex == 8}"><a ng-click="vifCtrl.goToSection(8)">8</a></li>
+                <li ng-class="{active: vifCtrl.sectionIndex == 9}"><a ng-click="vifCtrl.goToSection(9)">People</a></li>
+                <li ng-class="{active: vifCtrl.sectionIndex == 10}"><a ng-click="vifCtrl.goToSection(10)">Locations</a></li>
+				<li ng-class="{disabled: vifCtrl.sectionIndex == 10}">
+					<a ng-click="vifCtrl.nextSection()" aria-label="Next">
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>

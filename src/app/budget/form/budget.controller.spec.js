@@ -222,14 +222,34 @@ describe('BudgetController', () => {
     });
     
     describe(`function awarenessTotal`,()=>{
-        it(`if awareness_contact_cards is true and awareness_awareness_party_boolean is true and awareness_sign_boards_boolean is true`,()=>{
-            vm.form.awareness_contact_cards = true;
-            vm.form.awareness_awareness_party_boolean = true;
-            vm.form.awareness_sign_boards_boolean = true;
-            vm.form.awareness_contact_cards_amount = 1;
-            vm.form.awareness_awareness_party_amount = 1;
+        beforeEach(()=>{
+            vm.form.awareness_contact_cards = false;
+            vm.form.awareness_contact_cards_amount = 1;            
+            vm.form.awareness_awareness_party_boolean = false;
+            vm.form.awareness_awareness_party = 1;            
+            vm.form.awareness_sign_boards_boolean = false;
             vm.form.awareness_sign_boards= 1; 
         });
+        
+        it(`result should be 1`,()=>{
+            vm.form.awareness_contact_cards = true;
+            let result = vm.awarenessTotal();
+            expect(result).toEqual(1);
+        });
+        
+        it(`result should be 1`,()=>{
+            vm.form.awareness_awareness_party_boolean = true;
+            let result = vm.awarenessTotal();
+            expect(result).toEqual(1);
+        });        
+        
+        it(`result should be 1`,()=>{
+            vm.form.awareness_sign_boards_boolean = true;
+            let result = vm.awarenessTotal();
+            expect(result).toEqual(1);
+        });        
+        
+        
     });
     
     describe(`function communicationManagerTotal`,()=>{
@@ -575,23 +595,144 @@ describe('BudgetController', () => {
     });
     
     describe(`function travelNumberOfStaffUsingBikesTotal`,()=>{
-    
+        it(`result should be 4`,()=>{
+            vm.form.travel_number_of_staff_using_bikes = 2;
+            vm.form.travel_number_of_staff_using_bikes_multiplier = 2;
+            let result = vm.travelNumberOfStaffUsingBikesTotal();
+            expect(result).toEqual(4);
+        });    
     });
     
     describe(`function travelTotal`,()=>{
-    
+        beforeEach(()=>{
+            vm.form.travel_chair_with_bike = false;
+            vm.form.travel_chair_with_bike_amount =2;
+            vm.form.travel_manager_with_bike = false;
+            vm.form.travel_manager_with_bike_amount = 2;
+            vm.form.travel_number_of_staff_using_bikes = 2;
+            vm.form.travel_number_of_staff_using_bikes_multiplier = 2;
+            vm.form.travel_last_months_expense_for_sending_girls_home = 2;
+            vm.form.travel_motorbike = false;
+            vm.form.travel_motorbike_amount = 2;
+            vm.form.travel_plus_other = 2;
+            vm.form.other.Travel = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
+        });
+        
+        it(`result should be 15`,()=>{
+            vm.form.travel_chair_with_bike = true;
+            let result = vm.travelTotal();
+            expect(result).toEqual(15);
+        });
+        
+        it(`result should be 15`,()=>{
+            vm.form.travel_manager_with_bike = true;
+            let result = vm.travelTotal();
+            expect(result).toEqual(15);
+        });
+        
+        it(`result should be 9`,()=>{
+            vm.form.travel_number_of_staff_using_bikes = 0;
+            vm.form.travel_number_of_staff_using_bikes_multiplier = 0;
+            let result = vm.travelTotal();
+            expect(result).toEqual(9);         
+        });     
+        
+        it(`result should be 11`,()=>{
+            vm.form.travel_last_months_expense_for_sending_girls_home = 0;
+            let result = vm.travelTotal();
+            expect(result).toEqual(11);
+        });
+        
+        it(`result should be 15`,()=>{
+            vm.form.travel_motorbike = true;
+            let result = vm.travelTotal();
+            expect(result).toEqual(15);          
+        });
+        
+        it(`result should be 8`,()=>{
+            vm.form.other.Travel =[{cost:0},{cost:0},{cost:0},{cost:0},{cost:0}];
+            let result = vm.travelTotal();
+            expect(result).toEqual(8)
+        });
     });
     
     describe(`function setBorderMonitoringStatingTotals`,()=>{
-    
+        it(`adminTotal should be called`,()=>{
+            spyOn(vm,'adminTotal');
+            vm.setBorderMonitoringStationTotals();
+            expect(vm.adminTotal).toHaveBeenCalled();
+        });
+        
+        it(`communicationTotal should have been called`,()=>{
+            spyOn(vm,'communicationTotal');
+            vm.setBorderMonitoringStationTotals();
+            expect(vm.communicationTotal).toHaveBeenCalled();
+        });
+        
+        it(`medicalTotal should have been called`,()=>{
+            spyOn(vm,'medicalTotal');
+            vm.setBorderMonitoringStationTotals();
+            expect(vm.medicalTotal).toHaveBeenCalled();
+        });
+
+        it(`miscellaneousTotal should have been called`,()=>{
+            spyOn(vm,'miscellaneousTotal');
+            vm.setBorderMonitoringStationTotals();
+            expect(vm.miscellaneousTotal).toHaveBeenCalled();
+        });
+
+        it(`salariesTotal should have been called`,()=>{
+            spyOn(vm,'salariesTotal');
+            vm.setBorderMonitoringStationTotals();
+            expect(vm.salariesTotal).toHaveBeenCalled();
+        });
+        
+        it(`salariesTotal should have been called`,()=>{
+            spyOn(vm,'salariesTotal');
+            vm.setBorderMonitoringStationTotals();
+            expect(vm.salariesTotal).toHaveBeenCalled();
+        });
+                                        
     });
     
     describe(`function setSafeHouseTotals`,()=>{
-    
+        it(`foodAndGasTotal should have been called`,()=>{
+            spyOn(vm,'foodAndGasTotal');
+            vm.setSafeHouseTotals();
+            expect(vm.foodAndGasTotal).toHaveBeenCalled();
+        });
+        
+        it(`shelterTotal should have been called`,()=>{
+            spyOn(vm,'shelterTotal');
+            vm.setSafeHouseTotals();
+            expect(vm.shelterTotal).toHaveBeenCalled();
+        });
     });
     
     describe(`function setTotals`,()=>{
-    
+        it(`setBorderMonitoringStationTotals should have been called`,()=>{
+            spyOn(vm,'setBorderMonitoringStationTotals');
+            vm.setTotals();
+            expect(vm.setBorderMonitoringStationTotals).toHaveBeenCalled();
+        });       
+        
+        it(`setSafeHouseTotals should have been called`,()=>{
+            spyOn(vm,'setSafeHouseTotals');
+            vm.setTotals();
+            expect(vm.setSafeHouseTotals).toHaveBeenCalled();
+        });            
+        
+        it(`awarenessTotal should have been called`,()=>{
+            spyOn(vm,'awarenessTotal');
+            vm.setTotals();
+            expect(vm.awarenessTotal).toHaveBeenCalled();
+        });            
+        
+        it(`suppliesTotal should have been called`,()=>{
+            spyOn(vm,'suppliesTotal');
+            vm.setTotals();
+            expect(vm.suppliesTotal).toHaveBeenCalled();
+        });            
     });
     
     describe(`function deleteOtherItems`,()=>{

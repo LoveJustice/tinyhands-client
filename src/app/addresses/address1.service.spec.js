@@ -2,29 +2,27 @@ import Address1Service from './address1.service';
 
 describe('Address1Service', () => {
 
-  let service;
+  let service, mockBaseService;
 
   beforeEach(() => {
-    let $http = null;
-    service = new Address1Service($http);
+    mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'put'])
+    service = new Address1Service(mockBaseService);
   });
 
   describe('function listAddresses with queryParams', () => {
     let url = 'api/address1/';
     let params = 'test param';
     it(`should call get with '${url}' and '${params}'`, () => {
-      spyOn(service, 'get');
       service.listAddresses(params);
-      expect(service.get).toHaveBeenCalledWith(url, params);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
     });
   });
 
   describe('function listAddress1s', () => {
     let url = 'api/address1/';
     it(`should call get with '${url}'`, () => {
-      spyOn(service, 'get');
       service.listAddress1s();
-      expect(service.get).toHaveBeenCalledWith(url);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url);
     });
   });
 
@@ -41,9 +39,8 @@ describe('Address1Service', () => {
     let url = 'api/address1/';
     let params = 'test param';
     it(`should call get with '${url}' and '${params}'`, () => {
-      spyOn(service, 'get');
       service.loadMoreAddresses(params);
-      expect(service.get).toHaveBeenCalledWith(url, params);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
     });
   });
 
@@ -51,9 +48,8 @@ describe('Address1Service', () => {
     let address = {id: 123};
     let url = 'api/address1/' + address.id + '/';
     it(`should call put with '${url}' and '${address}'`, () => {
-      spyOn(service, 'put');
       service.saveAddress(address);
-      expect(service.put).toHaveBeenCalledWith(url, address);
+      expect(mockBaseService.put).toHaveBeenCalledWith(url, address);
     });
   });
 
@@ -61,9 +57,8 @@ describe('Address1Service', () => {
     let val = 'abcdefg';
     let url = 'api/address1/fuzzy/?district=' + val;
     it(`should call get with '${url}'`, () => {
-      spyOn(service, 'get');
       service.getFuzzyAddress1s(val);
-      expect(service.get).toHaveBeenCalledWith(url);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url);
     });
   });
 

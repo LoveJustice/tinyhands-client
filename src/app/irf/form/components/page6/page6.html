@@ -1,1 +1,198 @@
-6
+<div class="container-fluid">
+    <form>
+        <div class="form-group text-left">
+            
+            <h3>Victim Attributes</h3>
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox" ng-model="irfCtrl.form.staff_noticed">
+                    7.0 Staff
+                </label>
+            </div>
+            <div class="checkbox-inline">
+                <label>7.1 Staff who noticed:</label>
+                <input type="text" ng-model="irfCtrl.form.staff_who_noticed" maxlength="255">
+            </div>
+            
+            <div manner>
+                <h4>Manner</h4>            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_hesitant">
+                        7.2 Hesitant
+                    </label>
+                </div>
+            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_nervous_or_afraid">
+                        7.3 Nervous or afraid
+                    </label>
+                </div>
+            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_hurrying">
+                        7.4 Hurrying
+                    </label>
+                </div>
+            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_drugged_or_drowsy">
+                        7.5 Drugged or drowsy
+                    </label>
+                </div>
+            </div>
+            
+            <div attire>
+                <h4>Attire</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_new_clothes">
+                        7.6 New Clothes
+                    </label>
+                </div>
+            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_dirty_clothes">
+                        7.7 Dirty Clothes
+                    </label>
+                </div>
+            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_carrying_full_bags">
+                        7.8 Carrying Full Bags
+                    </label>
+                </div>
+            
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_village_dress">
+                        7.9 Village Dress
+                    </label>
+                </div>
+            </div>
+            
+            <div appearance>
+                <h4>Appearance</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_indian_looking">
+                        7.10 Indian Looking
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_typical_village_look">
+                        7.11 Typical Village Look
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_looked_like_agent">
+                        7.12 Looked Like Agent
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_caste_difference">
+                        7.13 Caste Difference
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_young_looking">
+                        7.14 Young Looking
+                    </label>
+                </div>
+            </div>
+            
+            <div action>
+                <h4>Action</h4>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_waiting_sitting">
+                        7.15 Waiting/Sitting
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_walking_to_border">
+                        7.16 Walking to Border
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_roaming_around">
+                        7.17 Roaming Around
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_exiting_vehicle">
+                        7.18 Exiting vehicle
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_heading_to_vehicle">
+                        7.19 Heading to Vehicle
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_in_a_vehicle">
+                        7.20 In a Vehicle
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_in_a_rickshaw">
+                        7.21 In a Rickshaw
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_in_a_cart">
+                        7.22 In a Cart
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_carrying_a_baby">
+                        7.23 Carrying a Baby
+                    </label>
+                </div>
+                
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="irfCtrl.form.noticed_on_the_phone">
+                        7.24 On the phone
+                    </label>
+                </div>
+            </div>
+            
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox" ng-model="irfCtrl.form.noticed_other_sign">
+                    7.25 Other Sign 
+                    <input type="text" ng-model="irfCtrl.form.noticed_other_sign_value" ng-if="irfCtrl.form.noticed_other_sign" maxlength="255">
+                </label>
+            </div>
+        </div>
+    </form>
+</div>

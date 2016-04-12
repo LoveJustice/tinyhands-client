@@ -131,7 +131,6 @@ describe('BudgetController', () => {
     
     describe(`function getOtherCost`,()=>{
         it(`amount should be equal to 5`,()=>{
-           pending("Currently amount becomes equal to NaN. Not sure why");
            let otherItems=[{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
            let amount = vm.getOtherCost(otherItems);
            expect(amount).toEqual(5);
@@ -478,6 +477,13 @@ describe('BudgetController', () => {
     });
     
     describe(`function shelterUtilTotal`,()=>{
+
+      it('should return 6', () => {
+        vm.form.shelter_rent = 1;
+        vm.form.shelter_water = 2;
+        vm.form.shelter_electricity = 3;
+        expect(vm.shelterUtilTotal()).toEqual(6);
+      });
     
     });
     

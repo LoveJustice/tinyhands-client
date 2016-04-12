@@ -3,10 +3,10 @@
         <h1>Person Cards</h1>
     </div>
     <div class="row">
-        <div class="col-md-4">
+        <div ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" class="col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Person Box 1</h3>
+                    <h3 class="panel-title">Person Box {{ i }}</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -14,10 +14,16 @@
                             <p>Full name</p>
                         </div>
                         <div class="col-md-7 input-field">
-                            <input type="text" name="fullname"><br>
+                            <input type="text" name="fullname" class="text-box"><br>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row radio-top">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">Victim</label> &nbsp;
+                          <label><input type="radio" name="optradio">Trafficker</label>
+                        </div>
+                    </div>
+                    <div class="row radio-bottom">
                         <div class="radio">
                           <label><input type="radio" name="optradio">Male</label> &nbsp;
                           <label><input type="radio" name="optradio">Female</label>
@@ -28,7 +34,7 @@
                             <p>Age</p>
                         </div>
                         <div class="col-md-7 input-field">
-                            <input type="text" name="age"><br>
+                            <input type="text" name="age" class="text-box"><br>
                         </div>
                     </div>
                     <div class="row">
@@ -37,7 +43,7 @@
                         </div>
 
                         <div class="col-md-7 input-field">
-                            <input type="text" name="address-1"><br>
+                            <input type="text" name="address-1" class="text-box"><br>
                         </div>
                     </div>
                     <div class="row">
@@ -46,7 +52,7 @@
                         </div>
 
                         <div class="col-md-7 input-field">
-                            <input type="text" name="address-2"><br>
+                            <input type="text" name="address-2" class="text-box"><br>
                         </div>
                     </div>
                     <div class="row">
@@ -54,7 +60,7 @@
                             <p>Phone Contact</p>
                         </div>
                         <div class="col-md-7 input-field">
-                            <input type="text" name="phone-contact"><br>
+                            <input type="text" name="phone-contact" class="text-box"><br>
                         </div>
                     </div>
                     <div class="row">
@@ -62,7 +68,7 @@
                             <p>Relation to...</p>
                         </div>
                         <div class="col-md-7 input-field">
-                            <input type="text" name="relation-to"><br>
+                            <input type="text" name="relation-to" class="text-box"><br>
                         </div>
                     </div>
                     <div class="row">
@@ -70,11 +76,14 @@
                             <p>Photo Upload</p>
                         </div>
                         <div class="col-md-7 input-field">
-                            <input type="text" name="photo-upload"><br>
+                            <input type="text" name="photo-upload" class="text-box"><br>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row pull-right">
+        <button type="button" class="btn btn-primary btn-lg">Save</button>
     </div>
 </div>

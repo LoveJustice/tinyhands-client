@@ -7,12 +7,29 @@
       }
     }
   }
-}
-.red-flag {
-  background-image: url(http://edwards.cse.taylor.edu/static/images/red-flag.png);
-  width: 25px;
-  height: 24px;
-  background-size: 100%;
-  display: inline-block;
-  vertical-align: middle;
+  table {
+    @border-radius: 15px;
+    border-collapse: separate;
+    border-radius: @border-radius;
+    tr:first-child td:first-child {
+      border-top-left-radius: @border-radius;
+    }
+    tr:first-child td:last-child {
+      border-top-right-radius: @border-radius;
+    }
+    tr:last-child td:first-child {
+      border-bottom-left-radius: @border-radius;
+    }
+    tr:last-child td:last-child {
+      border-bottom-right-radius: @border-radius;
+    }
+    .header {
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    td {
+      vertical-align: middle;
+    }
   }
+}

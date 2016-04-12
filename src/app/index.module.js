@@ -22,13 +22,17 @@ import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
+import AnswerDirective from './components/answer/answer.directive';
 import DetailDirective from './border-station/detail/detail.directive';
+import FlagDirective from './components/flag/flag.directive';
+import GreenLightDirective from './components/greenLight/greenLight.directive';
 import LocationDirective from './border-station/location/location.directive';
 import MapDirective from './components/map/map.directive';
 import MathOperator from './components/mathOperator/mathOperator.directive';
 import NavbarDirective from './components/navbar/navbar.directive';
 import PersonDirective from './border-station/person/person.directive';
 import TallyDirective from './components/tally/tally.directive';
+import VerticalWordDirective from './components/verticalWord/verticalWord.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
@@ -84,13 +88,17 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   // ENDREGION: Services
 
   // REGION: Directives
+  .directive('answer', () => new AnswerDirective())
   .directive('borderStationDetail', () => new DetailDirective())
   .directive('borderStationLocation', () => new LocationDirective())
   .directive('borderStationPerson', () => new PersonDirective())
+  .directive('flag', () => new FlagDirective())
   .directive('googlemap', () => new MapDirective())
+  .directive('greenLight', () => new GreenLightDirective())
   .directive('navbar', () => new NavbarDirective())
   .directive('operator', () => new MathOperator())
   .directive('tally', () => new TallyDirective())
+  .directive('verticalWord', () => new VerticalWordDirective())
   // ENDREGION: Directives
 
   // REGION: Controllers

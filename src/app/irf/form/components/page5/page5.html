@@ -78,21 +78,14 @@
             <h3>Did you pay for this information?</h3>
             <div class="checkbox-inline">
                 <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.contact_paid" name="contact_paid" value="True">
-                    Yes
+                    <input type="checkbox" ng-model="irfCtrl.form.contact_paid">
+                    Check this box if you paid for this information
                 </label>
-            </div>
+            </div>            
             
             <div class="checkbox-inline">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.contact_paid" name="contact_paid" value="False">
-                    No
-                </label>
-            </div>
-            
-            <div class="checkbox-inline">
-                <label>How much?</label>
-                <input type="text" ng-model="irfCtrl.form.contact_paid_how_much" name="contact_paid_how_much" maxlength="255">
+                <label>If so, How much?</label>
+                <input type="text" ng-model="irfCtrl.form.contact_paid_how_much" maxlength="255">
             </div>
          </div>   
         

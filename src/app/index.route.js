@@ -58,17 +58,22 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
     .state('account', {
       url: '/account/tab=:activeTab',
       templateUrl: 'app/account/account.html',
-      controller: 'AccountController',
-      controllerAs: 'accountCtrl',
       data: {
         requireLogin: true
       }
     })
     .state('account/:id', {
       url: '/account/:id',
-      templateUrl: 'app/account/components/edit/accountEdit.html',
-      controller: 'AccountEditController',
-      controllerAs: 'editCtrl',
+      templateUrl: 'app/account/account.html',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('account/activate-account/:code', {
+      url: '/account/activate-account/:code',
+      templateUrl: 'app/account/components/activate/activateAccount.html',
+      controller: 'ActivateAccountController',
+      controllerAs: 'activateAcctCtrl',
       data: {
         requireLogin: true
       }

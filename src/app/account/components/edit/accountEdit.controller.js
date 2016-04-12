@@ -1,10 +1,10 @@
 export default class AccountEditController {
-  constructor($scope, $state, $stateParams ,AccountService, PermissionsSetsService) {
+  constructor($scope, $state, $window ,AccountService, PermissionsSetsService) {
     'ngInject';
     // Modules
     this.$scope = $scope;
     this.$state = $state;
-    this.$stateParams = $stateParams;
+    this.$window = $window;
     //Services
     this.AccountService = AccountService;
     this.PermissionsSetsService = PermissionsSetsService;
@@ -12,19 +12,22 @@ export default class AccountEditController {
     this.emailError = '';
     this.userDesignationError = '';
 
+    this.$window.scrollTo(0, 0);
+
     let accountOptionsPath = 'app/account/components/';
     this.sections = {allSections: [{ name: 'Accounts List', templateUrl: `${accountOptionsPath}list/accountList.html` },
                                    { name: 'Accounts Access Control', templateUrl: `${accountOptionsPath}control/accountControl.html` },
                                    { name: 'Accounts Defaults', templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]}
 
-    if(this.$stateParams.id != undefined && this.$stateParams.id > 0) {
-          this.AccountService.getAccount(this.$stateParams.id).then((result) => {
+    if(this.$state.params.id != 'new' && this.$state.params.id > 0) {
+          this.AccountService.getAccount(this.$state.params.id).then((result) => {
             this.account = result.data;
             this.editing = true;
+            this.title = 'Edit ' +this.account.first_name + ' ' + this.account.last_name + "'s Account";
           });
-
     } else {
           this.editing = false;
+          this.title = 'Create Account';
           this.account = {
               email: '',
               first_name: '',
@@ -48,6 +51,7 @@ export default class AccountEditController {
               permission_budget_manage: false,
           }
     }
+
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissionsSets = result.data.results;
     });
@@ -64,7 +68,7 @@ export default class AccountEditController {
           call= this.AccountService.create(this.account);
       }
       call.then(() => {
-          this.$state.go("account");
+          this.$state.go("account", {activeTab: 0});
       }, (err) => {
           if(err.data.email){
               this.emailError = err.data.email[0];
@@ -85,13 +89,6 @@ export default class AccountEditController {
           return false;
       }
       return true;
-  }
-
-  getTitle() {
-      if(this.editing) {
-          return 'Edit ' +this.account.first_name + ' ' + this.account.last_name + "'s Account";
-      }
-      return 'Create Account';
   }
 
   onUserDesignationChanged(permissionSetId) {

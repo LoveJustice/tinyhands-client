@@ -9,13 +9,13 @@ import googleMapsConfig from './components/map/map.config';
 import runBlock from './index.run';
 
 // REGION: Services
-import AccountService from './account/components/list/account.service';
+import AccountService from './account/account.service';
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
 import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
-import PermissionsSetsService from './account/components/list/permissionsSets.service';
+import PermissionsSetsService from './account/permissionsSets.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -28,11 +28,9 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
+import ActivateAccountController from './account/components/activate/activateAccount.controller.js'
 import AccountController from './account/account.controller';
-import AccountListController from './account/components/list/accountList.controller';
-import AccountDefaultsController from './account/components/defaults/accountDefaults.controller';
 import AccountEditController from './account/components/edit/accountEdit.controller';
-import AccountControlController from './account/components/control/accountControl.controller.js';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
@@ -41,7 +39,7 @@ import BorderStationController from './border-station/borderStation.controller';
 import BudgetController from './budget/form/budget.controller';
 import DashboardController from './dashboard/dashboard.controller';
 import LoginController from './login/login.controller';
-import UnsavedChangesModalController from './account/components/defaults/unsavedChangesModal.controller.js'
+import UnsavedChangesModalController from './account/components/modal/unsavedChangesModal.controller.js'
 // ENDREGION: Controllers
 
 // REGION: Factories
@@ -84,11 +82,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSan
   // ENDREGION: Directives
 
   // REGION: Controllers
+  .controller('ActivateAccountController', ActivateAccountController)
   .controller('AccountController', AccountController)
-  .controller('AccountDefaultsController', AccountDefaultsController)
   .controller('AccountEditController', AccountEditController)
-  .controller('AccountListController', AccountListController)
-  .controller('AccountControlController', AccountControlController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address2Controller', Address2Controller)
   .controller('Address1EditModalController', Address1EditModalController)

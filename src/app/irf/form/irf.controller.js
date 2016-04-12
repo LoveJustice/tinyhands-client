@@ -39,20 +39,4 @@ export default class IrfController {
             this.selectedSectionIndex -= 1;
         }
     }
-
-    AddorRemoveFlag(id) {
-        var indexofFlag = this.selectedFlags.indexOf(id);
-        if (indexofFlag !== -1) {
-            this.selectedFlags.splice(indexofFlag, 1);
-        }
-        else {
-            this.selectedFlags.push(id);
-        }
-        this.flags = this.selectedFlags.length;
-    }
-
-    FlagChecked(id) {
-        var indexofFlag = this.selectedFlags.indexOf(id);
-        return (indexofFlag > -1);
-    }
 }

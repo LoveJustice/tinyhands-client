@@ -1,10 +1,11 @@
 import BaseService from '../base.service'
 
 export default class EventsService extends BaseService {
-    constructor() {
+    constructor($http) {
         'ngInject';
         super();
 
+        this.$http = $http;
     }
 
     getAll() {

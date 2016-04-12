@@ -17,22 +17,22 @@
             </div>
             
             <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.name_came_up_before" name="which_contact_rickshaw_driver">
-                    Had any name come up before?
+                <label ng-if="irfCtrl.form.call_thn_to_cross_check">
+                    <input type="checkbox" ng-model="irfCtrl.form.name_came_up_before">
+                    8.2a Had any name come up before?
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label ng-if="irfCtrl.form.name_came_up_before">
+                    <input type="number" min="0" ng-model="irfCtrl.form.name_came_up_before_value">
+                    8.2b If yes, write the # from the table above.
                 </label>
             </div>
             
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.name_came_up_before_value" name="which_contact_taxi_driver">
-                    If yes, write the # from the table above.
-                </label>
-            </div>
-            
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.scan_and_submit_same_day" name="which_contact_bus_driver">
+                    <input type="checkbox" ng-model="irfCtrl.form.scan_and_submit_same_day">
                     8.3 Scan and submit to TNH the same day
                 </label>
             </div>

@@ -1,1 +1,40 @@
-8
+<div class="container-fluid">
+    <form>
+        <div class="form-group text-left">
+            <h3>Procedures</h3>          
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="irfCtrl.form.call_subcommittee_chair">
+                    8.1 Call Subcommittee Chair
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="irfCtrl.form.call_thn_to_cross_check">
+                    8.2 Call THN to cross-check the names (622-3856)
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label ng-if="irfCtrl.form.call_thn_to_cross_check">
+                    <input type="checkbox" ng-model="irfCtrl.form.name_came_up_before">
+                    8.2a Had any name come up before?
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label ng-if="irfCtrl.form.name_came_up_before">
+                    <input type="number" min="0" ng-model="irfCtrl.form.name_came_up_before_value">
+                    8.2b If yes, write the # from the table above.
+                </label>
+            </div>
+            
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="irfCtrl.form.scan_and_submit_same_day">
+                    8.3 Scan and submit to TNH the same day
+                </label>
+            </div>          
+        </div>
+    </form>
+</div>

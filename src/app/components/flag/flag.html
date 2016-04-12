@@ -1,7 +1,7 @@
-<div>
+<div class="flag">
   <label>
-    <b>{{number.toString()}}</b>
-    <input type="checkbox" ng-model="ngModel">
+    <b>{{number}}</b>
+    <input type="checkbox" ng-model="ngModel" ng-change="flagCtrl.checkboxValueChange()">
     <img src="http://edwards.cse.taylor.edu/static/images/red-flag.png" alt="flag">
     <span class="text-danger" ng-transclude></span>
   </label>

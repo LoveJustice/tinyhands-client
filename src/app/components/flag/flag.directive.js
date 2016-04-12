@@ -1,8 +1,12 @@
+import FlagController from './flag.controller';
+
 export default class FlagDirective {
   constructor() {
     'ngInject';
 
     let directive = {
+      controller: FlagController,
+      controllerAs: 'flagCtrl',
       require: 'ngModel',
       restrict: 'E',
       scope: {

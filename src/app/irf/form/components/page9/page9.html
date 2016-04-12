@@ -24,7 +24,7 @@
             
             <div class="checkbox">
                 <label>
-                    <input type="number" min="0" ng-model="irfCtrl.form.interception_type_circus">
+                    <input type="checkbox" ng-model="irfCtrl.form.interception_type_circus">
                     9.4 Circus
                 </label>
             </div>
@@ -38,15 +38,21 @@
             
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.trafficker_taken_into_custody != ">
+                    <input type="checkbox" ng-init="policeCustodyBool = irfCtrl.form.trafficker_taken_into_custody != ''" ng-model="policeCustodyBool">
                     9.6 Was any trafficker taken into police custody?
                 </label>
             </div>  
-            
             <div class="checkbox">
+                <label ng-show="policeCustodyBool">
+                    If yes, write the # from the table above
+                    <input type="text" maxlength="255" ng-model="irfCtrl.form.trafficker_taken_into_custody">
+                </label>
+            </div>
+            
+            <div class="select">
                 <label>
                     9.7 How sure are you that it was a trafficking case?<br>
-                    <select ng-model="irfCtrl.form.how_sure_was_trafficking">
+                    <select class="form-control" ng-model="irfCtrl.form.how_sure_was_trafficking">
                         <option value="1">1 - Not at all sure</option>
                         <option value="2">2 - Unsure but suspects it</option>
                         <option value="3">3 - Somewhat sure</option>

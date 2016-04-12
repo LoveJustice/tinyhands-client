@@ -1,11 +1,7 @@
 import Constants from './constants.js';
 import BudgetService from './budget.service';
 import BudgetController from './budget.controller';
-
-describe(`function`,()=>{
-
-});
-
+import UtilService from '../../util/util.service';
 
 describe('BudgetController', () => {
     let vm;
@@ -13,14 +9,13 @@ describe('BudgetController', () => {
         // stateParams = { borderStationId: 123, id: 1 },
         stateParams = { borderStationId: 123, id: 1 ,isViewing: "true"},
         budgetService,
-        utils = { validId: (id) => {if (typeof id !== undefined && parseInt(id) >= 0) {
-                                    return true;}
-                                    return false;}};
-
+        utils;
 
     beforeEach(inject(($http) => {
         // let $http;
-        budgetService = new BudgetService($http);
+        utils = new UtilService();
+        stateParams = { borderStationId: 123, id: 1 ,isViewing: "true"};
+        budgetService = new BudgetService($http, utils);
         vm = new BudgetController(state, stateParams, budgetService, utils);
     }));
 
@@ -28,8 +23,19 @@ describe('BudgetController', () => {
         // it(`budgetFormPath should be 'app/budget/form/components/'`,()=>{
         //     expect(vm.budgetFormPath).toEqual('app/budget/form/components/');
         // });
-        it(`sections should be  "placeholder"`, () => {
-            pending("Not finished. Just holding the sections test place.");
+        it(`sections should be object`, () => {
+          let budgetFormPath = 'app/budget/form/components/';
+          let sections = {allSections: [{ name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
+                                        { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
+                                        { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
+                                        { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
+                                        { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
+                                        { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
+                                        { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
+                                        { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
+                                        { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
+                                        { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }]};
+          expect(vm.sections).toEqual(sections);
         });
 
         it(`active should be null`, () => {
@@ -48,8 +54,17 @@ describe('BudgetController', () => {
             expect(vm.deletedItems).toEqual([]);
         });
 
-        it(`form should be "placeholder"`, () => {
-            pending("Not finished. Just holding the forms test place.");
+        it(`form should be object`, () => {
+          let form = {
+            other: {},
+            totals: {
+              borderMonitoringStation: {},
+              other: {},
+              safeHouse: {}
+            },
+            border_station: stateParams.borderStationId,
+          };
+          expect(vm.form).toEqual(form);
         });
 
         it(`form.border_station should be${stateParams.borderStationId}`,()=>{
@@ -86,8 +101,7 @@ describe('BudgetController', () => {
         });
 
         it(`isViewing should be true`,()=>{
-            pending("Not sure about this test, need to ask question")
-            expect(vm.isViewing).toEqual(stateParams.isViewing);
+            expect(vm.isViewing).toEqual(true);
         });
         
         it(`safeHouseTotal should be 0`,()=>{
@@ -103,16 +117,14 @@ describe('BudgetController', () => {
         });
 
         it(`validRoute should have been called`,()=>{
-         pending("Not sure about this test, need to ask question")
-         spyOn(vm,"constructor().validRoute()");
-         vm.constructor();
+         spyOn(vm, 'validRoute');
+         vm.constructor(state, stateParams, budgetService, utils);
          expect(vm.validRoute).toHaveBeenCalled();
         });
 
         it(`getBudgetForm should have been called`,()=>{
-         pending("Not sure about this test, need to ask question")
-         spyOn(vm,"constructor().getBudgetForm");
-         vm.constructor();
+         spyOn(vm, 'getBudgetForm');
+         vm.constructor(state, stateParams, budgetService, utils);
          expect(vm.getBudgetForm).toHaveBeenCalled();
         });
     });
@@ -337,13 +349,12 @@ describe('BudgetController', () => {
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 2;
             vm.form.communication_each_staff = 2;
             vm.form.communication_each_staff_multiplier = 2;
-            vm.form.other.Communcation =  otherItems=[{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
+            vm.form.other.Communcation = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
         });
         
         it(`result should be 10`,()=>{
-            pending("stuff for getOtherItems doesn't work. Need help.")
             let result = vm.communicationTotal();
-            expect(result).toEqual(14);
+            expect(result).toEqual(10);
         });
     });
     
@@ -596,17 +607,123 @@ describe('BudgetController', () => {
     
     describe(`function deleteOtherItems`,()=>{
 
+      beforeEach(() => {
+        vm.deletedItems = ['foo', 'bar', 'baz'];
+        spyOn(vm.service, 'deleteOtherItem');
+        vm.deleteOtherItems();
+      });
+
+      it('should call service.deleteOtherItem 3 times', () => {
+        expect(vm.service.deleteOtherItem).toHaveBeenCalledTimes(3);
+      });
+
+      it('should call service.deleteOtherItem with budgetId and "foo"', () => {
+        expect(vm.service.deleteOtherItem).toHaveBeenCalledWith(vm.budgetId, 'foo');
+      });
+
+      it('should call service.deleteOtherItem with budgetId and "bar"', () => {
+        expect(vm.service.deleteOtherItem).toHaveBeenCalledWith(vm.budgetId, 'bar');
+      });
+
+      it('should call service.deleteOtherItem with budgetId and "baz"', () => {
+        expect(vm.service.deleteOtherItem).toHaveBeenCalledWith(vm.budgetId, 'baz');
+      });
+
     });
 
     describe(`function getAllData`,()=>{
+
+      it('should call getStaff', () => {
+        spyOn(vm, 'getStaff');
+        vm.getAllData();
+        expect(vm.getStaff).toHaveBeenCalled();
+      });
+
+      it('should call getBorderStation', () => {
+        spyOn(vm, 'getBorderStation');
+        vm.getAllData();
+        expect(vm.getBorderStation).toHaveBeenCalled();
+      });
+
+      it('should call getPreviousData', () => {
+        spyOn(vm, 'getPreviousData');
+        vm.getAllData();
+        expect(vm.getPreviousData).toHaveBeenCalled();
+      });
+
+      it('should call getOtherData', () => {
+        spyOn(vm, 'getOtherData');
+        vm.getAllData();
+        expect(vm.getOtherData).toHaveBeenCalled();
+      });
 
     });
 
     describe(`function getBorderStation`,()=>{
 
+      it('should call service.getBorderStation', () => {
+        spyOn(vm.service, 'getBorderStation').and.callThrough();
+        vm.getBorderStation();
+        expect(vm.service.getBorderStation).toHaveBeenCalled();
+      });
+
+      it('should set form.station_name to "foo"', () => {
+        let response = {data: {station_name: 'foo'}};
+        vm.service.getBorderStation = () => {return {then: (f) => { f(response) }}};
+        vm.getBorderStation();
+        expect(vm.form.station_name).toEqual('foo');
+      });
+
     });
 
     describe(`function getBudgetForm`,()=>{
+
+      beforeEach(() => {
+        let response = {data: {foo: 'bar'}};
+        vm.service.getBudgetForm = () => {return {then: (f) => { f(response) }}};
+        spyOn(vm, 'getAllData'); // getAllData is causing crashes that don't make sense!
+      });
+
+      it('should call service.getBudgetForm', () => {
+        vm.budgetId = 1;
+        spyOn(vm.service, 'getBudgetForm').and.callThrough();
+        vm.getBudgetForm();
+        expect(vm.service.getBudgetForm).toHaveBeenCalledWith(vm.budgetId);
+      });
+
+      it('should set form to response.data with changes', () => {
+        vm.budgetId = 1;
+        vm.form = null;
+        let result = {
+          foo: 'bar',
+          totals: {
+            borderMonitoringStation: {},
+            other: {},
+            safeHouse: {},
+          },
+        };
+        vm.getBudgetForm();
+        expect(vm.form).toEqual(result);
+      });
+
+      it('should call getAllData', () => {
+        vm.budgetId = 1;
+        vm.getBudgetForm();
+        expect(vm.getAllData).toHaveBeenCalled();
+      });
+
+      it('should call getAllData if budgetId not valid', () => {
+        vm.utils.validId = () => { return false };
+        vm.getBudgetForm();
+        expect(vm.getAllData).toHaveBeenCalled();
+      });
+
+      it('should set form.month_year if budgetId not valid', () => {
+        vm.utils.validId = () => { return false };
+        vm.form.month_year = null;
+        vm.getBudgetForm();
+        expect(typeof vm.form.month_year).toEqual('string');
+      });
 
     });
 

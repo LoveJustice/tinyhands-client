@@ -15,7 +15,7 @@ import BudgetListService from './budget/list/budgetList.service';
 import BudgetService from './budget/form/budget.service';
 import IrfListService from './irf/list/irfList.service';
 import IrfService from './irf/form/irf.service';
-import SessionService from './utils/session.service';
+import SessionService from './session/session.service';
 import TallyService from './components/tally/tally.service';
 import UtilService from './util/util.service';
 import VifService from './vif/form/vif.service';

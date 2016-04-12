@@ -7,6 +7,7 @@ export default class IrfController {
 
     this.form = {};
     this.irfId = $stateParams.id;
+    this.numPersonBoxes = 1;
     this.sections = [];
     this.selectedSectionIndex = 0;
     this.selectedFlags = [];

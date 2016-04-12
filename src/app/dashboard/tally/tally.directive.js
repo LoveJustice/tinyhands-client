@@ -6,7 +6,7 @@ class TallyDirective {
 		
 		let directive = {
 			restrict: 'E',
-			templateUrl: 'app/components/tally/tally.html',
+			templateUrl: 'app/dashboard/tally/tally.html',
 			controller: TallyController,
 			controllerAs: 'tally'
 		};

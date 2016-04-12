@@ -17,8 +17,12 @@ import BudgetTravelFormController from './form/components/travel/travelForm.cont
 
 import budgetRouteConfig from './budget.route';
 
+import MathOperator from './mathOperator/mathOperator.directive';
+
+
 export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Shared'])
     .config(budgetRouteConfig)
+    .directive('operator', () => new MathOperator())
     .service('BudgetListService', BudgetListService)
     .service('BudgetService', BudgetService)
     .controller('BudgetAdministrationFormController', BudgetAdministrationFormController)

@@ -64,6 +64,24 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
+    .state('irf', {
+      url: '/irf/:id',
+      templateUrl: 'app/irf/form/irf.html',
+      controller: 'IrfController',
+      controllerAs: 'irfCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('irfList', {
+      url: '/irf',
+      templateUrl: 'app/irf/list/irfList.html',
+      controller: 'IrfListController',
+      controllerAs: 'irfListCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',
@@ -71,15 +89,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       controllerAs: 'login',
       data: {
         requireLogin: false
-      }
-    })
-    .state('vifList', {
-      url: '/vif',
-      templateUrl: 'app/vif/list/vifList.html',
-      controller: 'VifListController',
-      controllerAs: 'vifListCtrl',
-      data: {
-        requireLogin: true
       }
     })
     .state('vif', {
@@ -91,11 +100,11 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
-    .state('irfList', {
-      url: '/irf',
-      templateUrl: 'app/irf/list/irfList.html',
-      controller: 'IrfListController',
-      controllerAs: 'irfListCtrl',
+    .state('vifList', {
+      url: '/vif',
+      templateUrl: 'app/vif/list/vifList.html',
+      controller: 'VifListController',
+      controllerAs: 'vifListCtrl',
       data: {
         requireLogin: true
       }

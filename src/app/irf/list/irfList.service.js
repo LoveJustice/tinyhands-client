@@ -11,6 +11,6 @@ export default class IrfListService extends BaseService {
     }
 
     deleteIrf(id){
-        return this.delete('/api/irf/${id}/');
+        return this.delete(`/api/irf/${id}/`);
     }
 }

@@ -97,7 +97,7 @@ describe('BorderStationController', () => {
         it('function on should be called 4 times', () => {
             spyOn(vm.$scope, "$on");
             vm.createModifyDoneListeners();
-            expect(vm.$scope.$on).toHaveBeenCalledTimes(4);
+            expect(vm.$scope.$on.calls.count()).toEqual(4);
         });
 
         it('modifyDetailDone, updateLocationDone, and updatePeopleDone should equal to true', () => {
@@ -119,7 +119,7 @@ describe('BorderStationController', () => {
         it('function on should be called 4 times', () => {
             spyOn(vm.$scope, "$on");
             vm.createUpdateErrorListeners();
-            expect(vm.$scope.$on).toHaveBeenCalledTimes(4);
+            expect(vm.$scope.$on.calls.count()).toEqual(4);
         });
 
         it('updateStatusText should be equal to "Error"', () => {

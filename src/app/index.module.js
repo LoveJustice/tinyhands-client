@@ -48,11 +48,11 @@ import BudgetSalariesController from './budget/form/components/salaries/salaries
 import BudgetShelterFormController from './budget/form/components/shelter/shelterForm.controller';
 import BudgetSuppliesFormController from './budget/form/components/supplies/suppliesForm.controller';
 import BudgetTravelFormController from './budget/form/components/travel/travelForm.controller';
-import EventsModalListController from './events/list/modalCtrl';
-import EventsListController from './events/list/eventsCtrl';
-import EventsEditFormController from './events/form/editEventCtrl';
-import EventsCalendarController from './events/calendar/eventCalendarCtrl';
-import EventsModalCalendarController from './events/calendar/eventModalCtrl';
+import EventsModalListController from './events/list/modalCtrl.controller';
+import EventsListController from './events/list/eventsCtrl.controller';
+import EventsEditFormController from './events/form/editEvent.controller';
+import EventsCalendarController from './events/calendar/eventCalendarCtrl.controller';
+import EventsModalCalendarController from './events/calendar/eventModalCtrl.controller';
 
 import DashboardController from './dashboard/dashboard.controller';
 import IrfListController from './irf/list/irfList.controller';

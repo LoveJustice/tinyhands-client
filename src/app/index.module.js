@@ -22,9 +22,8 @@ import VifListService from './vif/list/vifList.service';
 // ENDREGION: Services
 
 // REGION: Directives
-import AnswerDirective from './components/answer/answer.directive';
 import DetailDirective from './border-station/detail/detail.directive';
-import FlagDirective from './components/flag/flag.directive';
+import CheckBoxDirective from './components/checkBox/checkBox.directive';
 import GreenLightDirective from './components/greenLight/greenLight.directive';
 import LocationDirective from './border-station/location/location.directive';
 import MapDirective from './components/map/map.directive';
@@ -88,11 +87,10 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   // ENDREGION: Services
 
   // REGION: Directives
-  .directive('answer', () => new AnswerDirective())
   .directive('borderStationDetail', () => new DetailDirective())
   .directive('borderStationLocation', () => new LocationDirective())
   .directive('borderStationPerson', () => new PersonDirective())
-  .directive('flag', () => new FlagDirective())
+  .directive('checkBox', () => new CheckBoxDirective())
   .directive('googlemap', () => new MapDirective())
   .directive('greenLight', () => new GreenLightDirective())
   .directive('navbar', () => new NavbarDirective())

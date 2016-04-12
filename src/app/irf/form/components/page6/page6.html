@@ -189,8 +189,8 @@
             <div class="checkbox-inline">
                 <label>
                     <input type="checkbox" ng-model="irfCtrl.form.noticed_other_sign" name="noticed_other_sign">
-                    7.25 Other Sign: 
-                    <input type="text" ng-model="irfCtrl.form.noticed_other_sign_value" maxlength="255">
+                    7.25 Other Sign 
+                    <input type="text" ng-model="irfCtrl.form.noticed_other_sign_value" ng-if="irfCtrl.form.noticed_other_sign" maxlength="255">
                 </label>
             </div>
         </div>

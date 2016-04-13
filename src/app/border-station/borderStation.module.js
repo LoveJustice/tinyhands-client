@@ -9,7 +9,7 @@ import PersonDirective from './person/person.directive';
 export default angular.module('tinyhands.BorderStation', ['ui.router', 'tinyhands.Shared'])
     .config(borderStationRouteConfig)
     .service('BorderStationService', BorderStationService)
-    .directive('borderStationDetail', () => new DetailDirective())
-    .directive('borderStationLocation', () => new LocationDirective())
-    .directive('borderStationPerson', () => new PersonDirective())
+    .directive('borderStationDetail', DetailDirective)
+    .directive('borderStationLocation',LocationDirective)
+    .directive('borderStationPerson', PersonDirective)
     .controller('BorderStationController', BorderStationController);

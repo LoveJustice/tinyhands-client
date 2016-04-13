@@ -13,9 +13,9 @@ import IrfController from './form/irf.controller';
 export default angular.module('tinyhands.IRF', ['ui.router', 'tinyhands.Shared'])
     .config(IRFRoutes)
     
-    .directive('checkBox', () => new CheckBoxDirective())
-    .directive('greenLight', () => new GreenLightDirective())
-    .directive('verticalWord', () => new VerticalWordDirective())
+    .directive('checkBox', CheckBoxDirective)
+    .directive('greenLight', GreenLightDirective)
+    .directive('verticalWord', VerticalWordDirective)
     
     .service('IrfListService', IrfListService)
     .service('IrfService', IrfService)

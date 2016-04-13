@@ -1,7 +1,6 @@
 import NavbarController from './navbar.controller';
 
-class NavbarDirective {
-  constructor() {
+export default function NavbarDirective() {
     'ngInject';
 
     let directive = {
@@ -12,7 +11,4 @@ class NavbarDirective {
     };
 
     return directive;
-  }
 }
-
-export default NavbarDirective;

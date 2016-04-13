@@ -9,6 +9,6 @@ export default class IrfListService {
     }
 
     deleteIrf(id){
-        return this.service.delete('/api/irf/${id}/');
+        return this.service.delete(`/api/irf/${id}/`);
     }
 }

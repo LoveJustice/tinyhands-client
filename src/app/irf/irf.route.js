@@ -9,6 +9,15 @@ function IRFRoutes($stateProvider) {
         requireLogin: true
       }
     })
+    .state('irf', {
+      url: '/irf/:id',
+      templateUrl: 'app/irf/form/irf.html',
+      controller: 'IrfController',
+      controllerAs: 'irfCtrl',
+      data: {
+        requireLogin: true
+      }
+    });
 }
 
 export default IRFRoutes;

@@ -1,12 +1,7 @@
-import BaseService from '../base.service';
-
-export default class BorderStationService extends BaseService {
-	constructor($http, $q) {
+export default class BorderStationService {
+	constructor(BaseService, $q) {
 		'ngInject';
-		super();
-		
-		
-		this.$http = $http;
+		this.service = BaseService;
 		this.$q = $q;
 		
 		this.borderStationId = 0;
@@ -14,19 +9,19 @@ export default class BorderStationService extends BaseService {
 
 	// POSTs
 	createBorderStation(data) {
-		return this.post('api/border-station/', data);
+		return this.service.post('api/border-station/', data);
 	}
 	
 	createCommitteeMember(data) {
-		return this.post('api/committee-member/', data);
+		return this.service.post('api/committee-member/', data);
 	}
 
 	createLocation(data) {
-		return this.post('api/location/', data);
+		return this.service.post('api/location/', data);
 	}
 
 	createStaff(data) {
-		return this.post('api/staff/', data);
+		return this.service.post('api/staff/', data);
 	}
 	
 	createRelationship(createArray, createApiFunction) {
@@ -56,23 +51,23 @@ export default class BorderStationService extends BaseService {
 	
 	// GETs
 	getBorderStations() {
-		return this.get('api/border-station/');
+		return this.service.get('api/border-station/');
 	}
 	
 	getCommitteeMembers(bsId=this.borderStationId) {
-		return this.get('api/committee-member/?border_station=' + bsId);
+		return this.service.get('api/committee-member/?border_station=' + bsId);
 	}
 
 	getDetails() {
-		return this.get('api/border-station/' + this.borderStationId + '/');
+		return this.service.get('api/border-station/' + this.borderStationId + '/');
 	}
 
 	getLocations() {
-		return this.get('api/location/?border_station=' + this.borderStationId);
+		return this.service.get('api/location/?border_station=' + this.borderStationId);
 	}
 
 	getStaff(bsId=this.borderStationId) {
-		return this.get('api/staff/?border_station=' + bsId);
+		return this.service.get('api/staff/?border_station=' + bsId);
 	}
 	
 	
@@ -101,15 +96,15 @@ export default class BorderStationService extends BaseService {
 
 	// PUTs
 	updateCommitteeMembers(memberId, data) {
-		return this.put('api/committee-member/' + memberId + '/', data);
+		return this.service.put('api/committee-member/' + memberId + '/', data);
 	}
 
 	updateDetails(borderStationId, data) {
-		return this.put('api/border-station/' + borderStationId + '/', data);
+		return this.service.put('api/border-station/' + borderStationId + '/', data);
 	}
 
 	updateLocations(locationId, data) {
-		return this.put('api/location/' + locationId + '/', data);
+		return this.service.put('api/location/' + locationId + '/', data);
 	}
 	
 	updateRelationship(updateArray, updateApiFunction, numNew=0) {
@@ -138,6 +133,6 @@ export default class BorderStationService extends BaseService {
 	}
 
 	updateStaff(staffId, data) {
-		return this.put('api/staff/' + staffId + '/', data);
+		return this.service.put('api/staff/' + staffId + '/', data);
 	}
 }

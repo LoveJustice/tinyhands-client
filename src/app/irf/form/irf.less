@@ -1,0 +1,63 @@
+#irfForm {
+  .pagination {
+    li {
+      cursor: pointer;
+      * {
+        user-select: none;
+      }
+    }
+  }
+  #irf-page7 {
+    .box-label {
+      text-align: right;
+    }
+    .header {
+      margin-bottom: 25px;
+    }
+    .input-field {
+      padding-left: 0;
+    }
+    .radio-bottom {
+      height: 25px;
+      margin-bottom: 20px;
+    }
+    .radio-top {
+      height: 25px;
+    }
+    .test {
+      border: 1px solid black;
+    }
+    .text-box {
+      width: 100%;
+    }
+  }
+  table {
+    @border-radius: 15px;
+    border-collapse: separate;
+    border-radius: @border-radius;
+    tr:first-child td:first-child {
+      border-top-left-radius: @border-radius;
+    }
+    tr:first-child td:last-child {
+      border-top-right-radius: @border-radius;
+    }
+    tr:last-child td:first-child {
+      border-bottom-left-radius: @border-radius;
+    }
+    tr:last-child td:last-child {
+      border-bottom-right-radius: @border-radius;
+    }
+    .header {
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    td {
+      vertical-align: middle;
+    }
+  }
+  .headinghover:hover {
+    background-color: #cccccc;
+    cursor: pointer;
+  }
+}

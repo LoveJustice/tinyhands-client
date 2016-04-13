@@ -1,16 +1,14 @@
-import BaseService from '../../base.service';
-
-export default class BudgetListService extends BaseService {
-  constructor($http) {
+export default class BudgetListService{
+  constructor(BaseService) {
     'ngInject';
-    super($http);
+    this.service = BaseService;
   }
 
   getBudgetList() {
-    return this.get('/api/budget/');
+    return this.service.get('/api/budget/');
   }
 
   deleteBorderStationBudget(id) {
-    return this.delete(`/api/budget/${id}/`);
+    return this.service.delete(`/api/budget/${id}/`);
   }
 }

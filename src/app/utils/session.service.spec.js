@@ -2,7 +2,7 @@ import SessionService from './session.service';
 
 describe('SessionService', () => {
 
-  let service;
+  let service, mockBaseService;
 
   beforeEach(inject(($http) => {
     let $rootScope = {
@@ -11,7 +11,8 @@ describe('SessionService', () => {
         },
         $state = {go: () => {}},
         $timeout = (f) => {f();};
-    service = new SessionService($http, $rootScope, $state, $timeout);
+    mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'post']);
+    service = new SessionService($rootScope, $state, $timeout, mockBaseService);
   }));
 
 
@@ -30,15 +31,14 @@ describe('SessionService', () => {
     beforeEach(() => {
       let promise = {data: {token: 123}};
       sessionStorage.token = null;
-      service.post = () => { return {then: (f) => {
+      mockBaseService.post.and.callFake(() => { return {then: (f) => {
         f(promise);
-      }};};
+      }};});
     });
 
     it(`should call post with ${url} and ${obj}`, () => {
-      spyOn(service, 'post').and.callThrough();
       service.attemptLogin(username, password);
-      expect(service.post).toHaveBeenCalledWith(url, obj);
+      expect(mockBaseService.post).toHaveBeenCalledWith(url, obj);
     });
 
     let token = "Token 123";
@@ -65,15 +65,14 @@ describe('SessionService', () => {
     let result = {data: 'foobar'};
 
     beforeEach(() => {
-      service.get = () => { return {then: (f) => {
+      mockBaseService.get.and.callFake(() => { return {then: (f) => {
         f(result);
-      }};};
+      }};});
     });
 
     it("should call get with 'api/me/'", () => {
-      spyOn(service, 'get').and.callThrough();
       service.me();
-      expect(service.get).toHaveBeenCalledWith('api/me/');
+      expect(mockBaseService.get).toHaveBeenCalledWith('api/me/');
     });
 
     it(`should set user to '${result.data}'`, () => {
@@ -106,6 +105,11 @@ describe('SessionService', () => {
     });
 
     it('should set root authenticated to true if token', () => {
+      let result = {data: 'foobar'};
+      mockBaseService.get.and.callFake(() => { return {then: (f) => {
+        f(result);
+      }};});
+        
       service.root.authenticated = false;
       service.checkAuthenticityLogic(null, true);
       expect(service.root.authenticated).toBe(true);

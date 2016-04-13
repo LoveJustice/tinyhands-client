@@ -1,9 +1,9 @@
 class TallyController {
-	constructor ($rootScope, tallyService) {
+	constructor ($rootScope, TallyService) {
 		'ngInject';
 
 		this.rootScope = $rootScope;
-		this.service = tallyService;
+		this.service = TallyService;
 
 		this.days = [];
 		this.userId = null;

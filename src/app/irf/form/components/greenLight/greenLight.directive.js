@@ -1,5 +1,4 @@
-export default class GreenLightDirective {
-  constructor() {
+export default function GreenLightDirective() {
     'ngInject';
 
     let directive = {
@@ -9,5 +8,4 @@ export default class GreenLightDirective {
     };
 
     return directive;
-  }
 }

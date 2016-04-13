@@ -1,20 +1,19 @@
 import Address2Service from './address2.service';
 describe('Address2Service', () => {
 
-  let service;
+  let service, mockBaseService;
 
   beforeEach(() => {
-    let $http;
-    service = new Address2Service($http);
+    mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'put'])
+    service = new Address2Service(mockBaseService);
   });
 
   describe('function listAddresses', () => {
     let url = 'api/address2/',
         queryParams = 'foo bar baz';
     it(`should call get with '${url}' and '${queryParams}'`, () => {
-      spyOn(service, 'get');
       service.listAddresses(queryParams);
-      expect(service.get).toHaveBeenCalledWith(url, queryParams);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url, queryParams);
     });
   });
 
@@ -31,9 +30,8 @@ describe('Address2Service', () => {
     let url = 'api/address2/',
         queryParams = 'foo bar baz';
     it(`should call get with '${url}' and '${queryParams}'`, () => {
-      spyOn(service, 'get');
       service.loadMoreAddresses(queryParams);
-      expect(service.get).toHaveBeenCalledWith(url, queryParams);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url, queryParams);
     });
   });
 
@@ -41,9 +39,8 @@ describe('Address2Service', () => {
     let address = {id: 123},
         url = 'api/address2/' + address.id + '/';
     it(`should call get with '${url}' and '${address}'`, () => {
-      spyOn(service, 'put');
       service.saveAddress(address);
-      expect(service.put).toHaveBeenCalledWith(url, address);
+      expect(mockBaseService.put).toHaveBeenCalledWith(url, address);
     });
   });
 
@@ -51,9 +48,8 @@ describe('Address2Service', () => {
     let val = 'asdf',
         url = 'api/address2/fuzzy/?vdc=' + val;
     it(`should call get with '${url}'`, () => {
-      spyOn(service, 'get');
       service.getFuzzyAddress2s(val);
-      expect(service.get).toHaveBeenCalledWith(url);
+      expect(mockBaseService.get).toHaveBeenCalledWith(url);
     });
   });
 

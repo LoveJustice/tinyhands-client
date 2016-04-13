@@ -1,16 +1,14 @@
-import BaseService from '../../base.service';
-
-export default class VifListService extends BaseService {
-    constructor($http) {
+export default class VifListService {
+    constructor(BaseService) {
         'ngInject';
-        super($http);
+        this.service = BaseService;
     }
 
     deleteVif(id) {
-        return this.delete(`api/vif/${id}/`);
+        return this.service.delete(`api/vif/${id}/`);
     }
 
     getVifList() {
-        return this.get('api/vif/');
+        return this.service.get('api/vif/');
     }
 }

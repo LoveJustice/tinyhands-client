@@ -14,7 +14,7 @@ export default angular.module('tinyhands.Dashboard', ['uiGmapgoogle-maps', 'ui.r
     .config(dashboardRouteConfig)
     .config(googleMapsConfig) // Pass google maps config
         
-    .service('tallyService', TallyService)
+    .service('TallyService', TallyService)
     
     .directive('googlemap', () => new MapDirective())    
     .directive('tally', () => new TallyDirective())

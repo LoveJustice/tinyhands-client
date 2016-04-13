@@ -1,10 +1,8 @@
-import BaseService from '../base.service';
-
-export default class SessionService extends BaseService {
-  constructor($http, $rootScope, $state, $timeout) {
+export default class SessionService {
+  constructor($rootScope, $state, $timeout, BaseService) {
     'ngInject';
-    super($http);
 
+    this.service = BaseService;
     this.root = $rootScope;
     this.routeState = $state;
     this.timeout = $timeout;
@@ -13,21 +11,21 @@ export default class SessionService extends BaseService {
   }
 
   attemptLogin(username, password) {
-    return this.post('api/login/', { "username": username, "password": password })
+    return this.service.post('api/login/', { "username": username, "password": password })
       .then(
-        (promise) => {
-          sessionStorage.token = "Token " + promise.data.token;
-          this.root.authenticated = true;
-          this.routeState.go('dashboard');
-        },
-        () => {
-          window.toastr.error("Invalid Login");
-        }
-        );
+      (promise) => {
+        sessionStorage.token = "Token " + promise.data.token;
+        this.root.authenticated = true;
+        this.routeState.go('dashboard');
+      },
+      () => {
+        window.toastr.error("Invalid Login");
+      }
+      );
   }
 
   me() {
-    return this.get('api/me/').then((result) => {
+    return this.service.get('api/me/').then((result) => {
       this.user = result.data;
       this.root.$broadcast('GetNavBarBorderStations');
     });

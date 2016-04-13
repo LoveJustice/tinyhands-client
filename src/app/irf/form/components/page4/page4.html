@@ -1,50 +1,15 @@
 <div class="panel panel-info">
   <div class="panel-heading">
-    <h1>Which family member did you talk to?</h1>
+    <h3>Which family member did you talk to?</h3>
   </div>
   <div class="panel-body">
-    <div>
-      <label>
-        <b>4.1</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_brother"> Own Brother
-      </label>
-    </div>
-    <div>
-      <label>
-        <b>4.2</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_sister"> Own Sister
-      </label>
-    </div>
-    <div>
-      <label>
-        <b>4.3</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_father"> Own Father
-      </label>
-    </div>
-    <div>
-      <label>
-        <b>4.4</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_mother"> Own Mother
-      </label>
-    </div>
-    <div>
-      <label>
-        <b>4.5</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_grandparent"> Own Grandparent
-      </label>
-    </div>
-    <div>
-      <label>
-        <b>4.6</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_aunt_uncle"> Own Aunt/Uncle
-      </label>
-    </div>
-    <div>
-      <label>
-        <b>4.7</b>
-        <input type="checkbox" ng-model="irfCtrl.form.talked_to_family_member_other"> Other
-      </label>
-    </div>
+    <check-box number="4.1" ng-model="irfCtrl.form.talked_to_family_member_brother">Own Brother</check-box>
+    <check-box number="4.2" ng-model="irfCtrl.form.talked_to_family_member_sister">Own Sister</check-box>
+    <check-box number="4.3" ng-model="irfCtrl.form.talked_to_family_member_father">Own Father</check-box>
+    <check-box number="4.4" ng-model="irfCtrl.form.talked_to_family_member_mother">Own Mother</check-box>
+    <check-box number="4.5" ng-model="irfCtrl.form.talked_to_family_member_grandparent">Own Grandparent</check-box>
+    <check-box number="4.6" ng-model="irfCtrl.form.talked_to_family_member_aunt_uncle">Own Aunt/Uncle</check-box>
+    <check-box number="4.7" ng-model="irfCtrl.form.talked_to_family_member_other">Other</check-box>
     <div class="form-group col-md-offset-3 col-md-6" ng-if="irfCtrl.form.talked_to_family_member_other">
       <input type="textbox" class="form-control" placeholder="Other" ng-model="irfCtrl.form.talked_to_family_member_other_value">
     </div>

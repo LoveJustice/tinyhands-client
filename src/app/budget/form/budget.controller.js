@@ -1,12 +1,12 @@
 import Constants from './constants.js';
 
 export default class BudgetController {
-  constructor($state, $stateParams, BudgetService, utils) {
+  constructor($state, $stateParams, BudgetService, UtilService) {
     'ngInject';
 
     this.$state = $state;
     this.service = BudgetService;
-    this.utils = utils;
+    this.utils = UtilService;
 
 
     // Variable Declarations

@@ -1,9 +1,9 @@
 export default class VifListController {
-    constructor(VifListService, session) {
+    constructor(VifListService, SessionService) {
         'ngInject';
 
         this.service = VifListService;
-        this.session = session;
+        this.session = SessionService;
 
         this.numShowing = 25;
         this.paginateBy = 25;

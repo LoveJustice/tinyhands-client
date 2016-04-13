@@ -1,13 +1,14 @@
+import BaseService from '../../base.service'
 import TallyController from './tally.controller';
 import TallyService from './tally.service';
 import constants from '../../constants';
 
 describe('TallyController', () => {
   let vm, httpBackend;
-
   beforeEach(inject(($httpBackend, $http) => {
     let $rootScope = null;
-    let tallyService = new TallyService($http);
+    let baseService = new BaseService($http);
+    let tallyService = new TallyService(baseService);
     vm = new TallyController($rootScope, tallyService);
     httpBackend = $httpBackend;
   }));
@@ -116,7 +117,7 @@ describe('TallyController', () => {
 
   });
 
-  describe('function getTallyData with fistCall', () => {
+  describe('function getTallyData with firstCall', () => {
 
     it('should have days that have changed', () => {
         // REGION: Data Setup

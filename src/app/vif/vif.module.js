@@ -2,7 +2,7 @@ import TinyHandsShared from '../shared/shared.module';
 
 import VIFRoutes from './vif.route'
 
-import VifBuilder from './form/vifBuilder.service';
+import VifBuilder from './form/vifBuilder/vifBuilder.service';
 
 import VifService from './form/vif.service';
 import VifListService from './list/vifList.service';

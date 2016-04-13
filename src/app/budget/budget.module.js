@@ -20,7 +20,7 @@ import MathOperator from './mathOperator/mathOperator.directive';
 
 export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Shared'])
     .config(budgetRouteConfig)
-    .directive('operator', () => new MathOperator())
+    .directive('operator', MathOperator)
     .service('BudgetListService', BudgetListService)
     .service('BudgetService', BudgetService)
     .controller('BudgetAdministrationFormController', BudgetAdministrationFormController)

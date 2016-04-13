@@ -1,18 +1,16 @@
 import Constants from './constants.js';
 import BudgetService from './budget.service';
 import BudgetController from './budget.controller';
-import UtilService from '../../util/util.service';
+import UtilService from './../../utils/util.service';
 
 describe('BudgetController', () => {
     let vm;
     let state = {go: () => {}},
-        // stateParams = { borderStationId: 123, id: 1 },
         stateParams = { borderStationId: 123, id: 1 ,isViewing: "true"},
         budgetService,
         utils;
 
     beforeEach(inject(($http) => {
-        // let $http;
         utils = new UtilService();
         stateParams = { borderStationId: 123, id: 1 ,isViewing: "true"};
         budgetService = new BudgetService($http, utils);
@@ -20,9 +18,6 @@ describe('BudgetController', () => {
     }));
 
     describe('function constructor', () => {
-        // it(`budgetFormPath should be 'app/budget/form/components/'`,()=>{
-        //     expect(vm.budgetFormPath).toEqual('app/budget/form/components/');
-        // });
         it(`sections should be object`, () => {
           let budgetFormPath = 'app/budget/form/components/';
           let sections = {allSections: [{ name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },

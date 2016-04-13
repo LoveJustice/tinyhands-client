@@ -1,5 +1,3 @@
-import SharedModule from '../shared/shared.module';
-
 import BudgetListService from './list/budgetList.service';
 import BudgetService from './form/budget.service';
 

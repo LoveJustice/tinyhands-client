@@ -1,5 +1,3 @@
-import SharedModule from '../shared/shared.module';
-
 import IRFRoutes from './irf.route';
 
 import CheckBoxDirective from './form/components/checkBox/checkBox.directive';

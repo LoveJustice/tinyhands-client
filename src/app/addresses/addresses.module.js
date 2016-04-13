@@ -1,5 +1,3 @@
-import SharedModule from '../shared/shared.module';
-
 import Address1Service from './address1.service';
 import Address2Service from './address2.service';
 

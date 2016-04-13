@@ -16,7 +16,7 @@ import NavbarDirective from './components/navbar/navbar.directive';
 
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ui.router', 'ui.bootstrap',
-  'ngCsv', 'tinyhands.Shared', 'tinyhands.Budget', 'tinyhands.BorderStation', 'tinyhands.Addresses',
+  'ngCsv', 'tinyhands.Budget', 'tinyhands.BorderStation', 'tinyhands.Addresses',
   'tinyhands.Dashboard',  'tinyhands.Login', 'tinyhands.VIF', 'tinyhands.IRF'])
   .constant('toastr', toastr)
   .constant('moment', moment)

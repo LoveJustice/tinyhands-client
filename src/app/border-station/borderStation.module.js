@@ -1,5 +1,3 @@
-import SharedModule from '../shared/shared.module';
-
 import BorderStationService from './borderStation.service';
 import BorderStationController from './borderStation.controller';
 import borderStationRouteConfig from './borderStation.route';

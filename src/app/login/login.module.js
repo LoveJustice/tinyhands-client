@@ -1,5 +1,3 @@
-import SharedModule from '../shared/shared.module';
-
 import LoginController from './login.controller';
 import loginRouteConfig from './login.route';
 

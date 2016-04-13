@@ -1,5 +1,3 @@
-import SharedModule from '../shared/shared.module';
-
 import DashboardController from './dashboard.controller';
 import dashboardRouteConfig from './dashboard.route';
 

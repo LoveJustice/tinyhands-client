@@ -57,9 +57,9 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
     })
     .state('events', {
       url: '/events',
-      templateUrl: 'app/events/events.html',
-      controller: 'EventsController',
-      controllerAs: 'events',
+      templateUrl: 'app/events/calendar/event_calendar.html',
+      controller: 'EventsCalendarController',
+      controllerAs: 'calendarCtrl',
       data: {
         requireLogin: true
       }
@@ -73,11 +73,30 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
+    .state('eventsList', {
+      url: '/events/list',
+      templateUrl: 'app/events/list/event_list.html',
+      controller: 'EventsListController',
+      controllerAs: 'eventsCtrl',
+
+      data: {
+        requireLogin: true
+      }
+    })
     .state('irfList', {
       url: '/irf',
       templateUrl: 'app/irf/list/irfList.html',
       controller: 'IrfListController',
       controllerAs: 'irfListCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('eventsForm', {
+      url: '/events/create',
+      templateUrl: 'app/events/form/event_form.html',
+      controller: 'EventsEditFormController',
+      controllerAs: 'editCtrl',
       data: {
         requireLogin: true
       }
@@ -111,16 +130,6 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       templateUrl: 'app/account/components/activate/activateAccount.html',
       controller: 'ActivateAccountController',
       controllerAs: 'activateAcctCtrl',
-      data: {
-        requireLogin: true
-      }
-    })
-
-    .state('vifList', {
-      url: '/vif',
-      templateUrl: 'app/vif/list/vifList.html',
-      controller: 'VifListController',
-      controllerAs: 'vifListCtrl',
       data: {
         requireLogin: true
       }

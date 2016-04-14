@@ -1,7 +1,6 @@
 export default class EventCalendarCtrl {
-    constructor($modal) {
+    constructor($uibModal) {
         'ngInject';
-
         this.eventSources = [
             {
                 url: '/api/event/feed/calendar',
@@ -38,7 +37,7 @@ export default class EventCalendarCtrl {
     }
 
     onCalendarEventClicked (event) {
-        $modal.open({
+        $uibModal.open({
             templateUrl: 'modal.html',
             controller: 'EventModalCtrl',
             controllerAs: 'modalCtrl',

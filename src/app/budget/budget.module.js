@@ -1,7 +1,4 @@
-import SharedModule from '../shared/shared.module';
-
-import BudgetListService from './list/budgetList.service';
-import BudgetService from './form/budget.service';
+import budgetRouteConfig from './budget.route';
 
 import BudgetAdministrationFormController from './form/components/administration/administrationForm.controller';
 import BudgetAwarenessFormController from './form/components/awareness/awarenessForm.controller';
@@ -15,16 +12,14 @@ import BudgetShelterFormController from './form/components/shelter/shelterForm.c
 import BudgetSuppliesFormController from './form/components/supplies/suppliesForm.controller';
 import BudgetTravelFormController from './form/components/travel/travelForm.controller';
 
-import budgetRouteConfig from './budget.route';
-
 import MathOperator from './mathOperator/mathOperator.directive';
 
+import BudgetListService from './list/budgetList.service';
+import BudgetService from './form/budget.service';
 
 export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Shared'])
     .config(budgetRouteConfig)
-    .directive('operator', () => new MathOperator())
-    .service('BudgetListService', BudgetListService)
-    .service('BudgetService', BudgetService)
+    
     .controller('BudgetAdministrationFormController', BudgetAdministrationFormController)
     .controller('BudgetAwarenessFormController', BudgetAwarenessFormController)
     .controller('BudgetCommunicationFormController', BudgetCommunicationFormController)
@@ -35,4 +30,9 @@ export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Share
     .controller('BudgetSalariesController', BudgetSalariesController)
     .controller('BudgetShelterFormController', BudgetShelterFormController)
     .controller('BudgetSuppliesFormController', BudgetSuppliesFormController)
-    .controller('BudgetTravelFormController', BudgetTravelFormController);
+    .controller('BudgetTravelFormController', BudgetTravelFormController)
+    
+    .directive('operator', MathOperator)
+    
+    .service('BudgetListService', BudgetListService)
+    .service('BudgetService', BudgetService);

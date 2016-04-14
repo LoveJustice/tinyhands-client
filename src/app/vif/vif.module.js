@@ -4,9 +4,6 @@ import VIFRoutes from './vif.route'
 
 import VifBuilder from './form/vifBuilder.service';
 
-import VifService from './form/vif.service';
-import VifListService from './list/vifList.service';
-
 import VifController from './form/vif.controller';
 import VifInfoController from './form/info/info.controller';
 import VifSection1Controller from './form/section1/section1.controller';
@@ -20,6 +17,9 @@ import VifSection8Controller from './form/section8/section8.controller';
 import VifPeopleController from './form/people/people.controller';
 import VifLocationsController from './form/locations/locations.controller';
 import VifListController from './list/vifList.controller';
+
+import VifListService from './list/vifList.service';
+import VifService from './form/vif.service';
 
 export default angular.module('tinyhands.VIF', ['ui.router', 'tinyhands.Shared'])
   .config(VIFRoutes)
@@ -41,4 +41,3 @@ export default angular.module('tinyhands.VIF', ['ui.router', 'tinyhands.Shared']
   .controller('VifPeopleController', VifPeopleController) 
   .controller('VifLocationsController', VifLocationsController)   
   .controller('VifListController', VifListController)
-  

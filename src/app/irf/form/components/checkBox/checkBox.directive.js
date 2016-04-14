@@ -1,7 +1,6 @@
 import CheckBoxController from './checkBox.controller';
 
-export default class CheckBoxDirective {
-  constructor() {
+export default function CheckBoxDirective() {
     'ngInject';
 
     let directive = {
@@ -22,5 +21,4 @@ export default class CheckBoxDirective {
     };
 
     return directive;
-  }
 }

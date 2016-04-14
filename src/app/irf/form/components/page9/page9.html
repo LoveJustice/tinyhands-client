@@ -52,8 +52,9 @@
             <div class="select">
                 <label>
                     9.7 How sure are you that it was a trafficking case?<br>
-                    <select class="form-control" ng-model="irfCtrl.form.how_sure_was_trafficking" ng-options="how_sure for how_sure in ['1 - Not at all sure', '2 - Unsure but suspects it', '3 - Somewhat sure', '4 - Very sure', '5 - Absolutely sure']">
-                        <option value="">---Choose Option---</option>
+                    <select class="form-control" ng-model="irfCtrl.page9.how_sure_was_trafficking" 
+                        ng-options="how_sure.name for how_sure in irfCtrl.page9.how_sure_was_trafficking_options">
+                        <option>---Choose Option---</option>
                     </select>
                 </label>
             </div>              

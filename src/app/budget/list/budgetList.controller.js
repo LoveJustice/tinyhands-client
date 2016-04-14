@@ -11,11 +11,11 @@ export default class BudgetList {
    * @param BudgetListService (set of functions that controls data flow from front-end to back-end)
    * @param session (user session data)
    */
-  constructor(BudgetListService, session) {
+  constructor(BudgetListService, SessionService) {
     'ngInject';
 
     this.service = BudgetListService;
-    this.session = session;
+    this.session = SessionService;
 
     this.searchTerm = '';
     this.sortValue = 'month_year';

@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3>Victim Attributes</h3>
+    </div>
+    <div class="panel-body">
+      <check-box number="'7.0'" ng-model="irfCtrl.form.staff_noticed">Staff</check-box>
+      <div class="form-inline">
+        <label>7.1 Staff who noticed:</label>
+        <input class="form-control" placeholder="Staff Name" ng-model="irfCtrl.form.staff_who_noticed">
+      </div>
+      <br>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h4>Manner</h4>
+        </div>
+        <div class="panel-body">
+          <check-box number="7.2" ng-model="irfCtrl.form.noticed_hesitant">Hesitant</check-box>
+          <check-box number="7.3" ng-model="irfCtrl.form.noticed_nervous_or_afraid">Nervous or afraid</check-box>
+          <check-box number="7.4" ng-model="irfCtrl.form.noticed_hurrying">Hurrying</check-box>
+          <check-box number="7.5" ng-model="irfCtrl.form.noticed_drugged_or_drowsy">Drugged or drowsy</check-box>
+        </div>
+      </div>
+
+      <div class="panel panel-warning">
+        <div class="panel-heading">
+          <h4>Attire</h4>
+        </div>
+        <div class="panel-body">
+          <check-box number="7.6" ng-model="irfCtrl.form.noticed_new_clothes">New Clothes</check-box>
+          <check-box number="7.7" ng-model="irfCtrl.form.noticed_dirty_clothes">Dirty Clothes</check-box>
+          <check-box number="7.8" ng-model="irfCtrl.form.noticed_carrying_full_bags">Carrying Full Bags</check-box>
+          <check-box number="7.9" ng-model="irfCtrl.form.noticed_village_dress">Village Dress</check-box>
+        </div>
+      </div>
+
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          <h4>Appearance</h4>
+        </div>
+        <div class="panel-body">
+          <check-box number="'7.10'" ng-model="irfCtrl.form.noticed_indian_looking">Indian Looking</check-box>
+          <check-box number="7.11" ng-model="irfCtrl.form.noticed_typical_village_look">Typical Village Look</check-box>
+          <check-box number="7.12" ng-model="irfCtrl.form.noticed_looked_like_agent">Looked Like Agent</check-box>
+          <check-box number="7.13" ng-model="irfCtrl.form.noticed_caste_difference">Caste Difference</check-box>
+          <check-box number="7.14" ng-model="irfCtrl.form.noticed_young_looking">Young Looking</check-box>
+        </div>
+      </div>
+
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h4>Action</h4>
+        </div>
+        <div class="panel-body">
+          <check-box number="7.15" ng-model="irfCtrl.form.noticed_waiting_sitting">Waiting/Sitting</check-box>
+          <check-box number="7.16" ng-model="irfCtrl.form.noticed_walking_to_border">Walking to Border</check-box>
+          <check-box number="7.17" ng-model="irfCtrl.form.noticed_roaming_around">Roaming Around</check-box>
+          <check-box number="7.18" ng-model="irfCtrl.form.noticed_exiting_vehicle">Exiting vehicle</check-box>
+          <check-box number="7.19" ng-model="irfCtrl.form.noticed_heading_to_vehicle">Heading to Vehicle</check-box>
+          <check-box number="'7.20'" ng-model="irfCtrl.form.noticed_in_a_vehicle">In a Vehicle</check-box>
+          <check-box number="7.21" ng-model="irfCtrl.form.noticed_in_a_rickshaw">In a Rickshaw</check-box>
+          <check-box number="7.23" ng-model="irfCtrl.form.noticed_in_a_cart">In a Cart</check-box>
+          <check-box number="7.24" ng-model="irfCtrl.form.noticed_carrying_a_baby">Carrying a Baby</check-box>
+          <check-box number="7.25" ng-model="irfCtrl.form.noticed_on_the_phone">On the phone</check-box>
+        </div>
+      </div>
+
+      <check-box number="7.26" ng-model="irfCtrl.form.noticed_other_sign">Other Sign</check-box>
+      <div class="form-group col-md-offset-3 col-md-6">
+        <input class="form-control" ng-model="irfCtrl.form.noticed_other_sign_value" ng-if="irfCtrl.form.noticed_other_sign">
+      </div>
+    </div>
+  </div>
+</div>

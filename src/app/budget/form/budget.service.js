@@ -1,25 +1,15 @@
-import BaseService from '../../base.service';
-
 /**
  * Service to manage dataflow of budget form information between the client and
  * the backend.
  *
  * @export
  * @class BudgetService
- * @extends {BaseService}
  */
-export default class BudgetService extends BaseService {
-  /**
-   * Creates an instance of BudgetService.
-   *
-   * @param $http Angular http service
-   */
-  constructor($http, utils) {
+export default class BudgetService {
+  constructor(BaseService, UtilService) {
     'ngInject';
-    super();
-
-    this.$http = $http;
-    this.utils = utils;
+    this.service = BaseService;
+    this.utils = UtilService;
   }
 
   /**
@@ -29,7 +19,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   createForm(form) {
-    return this.post('api/budget/', form);
+    return this.service.post('api/budget/', form);
   }
 
   /**
@@ -40,7 +30,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   createOtherItem(budgetId, otherItem) {
-    return this.post(`api/budget/${budgetId}/item/`, otherItem);
+    return this.service.post(`api/budget/${budgetId}/item/`, otherItem);
   }
 
   /**
@@ -50,7 +40,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   createSalary(salaryData) {
-    return this.post('api/budget/staff_salary/', salaryData);
+    return this.service.post('api/budget/staff_salary/', salaryData);
   }
 
   /**
@@ -61,7 +51,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   deleteOtherItem(budgetId, otherItem) {
-    return this.delete(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
+    return this.service.delete(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
   }
 
   /**
@@ -71,7 +61,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   getBorderStation(id) {
-    return this.get(`api/border-station/${id}/`);
+    return this.service.get(`api/border-station/${id}/`);
   }
 
   /**
@@ -81,7 +71,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   getBudgetForm(id) {
-    return this.get(`api/budget/${id}/`);
+    return this.service.get(`api/budget/${id}/`);
   }
 
   /**
@@ -92,7 +82,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   getOtherItems(budgetId, formSection) {
-    return this.get(`api/budget/${budgetId}/item/?form_section=${formSection}`);
+    return this.service.get(`api/budget/${budgetId}/item/?form_section=${formSection}`);
   }
 
   /**
@@ -104,7 +94,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   getPreviousData(borderStationId, month, year) {
-    return this.get(`api/budget/previous_data/${borderStationId}/${month}/${year}/`);
+    return this.service.get(`api/budget/previous_data/${borderStationId}/${month}/${year}/`);
   }
 
   /**
@@ -115,7 +105,7 @@ export default class BudgetService extends BaseService {
    */
   getStaff(borderStationId) {
     if (this.utils.validId(borderStationId)) {
-      return this.get(`api/staff/?border_station=${borderStationId}`);
+      return this.service.get(`api/staff/?border_station=${borderStationId}`);
     }
   }
 
@@ -126,7 +116,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   getStaffSalaries(budgetId) {
-    return this.get(`api/budget/${budgetId}/staff_salary/`);
+    return this.service.get(`api/budget/${budgetId}/staff_salary/`);
   }
 
   /**
@@ -137,7 +127,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   updateForm(budgetId, form) {
-    return this.put(`api/budget/${budgetId}/`, form);
+    return this.service.put(`api/budget/${budgetId}/`, form);
   }
 
   /**
@@ -148,7 +138,7 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   updateOtherItem(budgetId, otherItem) {
-    return this.put(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
+    return this.service.put(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
   }
 
   /**
@@ -159,6 +149,6 @@ export default class BudgetService extends BaseService {
    * @returns Promise that provides the status and data of the request.
    */
   updateSalary(budgetId, salaryData) {
-    return this.put(`api/budget/${budgetId}/staff_salary/${salaryData.id}/`, salaryData);
+    return this.service.put(`api/budget/${budgetId}/staff_salary/${salaryData.id}/`, salaryData);
   }
 }

@@ -4,17 +4,17 @@ export default class VIFController {
         this.$state = $state;
         this.VifBuilder = VifBuilder;
         this.sections = [
-            'vif.info', 
-            'vif.section1', 
-            'vif.section2', 
-            'vif.section3', 
-            'vif.section4', 
-            'vif.section5', 
-            'vif.section6', 
-            'vif.section7', 
-            'vif.section8', 
-            'vif.people', 
-            'vif.locations'
+            {name: 'Info', state: 'vif.info'},
+            {name: '1', state: 'vif.section1'},
+            {name: '2', state: 'vif.section2'},
+            {name: '3', state: 'vif.section3'},
+            {name: '4', state: 'vif.section4'},
+            {name: '5', state: 'vif.section5'},
+            {name: '6', state: 'vif.section6'},
+            {name: '7', state: 'vif.section7'},
+            {name: '8', state: 'vif.section8'},
+            {name: 'People', state: 'vif.people'},
+            {name: 'Location', state: 'vif.locations'}, 
         ];
         this.sectionIndex = $state.current.data.index;
 	}
@@ -29,7 +29,7 @@ export default class VIFController {
         } else {
             this.sectionIndex = index;
         }
-        this.$state.go(this.sections[this.sectionIndex]);       
+        this.$state.go(this.sections[this.sectionIndex].state);       
     }
     
     nextSection() {

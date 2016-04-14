@@ -47,7 +47,7 @@ describe('VifController', () => {
             it('should change state to corresponding section', () => {
                 controller.goToSection(index);
               
-                expect(mockState.go).toHaveBeenCalledWith(controller.sections[index]);
+                expect(mockState.go).toHaveBeenCalledWith(controller.sections[index].state);
             });
         });
     });
@@ -78,7 +78,7 @@ describe('VifController', () => {
             it('should change state to corresponding section', () => {
                 controller.nextSection();
               
-                expect(mockState.go).toHaveBeenCalledWith(controller.sections[index + 1]);
+                expect(mockState.go).toHaveBeenCalledWith(controller.sections[index + 1].state);
             });
         });
         
@@ -137,7 +137,7 @@ describe('VifController', () => {
             it('should change state to corresponding section', () => {
                 controller.prevSection();
               
-                expect(mockState.go).toHaveBeenCalledWith(controller.sections[index - 1]);
+                expect(mockState.go).toHaveBeenCalledWith(controller.sections[index - 1].state);
             });
         });
         

@@ -38,23 +38,23 @@ describe('BudgetController', () => {
           expect(vm.sections).toEqual(sections);
         });
 
-        it(`active should be null`, () => {
+        it(`should set active to null`, () => {
             expect(vm.active).toEqual(null);
         });
 
-        it(`borderMonitoringStationTotal should be 0`, () => {
+        it(`should borderMonitoringStationTotal to 0`, () => {
             expect(vm.borderMonitoringStationTotal).toEqual(0);
         });
 
-        it(`budgetId should be ${stateParams.id}`, () => {
+        it(`should set budgetId to ${stateParams.id}`, () => {
             expect(vm.budgetId).toEqual(stateParams.id);
         });
 
-        it(`deletedItems should be '[]'`, () => {
+        it(`should set deletedItems to '[]'`, () => {
             expect(vm.deletedItems).toEqual([]);
         });
 
-        it(`form should be object`, () => {
+        it(`should set form to object`, () => {
           let form = {
             other: {},
             totals: {
@@ -67,11 +67,11 @@ describe('BudgetController', () => {
           expect(vm.form).toEqual(form);
         });
 
-        it(`form.border_station should be${stateParams.borderStationId}`,()=>{
+        it(`should set form.border_station to ${stateParams.borderStationId}`,()=>{
            expect(vm.form.border_station).toEqual(stateParams.borderStationId); 
         });
         
-        it(`isCreating should be false if budgetId is ${null} and borderStationId is ${null} `, () => {
+        it(`should set isCreating to false if budgetId is ${null} and borderStationId is ${null} `, () => {
             stateParams.id = null;
             stateParams.borderStationId = null;
             expect(vm.isCreating).toEqual(false);
@@ -79,50 +79,50 @@ describe('BudgetController', () => {
 
         });
 
-        it(`isCreating should be false if budgetId isn't ${null} and borderStationId is ${null} `, () => {
+        it(`should set isCreating to false if budgetId isn't ${null} and borderStationId is ${null} `, () => {
             stateParams.id = 1;
             stateParams.borderStationId = null;
             expect(vm.isCreating).toEqual(false);
             stateParams = { borderStationId: 123, id: 1 };
         });
 
-        it(`isCreating should be false if budgetId is ${stateParams.id} and borderStationId is ${stateParams.borderStationId}`, () => {
+        it(`should set isCreating to false if budgetId is ${stateParams.id} and borderStationId is ${stateParams.borderStationId}`, () => {
             stateParams.id = 1;
             stateParams.borderStationId = 123;
             expect(vm.isCreating).toEqual(false);
             stateParams = { borderStationId: 123, id: 1 };
         });
 
-        it(`isCreating should be true if budgetId is ${null} and borderStationId is ${stateParams.borderStationId}`, () => {
+        it(`should set isCreating to true if budgetId is ${null} and borderStationId is ${stateParams.borderStationId}`, () => {
             stateParams.id = null;
             stateParams.borderStationId = 123;
             expect(vm.isCreating).toEqual(false);
             stateParams = { borderStationId: 123, id: 1 };
         });
 
-        it(`isViewing should be true`,()=>{
+        it(`should set isViewing to true`,()=>{
             expect(vm.isViewing).toEqual(true);
         });
         
-        it(`safeHouseTotal should be 0`,()=>{
+        it(`should set safeHouseTotal to 0`,()=>{
          expect(vm.safeHouseTotal).toEqual(0);
         });
         
-        it(`sectionTemplateUrl should be null`,()=>{
+        it(`should set sectionTemplateUrl to null`,()=>{
          expect(vm.sectionTemplateUrl).toEqual(null);
         });
         
-        it(`total should be 0`,()=>{
+        it(`should set total to 0`,()=>{
          expect(vm.total).toEqual(0);
         });
 
-        it(`validRoute should have been called`,()=>{
+        it(`should have called validRoute`,()=>{
          spyOn(vm, 'validRoute');
          vm.constructor(state, stateParams, budgetService, utils);
          expect(vm.validRoute).toHaveBeenCalled();
         });
 
-        it(`getBudgetForm should have been called`,()=>{
+        it(`should have called getBudgetForm`,()=>{
          spyOn(vm, 'getBudgetForm');
          vm.constructor(state, stateParams, budgetService, utils);
          expect(vm.getBudgetForm).toHaveBeenCalled();
@@ -130,7 +130,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function getOtherCost`,()=>{
-        it(`amount should be equal to 5`,()=>{
+        it(`should return 5`,()=>{
            let otherItems=[{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
            let amount = vm.getOtherCost(otherItems);
            expect(amount).toEqual(5);
@@ -138,7 +138,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function removeItem`,()=>{
-        it(`otherArray[1] should be removed after function`,()=>{
+        it(`should remove otherArray[1] after function call`,()=>{
          let otherArray = [1, 2, 3 ,4];
          let idx = 1;
          vm.removeItem(otherArray,idx);
@@ -147,13 +147,13 @@ describe('BudgetController', () => {
     });
     
     describe(`function validAmount`,()=>{
-        it(`if amount not zero return amount`,()=>{
-         let amount = 5;
+        it(`should return 0 if amount is false`,()=>{
+         let amount = false;
          let result = vm.validAmount(amount);
-         expect(result).toEqual(5);
+         expect(result).toEqual(0);
         });  
         
-        it(`if amount is zero return zero`,()=>{
+        it(`should return 5`,()=>{
          let amount = 5;
          let result = vm.validAmount(amount);
          expect(result).toEqual(5);
@@ -161,7 +161,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function adminStationaryTotal`,()=>{
-        it(`result should be 6`,()=>{
+        it(`should return 6`,()=>{
           vm.form.administration_number_of_intercepts_last_month = 2;
           vm.form.administration_number_of_intercepts_last_month_multiplier = 2;
           vm.form.administration_number_of_intercepts_last_month_adder = 2;
@@ -173,7 +173,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function adminMeetingsTotal`,()=>{
-        it(`result should be 4`,()=>{
+        it(`should return 4`,()=>{
           vm.form.administration_number_of_meetings_per_month = 2;
           vm.form.administration_number_of_meetings_per_month_multiplier = 2;
           let total = vm.form.administration_number_of_meetings_per_month * vm.form.administration_number_of_meetings_per_month_multiplier;
@@ -189,19 +189,19 @@ describe('BudgetController', () => {
             vm.form.administration_registration = false;
             vm.form.administration_registration_amount =3;
         });
-        it(`if administration_booth is true and administration_registration is false return 2`,()=>{
+        it(`should return 2 if administration_booth is true and administration_registration is false `,()=>{
             let result = vm.adminBoothRentalTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if administration_booth is false and administration_registration is true return 3`,()=>{
+        it(`should return 3 if administration_booth is false and administration_registration is true`,()=>{
             vm.form.administration_booth = false;
             vm.form.administration_registration = true;
             let result = vm.adminBoothRentalTotal();
             expect(result).toEqual(3);
         });
         
-        it(`if administration_booth is true and administration_registration is true return 5`,()=>{
+        it(`should return 5 if administration_booth is true and administration_registration is true`,()=>{
             vm.form.administration_registration = true;
             let result = vm.adminBoothRentalTotal();
             expect(result).toEqual(5);         
@@ -221,12 +221,12 @@ describe('BudgetController', () => {
           vm.form.administration_registration_amount =3;
           vm.form.totals.borderMonitoringStation.administration = 0;
         });
-        it(`result should be 15`,()=>{
+        it(`should return 15`,()=>{
           let result = vm.adminTotal();
           expect(result).toEqual(15);
         });
         
-        it(`bMS_administration should be 15 `,()=>{
+        it(`should set bMS_administration to 15 `,()=>{
           vm.adminTotal();
           expect(vm.form.totals.borderMonitoringStation.administration).toEqual(15);
         });
@@ -242,19 +242,19 @@ describe('BudgetController', () => {
             vm.form.awareness_sign_boards= 1; 
         });
         
-        it(`result should be 1`,()=>{
+        it(`should return 1 when awareness_contact_cards is true`,()=>{
             vm.form.awareness_contact_cards = true;
             let result = vm.awarenessTotal();
             expect(result).toEqual(1);
         });
         
-        it(`result should be 1`,()=>{
+        it(`should return 1 when awareness_awareness_party_boolean is true`,()=>{
             vm.form.awareness_awareness_party_boolean = true;
             let result = vm.awarenessTotal();
             expect(result).toEqual(1);
         });        
         
-        it(`result should be 1`,()=>{
+        it(`should return 1 when awareness_sign_boards_boolean is true`,()=>{
             vm.form.awareness_sign_boards_boolean = true;
             let result = vm.awarenessTotal();
             expect(result).toEqual(1);
@@ -271,24 +271,24 @@ describe('BudgetController', () => {
             vm.form.communication_manager_amount = 1;
         });
         
-        it(`if communication_chair is true and communication_manager is true result should be 2`,()=>{
+        it(`should return 2 if communication_chair is true and communication_manager is true`,()=>{
             let result = vm.communicationManagerTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if communication_chair is false and communication_manager is true result should be 1`,()=>{
+        it(`should return 1 if communication_chair is false and communication_manager is true`,()=>{
             vm.form.communication_chair = false;
             let result = vm.communicationManagerTotal();
             expect(result).toEqual(1);
         });
         
-        it(`if communication_chair is true and communication_manager is false result should be 1`,()=>{
+        it(`should return 1 if communication_chair is true and communication_manager is false`,()=>{
             vm.form.communication_manager = false;
             let result = vm.communicationManagerTotal();
             expect(result).toEqual(1);
         });
         
-        it(`if communication_chair is false and communication_manager is false result should be 0`,()=>{
+        it(`should return 0 if communication_chair is false and communication_manager is false`,()=>{
             vm.form.communication_chair = false;
             vm.form.communication_manager = false;
             let result = vm.communicationManagerTotal();
@@ -302,24 +302,24 @@ describe('BudgetController', () => {
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 2;
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid result should be 4`,()=>{
+        it(`should return 4 if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid`,()=>{
             let result = vm.communicationNumberOfStaffTotal();
             expect(result).toEqual(4);
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid result should be 4`,()=>{
+        it(`should return 4 if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier is valid`,()=>{
             vm.form.communication_number_of_staff_with_walkie_talkies = 0;
             let result = vm.communicationNumberOfStaffTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid result should be 4`,()=>{
+        it(`should return 4 if communication_number_of_staff_with_walkie_talkies is valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid`,()=>{
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 0;
             let result = vm.communicationNumberOfStaffTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid result should be 4`,()=>{
+        it(`should return 4 if communication_number_of_staff_with_walkie_talkies isn't valid and communication_number_of_staff_with_walkie_talkies_multiplier isn't valid`,()=>{
             vm.form.communication_number_of_staff_with_walkie_talkies = 0;
             vm.form.communication_number_of_staff_with_walkie_talkies_multiplier = 0;
             let result = vm.communicationNumberOfStaffTotal();
@@ -333,24 +333,24 @@ describe('BudgetController', () => {
             vm.form.communication_each_staff_multiplier = 2;
         });
         
-        it(`if communication_each_staff is valid and communication_each_staff_multiplier is valid `,()=>{
+        it(`should return 4 if communication_each_staff is valid and communication_each_staff_multiplier is valid `,()=>{
             let result = vm.communicationEachStaffTotal();
             expect(result).toEqual(4);
         });
         
-        it(`if communication_each_staff isn't valid and communication_each_staff_multiplier is valid `,()=>{
+        it(`should return 0 if communication_each_staff isn't valid and communication_each_staff_multiplier is valid `,()=>{
             vm.form.communication_each_staff = 0;
             let result = vm.communicationEachStaffTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if communication_each_staff is valid and communication_each_staff_multiplier isn't valid `,()=>{
+        it(`should return 0 if communication_each_staff is valid and communication_each_staff_multiplier isn't valid `,()=>{
             vm.form.communication_each_staff_multiplier = 0;
             let result = vm.communicationEachStaffTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if communication_each_staff isn't valid and communication_each_staff_multiplier isn't valid `,()=>{
+        it(`should return 0 if communication_each_staff isn't valid and communication_each_staff_multiplier isn't valid `,()=>{
             vm.form.communication_each_staff = 0;
             vm.form.communication_each_staff_multiplier = 0;
             let result = vm.communicationEachStaffTotal();
@@ -371,14 +371,14 @@ describe('BudgetController', () => {
             vm.form.other.Communcation = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
         });
         
-        it(`result should be 10`,()=>{
+        it(`should return 10`,()=>{
             let result = vm.communicationTotal();
             expect(result).toEqual(10);
         });
     });
     
     describe(`function foodGasInterceptedGirls`,()=>{
-        it(`result should be 8`,()=>{
+        it(`should return 8`,()=>{
          vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = 2;
          vm.form.food_and_gas_number_of_intercepted_girls = 2;
          vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = 2;
@@ -388,7 +388,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function foodGasLimboGirls`,()=>{
-        it(`result should be 8`,()=>{
+        it(`should return 8`,()=>{
          vm.form.food_and_gas_limbo_girls_multiplier = 2;
          vm.form.food_and_gas_number_of_limbo_girls = 2;
          vm.form.food_and_gas_number_of_days = 2; 
@@ -407,13 +407,13 @@ describe('BudgetController', () => {
          vm.form.food_and_gas_number_of_days = 2; 
         });
         
-        it(`foodGasInterceptedGirls should have been called`,()=>{
+        it(`should have called foodGasInterceptedGirls`,()=>{
             spyOn(vm,'foodGasInterceptedGirls');
             vm.foodAndGasTotal();
             expect(vm.foodGasInterceptedGirls).toHaveBeenCalled();
         });
         
-        it(`foodGasLimboGirls should have been called`,()=>{
+        it(`should have called foodGasLimboGirls `,()=>{
             spyOn(vm,'foodGasLimboGirls');
             vm.foodAndGasTotal();
             expect(vm.foodGasLimboGirls).toHaveBeenCalled();
@@ -421,7 +421,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function medicalTotal`,()=>{
-        it(`medical_last_months_expense should be 2`,()=>{
+        it(`should have medical_last_months_expense be 2 after function call`,()=>{
             vm.form.medical_last_months_expense = 2;
             vm.medicalTotal();
             expect(vm.form.medical_last_months_expense).toEqual(2);
@@ -434,24 +434,24 @@ describe('BudgetController', () => {
         vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 2;
         });
         
-        it(`if miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 2 result should be 4`,()=>{
+        it(`should return 4 if miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 2`,()=>{
             let result = vm.miscellaneousMaximum();
             expect(result).toEqual(4); 
         });
         
-        it(`if miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 2 result should be 4`,()=>{
+        it(`should return 0 if miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 2`,()=>{
             vm.form.miscellaneous_number_of_intercepts_last_month = 0;
             let result = vm.miscellaneousMaximum();
             expect(result).toEqual(0);
         });
         
-        it(`if miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 0 result should be 4`,()=>{
+        it(`should return 0 if miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 0`,()=>{
             vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
             let result = vm.miscellaneousMaximum();
             expect(result).toEqual(0);
         });
         
-        it(`if miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 0 result should be 4`,()=>{
+        it(`should return 0 if miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 0`,()=>{
          vm.form.miscellaneous_number_of_intercepts_last_month = 0;
          vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
          let result = vm.miscellaneousMaximum();
@@ -466,7 +466,7 @@ describe('BudgetController', () => {
         vm.form.other.Miscellaneous = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
         });
         
-        it(`result should be 9`,()=>{
+        it(`should return 9`,()=>{
             let result = vm.miscellaneousTotal();
             expect(result).toEqual(9);
         });
@@ -478,7 +478,7 @@ describe('BudgetController', () => {
             vm.form.other.Salaries = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];      
         });
         
-        it(`result should be 7`,()=>{
+        it(`should return 7`,()=>{
             let result = vm.salariesTotal();
             expect(result).toEqual(7);
         });
@@ -503,24 +503,24 @@ describe('BudgetController', () => {
             vm.form.shelter_shelter_two_amount = 2;
         });
         
-        it(`if shelter_shelter_startup is true and shelter_shelter_two is true result should be 4`,()=>{
+        it(`should return 4 if shelter_shelter_startup is true and shelter_shelter_two is true`,()=>{
             let result = vm.shelterCheckboxTotal();
             expect(result).toEqual(4); 
         });
         
-        it(`if shelter_shelter_startup is false and shelter_shelter_two is true result should be 2`,()=>{
+        it(`should return 2 if shelter_shelter_startup is false and shelter_shelter_two is true`,()=>{
             vm.form.shelter_shelter_startup = false;
             let result = vm.shelterCheckboxTotal();
             expect(result).toEqual(2); 
         });
         
-        it(`if shelter_shelter_startup is true and shelter_shelter_two is false result should be 2`,()=>{
+        it(`should return 2 if shelter_shelter_startup is true and shelter_shelter_two is false`,()=>{
             vm.form.shelter_shelter_two = false;
             let result = vm.shelterCheckboxTotal();
             expect(result).toEqual(2); 
         });
         
-        it(`if shelter_shelter_startup is false and shelter_shelter_two is false result should be 0`,()=>{
+        it(`should return 0 if shelter_shelter_startup is false and shelter_shelter_two is false`,()=>{
             vm.form.shelter_shelter_startup = false;
             vm.form.shelter_shelter_two = false;
             let result = vm.shelterCheckboxTotal();
@@ -540,7 +540,7 @@ describe('BudgetController', () => {
             vm.form.other.Shelter = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
         });
         
-        it(`result should be  15`,()=>{
+        it(`should return 15`,()=>{
             let result = vm.shelterTotal();
             expect(result).toEqual(15);
         });
@@ -558,51 +558,51 @@ describe('BudgetController', () => {
             vm.form.supplies_flashlights_amount = 2;
         });
         
-        it(`if supplies_walkie_talkies_boolean is true`,()=>{
+        it(`should return 2 if supplies_walkie_talkies_boolean is true`,()=>{
             vm.form.supplies_walkie_talkies_boolean = true;
             let result = vm.suppliesTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if supplies_walkie_talkies_boolean is false`,()=>{
+        it(`should return 0 if supplies_walkie_talkies_boolean is false`,()=>{
             let result = vm.suppliesTotal();
             expect(result).toEqual(0);
         });
         
-        it(`if supplies_recorders_boolean is true`,()=>{
+        it(`should return  2 if supplies_recorders_boolean is true`,()=>{
             vm.form.supplies_recorders_boolean = true;
             let result = vm.suppliesTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if supplies_recorders_boolean is false`,()=>{
+        it(`should return 0 if supplies_recorders_boolean is false`,()=>{
             let result = vm.suppliesTotal();
             expect(result).toEqual(0);
         });        
         
-        it(`if supplies_binoculars_boolean is true`,()=>{
+        it(`should return 2 if supplies_binoculars_boolean is true`,()=>{
             vm.form.supplies_binoculars_boolean = true;
             let result = vm.suppliesTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if supplies_binoculars_boolean is false`,()=>{
+        it(`should return 0 if supplies_binoculars_boolean is false`,()=>{
             let result = vm.suppliesTotal();
             expect(result).toEqual(0);
         });  
         
-        it(`if supplies_flashlights_boolean is true`,()=>{
+        it(`should return 2 if supplies_flashlights_boolean is true`,()=>{
             vm.form.supplies_flashlights_boolean = true;
             let result = vm.suppliesTotal();
             expect(result).toEqual(2);
         });
         
-        it(`if supplies_flashlights_boolean is false`,()=>{
+        it(`should return 0 if supplies_flashlights_boolean is false`,()=>{
             let result = vm.suppliesTotal();
             expect(result).toEqual(0);
         });   
         
-        it(`result should be 5`,()=>{
+        it(`should return 5 result should be 5`,()=>{
             vm.form.other.Supplies = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
             let result = vm.suppliesTotal();
             expect(result).toEqual(5);
@@ -610,7 +610,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function travelMotorbikeOtherTotal`,()=>{
-        it(`result should be 4`,()=>{
+        it(`should return 4`,()=>{
             vm.form.travel_motorbike = true;
             vm.form.travel_motorbike_amount = 2;
             vm.form.travel_plus_other = 2;
@@ -620,7 +620,7 @@ describe('BudgetController', () => {
     });
     
     describe(`function travelNumberOfStaffUsingBikesTotal`,()=>{
-        it(`result should be 4`,()=>{
+        it(`should return 4`,()=>{
             vm.form.travel_number_of_staff_using_bikes = 2;
             vm.form.travel_number_of_staff_using_bikes_multiplier = 2;
             let result = vm.travelNumberOfStaffUsingBikesTotal();
@@ -643,38 +643,38 @@ describe('BudgetController', () => {
             vm.form.other.Travel = [{cost:1},{cost:1},{cost:1},{cost:1},{cost:1}];
         });
         
-        it(`result should be 15`,()=>{
+        it(`should return 15 when travel_chair_with_bike is true`,()=>{
             vm.form.travel_chair_with_bike = true;
             let result = vm.travelTotal();
             expect(result).toEqual(15);
         });
         
-        it(`result should be 15`,()=>{
+        it(`should return 15 when travel_manager_with_bike is true`,()=>{
             vm.form.travel_manager_with_bike = true;
             let result = vm.travelTotal();
             expect(result).toEqual(15);
         });
         
-        it(`result should be 9`,()=>{
+        it(`should return 9 when travel_number_of_staff_using_bikes is 0 and travel_number_of_staff_using_bikes_multiplier is 0`,()=>{
             vm.form.travel_number_of_staff_using_bikes = 0;
             vm.form.travel_number_of_staff_using_bikes_multiplier = 0;
             let result = vm.travelTotal();
             expect(result).toEqual(9);         
         });     
         
-        it(`result should be 11`,()=>{
+        it(`should return 11 when travel_last_months_expense_for_sending_girls_home is 0`,()=>{
             vm.form.travel_last_months_expense_for_sending_girls_home = 0;
             let result = vm.travelTotal();
             expect(result).toEqual(11);
         });
         
-        it(`result should be 15`,()=>{
+        it(`should return 15 when travel_motorbike true`,()=>{
             vm.form.travel_motorbike = true;
             let result = vm.travelTotal();
             expect(result).toEqual(15);          
         });
         
-        it(`result should be 8`,()=>{
+        it(`should return 8`,()=>{
             vm.form.other.Travel =[{cost:0},{cost:0},{cost:0},{cost:0},{cost:0}];
             let result = vm.travelTotal();
             expect(result).toEqual(8)
@@ -682,37 +682,37 @@ describe('BudgetController', () => {
     });
     
     describe(`function setBorderMonitoringStatingTotals`,()=>{
-        it(`adminTotal should be called`,()=>{
+        it(`should have called adminTotal `,()=>{
             spyOn(vm,'adminTotal');
             vm.setBorderMonitoringStationTotals();
             expect(vm.adminTotal).toHaveBeenCalled();
         });
         
-        it(`communicationTotal should have been called`,()=>{
+        it(`should have called communicationTotal `,()=>{
             spyOn(vm,'communicationTotal');
             vm.setBorderMonitoringStationTotals();
             expect(vm.communicationTotal).toHaveBeenCalled();
         });
         
-        it(`medicalTotal should have been called`,()=>{
+        it(`should have called medicalTotal`,()=>{
             spyOn(vm,'medicalTotal');
             vm.setBorderMonitoringStationTotals();
             expect(vm.medicalTotal).toHaveBeenCalled();
         });
 
-        it(`miscellaneousTotal should have been called`,()=>{
+        it(`should have called miscellaneousTotal `,()=>{
             spyOn(vm,'miscellaneousTotal');
             vm.setBorderMonitoringStationTotals();
             expect(vm.miscellaneousTotal).toHaveBeenCalled();
         });
 
-        it(`salariesTotal should have been called`,()=>{
+        it(`should have called salariesTotal`,()=>{
             spyOn(vm,'salariesTotal');
             vm.setBorderMonitoringStationTotals();
             expect(vm.salariesTotal).toHaveBeenCalled();
         });
         
-        it(`salariesTotal should have been called`,()=>{
+        it(`should have called salariesTotal`,()=>{
             spyOn(vm,'salariesTotal');
             vm.setBorderMonitoringStationTotals();
             expect(vm.salariesTotal).toHaveBeenCalled();
@@ -721,13 +721,13 @@ describe('BudgetController', () => {
     });
     
     describe(`function setSafeHouseTotals`,()=>{
-        it(`foodAndGasTotal should have been called`,()=>{
+        it(`should have called foodAndGasTotal`,()=>{
             spyOn(vm,'foodAndGasTotal');
             vm.setSafeHouseTotals();
             expect(vm.foodAndGasTotal).toHaveBeenCalled();
         });
         
-        it(`shelterTotal should have been called`,()=>{
+        it(`should have called shelterTotal`,()=>{
             spyOn(vm,'shelterTotal');
             vm.setSafeHouseTotals();
             expect(vm.shelterTotal).toHaveBeenCalled();
@@ -735,25 +735,25 @@ describe('BudgetController', () => {
     });
     
     describe(`function setTotals`,()=>{
-        it(`setBorderMonitoringStationTotals should have been called`,()=>{
+        it(`should have called setBorderMonitoringStationTotals`,()=>{
             spyOn(vm,'setBorderMonitoringStationTotals');
             vm.setTotals();
             expect(vm.setBorderMonitoringStationTotals).toHaveBeenCalled();
         });       
         
-        it(`setSafeHouseTotals should have been called`,()=>{
+        it(`should have called setSafeHouseTotals`,()=>{
             spyOn(vm,'setSafeHouseTotals');
             vm.setTotals();
             expect(vm.setSafeHouseTotals).toHaveBeenCalled();
         });            
         
-        it(`awarenessTotal should have been called`,()=>{
+        it(`should have called awarenessTotal`,()=>{
             spyOn(vm,'awarenessTotal');
             vm.setTotals();
             expect(vm.awarenessTotal).toHaveBeenCalled();
         });            
         
-        it(`suppliesTotal should have been called`,()=>{
+        it(`should have called suppliesTotal `,()=>{
             spyOn(vm,'suppliesTotal');
             vm.setTotals();
             expect(vm.suppliesTotal).toHaveBeenCalled();

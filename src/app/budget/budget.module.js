@@ -15,12 +15,6 @@ export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Share
     .controller('BudgetListController', BudgetListController)
 
     .directive('operator', MathOperator)
-
-    .filter('capitalize', function() {
-        return function(input) {
-            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-        };
-    })
-
+    
     .service('BudgetListService', BudgetListService)
     .service('BudgetService', BudgetService);

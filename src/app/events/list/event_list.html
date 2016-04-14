@@ -1,12 +1,8 @@
-{% extends 'events/event_base.html' %}
-
-{% block content %}
 
 <h2> Edit Events </h2>
 
-{% verbatim %}
 
-    <div ng-controller="EventsCtrl as eventsCtrl" ng-cloak>
+    <div ng-cloak>
         <table class="table table-bordered table-hover">
             <thead>
                 <th>Title</th>
@@ -45,6 +41,8 @@
             </div>
     </script>
 
-{% endverbatim %}
 
-{% endblock %}
+<script src="../events.service.js"></script>
+<script src="eventsCtrl.js"></script>
+<script src="modalCtrl.controller.js"></script>
+

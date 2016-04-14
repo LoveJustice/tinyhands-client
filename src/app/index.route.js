@@ -64,6 +64,24 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
+ .state('eventsList', {
+      url: '/events/list',
+      templateUrl: 'app/events/list/event_list.html',
+      controller: 'EventsListController',
+      controllerAs: 'eventsCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+ .state('eventsForm', {
+      url: '/events/create',
+      templateUrl: 'app/events/form/event_form.html',
+      controller: 'EventsEditFormController',
+      controllerAs: 'editCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
     .state('login', {
       url: '/login',
       templateUrl: 'app/login/login.html',

@@ -6,9 +6,9 @@ export default class ModalController {
 
     delete() {
         $modalInstance.close(true);
-    };
+    }
 
     cancel() {
         $modalInstance.dismiss("cancel");
-    };
+    }
 }

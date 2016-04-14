@@ -118,7 +118,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .controller('EventsListController', EventsListController)
   .controller('EventsEditFormController', EventsEditFormController)
   .controller('EventsCalendarController', EventsCalendarController)
-  .controller('EventsModalCalendarController', EventsModalCalendarController) 
+  .controller('EventsModalCalendarController', EventsModalCalendarController)
   .controller('DashboardController', DashboardController)
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)

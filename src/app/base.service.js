@@ -5,7 +5,7 @@ class BaseService {
 		'ngInject';
 
 		this.$http = $http;
-
+		
 		this.baseUrl = constants.BaseUrl;
 
 		this.errors = [];
@@ -24,7 +24,9 @@ class BaseService {
 		}
 
 		if (params.length > 0) {
+			console.log(params)
 			params = params ? '?' + $.param(params) : '';
+			console.log(params)
 		} else {
 			params = '';
 		}
@@ -79,6 +81,23 @@ class BaseService {
 
 		return this.$http.put(this.baseUrl + url, data, { headers: headers });
 	}
+
+  	/*
+	* Function: delete
+	* Params:
+	*	url - string
+	* headers - JSON object
+	*/
+  delete(url, userHeaders) {
+    var headers = {};
+    angular.copy(userHeaders, headers);
+    if(sessionStorage.getItem('token')){
+      headers.Authorization = sessionStorage.token;
+    }
+
+    return this.$http.delete(this.baseUrl + url, { headers: headers});
+  }
+
 }
 
 export default BaseService;

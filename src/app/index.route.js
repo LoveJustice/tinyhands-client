@@ -91,6 +91,40 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: false
       }
     })
+    .state('account', {
+      url: '/account/tab=:activeTab',
+      templateUrl: 'app/account/account.html',
+      data: {
+        requireLogin: true
+      }
+    })
+
+    .state('account/:id', {
+      url: '/account/:id',
+      templateUrl: 'app/account/account.html',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('account/activate-account/:code', {
+      url: '/account/activate-account/:code',
+      templateUrl: 'app/account/components/activate/activateAccount.html',
+      controller: 'ActivateAccountController',
+      controllerAs: 'activateAcctCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+
+    .state('vifList', {
+      url: '/vif',
+      templateUrl: 'app/vif/list/vifList.html',
+      controller: 'VifListController',
+      controllerAs: 'vifListCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
     .state('vif', {
       url: '/vif/create',
       templateUrl: 'app/vif/form/vif.html',

@@ -8,6 +8,7 @@ import googleMapsConfig from './components/map/map.config';
 import runBlock from './index.run';
 
 // REGION: Services
+import AccountService from './account/account.service';
 import Address1Service from './addresses/address1.service';
 import Address2Service from './addresses/address2.service';
 import BorderStationService from './border-station/borderStation.service';
@@ -20,6 +21,7 @@ import SessionService from './utils/session.service';
 import TallyService from './components/tally/tally.service';
 import VifService from './vif/form/vif.service';
 import VifListService from './vif/list/vifList.service';
+import PermissionsSetsService from './account/permissionsSets.service';
 // ENDREGION: Services
 
 // REGION: Directives
@@ -37,6 +39,9 @@ import VerticalWordDirective from './components/verticalWord/verticalWord.direct
 // ENDREGION: Directives
 
 // REGION: Controllers
+import ActivateAccountController from './account/components/activate/activateAccount.controller.js'
+import AccountController from './account/account.controller';
+import AccountEditController from './account/components/edit/accountEdit.controller';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
@@ -66,6 +71,7 @@ import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
 import VifController from './vif/form/vif.controller';
 import VifListController from './vif/list/vifList.controller';
+import UnsavedChangesModalController from './account/components/modal/unsavedChangesModal.controller.js'
 // ENDREGION: Controllers
 
 
@@ -81,6 +87,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .run(runBlock)
 
   // REGION: Services
+  .service('AccountService', AccountService)
   .service('address1Service', Address1Service)
   .service('address2Service', Address2Service)
   .service('BorderStationService', BorderStationService)
@@ -91,6 +98,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .service('IrfService', IrfService)
   .service('session', SessionService)
   .service('tallyService', TallyService)
+  .service('PermissionsSetsService', PermissionsSetsService)
   .service('VifListService', VifListService)
   .service('VifService', VifService)
   // ENDREGION: Services
@@ -110,6 +118,9 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   // ENDREGION: Directives
 
   // REGION: Controllers
+  .controller('ActivateAccountController', ActivateAccountController)
+  .controller('AccountController', AccountController)
+  .controller('AccountEditController', AccountEditController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address1EditModalController', Address1EditModalController)
   .controller('Address2Controller', Address2Controller)
@@ -135,6 +146,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   .controller('IrfController', IrfController)
   .controller('IrfListController', IrfListController)
   .controller('LoginController', LoginController)
+  .controller('UnsavedChangesModalController', UnsavedChangesModalController)
   .controller('TallyController', TallyController)
   .controller('VifController', VifController)
   .controller('VifListController', VifListController)

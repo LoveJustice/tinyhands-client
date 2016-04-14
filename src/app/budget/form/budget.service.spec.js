@@ -24,7 +24,6 @@ describe('BudgetService', () => {
     describe('function createOtherItem', () => {
         let url = `api/budget/${budgetId}/item/`;
         it(`should get called with ${url} and'${otherItem}'`, () => {
-            fail();
             service.createOtherItem(budgetId, otherItem);
             expect(mockBaseService.post).toHaveBeenCalledWith(url, otherItem);
         });

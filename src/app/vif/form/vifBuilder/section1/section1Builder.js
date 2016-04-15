@@ -9,7 +9,6 @@ import IsLiterateBuilder from './isLiterateBuilder';
 
 export default class Section1Builder {
     
-    
     constructor(vif = null) {
         this.caste = new CasteBuilder(vif);
         this.occupation = new OccuptionBuilder(vif);

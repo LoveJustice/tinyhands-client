@@ -1,7 +1,7 @@
-function runBlock ($log, session) {
+function runBlock ($log, SessionService) {
   'ngInject';
   
-  session.checkAuthenticity();
+  SessionService.checkAuthenticity();
   
   $log.debug('runBlock end');
 }

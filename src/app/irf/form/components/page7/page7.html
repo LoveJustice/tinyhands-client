@@ -1,1 +1,94 @@
-7
+<div ng-app="irf.controller.js as irfCtrl" id="irf-page7">
+    <div class="row header">
+        <h3>Person Cards</h3>
+    </div>
+    <div class="row">
+        <div ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]" class="col-md-4">
+            <div ng-if="i <= irfCtrl.numPersonBoxes" class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <button ng-if="i != 1" ng-click="irfCtrl.numPersonBoxes = irfCtrl.numPersonBoxes - 1" type="button" class="btn btn-danger btn-xs pull-left">
+                            <strong>-</strong>
+                        </button>
+                    Person Box {{ i }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Full name</p>
+                        </div>
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="fullname" class="text-box"><br>
+                        </div>
+                    </div>
+                    <div class="row radio-top">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">Victim</label> &nbsp;
+                          <label><input type="radio" name="optradio">Trafficker</label>
+                        </div>
+                    </div>
+                    <div class="row radio-bottom">
+                        <div class="radio">
+                          <label><input type="radio" name="optradio">Male</label> &nbsp;
+                          <label><input type="radio" name="optradio">Female</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Age</p>
+                        </div>
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="age" class="text-box"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Address 1</p>
+                        </div>
+
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="address-1" class="text-box"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Address 2</p>
+                        </div>
+
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="address-2" class="text-box"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Phone Contact</p>
+                        </div>
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="phone-contact" class="text-box"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Relation to...</p>
+                        </div>
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="relation-to" class="text-box"><br>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 box-label">
+                            <p>Photo Upload</p>
+                        </div>
+                        <div class="col-md-7 input-field">
+                            <input type="text" name="photo-upload" class="text-box"><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pull-right">
+        <button ng-click="irfCtrl.numPersonBoxes = irfCtrl.numPersonBoxes + 1" ng-disabled="irfCtrl.numPersonBoxes == 12" type="button" class="btn btn-success btn-lg">Add Person Box</button>
+        <button type="button" class="btn btn-primary btn-lg">Save</button>
+    </div>
+</div>

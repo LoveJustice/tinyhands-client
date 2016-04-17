@@ -1,4 +1,4 @@
-export default class EventCalendarCtrl {
+export default class EventCalendarController {
     constructor($uibModal) {
         'ngInject';
         this.eventSources = [

@@ -1,5 +1,4 @@
-export default class VerticalWordDirective {
-  constructor() {
+export default function VerticalWordDirective() {
     'ngInject';
 
     let directive = {
@@ -10,5 +9,4 @@ export default class VerticalWordDirective {
     };
 
     return directive;
-  }
 }

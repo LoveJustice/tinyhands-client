@@ -1,11 +1,11 @@
 export default class NavbarController {
-	constructor ($interval, $scope, $timeout, BorderStationService, session) {
+	constructor ($interval, $scope, $timeout, BorderStationService, SessionService) {
 		'ngInject';
 		
 		this.$interval = $interval;
 		this.$timeout = $timeout;
 		this.borderStationService = BorderStationService;
-		this.session = session;
+		this.session = SessionService;
 		
 		
 		this.borderStations = [];

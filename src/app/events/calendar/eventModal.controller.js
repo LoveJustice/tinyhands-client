@@ -1,11 +1,12 @@
 export default class EventModalCtrl {
-    constructor($scope, $modalInstance, event) {
+    constructor($scope, $uibModalInstance, event) {
         'ngInject';
 
         this.event = event;
+        this.uibModalInstance = $uibModalInstance;
     }
 
     close () {
-        $modalInstance.dismiss('cancel');
+        this.uibModalInstance.dismiss('cancel');
     }
 }

@@ -1,6 +1,8 @@
 export default class EventCalendarController {
     constructor($uibModal, EventsService) {
         'ngInject';
+        console.log($uibModal);
+        this.modal = $uibModal;
         this.eventSources = [
            {
                events: (start, end, timezone, callback) => {
@@ -22,7 +24,9 @@ export default class EventCalendarController {
             defaultDate: this.getToday(),
 			editable: false,
 			eventLimit: true, // allow "more" link when too many events
-            eventClick: this.onCalendarEventClicked,
+            eventClick: (event) => {
+                this.onCalendarEventClicked(event);
+            },
         }
     }
 
@@ -43,9 +47,10 @@ export default class EventCalendarController {
     }
 
     onCalendarEventClicked (event) {
-        $uibModal.open({
-            templateUrl: 'modal.html',
-            controller: 'EventModalCtrl',
+        console.log(this);
+        this.modal.open({
+            templateUrl: 'app/events/calendar/eventModal.html',
+            controller: 'EventModalController',
             controllerAs: 'modalCtrl',
             bindToController: true,
             resolve: {

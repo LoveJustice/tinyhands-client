@@ -1,10 +1,16 @@
 export default class EventCalendarController {
-    constructor($uibModal) {
+    constructor($uibModal, EventsService) {
         'ngInject';
         this.eventSources = [
-            {
-                url: '/api/event/feed/calendar',
-            }
+           {
+               events: (start, end, timezone, callback) => {
+                   let formattedStart = start.format('YYYY-MM-DD');
+                   let formattedEnd = end.format('YYYY-MM-DD');
+                   EventsService.getCalendar(formattedStart, formattedEnd).then((results) => {
+                       callback(results.data);
+                    });
+               }
+           }
         ];
 
         this.calendarConfig = {

@@ -24,9 +24,7 @@ class BaseService {
 		}
 
 		if (params.length > 0) {
-			console.log(params)
 			params = params ? '?' + $.param(params) : '';
-			console.log(params)
 		} else {
 			params = '';
 		}

@@ -1,34 +1,44 @@
-import BaseService from '../base.service'
-
-export default class EventsService extends BaseService {
-    constructor($http) {
+export default class EventsService{
+    constructor(BaseService) {
         'ngInject';
-        super();
-
-        this.$http = $http;
+        this.service = BaseService;
     }
 
     getAll() {
-        return this.get();
+        return this.serivce.get('api/event/all/');
     }
 
     getEvent(id) {
-        return this.get();
+        return this.service.get(`api/event/${id}/`);
     }
 
-    createEvent(id) {
-        return this.post();
+    createEvent(event) {
+        return this.service.post('api/event/', event);
     }
 
-    updateEvent(id) {
-        return this.put();
+    updateEvent(id, event) {
+        return this.service.put('api/event/', event);
     }
 
     destroyEvent(id) {
-        return this.delete();
+        return this.service.delete(`api/event/${id}/`);
+    }
+    
+    getCalendar(start, end) {
+        var params = [
+            {
+                name: 'start',
+                value: start
+            },
+            {
+                name: 'end',
+                value: end
+            }
+        ];
+        return this.service.get('api/event/feed/calendar/', params);
     }
 
     getDashboard() {
-        return this.get();
+        return this.service.get('api/event/feed/dashboard/');
     }
 }

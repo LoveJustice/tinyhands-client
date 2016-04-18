@@ -8,7 +8,7 @@ import ModalController from './list/modal.controller';
 
 import EventsService from './events.service'
 
-export default angular.module('tinyhands.Events', ['ui.router','tinyhands.Shared'])
+export default angular.module('tinyhands.Events', ['ui.router', 'ui.bootstrap', 'ui.calendar', 'tinyhands.Shared'])
     .config(EventsRoutes)
     
     .controller('EventCalendarController', EventCalendarController)

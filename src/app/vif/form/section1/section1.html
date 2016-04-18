@@ -68,37 +68,9 @@
                     <h3 class="panel-title"><strong>1.7</strong> Caste</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Magar</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Jaisi</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Thakuri</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Bramin</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Tamang</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Chhetri</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Mongolian</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Newar</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="caste">Muslim</label>
+                    <div class="col-md-4" ng-repeat="caste in section1Ctrl.castes">
+                        <div class="radio options">
+                            <label><input type="radio" name="caste">{{ caste }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
@@ -113,48 +85,9 @@
                     <h3 class="panel-title"><strong>1.8</strong> What is your occupation?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3">
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Unemployed</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Farmer</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Wage-laborer</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Business Owner</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Migrant Worker</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Tailoring</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Housewife</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Animal Husbandry</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Domestic Work</label>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Shoekeeper</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Hotel</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="occuption">Factory</label>
+                    <div class="col-md-3" ng-repeat="occupation in section1Ctrl.occupations">
+                        <div class="radio options">
+                            <label><input type="radio" name="occupation">{{ occupation }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
@@ -168,29 +101,10 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>1.9</strong> Marital Status</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="marital-status">Single</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="marital-status">Married</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="marital-status">Widow</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="marital-status">Divorced</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="marital-status">Husband has other wives</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="marital-status">Abandoned by husband</label>
+                <div class="panel-body panel-radio-only">
+                    <div class="col-md-4" ng-repeat="status in section1Ctrl.marital_statuses">
+                        <div class="radio options">
+                            <label><input type="radio" name="marital-status">{{ status }}</label>
                         </div>
                     </div>
                 </div>
@@ -201,28 +115,9 @@
                     <h3 class="panel-title"><strong>1.10</strong> With whom do you live?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="living">Own Parent(s)</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="living">Husband</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="living">Husband's Family</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="living">Friends</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="living">Alone</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="living">Other Relative</label>
+                    <div class="col-md-4" ng-repeat="living in section1Ctrl.living">
+                        <div class="radio options">
+                            <label><input type="radio" name="living">{{ living }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
@@ -245,13 +140,11 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>1.12</strong> Who is your primary guardian?</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="radio">
-                        <label><input type="radio" name="guardian">Own Parent(s)</label>&nbsp;
-                        <label><input type="radio" name="guardian">Husband</label>&nbsp;
-                        <label><input type="radio" name="guardian">Other Relative</label>&nbsp;
-                        <label><input type="radio" name="guardian">Non-relative</label>&nbsp;
-                        <label><input type="radio" name="guardian">No one (I have no guardian)</label><br>
+                <div class="panel-body panel-radio-only">
+                    <div class="col-md-4" ng-repeat="guardian in section1Ctrl.guardians">
+                        <div class="radio options">
+                            <label><input type="radio" name="guardian">{{ guardian }}</label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -284,29 +177,10 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>1.14</strong> What is parents' marital status?</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="parent-marital">Single</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="parent-marital">Married</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="parent-marital">Widow</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="parent-marital">My father has other wives</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="parent-marital">Separated (Legally married)</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="parent-marital">Divorced</label>
+                <div class="panel-body panel-radio-only">
+                    <div class="col-md-4" ng-repeat="status in section1Ctrl.parents_marital_statuses">
+                        <div class="radio options">
+                            <label><input type="radio" name="parents-marital">{{ status }}</label>
                         </div>
                     </div>
                 </div>
@@ -316,38 +190,10 @@
                 <div class="panel-heading">
                     <h3 class="panel-title"><strong>1.15</strong> Education Level</h3>
                 </div>
-                <div class="panel-body">
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="education">None</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="education">Only informal (adult)</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="education">Primary only</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="education">Grade 4-8</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="education">Grade 9-10</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="education">SLC</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="radio">
-                            <label><input type="radio" name="education">11-12</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="education">Bachelors</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="education">Masters</label>
+                <div class="panel-body panel-radio-only">
+                    <div class="col-md-4" ng-repeat="education in section1Ctrl.education">
+                        <div class="radio options">
+                            <label><input type="radio" name="education">{{ education }}</label>
                         </div>
                     </div>
                 </div>
@@ -358,14 +204,9 @@
                     <h3 class="panel-title"><strong>1.16</strong> Is the victim literate?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-6">
+                    <div class="col-md-6" ng-repeat="option in ['No', 'Yes']">
                         <div class="radio">
-                            <label><input type="radio" name="literate">No</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="radio">
-                            <label><input type="radio" name="literate">Yes</label>
+                            <label><input type="radio" name="literate">{{ option }}</label>
                         </div>
                     </div>
                 </div>

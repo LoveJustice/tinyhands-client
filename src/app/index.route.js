@@ -80,14 +80,20 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
         requireLogin: true
       }
     })
+
+    .state('account/not_found/:id', {
+      url: '/account/not_found/:id',
+      templateUrl: 'app/account/account.html',
+      data: {
+        requireLogin: true
+      }
+    })
+
     .state('account/activate-account/:code', {
       url: '/account/activate-account/:code',
       templateUrl: 'app/account/components/activate/activateAccount.html',
       controller: 'ActivateAccountController',
       controllerAs: 'activateAcctCtrl',
-      data: {
-        requireLogin: true
-      }
     })
 
     .state('vifList', {

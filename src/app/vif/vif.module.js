@@ -22,23 +22,22 @@ import VifLocationsController from './form/locations/locations.controller';
 import VifListController from './list/vifList.controller';
 
 export default angular.module('tinyhands.VIF', ['ui.router', 'tinyhands.Shared'])
-  .config(VIFRoutes)
-  
-  .service('VifBuilder', VifBuilder)
-  .service('VifListService', VifListService)
-  .service('VifService', VifService)
-  
-  .controller('VifController', VifController)
-  .controller('VifInfoController', VifInfoController)
-  .controller('VifSection1Controller', VifSection1Controller)
-  .controller('VifSection2Controller', VifSection2Controller)
-  .controller('VifSection3Controller', VifSection3Controller) 
-  .controller('VifSection4Controller', VifSection4Controller) 
-  .controller('VifSection5Controller', VifSection5Controller) 
-  .controller('VifSection6Controller', VifSection6Controller) 
-  .controller('VifSection7Controller', VifSection7Controller) 
-  .controller('VifSection8Controller', VifSection8Controller) 
-  .controller('VifPeopleController', VifPeopleController) 
-  .controller('VifLocationsController', VifLocationsController)   
-  .controller('VifListController', VifListController)
-  
+    .config(VIFRoutes)
+
+    .controller('VifController', VifController)
+    .controller('VifInfoController', VifInfoController)
+    .controller('VifSection1Controller', VifSection1Controller)
+    .controller('VifSection2Controller', VifSection2Controller)
+    .controller('VifSection3Controller', VifSection3Controller)
+    .controller('VifSection4Controller', VifSection4Controller)
+    .controller('VifSection5Controller', VifSection5Controller)
+    .controller('VifSection6Controller', VifSection6Controller)
+    .controller('VifSection7Controller', VifSection7Controller)
+    .controller('VifSection8Controller', VifSection8Controller)
+    .controller('VifPeopleController', VifPeopleController)
+    .controller('VifLocationsController', VifLocationsController)
+    .controller('VifListController', VifListController)
+
+    .service('VifBuilder', VifBuilder)
+    .service('VifListService', VifListService)
+    .service('VifService', VifService);

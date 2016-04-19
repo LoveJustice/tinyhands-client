@@ -6,5 +6,6 @@ bower_components/
 dist/
 .DS_Store
 *.swp
+*.d.ts
 
 jsconfig.json

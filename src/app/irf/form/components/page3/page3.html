@@ -1,1 +1,66 @@
-3
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3>Where are you from?</h3>
+        <t>Ask her to describe in detail</t>
+    </div>
+    <div class="panel-body">
+        <table align="center">
+            <tr>
+                <td align="left"><check-box flag number="3.35" ng-model="irfCtrl.form.doesnt_know_villiage_details">Doesn't know details about village</check-box></td>
+            </tr>
+            <tr>
+                <td align="left"><check-box flag number="3.36" ng-model="irfCtrl.form.reluctant_villiage_info">Reluctant to give info about village</check-box></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3>Who is your family?</h3>
+        <t>Ask for family contact info</t>
+    </div>
+    <div class="panel-body">
+        <table align="center">
+            <tr>
+                <td align="left"><check-box flag number="3.37" ng-model="irfCtrl.form.reluctant_family_info">Reluctant to give family info</check-box></td>
+            </tr>
+            <tr>
+                <td align="left"><check-box flag number="3.38" ng-model="irfCtrl.form.refuses_family_info">Will not give family info</check-box></td>
+            </tr>
+        </table>
+        <br>
+        <div class="panel panel-default">
+            <div class="panel-heading headinghover" ng-click="isCollapsed1 = !isCollapsed1">
+                <h4>Under 18 years old</h4>
+            </div>
+            <div class="panel-body" uib-collapse="isCollapsed1" ng-init="isCollapsed1 = true">
+                <table align="center">
+                    <tr>
+                        <td align="left"><check-box flag number="3.39" ng-model="irfCtrl.form.under_18_cant_contact_family">No family contact established</check-box></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><check-box flag number="'3.40'" ng-model="irfCtrl.form.under_18_family_doesnt_know">Family doesn't know she is going to India</check-box></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><check-box flag number="3.41" ng-model="irfCtrl.form.under_18_family_unwilling">Family unwilling to let her go</check-box></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading headinghover" ng-click="isCollapsed2 = !isCollapsed2">
+                <h4>18 years or older</h4>
+            </div>
+            <div class="panel-body" uib-collapse="isCollapsed2" ng-init="isCollapsed2 = true">
+                <table align="center">
+                    <tr>
+                        <td align="left"><check-box flag number="3.42" ng-model="irfCtrl.form.over_18_family_doesnt_know">Family members do not know she is going to India</check-box></td>
+                    </tr>
+                    <tr>
+                        <td align="left"><check-box flag number="3.43" ng-model="irfCtrl.form.over_18_family_unwilling">Family members unwilling to let her go</check-box></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

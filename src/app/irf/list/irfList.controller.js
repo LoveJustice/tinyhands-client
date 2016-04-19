@@ -1,9 +1,9 @@
 export default class IrfListController {
-    constructor(IrfListService, session) {
+    constructor(IrfListService, SessionService) {
         'ngInject';
 
         this.service = IrfListService;
-        this.session = session;
+        this.session = SessionService;
 
         this.numShowing = 25;
         this.paginateBy = 25;

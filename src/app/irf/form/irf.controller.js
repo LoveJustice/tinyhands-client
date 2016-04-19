@@ -1,12 +1,13 @@
 export default class IrfController {
-    constructor($stateParams, IrfService) {
+    constructor($rootScope, $stateParams, IrfService) {
         'ngInject';
 
+        this.root = $rootScope;
         this.service = IrfService;
 
-        this.flags = 0;
         this.form = {};
         this.irfId = $stateParams.id;
+        this.numPersonBoxes = 1;
         this.page9 = {
             how_sure_was_trafficking_options: [
                 { name: '1 - Not at all sure', val: 1 },
@@ -18,6 +19,7 @@ export default class IrfController {
         };
         this.sections = [];
         this.selectedSectionIndex = 0;
+        this.selectedFlags = [];
 
         this.addSections();
         this.getIrf();
@@ -35,6 +37,17 @@ export default class IrfController {
             this.form = response.data;
             this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking - 1];
         });
+    }
+
+    getFlagText() {
+        if (this.root.flags) {
+            if (this.root.flags < 50) {
+                return this.root.flags;
+            } else {
+                return '50 or More Flags';
+            }
+        }
+        return '';
     }
 
     nextSection() {

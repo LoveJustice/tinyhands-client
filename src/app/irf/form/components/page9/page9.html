@@ -2,52 +2,11 @@
     <form>
         <div class="form-group text-left">
             <h3>Type of Intercept</h3>          
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.interception_type_gulf_countries">
-                    9.1 Gulf Countries
-                </label>
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.interception_type_india_trafficking">
-                    9.2 India Trafficking
-                </label>
-            </div>
-            
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.interception_type_unsafe_migration">
-                    9.3 Unsafe Migration
-                </label>
-            </div>
-            
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.interception_type_circus">
-                    9.4 Circus
-                </label>
-            </div>
-            
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.interception_type_runaway">
-                    9.5 Runaway
-                </label>
-            </div>
-            
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-init="policeCustodyBool = irfCtrl.form.trafficker_taken_into_custody != ''" ng-model="policeCustodyBool">
-                    9.6 Was any trafficker taken into police custody?
-                </label>
-            </div>  
-            <div class="checkbox">
-                <label ng-show="policeCustodyBool">
-                    If yes, write the # from the table above
-                    <input type="text" maxlength="255" ng-model="irfCtrl.form.trafficker_taken_into_custody">
-                </label>
-            </div>
+            <check-box number="9.1" ng-model="irfCtrl.form.interception_type_gulf_countries">Gulf Countries</check-box>
+            <check-box number="9.2" ng-model="irfCtrl.form.interception_type_india_trafficking">India Trafficking</check-box>
+            <check-box number="9.3" ng-model="irfCtrl.form.interception_type_unsafe_migration">Unsafe Migration</check-box>
+            <check-box number="9.4" ng-model="irfCtrl.form.interception_type_circus">Circus</check-box>
+            <check-box number="9.5" ng-model="irfCtrl.form.interception_type_runaway">Runaway</check-box>
             
             <div class="select">
                 <label>
@@ -61,12 +20,7 @@
             
             <h3>Digital Signature</h3>
             <p><strong>I certify that I have followed procedures and filled out this form correctly, completely, and accurately.</strong></p>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" ng-model="irfCtrl.form.has_signature">
-                    Scanned form has signature?
-                </label>
-            </div>          
+            <check-box ng-model="irfCtrl.form.has_signature">Scanned form has signature?</check-box>
         </div>
     </form>
 </div>

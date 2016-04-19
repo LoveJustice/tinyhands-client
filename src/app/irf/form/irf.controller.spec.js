@@ -21,7 +21,7 @@ describe('IrfController', () => {
             expect(vm.irfId).toEqual(stateParams.id);
         });
 
-        it('page9.how_sure_was_traficking_options', () => {
+        it('page9 how_sure_was_traficking_options should be an object for select options', () => {
             expect(vm.page9.how_sure_was_trafficking_options).toEqual([
                 { name: '1 - Not at all sure', val: 1 },
                 { name: '2 - Unsure but suspects it', val: 2 },

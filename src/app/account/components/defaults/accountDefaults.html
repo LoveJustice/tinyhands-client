@@ -1,6 +1,6 @@
 <div id="accountDefaults" class="container verticalOffset" ng-cloak>
-    <p>Use this form to designate default access for each type of user.<br/>For instance: what default permissions ought
-        to be given to a new user designated as &quot;Field Staff?&quot;</p>
+    <!-- <p>Use this form to designate default access for each type of user.<br/>For instance: what default permissions ought
+        to be given to a new user designated as &quot;Field Staff?&quot;</p> -->
 
     <p ng-show="accountCtrl.nameError" class="text-danger">All access defaults must have a designation.</p>
     <table class="table table-condensed defaultsTable">
@@ -103,9 +103,9 @@
                     ng-class="permissionsSet.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'">{{
                 permissionsSet.permission_receive_email ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_vdc_manage = !permissionsSet.permission_vdc_manage; accountCtrl.checkIfModified($index, accountCtrl.permissions, accountCtrl.saveButtonInfo)"
-                    ng-class="permissionsSet.permission_vdc_manage ? 'btn btn-success' : 'btn btn-danger'">{{
-                permissionsSet.permission_vdc_manage ? "Yes" : "No" }}</label></td>
+                    ng-click="permissionsSet.permission_address2_manage = !permissionsSet.permission_address2_manage; accountCtrl.checkIfModified($index, accountCtrl.permissions, accountCtrl.saveButtonInfo)"
+                    ng-class="permissionsSet.permission_address2_manage ? 'btn btn-success' : 'btn btn-danger'">{{
+                permissionsSet.permission_address2_manage ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage; accountCtrl.checkIfModified($index, accountCtrl.permissions, accountCtrl.saveButtonInfo)"
                     ng-class="permissionsSet.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'">{{

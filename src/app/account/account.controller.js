@@ -19,12 +19,14 @@ export default class AccountController {
     //Scope variables
     let accountOptionsPath = 'app/account/components/';
     this.editAccountPath = `${accountOptionsPath}edit/accountEdit.html`;
+    this.accountNotFoundPath = `${accountOptionsPath}edit/accountNotFound.html`;
+
     this.sections = {allSections: [{ name: this.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
                                    { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
                                    { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]}
 
     //Stores information about the 'active' tab selected, as well as the current html template to display.
-    this.tabInfo = {'active': null, 'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
+    this.tabInfo = {'active': null, 'sectionTemplateUrl': null};
 
     this.saveButtonInfo = {"saveButtonText":"Saved", "saveButtonColor":"btn-primary", "unsavedChanges": false};
     this.saveText= "Save All";
@@ -71,12 +73,15 @@ export default class AccountController {
      *  it opens the activeTab specified in the URL. If the active Tab
      *  is not given, it defaults to 0, which is the 'Account List Tab'
      */
-    if (this.$state.params.id){
-        this.editUser(this.$state.params.id)
+    if (this.$state.params.id) {
+      if (this.$state.params.id == 'create') {
+        this.accountCreate();
+      } else {
+        this.retrieveAccount(this.$state.params.id);
+      }
+    } else if (this.$state.params.activeTab == undefined) {
+        this.$state.params.activeTab = 0;
     } else {
-        if (this.$state.params.activeTab == undefined) {
-          this.$state.params.activeTab = 0;
-        }
         this.switchActive(this.$state.params.activeTab);
     }
   }
@@ -100,17 +105,75 @@ export default class AccountController {
     });
   }
 
-  editUser(id){
+  retrieveAccount(id){
+    this.AccountService.getAccount(id).then((result) => {
+      this.accountEdit(result.data)
+    }, (error) => {
+        if (error.status == 404){
+          this.accountNotFound(id);
+        }
+    });
+  }
+
+  accountEdit(account) {
     this.tabInfo.active = -1; //Causes no nav-bar tab to be selected
     this.tabInfo.sectionTemplateUrl = this.editAccountPath;
 
+    this.account = account;
+    this.editing = true;
+    this.title = 'Edit ' +this.account.first_name + ' ' + this.account.last_name + "'s Account";
+
     //Change to the Edit User State
-    this.$state.transitionTo('account/:id', {id: id}, {
+    this.$state.transitionTo('account/:id', {id: this.account.id}, {
     location: true,
     inherit: true,
     relative: this.$state.$current,
     notify: false
     });
+  }
+
+  accountCreate(){
+    this.tabInfo.active = -1; //Causes no nav-bar tab to be selected
+    this.tabInfo.sectionTemplateUrl = this.editAccountPath;
+
+    this.editing = false;
+    this.title = 'Create Account';
+    this.account = {
+        email: '',
+        first_name: '',
+        last_name: '',
+        user_designation: '',
+        permission_irf_view: false,
+        permission_irf_add: false,
+        permission_irf_edit: false,
+        permission_irf_delete: false,
+        permission_vif_view: false,
+        permission_vif_add: false,
+        permission_vif_edit: false,
+        permission_vif_delete: false,
+        permission_border_stations_view: false,
+        permission_border_stations_add: false,
+        permission_border_stations_edit: false,
+        permission_border_stations_delete: false,
+        permission_accounts_manage: false,
+        permission_receive_email: false,
+        permission_address2_manage: false,
+        permission_budget_manage: false,
+    }
+
+    //Change to the Edit User State
+    this.$state.transitionTo('account/:id', {id: 'create'}, {
+    location: true,
+    inherit: true,
+    relative: this.$state.$current,
+    notify: false
+    });
+  }
+
+  accountNotFound(id){
+    this.idNotFound = id;
+    this.tabInfo.active = -1; //Causes no nav-bar tab to be selected
+    this.tabInfo.sectionTemplateUrl = this.accountNotFoundPath;
   }
 
   //This method is used to save the account and permissions arrays
@@ -126,13 +189,17 @@ export default class AccountController {
       this.$q.all(promises).then((data) => {
           arrays.saved = angular.copy(arrays.local);
           this.$timeout(() => {
-              this.$scope.$apply();
-              this.updateSaveButton(this.savedText, this.savedColor, false);
-              resolve();
+            this.updateSaveButton(this.savedText, this.savedColor, false);
+            resolve();
           }, 800);
       }, (error) => {
-          arrays.saved = angular.copy(arrays.local);
-          this.updateSaveButton(this.saveText, this.saveColor, null, 800);
+            this.PermissionsSetsService.getPermissions().then((result) => {
+                arrays.saved = result.data.results
+            });
+            this.$timeout(() => {
+              this.updateSaveButton(this.saveText, this.saveColor, true);
+              resolve();
+            }, 800);
           reject(error);
       });
     });
@@ -148,15 +215,15 @@ export default class AccountController {
         } else if (elm.is_modified) {
             call = serviceToUse.update(elm.id, elm);
         } else {
-            resolve("no reason call a request");
+            resolve(); //"no reason call a request";
             return;
         }
         call.then( (data) => {
             local[index] = data.data;
-            resolve();
+            resolve(); //"saved"
         }, (error) => { // Catch name error
             local[index].nameError = true;
-            reject("nameError");
+            reject(index); //"name error"
         });
       });
   }
@@ -273,7 +340,8 @@ export default class AccountController {
         this.AccountService.destroy(account.id).then(() =>{
             window.toastr.success("Account Role Successfully Deleted");
             this.AccountService.getAccounts().then((response) =>{
-            this.accounts = response.data;
+              this.accounts.local = response.data;
+              this.accounts.saved = angular.copy(this.accounts.local);
           });
         });
       }
@@ -300,7 +368,7 @@ export default class AccountController {
           this.accounts.local[index].permission_border_stations_delete = result.data.permission_border_stations_delete;
           this.accounts.local[index].permission_accounts_manage = result.data.permission_accounts_manage;
           this.accounts.local[index].permission_receive_email = result.data.permission_receive_email;
-          this.accounts.local[index].permission_vdc_manage = result.data.permission_vdc_manage;
+          this.accounts.local[index].permission_address2_manage = result.data.permission_address2_manage;
           this.accounts.local[index].permission_budget_manage = result.data.permission_budget_manage;
       });
       this.checkIfModified(index, this.accounts);
@@ -323,7 +391,7 @@ export default class AccountController {
       permission_irf_edit: false,
       permission_irf_view: false,
       permission_receive_email: false,
-      permission_vdc_manage: false,
+      permission_address2_manage: false,
       permission_vif_add: false,
       permission_vif_delete: false,
       permission_vif_edit: false,
@@ -358,4 +426,82 @@ export default class AccountController {
       }
     }
   }
+
+  //Account Edit Tab
+  update() {
+      if(!this.checkFields()){
+          return;
+      }
+      var call;
+      if(this.editing) {
+          call = this.AccountService.update(this.account.id, this.account);
+      }else {
+          call= this.AccountService.create(this.account);
+      }
+      call.then(() => {
+          this.$state.go("account", {activeTab: 0});
+      }, (err) => {
+          if(err.data.email){
+              this.emailError = err.data.email[0];
+          }
+      });
+  }
+
+  //Account Edit Tab
+  checkFields() {
+      this.emailError = '';
+      this.userDesignationError = '';
+      if(!this.account.email) {
+          this.emailError = 'An email is required.';
+      }
+      if(!this.account.user_designation){
+          this.userDesignationError = 'A user designation is required.';
+      }
+      if(this.emailError || this.userDesignationError) {
+          return false;
+      }
+      return true;
+  }
+
+  //Account Edit Tab
+  onUserDesignationChanged(permissionSetId) {
+    if (permissionSetId){
+      this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
+          this.account.permission_irf_view = permissions.data.permission_irf_view;
+          this.account.permission_irf_add = permissions.data.permission_irf_add;
+          this.account.permission_irf_edit = permissions.data.permission_irf_edit;
+          this.account.permission_irf_delete = permissions.data.permission_irf_delete;
+          this.account.permission_vif_view = permissions.data.permission_vif_view;
+          this.account.permission_vif_add = permissions.data.permission_vif_add;
+          this.account.permission_vif_edit = permissions.data.permission_vif_edit;
+          this.account.permission_vif_delete = permissions.data.permission_vif_delete;
+          this.account.permission_border_stations_view = permissions.data.permission_border_stations_view;
+          this.account.permission_border_stations_add = permissions.data.permission_border_stations_add;
+          this.account.permission_border_stations_edit = permissions.data.permission_border_stations_edit;
+          this.account.permission_border_stations_delete = permissions.data.permission_border_stations_delete;
+          this.account.permission_accounts_manage = permissions.data.permission_accounts_manage;
+          this.account.permission_receive_email = permissions.data.permission_receive_email;
+          this.account.permission_address2_manage = permissions.data.permission_address2_manage;
+          this.account.permission_budget_manage = permissions.data.permission_budget_manage;
+      });
+    }
+  }
+
+  //Account Edit Tab
+  getButtonText(has_permission) {
+      if(has_permission) {
+          return "Yes";
+      }
+      return "No";
+  }
+
+  //Account Edit Tab
+  getUpdateButtonText() {
+      if(this.editing) {
+          return "Update";
+      }
+      return "Create";
+  }
+
+
 }

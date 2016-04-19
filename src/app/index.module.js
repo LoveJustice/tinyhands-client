@@ -35,7 +35,6 @@ import TallyDirective from './components/tally/tally.directive';
 // REGION: Controllers
 import ActivateAccountController from './account/components/activate/activateAccount.controller.js'
 import AccountController from './account/account.controller';
-import AccountEditController from './account/components/edit/accountEdit.controller';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
 import Address2Controller from './addresses/address2.controller';
@@ -100,7 +99,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngTouch
   // REGION: Controllers
   .controller('ActivateAccountController', ActivateAccountController)
   .controller('AccountController', AccountController)
-  .controller('AccountEditController', AccountEditController)
   .controller('Address1Controller', Address1Controller)
   .controller('Address1EditModalController', Address1EditModalController)
   .controller('Address2Controller', Address2Controller)

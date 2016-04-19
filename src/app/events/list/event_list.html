@@ -25,7 +25,7 @@
                     <td>{{event.is_repeat}}</td>
                     <td>{{event.get_repetition_display}}</td>
                     <td>{{event.ends}}</td>
-                    <td><a ng-href="/events/update/{{ event.id }}">Edit</a> <a ng-click="eventsCtrl.openModal(event)" >Delete</a> </td>
+                    <td><a ui-sref="eventsForm">Edit</a> <a ng-click="eventsCtrl.openModal(event)" >Delete</a> </td>
                 </tr>
             </tbody>
         </table>

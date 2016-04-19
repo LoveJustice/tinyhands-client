@@ -1,8 +1,10 @@
 export default class EditEventCtrl {
-    constructor($scope, $window, Events) {
+    constructor($scope, $window, EventsService) {
         'ngInject';
 
         //variable declarations
+        this.Events = EventsService;
+        this.window = $window;
         this.titleError = '';
         this.startDateError = '';
         this.startTimeError = '';
@@ -31,19 +33,19 @@ export default class EditEventCtrl {
         this.mstep = 1;
         this.ismeridian = false;
 
-        $scope.$watch('myStartTime', function(newValue, oldValue) {
+        $scope.$watch('myStartTime', (newValue, oldValue) => {
             this.displayStartTime = moment($scope.myStartTime).format('HH:mm');
             this.event.start_time = this.displayStartTime;
         });
-        $scope.$watch('myEndTime', function(newValue, oldValue) {
+        $scope.$watch('myEndTime', (newValue, oldValue) => {
             this.displayEndTime = moment($scope.myEndTime).format('HH:mm');
             this.event.end_time = this.displayEndTime;
         });
 
-        if($window.event_id !== undefined && $window.event_id > -1) {
+        if(this.window.event_id !== undefined && this.window.event_id > -1) {
           this.editing = true;
-          var eventId = $window.event_id;
-          Events.get({id: eventId}).$promise.then(function(event) {
+          var eventId = this.window.event_id;
+          this.Events.get({id: eventId}).then((event) => {
               this.event = event;
               $scope.myStartTime = moment(this.event.start_date +'T'+this.event.start_time).toDate();
               $scope.myEndTime = moment(this.event.end_date +'T'+this.event.end_time).toDate();
@@ -93,19 +95,18 @@ export default class EditEventCtrl {
             this.event.repetition = '';
             this.event.ends = null;
         }
-        console.log(this.event.ends)
       if(!this.checkFields()) {
         return;
       }
       var call;
       if(this.editing) {
-        call = Events.update(this.event).$promise;
+        call = this.Events.updateEvent(this.event);
       }else {
-        call = Events.create(this.event).$promise;
+        call = this.Events.createEvent(this.event);
       }
-      call.then(function() {
-        $window.location.href = '/events/list/';
-      }, function(err) {
+      call.then(() => {
+        this.window.location.href = '/events/list';
+    }, (err) => {
         if(err.data.title) {
           this.titleError = err.data.title[0];
           this.startDateError = err.data.title[1];

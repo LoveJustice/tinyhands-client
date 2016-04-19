@@ -13,7 +13,7 @@ export default class EventsController {
               events[i].get_repetition_display = "Monthly";
           }
       }
-      this.events = events;
+      this.events = events.data;
     })
     this.modal = $uibModal;
   }
@@ -31,8 +31,8 @@ export default class EventsController {
         }
       }
     });
-    deleteModal.result.then( function() {
-      this.Events.destroy({id: event.id}).then( function() {
+    deleteModal.result.then(() => {
+      this.Events.destroyEvent({id: event.id}).then(() => {
         this.events = Events.all()
       })
     })

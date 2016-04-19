@@ -1,6 +1,6 @@
 export default function routerConfig ($stateProvider) {
   'ngInject';
-  
+
   $stateProvider
     .state('events', {
       url: '/events',
@@ -14,7 +14,7 @@ export default function routerConfig ($stateProvider) {
     .state('eventsList', {
       url: '/events/list',
       templateUrl: 'app/events/list/event_list.html',
-      controller: 'EventsListController',
+      controller: 'EventsController',
       controllerAs: 'eventsCtrl',
 
       data: {
@@ -24,7 +24,7 @@ export default function routerConfig ($stateProvider) {
     .state('eventsForm', {
       url: '/events/create',
       templateUrl: 'app/events/form/event_form.html',
-      controller: 'EventsEditFormController',
+      controller: 'EditEventController',
       controllerAs: 'editCtrl',
       data: {
         requireLogin: true

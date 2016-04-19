@@ -1,10 +1,9 @@
 export default class AccountEditController {
-  constructor($scope, $state, $window ,AccountService, PermissionsSetsService) {
+  constructor($state, AccountService, PermissionsSetsService) {
     'ngInject';
     // Modules
-    this.$scope = $scope;
     this.$state = $state;
-    this.$window = $window;
+    //this.$window = $window;
     //Services
     this.AccountService = AccountService;
     this.PermissionsSetsService = PermissionsSetsService;
@@ -12,7 +11,7 @@ export default class AccountEditController {
     this.emailError = '';
     this.userDesignationError = '';
 
-    this.$window.scrollTo(0, 0);
+    //this.$window.scrollTo(0, 0);
 
     let accountOptionsPath = 'app/account/components/';
     this.sections = {allSections: [{ name: 'Accounts List', templateUrl: `${accountOptionsPath}list/accountList.html` },

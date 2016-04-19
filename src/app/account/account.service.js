@@ -36,8 +36,8 @@ export default class AccountService extends BaseService {
     return this.post(`/api/account/resend-activation-email/${id}/`)
 	}
 
-  activateAccount(code){
-    return this.post(`/api/account/activate-account/${code}/`)
+  activateAccount(activateCode){
+    return this.post(`/api/account/activate-account/${activateCode}/`)
   }
 
   // DELETE

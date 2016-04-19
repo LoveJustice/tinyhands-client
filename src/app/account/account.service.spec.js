@@ -5,6 +5,7 @@ describe ('AccountService', () => {
 
     let id=123,
     data = {id: 'dataId'};
+    //activateCode = 'abc';
 
     beforeEach(inject(($http) =>{
         service = new AccountService($http);
@@ -72,4 +73,13 @@ describe ('AccountService', () => {
             expect(service.delete).toHaveBeenCalledWith(url);
         });
     });
+
+    /*describe('function activateAccount', () => {
+        let url = `/api/account/activate-account/${activateCode}/`;
+        it(`should get called with ${url} and ${activateCode}`, () => {
+            spyOn(service, 'post');
+            service.activateAccount(activateCode);
+            expect(service.post).toHaveBeenCalledWith(url, activateCode);
+        });
+    });*/
 });

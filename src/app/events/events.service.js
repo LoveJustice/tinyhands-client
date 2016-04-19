@@ -5,7 +5,7 @@ export default class EventsService{
     }
 
     getAll() {
-        return this.serivce.get('api/event/all/');
+        return this.service.get('api/event/all/');
     }
 
     getEvent(id) {
@@ -23,7 +23,7 @@ export default class EventsService{
     destroyEvent(id) {
         return this.service.delete(`api/event/${id}/`);
     }
-    
+
     getCalendar(start, end) {
         var params = [
             {

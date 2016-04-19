@@ -1,8 +1,9 @@
 export default class EventsController {
-  constructor(Events, $modal) {
+  constructor(EventsService, $uibModal) {
     "ngInject"
     this.events = [];
-    Events.all().$promise.then(function(events) {
+    this.Events = EventsService;
+    this.Events.getAll().then((events) => {
       for (var i = 0; i < events.length; i++) {
           if (events[i].repetition == "D") {
               events[i].get_repetition_display = "Daily";
@@ -14,24 +15,26 @@ export default class EventsController {
       }
       this.events = events;
     })
+    this.modal = $uibModal;
   }
 
-    openModal(event) {
-      var eventTitle = event.title;
-      var deleteModal = $modal.open({
-        templateUrl: 'modal.html',
-        controller: 'ModalCtrl',
-        controllerAs: 'modalCtrl',
-        resolve: {
-          eventTitle: function() {
-            return eventTitle;
-          }
+  openModal(event) {
+    var eventTitle = event.title;
+    var deleteModal = this.modal.open({
+      templateUrl: 'app/events/list/deleteModal.html',
+      controller: 'ModalController',
+      controllerAs: 'modalCtrl',
+      bindToController: true,
+      resolve: {
+        eventTitle: function() {
+          return eventTitle;
         }
-      });
-      deleteModal.result.then( function() {
-        Events.destroy({id: event.id}).$promise.then( function() {
-          this.events = Events.all()
-        })
+      }
+    });
+    deleteModal.result.then( function() {
+      this.Events.destroy({id: event.id}).then( function() {
+        this.events = Events.all()
       })
-    }
+    })
   }
+}

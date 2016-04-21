@@ -21,8 +21,17 @@ export default function routerConfig ($stateProvider) {
         requireLogin: true
       }
     })
-    .state('eventsForm', {
+    .state('eventsCreate', {
       url: '/events/create',
+      templateUrl: 'app/events/form/event_form.html',
+      controller: 'EditEventController',
+      controllerAs: 'editCtrl',
+      data: {
+        requireLogin: true
+      }
+    })
+    .state('eventsEdit', {
+      url: '/events/update/:id',
       templateUrl: 'app/events/form/event_form.html',
       controller: 'EditEventController',
       controllerAs: 'editCtrl',

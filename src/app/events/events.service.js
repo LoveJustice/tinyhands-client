@@ -20,8 +20,8 @@ export default class EventsService{
         return this.service.put('api/event/', event);
     }
 
-    destroyEvent(id) {
-        return this.service.delete(`api/event/${id}/`);
+    destroyEvent(id, event) {
+        return this.service.delete('api/event/', event);
     }
 
     getCalendar(start, end) {

@@ -32,6 +32,7 @@ export default class EventsController {
       }
     });
     deleteModal.result.then(() => {
+        console.log(event.id);
       this.Events.destroyEvent({id: event.id}).then(() => {
         this.events = Events.all()
       })

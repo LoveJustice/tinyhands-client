@@ -1,41 +1,44 @@
 <div id="irfForm" class="container-fluid text-center">
-  <div class="container-fluid" ng-if="irfCtrl.sections.length > 0">
-    <br>
-    <!--REGION: Progress Bar-->
-    <div>
-      <div class="col-xs-4 col-sm-2 col-md-offset-1 col-md-2 text-right"><b>Red Flags:</b></div>
-      <div class="col-xs-8 col-sm-10 col-md-6">
-        <div class="progress">
-          <div class="progress-bar progress-bar-danger" role="progressbar" ng-style="{'width': (irfCtrl.root.flags/50 * 100) + '%'}">
-            <div class="animated" ng-class="{shake: irfCtrl.root.flags >= 50}">{{irfCtrl.getFlagText()}}</div>
-          </div>
+    <div class="container-fluid" ng-if="irfCtrl.sections.length > 0">
+        <br>
+        <!--REGION: Progress Bar-->
+        <div>
+            <div class="col-xs-4 col-sm-2 col-md-offset-1 col-md-2 text-right"><b>Red Flags:</b></div>
+            <div class="col-xs-8 col-sm-10 col-md-6">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" ng-style="{'width': (irfCtrl.root.flags/50 * 100) + '%'}">
+                        <div class="animated" ng-class="{shake: irfCtrl.root.flags >= 50}">{{irfCtrl.getFlagText()}}</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        <!--ENDREGION: Progress Bar-->
+        <!--REGION: SECTION-->
+        <div class="panel panel-default col-xs-12">
+            <div class="panel-body" ng-repeat="section in irfCtrl.sections" ng-if="$index == irfCtrl.selectedSectionIndex">
+                <div ng-include="section"></div>
+            </div>
+        </div>
+        <!--ENDREGION: SECTION-->
+        <!--REGION: PAGER-->
+        <nav class="col-xs-12">
+            <ul class="pagination">
+                <li ng-click="irfCtrl.previousSection()">
+                    <a>
+                        <span>Previous</span>
+                    </a>
+                </li>
+                <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectedSectionIndex = $index"><a>{{$index}}</a></li>
+                <li ng-click="irfCtrl.nextSection()">
+                    <a>
+                        <span>Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!--ENDREGION: PAGER-->
     </div>
-    <!--ENDREGION: Progress Bar-->
-    <!--REGION: SECTION-->
-    <div class="panel panel-default col-xs-12">
-      <div class="panel-body" ng-repeat="section in irfCtrl.sections" ng-if="$index == irfCtrl.selectedSectionIndex">
-        <div ng-include="section"></div>
-      </div>
-    </div>
-    <!--ENDREGION: SECTION-->
-    <!--REGION: PAGER-->
-    <nav class="col-xs-12">
-      <ul class="pagination">
-        <li ng-click="irfCtrl.previousSection()">
-          <a>
-            <span>Previous</span>
-          </a>
-        </li>
-        <li ng-repeat="section in irfCtrl.sections" ng-class="{active: $index == irfCtrl.selectedSectionIndex}" ng-click="irfCtrl.selectedSectionIndex = $index"><a>{{$index}}</a></li>
-        <li ng-click="irfCtrl.nextSection()">
-          <a>
-            <span>Next</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <!--ENDREGION: PAGER-->
-  </div>
+    <button class="btn btn-lg btn-success" ng-click="irfCtrl.createOrUpdateIrf()">{{irfCtrl.isCreating ? 'Create' : 'Update'}}</button>
+    <br>
+    <br>
 </div>

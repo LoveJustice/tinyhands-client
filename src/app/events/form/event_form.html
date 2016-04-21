@@ -1,9 +1,3 @@
-{% if event.id %}
-<script>
-  window.event_id = {{event.id}}
-
-</script>
-
 <div ng-cloak>
     <div class="row">
         <div class="col-md-10">
@@ -163,8 +157,8 @@
                             </div>
                         </div>
 
-                        <input class="btn btn-primary pull-right" ng-click="editCtrl.update()" value="Save Event" />
-                        <a ng-href="/events/list/" class="btn btn-default pull-right" style="margin-right: 5px">Cancel</a>
+                        <input class="btn btn-primary pull-right" ng-click="editCtrl.updateEvent()" value="Save Event" />
+                        <a ui-sref="eventsList" class="btn btn-default pull-right" style="margin-right: 5px">Cancel</a>
                     </div>
                 </form>
             </div>

@@ -13,7 +13,7 @@ export default class EventsController {
               events[i].get_repetition_display = "Monthly";
           }
       }
-      this.events = events;
+      this.events = events.data;
     })
     this.modal = $uibModal;
   }

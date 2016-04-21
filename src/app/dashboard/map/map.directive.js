@@ -6,7 +6,7 @@ class MapDirective {
 		
 		let directive = {
 			restrict: 'E',
-			templateUrl: 'app/components/map/map.html',
+			templateUrl: 'app/dashboard/map/map.html',
 			controller: MapController,
 			controllerAs: 'map'
 		};

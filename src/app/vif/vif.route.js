@@ -26,7 +26,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifInfoController',
       controllerAs: 'infoCtrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 0
       }
     })
     .state('vif.section1', {
@@ -35,7 +36,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection1Controller',
       controllerAs: 'section1Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 1
       }
     })
     .state('vif.section2', {
@@ -44,7 +46,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection2Controller',
       controllerAs: 'section2Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 2
       }
     })
     .state('vif.section3', {
@@ -53,7 +56,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection3Controller',
       controllerAs: 'section3Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 3
       }
     })
     .state('vif.section4', {
@@ -62,7 +66,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection4Controller',
       controllerAs: 'section4Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 4
       }
     })
     .state('vif.section5', {
@@ -71,7 +76,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection5Controller',
       controllerAs: 'section5Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 5
       }
     })
     .state('vif.section6', {
@@ -80,7 +86,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection6Controller',
       controllerAs: 'section6Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 6
       }
     })
     .state('vif.section7', {
@@ -89,7 +96,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection7Controller',
       controllerAs: 'section7Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 7
       }
     })
     .state('vif.section8', {
@@ -98,7 +106,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifSection8Controller',
       controllerAs: 'section8Ctrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 8
       }
     })
     .state('vif.people', {
@@ -107,7 +116,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifPeopleController',
       controllerAs: 'peopleCtrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 9
       }
     })
     .state('vif.locations', {
@@ -116,7 +126,8 @@ function VIFRoutes($stateProvider) {
       controller: 'VifLocationsController',
       controllerAs: 'locationsCtrl',
       data: {
-        requireLogin: true
+        requireLogin: true,
+        index: 10
       }
     });
 }

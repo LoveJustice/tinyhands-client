@@ -18,7 +18,7 @@ function budgetRouteConfig ($stateProvider) {
           data: {
             requireLogin: true
           }
-        })
+        });
 }
 
 export default budgetRouteConfig;

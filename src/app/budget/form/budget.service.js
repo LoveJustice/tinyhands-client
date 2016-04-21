@@ -1,7 +1,7 @@
 export default class BudgetService {
   constructor(BaseService) {
     'ngInject';
-    this.service = BaseService
+    this.service = BaseService;
   }
 
   getBorderStation(id) {

@@ -40,7 +40,7 @@ export default class AccountController {
     this.permissions = {};
 
     //Used by 'Account List' tab
-    this.AccountService.getMe().then((response) => {
+    /*this.AccountService.getMe().then((response) => {
       this.currentuser = response.data;
     });
 
@@ -66,7 +66,7 @@ export default class AccountController {
         e.preventDefault();
         this.openUnsavedChangesModal(0, toState.name);
       }
-    });
+    });*/
 
     /*  This checks the URL params to see if a userId is present,
      *  if it is it opens the editUser tab. If no userId is present,

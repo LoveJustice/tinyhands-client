@@ -9,40 +9,40 @@ describe('account Controller', () => {
         $timeout,
         $uibModal,
         $state,
-        AccountService,
-        PermissionsSetsService;
+        accountService,
+        permissionsSetsService;
 
 
-    beforeEach(inject(($q, $rootScope, $timeout, $http) => {
-        $q = $q;
+    beforeEach(inject((_$q_, $rootScope, _$timeout_, $http) => {
+        $q = _$q_;
         $scope = $rootScope.$new();
-        $timeout = $timeout;
+        $timeout = _$timeout_;
         $uibModal = jasmine.createSpyObj('$uibModal', ['open']);
         $state = {params: {id: 1}};
-        AccountService = new AccountService($http);
-        PermissionsSetsService = new PermissionsSetsService($http);
-        vm = new AccountController($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService)
+        accountService = jasmine.createSpyObj('accountService', ['getMe', 'getAccounts', 'getAccount', 'update', 'create', 'resendActivationEmail', 'activateAccount', 'destroy']);
+        permissionsSetsService = jasmine.createSpyObj('permissionsSetsService', ['getPermissions', 'getPermission', 'create', 'update', 'destroy']);
+        vm = new AccountController($q, $scope, $timeout, $uibModal, $state, accountService, permissionsSetsService);
     }));
 
     describe('function constructor', () => {
         it(`tab_1_name should be equal to 'Accounts List'`, () => {
             expect(vm.tab_1_name).toEqual('Accounts List');
         });
-        /*it(`tab_2_name should be equal to 'Accounts Access Control'`, () =>{
-            expect(vm.tab_2_name).toEqual('AccountsAccessControl');
+        it(`tab_2_name should be equal to 'Accounts Access Control'`, () =>{
+            expect(vm.tab_2_name).toEqual('Accounts Access Control');
         });
         it(`tab_3_name should be equal to 'Accounts Defaults'`, () =>{
             expect(vm.tab_3_name).toEqual('Accounts Defaults');
         });
         it(`sections should be object`, () => {
             let accountOptionsPath = 'app/account/components/';
-            let sections = {allSections: [{ name: this.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
-                                          { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
-                                          { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]};
+            let sections = {allSections: [{ name: vm.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
+                                          { name: vm.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
+                                          { name: vm.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]};
             expect(vm.sections).toEqual(sections);
         });
         it(`tabInfo should be an object`, () => {
-            let tabInfo = {'active': null, 'sectionTemplateUrl': this.sections.allSections[0].templateUrl};
+            let tabInfo = {'active': null, 'sectionTemplateUrl': null};
             expect(vm.tabInfo).toEqual(tabInfo);
         });
         it(`saveButtonInfo should be an object`, () => {
@@ -67,120 +67,104 @@ describe('account Controller', () => {
         it(`savedColor should be equal to 'btn-primary'`, () => {
             expect(vm.savedColor).toEqual('btn-primary');
         });
-        it(`should call AccountService.getMe`, () => {
-            spyOn(vm.AccountService, 'getMe').and.callThrough();
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
-            expect(vm.AccountService.getMe).toHaveBeenCalled();
+        it(`should call accountService.getMe`, () => {
+            expect(accountService.getMe).toHaveBeenCalled();
         });
         it(`should set currentuser equal to '{id: 123}'`, () => {
             let response = {data: {id: 123}};
-            vm.AccountService.getMe = () => {return {then: (f) => { f(response) }}};
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
+            accountService.getMe.and.returnValue($q.when(response));
             expect(vm.currentuser).toEqual('{id: 123}');
         });
-        it(`should call AccountService.getAccounts`, () => {
-            spyOn(vm.AccountService, 'getAccounts');
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
-            expect(vm.AccountService.getAccounts).toHaveBeenCalled();
+        it(`should call accountService.getAccounts`, () => {
+            expect(accountService.getAccounts).toHaveBeenCalled();
         });
-        it(`should set accounts.local equal to '{id: 123}'`, () => {
+        /*it(`should set accounts.local equal to '{id: 123}'`, () => {
             let result = {data: {id: 123}};
-            vm.AccountService.getAccounts = () => {return {then: (f) => { f(result) }}};
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
+            accountService.getAccounts = () => {return {then: (f) => { f(result) }}};
+            $scope.$apply();
             expect(vm.accounts.local).toEqual('{id: 123}');
         });
         it(`should set accounts.saved equal to accounts.local`, () => {
             let result = {data: {id: 123}};
-            vm.AccountService.getAccounts = () => {return {then: (f) => { f(result) }}};
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
+            accountService.getAccounts = () => {return {then: (f) => { f(result) }}};
             expect(vm.accounts.saved).toEqual('{id: 123}');
         });
-        it(`should call PermissionsSetsService.getPermissions`, () => {
-            spyOn(vm.PermissionsSetsService, 'getPermissions');
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
-            expect(vm.PermissionsSetsService.getPermissions).toHaveBeenCalled();
+        it(`should call permissionsSetsService.getPermissions`, () => {
+            expect(permissionsSetsService.getPermissions).toHaveBeenCalled();
         });
         it(`should set permissions.local equal to '{foo: true}'`, () => {
             let result = {date: {foo: true}};
-            vm.PermissionsSetsService.getPermissions = () => {return {then: (f) => { f(result) }}};
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
+            permissionsSetsService.getPermissions = () => {return {then: (f) => { f(result) }}};
             expect(vm.permissions.local).toEqual('{foo: true}');
         });
         it(`should set permissions.saved equal to '{foo: true}'`, () => {
             let result = {date: {foo: true}};
-            vm.PermissionsSetsService.getPermissions = () => {return {then: (f) => { f(result) }}};
-            vm.constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService);
+            permissionsSetsService.getPermissions = () => {return {then: (f) => { f(result) }}};
             expect(vm.permissions.saved).toEqual('{foo: true}');
-        });*/
+        });
         //test this.$scope.$on('$stateChangeStart
         //test this.$state.params.id
-
+        */
 
     });
 
     describe('function switchActive', () => {
-        /*beforeEach(() => {
-            this.saveButtonInfo.unsavedChanges = true;
-            let index = 1;
-        });
+        let index = 1;
         it(`openUnsavedChangesModal should be called`, () => {
+            vm.saveButtonInfo.unsavedChanges = true;
             spyOn(vm, 'openUnsavedChangesModal');
             vm.switchActive(index);
             expect(vm.openUnsavedChangesModal).toHaveBeenCalled();
         });
         it(`activateTab should be called`, () => {
-            this.saveButtonInfo.unsavedChanges = false;
+            vm.saveButtonInfo.unsavedChanges = false;
             spyOn(vm, 'activateTab');
             vm.switchActive(index);
             expect(vm.activateTab).toHaveBeenCalled();
-        });*/
+        });
     });
 
     describe('function activateTab', () => {
-        /*beforeEach(() => {
-            let index = 1;
-        });
+        let index = 1;
         it(`tabInfo.active should be 1`, () => {
-            activateTab(index);
+            vm.activateTab(index);
             expect(vm.tabInfo.active).toEqual(1);
         });
         it(`tabInfo.sectionTemplateUrl should be equal to sections.allSections[1].templateUrl`, () => {
             let section = vm.sections.allSections[1].templateUrl;
-            activateTab(index);
+            vm.activateTab(index);
             expect(vm.tabInfo.sectionTemplateUrl).toEqual(section);
         });
         it(`$state.transitionTo should be called`, () => {
             spyOn(vm.$state, 'transitionTo');
             vm.activateTab(index);
             expect(vm.$state.transitionTo).toHaveBeenCalled();
-        });*/
+        });
     });
 
     describe('function editUser', () => {
-        /*beforeEach(() => {
-            id = 123;
-        });
+        let id = 123;
         it(`tabInfo.active should be -1`, () => {
             vm.editUser(id);
             expect(vm.tabInfo.active).toEqual(-1);
         });
         it(`tabInfo.sectionTemplateUrl should be equal to editAccountPath`, () => {
             let section = vm.editAccountPath;
-            editUser(id);
+            vm.editUser(id);
             expect(vm.tabInfo.sectionTemplateUrl).toEqual(section);
         });
         it(`$state.transitionTo should be called`, () => {
             spyOn(vm.$state, 'transitionTo');
             vm.editUser(id);
             expect(vm.$state.transitionTo).toHaveBeenCalled();
-        });*/
+        });
     });
 
     describe('saveAll', () => {
         /*beforeEach(() => {
             let arrays = {local: {id: 123},
                       saved: {id: 123}};
-            let serviceToUse = vm.AccountService;
+            let serviceToUse = vm.accountService;
         });
         it(`updateSaveButton should be called`, () => {
             spyOn(vm, 'updateSaveButton');
@@ -284,9 +268,9 @@ describe('account Controller', () => {
     });
 
     describe('function resendActivationEmail', () => {
-        /*spyOn(vm.AccountService, 'resendActivationEmail');
+        /*spyOn(vm.accountService, 'resendActivationEmail');
         vm.resendActivationEmail(123);
-        expect(vm.AccountService.resendActivationEmail).toHaveBeenCalled);*/
+        expect(vm.accountService.resendActivationEmail).toHaveBeenCalled);*/
     });
 
     describe('function deleteAccount', () => {
@@ -294,18 +278,18 @@ describe('account Controller', () => {
          let account = {id: 123, accountdelete: true};
          });
          it(`destroy should be called`, () => {
-         spyOn(vm.AccountService, 'destroy');
+         spyOn(vm.accountService, 'destroy');
          vm.deleteAccount(account);
-         expect(vm.AccountService.destroy).toHaveBeenCalled();
+         expect(vm.accountService.destroy).toHaveBeenCalled();
          });
          it(`getAccounts should be called`, () => {
-         spyOn(vm.AccountService, 'getAccounts');
+         spyOn(vm.accountService, 'getAccounts');
          vm.deleteAccount(account);
-         expect(vm.AccountService.getAccounts).toHaveBeenCalled();
+         expect(vm.accountService.getAccounts).toHaveBeenCalled();
          });
          it(`accounts should be equal to the response`, () => {
          let response = {data: {id: 321}};
-         vm.AccountService.getAccounts = () => {return {then: (f) => { f(response) }}};
+         vm.accountService.getAccounts = () => {return {then: (f) => { f(response) }}};
          vm.deleteAccount(account);
          expect(vm.accounts).toEqual('{id: 321}');
          });
@@ -322,13 +306,13 @@ describe('account Controller', () => {
             let index = 0;
         });
         it(`getPermission should be called`, () => {
-            spyOn(vm.PermissionsSetsService, 'getPermission');
+            spyOn(vm.permissionsSetsService, 'getPermission');
             vm.changeUserRole(index);
-            expect(vm.PermissionsSetsService.getPermission).toHaveBeenCalled();
+            expect(vm.permissionsSetsService.getPermission).toHaveBeenCalled();
         });
         it(`accounts should be equal to result`, () => {
             let result = {permission_irf_view: false};
-            vm.PermissionsSetsService.getPermission = () => {return {then: (f) => { f(result) }}};
+            vm.permissionsSetsService.getPermission = () => {return {then: (f) => { f(result) }}};
             vm.changeUserRole(index);
             expect(accounts.local[index].permission_irf_view).toEqual(false);
         });*/

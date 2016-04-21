@@ -7,7 +7,7 @@ export default class IrfController {
         this.$stateParams = $stateParams;
         this.utils = UtilService;
 
-        this.errorList = [];        
+        this.errorList = [];
         this.errors = {};
         this.form = {};
         this.irfId = $stateParams.id;
@@ -30,11 +30,12 @@ export default class IrfController {
     }
 
     createIrf() {
+        this.form.date_form_received = new Date();
         this.service.createIrf().then((response) => {
 
-        }, (error) => {
-            this.errors = error;
-            this.errorList = this.utils.handleErrors(error);
+        }, (response) => {
+            this.errors = response.data;
+            this.errorList = this.utils.handleErrors(response.data);
         });
     }
 
@@ -50,6 +51,7 @@ export default class IrfController {
         if (this.irfId) {
             this.service.getIrf(this.irfId).then((response) => {
                 this.form = response.data;
+                this.form.date_time_of_interception = new Date(this.form.date_time_of_interception);
             });
         }
     }

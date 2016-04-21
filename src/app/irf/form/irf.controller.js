@@ -7,7 +7,8 @@ export default class IrfController {
         this.$stateParams = $stateParams;
         this.utils = UtilService;
 
-        this.errors = [];
+        this.errorList = [];        
+        this.errors = {};
         this.form = {};
         this.irfId = $stateParams.id;
         this.isCreating = !this.irfId;
@@ -32,7 +33,8 @@ export default class IrfController {
         this.service.createIrf().then((response) => {
 
         }, (error) => {
-            this.errors = this.utils.handleErrors(error);
+            this.errors = error;
+            this.errorList = this.utils.handleErrors(error);
         });
     }
 

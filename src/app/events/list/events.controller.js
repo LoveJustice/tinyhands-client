@@ -3,18 +3,7 @@ export default class EventsController {
     "ngInject"
     this.events = [];
     this.Events = EventsService;
-    this.Events.getAll().then((events) => {
-      for (var i = 0; i < events.length; i++) {
-          if (events[i].repetition == "D") {
-              events[i].get_repetition_display = "Daily";
-          } else if (events[i].repetition == "W") {
-              events[i].get_repetition_display = "Weekly";
-          } else if (events[i].repetition == "M") {
-              events[i].get_repetition_display = "Monthly";
-          }
-      }
-      this.events = events.data;
-    })
+    this.getAllEvents();
     this.modal = $uibModal;
   }
 
@@ -32,10 +21,24 @@ export default class EventsController {
       }
     });
     deleteModal.result.then(() => {
-        console.log(event.id);
-      this.Events.destroyEvent({id: event.id}).then(() => {
-        this.events = Events.all()
+      this.Events.destroyEvent(event.id).then(() => {
+        this.getAllEvents();
       })
     })
+  }
+
+  getAllEvents() {
+      this.Events.getAll().then((events) => {
+        for (var i = 0; i < events.length; i++) {
+            if (events[i].repetition == "D") {
+                events[i].get_repetition_display = "Daily";
+            } else if (events[i].repetition == "W") {
+                events[i].get_repetition_display = "Weekly";
+            } else if (events[i].repetition == "M") {
+                events[i].get_repetition_display = "Monthly";
+            }
+        }
+        this.events = events.data;
+      })
   }
 }

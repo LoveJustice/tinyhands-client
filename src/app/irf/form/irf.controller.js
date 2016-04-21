@@ -4,7 +4,7 @@ export default class IrfController {
 
     this.root = $rootScope;
     this.service = IrfService;
-
+    this.$stateParams = $stateParams;
     this.form = {};
     this.irfId = $stateParams.id;
     this.numPersonBoxes = 1;
@@ -13,6 +13,10 @@ export default class IrfController {
     this.selectedFlags = [];
 
     this.addSections();
+
+    this.isCreating = !this.irfId && this.irfId ? true : false;
+    this.isViewing = $stateParams.isViewing === "true";
+
     this.getIrf();
   }
 

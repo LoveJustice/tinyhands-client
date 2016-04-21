@@ -105,7 +105,7 @@ export default class EditEventCtrl {
         call = this.Events.createEvent(this.event);
       }
       call.then(() => {
-        this.window.location.href = '/events/list';
+        this.window.location.href = '/#/events/list';
     }, (err) => {
         if(err.data.title) {
           this.titleError = err.data.title[0];

@@ -1,5 +1,6 @@
 export default class OccupationBuilder {
     constructor(vif = null) {
+        this.occupations = ["Unemployed", "Farmer", "Wage-laborer", "Business Owner", "Migrant Worker", "Tailoring", "Housewife", "Animal Husbandry", "Domestic Work", "Shoekeeper", "Hotel", "Factory"];
         if(vif == null) {
             this.clearAll()
             this._otherText = '';

@@ -1,5 +1,6 @@
 export default class LivesWithBuilder {
     constructor(vif = null) {
+        this.living = ["Own Parent(s)", "Husband", "Husband's Family", "Friends", "Alone", "Other Relative"];
         if(vif == null) {
             this.clearAll();
             this._otherText = '';

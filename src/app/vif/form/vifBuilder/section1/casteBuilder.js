@@ -1,9 +1,10 @@
 export default class CasteBuilder {
     constructor(vif = null) {
+        this.castes = ["Magar", "Jaisi", "Thakuri", "Bramin", "Tamang", "Chhetri", "Mongolian", "Newar", "Muslim"];
         if(vif == null) {
             this.clearAll();
             this._otherText = '';
-        } else {
+        } else {   
             this.setValues(vif);
         }
     }

@@ -1,5 +1,6 @@
 export default class PrimaryGuardianBuilder {
     constructor(vif = null) {
+        this.guardians = ["Own Parent(s)", "Husband", "Other Relative", "Non-relative", "No one (I have no guardian)"];        
         if(vif == null) {
             this.clearAll();
         } else {

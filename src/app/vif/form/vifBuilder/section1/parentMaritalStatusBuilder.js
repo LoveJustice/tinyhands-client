@@ -1,5 +1,6 @@
 export default class ParentMaritalStatusBuilder {
     constructor(vif = null) {
+        this.parents_marital_statuses = ["Single", "Married", "Widow", "My father has other wives", "Separated (legally married)", "Divorced"];
         if(vif == null) {
             this.clearAll();
         } else {

@@ -1,5 +1,6 @@
 export default class EducationLevelBuilder {
     constructor(vif = null) {
+        this.education = ["None", "Only informal (adult)", "Primary only", "Grade 4-8", "Grade 9-10", "SLC", "11-12", "Bachelors", "Masters"];
         if(vif == null) {
             this.clearAll();
         } else {

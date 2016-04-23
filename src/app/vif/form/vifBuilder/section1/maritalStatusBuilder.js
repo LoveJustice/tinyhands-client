@@ -1,5 +1,6 @@
 export default class MaritalStatusBuilder{
     constructor(vif = null) {
+        this.marital_statuses = ["Single", "Married", "Widow", "Divorced", "Husband has other wives", "Abandoned by husband"];
         if(vif == null) {
             this.clearAll();
         } else {

@@ -69,7 +69,7 @@
                     <h3 class="panel-title"><strong>1.7</strong> Caste</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4" ng-repeat="caste in section1Ctrl.castes">
+                    <div class="col-md-4" ng-repeat="caste in section1Ctrl.vif.section1.caste.castes">
                         <div class="radio options">
                             <label><input type="radio" name="caste" ng-model="caste.value" ng-value="true">{{ caste.name }}</label>
                         </div>
@@ -86,7 +86,7 @@
                     <h3 class="panel-title"><strong>1.8</strong> What is your occupation?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3" ng-repeat="occupation in section1Ctrl.occupations">
+                    <div class="col-md-3" ng-repeat="occupation in section1Ctrl.vif.section1.occupation.occupations">
                         <div class="radio options">
                             <label><input type="radio" name="occupation" ng-model="occupation.value">{{ occupation.name }}</label>
                         </div>
@@ -103,7 +103,7 @@
                     <h3 class="panel-title"><strong>1.9</strong> Marital Status</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="status in section1Ctrl.marital_statuses">
+                    <div class="col-md-4" ng-repeat="status in section1Ctrl.vif.section1.maritalStatus.marital_statuses">
                         <div class="radio options">
                             <label><input type="radio" name="marital-status" ng-model="status.value">{{ status.name }}</label>
                         </div>
@@ -116,7 +116,7 @@
                     <h3 class="panel-title"><strong>1.10</strong> With whom do you live?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4" ng-repeat="living in section1Ctrl.living">
+                    <div class="col-md-4" ng-repeat="living in section1Ctrl.vif.section1.livesWith.living">
                         <div class="radio options">
                             <label><input type="radio" name="living" ng-model="living.value">{{ living.name }}</label>
                         </div>
@@ -142,7 +142,7 @@
                     <h3 class="panel-title"><strong>1.12</strong> Who is your primary guardian?</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="guardian in section1Ctrl.guardians">
+                    <div class="col-md-4" ng-repeat="guardian in section1Ctrl.vif.section1.primaryGuardian.guardians">
                         <div class="radio options">
                             <label><input type="radio" name="guardian" ng-model="guardian.value">{{ guardian.name }}</label>
                         </div>
@@ -179,7 +179,7 @@
                     <h3 class="panel-title"><strong>1.14</strong> What is parents' marital status?</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="status in section1Ctrl.parents_marital_statuses">
+                    <div class="col-md-4" ng-repeat="status in section1Ctrl.vif.section1.parentMaritalStatus.parents_marital_statuses">
                         <div class="radio options">
                             <label><input type="radio" name="parents-marital" ng-model="status.value">{{ status.name }}</label>
                         </div>
@@ -192,7 +192,7 @@
                     <h3 class="panel-title"><strong>1.15</strong> Education Level</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="education in section1Ctrl.education">
+                    <div class="col-md-4" ng-repeat="education in section1Ctrl.vif.section1.educationLevel.education">
                         <div class="radio options">
                             <label><input type="radio" name="education" ng-model="education.value">{{ education.name }}</label>
                         </div>

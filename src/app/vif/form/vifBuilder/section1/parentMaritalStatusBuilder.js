@@ -12,7 +12,7 @@ export default class ParentMaritalStatusBuilder {
         this._married = false;
         this._widow = false;
         this._fatherHasOtherWives = false;
-        this._seperated = false;
+        this._separated = false;
         this._divorced = false;
     }
 
@@ -21,7 +21,7 @@ export default class ParentMaritalStatusBuilder {
         this._married = vif.victim_parents_marital_status_married;
         this._widow = vif.victim_parents_marital_status_widow;
         this._fatherHasOtherWives = vif.victim_parents_marital_status_father_has_other_wives;
-        this._seperated = vif.victim_parents_marital_separated;
+        this._separated = vif.victim_parents_marital_separated;
         this._divorced = vif.victim_parents_marital_divorced;
     }
 

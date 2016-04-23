@@ -60,15 +60,16 @@ export default class CasteBuilder {
     }
     
     set magar(value) {
+        console.log(value);
         this.clearAll();
         this._magar = value;
     }
     
-    get brahmin() {
+    get bramin() {
         return this._brahmin;
     }
     
-    set brahmin(value) {
+    set bramin(value) {
         this.clearAll();
         this._brahmin = value;
     }

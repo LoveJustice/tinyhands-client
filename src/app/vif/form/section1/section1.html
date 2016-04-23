@@ -2,6 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">VIF Data</h3>
+            <input type="button" value="Hello" ng-click="section1Ctrl.foo()">
         </div>
         <div class="panel-body">
             <div class="panel panel-default">
@@ -11,10 +12,10 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="radio">
-                            <input type="text" class="form-control" id="name" placeholder="Name">
+                            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="section1Ctrl.vif.name">
                             <strong>Gender:</strong>&nbsp;
-                            <label><input type="radio" name="gender">Male</label>&nbsp;
-                            <label><input type="radio" name="gender">Female</label>&nbsp;
+                            <label><input type="radio" name="gender" ng-model="section1Ctrl.vif.isMale" ng-value="true">Male</label>&nbsp;
+                            <label><input type="radio" name="gender" ng-model="section1Ctrl.vif.isFemale" ng-value="true">Female</label>&nbsp;
                         </div>
                     </div>
                 </div>
@@ -27,18 +28,18 @@
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="address1" placeholder="Address 1">
+                            <input type="text" class="form-control" id="address1" placeholder="Address 1" ng-model="section1Ctrl.vif.address1">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control pull-right" id="address2" placeholder="Address 2">
+                            <input type="text" class="form-control pull-right" id="address2" placeholder="Address 2" ng-model="section1Ctrl.vif.address2">
                         </div>
                     </div>
                     <div class="form-group row no-margin-bottom">
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="ward" placeholder="Ward #">
+                            <input type="text" class="form-control" id="ward" placeholder="Ward #" ng-model="section1Ctrl.vif.ward">
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control pull-right" id="phone" placeholder="Phone #">
+                            <input type="text" class="form-control pull-right" id="phone" placeholder="Phone #" ng-model="section1Ctrl.vif.phone">
                         </div>
                     </div>
                 </div>
@@ -51,13 +52,13 @@
                 <div class="panel-body">
                     <div class="form-group row no-margin-bottom">
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="age" placeholder="Age">
+                            <input type="text" class="form-control" id="age" placeholder="Age" ng-model="section1Ctrl.vif.age">
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="height" placeholder="Height">
+                            <input type="text" class="form-control" id="height" placeholder="Height" ng-model="section1Ctrl.vif.height">
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control pull-right" id="weight" placeholder="Weight">
+                            <input type="text" class="form-control pull-right" id="weight" placeholder="Weight" ng-model="section1Ctrl.vif.weight">
                         </div>
                     </div>
                 </div>
@@ -70,12 +71,12 @@
                 <div class="panel-body">
                     <div class="col-md-4" ng-repeat="caste in section1Ctrl.castes">
                         <div class="radio options">
-                            <label><input type="radio" name="caste">{{ caste }}</label>
+                            <label><input type="radio" name="caste" ng-model="caste.value" ng-value="true">{{ caste.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
-                        <label><input type="radio" name="caste">Other</label>&nbsp;
-                        <input type="text" class="form-control other" placeholder="Caste">
+                        <label><input type="radio" name="caste" ng-model="section1Ctrl.vif.caste.other">Other</label>&nbsp;
+                        <input type="text" class="form-control other" placeholder="Caste" ng-model="section1Ctrl.vif.caste.otherText">
                     </div>
                 </div>
             </div>
@@ -87,12 +88,12 @@
                 <div class="panel-body">
                     <div class="col-md-3" ng-repeat="occupation in section1Ctrl.occupations">
                         <div class="radio options">
-                            <label><input type="radio" name="occupation">{{ occupation }}</label>
+                            <label><input type="radio" name="occupation" ng-model="occupation.value">{{ occupation.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
-                        <label><input type="radio" name="occuption">Other</label>&nbsp;
-                        <input type="text" class="form-control other" placeholder="Occupation">
+                        <label><input type="radio" name="occupation" ng-model="section1Ctrl.vif.occupation.other">Other</label>&nbsp;
+                        <input type="text" class="form-control other" placeholder="Occupation" ng-model="section1Ctrl.vif.occupation.otherText">
                     </div>
                 </div>
             </div>
@@ -104,7 +105,7 @@
                 <div class="panel-body panel-radio-only">
                     <div class="col-md-4" ng-repeat="status in section1Ctrl.marital_statuses">
                         <div class="radio options">
-                            <label><input type="radio" name="marital-status">{{ status }}</label>
+                            <label><input type="radio" name="marital-status" ng-model="status.value">{{ status.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -117,12 +118,12 @@
                 <div class="panel-body">
                     <div class="col-md-4" ng-repeat="living in section1Ctrl.living">
                         <div class="radio options">
-                            <label><input type="radio" name="living">{{ living }}</label>
+                            <label><input type="radio" name="living" ng-model="living.value">{{ living.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
-                        <label><input type="radio" name="living">Other</label>&nbsp;
-                        <input type="text" class="form-control other" placeholder="Lives with">
+                        <label><input type="radio" name="living" ng-model="section1Ctrl.vif.livesWith.other">Other</label>&nbsp;
+                        <input type="text" class="form-control other" placeholder="Lives with" ng-model="section1Ctrl.vif.livesWith.otherText">
                     </div>
                 </div>
             </div>
@@ -132,7 +133,7 @@
                     <h3 class="panel-title"><strong>1.11</strong> How many people are in your own family?</h3>
                 </div>
                 <div class="panel-body">
-                    <input type="text" class="form-control" placeholder="#">
+                    <input type="text" class="form-control" placeholder="#" ng-model="section1Ctrl.vif.numInFamily">
                 </div>
             </div>
 
@@ -143,7 +144,7 @@
                 <div class="panel-body panel-radio-only">
                     <div class="col-md-4" ng-repeat="guardian in section1Ctrl.guardians">
                         <div class="radio options">
-                            <label><input type="radio" name="guardian">{{ guardian }}</label>
+                            <label><input type="radio" name="guardian" ng-model="guardian.value">{{ guardian.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -156,18 +157,18 @@
                 <div class="panel-body">
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="address1" placeholder="Address 1">
+                            <input type="text" class="form-control" id="address1" placeholder="Address 1" ng-model="section1Ctrl.vif.primaryGuardian.address1">
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control pull-right" id="address2" placeholder="Address 2">
+                            <input type="text" class="form-control pull-right" id="address2" placeholder="Address 2" ng-model="section1Ctrl.vif.primaryGuardian.address2">
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="ward" placeholder="Ward #">
+                            <input type="text" class="form-control" id="ward" placeholder="Ward #" ng-model="section1Ctrl.vif.primaryGuardian.ward">
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control pull-right" id="phone" placeholder="Phone #">
+                            <input type="text" class="form-control pull-right" id="phone" placeholder="Phone #" ng-model="section1Ctrl.vif.primaryGuardian.phone">
                         </div>
                     </div>
                 </div>
@@ -180,7 +181,7 @@
                 <div class="panel-body panel-radio-only">
                     <div class="col-md-4" ng-repeat="status in section1Ctrl.parents_marital_statuses">
                         <div class="radio options">
-                            <label><input type="radio" name="parents-marital">{{ status }}</label>
+                            <label><input type="radio" name="parents-marital" ng-model="status.value">{{ status.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -193,7 +194,7 @@
                 <div class="panel-body panel-radio-only">
                     <div class="col-md-4" ng-repeat="education in section1Ctrl.education">
                         <div class="radio options">
-                            <label><input type="radio" name="education">{{ education }}</label>
+                            <label><input type="radio" name="education" ng-model="education.value">{{ education.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -204,9 +205,9 @@
                     <h3 class="panel-title"><strong>1.16</strong> Is the victim literate?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-6" ng-repeat="option in ['No', 'Yes']">
+                    <div class="col-md-6" ng-repeat="option in section1Ctrl.literate">
                         <div class="radio">
-                            <label><input type="radio" name="literate">{{ option }}</label>
+                            <label><input type="radio" name="literate" ng-click="section1Ctrl.test()">{{ option.name }}</label>
                         </div>
                     </div>
                 </div>

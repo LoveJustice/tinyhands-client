@@ -32,10 +32,12 @@ export default class IsLiterateBuilder {
     }
     
     get isLiterate() {
+        console.log("Getter");
         return this._isLiterate === true;
     }
     
     set isLiterate(value) {
+        console.log("Setter");
         if(value === true && this._isNotLiterate === true) {
             this._isNotLiterate = false;
         }

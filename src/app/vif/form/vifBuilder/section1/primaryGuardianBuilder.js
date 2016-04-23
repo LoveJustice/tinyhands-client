@@ -16,7 +16,7 @@ export default class PrimaryGuardianBuilder {
         this.address1 = null; //FK
         this.address2 = null; //FK
         this.ward = '';
-        this.phoneNumber = '';
+        this.phone = '';
     }
 
     setValues(vif) {

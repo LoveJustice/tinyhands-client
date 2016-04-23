@@ -8,7 +8,8 @@ import EducationLevelBuilder from './educationLevelBuilder';
 import IsLiterateBuilder from './isLiterateBuilder';
 
 export default class Section1Builder {
-    
+
+
     constructor(vif = null) {
         this.caste = new CasteBuilder(vif);
         this.occupation = new OccuptionBuilder(vif);
@@ -76,7 +77,7 @@ export default class Section1Builder {
     }
     
     get isMale() {
-        return this._gender === 'male'
+        return this._gender === 'male';
     }
     
     set isMale(value) {
@@ -86,7 +87,7 @@ export default class Section1Builder {
     }
     
     get isFemale() {
-        return this._gender === 'female'
+        return this._gender === 'female';
     }
     
     set isFemale(value) {

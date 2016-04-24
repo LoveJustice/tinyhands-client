@@ -2,7 +2,6 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">VIF Data</h3>
-            <input type="button" value="Hello" ng-click="section1Ctrl.foo()">
         </div>
         <div class="panel-body">
             <div class="panel panel-default">
@@ -69,9 +68,9 @@
                     <h3 class="panel-title"><strong>1.7</strong> Caste</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4" ng-repeat="caste in section1Ctrl.vif.section1.caste.castes">
+                    <div class="col-md-4" ng-repeat="caste in section1Ctrl.castes">
                         <div class="radio options">
-                            <label><input type="radio" name="caste" ng-model="caste.value" ng-value="true">{{ caste.name }}</label>
+                            <label><input type="radio" name="caste" ng-model="section1Ctrl.vif.caste[caste.value]" ng-value="true">{{ caste.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
@@ -86,9 +85,9 @@
                     <h3 class="panel-title"><strong>1.8</strong> What is your occupation?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-3" ng-repeat="occupation in section1Ctrl.vif.section1.occupation.occupations">
+                    <div class="col-md-3" ng-repeat="occupation in section1Ctrl.occupations">
                         <div class="radio options">
-                            <label><input type="radio" name="occupation" ng-model="occupation.value">{{ occupation.name }}</label>
+                            <label><input type="radio" name="occupation" ng-model="section1Ctrl.vif.occupation[occupation.value]" ng-value="true">{{ occupation.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
@@ -103,9 +102,9 @@
                     <h3 class="panel-title"><strong>1.9</strong> Marital Status</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="status in section1Ctrl.vif.section1.maritalStatus.marital_statuses">
+                    <div class="col-md-4" ng-repeat="status in section1Ctrl.marital_statuses">
                         <div class="radio options">
-                            <label><input type="radio" name="marital-status" ng-model="status.value">{{ status.name }}</label>
+                            <label><input type="radio" name="marital-status" ng-model="section1Ctrl.vif.maritalStatus[status.value]" ng-value="true">{{ status.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -116,9 +115,9 @@
                     <h3 class="panel-title"><strong>1.10</strong> With whom do you live?</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4" ng-repeat="living in section1Ctrl.vif.section1.livesWith.living">
+                    <div class="col-md-4" ng-repeat="living in section1Ctrl.living">
                         <div class="radio options">
-                            <label><input type="radio" name="living" ng-model="living.value">{{ living.name }}</label>
+                            <label><input type="radio" name="living" ng-model="section1Ctrl.vif.livesWith[living.value]" ng-value="true">{{ living.name }}</label>
                         </div>
                     </div>
                     <div class="col-md-12 radio">
@@ -142,9 +141,9 @@
                     <h3 class="panel-title"><strong>1.12</strong> Who is your primary guardian?</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="guardian in section1Ctrl.vif.section1.primaryGuardian.guardians">
+                    <div class="col-md-4" ng-repeat="guardian in section1Ctrl.guardians">
                         <div class="radio options">
-                            <label><input type="radio" name="guardian" ng-model="guardian.value">{{ guardian.name }}</label>
+                            <label><input type="radio" name="guardian" ng-model="section1Ctrl.vif.primaryGuardian[guardian.value]" ng-value="true">{{ guardian.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -179,9 +178,9 @@
                     <h3 class="panel-title"><strong>1.14</strong> What is parents' marital status?</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="status in section1Ctrl.vif.section1.parentMaritalStatus.parents_marital_statuses">
+                    <div class="col-md-4" ng-repeat="status in section1Ctrl.parents_marital_statuses">
                         <div class="radio options">
-                            <label><input type="radio" name="parents-marital" ng-model="status.value">{{ status.name }}</label>
+                            <label><input type="radio" name="parents-marital" ng-model="section1Ctrl.vif.parentMaritalStatus[status.value]" ng-value="true">{{ status.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -192,9 +191,9 @@
                     <h3 class="panel-title"><strong>1.15</strong> Education Level</h3>
                 </div>
                 <div class="panel-body panel-radio-only">
-                    <div class="col-md-4" ng-repeat="education in section1Ctrl.vif.section1.educationLevel.education">
+                    <div class="col-md-4" ng-repeat="education in section1Ctrl.education">
                         <div class="radio options">
-                            <label><input type="radio" name="education" ng-model="education.value">{{ education.name }}</label>
+                            <label><input type="radio" name="education" ng-model="section1Ctrl.vif.educationLevel[education.value]" ng-value="true">{{ education.name }}</label>
                         </div>
                     </div>
                 </div>
@@ -207,7 +206,7 @@
                 <div class="panel-body">
                     <div class="col-md-6" ng-repeat="option in section1Ctrl.literate">
                         <div class="radio">
-                            <label><input type="radio" name="literate" ng-click="section1Ctrl.test()">{{ option.name }}</label>
+                            <label><input type="radio" name="literate" ng-model="section1Ctrl.vif.literacy[option.value]" ng-value="true">{{ option.name }}</label>
                         </div>
                     </div>
                 </div>

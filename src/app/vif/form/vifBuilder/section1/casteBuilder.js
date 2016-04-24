@@ -61,7 +61,6 @@ export default class CasteBuilder {
     }
     
     set magar(value) {
-        console.log(value);
         this.clearAll();
         this._magar = value;
     }
@@ -169,7 +168,7 @@ export default class CasteBuilder {
         return this._otherText;
     }
     
-    set otherValue(value) {
+    set otherText(value) {
         this._otherText = value;
     }
 }

@@ -10,8 +10,8 @@ describe('The main view', () => {
   var page;
 
   beforeEach(() => {
-    browser.get('/index.html');
-    page = require('./main.po');
+    browser.get('/src/app/border-station/borderStation.html');
+    // page = require('./borderStation.po');
   });
 
   it('should include jumbotron with correct data', () => {

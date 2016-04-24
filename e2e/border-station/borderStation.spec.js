@@ -24,4 +24,5 @@ describe('The main view', () => {
     expect(page.thumbnailEls.count()).toBeGreaterThan(5);
   });
 
+
 });

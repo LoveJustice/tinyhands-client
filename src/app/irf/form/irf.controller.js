@@ -14,6 +14,15 @@ export default class IrfController {
         this.isCreating = !this.irfId;
         this.isViewing = $stateParams.isViewing === "true";
         this.numPersonBoxes = 1;
+        this.page9 = {
+            how_sure_was_trafficking_options: [
+                { name: '1 - Not at all sure', val: 1 },
+                { name: '2 - Unsure but suspects it', val: 2 },
+                { name: '3 - Somewhat sure', val: 3 },
+                { name: '4 - Very sure', val: 4 },
+                { name: '5 - Absolutely sure', val: 5 }
+            ]
+        };
         this.sections = [];
         this.selectedSectionIndex = 0;
         this.selectedFlags = [];
@@ -52,6 +61,7 @@ export default class IrfController {
             this.service.getIrf(this.irfId).then((response) => {
                 this.form = response.data;
                 this.form.date_time_of_interception = new Date(this.form.date_time_of_interception);
+                this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking - 1];
             });
         }
     }

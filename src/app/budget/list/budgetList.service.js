@@ -4,11 +4,15 @@ export default class BudgetListService{
     this.service = BaseService;
   }
 
-  getBudgetList() {
-    return this.service.get('/api/budget/');
-  }
-
   deleteBorderStationBudget(id) {
     return this.service.delete(`/api/budget/${id}/`);
+  }
+
+  getBudgetList(searchTerm, sortValue) {
+    return this.service.get('/api/budget/', [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, {name: "ordering", value: sortValue }]);
+  }
+
+  getNextBudgetPage(nextPageUrl) {
+    return this.service.get(nextPageUrl);
   }
 }

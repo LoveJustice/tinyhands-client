@@ -19,7 +19,7 @@
 ### Gulp Usage
 #### Running
 `gulp serve` 	  -> To run the project and watch file changes run  
-`gulp serve:dist` -> To build the project, run the project and watch file changes run
+`gulp serve:dist` -> To build the project, run the project and watch file changes run  
 
 #### Unit Testing
 `gulp test`			  -> To run Karma tests  
@@ -44,6 +44,7 @@
 **UI**  
 [Angular UI Bootstrap](http://angular-ui.github.io/bootstrap/) UI Framework  
 [Bootstrap](http://getbootstrap.com/) UI Framework  
+[ngInfiniteScroll](https://sroze.github.io/ngInfiniteScroll/) Third-party tool for running functions when scrolling  
 [Less CSS](http://lesscss.org/) CSS Language  
 **Testing**  
 [Jasmine](http://jasmine.github.io/) JS Unit testing  

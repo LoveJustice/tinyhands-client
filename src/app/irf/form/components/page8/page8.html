@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3>Procedures</h3>
+    </div>
+    <div class="panel-body">
+      <check-box number="8.1" ng-model="irfCtrl.form.call_subcommittee_chair">Call Subcommittee Chair</check-box>
+      <check-box number="8.2" ng-model="irfCtrl.form.call_thn_to_cross_check">Call THN to cross-check the names (622-3856)</check-box>
+      <check-box number="'8.2a'" ng-if="irfCtrl.form.call_thn_to_cross_check" ng-model="irfCtrl.form.name_came_up_before">Had any name come up before?</check-box>
+      <div class="form-inline" ng-if="irfCtrl.form.name_came_up_before">
+        <label>
+          8.2b If yes, write the corresponding #:
+          <input class="form-control" type="number" min="0" ng-model="irfCtrl.form.name_came_up_before_value">
+        </label>
+      </div>
+      <check-box number="8.3" ng-model="irfCtrl.form.scan_and_submit_same_day">Scan and submit to TNH the same day</check-box>
+    </div>
+  </div>
+</div>

@@ -69,7 +69,7 @@
                                 </div>
                                 <div class="col-md-2  ">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="id_start_date" name="start_date" placeholder="Start date" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.start_date_open()" is-open="editCtrl.start_date_popup.opened" ng-required="true" close-text="Close"/>
+                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.startDateOpen()" is-open="editCtrl.startDatePopup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">
@@ -78,7 +78,7 @@
 
                                           <ul class="dropdown-menu">
                                              <li>
-                                                <timepicker ng-model="my_start_time" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                                <timepicker ng-model="myStartTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
                                              </li>
                                           </ul>
                                         </span>
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="col-md-2  ">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.end_date" ng-click="editCtrl.end_date_open()" is-open="editCtrl.end_date_popup.opened" ng-required="true" close-text="Close"/>
+                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.end_date" ng-click="editCtrl.endDateOpen()" is-open="editCtrl.endDatePopup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">
@@ -98,7 +98,7 @@
 
                                       <ul class="dropdown-menu">
                                          <li>
-                                            <timepicker ng-model="my_end_time" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                            <timepicker ng-model="myEndTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
                                          </li>
                                       </ul>
                                     </span>
@@ -153,7 +153,7 @@
                             </div>
                             <div class="col-md-9  ">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" datepicker-popup="{{editCtrl.date_format}}" ng-model="editCtrl.event.ends" ng-click="editCtrl.end_repeat_open()" is-open="editCtrl.end_repeat_popup.opened" ng-required="true" close-text="Close"/>
+                                    <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.ends" ng-click="editCtrl.endRepeatOpen()" is-open="editCtrl.endRepeatPopup.opened" ng-required="true" close-text="Close"/>
                                 </div>
                             </div>
                         </div>

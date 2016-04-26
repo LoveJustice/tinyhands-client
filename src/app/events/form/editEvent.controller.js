@@ -1,10 +1,11 @@
 export default class EditEventCtrl {
-    constructor($scope, $window, EventsService) {
+    constructor($scope, $window, EventsService,$stateParams) {
         'ngInject';
 
         //variable declarations
         this.Events = EventsService;
         this.window = $window;
+        this.stateParams = $stateParams;
         this.titleError = '';
         this.startDateError = '';
         this.startTimeError = '';
@@ -42,14 +43,11 @@ export default class EditEventCtrl {
             this.event.end_time = this.displayEndTime;
         });
 
-        if(this.window.location.href !== undefined && this.window.location.href.indexOf("#/events/update") > -1) { //Functional; possibly inefficient
-	  console.log("Editing mode!");
+        if(this.stateParams.id) { //Functional; possibly inefficient
           this.editing = true;
-          var eventId = parseInt(this.window.location.href.substr(38));
-	  //var eventId = 17;
+          var eventId = this.stateParams.id;
           this.Events.getEvent(eventId).then((event) => {
               this.event = event.data;
-	      console.log(this.event.id);
               $scope.myStartTime = moment(this.event.start_date +'T'+this.event.start_time).toDate();
               $scope.myEndTime = moment(this.event.end_date +'T'+this.event.end_time).toDate();
           });
@@ -70,6 +68,7 @@ export default class EditEventCtrl {
           $scope.myStartTime = moment('2016-01-01T12:00').toDate();
           $scope.myEndTime = moment('2016-01-01T13:00').toDate();
         }
+
     }
 
     // functions
@@ -86,24 +85,24 @@ export default class EditEventCtrl {
     }
 
     updateEvent () {
-        this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
-        this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
-        if(this.event.is_repeat) {
-            if(this.event.ends != '') {
-                this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
-            } else {
-                this.event.ends = null;
-            }
-        } else {
-            this.event.repetition = '';
-            this.event.ends = null;
-        }
       if(!this.checkFields()) {
         return;
       }
+      this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
+      console.log(this.event.start_date);
+      this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
+      if(this.event.is_repeat) {
+          if(this.event.ends != '') {
+              this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
+          } else {
+              this.event.ends = null;
+          }
+      } else {
+          this.event.repetition = '';
+          this.event.ends = null;
+      }
       var call;
       if(this.editing) {
-	console.log(this.event);
         call = this.Events.updateEvent(this.event.id, this.event);
       }else {
         call = this.Events.createEvent(this.event);
@@ -148,6 +147,8 @@ export default class EditEventCtrl {
       }
       if(this.event.start_date && this.event.end_date) {
           if(this.event.start_date > this.event.end_date) {
+              console.log(this.event.start_date);
+
               this.dateError = 'Start date is not allowed to be greater than end date';
           }
           if(this.event.start_date == this.event.end_date) {

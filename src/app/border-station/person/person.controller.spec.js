@@ -8,7 +8,8 @@ describe('PersonController', () => {
     beforeEach(inject(($q, $rootScope, $http) => {
         q = $q;
         scope = $rootScope;
-        bss = new BorderStationService($http, $q);
+        let fakeUtilService = {};
+        bss = new BorderStationService($http, fakeUtilService, q);
         vm = new PersonController(q, scope, bss);
     }));
 

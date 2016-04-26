@@ -44,7 +44,7 @@ export default class IrfController {
 
         }, (response) => {
             this.errors = response.data;
-            this.errorList = this.utils.handleErrors(response.data);
+            this.errorList = this.utils.handleErrors(response);
         });
     }
 
@@ -54,6 +54,16 @@ export default class IrfController {
         } else {
             
         }
+    }
+
+    formatErrorField(error) {
+        let field = error.field;
+        field = field.split('_');
+        for (var i in field) {
+            field[i] = field[i].charAt(0).toUpperCase() + field[i].slice(1);
+        }
+        field = field.join(' ');
+        return field;
     }
 
     getIrf() {

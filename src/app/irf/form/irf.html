@@ -38,6 +38,14 @@
         </nav>
         <!--ENDREGION: PAGER-->
     </div>
+    <!-- REGION: Error messages -->
+    <div class="text-danger well" ng-if="irfCtrl.errorList.length > 0">
+        <h3>Errors</h3>
+        <div class="well well-sm" ng-repeat="error in irfCtrl.errorList">
+            <h4>{{irfCtrl.formatErrorField(error) + ': ' + error.messages[0]}}</h4>
+        </div>
+    </div>
+    <!-- ENDREGION: Error messages -->
     <button class="btn btn-lg btn-success" ng-click="irfCtrl.createOrUpdateIrf()">{{irfCtrl.isCreating ? 'Create' : 'Update'}}</button>
     <br>
     <br>

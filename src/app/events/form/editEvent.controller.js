@@ -42,11 +42,14 @@ export default class EditEventCtrl {
             this.event.end_time = this.displayEndTime;
         });
 
-        if(this.window.event_id !== undefined && this.window.event_id > -1) {
+        if(this.window.location.href !== undefined && this.window.location.href.indexOf("#/events/update") > -1) { //Functional; possibly inefficient
+	  console.log("Editing mode!");
           this.editing = true;
-          var eventId = this.window.event_id;
-          this.Events.get({id: eventId}).then((event) => {
-              this.event = event;
+          var eventId = parseInt(this.window.location.href.substr(38));
+	  //var eventId = 17;
+          this.Events.getEvent(eventId).then((event) => {
+              this.event = event.data;
+	      console.log(this.event.id);
               $scope.myStartTime = moment(this.event.start_date +'T'+this.event.start_time).toDate();
               $scope.myEndTime = moment(this.event.end_date +'T'+this.event.end_time).toDate();
           });
@@ -100,7 +103,8 @@ export default class EditEventCtrl {
       }
       var call;
       if(this.editing) {
-        call = this.Events.updateEvent(this.event);
+	console.log(this.event);
+        call = this.Events.updateEvent(this.event.id, this.event);
       }else {
         call = this.Events.createEvent(this.event);
       }

@@ -69,12 +69,12 @@
                                 </div>
                                 <div class="col-md-2  ">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="id_start_date" name="start_date" placeholder="Start date" datepicker-popup="{{editCtrl.date_format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.start_date_open()" is-open="editCtrl.start_date_popup.opened" ng-required="true" close-text="Close"/>
+                                        <input type="text" class="form-control" id="id_start_date" name="start_date" placeholder="Start date" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.start_date_open()" is-open="editCtrl.start_date_popup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">
                                         <span dropdown auto-close="outsideClick">
-                                          <input href dropdown-toggle value = "{{ editCtrl.display_start_time }}" class="form-control" id="id_start_time">
+                                          <input href dropdown-toggle value = "{{ editCtrl.displayStartTime }}" class="form-control" id="id_start_time">
 
                                           <ul class="dropdown-menu">
                                              <li>
@@ -89,12 +89,12 @@
                                 </div>
                                 <div class="col-md-2  ">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.date_format}}" ng-model="editCtrl.event.end_date" ng-click="editCtrl.end_date_open()" is-open="editCtrl.end_date_popup.opened" ng-required="true" close-text="Close"/>
+                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.end_date" ng-click="editCtrl.end_date_open()" is-open="editCtrl.end_date_popup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">
                                     <span dropdown auto-close="outsideClick">
-                                      <input href dropdown-toggle value = "{{ editCtrl.display_end_time }}" class="form-control" id="id_end_time">
+                                      <input href dropdown-toggle value = "{{ editCtrl.displayEndTime }}" class="form-control" id="id_end_time">
 
                                       <ul class="dropdown-menu">
                                          <li>

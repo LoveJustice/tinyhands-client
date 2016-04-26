@@ -1,28 +1,11 @@
-describe('Border Station View E2E Tests', () => {
-    var page;
+var borderStation = require('./borderStation.po.js');
+describe('borderStation view', () => {
+  // browser.get('#/border-station/1');
+  it("should have h1 text 'Errors'", () => {
     
-    
+    // var borderstation = new borderStation();
+    borderStation.getBorderStation();
+    expect(true).toEqual(true);
+  });
 });
 
-
-
-describe('The main view', () => {
-  var page;
-
-  beforeEach(() => {
-    browser.get('/src/app/border-station/borderStation.html');
-    // page = require('./borderStation.po');
-  });
-
-  it('should include jumbotron with correct data', () => {
-    expect(page.h1El.getText()).toBe('\'Allo, \'Allo!');
-    expect(page.imgEl.getAttribute('src')).toMatch(/assets\/images\/yeoman.png$/);
-    expect(page.imgEl.getAttribute('alt')).toBe('I\'m Yeoman');
-  });
-
-  it('should list more than 5 awesome things', () => {
-    expect(page.thumbnailEls.count()).toBeGreaterThan(5);
-  });
-
-
-});

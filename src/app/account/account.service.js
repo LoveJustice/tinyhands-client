@@ -1,14 +1,12 @@
 import BaseService from '../base.service';
 
 export default class AccountService extends BaseService {
-	constructor($http, $q, $timeout) {
-		'ngInject';
-		super();
+  constructor($http) {
+	'ngInject';
+	super($http);
 
-		this.$http = $http;
-		this.$q = $q;
-    	this.$timeout = $timeout;
-	}
+	this.$http = $http;
+  }
 
 	// GETs
 	getAccounts() {
@@ -33,12 +31,12 @@ export default class AccountService extends BaseService {
 
   // POSTs
   create(data) {
-    return this.post('api/account/', data);
-	}
+    return this.post('/api/account/', data);
+  }
 
   resendActivationEmail(id){
-    return this.post(`api/account/resend-activation-email/${id}/`)
-	}
+    return this.post(`/api/account/resend-activation-email/${id}/`)
+  }
 
   activateAccountPassword(activationKey, data){
     return this.post(`api/account/activate/${activationKey}/`, data);
@@ -46,6 +44,6 @@ export default class AccountService extends BaseService {
 
   // DELETE
   destroy(id) {
-      return this.delete(`api/account/${id}/`);
+    return this.delete(`api/account/${id}/`);
   }
 }

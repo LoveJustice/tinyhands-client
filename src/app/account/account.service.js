@@ -9,20 +9,24 @@ export default class AccountService extends BaseService {
   }
 
 	// GETs
-  getAccounts() {
-	return this.get('/api/account/all/');
-  }
+	getAccounts() {
+		return this.get('api/account/all/');
+	}
 
   getAccount(id) {
-    return this.get(`/api/account/${id}/`);
+    return this.get(`api/account/${id}/`);
   }
 
-  getMe() {
-	return this.get('/api/me/');
-  }
+	getMe() {
+		return this.get('api/me/');
+	}
 
-  update(id, data) {
-    return this.put(`/api/account/${id}/`, data);
+	update(id, data) {
+		return this.put(`api/account/${id}/`, data);
+	}
+
+  activateAccount(activationKey){
+    return this.get(`api/account/activate/${activationKey}/`);
   }
 
   // POSTs
@@ -34,8 +38,8 @@ export default class AccountService extends BaseService {
     return this.post(`/api/account/resend-activation-email/${id}/`)
   }
 
-  activateAccount(activateCode){
-    return this.post(`/api/account/activate-account/${activateCode}/`)
+  activateAccountPassword(activationKey, data){
+    return this.post(`api/account/activate/${activationKey}/`, data);
   }
 
   // DELETE

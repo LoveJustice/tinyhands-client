@@ -28,13 +28,20 @@ export default class AccountController {
     //Stores information about the 'active' tab selected, as well as the current html template to display.
     this.tabInfo = {'active': null, 'sectionTemplateUrl': null};
 
-    this.saveButtonInfo = {"saveButtonText":"Saved", "saveButtonColor":"btn-primary", "unsavedChanges": false};
     this.saveText= "Save All";
     this.savingText = "Saving...";
     this.savedText = "Saved";
     this.saveColor = "btn-success";
     this.savingColor = "btn-success";
     this.savedColor = "btn-primary";
+    this.createText = "Create";
+    this.updateText = "Update";
+    this.creatingText = "Creating...";
+    this.updatingText = "Updating...";
+    this.inputColor = "btn-primary";
+    this.updatingOrCreatingColor = "btn-success";
+    this.saveButtonInfo = {"saveButtonText": this.savedText, "saveButtonColor": this.savedColor, "unsavedChanges": false};
+    this.accountButtonInfo = {"accountButtonText": "", accountButtonColor: this.inputColor};
 
     this.accounts = {};
     this.permissions = {};
@@ -121,6 +128,8 @@ export default class AccountController {
 
     this.account = account;
     this.editing = true;
+    this.resetErrors();
+    this.getUpdateButtonText();
     this.title = 'Edit ' +this.account.first_name + ' ' + this.account.last_name + "'s Account";
 
     //Change to the Edit User State
@@ -137,6 +146,8 @@ export default class AccountController {
     this.tabInfo.sectionTemplateUrl = this.editAccountPath;
 
     this.editing = false;
+    this.resetErrors();
+    this.getUpdateButtonText();
     this.title = 'Create Account';
     this.account = {
         email: '',
@@ -188,19 +199,14 @@ export default class AccountController {
       // Waiting for all permissionsSets to be saved via saveSet()
       this.$q.all(promises).then((data) => {
           arrays.saved = angular.copy(arrays.local);
-          this.$timeout(() => {
-            this.updateSaveButton(this.savedText, this.savedColor, false);
-            resolve();
-          }, 800);
+          this.updateSaveButton(this.savedText, this.savedColor, false, 800);
+          resolve();
       }, (error) => {
             this.PermissionsSetsService.getPermissions().then((result) => {
                 arrays.saved = result.data.results
             });
-            this.$timeout(() => {
-              this.updateSaveButton(this.saveText, this.saveColor, true);
-              resolve();
-            }, 800);
-          reject(error);
+            this.updateSaveButton(this.saveText, this.saveColor, true, 800);
+            resolve();
       });
     });
   }
@@ -282,6 +288,13 @@ export default class AccountController {
     }, time);
   }
 
+  updateAccountButton(text, color, time) {
+    this.$timeout(() => {
+      this.accountButtonInfo.accountButtonText = text;
+      this.accountButtonInfo.accountButtonColor = color;
+    }, time);
+  }
+
   discardChanges(arrays) {
     arrays.local = angular.copy(arrays.saved);
     this.updateSaveButton(this.savedText, this.savedColor, false);
@@ -337,7 +350,7 @@ export default class AccountController {
     if(this.currentuser.id != account.id){
       if(account.accountdelete){
         this.AccountService.destroy(account.id).then(() =>{
-            window.toastr.success("Account Role Successfully Deleted");
+            window.toastr.success("Account Successfully Deleted");
             this.AccountService.getAccounts().then((response) =>{
               this.accounts.local = response.data;
               this.accounts.saved = angular.copy(this.accounts.local);
@@ -416,7 +429,6 @@ export default class AccountController {
                 window.toastr.success("Account Role Successfully Deleted");
                 this.permissions.saved = angular.copy(this.permissions.local);
                 this.checkForUnsavedChanges(this.permissions);
-
             });
         }
       }
@@ -427,22 +439,35 @@ export default class AccountController {
   }
 
   //Account Edit Tab
-  update() {
+  //Used when updating or creating an account
+  updateOrCreate() {
       if(!this.checkFields()){
           return;
       }
       var call;
       if(this.editing) {
+          this.updateAccountButton(this.updatingText, this.updatingOrCreatingColor);
           call = this.AccountService.update(this.account.id, this.account);
       }else {
+          this.updateAccountButton(this.creatingText, this.updatingOrCreatingColor);
           call= this.AccountService.create(this.account);
       }
       call.then(() => {
-          this.$state.go("account", {activeTab: 0});
+          this.$timeout(() => {
+            if(this.editing){
+                window.toastr.success("Account Updated");
+            } else {
+                window.toastr.success("Account Created");
+            }
+            this.$state.go("account", {activeTab: 0});
+          }, 300);
       }, (err) => {
-          if(err.data.email){
+          this.$timeout(() => {
+            if (err.data.email) {
               this.emailError = err.data.email[0];
-          }
+              this.getUpdateButtonText();
+            }
+          }, 300);
       });
   }
 
@@ -460,6 +485,11 @@ export default class AccountController {
           return false;
       }
       return true;
+  }
+
+  resetErrors() {
+    this.emailError = '';
+    this.userDesignationError = '';
   }
 
   //Account Edit Tab
@@ -497,10 +527,9 @@ export default class AccountController {
   //Account Edit Tab
   getUpdateButtonText() {
       if(this.editing) {
-          return "Update";
+          this.updateAccountButton(this.updateText, this.inputColor);
+      } else {
+          this.updateAccountButton(this.createText, this.inputColor);
       }
-      return "Create";
   }
-
-
 }

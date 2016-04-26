@@ -580,4 +580,24 @@ describe('account Controller', () => {
             expect(returnValue).toEqual("Create");
         });
     });
+
+    describe('function update', () => {
+
+    });
+
+    describe('function checkFields', () => {
+
+    });
+
+    describe('function onUserDesignationChanged', () => {
+
+    });
+
+    describe('function getButtonText', () => {
+
+    });
+
+    describe('function getUpdateButtonText', () => {
+
+    });
 });

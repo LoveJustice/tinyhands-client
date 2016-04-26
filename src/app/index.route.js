@@ -89,11 +89,14 @@ function routerConfig ($locationProvider, $stateProvider, $urlRouterProvider) {
       }
     })
 
-    .state('account/activate-account/:code', {
-      url: '/account/activate-account/:code',
+    .state('account/activate/:activation_key', {
+      url: '/account/activate/:activation_key',
       templateUrl: 'app/account/components/activate/activateAccount.html',
       controller: 'ActivateAccountController',
       controllerAs: 'activateAcctCtrl',
+      data: {
+        requireLogin: false
+      }
     })
 
     .state('vifList', {

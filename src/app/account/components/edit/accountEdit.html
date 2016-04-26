@@ -213,13 +213,13 @@
             </table>
             <br/>
             <br/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <button class="clear btn btn-primary pull-right btn-lg" ng-click="accountCtrl.update()">
-                {{accountCtrl.getUpdateButtonText()}}
-            </button>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="clear btn {{accountCtrl.accountButtonInfo.accountButtonColor}} pull-right btn-lg col-sm-4 col-md-4 col-lg-4" ng-click="accountCtrl.updateOrCreate()">
+                        {{accountCtrl.accountButtonInfo.accountButtonText}}
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

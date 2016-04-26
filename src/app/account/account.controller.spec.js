@@ -355,4 +355,24 @@ describe('account Controller', () => {
 
         });*/
     });
+
+    describe('function update', () => {
+
+    });
+
+    describe('function checkFields', () => {
+
+    });
+
+    describe('function onUserDesignationChanged', () => {
+
+    });
+
+    describe('function getButtonText', () => {
+
+    });
+
+    describe('function getUpdateButtonText', () => {
+
+    });
 });

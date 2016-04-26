@@ -17,7 +17,7 @@ export default class EventsService{
     }
 
     updateEvent(id, event) {
-        return this.service.put('api/event/', event);
+        return this.service.put(`api/event/${id}/`, event);
     }
 
     destroyEvent(id) {

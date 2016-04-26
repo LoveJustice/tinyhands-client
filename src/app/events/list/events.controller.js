@@ -29,13 +29,13 @@ export default class EventsController {
 
   getAllEvents() {
       this.Events.getAll().then((events) => {
-        for (var i = 0; i < events.length; i++) {
-            if (events[i].repetition == "D") {
-                events[i].get_repetition_display = "Daily";
-            } else if (events[i].repetition == "W") {
-                events[i].get_repetition_display = "Weekly";
-            } else if (events[i].repetition == "M") {
-                events[i].get_repetition_display = "Monthly";
+        for (var i = 0; i < events.data.length; i++) {
+            if (events.data[i].repetition == "D") {
+                events.data[i].get_repetition_display = "Daily";
+            } else if (events.data[i].repetition == "W") {
+                events.data[i].get_repetition_display = "Weekly";
+            } else if (events.data[i].repetition == "M") {
+                events.data[i].get_repetition_display = "Monthly";
             }
         }
         this.events = events.data;

@@ -4,15 +4,15 @@ describe ('AccountService', () => {
     let service;
 
     let id=123,
-    data = {id: 'dataId'};
-    //activateCode = 'abc';
+    data = {id: 'dataId'},
+    activationKey = 'abc';
 
     beforeEach(inject(($http) =>{
         service = new AccountService($http);
     }));
 
     describe('function getAccounts', () =>{
-        let url = '/api/account/all/';
+        let url = 'api/account/all/';
         it(`should get called with ${url}`, () =>{
             spyOn(service, 'get');
             service.getAccounts();
@@ -21,7 +21,7 @@ describe ('AccountService', () => {
     });
 
     describe('function getAccount', () =>{
-        let url = `/api/account/${id}/`;
+        let url = `api/account/${id}/`;
         it(`should get called with ${url}`, () => {
             spyOn(service, 'get');
             service.getAccount(id);
@@ -30,7 +30,7 @@ describe ('AccountService', () => {
     });
 
     describe('function getMe', () => {
-        let url = '/api/me/';
+        let url = 'api/me/';
         it(`should get called with ${url}`, () => {
             spyOn(service, 'get');
             service.getMe();
@@ -39,11 +39,20 @@ describe ('AccountService', () => {
     });
 
     describe('function update', () =>{
-        let url = `/api/account/${id}/`;
+        let url = `api/account/${id}/`;
         it(`should get called with ${url} and ${data}`, () => {
             spyOn(service, 'put');
             service.update(id, data);
             expect(service.put).toHaveBeenCalledWith(url, data);
+        });
+    });
+
+    describe('function activateAccount', () => {
+        let url = `api/account/activate/${activationKey}/`;
+        it(`should get called with ${url} and ${activationKey}`, () => {
+            spyOn(service, 'get');
+            service.activateAccount(activationKey);
+            expect(service.get).toHaveBeenCalledWith(url);
         });
     });
 
@@ -65,6 +74,15 @@ describe ('AccountService', () => {
         });
     });
 
+    describe('function activateAccountPassword', () => {
+        let url = `api/account/activate/${activationKey}/`;
+        it(`should get called with ${url} and ${data}`, () => {
+            spyOn(service, 'post');
+            service.activateAccountPassword(activationKey, data);
+            expect(service.post).toHaveBeenCalledWith(url, data);
+        });
+    });
+
     describe('function destroy', () => {
         let url = `api/account/${id}/`;
         it(`should get called with ${url}`, () => {
@@ -74,12 +92,5 @@ describe ('AccountService', () => {
         });
     });
 
-    /*describe('function activateAccount', () => {
-        let url = `/api/account/activate-account/${activateCode}/`;
-        it(`should get called with ${url} and ${activateCode}`, () => {
-            spyOn(service, 'post');
-            service.activateAccount(activateCode);
-            expect(service.post).toHaveBeenCalledWith(url, activateCode);
-        });
-    });*/
+
 });

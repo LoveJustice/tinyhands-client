@@ -21,12 +21,12 @@ describe('account Controller', () => {
         $state = {params: {id: 1}, transitionTo: () => {}, go: () => {}};
         accountService = new AccountService($http);
         permissionsSetsService = new PermissionsSetsService($http);
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80//api/me/').respond({data: 'foo'});
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80//api/account/all/').respond({data: 'foo'});
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80//api/defaultPermissionsSet/').respond({data: 'foo'});
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80//api/account/1/').respond({data: 'foo'});
-        $httpBackend.whenPUT('http://edwards.cse.taylor.edu:80//api/account/123/').respond({data: 'foo'});
-        $httpBackend.whenPOST('http://edwards.cse.taylor.edu:80//api/account/').respond({date: 'foo'});
+        $httpBackend.whenGET('http://localhost:80/api/me/').respond({data: 'foo'});
+        $httpBackend.whenGET('http://localhost:80/api/account/all/').respond({data: 'foo'});
+        $httpBackend.whenGET('http://localhost:80//api/defaultPermissionsSet/').respond({data: 'foo'});
+        $httpBackend.whenGET('http://localhost:80/api/account/1/').respond({data: 'foo'});
+        $httpBackend.whenPUT('http://localhost:80/api/account/123/').respond({data: 'foo'});
+        $httpBackend.whenPOST('http://localhost:80//api/account/').respond({date: 'foo'});
         vm = new AccountController($q, $scope, $timeout, $uibModal, $state, accountService, permissionsSetsService);
     }));
 
@@ -279,12 +279,6 @@ describe('account Controller', () => {
             vm.saveAll(vm.accounts, accountService);
             expect(vm.saveSet).toHaveBeenCalled();
         });
-        it(`arrays.saved should be equal to arrays.local`, () => {
-            vm.saveAll(vm.accounts, accountService);
-            $scope.$apply();
-            $timeout.flush();
-            expect(vm.accounts.local).toEqual(vm.accounts.saved);
-        });
     });
 
     describe('function saveSet', () => {
@@ -365,6 +359,19 @@ describe('account Controller', () => {
             expect(vm.saveButtonInfo.unsavedChanges).toEqual(false);
         });
 
+    });
+
+    describe('function updateAccountButton', () => {
+        it(`accountButtonText should be equal to text`, () => {
+            vm.updateAccountButton(vm.saveText, vm.saveColor, 100);
+            $timeout.flush();
+            expect(vm.accountButtonInfo.accountButtonText).toEqual(vm.saveText);
+        });
+        it(`accountButtonColor should be equal to color`, () => {
+            vm.updateAccountButton(vm.saveText, vm.saveColor, 100);
+            $timeout.flush();
+            expect(vm.accountButtonInfo.accountButtonColor).toEqual(vm.saveColor);
+        });
     });
 
     describe('function discardChanges', () => {
@@ -508,20 +515,27 @@ describe('account Controller', () => {
         });
     });
 
-    describe('function update', () => {
+    describe('function updateOrCreate', () => {
         beforeEach(() => {
-            vm.account = {email: 'troll@taylor.edu', user_designation: 1};
+            vm.account = {id: 123, email: 'troll@taylor.edu', user_designation: 1};
             vm.editing = true;
+        });
+        it(`updateAccountButton should be called`, () => {
+            spyOn(vm, 'updateAccountButton');
+            vm.updateOrCreate();
+            expect(vm.updateAccountButton).toHaveBeenCalled();
         });
         it(`update should be called`, () => {
             spyOn(accountService, 'update').and.callThrough();
-            vm.update();
+            vm.updateOrCreate();
+            $scope.$apply();
             expect(accountService.update).toHaveBeenCalled();
         });
         it(`create should be called`, () => {
             vm.editing = false;
             spyOn(accountService, 'create').and.callThrough();
-            vm.update();
+            vm.updateOrCreate();
+            $scope.$apply();
             expect(accountService.create).toHaveBeenCalled();
         });
     });
@@ -569,35 +583,13 @@ describe('account Controller', () => {
     });
 
     describe('function getUpdateButtonText', () => {
-        it(`returnValue should equal "Update"`, () => {
+        beforeEach(() => {
             vm.editing = true;
-            let returnValue = vm.getUpdateButtonText();
-            expect(returnValue).toEqual("Update");
         });
-        it(`returnValue should equal "Create"`, () => {
-            vm.editing = false;
-            let returnValue = vm.getUpdateButtonText();
-            expect(returnValue).toEqual("Create");
+        it(`updateAccountButton should be called`, () => {
+            spyOn(vm, 'updateAccountButton');
+            vm.getUpdateButtonText();
+            expect(vm.updateAccountButton).toHaveBeenCalled();
         });
-    });
-
-    describe('function update', () => {
-
-    });
-
-    describe('function checkFields', () => {
-
-    });
-
-    describe('function onUserDesignationChanged', () => {
-
-    });
-
-    describe('function getButtonText', () => {
-
-    });
-
-    describe('function getUpdateButtonText', () => {
-
     });
 });

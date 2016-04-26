@@ -33,7 +33,7 @@ import TallyDirective from './components/tally/tally.directive';
 // ENDREGION: Directives
 
 // REGION: Controllers
-import ActivateAccountController from './account/components/activate/activateAccount.controller.js'
+import ActivateAccountController from './account/components/activate/activateAccount.controller';
 import AccountController from './account/account.controller';
 import Address1Controller from './addresses/address1.controller';
 import Address1EditModalController from './addresses/address1EditModal.controller';
@@ -57,7 +57,7 @@ import LoginController from './login/login.controller';
 import TallyController from './components/tally/tally.controller';
 import VifController from './vif/form/vif.controller';
 import VifListController from './vif/list/vifList.controller';
-import UnsavedChangesModalController from './account/components/modal/unsavedChangesModal.controller.js'
+import UnsavedChangesModalController from './account/components/modal/unsavedChangesModal.controller';
 // ENDREGION: Controllers
 
 

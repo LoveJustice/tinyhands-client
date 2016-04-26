@@ -3,7 +3,7 @@ import BaseService from '../base.service';
 export default class AccountService extends BaseService {
   constructor($http) {
 	'ngInject';
-	super($http);
+	super();
 
 	this.$http = $http;
   }

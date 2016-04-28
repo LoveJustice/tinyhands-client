@@ -73,15 +73,16 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">
-                                        <span dropdown auto-close="outsideClick">
-                                          <input href dropdown-toggle value = "{{ editCtrl.displayStartTime }}" class="form-control" id="id_start_time">
+                                    <!--<span dropdown auto-close="outsideClick">
+                                      <input href dropdown-toggle value = "{{ editCtrl.displayStartTime }}" class="form-control" id="id_start_time">
 
-                                          <ul class="dropdown-menu">
-                                             <li>
-                                                <timepicker ng-model="myStartTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
-                                             </li>
-                                          </ul>
-                                        </span>
+                                      <ul class="dropdown-menu">
+                                          <li>
+                                            <ng-timepicker ng-model="myStartTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                         </li>
+                                      </ul>
+                                  </span>-->
+                                    <ng-timepicker ng-model="myStartTime"></ng-timepicker>
                                 </div>
 
                                 <div class="col-md-1">
@@ -98,7 +99,7 @@
 
                                       <ul class="dropdown-menu">
                                          <li>
-                                            <timepicker ng-model="myEndTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                            <ng-timepicker ng-model="myEndTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
                                          </li>
                                       </ul>
                                     </span>

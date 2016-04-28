@@ -89,7 +89,6 @@ export default class EditEventCtrl {
         return;
       }
       this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
-      console.log(this.event.start_date);
       this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
       if(this.event.is_repeat) {
           if(this.event.ends != '') {
@@ -147,8 +146,6 @@ export default class EditEventCtrl {
       }
       if(this.event.start_date && this.event.end_date) {
           if(this.event.start_date > this.event.end_date) {
-              console.log(this.event.start_date);
-
               this.dateError = 'Start date is not allowed to be greater than end date';
           }
           if(this.event.start_date == this.event.end_date) {

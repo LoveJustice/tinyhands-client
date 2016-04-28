@@ -8,7 +8,9 @@ import ModalController from './list/modal.controller';
 
 import EventsService from './events.service'
 
-export default angular.module('tinyhands.Events', ['ui.router', 'ui.bootstrap', 'ui.calendar', 'tinyhands.Shared'])
+import timepicker from '../../../bower_components/ngTimepicker/src/js/ngTimepicker.js';
+
+export default angular.module('tinyhands.Events', ['ui.router', 'ui.bootstrap', 'ui.calendar', 'tinyhands.Shared','jkuri.timepicker'])
     .config(EventsRoutes)
 
     .controller('EventCalendarController', EventCalendarController)

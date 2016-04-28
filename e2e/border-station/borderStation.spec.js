@@ -1,10 +1,6 @@
 describe('Border Station View E2E Tests', () => {
-    var page;
-    
-    
+    var page;    
 });
-
-
 
 describe('The main view', () => {
   var page;

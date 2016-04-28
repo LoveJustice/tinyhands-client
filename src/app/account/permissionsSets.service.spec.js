@@ -11,7 +11,7 @@ describe('PermissionsSetsService', () => {
     }));
 
     describe('function getPermissions', () => {
-        let url = '/api/defaultPermissionsSet/';
+        let url = 'api/defaultPermissionsSet/';
         it(`should get called with ${url}`, () => {
             spyOn(service, 'get');
             service.getPermissions();
@@ -20,7 +20,7 @@ describe('PermissionsSetsService', () => {
     });
 
     describe('function getPermission', () => {
-        let url = `/api/defaultPermissionsSet/${id}/`;
+        let url = `api/defaultPermissionsSet/${id}/`;
         it(`should get called with ${url}`, () => {
             spyOn(service, 'get');
             service.getPermission(id);
@@ -29,7 +29,7 @@ describe('PermissionsSetsService', () => {
     });
 
     describe('function create', () => {
-        let url = '/api/defaultPermissionsSet/';
+        let url = 'api/defaultPermissionsSet/';
         it(`should get called with ${url} and ${data}`, () => {
             spyOn(service, 'post');
             service.create(data);
@@ -38,7 +38,7 @@ describe('PermissionsSetsService', () => {
     });
 
     describe('function update', () => {
-        let url = `/api/defaultPermissionsSet/${id}/`;
+        let url = `api/defaultPermissionsSet/${id}/`;
         it(`should get called with ${url} and ${data}`, () => {
             spyOn(service, 'put');
             service.update(id, data);
@@ -47,7 +47,7 @@ describe('PermissionsSetsService', () => {
     });
 
     describe('function destroy', () => {
-        let url = `/api/defaultPermissionsSet/${id}/`;
+        let url = `api/defaultPermissionsSet/${id}/`;
         it(`should get called with ${url}`, () => {
             spyOn(service, 'delete');
             service.destroy(id);

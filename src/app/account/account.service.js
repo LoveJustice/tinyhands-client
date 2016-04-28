@@ -3,7 +3,7 @@ import BaseService from '../base.service';
 export default class AccountService extends BaseService {
   constructor($http) {
 	'ngInject';
-	super($http);
+	super();
 
 	this.$http = $http;
   }
@@ -31,11 +31,11 @@ export default class AccountService extends BaseService {
 
   // POSTs
   create(data) {
-    return this.post('/api/account/', data);
+    return this.post('api/account/', data);
   }
 
   resendActivationEmail(id){
-    return this.post(`/api/account/resend-activation-email/${id}/`)
+    return this.post(`api/account/resend-activation-email/${id}/`)
   }
 
   activateAccountPassword(activationKey, data){

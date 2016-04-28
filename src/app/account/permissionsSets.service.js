@@ -10,23 +10,23 @@ export default class PermissionsSetsService extends BaseService {
   }
 
   getPermissions() {
-    return this.get('/api/defaultPermissionsSet/')
+    return this.get('api/defaultPermissionsSet/');
   }
 
   getPermission(id) {
-    return this.get(`/api/defaultPermissionsSet/${id}/`)
+    return this.get(`api/defaultPermissionsSet/${id}/`);
   }
 
   create(data) {
-	return this.post('/api/defaultPermissionsSet/', data)
+	return this.post('api/defaultPermissionsSet/', data);
   }
 
   update(id, data) {
-	return this.put(`/api/defaultPermissionsSet/${id}/`, data)
+	return this.put(`api/defaultPermissionsSet/${id}/`, data);
   }
 
   destroy(id) {
-	return this.delete(`/api/defaultPermissionsSet/${id}/`)
+	return this.delete(`api/defaultPermissionsSet/${id}/`);
   }
 
 }

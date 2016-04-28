@@ -209,7 +209,6 @@ export default class AccountController {
             resolve();
       });
     });
-   return true;
   }
 
   saveSet(index, local, serviceToUse) {

@@ -1,18 +1,14 @@
 import NavbarController from './navbar.controller';
 
-class NavbarDirective {
-  constructor() {
-    'ngInject';
+export default function NavbarDirective() {
+  'ngInject';
 
-    let directive = {
-      restrict: 'E',
-      templateUrl: 'app/components/navbar/navbar.html',
-      controller: NavbarController,
-      controllerAs: 'navbarCtrl'
-    };
+  let directive = {
+    restrict: 'E',
+    templateUrl: 'app/components/navbar/navbar.html',
+    controller: NavbarController,
+    controllerAs: 'navbarCtrl'
+  };
 
-    return directive;
-  }
+  return directive;
 }
-
-export default NavbarDirective;

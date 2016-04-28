@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../bower_components/ngTimepicker/src/css/ngTimepicker.css">
 
 <div ng-cloak>
     <div class="row">
@@ -72,17 +74,17 @@
                                         <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.startDateOpen()" is-open="editCtrl.startDatePopup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
-                                <div class="col-md-2  ">
-                                    <!--<span dropdown auto-close="outsideClick">
-                                      <input href dropdown-toggle value = "{{ editCtrl.displayStartTime }}" class="form-control" id="id_start_time">
+                                <div class="col-md-2" style="z-index:9" >
+                                    <span uib-dropdown auto-close="outsideClick">
+                                      <input href uib-dropdown-toggle value = "{{ editCtrl.displayStartTime }}" class="form-control" id="id_start_time">
 
-                                      <ul class="dropdown-menu">
-                                          <li>
-                                            <ng-timepicker ng-model="myStartTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                      <ul class="dropdown-menu" uib-dropdown-menu>
+                                         <li>
+                                            <uib-timepicker ng-model="myStartTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></uib-timepicker>
                                          </li>
                                       </ul>
-                                  </span>-->
-                                    <ng-timepicker ng-model="myStartTime"></ng-timepicker>
+                                    </span>
+
                                 </div>
 
                                 <div class="col-md-1">
@@ -94,12 +96,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">
-                                    <span dropdown auto-close="outsideClick">
-                                      <input href dropdown-toggle value = "{{ editCtrl.displayEndTime }}" class="form-control" id="id_end_time">
+                                    <span uib-dropdown auto-close="outsideClick">
+                                      <input href uib-dropdown-toggle value = "{{ editCtrl.displayEndTime }}" class="form-control" id="id_end_time">
 
-                                      <ul class="dropdown-menu">
+                                      <ul class="dropdown-menu" uib-dropdown-menu>
                                          <li>
-                                            <ng-timepicker ng-model="myEndTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></timepicker>
+                                            <uib-timepicker ng-model="myEndTime" hour-step="editCtrl.hstep" minute-step="editCtrl.mstep" show-meridian="editCtrl.ismeridian"></uib-timepicker>
                                          </li>
                                       </ul>
                                     </span>

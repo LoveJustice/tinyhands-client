@@ -11,7 +11,7 @@
 //   capabilities: {
 //     'browserName': 'chrome'
 //   },
-  
+
 //   baseUrl: 'http://localhost:3000',
 
 //   // Spec patterns are relative to the current working directly when
@@ -24,15 +24,13 @@
 //     defaultTimeoutInterval: 30000
 //   }
 // };
-
-
-
 // conf.js
 exports.config = {
   framework: 'jasmine',
   seleniumAddress: 'http://localhost:4444/wd/hub',
+  baseUrl: 'http://localhost:3000',
   specs: [
-  'spec.js',
-  'e2e/border-station/borderStation.spec.js'
+    'spec.js',
+    'e2e/border-station/borderStation.spec.js'
   ]
 }

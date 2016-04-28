@@ -1,31 +1,23 @@
 <div>
-	<div ui-view></div>
-	
-	<div class="row bottom-nav">
-		<nav class="text-center">
-			<ul class="pagination">
-				<li ng-class="{disabled: vifCtrl.sectionIndex == 0}">
-					<a ng-click="vifCtrl.prevSection()" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</a>
-				</li>
-                <li ng-class="{active: vifCtrl.sectionIndex == 0}"><a  ng-click="vifCtrl.goToSection(0)">Info</a></li>
-				<li ng-class="{active: vifCtrl.sectionIndex == 1}"><a ng-click="vifCtrl.goToSection(1)">1</a></li>
-				<li ng-class="{active: vifCtrl.sectionIndex == 2}"><a ng-click="vifCtrl.goToSection(2)">2</a></li>
-				<li ng-class="{active: vifCtrl.sectionIndex == 3}"><a ng-click="vifCtrl.goToSection(3)">3</a></li>
-				<li ng-class="{active: vifCtrl.sectionIndex == 4}"><a ng-click="vifCtrl.goToSection(4)">4</a></li>
-				<li ng-class="{active: vifCtrl.sectionIndex == 5}"><a ng-click="vifCtrl.goToSection(5)">5</a></li>
-                <li ng-class="{active: vifCtrl.sectionIndex == 6}"><a ng-click="vifCtrl.goToSection(6)">6</a></li>
-                <li ng-class="{active: vifCtrl.sectionIndex == 7}""><a ng-click="vifCtrl.goToSection(7)">7</a></li>
-                <li ng-class="{active: vifCtrl.sectionIndex == 8}"><a ng-click="vifCtrl.goToSection(8)">8</a></li>
-                <li ng-class="{active: vifCtrl.sectionIndex == 9}"><a ng-click="vifCtrl.goToSection(9)">People</a></li>
-                <li ng-class="{active: vifCtrl.sectionIndex == 10}"><a ng-click="vifCtrl.goToSection(10)">Locations</a></li>
-				<li ng-class="{disabled: vifCtrl.sectionIndex == 10}">
-					<a ng-click="vifCtrl.nextSection()" aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</a>
-				</li>
-			</ul>
-		</nav>	
-	</div>
+    <div ui-view></div>
+
+    <div class="row bottom-nav">
+        <nav class="text-center">
+            <ul class="pagination">
+                <li ng-class="{disabled: vifCtrl.sectionIndex == 0}">
+                    <a ng-click="vifCtrl.prevSection()" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li ng-repeat="section in vifCtrl.sections" ng-class="{active: vifCtrl.sectionIndex == $index}">
+                    <a ng-click="vifCtrl.goToSection($index)">{{section.name}}</a>
+                </li>
+                <li ng-class="{disabled: vifCtrl.sectionIndex == vifCtrl.sections.length-1}">
+                    <a ng-click="vifCtrl.nextSection()" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>	
+    </div>
 </div>

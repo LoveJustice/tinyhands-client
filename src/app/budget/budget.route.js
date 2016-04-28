@@ -2,7 +2,7 @@ function budgetRouteConfig ($stateProvider) {
     'ngInject';
     $stateProvider
         .state('budget', {
-          url: '/budget/:id',
+          url: '/budget/:id?borderStationId&isViewing',
           templateUrl: 'app/budget/form/budget.html',
           controller: 'BudgetController',
           controllerAs: 'budgetCtrl',

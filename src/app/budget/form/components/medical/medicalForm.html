@@ -2,7 +2,7 @@
   <h2 class="text-center">Medical</h2>
   <div class="row form-group">
     <div class="col-md-5 calc-form-input-no-width">
-        <input class="text-right form-control" type="number" id="medical_expense" ng-model="budgetCtrl.form.medical_last_months_expense"/>
+        <input class="text-right form-control" type="number" id="medical_expense" ng-model="budgetCtrl.form.medical_last_months_expense" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
         <small>Last month's medical expense</small>
     </div>
     <operator width="2">=</operator>

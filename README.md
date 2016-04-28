@@ -2,6 +2,9 @@
 
 **Note:** Used [Generator-gulp-angular](https://github.com/Swiip/generator-gulp-angular) to generate project
 
+### Codeship Status
+[ ![Codeship Status for tu-software-studio/tinyhands-client](https://codeship.com/projects/be6ab140-e41a-0133-4db8-3aa3f222b1f1/status?branch=develop)](https://codeship.com/projects/146238)
+
 ### Front-End Installation
 1. `npm install -g gulp bower`
 2. Install dependencies: `npm install`
@@ -16,7 +19,7 @@
 ### Gulp Usage
 #### Running
 `gulp serve` 	  -> To run the project and watch file changes run  
-`gulp serve:dist` -> To build the project, run the project and watch file changes run
+`gulp serve:dist` -> To build the project, run the project and watch file changes run  
 
 #### Unit Testing
 `gulp test`			  -> To run Karma tests  
@@ -41,6 +44,7 @@
 **UI**  
 [Angular UI Bootstrap](http://angular-ui.github.io/bootstrap/) UI Framework  
 [Bootstrap](http://getbootstrap.com/) UI Framework  
+[ngInfiniteScroll](https://sroze.github.io/ngInfiniteScroll/) Third-party tool for running functions when scrolling  
 [Less CSS](http://lesscss.org/) CSS Language  
 **Testing**  
 [Jasmine](http://jasmine.github.io/) JS Unit testing  

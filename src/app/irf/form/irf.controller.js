@@ -34,14 +34,11 @@ export default class IrfController {
     }
 
     getIrf() {
+        this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[0];
         this.service.getIrf(this.irfId).then((response) => {
             this.form = response.data;
             this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking];     
         });
-        if(this.page9.how_sure_was_trafficking == null){  
-            this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[0];
-        }
-        
     }
 
     getFlagText() {

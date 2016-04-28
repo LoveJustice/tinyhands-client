@@ -1,9 +1,9 @@
 export default class IrfListController {
-    constructor(IrfListService, session) {
+    constructor(IrfListService, SessionService) {
         'ngInject';
 
         this.service = IrfListService;
-        this.session = session;
+        this.session = SessionService;
 
         this.numShowing = 25;
         this.paginateBy = 25;
@@ -25,7 +25,7 @@ export default class IrfListController {
     }
 
     getSort() {
-        if (this.reverse == false) {
+        if (this.reverse === false) {
             return this.sort;
         } else {
             return '-' + this.sort;

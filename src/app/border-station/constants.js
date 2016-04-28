@@ -1,4 +1,4 @@
-export default {
+const Constants = {
 	Events: {
 		Create: {
 			BorderStation: {
@@ -34,3 +34,4 @@ export default {
 		Saving: 'Saving...'
 	}
 };
+export default Constants;

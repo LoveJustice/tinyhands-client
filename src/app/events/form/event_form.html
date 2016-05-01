@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="col-md-2  ">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.start_date" ng-click="editCtrl.startDateOpen()" is-open="editCtrl.startDatePopup.opened" ng-required="true" close-text="Close"/>
+                                        <input type="text" class="form-control" uib-datepicker-popup ng-model="myStartDate" ng-click="editCtrl.startDateOpen()" is-open="editCtrl.startDatePopup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2" style="z-index:9" >
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="col-md-2  ">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" datepicker-popup="{{editCtrl.format}}" ng-model="editCtrl.event.end_date" ng-click="editCtrl.endDateOpen()" is-open="editCtrl.endDatePopup.opened" ng-required="true" close-text="Close"/>
+                                        <input type="text" class="form-control" uib-datepicker-popup ng-model="myEndDate" ng-click="editCtrl.endDateOpen()" is-open="editCtrl.endDatePopup.opened" ng-required="true" close-text="Close"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2  ">

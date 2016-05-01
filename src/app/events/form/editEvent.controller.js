@@ -16,7 +16,16 @@ export default class EditEventCtrl {
         this.noRepetitionError = '';
         this.endsError = '';
         this.event = {};
-        this.format = 'yyyy-MM-dd';
+
+        //for datepicker
+        $scope.myStartDate = new Date();
+        $scope.myEndDate = new Date();
+        $scope.$watch('myStartDate', (newValue, oldValue) => {
+            this.event.start_date = $scope.myStartDate;
+        });
+        $scope.$watch('myEndDate', (newValue, oldValue) => {
+            this.event.end_date = $scope.myEndDate;
+        });
         this.startDatePopup = {
             opened: false
         };
@@ -26,6 +35,8 @@ export default class EditEventCtrl {
         this.endRepeatPopup = {
             opened: false
         };
+
+        //for timepicker
         $scope.myStartTime = new Date();
         $scope.myEndTime = new Date();
         this.displayStartTime = 'n/a';
@@ -33,7 +44,6 @@ export default class EditEventCtrl {
         this.hstep = 1;
         this.mstep = 1;
         this.ismeridian = false;
-
         $scope.$watch('myStartTime', (newValue, oldValue) => {
             this.displayStartTime = moment($scope.myStartTime).format('HH:mm');
             this.event.start_time = this.displayStartTime;
@@ -43,11 +53,14 @@ export default class EditEventCtrl {
             this.event.end_time = this.displayEndTime;
         });
 
+        //change the dates and times to correct values
         if(this.stateParams.id) { //Functional; possibly inefficient
           this.editing = true;
           var eventId = this.stateParams.id;
           this.Events.getEvent(eventId).then((event) => {
               this.event = event.data;
+              $scope.myStartDate = moment(this.event.start_date).toDate();
+              $scope.myEndDate = moment(this.event.end_date).toDate();
               $scope.myStartTime = moment(this.event.start_date +'T'+this.event.start_time).toDate();
               $scope.myEndTime = moment(this.event.end_date +'T'+this.event.end_time).toDate();
           });

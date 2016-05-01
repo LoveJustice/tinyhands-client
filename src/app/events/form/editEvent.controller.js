@@ -65,8 +65,12 @@ export default class EditEventCtrl {
               this.event = event.data;
               $scope.myStartDate = moment(this.event.start_date).toDate();
               $scope.myEndDate = moment(this.event.end_date).toDate();
+              $scope.myEndRepeatDate = '';
               $scope.myStartTime = moment(this.event.start_date +'T'+this.event.start_time).toDate();
               $scope.myEndTime = moment(this.event.end_date +'T'+this.event.end_time).toDate();
+              if (this.event.ends != null) {
+                  $scope.myEndRepeatDate = moment(this.event.ends).toDate();
+              }
           });
         } else {
           this.editing = false;
@@ -108,7 +112,7 @@ export default class EditEventCtrl {
       this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
       this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
       if(this.event.is_repeat) {
-          if(this.event.ends != '') {
+          if(this.event.ends != null) {
               this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
           } else {
               this.event.ends = null;

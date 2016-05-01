@@ -20,11 +20,15 @@ export default class EditEventCtrl {
         //for datepicker
         $scope.myStartDate = new Date();
         $scope.myEndDate = new Date();
+        $scope.myEndRepeatDate = new Date();
         $scope.$watch('myStartDate', (newValue, oldValue) => {
             this.event.start_date = $scope.myStartDate;
         });
         $scope.$watch('myEndDate', (newValue, oldValue) => {
             this.event.end_date = $scope.myEndDate;
+        });
+        $scope.$watch('myEndRepeatDate', (newValue, oldValue) => {
+            this.event.ends = $scope.myEndRepeatDate;
         });
         this.startDatePopup = {
             opened: false

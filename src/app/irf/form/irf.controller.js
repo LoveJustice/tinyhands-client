@@ -16,6 +16,7 @@ export default class IrfController {
         this.numPersonBoxes = 1;
         this.page9 = {
             how_sure_was_trafficking_options: [
+                { name: '--- Choose an option ---', val: null },
                 { name: '1 - Not at all sure', val: 1 },
                 { name: '2 - Unsure but suspects it', val: 2 },
                 { name: '3 - Somewhat sure', val: 3 },
@@ -52,7 +53,7 @@ export default class IrfController {
         if (this.isCreating) {
             this.createIrf();
         } else {
-            
+
         }
     }
 
@@ -67,11 +68,12 @@ export default class IrfController {
     }
 
     getIrf() {
+        this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[0];
         if (this.irfId) {
             this.service.getIrf(this.irfId).then((response) => {
                 this.form = response.data;
                 this.form.date_time_of_interception = new Date(this.form.date_time_of_interception);
-                this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking - 1];
+                this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking];
             });
         }
     }

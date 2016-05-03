@@ -1,4 +1,4 @@
-import VIFRoutes from './vif.route'
+import VIFRoutes from './vif.route';
 
 import VifController from './form/vif.controller';
 import VifInfoController from './form/info/info.controller';

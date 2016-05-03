@@ -34,7 +34,7 @@ export default class BudgetController {
       }
     };
     this.form.border_station = $stateParams.borderStationId;
-    this.isCreating = !this.budgetId && this.form.border_station ? true : false;
+    this.isCreating = !this.budgetId && this.form.border_station;
     this.isViewing = $stateParams.isViewing === "true";
     this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;

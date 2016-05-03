@@ -112,7 +112,7 @@ export default class EditEventCtrl {
       this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
       this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
       if(this.event.is_repeat) {
-          if(this.event.ends != null) {
+          if(this.event.ends != null && this.event.ends != "") {
               this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
           } else {
               this.event.ends = null;

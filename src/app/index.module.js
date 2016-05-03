@@ -18,13 +18,13 @@ import runBlock from './index.run';
 import NavbarDirective from './components/navbar/navbar.directive';
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngSanitize', 'ngTouch', 'ngResource',
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResource', 'ngSanitize', 'ngTouch',
     'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget', 'tinyhands.Dashboard', 'tinyhands.IRF', 'tinyhands.Login', 'tinyhands.VIF',
     'ui.bootstrap', 'ui.router'])
     .constant('toastr', toastr)
     .constant('moment', moment)
     .config(config)
-    .config(routerConfig)
     .config(httpProviderConfig)
+    .config(routerConfig)
     .run(runBlock)
     .directive('navbar', NavbarDirective);

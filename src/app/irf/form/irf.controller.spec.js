@@ -23,6 +23,7 @@ describe('IrfController', () => {
 
         it('page9 how_sure_was_traficking_options should be an object for select options', () => {
             expect(vm.page9.how_sure_was_trafficking_options).toEqual([
+                { name: '--- Choose an option ---', val: null},
                 { name: '1 - Not at all sure', val: 1 },
                 { name: '2 - Unsure but suspects it', val: 2 },
                 { name: '3 - Somewhat sure', val: 3 },
@@ -91,7 +92,15 @@ describe('IrfController', () => {
             expect(vm.form).toEqual(response.data);
         });
 
-        it('should set page9.how_sure_was_trafficking to the page9.how_sure_was_trafficking_options[0]', () => {
+        it('should set page9.how_sure_was_trafficking to the page9.how_sure_was_trafficking_options[0] when form.how_sure_was_trafficking is null', () => {
+            let response = {};
+            spyOn(vm.service, 'getIrf').and.callThrough();
+            vm.getIrf();
+            
+            expect(vm.page9.how_sure_was_trafficking).toEqual({ name: '--- Choose an option ---', val: null});
+        });
+
+        it('should set page9.how_sure_was_trafficking to the page9.how_sure_was_trafficking_options[1]', () => {
             let response = { data: { how_sure_was_trafficking: 1 } };
             spyOn(vm.service, 'getIrf').and.returnValue({ then: (f) => { f(response) } });
             vm.getIrf();

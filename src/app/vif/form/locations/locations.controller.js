@@ -1,6 +1,6 @@
 export default class VifLocationsController {
   constructor(VifBuilder) {
-    'ngInject'
+    'ngInject';
     this.vif = VifBuilder;
   }
 }

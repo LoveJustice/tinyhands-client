@@ -8,9 +8,9 @@
 //   //seleniumServerJar: deprecated, this should be set on node_modules/protractor/config.json
 
 //   // Capabilities to be passed to the webdriver instance.
-//   capabilities: {
-//     'browserName': 'chrome'
-//   },
+  // capabilities: {
+  //   'browserName': 'chrome'
+  // },
 
 //   baseUrl: 'http://localhost:3000',
 
@@ -27,10 +27,14 @@
 // conf.js
 exports.config = {
   framework: 'jasmine',
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: ' http://127.0.0.1:4444/wd/hub',
   baseUrl: 'http://localhost:3000',
   specs: [
-    'spec.js',
-    'e2e/border-station/borderStation.spec.js'
+    // 'spec.js',
+    'e2e/border-station/borderStation.spec.js',
   ]
+  ,
+    capabilities: {
+    'browserName': 'firefox'
+  },
 }

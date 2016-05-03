@@ -6,10 +6,9 @@
 'use strict';
 
 module.exports = {
-  getBorderStation: ()=> {
-    browser.get('#/border-station/1');
-  },
-  alwaysTrue: () => {
-
+  getBorderStation: () => {
+    var StationName = by.model('detailCtrl.details.station_name');
+    // browser.get('#/border-station/1');
+    browser.get('src/app/border-station/person/borderStation.html');
   },
 };

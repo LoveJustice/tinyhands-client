@@ -24,6 +24,7 @@
 
 #### E2E Testing
 **Note:** Requires `protractor.config.js` to contain paths to test files  
+
 `webdriver-manager start` -> Must be running in a separate terminal tab before launching protractor  
 `gulp protractor`		-> To run Protractor e2e tests  
 `gulp protractor:src`	-> To run Protractor e2e tests from src  

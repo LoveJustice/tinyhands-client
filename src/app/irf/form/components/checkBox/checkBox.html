@@ -1,8 +1,11 @@
 <div class="check-box" ng-class="{'text-info': isAnswer, 'h4': isAnswer}">
   <label>
     <b>{{number}}</b>
-    <input type="checkbox" ng-model="ngModel" ng-change="checkBoxCtrl.checkboxValueChange()">
-    <img ng-if="isFlag" src="http://edwards.cse.taylor.edu/static/images/red-flag.png" alt="flag">
+    <input type="checkbox" ng-model="ngModel.value" ng-change="checkBoxCtrl.checkboxValueChange()">
+    <span class="flag-container" ng-if="isFlag">
+        <img src="http://edwards.cse.taylor.edu/static/images/red-flag.png" alt="flag">
+        <span ng-if="ngModel.weight > 0">{{ngModel.weight}}</span>
+    </span>
     <span ng-class="{'text-danger': isFlag}" ng-transclude></span>
   </label>
 </div>

@@ -5,6 +5,7 @@ export default class IrfController {
         this.root = $rootScope;
         this.service = IrfService;
 
+        this.flagValue = this.root.flags;
         this.form = {};
         this.irfId = $stateParams.id;
         this.numPersonBoxes = 1;
@@ -18,6 +19,7 @@ export default class IrfController {
                 { name: '5 - Absolutely sure', val: 5 }
             ]
         };
+        this.root.flags = 0;
         this.sections = [];
         this.selectedSectionIndex = 0;
         this.selectedFlags = [];
@@ -33,22 +35,34 @@ export default class IrfController {
         }
     }
 
+    calculateFlagTotal() {
+        for (let key in this.form) {
+            if (this.form[key] && this.form[key].weight && this.form[key].value === true) {
+                this.root.flags += this.form[key].weight;
+            }
+        }
+    }
+
     getIrf() {
         this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[0];
         this.service.getIrf(this.irfId).then((response) => {
             this.form = response.data;
-            this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking];     
+            this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking];
+            this.calculateFlagTotal();
         });
     }
 
     getFlagText() {
-        if (this.root.flags) {
+        if (this.root.flags > 0) {
             if (this.root.flags < 50) {
-                return this.root.flags;
+                this.flagValue = this.root.flags;
+                return this.flagValue;
             } else {
+                this.flagValue = 50;
                 return '50 or More Flags';
             }
         }
+        this.flagValue = 0;
         return '';
     }
 

@@ -23,6 +23,9 @@
 `gulp test:auto`	  -> To run Karma tests and watch changes  
 
 #### E2E Testing
+**Note:** Requires `protractor.config.js` to contain paths to test files  
+
+`webdriver-manager start` -> Must be running in a separate terminal tab before launching protractor  
 `gulp protractor`		-> To run Protractor e2e tests  
 `gulp protractor:src`	-> To run Protractor e2e tests from src  
 `gulp protractor:dist`	-> To run Protractor e2e tests from compiled build  
@@ -45,7 +48,8 @@
 **Testing**  
 [Jasmine](http://jasmine.github.io/) JS Unit testing  
 [Karma](http://karma-runner.github.io/) JS Unit testing  
-[Protractor](https://github.com/angular/protractor) E2E Testing  
+[Protractor](https://github.com/angular/protractor) E2E Testing 
+[webdriver-manger](https://www.npmjs.com/package/webdriver-manager) E2E Testing
 **Building/Compiling**  
 [ES6 Babel](https://babeljs.io/) ES6to5 Transpiler  
 [GulpJS](http://gulpjs.com/) Build System  

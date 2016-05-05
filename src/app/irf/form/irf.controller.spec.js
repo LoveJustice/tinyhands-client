@@ -24,7 +24,7 @@ describe('IrfController', () => {
 
         it('page9 how_sure_was_traficking_options should be an object for select options', () => {
             expect(vm.page9.how_sure_was_trafficking_options).toEqual([
-                { name: '--- Choose an option ---', val: null},
+                { name: '--- Choose an option ---', val: null },
                 { name: '1 - Not at all sure', val: 1 },
                 { name: '2 - Unsure but suspects it', val: 2 },
                 { name: '3 - Somewhat sure', val: 3 },
@@ -32,6 +32,16 @@ describe('IrfController', () => {
                 { name: '5 - Absolutely sure', val: 5 }
             ]);
         });
+
+
+        it('root flags should be 0', () => {
+            vm.root.flags = 1234;
+
+            vm.constructor(rootScope, stateParams, service);
+
+            expect(vm.root.flags).toEqual(0);
+        });
+
 
         it('sections should be an empty array', () => {
             vm.sections = [1, 2, 3, 4, 5, 6];
@@ -73,6 +83,37 @@ describe('IrfController', () => {
             expect(vm.sections).not.toEqual([]);
         });
     });
+
+
+
+    describe('function calculateFlagTotal', () => {
+
+        it('when an attribute is null on form object value of root flags should not change', () => {
+            vm.root.flags = 1234;
+            vm.form = { 'stuff': null };
+
+            vm.calculateFlagTotal();
+
+            expect(vm.root.flags).toEqual(1234);
+        });
+
+        it('when attribute is an object with a weight property and value property of true should add weight to root flags', () => {
+            vm.root.flags = 0;
+            let weight = 4321;
+            vm.form = {
+                'some_bool_val': {
+                    'weight': weight,
+                    'value': true
+                }
+            };
+
+            vm.calculateFlagTotal();
+
+            expect(vm.root.flags).toEqual(4321);
+        });
+
+    });
+
 
 
     describe('function getIrf', () => {
@@ -144,6 +185,63 @@ describe('IrfController', () => {
             expect(vm.page9.how_sure_was_trafficking).toEqual({ name: '5 - Absolutely sure', val: 5 });
         });
     });
+
+
+
+    describe('function getFlagText', () => {
+        it('when root flags is less than or equal to 0 should set flagValue to 0', () => {
+            vm.flagValue = 1234;
+            vm.root.flags = 0;
+
+            vm.getFlagText();
+
+            expect(vm.flagValue).toEqual(0);
+        });
+        
+        it('when root flags is less than or equal to 0 should return empty string', () => {
+            vm.root.flags = 0;
+
+            let result = vm.getFlagText();
+
+            expect(result).toEqual('');
+        });
+        
+        it('when root flags is greater than 0 and root flags is less than 50 should set flagValue to root flags', () => {
+            vm.root.flags = 12;
+            vm.flagValue = 0;
+
+            vm.getFlagText();
+
+            expect(vm.flagValue).toEqual(12);
+        });
+        
+        it('when root flags is greater than 0 and root flags is less than 50 should return flagValue', () => {
+            vm.root.flags = 12;
+            vm.flagValue = 0;
+
+            let result = vm.getFlagText();
+
+            expect(result).toEqual(12);
+        });
+        
+        it('when root flags is greater than 0 and root flags is greater than 50 should set flagValue to 50', () => {
+            vm.root.flags = 56;
+            vm.flagValue = 0;
+
+            vm.getFlagText();
+
+            expect(vm.flagValue).toEqual(50);
+        });
+        
+        it('when root flags is greater than 0 and root flags is greater than 50 should return string \'50 or More Flags\'', () => {
+            vm.root.flags = 56;
+
+            let result = vm.getFlagText();
+
+            expect(result).toEqual('50 or More Flags');
+        });
+    });
+
 
 
     describe('function nextSection', () => {

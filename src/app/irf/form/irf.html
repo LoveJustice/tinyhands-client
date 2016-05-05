@@ -6,14 +6,13 @@
             <div class="col-xs-4 col-sm-2 col-md-offset-1 col-md-2 text-right"><b>Red Flags:</b></div>
             <div class="col-xs-8 col-sm-10 col-md-6">
                 <div class="progress">
-                    <div class="progress-bar progress-bar-danger" role="progressbar" ng-style="{'width': (irfCtrl.root.flags/50 * 100) + '%'}">
-                        <div class="animated" ng-class="{shake: irfCtrl.root.flags >= 50}">{{irfCtrl.getFlagText()}}</div>
+                    <div class="progress-bar progress-bar-danger" role="progressbar" ng-style="{'width': (irfCtrl.flagValue/50 * 100) + '%'}">
+                        <div class="animated" ng-class="{shake: irfCtrl.flagValue >= 50}">{{irfCtrl.getFlagText()}}</div>
                     </div>
                 </div>
             </div>
         </div>
         <!--ENDREGION: Progress Bar-->
-        <!--REGION: SECTION-->
         <div class="panel panel-default col-xs-12">
             <div class="panel-body" ng-repeat="section in irfCtrl.sections" ng-if="$index == irfCtrl.selectedSectionIndex">
                 <div ng-include="section"></div>

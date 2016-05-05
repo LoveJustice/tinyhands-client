@@ -9,6 +9,7 @@ export default class IrfController {
 
         this.errorList = [];
         this.errors = {};
+        this.flagValue = this.root.flags;
         this.form = {};
         this.irfId = $stateParams.id;
         this.isCreating = !this.irfId;
@@ -24,6 +25,7 @@ export default class IrfController {
                 { name: '5 - Absolutely sure', val: 5 }
             ]
         };
+        this.root.flags = 0;
         this.sections = [];
         this.selectedSectionIndex = 0;
         this.selectedFlags = [];
@@ -36,6 +38,14 @@ export default class IrfController {
         this.sections.push('app/irf/form/components/metaData/metaData.html');
         for (var pageNum = 1; pageNum <= 9; pageNum++) {
             this.sections.push(`app/irf/form/components/page${pageNum}/page${pageNum}.html`);
+        }
+    }
+    
+    calculateFlagTotal() {
+        for (let key in this.form) {
+            if (this.form[key] && this.form[key].weight && this.form[key].value === true) {
+                this.root.flags += this.form[key].weight;
+            }
         }
     }
 
@@ -74,18 +84,22 @@ export default class IrfController {
                 this.form = response.data;
                 this.form.date_time_of_interception = new Date(this.form.date_time_of_interception);
                 this.page9.how_sure_was_trafficking = this.page9.how_sure_was_trafficking_options[this.form.how_sure_was_trafficking];
+                this.calculateFlagTotal();
             });
         }
     }
 
     getFlagText() {
-        if (this.root.flags) {
+        if (this.root.flags > 0) {
             if (this.root.flags < 50) {
-                return this.root.flags;
+                this.flagValue = this.root.flags;
+                return this.flagValue;
             } else {
+                this.flagValue = 50;
                 return '50 or More Flags';
             }
         }
+        this.flagValue = 0;
         return '';
     }
 

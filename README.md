@@ -23,7 +23,7 @@
 `gulp test:auto`	  -> To run Karma tests and watch changes  
 
 #### E2E Testing
-**Note: Requires confirguration of `protractor.config.js` for your enviroment/browser and what test files to test**  
+**Note: Requires `protractor.config.js` test file pathes**  
 `webdriver-manager start` -> Must be running in a separate terminal tab before launching protractor  
 `gulp protractor`		-> To run Protractor e2e tests  
 `gulp protractor:src`	-> To run Protractor e2e tests from src  

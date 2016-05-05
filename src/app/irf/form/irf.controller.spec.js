@@ -1,5 +1,6 @@
 import IrfController from './irf.controller';
 import IrfService from './irf.service';
+import UtilService from './../../utils/util.service';
 
 describe('IrfController', () => {
     let service, stateParams, vm, rootScope;
@@ -8,7 +9,7 @@ describe('IrfController', () => {
         stateParams = { id: 1 };
         rootScope = $rootScope;
         service = new IrfService($http);
-        vm = new IrfController(rootScope, stateParams, service);
+        vm = new IrfController(rootScope, stateParams, UtilService, service);
     }));
 
 
@@ -35,6 +36,7 @@ describe('IrfController', () => {
 
         it('root flags should be 0', () => {
             vm.root.flags = 1234;
+            spyOn(vm, 'getIrf');
 
             vm.constructor(rootScope, stateParams, service);
 
@@ -46,7 +48,7 @@ describe('IrfController', () => {
             vm.sections = [1, 2, 3, 4, 5, 6];
             spyOn(vm, 'addSections');
 
-            vm.constructor(rootScope, stateParams, service);
+            vm.constructor(rootScope, stateParams, UtilService, service);
 
             expect(vm.sections).toEqual([]);
         });
@@ -58,7 +60,7 @@ describe('IrfController', () => {
         it('should call addSections', () => {
             spyOn(vm, 'addSections');
 
-            vm.constructor(rootScope, stateParams, service);
+            vm.constructor(rootScope, stateParams, UtilService, service);
 
             expect(vm.addSections).toHaveBeenCalled();
         });
@@ -66,7 +68,7 @@ describe('IrfController', () => {
         it('should call getIrf', () => {
             spyOn(vm, 'getIrf');
 
-            vm.constructor(stateParams, service);
+            vm.constructor(rootScope, stateParams, UtilService, service);
 
             expect(vm.getIrf).toHaveBeenCalled();
         });
@@ -125,7 +127,10 @@ describe('IrfController', () => {
         });
 
         it('should set form to response data', () => {
-            let response = { data: 'hi' };
+            let response = {
+                data: {}
+            };
+            vm.irfId = 1;
             spyOn(vm.service, 'getIrf').and.returnValue({ then: (f) => { f(response) } });
 
             vm.getIrf();

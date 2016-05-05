@@ -36,6 +36,7 @@ describe('IrfController', () => {
 
         it('root flags should be 0', () => {
             vm.root.flags = 1234;
+            spyOn(vm, 'getIrf');
 
             vm.constructor(rootScope, stateParams, service);
 

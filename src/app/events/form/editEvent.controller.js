@@ -1,10 +1,10 @@
 export default class EditEventCtrl {
-    constructor($scope, $window, EventsService,$stateParams) {
+    constructor($scope, $state, EventsService, $stateParams) {
         'ngInject';
 
         //variable declarations
         this.Events = EventsService;
-        this.window = $window;
+        this.state = $state;
         this.stateParams = $stateParams;
         this.titleError = '';
         this.startDateError = '';
@@ -106,21 +106,23 @@ export default class EditEventCtrl {
     }
 
     updateEvent () {
+        this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
+        this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
+        if(this.event.is_repeat) {
+            if(this.event.ends != null && this.event.ends != "") {
+                this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
+            } else {
+                this.event.ends = null;
+            }
+        } else {
+            this.event.repetition = '';
+            this.event.ends = null;
+        }
       if(!this.checkFields()) {
         return;
       }
-      this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
-      this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
-      if(this.event.is_repeat) {
-          if(this.event.ends != null && this.event.ends != "") {
-              this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
-          } else {
-              this.event.ends = null;
-          }
-      } else {
-          this.event.repetition = '';
-          this.event.ends = null;
-      }
+
+
       var call;
       if(this.editing) {
         call = this.Events.updateEvent(this.event.id, this.event);
@@ -128,7 +130,7 @@ export default class EditEventCtrl {
         call = this.Events.createEvent(this.event);
       }
       call.then(() => {
-        this.window.location.href = '/#/events/list';
+        this.state.go('eventsList');
     }, (err) => {
         if(err.data.title) {
           this.titleError = err.data.title[0];

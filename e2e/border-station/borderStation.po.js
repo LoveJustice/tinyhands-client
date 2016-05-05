@@ -3,6 +3,7 @@
  * https://docs.google.com/presentation/d/1B6manhG0zEXkC-H-tPo2vwU06JhL8w9-XCF9oehXzAQ
  */
 
+// We never fully implemented Page Object files with e2e testing but left the file here for reference
 'use strict';
 
 module.exports = {

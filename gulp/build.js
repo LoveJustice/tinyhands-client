@@ -88,4 +88,31 @@ gulp.task('clean', function (done) {
   $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], done);
 });
 
+gulp.task('api:local', function () {
+    changeBaseUrl('http://edwards.cse.taylor.edu/');
+});
+
+gulp.task('api:develop', function () {
+    changeBaseUrl('https://staging.tinyhandsdreamsuite.org/');
+});
+
+gulp.task('api:master', function () {
+    changeBaseUrl('https://tinyhandsdreamsuite.org/');
+});
+
+function changeBaseUrl(url) {
+    var config = path.join(conf.paths.src, 'app/constants.js');
+    gulp.src([config])
+        .pipe($.replace(/BaseUrl:\s'http.+'/i, "BaseUrl: '" + url + "'"))
+        .pipe(gulp.dest(path.join(conf.paths.tmp, 'app')));
+}
+
+
+
+gulp.task('build:local', ['api:local', 'build']);
+
+gulp.task('build:develop', ['api:develop', 'build']);
+
+gulp.task('build:master', ['api:master', 'build']);
+
 gulp.task('build', ['html', 'fonts', 'other']);

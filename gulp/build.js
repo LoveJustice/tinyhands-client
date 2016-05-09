@@ -104,7 +104,7 @@ function changeBaseUrl(url) {
     var config = path.join(conf.paths.src, 'app/constants.js');
     gulp.src([config])
         .pipe($.replace(/BaseUrl:\s'http.+'/i, "BaseUrl: '" + url + "'"))
-        .pipe(gulp.dest(path.join(conf.paths.tmp, 'app')));
+        .pipe(gulp.dest(path.join(conf.paths.src, 'app')));
 }
 
 

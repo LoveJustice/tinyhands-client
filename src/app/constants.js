@@ -1,5 +1,5 @@
 const constants = {
-  BaseUrl: 'https://staging.tinyhandsdreamsuite.org/'
+  BaseUrl: 'http://edwards.cse.taylor.edu/'
 };
 
 export default constants;

@@ -18,6 +18,14 @@ exports.paths = {
   e2e: 'e2e'
 };
 
+
+exports.apiUrls = {
+    develop: 'https://staging.tinyhandsdreamsuite.org/',
+    local: 'http://edwards.cse.taylor.edu/',
+    master: 'https://tinyhandsdreamsuite.org/'
+};
+
+
 /**
  *  Wiredep is the lib which inject bower dependencies in your project
  *  Mainly used to inject script tags in the index.html but also used

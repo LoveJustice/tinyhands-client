@@ -123,12 +123,7 @@ export default class AccountController {
   activateTab(index){
     this.tabInfo.active = index;
     this.tabInfo.sectionTemplateUrl = this.sections.allSections[index].templateUrl;
-    this.$state.transitionTo('account', {activeTab: index}, {
-      location: true,
-      inherit: true,
-      relative: this.$state.$current,
-      notify: false
-    });
+    this.$state.go('account', {activeTab: index});
   }
 
   retrieveAccount(id){
@@ -152,12 +147,7 @@ export default class AccountController {
     this.title = `Edit ${this.account.first_name} ${this.account.last_name}'s Account`;
 
     //Change to the Edit User State
-    this.$state.transitionTo('account/:id', {id: this.account.id}, {
-    location: true,
-    inherit: true,
-    relative: this.$state.$current,
-    notify: false
-    });
+    this.$state.go('account/:id', {id: this.account.id});
   }
 
   accountCreate(){
@@ -171,12 +161,7 @@ export default class AccountController {
     this.account = {};
 
     //Change to the Edit User State
-    this.$state.transitionTo('account/:id', {id: 'create'}, {
-    location: true,
-    inherit: true,
-    relative: this.$state.$current,
-    notify: false
-    });
+    this.$state.go('account/:id', {id: 'create'});
   }
 
   accountNotFound(id){

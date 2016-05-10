@@ -14,15 +14,16 @@ import IRFModule from './irf/irf.module';
 
 import config from './index.config';
 import routerConfig from './index.route';
+import httpProviderConfig from './httpProvider.config';
 import runBlock from './index.run';
 import NavbarDirective from './components/navbar/navbar.directive';
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngSanitize', 'ngTouch',
     'tinyhands.Account', 'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget', 'tinyhands.Dashboard', 'tinyhands.IRF', 'tinyhands.Login', 'tinyhands.VIF',
-    'ui.bootstrap', 'ui.router'])
     .constant('toastr', toastr)
     .constant('moment', moment)
     .config(config)
+    .config(httpProviderConfig)
     .config(routerConfig)
     .run(runBlock)
     .directive('navbar', NavbarDirective);

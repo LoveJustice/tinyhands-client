@@ -10,17 +10,12 @@ describe('BaseService', () => {
   }));
 
   describe('function constructor', () => {
-
     it(`baseUrl should be '${constants.BaseUrl}'`, () => {
       expect(service.baseUrl).toEqual(constants.BaseUrl);
     });
-
-    it('errors should be []', () => {
-      expect(service.errors).toEqual([]);
-    });
-
   });
 
+    
   describe('function get with url, params, and headers', () => {
 
     let testParams = [{name: 'first', value: 'Rick'}, {name: 'last', value: 'Astley'}];
@@ -59,19 +54,9 @@ describe('BaseService', () => {
       service.get(url, [], headers);
       expect(service.$http.get).toHaveBeenCalledWith(testUrlEmptyParams, finalHeaders);
     });
-
   });
 
-  describe('function handleErrors', () => {
-    let error = {data: {a: 1, b: 2, c: 3}};
-    let finalErrors = [{field: 'a', messages: 1}, {field: 'b', messages: 2}, {field: 'c', messages: 3}];
-
-    it(`should set errors ${finalErrors}`, () => {
-      service.handleErrors(error);
-      expect(service.errors).toEqual(finalErrors);
-    });
-  });
-
+    
   describe('post with url, data, and userHeaders', () => {
 
     let url = 'test/url/';
@@ -88,9 +73,9 @@ describe('BaseService', () => {
       expect(service.$http.post).toHaveBeenCalledWith(finalUrl, data, finalHeaders);
       sessionStorage.setItem('token', old);
     });
-
   });
 
+    
   describe('put with url, data, and userHeaders', () => {
 
     let url = 'test/url/';
@@ -107,7 +92,5 @@ describe('BaseService', () => {
       expect(service.$http.put).toHaveBeenCalledWith(finalUrl, data, finalHeaders);
       sessionStorage.setItem('token', old);
     });
-
   });
-
 });

@@ -1,6 +1,6 @@
 export default class VifPeopleController {
   constructor(VifBuilder) {
-    'ngInject'
+    'ngInject';
     this.vif = VifBuilder;
   }
 }

@@ -8,12 +8,13 @@
             <check-box number="9.4" ng-model="irfCtrl.form.interception_type_circus">Circus</check-box>
             <check-box number="9.5" ng-model="irfCtrl.form.interception_type_runaway">Runaway</check-box>
             
-            <div class="select">
-                <label>
-                    9.7 How sure are you that it was a trafficking case?<br>
+            <div class="has-error">
+                <label class="control-label" uib-tooltip="How sure is tafficking case is Required"
+                       tooltip-enable="irfCtrl.errors.how_sure_was_trafficking"
+                       tooltip-is-open="irfCtrl.errors.how_sure_was_trafficking">
+                    9.7 How sure are you that it was a trafficking case?*
                     <select class="form-control" ng-model="irfCtrl.page9.how_sure_was_trafficking" 
                         ng-options="how_sure.name for how_sure in irfCtrl.page9.how_sure_was_trafficking_options">
-                        <option>---Choose Option---</option>
                     </select>
                 </label>
             </div>              

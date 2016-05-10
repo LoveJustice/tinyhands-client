@@ -11,27 +11,25 @@ export default class BaseService {
 	 *
 	 * @param $http Angular http service
 	 */
-  constructor($http) {
-    'ngInject';
+    constructor($http) {
+        'ngInject';
 
-    this.$http = $http;
+        this.$http = $http;
 
-    this.baseUrl = constants.BaseUrl;
-    this.errors = [];
-  }
-
-
-  /**
-   * Function to add the token to the header.
-   *
-   * @param {Object} [headers] JSON object containing header options.
-   */
-  addToken(headers) {
-    if (sessionStorage.getItem('token')) {
-      headers.Authorization = sessionStorage.token;
+        this.baseUrl = constants.BaseUrl;
     }
-  }
 
+
+    /**
+     * Function to add the token to the header.
+     *
+     * @param {Object} [headers] JSON object containing header options.
+     */
+    addToken(headers) {
+        if (sessionStorage.getItem('token')) {
+            headers.Authorization = sessionStorage.token;
+        }
+    }
 
   /**
    * HTTP delete function
@@ -46,7 +44,6 @@ export default class BaseService {
     return this.$http.delete(this.baseUrl + url, { data: data, headers: headers });
   }
 
-
 	/**
 	 * HTTP get function
 	 *
@@ -55,34 +52,17 @@ export default class BaseService {
 	 * @param {Object} [headers] JSON object containing header options.
 	 * @returns Promise of http response.
 	 */
-  get(url, params = [], headers = {}) {
-    this.addToken(headers);
+    get(url, params = [], headers = {}) {
+        this.addToken(headers);
 
-    if (params.length > 0) {
-      params = params ? '?' + $.param(params) : '';
-    } else {
-      params = '';
+        if (params.length > 0) {
+            params = params ? '?' + $.param(params) : '';
+        } else {
+            params = '';
+        }
+
+        return this.$http.get(this.baseUrl + url + params, { headers: headers });
     }
-
-    return this.$http.get(this.baseUrl + url + params, { headers: headers });
-  }
-
-
-  // Error Handling
-	/**
-	 * Function to handle errors.
-	 *
-	 * @param {Object} error JSON object that contains the error response from the http endpoint.
-	 */
-  handleErrors(error) {
-    var errorData = error.data;
-    for (var key in errorData) {
-      this.errors.push({
-        field: key,
-        messages: errorData[key]
-      });
-    }
-  }
 
 
 	/**
@@ -93,11 +73,11 @@ export default class BaseService {
 	 * @param {Object} [headers] JSON object containing header options.
 	 * @returns Promise of http response.
 	 */
-  post(url, data, headers = {}) {
-    this.addToken(headers);
+    post(url, data, headers = {}) {
+        this.addToken(headers);
 
-    return this.$http.post(this.baseUrl + url, data, { headers: headers });
-  }
+        return this.$http.post(this.baseUrl + url, data, { headers: headers });
+    }
 
 
 	/**
@@ -108,9 +88,9 @@ export default class BaseService {
 	 * @param {Object} [headers] JSON object containing header options.
 	 * @returns Promise of http response.
 	 */
-  put(url, data, headers = {}) {
-    this.addToken(headers);
+    put(url, data, headers = {}) {
+        this.addToken(headers);
 
-    return this.$http.put(this.baseUrl + url, data, { headers: headers });
-  }
+        return this.$http.put(this.baseUrl + url, data, { headers: headers });
+    }
 }

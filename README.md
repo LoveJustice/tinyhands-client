@@ -40,7 +40,7 @@
 `gulp build:develop`    -> Build project and change rest endpoint url (BaseUrl) to develop rest endpoint  
 `gulp build:master`    -> Build project and change rest endpoint url (BaseUrl) to master rest endpoint  
 
-#### Misc
+#### Misc (Typically never called directly from Command Line)
 `gulp inject`	-> UNKNOWN  
 `gulp scripts`	-> UNKNOWN  
 `gulp scripts`  -> UNKNOWN  

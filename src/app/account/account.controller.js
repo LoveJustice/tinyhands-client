@@ -1,3 +1,5 @@
+import Constants from './constants.js';
+
 export default class AccountController {
   constructor($q, $scope, $timeout, $uibModal, $state, AccountService, PermissionsSetsService) {
     'ngInject';
@@ -12,6 +14,7 @@ export default class AccountController {
 
     //If changing tab names or order, go to the
     // 'openUnsavedChangesModal' method and make sure it is saving the correct arrays.
+    // Also check the 'saveAll' method in order to make sure you are displaying the appropriate save errors.
     this.tab_1_name = 'Accounts List';
     this.tab_2_name = 'Accounts Access Control';
     this.tab_3_name = 'Accounts Defaults'
@@ -20,76 +23,92 @@ export default class AccountController {
     let accountOptionsPath = 'app/account/components/';
     this.editAccountPath = `${accountOptionsPath}edit/accountEdit.html`;
     this.accountNotFoundPath = `${accountOptionsPath}edit/accountNotFound.html`;
-
-    this.sections = {allSections: [{ name: this.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
-                                   { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
-                                   { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]}
-
+    this.sections = {
+      allSections: [
+        { name: this.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
+        { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
+        { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}
+    ]}
     //Stores information about the 'active' tab selected, as well as the current html template to display.
-    this.tabInfo = {'active': null, 'sectionTemplateUrl': null};
-
-    this.saveText= "Save All";
-    this.savingText = "Saving...";
-    this.savedText = "Saved";
-    this.saveColor = "btn-success";
-    this.savingColor = "btn-success";
-    this.savedColor = "btn-primary";
-    this.createText = "Create";
-    this.updateText = "Update";
-    this.creatingText = "Creating...";
-    this.updatingText = "Updating...";
-    this.inputColor = "btn-primary";
-    this.updatingOrCreatingColor = "btn-success";
-    this.saveButtonInfo = {"saveButtonText": this.savedText, "saveButtonColor": this.savedColor, "unsavedChanges": false};
-    this.accountButtonInfo = {"accountButtonText": "", accountButtonColor: this.inputColor};
-
+    this.tabInfo = {
+      'active': null,
+      'sectionTemplateUrl': null
+    };
+    this.saveButtonInfo = {
+      saveButtonText: Constants.saveButton.savedText,
+      saveButtonColor: Constants.saveButton.savedColor,
+      unsavedChanges: false
+    };
+    this.accountButtonInfo = {
+      accountButtonText: "",
+      accountButtonColor: Constants.createOrUpdateButton.inputColor
+    };
     this.accounts = {};
     this.permissions = {};
 
     //Used by 'Account List' tab
+    this.getCurrentUser();
+    //Used by 'Account List' and 'Account Access Controls' tabs
+    this.getAccounts();
+    //Used by 'Account List' and 'Account Access Controls' and 'Account Defaults' tabs
+    this.getPermissions();
+    //Prevents changing states if unsaved changes
+    this.createOnStateChangeListener();
+
+    this.displayPage();
+  }
+
+  getCurrentUser(){
     this.AccountService.getMe().then((response) => {
       this.currentuser = response.data;
     });
+  }
 
-    //Used by 'Account List' and 'Account Access Controls' tabs
+  getAccounts(){
     this.AccountService.getAccounts().then((result) => {
       this.accounts.local = result.data;
       // Creates a deep copy of accounts.local
       this.accounts.saved = angular.copy(this.accounts.local);
       // accounts.local is compared against accounts.saved to check for unsaved changes.
     });
+  }
 
-    //Used by 'Account List' and 'Account Access Controls' and 'Account Defaults' tabs
+  getPermissions(){
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissions.local = result.data.results;
       // Creates a deep copy of permissions.local
       this.permissions.saved = angular.copy(this.permissions.local);
       // permissions.local is compared against permissions.saved to check for unsaved changes.
     });
+  }
 
-    //Prevents changing states if unsaved changes
+  createOnStateChangeListener(){
     this.$scope.$on('$stateChangeStart', (e, toState) => {
       if (this.saveButtonInfo.unsavedChanges) {
         e.preventDefault();
         this.openUnsavedChangesModal(0, toState.name);
       }
     });
+  }
 
-    /*  This checks the URL params to see if a userId is present,
-     *  if it is it opens the editUser tab. If no userId is present,
-     *  it opens the activeTab specified in the URL. If the active Tab
-     *  is not given, it defaults to 0, which is the 'Account List Tab'
-     */
+   /** This checks the URL params to see if a userId param is present.
+   *   If a userId is present, it opens the editUser tab. If no userId is present,
+   *   it checks the URL params to see if an activeTab param is present.
+   *   If an activeTab is present, it diplays that tab.
+   *   If the active Tab is not given, it defaults to 0, which is the 'this.tab_1_name'
+   */
+  displayPage(){
     if (this.$state.params.id) {
       if (this.$state.params.id == 'create') {
         this.accountCreate();
       } else {
         this.retrieveAccount(this.$state.params.id);
       }
-    } else if (this.$state.params.activeTab == undefined) {
-        this.$state.params.activeTab = 0;
     } else {
-        this.switchActive(this.$state.params.activeTab);
+      if (this.$state.params.activeTab == undefined) {
+        this.$state.params.activeTab = 0;
+      }
+      this.switchActive(this.$state.params.activeTab);
     }
   }
 
@@ -105,10 +124,10 @@ export default class AccountController {
     this.tabInfo.active = index;
     this.tabInfo.sectionTemplateUrl = this.sections.allSections[index].templateUrl;
     this.$state.transitionTo('account', {activeTab: index}, {
-    location: true,
-    inherit: true,
-    relative: this.$state.$current,
-    notify: false
+      location: true,
+      inherit: true,
+      relative: this.$state.$current,
+      notify: false
     });
   }
 
@@ -123,14 +142,14 @@ export default class AccountController {
   }
 
   accountEdit(account) {
-    this.tabInfo.active = -1; //Causes no nav-bar tab to be selected
+    this.tabInfo.active = null; //Causes no nav-bar tab to be selected
     this.tabInfo.sectionTemplateUrl = this.editAccountPath;
 
     this.account = account;
     this.editing = true;
     this.resetErrors();
     this.getUpdateButtonText();
-    this.title = 'Edit ' +this.account.first_name + ' ' + this.account.last_name + "'s Account";
+    this.title = `Edit ${this.account.first_name} ${this.account.last_name}'s Account`;
 
     //Change to the Edit User State
     this.$state.transitionTo('account/:id', {id: this.account.id}, {
@@ -142,35 +161,14 @@ export default class AccountController {
   }
 
   accountCreate(){
-    this.tabInfo.active = -1; //Causes no nav-bar tab to be selected
+    this.tabInfo.active = null; //Causes no nav-bar tab to be selected
     this.tabInfo.sectionTemplateUrl = this.editAccountPath;
 
     this.editing = false;
     this.resetErrors();
     this.getUpdateButtonText();
     this.title = 'Create Account';
-    this.account = {
-        email: '',
-        first_name: '',
-        last_name: '',
-        user_designation: '',
-        permission_irf_view: false,
-        permission_irf_add: false,
-        permission_irf_edit: false,
-        permission_irf_delete: false,
-        permission_vif_view: false,
-        permission_vif_add: false,
-        permission_vif_edit: false,
-        permission_vif_delete: false,
-        permission_border_stations_view: false,
-        permission_border_stations_add: false,
-        permission_border_stations_edit: false,
-        permission_border_stations_delete: false,
-        permission_accounts_manage: false,
-        permission_receive_email: false,
-        permission_address2_manage: false,
-        permission_budget_manage: false,
-    }
+    this.account = {};
 
     //Change to the Edit User State
     this.$state.transitionTo('account/:id', {id: 'create'}, {
@@ -189,7 +187,7 @@ export default class AccountController {
 
   //This method is used to save the account and permissions arrays
   saveAll(arrays, serviceToUse) {
-    this.updateSaveButton(this.savingText, this.savingColor, true);
+    this.updateSaveButton(Constants.saveButton.savingText, Constants.saveButton.savingColor, true);
     return this.$q((resolve, reject) => {
       var promises = [];
       arrays.local.forEach((elm, index) => {
@@ -199,14 +197,20 @@ export default class AccountController {
       // Waiting for all permissionsSets to be saved via saveSet()
       this.$q.all(promises).then((data) => {
           arrays.saved = angular.copy(arrays.local);
-          this.updateSaveButton(this.savedText, this.savedColor, false, 800);
+          this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false, 800);
           resolve();
       }, (error) => {
-            this.PermissionsSetsService.getPermissions().then((result) => {
+            if (this.sections.allSections[this.tabInfo.active].name == this.tab_2_name) {
+              window.toastr.error("One or more Account Settings could not be saved");
+            }
+            else if (this.sections.allSections[this.tabInfo.active].name == this.tab_3_name) {
+              this.PermissionsSetsService.getPermissions().then((result) => {
                 arrays.saved = result.data.results
-            });
-            this.updateSaveButton(this.saveText, this.saveColor, true, 800);
-            resolve();
+              });
+              this.updateSaveButton(Constants.saveButton.saveText, Constants.saveButton.saveColor, true, 800);
+              resolve();
+              window.toastr.error("One or more Designations could not be saved");
+            }
       });
     });
   }
@@ -226,37 +230,39 @@ export default class AccountController {
         call.then( (data) => {
             local[index] = data.data;
             resolve(); //"saved"
-        }, (error) => { // Catch name error
+        }, () => { // Catch name error
             local[index].nameError = true;
             reject(index); //"name error"
         });
       });
   }
 
+  /** Whenever a user toggles a 'Yes/No' Button on the 'Account Controls' and 'Account Defaults' pages,
+   * this method checks to see if any values in the local array do equals the value in the saved array. If there is
+   * an unequal value, the set in the array is marked as 'modified'. Then the 'checkForUnsavedChanges' method
+   * is called, which checks if any of the sets are modified and controls the saved button functionality to display the
+   * appropriate text and button color depending on if there are unsaved changes or no unsaved changes.
+   */
   checkIfModified(index, arrays) {
-    var modified = false;
+    arrays.local[index].is_modified = false;
     // Checks if index is new. If it is, there is no need to check if it has been modified.
     if (arrays.local[index].is_new){
-        modified = true;
+        arrays.local[index].is_modified = true;
     } else {
         var keys = Object.keys(arrays.local[index]);
         keys.forEach((key) => {
-          /*  Checks if a value on the local copy differs from a value on the database copy. If so, it calls the 'checkForUnsavedChanges' method.
+          /*  Checks if a value on the local copy differs from a value on the database copy.
            *  Ignores '$$hashKey' key, which angular adds when copying an object.
            *  Ignores 'hover', which I believe angular also adds.
            *  Ignores 'is_modified', which this controller adds to local copy to keep track of saved or unsaved changes.
-           *  Ignores 'accountRemove', which this controller adds to local copy in order to prevent the deletion of user roles that are used by active accounts.
+           *  Ignores 'accountRemove', which this controller adds to local copy in order to prevent the deletion of
+            *  user roles that are used by active accounts.
            */
-          if (key != '$$hashKey' && key != 'hover' && key != 'is_modified' && key != 'accountRemoved' && arrays.local[index][key] != arrays.saved[index][key]) {
-            modified = true;
+          if (key != '$$hashKey' && key != 'hover' && key != 'is_modified' && key != 'accountRemoved'
+            && arrays.local[index][key] != arrays.saved[index][key]) {
+            arrays.local[index].is_modified = true;
           }
         });
-    }
-
-    if (modified) {
-      arrays.local[index].is_modified = true;
-    } else {
-      arrays.local[index].is_modified = false;
     }
     this.checkForUnsavedChanges(arrays);
   }
@@ -267,14 +273,17 @@ export default class AccountController {
         unsaved = true;
     } else {
         arrays.local.forEach((elm) => {
-          if (elm.is_modified) { unsaved = true; return;}
+          if (elm.is_modified) {
+            unsaved = true;
+            return;
+          }
         });
     }
 
     if (unsaved){
-        this.updateSaveButton(this.saveText, this.saveColor, true);
+        this.updateSaveButton(Constants.saveButton.saveText, Constants.saveButton.saveColor, true);
     } else {
-        this.updateSaveButton(this.savedText, this.savedColor, false);
+        this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false);
     }
   }
 
@@ -297,7 +306,7 @@ export default class AccountController {
 
   discardChanges(arrays) {
     arrays.local = angular.copy(arrays.saved);
-    this.updateSaveButton(this.savedText, this.savedColor, false);
+    this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false);
   }
 
   /**This method is called from both the 'switchActive' method if a user tries to change tabs while unsaved changes.
@@ -310,7 +319,7 @@ export default class AccountController {
       controllerAs: 'UnsavedChangesModalCtrl'
     });
     selection.result.then((result) => {
-      if (result == 'save') {
+      if (result == Constants.unsavedChangesModalOptions.save) {
           //Determines which arrays to save based on which tab is active
           if (this.sections.allSections[this.tabInfo.active].name == this.tab_2_name) {
               //Beginning of promise chain (saveAll() => saveSet())
@@ -390,50 +399,38 @@ export default class AccountController {
   addAnother() {
     this.permissions.local.push({
       is_new: true,
-      is_used_by_accounts: false,
-      name: "",
-      permission_accounts_manage: false,
-      permission_border_stations_add: false,
-      permission_border_stations_delete: false,
-      permission_border_stations_edit: false,
-      permission_border_stations_view: false,
-      permission_budget_manage: false,
-      permission_irf_add: false,
-      permission_irf_delete: false,
-      permission_irf_edit: false,
-      permission_irf_view: false,
-      permission_receive_email: false,
-      permission_address2_manage: false,
-      permission_vif_add: false,
-      permission_vif_delete: false,
-      permission_vif_edit: false,
-      permission_vif_view: false
+      is_used_by_accounts: false
     });
     this.checkForUnsavedChanges(this.permissions);
   }
 
   //Account Defaults Tab
   deletePermissionRole(index) {
-    var pSet = this.permissions.local[index];
-    if (!pSet.is_used_by_accounts){
-      if(pSet.accountRemoved){
-        if (pSet.is_new) {
+    let permissionSet = this.permissions.local[index];
+    if (!permissionSet.is_used_by_accounts){
+      if(permissionSet.accountRemoved){
+        if (permissionSet.is_new) {
             // Local delete
-          window.toastr.success("Account Role Successfully Deleted");
-          this.permissions.local.splice(index, 1);
-          this.checkForUnsavedChanges(this.permissions);
+            window.toastr.success("Account Role Successfully Removed");
+            this.permissions.local.splice(index, 1);
+            this.checkForUnsavedChanges(this.permissions);
         } else {
             // Database delete
+            var call = null;
             this.permissions.local.splice(index, 1);
-            this.PermissionsSetsService.destroy(pSet.id).then(() => {
+            call =this.PermissionsSetsService.destroy(permissionSet.id);
+
+            call.then(() => {
                 window.toastr.success("Account Role Successfully Deleted");
                 this.permissions.saved = angular.copy(this.permissions.local);
                 this.checkForUnsavedChanges(this.permissions);
+            }, () => {
+                window.toastr.error("Deleting Unsuccessful");
             });
         }
       }
       else{
-        pSet.accountRemoved = true;
+        permissionSet.accountRemoved = true;
       }
     }
   }
@@ -446,10 +443,10 @@ export default class AccountController {
       }
       var call;
       if(this.editing) {
-          this.updateAccountButton(this.updatingText, this.updatingOrCreatingColor);
+          this.updateAccountButton(Constants.createOrUpdateButton.updatingText, Constants.createOrUpdateButton.updatingOrCreatingColor);
           call = this.AccountService.update(this.account.id, this.account);
       }else {
-          this.updateAccountButton(this.creatingText, this.updatingOrCreatingColor);
+          this.updateAccountButton(Constants.createOrUpdateButton.creatingText, Constants.createOrUpdateButton.updatingOrCreatingColor);
           call= this.AccountService.create(this.account);
       }
       call.then(() => {
@@ -476,12 +473,12 @@ export default class AccountController {
       this.emailError = '';
       this.userDesignationError = '';
       if(!this.account.email) {
-          this.emailError = 'An email is required.';
+          this.emailError = Constants.errors.emailIsRequired;
       }
       if(!this.account.user_designation){
-          this.userDesignationError = 'A user designation is required.';
+          this.userDesignationError = Constants.errors.aUserDesignationIsRequired;
       }
-      if(this.emailError || this.userDesignationError) {
+      if(this.emailError == Constants.errors.emailIsRequired || this.userDesignationError == Constants.errors.aUserDesignationIsRequired) {
           return false;
       }
       return true;
@@ -496,22 +493,7 @@ export default class AccountController {
   onUserDesignationChanged(permissionSetId) {
     if (permissionSetId){
       this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
-          this.account.permission_irf_view = permissions.data.permission_irf_view;
-          this.account.permission_irf_add = permissions.data.permission_irf_add;
-          this.account.permission_irf_edit = permissions.data.permission_irf_edit;
-          this.account.permission_irf_delete = permissions.data.permission_irf_delete;
-          this.account.permission_vif_view = permissions.data.permission_vif_view;
-          this.account.permission_vif_add = permissions.data.permission_vif_add;
-          this.account.permission_vif_edit = permissions.data.permission_vif_edit;
-          this.account.permission_vif_delete = permissions.data.permission_vif_delete;
-          this.account.permission_border_stations_view = permissions.data.permission_border_stations_view;
-          this.account.permission_border_stations_add = permissions.data.permission_border_stations_add;
-          this.account.permission_border_stations_edit = permissions.data.permission_border_stations_edit;
-          this.account.permission_border_stations_delete = permissions.data.permission_border_stations_delete;
-          this.account.permission_accounts_manage = permissions.data.permission_accounts_manage;
-          this.account.permission_receive_email = permissions.data.permission_receive_email;
-          this.account.permission_address2_manage = permissions.data.permission_address2_manage;
-          this.account.permission_budget_manage = permissions.data.permission_budget_manage;
+          this.account = permissions.data;
       });
     }
   }
@@ -527,9 +509,9 @@ export default class AccountController {
   //Account Edit Tab
   getUpdateButtonText() {
       if(this.editing) {
-          this.updateAccountButton(this.updateText, this.inputColor);
+          this.updateAccountButton(Constants.createOrUpdateButton.updateText, Constants.createOrUpdateButton.inputColor);
       } else {
-          this.updateAccountButton(this.createText, this.inputColor);
+          this.updateAccountButton(Constants.createOrUpdateButton.createText, Constants.createOrUpdateButton.inputColor);
       }
   }
 }

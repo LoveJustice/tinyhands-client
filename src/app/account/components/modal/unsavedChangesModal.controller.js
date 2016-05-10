@@ -1,3 +1,5 @@
+import Constants from './../../constants.js';
+
 export default class UnsavedChangesModalController {
   constructor($scope, $uibModalInstance) {
 
@@ -5,14 +7,14 @@ export default class UnsavedChangesModalController {
   }
 
   saveAndContinue() {
-    this.$uibModalInstance.close('save');
+    this.$uibModalInstance.close(Constants.unsavedChangesModalOptions.save);
   };
 
   discardAndContinue() {
-    this.$uibModalInstance.close('discard');
+    this.$uibModalInstance.close(Constants.unsavedChangesModalOptions.discard);
   }
 
   cancel() {
-    this.$uibModalInstance.dismiss("cancel");
+    this.$uibModalInstance.dismiss(Constants.unsavedChangesModalOptions.cancel);
   };
 }

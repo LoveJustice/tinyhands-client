@@ -1,8 +1,8 @@
 import accountRouteConfig from './account.route';
 
-import ActivateAccountController from './components/activate/activateAccount.controller.js'
+import ActivateAccountController from './components/activate/activateAccount.controller';
 import AccountController from './account.controller';
-import UnsavedChangesModalController from './components/modal/unsavedChangesModal.controller.js'
+import UnsavedChangesModalController from './components/modal/unsavedChangesModal.controller';
 
 import AccountService from './account.service';
 import PermissionsSetsService from './permissionsSets.service';

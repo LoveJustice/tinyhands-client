@@ -76,6 +76,7 @@ export default class AccountController {
   getPermissions(){
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissions.local = result.data.results;
+      console.log(this.permissions.local);
       // Creates a deep copy of permissions.local
       this.permissions.saved = angular.copy(this.permissions.local);
       // permissions.local is compared against permissions.saved to check for unsaved changes.
@@ -123,7 +124,7 @@ export default class AccountController {
   activateTab(index){
     this.tabInfo.active = index;
     this.tabInfo.sectionTemplateUrl = this.sections.allSections[index].templateUrl;
-    this.$state.go('account', {activeTab: index});
+    this.$state.go('account list', {activeTab: index});
   }
 
   retrieveAccount(id){
@@ -147,7 +148,7 @@ export default class AccountController {
     this.title = `Edit ${this.account.first_name} ${this.account.last_name}'s Account`;
 
     //Change to the Edit User State
-    this.$state.go('account/:id', {id: this.account.id});
+    this.$state.go('account', {id: this.account.id});
   }
 
   accountCreate(){
@@ -161,7 +162,7 @@ export default class AccountController {
     this.account = {};
 
     //Change to the Edit User State
-    this.$state.go('account/:id', {id: 'create'});
+    this.$state.go('account', {id: 'create'});
   }
 
   accountNotFound(id){
@@ -498,5 +499,21 @@ export default class AccountController {
       } else {
           this.updateAccountButton(Constants.createOrUpdateButton.createText, Constants.createOrUpdateButton.inputColor);
       }
+  }
+
+  getStyling(attribute) {
+    if (attribute){
+      return 'btn btn-success';
+    }
+    else {
+      return 'btn btn-danger';
+    }
+  }
+
+  togglePermission(permission, index) {
+    console.log(permission)
+    var newVal = !permission
+    permission = newVal
+    this.checkIfModified(index, this.accounts);
   }
 }

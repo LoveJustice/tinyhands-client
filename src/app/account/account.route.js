@@ -1,7 +1,7 @@
 function accountRouteConfig ($stateProvider) {
   'ngInject';
   $stateProvider
-    .state('account', {
+    .state('account list', {
           url: '/account/tab=:activeTab',
           templateUrl: 'app/account/account.html',
           data: {
@@ -9,7 +9,7 @@ function accountRouteConfig ($stateProvider) {
           }
     })
 
-    .state('account/:id', {
+    .state('account', {
       url: '/account/:id',
       templateUrl: 'app/account/account.html',
       data: {
@@ -17,15 +17,7 @@ function accountRouteConfig ($stateProvider) {
       }
     })
 
-    .state('account/not_found/:id', {
-      url: '/account/not_found/:id',
-      templateUrl: 'app/account/account.html',
-      data: {
-        requireLogin: true
-      }
-    })
-
-    .state('account/activate/:activation_key', {
+    .state('account activate', {
       url: '/account/activate/:activation_key',
       templateUrl: 'app/account/components/activate/activateAccount.html',
       controller: 'ActivateAccountController',

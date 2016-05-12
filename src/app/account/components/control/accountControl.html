@@ -49,67 +49,67 @@
             </td>
             <td><label
                     ng-click="account.permission_irf_view = !account.permission_irf_view; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_irf_view);"><span
                     class="yesno"></span>{{ account.permission_irf_view ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_irf_add = !account.permission_irf_add; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_irf_add ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_irf_add);"><span
                     class="yesno"></span>{{ account.permission_irf_add ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_irf_edit = !account.permission_irf_edit; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_irf_edit ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_irf_edit);"><span
                     class="yesno"></span>{{ account.permission_irf_edit ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_irf_delete = !account.permission_irf_delete; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_irf_delete ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_irf_delete);"><span
                     class="yesno"></span>{{ account.permission_irf_delete ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_vif_view = !account.permission_vif_view; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_vif_view ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_vif_view);"><span
                     class="yesno"></span>{{ account.permission_vif_view ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_vif_add = !account.permission_vif_add; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_vif_add ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_vif_add);"><span
                     class="yesno"></span>{{ account.permission_vif_add ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_vif_edit = !account.permission_vif_edit; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_vif_edit ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_vif_edit);"><span
                     class="yesno"></span>{{ account.permission_vif_edit ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_vif_delete = !account.permission_vif_delete; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_vif_delete ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_vif_delete);"><span
                     class="yesno"></span>{{ account.permission_vif_delete ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_border_stations_view = !account.permission_border_stations_view; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_border_stations_view ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_border_stations_view);"><span
                     class="yesno"></span>{{ account.permission_border_stations_view ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_border_stations_add = !account.permission_border_stations_add; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_border_stations_add ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_border_stations_add);"><span
                     class="yesno"></span>{{ account.permission_border_stations_add ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_border_stations_edit = !account.permission_border_stations_edit; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_border_stations_edit ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_border_stations_edit);"><span
                     class="yesno"></span>{{ account.permission_border_stations_edit ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_border_stations_delete = !account.permission_border_stations_delete; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_border_stations_delete ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_border_stations_delete);"><span
                     class="yesno"></span>{{ account.permission_border_stations_delete ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_accounts_manage = !account.permission_accounts_manage; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_accounts_manage);"><span
                     class="yesno"></span>{{ account.permission_accounts_manage ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_receive_email = !account.permission_receive_email; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_receive_email);"><span
                     class="yesno"></span>{{ account.permission_receive_email ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_address2_manage = !account.permission_address2_manage; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_address2_manage ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_address2_manage);"><span
                     class="yesno"></span>{{ account.permission_address2_manage ? "Yes" : "No" }}</label></td>
             <td><label
                     ng-click="account.permission_budget_manage = !account.permission_budget_manage; accountCtrl.checkIfModified($index, accountCtrl.accounts)"
-                    ng-class="account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"><span
+                    ng-class="accountCtrl.getStyling(account.permission_budget_manage);"><span
                     class="yesno"></span>{{ account.permission_budget_manage ? "Yes" : "No" }}</label></td>
         </tr>
         </tbody>

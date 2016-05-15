@@ -24,7 +24,7 @@ class Address1Service {
     }
 
     getFuzzyAddress1s (val) {
-        return this.service.get('api/address1/fuzzy/?district=' + val);
+        return this.service.get('api/address1/fuzzy/?address1=' + val);
     }
 }
 

@@ -89,15 +89,15 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('api:local', function () {
-    changeBaseUrl('http://edwards.cse.taylor.edu/');
+    changeBaseUrl(conf.apiUrls.local);
 });
 
 gulp.task('api:develop', function () {
-    changeBaseUrl('https://staging.tinyhandsdreamsuite.org/');
+    changeBaseUrl(conf.apiUrls.develop);
 });
 
 gulp.task('api:master', function () {
-    changeBaseUrl('https://tinyhandsdreamsuite.org/');
+    changeBaseUrl(conf.apiUrls.master);
 });
 
 function changeBaseUrl(url) {

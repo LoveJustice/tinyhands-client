@@ -23,14 +23,30 @@
         <thead>
             <tr>
                 <th id="addressNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
-                    Name <i class="glyphicon" ng-class="vm.sortIcon()"></i>
+                    Name <i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
+                </th>
+                <th id="addressLatitudeHeader" ng-click="vm.sortColumn = 'latitude'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                    Latitude <i class="glyphicon" ng-class="vm.sortIcon('latitude')"></i>
+                </th>
+                <th id="addressLongitudeHeader" ng-click="vm.sortColumn = 'longitude'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                    Longitude <i class="glyphicon" ng-class="vm.sortIcon('longitude')"></i>
+                </th>
+                <th id="addressLevelHeader" ng-click="vm.sortColumn = 'level'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                    Level <i class="glyphicon" ng-class="vm.sortIcon('level')"></i>
+                </th>
+                <th id="addressCompletedHeader" ng-click="vm.sortColumn = 'completed'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
+                    Completed <i class="glyphicon" ng-class="vm.sortIcon('completed')"></i>
                 </th>
                 <th class="text-center">&nbsp;</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody ng-init="vm.sortColumn = 'name'">
             <tr ng-repeat="address in vm.addresses | orderBy:vm.sortColumn:vm.reverse">
                 <td class="text-center address-name">{{ address.name }}</td>
+                <td class="text-center address-name">{{ address.latitude }}</td>
+                <td class="text-center address-name">{{ address.longitude }}</td>
+                <td class="text-center address-name">{{ address.level }}</td>
+                <td class="text-center address-name">{{ address.completed }}</td>
                 <td class="text-center">
                     <button ng-click="vm.editAddress1(address)" class="edit btn btn-warning">Edit</button>
                 </td>

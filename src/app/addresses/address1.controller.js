@@ -20,16 +20,31 @@ class Address1Controller {
         this.getAddresses();
     }
 
-    sortIcon() {
-        return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
+
+    sortIcon(column) {
+        if (column === this.sortColumn) {
+            switch (column) {
+                case "latitude":
+                case "longitude":
+                    return this.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
+                case "name":
+                case "level":
+                case "completed":
+                    return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
+                default:
+                    return "glyphicon-sort";
+            }
+        }
+        return "glyphicon-sort";
     }
+
 
     getAddresses() {
         this.loading = true;
         this.address1Service.listAddresses(this.getQueryParams())
-            .then((data) => {
-                this.addresses = data.results;
-                this.nextPageUrl = this.nextUrl(data.next);
+            .then((promise) => {
+                this.addresses = promise.data.results;
+                this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
     }
@@ -37,9 +52,9 @@ class Address1Controller {
     loadMoreAddresses() {
         this.loading = true;
         this.address1Service.loadMoreAddresses(this.getQueryParams(true))
-            .then((data) => {
-                this.addresses = this.addresses.concat(data.results);
-                this.nextPageUrl = this.nextUrl(data.next);
+            .then((promise) => {
+                this.addresses = this.addresses.concat(promise.data.results);
+                this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
     }
@@ -47,9 +62,9 @@ class Address1Controller {
     searchAddresses() {
         this.loading = true;
         this.address1Service.searchAddresses(this.getQueryParams())
-            .then((data) => {
-                this.addresses = data.results;
-                this.nextPageUrl = this.nextUrl(data.next);
+            .then((promise) => {
+                this.addresses = promise.data.results;
+                this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
     }
@@ -105,4 +120,3 @@ class Address1Controller {
 }
 
 export default Address1Controller;
-

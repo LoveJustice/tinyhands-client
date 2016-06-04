@@ -46,7 +46,7 @@ describe('Address2Service', () => {
 
   describe('function getFuzzyAddress2s', () => {
     let val = 'asdf',
-        url = 'api/address2/fuzzy/?vdc=' + val;
+        url = 'api/address2/fuzzy/?address2=' + val;
     it(`should call get with '${url}'`, () => {
       service.getFuzzyAddress2s(val);
       expect(mockBaseService.get).toHaveBeenCalledWith(url);

@@ -52,7 +52,7 @@ describe('Address1Controller', () => {
     });
 
     describe("function loadMoreAddresses", () => {
-        let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+        let response = {"data": { 'results': 'page1', 'next': 'test.com/page=469876' }}
         beforeEach(() => {
             vm.address1Service.loadMoreAddresses = () => {
                 return {
@@ -80,19 +80,21 @@ describe('Address1Controller', () => {
     describe("function sortIcon", () => {
         it("if reverse is true, should return string: glyphicon-sort-by-alphabet-alt", () => {
             vm.reverse = true;
-            let fetchedStr = vm.sortIcon();
+            vm.sortColumn = "name";
+            let fetchedStr = vm.sortIcon('name');
             expect(fetchedStr).toEqual('glyphicon-sort-by-alphabet-alt');
         });
-        
+
         it("if reverse is false, should return string: glyphicon-sort-by-alphabet", () => {
             vm.reverse = false;
-            let fetchedStr = vm.sortIcon();
-            expect(fetchedStr).toEqual('glyphicon-sort-by-alphabet'); 
+            vm.sortColumn = "name";
+            let fetchedStr = vm.sortIcon('name');
+            expect(fetchedStr).toEqual('glyphicon-sort-by-alphabet');
         });
     });
 
     describe("function search addresses", () => {
-        let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+        let response = {"data": { 'results': 'page1', 'next': 'test.com/page=469876' }}
         beforeEach(() => {
             vm.address1Service.searchAddresses = () => {
                 return {
@@ -152,7 +154,7 @@ describe('Address1Controller', () => {
     });
 
     describe("function getAddresses", () => {
-        let response = { 'results': 'page1', 'next': 'test.com/page=469876' };
+        let response = {"data": { 'results': 'page1', 'next': 'test.com/page=469876' }}
         beforeEach(() => {
             vm.address1Service.listAddresses = () => {
                 return {
@@ -184,11 +186,11 @@ describe('Address1Controller', () => {
                 result: {
                     then: (f) => {
                         f(address);
-                    }  
-                } 
+                    }
+                }
             }
         }};
-        
+
         let saveAddress = () => {
             return {
                 then: (f) => {
@@ -196,30 +198,30 @@ describe('Address1Controller', () => {
                 }
             }
         };
-        
+
         beforeEach(() => {
            vm.modal = modal;
-           vm.address1Service.saveAddress = saveAddress; 
+           vm.address1Service.saveAddress = saveAddress;
         });
-        
+
         it("function getAddresses should be called", () => {
             spyOn(vm, "getAddresses").and.callThrough();
             vm.editAddress1();
             expect(vm.getAddresses).toHaveBeenCalled();
         });
-        
+
         it("function open should be called", () => {
           spyOn(vm.modal, "open").and.callThrough();
           vm.editAddress1(address);
           expect(vm.modal.open).toHaveBeenCalled();
         });
-        
+
         it("function saveAttributes should be called", () => {
           spyOn(vm.address1Service, "saveAddress").and.callThrough();
           vm.editAddress1(address);
           expect(vm.address1Service.saveAddress).toHaveBeenCalled();
         });
-    
+
     });
 
     describe('function nextUrl', () => {
@@ -244,4 +246,3 @@ describe('Address1Controller', () => {
     });
 
 });
-

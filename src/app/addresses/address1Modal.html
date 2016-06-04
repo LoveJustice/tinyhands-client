@@ -6,6 +6,23 @@
         <label for="addressName">Name</label>
         <input type="text" id="addressName" class="form-control" ng-model="address.name"/>
     </div>
+    <div class="form-group">
+        <label for="addressLatitude">Latitude</label>
+        <input type="number" id="addressLatitude" class="form-control" ng-model="address.latitude"/>
+    </div>
+    <div class="form-group">
+        <label for="addressLongitude">Longitude</label>
+        <input type="number" id="addressLongitude" class="form-control" ng-model="address.longitude"/>
+    </div>
+    <div class="form-group">
+        <label for="addressLevel">Level</label>
+        <select id="addressLevel" ng-model="address.level" ng-options="choice for choice in ['State','Country','City','District','VDC','Building', 'Block']" class="form-control">
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Completed</label>
+        <input id="addressCompleted" type="checkbox" class="form-control" ng-model="address.completed"/>
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="vm.save()">Save</button>

@@ -21,7 +21,7 @@ exports.paths = {
 
 exports.apiUrls = {
     develop: 'https://staging.tinyhandsdreamsuite.org/',
-    local: 'http://edwards.cse.taylor.edu/',
+    local: 'http://localhost/',
     master: 'https://tinyhandsdreamsuite.org/'
 };
 

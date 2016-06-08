@@ -8,7 +8,7 @@ export default class UnsavedChangesModalController {
 
   saveAndContinue() {
     this.$uibModalInstance.close(Constants.unsavedChangesModalOptions.save);
-  };
+  }
 
   discardAndContinue() {
     this.$uibModalInstance.close(Constants.unsavedChangesModalOptions.discard);
@@ -16,5 +16,5 @@ export default class UnsavedChangesModalController {
 
   cancel() {
     this.$uibModalInstance.dismiss(Constants.unsavedChangesModalOptions.cancel);
-  };
+  }
 }

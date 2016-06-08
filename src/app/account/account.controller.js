@@ -17,7 +17,7 @@ export default class AccountController {
     // Also check the 'saveAll' method in order to make sure you are displaying the appropriate save errors.
     this.tab_1_name = 'Accounts List';
     this.tab_2_name = 'Accounts Access Control';
-    this.tab_3_name = 'Accounts Defaults'
+    this.tab_3_name = 'Accounts Defaults';
 
     //Scope variables
     let accountOptionsPath = 'app/account/components/';
@@ -28,7 +28,7 @@ export default class AccountController {
         { name: this.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
         { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
         { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}
-    ]}
+    ]};
     //Stores information about the 'active' tab selected, as well as the current html template to display.
     this.tabInfo = {
       'active': null,
@@ -76,7 +76,6 @@ export default class AccountController {
   getPermissions(){
     this.PermissionsSetsService.getPermissions().then((result) => {
       this.permissions.local = result.data.results;
-      console.log(this.permissions.local);
       // Creates a deep copy of permissions.local
       this.permissions.saved = angular.copy(this.permissions.local);
       // permissions.local is compared against permissions.saved to check for unsaved changes.
@@ -100,13 +99,13 @@ export default class AccountController {
    */
   displayPage(){
     if (this.$state.params.id) {
-      if (this.$state.params.id == 'create') {
+      if (this.$state.params.id === 'create') {
         this.accountCreate();
       } else {
         this.retrieveAccount(this.$state.params.id);
       }
     } else {
-      if (this.$state.params.activeTab == undefined) {
+      if (this.$state.params.activeTab === undefined) {
         this.$state.params.activeTab = 0;
       }
       this.switchActive(this.$state.params.activeTab);
@@ -114,7 +113,7 @@ export default class AccountController {
   }
 
   switchActive(index){
-    if (this.saveButtonInfo.unsavedChanges == true) {
+    if (this.saveButtonInfo.unsavedChanges === true) {
         this.openUnsavedChangesModal(index);
     } else {
         this.activateTab(index);
@@ -129,9 +128,9 @@ export default class AccountController {
 
   retrieveAccount(id){
     this.AccountService.getAccount(id).then((result) => {
-      this.accountEdit(result.data)
+      this.accountEdit(result.data);
     }, (error) => {
-        if (error.status == 404){
+        if (error.status === 404){
           this.accountNotFound(id);
         }
     });
@@ -174,24 +173,24 @@ export default class AccountController {
   //This method is used to save the account and permissions arrays
   saveAll(arrays, serviceToUse) {
     this.updateSaveButton(Constants.saveButton.savingText, Constants.saveButton.savingColor, true);
-    return this.$q((resolve, reject) => {
+    return this.$q( (resolve) => {
       var promises = [];
       arrays.local.forEach((elm, index) => {
         promises.push(this.saveSet(index, arrays.local, serviceToUse));
       });
 
       // Waiting for all permissionsSets to be saved via saveSet()
-      this.$q.all(promises).then((data) => {
+      this.$q.all(promises).then( () => {
           arrays.saved = angular.copy(arrays.local);
           this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false, 800);
           resolve();
-      }, (error) => {
-            if (this.sections.allSections[this.tabInfo.active].name == this.tab_2_name) {
+      }, () => {
+            if (this.sections.allSections[this.tabInfo.active].name === this.tab_2_name) {
               window.toastr.error("One or more Account Settings could not be saved");
             }
-            else if (this.sections.allSections[this.tabInfo.active].name == this.tab_3_name) {
+            else if (this.sections.allSections[this.tabInfo.active].name === this.tab_3_name) {
               this.PermissionsSetsService.getPermissions().then((result) => {
-                arrays.saved = result.data.results
+                arrays.saved = result.data.results;
               });
               this.updateSaveButton(Constants.saveButton.saveText, Constants.saveButton.saveColor, true, 800);
               resolve();
@@ -223,8 +222,13 @@ export default class AccountController {
       });
   }
 
+  togglePermission(account, permission, index) {
+      account[permission] = !account[permission];
+      this.checkIfModified(index, this.accounts);
+  }
+
   /** Whenever a user toggles a 'Yes/No' Button on the 'Account Controls' and 'Account Defaults' pages,
-   * this method checks to see if any values in the local array do equals the value in the saved array. If there is
+   * this method checks to see if any values in the local array equals the value in the saved array. If there is
    * an unequal value, the set in the array is marked as 'modified'. Then the 'checkForUnsavedChanges' method
    * is called, which checks if any of the sets are modified and controls the saved button functionality to display the
    * appropriate text and button color depending on if there are unsaved changes or no unsaved changes.
@@ -244,8 +248,7 @@ export default class AccountController {
            *  Ignores 'accountRemove', which this controller adds to local copy in order to prevent the deletion of
             *  user roles that are used by active accounts.
            */
-          if (key != '$$hashKey' && key != 'hover' && key != 'is_modified' && key != 'accountRemoved'
-            && arrays.local[index][key] != arrays.saved[index][key]) {
+          if (key !== '$$hashKey' && key !== 'hover' && key !== 'is_modified' && key !== 'accountRemoved' && arrays.local[index][key] !== arrays.saved[index][key]) {
             arrays.local[index].is_modified = true;
           }
         });
@@ -277,7 +280,7 @@ export default class AccountController {
     this.$timeout(() => {
       this.saveButtonInfo.saveButtonText = text;
       this.saveButtonInfo.saveButtonColor = color;
-      if (unsavedChanges == true || unsavedChanges == false) {
+      if (unsavedChanges === true || unsavedChanges === false) {
         this.saveButtonInfo.unsavedChanges = unsavedChanges;
       }
     }, time);
@@ -304,27 +307,28 @@ export default class AccountController {
       controller: 'UnsavedChangesModalController',
       controllerAs: 'UnsavedChangesModalCtrl'
     });
+    var promise;
     selection.result.then((result) => {
-      if (result == Constants.unsavedChangesModalOptions.save) {
+      if (result === Constants.unsavedChangesModalOptions.save) {
           //Determines which arrays to save based on which tab is active
-          if (this.sections.allSections[this.tabInfo.active].name == this.tab_2_name) {
+          if (this.sections.allSections[this.tabInfo.active].name === this.tab_2_name) {
               //Beginning of promise chain (saveAll() => saveSet())
-              var promise = this.saveAll(this.accounts, this.AccountService);
-          } else if (this.sections.allSections[this.tabInfo.active].name == this.tab_3_name) {
-              var promise = this.saveAll(this.permissions, this.PermissionsSetsService);
+              promise = this.saveAll(this.accounts, this.AccountService);
+          } else if (this.sections.allSections[this.tabInfo.active].name === this.tab_3_name) {
+              promise = this.saveAll(this.permissions, this.PermissionsSetsService);
           }
       } else {
-          if (this.sections.allSections[this.tabInfo.active].name == this.tab_2_name) {
+          if (this.sections.allSections[this.tabInfo.active].name === this.tab_2_name) {
               this.discardChanges(this.accounts);
-          } else if (this.sections.allSections[this.tabInfo.active].name == this.tab_3_name) {
+          } else if (this.sections.allSections[this.tabInfo.active].name === this.tab_3_name) {
               this.discardChanges(this.permissions);
           }
-          var promise = this.$q.resolve();
+          promise = this.$q.resolve();
       }
-      promise.then((reason) => {
+      promise.then( () => {
         //If saving was successful and a toState has been provided, redirect to that state
         this.saveButtonInfo.unsavedChanges = false;
-        if (toState != null) {
+        if (toState !== null) {
             this.$state.go(toState);
         } else {
             //If no state was provided, then navigate the provided tab.
@@ -342,7 +346,7 @@ export default class AccountController {
 
   //Account List Tab
   deleteAccount(account){
-    if(this.currentuser.id != account.id){
+    if(this.currentuser.id !== account.id){
       if(account.accountdelete){
         this.AccountService.destroy(account.id).then(() =>{
             window.toastr.success("Account Successfully Deleted");
@@ -464,7 +468,7 @@ export default class AccountController {
       if(!this.account.user_designation){
           this.userDesignationError = Constants.errors.aUserDesignationIsRequired;
       }
-      if(this.emailError == Constants.errors.emailIsRequired || this.userDesignationError == Constants.errors.aUserDesignationIsRequired) {
+      if(this.emailError === Constants.errors.emailIsRequired || this.userDesignationError === Constants.errors.aUserDesignationIsRequired) {
           return false;
       }
       return true;
@@ -508,12 +512,5 @@ export default class AccountController {
     else {
       return 'btn btn-danger';
     }
-  }
-
-  togglePermission(permission, index) {
-    console.log(permission)
-    var newVal = !permission
-    permission = newVal
-    this.checkIfModified(index, this.accounts);
   }
 }

@@ -21,12 +21,12 @@ describe('account Controller', () => {
         $state = {params: {id: 1}, transitionTo: () => {}, go: () => {}};
         accountService = new AccountService($http);
         permissionsSetsService = new PermissionsSetsService($http);
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80/api/me/').respond({data: 'foo'});
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80/api/account/all/').respond({data: 'foo'});
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80/api/defaultPermissionsSet/').respond({data: 'foo'});
-        $httpBackend.whenGET('http://edwards.cse.taylor.edu:80/api/account/1/').respond({data: 'foo'});
-        $httpBackend.whenPUT('http://edwards.cse.taylor.edu:80/api/account/123/').respond({data: 'foo'});
-        $httpBackend.whenPOST('http://edwards.cse.taylor.edu:80/api/account/').respond({date: 'foo'});
+        $httpBackend.whenGET('/api/me/').respond({data: 'foo'});
+        $httpBackend.whenGET('/api/account/all/').respond({data: 'foo'});
+        $httpBackend.whenGET('/api/defaultPermissionsSet/').respond({data: 'foo'});
+        $httpBackend.whenGET('/api/account/1/').respond({data: 'foo'});
+        $httpBackend.whenPUT('/api/account/123/').respond({data: 'foo'});
+        $httpBackend.whenPOST('/api/account/').respond({date: 'foo'});
         vm = new AccountController($q, $scope, $timeout, $uibModal, $state, accountService, permissionsSetsService);
     }));
 

@@ -34,11 +34,11 @@ describe('account Controller', () => {
         it(`tab_1_name should be equal to 'Accounts List'`, () => {
             expect(vm.tab_1_name).toEqual('Accounts List');
         });
-        it(`tab_2_name should be equal to 'Accounts Access Control'`, () =>{
-            expect(vm.tab_2_name).toEqual('Accounts Access Control');
+        it(`tab_2_name should be equal to 'Access Control'`, () =>{
+            expect(vm.tab_2_name).toEqual('Access Control');
         });
-        it(`tab_3_name should be equal to 'Accounts Defaults'`, () =>{
-            expect(vm.tab_3_name).toEqual('Accounts Defaults');
+        it(`tab_3_name should be equal to 'Access Defaults'`, () =>{
+            expect(vm.tab_3_name).toEqual('Access Defaults');
         });
         it(`sections should be object`, () => {
             let accountOptionsPath = 'app/account/components/';
@@ -54,24 +54,6 @@ describe('account Controller', () => {
             it(`saveButtonInfo should be an object`, () => {
                 let saveButtonInfo = {"saveButtonText":"Saved", "saveButtonColor":"btn-primary", "unsavedChanges": false};
                 expect(vm.saveButtonInfo).toEqual(saveButtonInfo);
-            });
-            it(`saveText should be equal to 'Save All'`, () => {
-                expect(vm.saveText).toEqual('Save All');
-            });
-            it(`savingText should be equal to 'Saving...'`, () => {
-                expect(vm.savingText).toEqual('Saving...');
-            });
-            it(`savedText should be equal to 'Saved'`, () => {
-                expect(vm.savedText).toEqual('Saved');
-            });
-            it(`saveColor should be equal to 'btn-success'`, () => {
-                expect(vm.saveColor).toEqual('btn-success');
-            });
-            it(`savingColor should be equal to 'btn-success'`, () => {
-                expect(vm.savingColor).toEqual('btn-success');
-            });
-            it(`savedColor should be equal to 'btn-primary'`, () => {
-                expect(vm.savedColor).toEqual('btn-primary');
             });
             it(`should call accountService.getMe`, () => {
                 spyOn(accountService, 'getMe').and.callThrough();
@@ -174,10 +156,10 @@ describe('account Controller', () => {
                 vm.activateTab(index);
                 expect(vm.tabInfo.sectionTemplateUrl).toEqual(section);
             });
-            it(`$state.transitionTo should be called`, () => {
-                spyOn(vm.$state, 'transitionTo');
+            it(`$state.go should be called`, () => {
+                spyOn(vm.$state, 'go');
                 vm.activateTab(index);
-                expect(vm.$state.transitionTo).toHaveBeenCalled();
+                expect(vm.$state.go).toHaveBeenCalled();
             });
         });
 
@@ -200,9 +182,9 @@ describe('account Controller', () => {
 
         describe('function accountEdit', () => {
             let account = {first_name: 'James', last_name: 'Rodger', id: 123};
-            it(`tabInfo.active should be -1`, () => {
+            it(`tabInfo.active should be null`, () => {
                 vm.accountEdit(account);
-                expect(vm.tabInfo.active).toEqual(-1);
+                expect(vm.tabInfo.active).toEqual(null);
             });
             it(`tabInfo.sectionTemplateUrl should be equal to editAccountPath`, () => {
                 let section = vm.editAccountPath;
@@ -218,27 +200,27 @@ describe('account Controller', () => {
                 expect(vm.editing).toEqual(true);
             });
 
-            it(`$state.transitionTo should be called`, () => {
-                spyOn(vm.$state, 'transitionTo');
+            it(`$state.go should be called`, () => {
+                spyOn(vm.$state, 'go');
                 vm.accountEdit(account);
-                expect(vm.$state.transitionTo).toHaveBeenCalled();
+                expect(vm.$state.go).toHaveBeenCalled();
             });
         });
 
         describe('function accountCreate', () => {
-            it(`tabInfo.active should be equal to -1`, () => {
+            it(`tabInfo.active should be equal to null`, () => {
                 vm.tabInfo.active = 0;
                 vm.accountCreate();
-                expect(vm.tabInfo.active).toEqual(-1);
+                expect(vm.tabInfo.active).toEqual(null);
             });
             it(`tabeInfo.sectionTemplateUrl should be equal to editAccountPath`, () => {
                 vm.accountCreate();
                 expect(vm.tabInfo.sectionTemplateUrl).toEqual(vm.editAccountPath);
             });
-            it(`$state.transitionTo should be called`, () => {
-                spyOn(vm.$state, 'transitionTo');
+            it(`$state.go should be called`, () => {
+                spyOn(vm.$state, 'go');
                 vm.accountCreate();
-                expect(vm.$state.transitionTo).toHaveBeenCalled();
+                expect(vm.$state.go).toHaveBeenCalled();
             });
         });
 
@@ -559,19 +541,6 @@ describe('account Controller', () => {
                 spyOn(permissionsSetsService, 'getPermission').and.callThrough();
                 vm.onUserDesignationChanged(permissionSetId);
                 expect(permissionsSetsService.getPermission).toHaveBeenCalled();
-            });
-        });
-
-        describe('function getButtonText', () => {
-            it(`returnValue should equal "Yes"`, () => {
-                let has_permission = true;
-                let returnValue = vm.getButtonText(has_permission);
-                expect(returnValue).toEqual("Yes");
-            });
-            it(`returnValue should equal "No"`, () => {
-                let has_permission = false;
-                let returnValue = vm.getButtonText(has_permission);
-                expect(returnValue).toEqual("No");
             });
         });
 

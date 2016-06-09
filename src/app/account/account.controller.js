@@ -16,8 +16,8 @@ export default class AccountController {
     // 'openUnsavedChangesModal' method and make sure it is saving the correct arrays.
     // Also check the 'saveAll' method in order to make sure you are displaying the appropriate save errors.
     this.tab_1_name = 'Accounts List';
-    this.tab_2_name = 'Accounts Access Control';
-    this.tab_3_name = 'Accounts Defaults';
+    this.tab_2_name = 'Access Control';
+    this.tab_3_name = 'Access Defaults';
 
     //Scope variables
     let accountOptionsPath = 'app/account/components/';
@@ -365,22 +365,7 @@ export default class AccountController {
   //Account Access Controls Tab
   changeUserRole(index) {
       this.PermissionsSetsService.getPermission(this.accounts.local[index].user_designation).then((result) => {
-          this.accounts.local[index].permission_irf_view =  result.data.permission_irf_view;
-          this.accounts.local[index].permission_irf_add = result.data.permission_irf_add;
-          this.accounts.local[index].permission_irf_edit = result.data.permission_irf_edit;
-          this.accounts.local[index].permission_irf_delete = result.data.permission_irf_delete;
-          this.accounts.local[index].permission_vif_view = result.data.permission_vif_view;
-          this.accounts.local[index].permission_vif_add = result.data.permission_vif_add;
-          this.accounts.local[index].permission_vif_edit = result.data.permission_vif_edit;
-          this.accounts.local[index].permission_vif_delete = result.data.permission_vif_delete;
-          this.accounts.local[index].permission_border_stations_view = result.data.permission_border_stations_view;
-          this.accounts.local[index].permission_border_stations_add = result.data.permission_border_stations_add;
-          this.accounts.local[index].permission_border_stations_edit = result.data.permission_border_stations_edit;
-          this.accounts.local[index].permission_border_stations_delete = result.data.permission_border_stations_delete;
-          this.accounts.local[index].permission_accounts_manage = result.data.permission_accounts_manage;
-          this.accounts.local[index].permission_receive_email = result.data.permission_receive_email;
-          this.accounts.local[index].permission_address2_manage = result.data.permission_address2_manage;
-          this.accounts.local[index].permission_budget_manage = result.data.permission_budget_manage;
+          this.applyDesignationToAccount(this.accounts.local[index], result.data);
       });
       this.checkIfModified(index, this.accounts);
   }
@@ -446,7 +431,7 @@ export default class AccountController {
             } else {
                 window.toastr.success("Account Created");
             }
-            this.$state.go("account", {activeTab: 0});
+            this.$state.go('account list', {activeTab: 0});
           }, 300);
       }, (err) => {
           this.$timeout(() => {
@@ -480,12 +465,26 @@ export default class AccountController {
   }
 
   //Account Edit Tab
-  onUserDesignationChanged(permissionSetId) {
-    if (permissionSetId){
-      this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
-          this.account = permissions.data;
-      });
+    onUserDesignationChanged(permissionSetId) {
+        if (permissionSetId){
+            this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
+                this.applyDesignationToAccount(this.account, permissions.data);
+            });
+        }
     }
+
+  /* To defeat the code smell!
+     This piece of code takes a user designation object and applies its Settings
+     to a specific account, replacing the accounts values with the values in the
+     designation
+   */
+  applyDesignationToAccount(account, designation) {
+      var designationKeys = Object.keys(designation);
+      designationKeys.forEach( function(attribute) {
+          if (attribute.substring(0,10) === "permission") {
+              account[attribute] = designation[attribute];
+          }
+      });
   }
 
   //Account Edit Tab

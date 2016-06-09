@@ -340,7 +340,15 @@ export default class AccountController {
 
         //Account List Tab
         resendActivationEmail(accountID) {
-            this.AccountService.resendActivationEmail(accountID);
+            this.AccountService.resendActivationEmail(accountID)
+                .then(
+                    () => {
+                        window.toastr.success("Email Sent!");
+                    },
+                    () => {
+                        window.toastr.error("Email Not Sent!");
+                    }
+            );
         }
 
 

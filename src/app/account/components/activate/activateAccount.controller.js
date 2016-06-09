@@ -10,7 +10,6 @@ export default class ActivateAccountController {
     }
 
     activateAccount() {
-        debugger;
         if (this.$state.params.activation_key !== null){
             this.AccountService.activateAccount(this.$state.params.activation_key).then((response) => {
                 if (response.data === "account_already_active/invalid_key"){

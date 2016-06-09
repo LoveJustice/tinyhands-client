@@ -1,11 +1,16 @@
 export default class ActivateAccountController {
-    constructor($scope, $state, AccountService, session) {
+    constructor($scope, $state, AccountService, SessionService) {
         'ngInject';
         this.$scope = $scope;
         this.$state = $state;
         this.AccountService = AccountService;
-        this.session = session;
+        this.session = SessionService;
 
+        this.activateAccount();
+    }
+
+    activateAccount() {
+        debugger;
         if (this.$state.params.activation_key !== null){
             this.AccountService.activateAccount(this.$state.params.activation_key).then((response) => {
                 if (response.data === "account_already_active/invalid_key"){

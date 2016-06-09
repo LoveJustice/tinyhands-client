@@ -2,15 +2,15 @@ import BaseService from '../base.service';
 
 export default class AccountService extends BaseService {
     constructor($http) {
-    'ngInject';
-    super();
+        'ngInject';
+        super();
 
-    this.$http = $http;
+        this.$http = $http;
     }
 
     // GETs
     getAccounts() {
-    	return this.get('api/account/all/');
+        return this.get('api/account/all/');
     }
 
     getAccount(id) {
@@ -18,11 +18,11 @@ export default class AccountService extends BaseService {
     }
 
     getMe() {
-    	return this.get('api/me/');
+        return this.get('api/me/');
     }
 
     update(id, data) {
-    	return this.put(`api/account/${id}/`, data);
+        return this.put(`api/account/${id}/`, data);
     }
 
     activateAccount(activationKey){

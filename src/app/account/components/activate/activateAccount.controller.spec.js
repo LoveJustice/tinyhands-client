@@ -4,9 +4,9 @@ import AccountService from './../../account.service';
 describe('activateAccount Controller', () => {
     let vm;
     let $scope,
-        $state,
-        accountService,
-        session;
+    $state,
+    accountService,
+    session;
 
     beforeEach(inject(($rootScope, $http) => {
         $scope = $rootScope.$new();

@@ -3,7 +3,7 @@ import UnsavedChangesModalController from './unsavedChangesModal.controller';
 describe('UnsavedChangesModalController', () => {
     let vm;
     let $uibModalInstance,
-        $scope;
+    $scope;
 
 
     beforeEach(inject(($rootScope) => {

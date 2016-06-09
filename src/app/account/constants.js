@@ -23,7 +23,7 @@ let Constants = {
   errors: {
     emailIsRequired: 'An email is required.',
     aUserDesignationIsRequired: 'A user designation is required.'
-  }
+}
 };
 
 export default Constants;

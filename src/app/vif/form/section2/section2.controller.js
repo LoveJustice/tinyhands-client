@@ -1,6 +1,6 @@
 export default class VifSection2Controller {
   constructor(VifBuilder) {
-    'ngInject'
+    'ngInject';
     this.vif = VifBuilder;
     this.gulfLocations = ["Lebanon", "Dubai", "Saudi Arabia", "Kuwait", "Malaysia", "Oman", "Qatar", "Did Not Know"];
     this.indiaLocations = ["Delhi", "Mumbai", "Surat", "Rajastan", "Kolkata", "Pune", "Jaipur", "Bihar", "Did Not Know"];

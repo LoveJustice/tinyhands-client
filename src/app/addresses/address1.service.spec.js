@@ -55,7 +55,7 @@ describe('Address1Service', () => {
 
     describe('function getFuzzyAddress1s with val', () => {
         let val = 'abcdefg';
-        let url = 'api/address1/fuzzy/?district=' + val;
+        let url = 'api/address1/fuzzy/?address1=' + val;
         it(`should call get with '${url}'`, () => {
             service.getFuzzyAddress1s(val);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);

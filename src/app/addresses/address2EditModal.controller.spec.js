@@ -8,7 +8,7 @@ describe('Address2EditModalController', () => {
           close: () => {},
           dismiss: () => {}
         },
-        address = {cannonical_name: null},
+        address = {canonical_name: null},
         scope = {address: null},
         addr2Service = {getFuzzyAddress2s: null},
         addr1Service = {getFuzzyAddress1s: null};
@@ -18,10 +18,10 @@ describe('Address2EditModalController', () => {
   describe('function save', () => {
     let address = {id: -1, name: "Empty"};
 
-    it(`should set scope.address.cannonical_name to ${address} if empty`, () => {
-      vm.scope.address.cannonical_name = null;
+    it(`should set scope.address.canonical_name to ${address} if empty`, () => {
+      vm.scope.address.canonical_name = null;
       vm.save();
-      expect(vm.scope.address.cannonical_name).toEqual({id: -1, name: "Empty"});
+      expect(vm.scope.address.canonical_name).toEqual({id: -1, name: "Empty"});
     });
 
     it(`should call modalInstance close with scope.address`, () => {

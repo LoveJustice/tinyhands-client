@@ -16,9 +16,13 @@
   2. `echo 'export PATH="$PATH:$HOME/.npm-packages/bin"' >> ~/.bashrc`
 
 --------------------
+### Developing
+**Important Note:** the URLs for the rest endpoints when developing, on staging, or master are in [`gulp/conf.js`](gulp/conf.js).  
+
+--------------------
 ### Gulp Usage
 #### Running
-`gulp serve` 	  -> To run the project and watch file changes run  
+`gulp serve` 	  -> To run the project and watch file changes run. **Changes api url to point at local rest endpoint**  
 `gulp serve:dist` -> To build the project, run the project and watch file changes run  
 
 #### Unit Testing
@@ -30,8 +34,13 @@
 `gulp protractor:src`	-> To run Protractor e2e tests from src  
 `gulp protractor:dist`	-> To run Protractor e2e tests from compiled build  
 
-#### Misc
-`gulp build`	-> To Build project  
+#### Building
+`gulp build`	-> To Build project without changing rest endpoint url (BaseUrl)  
+`gulp build:local`    -> Build project and change rest endpoint url (BaseUrl) to local rest endpoint  
+`gulp build:develop`    -> Build project and change rest endpoint url (BaseUrl) to develop rest endpoint  
+`gulp build:master`    -> Build project and change rest endpoint url (BaseUrl) to master rest endpoint  
+
+#### Misc (Typically never called directly from Command Line)
 `gulp inject`	-> UNKNOWN  
 `gulp scripts`	-> UNKNOWN  
 `gulp scripts`  -> UNKNOWN  

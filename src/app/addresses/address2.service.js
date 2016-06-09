@@ -21,7 +21,7 @@ class Address2Service {
     }
 
     getFuzzyAddress2s (val) {
-        return this.service.get('api/address2/fuzzy/?vdc=' + val);
+        return this.service.get('api/address2/fuzzy/?address2=' + val);
     }
 }
 

@@ -57,26 +57,26 @@
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_irf_view ? 'btn btn-success' : 'btn btn-danger'"
-                                   ng-click="accountCtrl.account.permission_irf_view = !accountCtrl.account.permission_irf_view">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_irf_view) }}</label>
+                                   ng-click="accountCtrl.account.permission_irf_view = !accountCtrl.account.permission_irf_view">
+                                   {{ accountCtrl.account.permission_irf_view ? "Yes" : "No" }}</label>
                         </td>
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_irf_add ? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_irf_add= !accountCtrl.account.permission_irf_add">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_irf_add) }}</label>
+                                accountCtrl.account.permission_irf_add ? "Yes" : "No" }}</label>
                         </td>
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_irf_edit? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_irf_edit= !accountCtrl.account.permission_irf_edit">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_irf_edit) }}</label>
+                                accountCtrl.account.permission_irf_edit ? "Yes" : "No" }}</label>
                         </td>
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_irf_delete ? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_irf_delete= !accountCtrl.account.permission_irf_delete">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_irf_delete) }}</label>
+                                accountCtrl.account.permission_irf_delete ? "Yes" : "No" }}</label>
                         </td>
                     </tr>
                     </tbody>
@@ -100,25 +100,25 @@
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_vif_view ? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_vif_view = !accountCtrl.account.permission_vif_view">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_vif_view) }}</label>
+                                accountCtrl.account.permission_vif_view ? "Yes" : "No" }}</label>
                         </td>
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_vif_add ? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_vif_add= !accountCtrl.account.permission_vif_add">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_vif_add) }}</label>
+                                accountCtrl.account.permission_vif_add ? "Yes" : "No" }}</label>
                         </td>
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_vif_edit ? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_vif_edit= !accountCtrl.account.permission_vif_edit">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_vif_edit) }}</label>
+                                accountCtrl.account.permission_vif_edit ? "Yes" : "No" }}</label>
                         </td>
                         <td>
                             <label class="btn"
                                    ng-class="accountCtrl.account.permission_vif_delete ? 'btn btn-success' : 'btn btn-danger'"
                                    ng-click="accountCtrl.account.permission_vif_delete= !accountCtrl.account.permission_vif_delete">{{
-                                accountCtrl.getButtonText(accountCtrl.account.permission_vif_delete) }}</label>
+                                accountCtrl.account.permission_vif_delete ? "Yes" : "No" }}</label>
                         </td>
                     </tr>
                     </tbody>
@@ -144,25 +144,25 @@
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_border_stations_view ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_border_stations_view = !accountCtrl.account.permission_border_stations_view">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_border_stations_view) }}</label>
+                            accountCtrl.account.permission_border_stations_view ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_border_stations_add ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_border_stations_add= !accountCtrl.account.permission_border_stations_add">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_border_stations_add) }}</label>
+                            accountCtrl.account.permission_border_stations_add ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_border_stations_edit ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_border_stations_edit= !accountCtrl.account.permission_border_stations_edit">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_border_stations_edit) }}</label>
+                            accountCtrl.account.permission_border_stations_edit ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_border_stations_delete ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_border_stations_delete= !accountCtrl.account.permission_border_stations_delete">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_border_stations_delete) }}</label>
+                            accountCtrl.account.permission_border_stations_delete ? "Yes" : "No" }}</label>
                     </td>
                 </tr>
                 </tbody>
@@ -188,25 +188,25 @@
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_accounts_manage= !accountCtrl.account.permission_accounts_manage">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_accounts_manage) }}</label>
+                            accountCtrl.account.permission_accounts_manage ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_receive_email = !accountCtrl.account.permission_receive_email">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_receive_email) }}</label>
+                            accountCtrl.account.permission_receive_email ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_address2_manage ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_address2_manage = !accountCtrl.account.permission_address2_manage">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_address2_manage) }}</label>
+                            accountCtrl.account.permission_address2_manage ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
                                ng-class="accountCtrl.account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountCtrl.account.permission_budget_manage = !accountCtrl.account.permission_budget_manage">{{
-                            accountCtrl.getButtonText(accountCtrl.account.permission_budget_manage) }}</label>
+                            accountCtrl.account.permission_budget_manage ? "Yes" : "No" }}</label>
                     </td>
                 </tr>
                 </tbody>

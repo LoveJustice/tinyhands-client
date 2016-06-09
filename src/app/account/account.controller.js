@@ -488,14 +488,6 @@ export default class AccountController {
   }
 
   //Account Edit Tab
-  getButtonText(has_permission) {
-      if(has_permission) {
-          return "Yes";
-      }
-      return "No";
-  }
-
-  //Account Edit Tab
   getUpdateButtonText() {
       if(this.editing) {
           this.updateAccountButton(Constants.createOrUpdateButton.updateText, Constants.createOrUpdateButton.inputColor);

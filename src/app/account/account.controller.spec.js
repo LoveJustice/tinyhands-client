@@ -43,8 +43,8 @@ describe('account Controller', () => {
         it(`sections should be object`, () => {
             let accountOptionsPath = 'app/account/components/';
             let sections = {allSections: [{ name: vm.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
-                { name: vm.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
-                { name: vm.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}]};
+                { name: vm.tab_2_name , templateUrl: `${accountOptionsPath}control/accessControl.html` },
+                { name: vm.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accessDefaults.html`}]};
                 expect(vm.sections).toEqual(sections);
             });
             it(`tabInfo should be an object`, () => {

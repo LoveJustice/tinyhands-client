@@ -26,8 +26,8 @@ export default class AccountController {
         this.sections = {
             allSections: [
                 { name: this.tab_1_name , templateUrl: `${accountOptionsPath}list/accountList.html` },
-                { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accountControl.html` },
-                { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accountDefaults.html`}
+                { name: this.tab_2_name , templateUrl: `${accountOptionsPath}control/accessControl.html` },
+                { name: this.tab_3_name , templateUrl: `${accountOptionsPath}defaults/accessDefaults.html`}
             ]};
             //Stores information about the 'active' tab selected, as well as the current html template to display.
             this.tabInfo = {

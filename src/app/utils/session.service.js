@@ -47,12 +47,15 @@ export default class SessionService {
     }
   }
 
-    checkPermissions(stateData, user) {
+    checkPermissions(stateData, toState) {
         if (angular.isDefined(stateData.permissions_required)) {
             this.service.get('api/me/').then((result) => {
                 for(var x = 0; x < stateData.permissions_required.length; x++) {
-                    if (! result[stateData.permissions_required[x]]){
-                        this.routeState.go('dashboard'); // Make user login
+                    if (! result.data[stateData.permissions_required[x]]){
+
+                        this.routeState.go('dashboard');
+                        window.toastr.error(`You are not authorized to view the ${toState.name} page!`);
+
                     }
                 }
             });
@@ -64,11 +67,9 @@ export default class SessionService {
     this.root.$on('$stateChangeStart', (event, toState) => {
       var requireLogin = toState.data.requireLogin; // See if page requires login
       var token = sessionStorage.token; // Get user token from storage if already logged in
-      var user = this.me().then((promise) => { return promise })
-
-
+      
       this.checkAuthenticityLogic(requireLogin, token);
-      this.checkPermissions(toState.data)
+      this.checkPermissions(toState.data, toState);
     });
   }
 

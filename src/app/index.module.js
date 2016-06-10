@@ -26,6 +26,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
 
     .constant('toastr', toastr)
     .constant('moment', moment)
+
     .config(config)
     .config(httpProviderConfig)
     .config(routerConfig)

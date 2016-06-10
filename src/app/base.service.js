@@ -43,7 +43,7 @@ export default class BaseService {
     delete(url, data, headers = {}) {
         this.addToken(headers);
 
-        return this.$http.delete(this.baseUrl + url, data, { headers: headers });
+        return this.$http.delete(this.baseUrl + url, { headers: headers });
     }
 
 

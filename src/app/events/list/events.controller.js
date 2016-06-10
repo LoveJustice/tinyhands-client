@@ -1,6 +1,6 @@
 export default class EventsController {
   constructor(EventsService, $uibModal) {
-    "ngInject"
+    "ngInject";
     this.events = [];
     this.Events = EventsService;
     this.getAllEvents();
@@ -23,22 +23,22 @@ export default class EventsController {
     deleteModal.result.then(() => {
       this.Events.destroyEvent(event.id).then(() => {
         this.getAllEvents();
-      })
-    })
+      });
+    });
   }
 
   getAllEvents() {
       this.Events.getAll().then((events) => {
         for (var i = 0; i < events.data.length; i++) {
-            if (events.data[i].repetition == "D") {
+            if (events.data[i].repetition === "D") {
                 events.data[i].get_repetition_display = "Daily";
-            } else if (events.data[i].repetition == "W") {
+            } else if (events.data[i].repetition === "W") {
                 events.data[i].get_repetition_display = "Weekly";
-            } else if (events.data[i].repetition == "M") {
+            } else if (events.data[i].repetition === "M") {
                 events.data[i].get_repetition_display = "Monthly";
             }
         }
         this.events = events.data;
-      })
+      });
   }
 }

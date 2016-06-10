@@ -4,7 +4,7 @@ export default class ModalController {
 
         this.modalInstance = $uibModalInstance;
         this.eventTitle = eventTitle;
-    };
+    }
 
     delete() {
         this.modalInstance.close(true);

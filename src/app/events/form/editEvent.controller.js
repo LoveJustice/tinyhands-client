@@ -1,5 +1,5 @@
 export default class EditEventCtrl {
-    constructor($scope, $state, EventsService, $stateParams) {
+    constructor($scope, $state, EventsService, $stateParams, moment) {
         'ngInject';
 
         //variable declarations
@@ -16,18 +16,19 @@ export default class EditEventCtrl {
         this.noRepetitionError = '';
         this.endsError = '';
         this.event = {};
+        this.moment = moment;
 
         //for datepicker
         $scope.myStartDate = new Date();
         $scope.myEndDate = new Date();
         $scope.myEndRepeatDate = new Date();
-        $scope.$watch('myStartDate', (newValue, oldValue) => {
+        $scope.$watch('myStartDate', () => {
             this.event.start_date = $scope.myStartDate;
         });
-        $scope.$watch('myEndDate', (newValue, oldValue) => {
+        $scope.$watch('myEndDate', () => {
             this.event.end_date = $scope.myEndDate;
         });
-        $scope.$watch('myEndRepeatDate', (newValue, oldValue) => {
+        $scope.$watch('myEndRepeatDate', () => {
             this.event.ends = $scope.myEndRepeatDate;
         });
         this.startDatePopup = {
@@ -48,12 +49,12 @@ export default class EditEventCtrl {
         this.hstep = 1;
         this.mstep = 1;
         this.ismeridian = false;
-        $scope.$watch('myStartTime', (newValue, oldValue) => {
-            this.displayStartTime = moment($scope.myStartTime).format('HH:mm');
+        $scope.$watch('myStartTime', () => {
+            this.displayStartTime = this.moment($scope.myStartTime).format('HH:mm');
             this.event.start_time = this.displayStartTime;
         });
-        $scope.$watch('myEndTime', (newValue, oldValue) => {
-            this.displayEndTime = moment($scope.myEndTime).format('HH:mm');
+        $scope.$watch('myEndTime', () => {
+            this.displayEndTime = this.moment($scope.myEndTime).format('HH:mm');
             this.event.end_time = this.displayEndTime;
         });
 
@@ -63,13 +64,13 @@ export default class EditEventCtrl {
           var eventId = this.stateParams.id;
           this.Events.getEvent(eventId).then((event) => {
               this.event = event.data;
-              $scope.myStartDate = moment(this.event.start_date).toDate();
-              $scope.myEndDate = moment(this.event.end_date).toDate();
+              $scope.myStartDate = this.moment(this.event.start_date).toDate();
+              $scope.myEndDate = this.moment(this.event.end_date).toDate();
               $scope.myEndRepeatDate = '';
-              $scope.myStartTime = moment(this.event.start_date +'T'+this.event.start_time).toDate();
-              $scope.myEndTime = moment(this.event.end_date +'T'+this.event.end_time).toDate();
-              if (this.event.ends != null) {
-                  $scope.myEndRepeatDate = moment(this.event.ends).toDate();
+              $scope.myStartTime = this.moment(this.event.start_date +'T'+this.event.start_time).toDate();
+              $scope.myEndTime = this.moment(this.event.end_date +'T'+this.event.end_time).toDate();
+              if (this.event.ends !== null) {
+                  $scope.myEndRepeatDate = this.moment(this.event.ends).toDate();
               }
           });
         } else {
@@ -85,9 +86,9 @@ export default class EditEventCtrl {
             is_repeat: false,
             repetition: '',
             ends: '',
-          }
-          $scope.myStartTime = moment('2016-01-01T12:00').toDate();
-          $scope.myEndTime = moment('2016-01-01T13:00').toDate();
+          };
+          $scope.myStartTime = this.moment('2016-01-01T12:00').toDate();
+          $scope.myEndTime = this.moment('2016-01-01T13:00').toDate();
         }
 
     }
@@ -106,11 +107,11 @@ export default class EditEventCtrl {
     }
 
     updateEvent () {
-        this.event.start_date = moment(this.event.start_date).format('YYYY-MM-DD');
-        this.event.end_date = moment(this.event.end_date).format('YYYY-MM-DD');
+        this.event.start_date = this.moment(this.event.start_date).format('YYYY-MM-DD');
+        this.event.end_date = this.moment(this.event.end_date).format('YYYY-MM-DD');
         if(this.event.is_repeat) {
-            if(this.event.ends != null && this.event.ends != "") {
-                this.event.ends = moment(this.event.ends).format('YYYY-MM-DD');
+            if(this.event.ends !== null && this.event.ends !== "") {
+                this.event.ends = this.moment(this.event.ends).format('YYYY-MM-DD');
             } else {
                 this.event.ends = null;
             }
@@ -171,7 +172,7 @@ export default class EditEventCtrl {
           if(this.event.start_date > this.event.end_date) {
               this.dateError = 'Start date is not allowed to be greater than end date';
           }
-          if(this.event.start_date == this.event.end_date) {
+          if(this.event.start_date === this.event.end_date) {
               if (this.event.start_time > this.event.end_time) {
                   this.timeError = 'Start time must less than end time for same day';
               }
@@ -190,7 +191,7 @@ export default class EditEventCtrl {
       if(this.titleError || this.startDateError || this.startTimeError || this.endDateError || this.endTimeError || this.dateError || this.timeError || this.noRepetitionError || this.endsError) {
         return false;
       }
-      return true
+      return true;
     }
 
     getTitle () {

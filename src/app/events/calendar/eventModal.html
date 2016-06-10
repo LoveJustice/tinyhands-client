@@ -42,5 +42,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" ng-click="modalCtrl.close()" >Close</button>
+        <button type="button" class="btn btn-danger" ng-click="modalCtrl.delete(modalCtrl.event)" >{{ modalCtrl.event.delete_event ? "Are you sure?" : "Delete" }}</button>
     </div>
 </div>

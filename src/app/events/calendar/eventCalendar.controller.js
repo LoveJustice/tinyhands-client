@@ -1,7 +1,10 @@
 export default class EventCalendarController {
-    constructor($uibModal, EventsService) {
+    constructor($state, $uibModal, EventsService) {
         'ngInject';
         this.modal = $uibModal;
+        this.EventsService = EventsService;
+        this.$state = $state;
+
         this.eventSources = [
            {
                events: (start, end, timezone, callback) => {
@@ -46,7 +49,7 @@ export default class EventCalendarController {
     }
 
     onCalendarEventClicked (event) {
-        this.modal.open({
+        var modalPromise = this.modal.open({
             templateUrl: 'app/events/calendar/eventModal.html',
             controller: 'EventModalController',
             controllerAs: 'modalCtrl',
@@ -55,6 +58,13 @@ export default class EventCalendarController {
                 event: function () {
                     return event;
                 }
+            }
+        });
+
+        modalPromise.result.then( () => {}, (reason) => {
+            if (reason === 'delete') {
+                this.EventsService.destroyEvent(event.id);
+                window.location.reload();
             }
         });
     }

@@ -19,9 +19,10 @@ import runBlock from './index.run';
 import NavbarDirective from './components/navbar/navbar.directive';
 
 
-angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResource', 'ngSanitize', 'ngTouch', 'ui.bootstrap', 'ui.router'
-    'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget', 'tinyhands.Dashboard',
-    'tinyhands.IRF', 'tinyhands.Login', 'tinyhands.VIF', 'tinyhands.Events'])
+angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResource', 'ngSanitize', 'ngTouch', 'ui.bootstrap', 'ui.router',
+    'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget',
+    'tinyhands.Dashboard', 'tinyhands.IRF', 'tinyhands.Login',
+    'tinyhands.VIF', 'tinyhands.Events'])
 
     .constant('toastr', toastr)
     .constant('moment', moment)
@@ -30,4 +31,3 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     .config(routerConfig)
     .run(runBlock)
     .directive('navbar', NavbarDirective);
->>>>>>> develop

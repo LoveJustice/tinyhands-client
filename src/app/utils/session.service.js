@@ -1,4 +1,4 @@
-class SessionService {
+export default class SessionService {
   constructor($rootScope, $state, $timeout, BaseService) {
     'ngInject';
 
@@ -63,5 +63,3 @@ class SessionService {
     this.routeState.go('login');
   }
 }
-
-export default SessionService;

@@ -1,10 +1,14 @@
-export default class IrfService{
-  constructor(BaseService) {
-    'ngInject';
-    this.service = BaseService;
-  }
+export default class IrfService {
+    constructor(BaseService) {
+        'ngInject';
+        this.service = BaseService;
+    }
 
-  getIrf(id) {
-    return this.service.get(`api/irf/${id}/`);
-  }
+    createIrf(data) {
+        return this.service.post('api/irf/', data);
+    }
+
+    getIrf(id) {
+        return this.service.get(`api/irf/${id}/`);
+    }
 }

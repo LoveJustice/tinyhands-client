@@ -10,7 +10,7 @@ function IRFRoutes($stateProvider) {
       }
     })
     .state('irf', {
-      url: '/irf/:id',
+      url: '/irf/:id?isViewing',
       templateUrl: 'app/irf/form/irf.html',
       controller: 'IrfController',
       controllerAs: 'irfCtrl',

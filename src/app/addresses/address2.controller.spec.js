@@ -107,13 +107,13 @@ describe('Address2Controller', () => {
             expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
-          it(`if column equals "cannonical_name.name"`, () => {
-            vm.sortColumn = 'cannonical_name.name';
+          it(`if column equals "canonical_name.name"`, () => {
+            vm.sortColumn = 'canonical_name.name';
             expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
-          it(`if column equals "district.name"`, () => {
-            vm.sortColumn = 'district.name';
+          it(`if column equals "address1.name"`, () => {
+            vm.sortColumn = 'address1.name';
             expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlt);
           });
 
@@ -154,13 +154,13 @@ describe('Address2Controller', () => {
             expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
 
-          it(`if column equals "cannonical_name.name"`, () => {
-            vm.sortColumn = 'cannonical_name.name';
+          it(`if column equals "canonical_name.name"`, () => {
+            vm.sortColumn = 'canonical_name.name';
             expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
 
-          it(`if column equals "district.name"`, () => {
-            vm.sortColumn = 'district.name';
+          it(`if column equals "address1.name"`, () => {
+            vm.sortColumn = 'address1.name';
             expect(vm.sortIcon(vm.sortColumn)).toEqual(retAlphabet);
           });
 
@@ -197,16 +197,16 @@ describe('Address2Controller', () => {
     describe('on then', () => {
 
       let nextPageUrl;
-      let data = {results: 'abcdef', next: 'page=123'};
+      let promise = {"data": {results: 'abcdef', next: 'page=123'}};
 
       beforeEach(() => {
-        vm.address2Service.listAddresses = mockThen(data);
-        nextPageUrl = vm.nextUrl(data.next);
+        vm.address2Service.listAddresses = mockThen(promise);
+        nextPageUrl = vm.nextUrl(promise.data.next);
       });
 
-      it(`should set addresses to '${data.results}'`, () => {
+      it(`should set addresses to '${promise.data.results}'`, () => {
         vm.getAddresses();
-        expect(vm.addresses).toEqual(data.results);
+        expect(vm.addresses).toEqual(promise.data.results);
       });
 
       it(`should set nextPageUrl to '${nextPageUrl}'`, () => {
@@ -241,12 +241,12 @@ describe('Address2Controller', () => {
     describe('on then', () => {
 
       let nextPageUrl, addresses;
-      let data = {results: 'abcdef', next: 'page=123'};
+      let promise = {"data": {results: 'abcdef', next: 'page=123'}};
 
       beforeEach(() => {
-        vm.address2Service.loadMoreAddresses = mockThen(data);
-        nextPageUrl = vm.nextUrl(data.next);
-        addresses = vm.addresses.concat(data.results);
+        vm.address2Service.loadMoreAddresses = mockThen(promise);
+        nextPageUrl = vm.nextUrl(promise.data.next);
+        addresses = vm.addresses.concat(promise.data.results);
         vm.loadMoreAddresses();
       });
 
@@ -282,12 +282,12 @@ describe('Address2Controller', () => {
     describe('on then', () => {
 
       let nextPageUrl, addresses;
-      let data = {results: 'abcdef', next: 'page=123'};
+      let promise = {"data": {results: 'abcdef', next: 'page=123'}};
 
       beforeEach(() => {
-        vm.address2Service.searchAddresses = mockThen(data);
-        nextPageUrl = vm.nextUrl(data.next);
-        addresses = data.results;
+        vm.address2Service.searchAddresses = mockThen(promise);
+        nextPageUrl = vm.nextUrl(promise.data.next);
+        addresses = promise.data.results;
         vm.searchAddresses();
       });
 

@@ -1,12 +1,13 @@
 import LocationController from './location.controller';
 import BorderStationService from './../borderStation.service';
+import UtilService from './../../utils/util.service';
 import constants from './../constants';
 
 describe('LocationController', () => {
   let vm, q, $scope, bss;
 
   beforeEach(inject(($q, $http) => {
-    bss = new BorderStationService($http, $q);
+    bss = new BorderStationService($http, UtilService, $q);
     $scope = {$on: () => {}, $emit: () => {}};
     q = $q;
     vm = new LocationController($q, $scope, bss);

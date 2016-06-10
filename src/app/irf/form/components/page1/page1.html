@@ -45,7 +45,7 @@
       </td>
     </tr>
     <tr>
-      <td class="header bg-danger">
+      <td class="header bg-danger" rowspan="2">
         <vertical-word>RED FLAGS</vertical-word>
       </td>
       <td>
@@ -67,5 +67,15 @@
         <check-box flag number="'3.10'" ng-model="irfCtrl.form.caste_not_same_as_relative">Caste not the same as alleged relative</check-box>
       </td>
     </tr>
+    <tr>
+      <td colspan="6">
+        <check-box class="col-xs-6" flag number="3.11" ng-model="irfCtrl.form.caught_in_lie">Caught in a lie or contradiction</check-box>
+        <div class="col-xs-6">
+          <check-box flag number="3.12" ng-model="irfCtrl.form.other_red_flag">Other Red Flag</check-box>
+          <input ng-if="irfCtrl.form.other_red_flag" class="form-control" ng-model="irfCtrl.form.other_red_flag_value">
+        </div>
+      </td>
+    </tr>
+
   </tbody>
 </table>

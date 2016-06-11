@@ -1,8 +1,12 @@
+import Constants from './constants.js';
+
 export default class BudgetController {
-  constructor($scope, $http, $location, $stateParams, $window, BudgetService) {
+  constructor($state, $stateParams, BudgetService, UtilService) {
     'ngInject';
 
+    this.$state = $state;
     this.service = BudgetService;
+    this.utils = UtilService;
 
 
     // Variable Declarations
@@ -16,73 +20,331 @@ export default class BudgetController {
                                    { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
                                    { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
                                    { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
-                                   { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }],
-      borderMonitoringStationSections: ['Administration', 'Communication', 'Medical', 'Miscellaneous', 'Salaries', 'Travel'],
-      safeHouseSections: ['Shelter', 'Food and Gas'],
-      otherSections: ['Awareness', 'Supplies']
-    };
+                                   { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }]};
     this.active = null;
+    this.borderMonitoringStationTotal = 0;
+    this.budgetId = $stateParams.id;
+    this.deletedItems = [];
+    this.form = {
+      other: {},
+      totals: {
+        borderMonitoringStation: {},
+        other: {},
+        safeHouse: {}
+      }
+    };
+    this.form.border_station = $stateParams.borderStationId;
+    this.isCreating = !this.budgetId && this.form.border_station;
+    this.isViewing = $stateParams.isViewing === "true";
+    this.safeHouseTotal = 0;
     this.sectionTemplateUrl = null;
+    this.total = 0;
 
-    this.budgetId = $stateParams.id
-    this.form = {};
-    this.salariesTotal = 0;
-
-    this.miscTotalValue = 0;
-    this.travelTotalValue = 0;
-    this.awarenessTotalValue = 0;
-    this.suppliesTotalValue = 0;
-    this.shelterTotalValue = 0;
-    this.foodGasTotalValue = 0;
-    this.communicationTotalValue = 0;
-    this.staffTotalValue = 0;
-
-    this.otherTravelTotalValue = [0];
-    this.otherMiscTotalValue = [0];
-    this.otherAwarenessTotalValue = [0];
-    this.otherSuppliesTotalValue = [0];
-    this.otherShelterTotalValue = [0];
-    this.otherFoodGasTotalValue = [0];
-    this.otherCommunicationTotalValue = [0];
-    this.otherStaffTotalValue = [0];
-
-
-    // Budget Calc sheets are for the 15th of every month
-    this.date =  new Date();
-    var thisMonth = this.date.getMonth();
-    this.date.setMonth(thisMonth + 1);
-
-    this.form.station_name = window.station_name;
-
-    this.otherItemsTotals = [this.otherTravelTotalValue,
-                            this.otherMiscTotalValue,
-                            this.otherAwarenessTotalValue,
-                            this.otherSuppliesTotalValue,
-                            this.otherShelterTotalValue,
-                            this.otherFoodGasTotalValue,
-                            this.otherCommunicationTotalValue,
-                            this.otherStaffTotalValue];
-
-
-    // Event Listeners
-    // $scope.$on('handleOtherItemsTotalChangeBroadcast', (event, args) => {
-    //   this.otherItemsTotals[args['form_section'] - 1][0] = args['total'];
-    //   this.callTotals();
-    // });
-
-    // $scope.$on('handleSalariesTotalChangeBroadcast', (event, args) => {
-    //   this.salariesTotal = args['total'];
-    // });
-
-    // $scope.$on('lastBudgetTotalBroadcast', (event, args) => {
-    //   this.last_months_total_cost = args['total'];
-    // });
-
+    this.validRoute();
     this.getBudgetForm();
   }
 
 
   // Functions
+
+  getOtherCost(otherItems) {
+    let amount = 0;
+    for (let i in otherItems) {
+      amount += this.validAmount(otherItems[i].cost);
+    }
+    return amount;
+  }
+
+  removeItem(otherArray, idx) {
+    let item = otherArray[idx];
+    if (item.id) {
+      this.deletedItems.push(item);
+    }
+    otherArray.splice(idx, 1);
+  }
+
+  validAmount(amount) {
+    if (amount) {
+      return amount;
+    }
+    return 0;
+  }
+
+  validRoute() {
+    if (!this.budgetId && !this.isCreating && !this.isViewing) {
+      this.$state.go('budgetList');
+    }
+  }
+
+
+// REGION: Administration
+  adminStationaryTotal() {
+    return this.validAmount(this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) + this.validAmount(this.form.administration_number_of_intercepts_last_month_adder);
+  }
+
+  adminMeetingsTotal() {
+    return this.validAmount(this.form.administration_number_of_meetings_per_month * this.form.administration_number_of_meetings_per_month_multiplier);
+  }
+
+  adminBoothRentalTotal() {
+    var amount = 0;
+    if (this.form.administration_booth) {
+      amount += this.validAmount(this.form.administration_booth_amount);
+    }
+    if (this.form.administration_registration) {
+      amount += this.validAmount(this.form.administration_registration_amount);
+    }
+    return amount;
+  }
+
+  adminTotal() {
+    let amount = this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal();
+    this.form.totals.borderMonitoringStation.administration = amount;
+    return amount;
+  }
+// ENDREGION: Administration
+
+
+// REGION: Awareness
+  awarenessTotal() {
+    var amount = 0;
+    if (this.form.awareness_contact_cards) {
+      amount += this.validAmount(this.form.awareness_contact_cards_amount);
+    }
+    if (this.form.awareness_awareness_party_boolean) {
+      amount += this.validAmount(this.form.awareness_awareness_party);
+    }
+    if (this.form.awareness_sign_boards_boolean) {
+      amount += this.validAmount(this.form.awareness_sign_boards);
+    }
+    amount += this.getOtherCost(this.form.other.Awareness);
+    this.form.totals.other.awareness = amount;
+    return amount;
+  }
+// ENDREGION: Awareness
+
+
+// REGION: Communication
+  communicationManagerTotal() {
+    var amount = 0;
+
+    if (this.form.communication_chair) {
+      amount += this.validAmount(this.form.communication_chair_amount);
+    }
+    if (this.form.communication_manager) {
+      amount += this.validAmount(this.form.communication_manager_amount);
+    }
+    return amount;
+  }
+
+  communicationNumberOfStaffTotal() {
+    return this.validAmount(this.form.communication_number_of_staff_with_walkie_talkies *
+      this.form.communication_number_of_staff_with_walkie_talkies_multiplier);
+  }
+
+  communicationEachStaffTotal() {
+    return this.validAmount(this.form.communication_each_staff *
+      this.form.communication_each_staff_multiplier);
+  }
+
+  communicationTotal() {
+    let amount = this.communicationManagerTotal() + this.communicationNumberOfStaffTotal() + this.communicationEachStaffTotal();
+    amount += this.getOtherCost(this.form.other.Communication);
+    this.form.totals.borderMonitoringStation.communication = amount;
+    return amount;
+  }
+// ENDREGION: Communication
+
+
+// REGION: Food And Gas
+  foodGasInterceptedGirls() {
+    return this.validAmount(this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
+      this.form.food_and_gas_number_of_intercepted_girls *
+      this.form.food_and_gas_number_of_intercepted_girls_multiplier_after);
+  }
+
+  foodGasLimboGirls() {
+    return this.validAmount(this.form.food_and_gas_limbo_girls_multiplier *
+      this.form.food_and_gas_number_of_limbo_girls *
+      this.form.food_and_gas_number_of_days);
+  }
+
+  foodAndGasTotal() {
+    let amount = this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
+    amount += this.getOtherCost(this.form.other.FoodAndGas);
+    this.form.totals.safeHouse.foodAndGas = amount;
+    return amount;
+  }
+// ENDREGION: Food And Gas
+
+
+// REGION: Medical
+  medicalTotal() {
+    this.form.totals.borderMonitoringStation.medical = this.form.medical_last_months_expense;
+    return this.form.medical_last_months_expense;
+  }
+// ENDREGION: Medical
+
+
+// REGION: Miscellaneous
+  miscellaneousMaximum() {
+    return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
+  }
+
+  miscellaneousTotal() {
+    let amount = this.miscellaneousMaximum() + this.getOtherCost(this.form.other.Miscellaneous);
+    this.form.totals.borderMonitoringStation.miscellaneous = amount;
+    return amount;
+  }
+// ENDREGION: Miscellaneous
+
+
+// REGION: Salaries
+  salariesTotal() {
+    var amount = 0;
+
+    for (let i in this.form.staff) {
+      let staff = this.form.staff[i];
+      if (staff.salaryInfo) {
+        amount += staff.salaryInfo.salary;
+      }
+    }
+
+    amount += this.getOtherCost(this.form.other.Salaries);
+
+    this.form.totals.borderMonitoringStation.salaries = amount;
+
+    return amount;
+  }
+// ENDREGION: Salaries
+
+
+// REGION: Shelter
+  shelterUtilTotal() {
+    return this.validAmount(this.form.shelter_rent) + this.validAmount(this.form.shelter_water) + this.validAmount(this.form.shelter_electricity);
+  }
+
+  shelterCheckboxTotal() {
+    var totalAmount = 0;
+    if (this.form.shelter_shelter_startup) {
+        totalAmount += this.validAmount(this.form.shelter_shelter_startup_amount);
+    }
+    if (this.form.shelter_shelter_two) {
+        totalAmount += this.validAmount(this.form.shelter_shelter_two_amount);
+    }
+    return totalAmount;
+  }
+
+  shelterTotal() {
+    var amount = 0;
+    amount += this.shelterUtilTotal() + this.shelterCheckboxTotal(this.form);
+    amount += this.getOtherCost(this.form.other.Shelter);
+    this.form.totals.safeHouse.shelter = amount;
+    return amount;
+  }
+// ENDREGION: Shelter
+
+
+// REGION: Supplies
+  suppliesTotal() {
+    var amount = 0;
+    if(this.form.supplies_walkie_talkies_boolean) {
+        amount += this.validAmount(this.form.supplies_walkie_talkies_amount);
+    }
+    if(this.form.supplies_recorders_boolean) {
+        amount += this.validAmount(this.form.supplies_recorders_amount);
+    }
+    if(this.form.supplies_binoculars_boolean) {
+        amount += this.validAmount(this.form.supplies_binoculars_amount);
+    }
+    if(this.form.supplies_flashlights_boolean) {
+        amount += this.validAmount(this.form.supplies_flashlights_amount);
+    }
+    amount += this.getOtherCost(this.form.other.Supplies);
+    this.form.totals.other.supplies = amount;
+    return amount;
+  }
+// ENDREGION: Supplies
+
+
+// REGION: Travel
+  travelMotorbikeOtherTotal() {
+    var returnVal = 0;
+    if(this.form.travel_motorbike) {
+        returnVal = this.validAmount(this.form.travel_motorbike_amount);
+    }
+    returnVal += this.validAmount(this.form.travel_plus_other);
+    return returnVal;
+  }
+
+  travelNumberOfStaffUsingBikesTotal() {
+    return this.validAmount(this.form.travel_number_of_staff_using_bikes * this.form.travel_number_of_staff_using_bikes_multiplier);
+  }
+
+  travelTotal() {
+    var amount = 0;
+    if(this.form.travel_chair_with_bike) {
+        amount += this.form.travel_chair_with_bike_amount;
+    }
+    if(this.form.travel_manager_with_bike) {
+        amount += this.form.travel_manager_with_bike_amount;
+    }
+    amount += this.travelNumberOfStaffUsingBikesTotal() +
+      this.validAmount(this.form.travel_last_months_expense_for_sending_girls_home) +
+      this.travelMotorbikeOtherTotal() +
+      this.getOtherCost(this.form.other.Travel);
+    this.form.totals.borderMonitoringStation.travel = amount;
+    return amount;
+  }
+// ENDREGION: Travel
+
+
+
+// REGION: Functions that handle totals
+  setBorderMonitoringStationTotals() {
+    let amount = this.adminTotal() +
+      this.communicationTotal() +
+      this.medicalTotal() +
+      this.miscellaneousTotal() +
+      this.salariesTotal() +
+      this.travelTotal();
+    this.borderMonitoringStationTotal = amount;
+    return amount;
+  }
+
+  setSafeHouseTotals() {
+    let amount = this.foodAndGasTotal() + this.shelterTotal();
+    this.safeHouseTotal = amount;
+    return amount;
+  }
+
+  setTotals() {
+    let amount = this.setBorderMonitoringStationTotals() +
+      this.setSafeHouseTotals() +
+      this.awarenessTotal() +
+      this.suppliesTotal();
+    this.total = amount;
+  }
+// ENDREGION: Functions that handle totals
+
+
+
+// REGION: Call to Service Functions
+  // REGION: DELETE Calls
+  deleteOtherItems() {
+    for (let i in this.deletedItems) {
+      this.service.deleteOtherItem(this.budgetId, this.deletedItems[i]);
+    }
+  }
+  // ENDREGION: DELETE Calls
+
+  // REGION: GET Calls
+  getAllData() {
+    this.getStaff();
+    this.getBorderStation();
+    this.getPreviousData();
+    this.getOtherData();
+  }
 
   getBorderStation() {
     this.service.getBorderStation(this.form.border_station).then((response) => {
@@ -91,16 +353,41 @@ export default class BudgetController {
   }
 
   getBudgetForm() {
-    this.service.getBudgetForm(this.budgetId).then((response) => {
-      this.form = response.data;
-      this.getStaff();
-      this.getBorderStation();
-    });
+    if (this.utils.validId(this.budgetId)) {
+      this.service.getBudgetForm(this.budgetId).then((response) => {
+        this.form = response.data;
+        this.form.totals = { borderMonitoringStation: {},
+          other: {},
+          safeHouse: {}
+        };
+        this.getAllData();
+      });
+    } else {
+      this.form.month_year = window.moment().format();
+      this.getAllData();
+    }
   }
 
-  getOtherStaff() {
-    this.service.getOtherItems(this.budgetId, 8).then((response) => {
-      this.form.otherStaff = response.data.results;
+  getOtherData() {
+    this.form.other = {};
+    if (this.utils.validId(this.budgetId)) {
+      for (let key in Constants.FormSections) {
+        this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
+          this.form.other[key] = response.data;
+        });
+      }
+    } else {
+      for (let key in Constants.FormSections) {
+        this.form.other[key] = [];
+      }
+    }
+  }
+
+  getPreviousData() {
+    let month = window.moment(this.form.month_year).format('M');
+    let year = window.moment(this.form.month_year).format('YYYY');
+    this.service.getPreviousData(this.form.border_station, month, year).then((response) => {
+      this.form.previousData = response.data;
     });
   }
 
@@ -108,180 +395,101 @@ export default class BudgetController {
     this.service.getStaff(this.form.border_station).then((response) => {
       this.form.staff = response.data.results;
       this.getStaffSalaries();
-      this.getOtherStaff();
     });
   }
 
   getStaffSalaries() {
-    this.service.getStaffSalaries(this.form.border_station).then((response) => {
-      this.form.staff.map((staff) => {
-        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person == staff.id })[0];
+    if (this.utils.validId(this.budgetId)) {
+      this.service.getStaffSalaries(this.budgetId).then((response) => {
+        this.form.staff.map((staff) => {
+          if (response.data.length > 0) {
+            staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
+          } else {
+            staff.salaryInfo = { salary: 0 };
+          }
+        });
+        this.setTotals();
       });
-    });
-  }
-
-  //Determine the kind of functionality...view/create/edit
-  main (){
-    if( (window.submit_type) == 1 ) {
-        this.create = true;
-        this.retrieveNewForm();
-    }
-    else if( (window.submit_type) == 2)  {
-        this.update = true;
-        this.retrieveForm(window.budget_calc_id);
-    }
-    else if( (window.submit_type) == 3) {
-        this.view = true;
-        $('input').prop('disabled', true);
-        this.retrieveForm(window.budget_calc_id);
-
     }
   }
+  // ENDREGION: GET Calls
 
-  callTotals (){
-    this.miscTotal();
-    this.travelTotal();
-    this.awarenessTotal();
-    this.suppliesTotal();
-    this.shelterTotal();
-    this.foodGasTotal();
-    this.communicationTotal();
-    this.staffTotal();
+
+  // REGION: PUT Calls
+  updateOrCreateAll() {
+    this.updateOrCreateSalaries();
+    this.updateOrCreateOtherItems();
+    this.deleteOtherItems();
+    this.$state.go('budgetList');
   }
 
-
-  foodAndShelterTotal () {
-    return this.foodGasTotal() + this.shelterTotal();
+  updateOrCreateForm() {
+    if (this.isCreating) {
+      this.service.createForm(this.form).then((response) => {
+        this.budgetId = response.data.id;
+        this.updateOrCreateAll();
+        window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+      });
+    } else {
+      this.service.updateForm(this.budgetId, this.form).then(() => {
+        window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+      });
+      this.updateOrCreateAll();
+    }
   }
 
-  bunchTotal() {
-    return  this.communicationTotalValue +
-            this.travelTotalValue +
-            this.adminTotal() +
-            this.medicalTotal() +
-            this.miscTotalValue +
-            this.staffTotal();
-  }
-
-  stationTotal() {
-    return  this.foodAndShelterTotal() +
-            this.bunchTotal() +
-            this.awarenessTotalValue +
-            this.suppliesTotalValue;
-  }
-
-  //CRUD Functions
-  updateForm() {
-    this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
-    this.mainCtrlService.updateForm(this.form.id, this.form).then((promise) => {
-      this.id = promise.data.id;
-      //Broadcast event to call the saveAllItems function in the otherItems controller
-      this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'});
-      this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
-    });
-  }
-
-  createForm() {
-    this.form.month_year = new Date(document.getElementById('month_year').value + '-15');
-    this.mainCtrlService.createForm(this.form).then((promise) => {
-      var data = promise.data;
-      this.id = data.id;
-      window.budget_calc_id = data.id;
-      this.$scope.$emit('handleBudgetCalcSavedEmit', {message: 'It is done.'}); //Broadcast event to call the saveAllItems function in the otherItems controller
-      this.$window.location.assign('/budget/budget_calculations/money_distribution/view/' + this.id + '/');
-    });
-  }
-
-  retrieveForm(id) {
-    this.mainCtrlService.retrieveForm(id).then((promise) => {
-      this.form = promise.data;
-      this.form.month_year = new Date(promise.data.month_year);
-      this.form.station_name = window.station_name;
-      this.$scope.$emit('dateSetEmit', {date: promise.data.month_year});
-      this.callTotals();
-    });
-  }
-
-  retrieveNewForm() {
-    this.mainCtrlService.retrieveNewForm(window.budget_calc_id).then((promise) => {
-      var data = promise.data.budget_form;
-      if (promise.data.None) {
-        this.resetValuesToZero();
+  updateOrCreateOtherItems() {
+    for (let section in this.form.other) {
+      for (let i in this.form.other[section]) {
+        let item = this.form.other[section][i];
+        if (item.id) {
+          this.service.updateOtherItem(this.budgetId, item);
+        } else {
+          item.budget_item_parent = this.budgetId;
+          item.form_section = Constants.FormSections[section];
+          this.service.createOtherItem(this.budgetId, item);
+        }
       }
-      else {
-        this.form = data;
-      }
-      this.form.station_name = window.station_name;
-      this.form.month_year = this.date;
-      this.form.next_month = this.next_month;
-      data.members = [];
-      data.id = undefined;
-      this.callTotals();
-    });
+    }
   }
 
-  resetValuesToZero() {
-    this.form = {
-      border_station: window.border_station,
-      shelter_shelter_startup_amount: 0,
-      shelter_shelter_two_amount: 0,
-      communication_chair: false,
-      communication_chair_amount: 0,
-      communication_manager: false,
-      communication_manager_amount: 0,
-      communication_number_of_staff_with_walkie_talkies: 0,
-      communication_number_of_staff_with_walkie_talkies_multiplier: 0,
-      communication_each_staff: 0,
-      communication_each_staff_multiplier: 0,
-      travel_chair_with_bike: false,
-      travel_chair_with_bike_amount: 0,
-      travel_manager_with_bike: false,
-      travel_manager_with_bike_amount: 0,
-      travel_number_of_staff_using_bikes: 0,
-      travel_number_of_staff_using_bikes_multiplier: 0,
-      travel_last_months_expense_for_sending_girls_home: 0,
-      travel_motorbike: false,
-      travel_motorbike_amount: 0,
-      travel_plus_other: 0,
-      administration_number_of_intercepts_last_month: 0,
-      administration_number_of_intercepts_last_month_multiplier: 0,
-      administration_number_of_intercepts_last_month_adder: 0,
-      administration_number_of_meetings_per_month: 0,
-      administration_number_of_meetings_per_month_multiplier: 0,
-      administration_booth: false,
-      administration_booth_amount: 0,
-      administration_registration: false,
-      administration_registration_amount: 0,
-      medical_last_months_expense: 0,
-      miscellaneous_number_of_intercepts_last_month: 0,
-      miscellaneous_number_of_intercepts_last_month_multiplier: 0,
-      shelter_rent: 0,
-      shelter_water: 0,
-      shelter_electricity: 0,
-      shelter_shelter_startup: false,
-      shelter_shelter_two: false,
-      food_and_gas_number_of_intercepted_girls: 0,
-      food_and_gas_number_of_intercepted_girls_multiplier_before: 0,
-      food_and_gas_number_of_intercepted_girls_multiplier_after: 0,
-      food_and_gas_limbo_girls_multiplier: 0,
-      food_and_gas_number_of_limbo_girls: 0,
-      food_and_gas_number_of_days: 0,
-      awareness_contact_cards: false,
-      awareness_contact_cards_boolean_amount: 0,
-      awareness_contact_cards_amount: 0,
-      awareness_awareness_party_boolean: false,
-      awareness_awareness_party: 0,
-      awareness_sign_boards_boolean: false,
-      awareness_sign_boards: 0,
-      supplies_walkie_talkies_boolean: false,
-      supplies_walkie_talkies_amount: 0,
-      supplies_recorders_boolean: false,
-      supplies_recorders_amount: 0,
-      supplies_binoculars_boolean: false,
-      supplies_binoculars_amount: 0,
-      supplies_flashlights_boolean: false,
-      supplies_flashlights_amount: 0
+  updateOrCreateSalaries() {
+    this.form.staff.forEach((staff) => {
+      if (staff.salaryInfo && staff.salaryInfo.id) {
+        this.service.updateSalary(this.budgetId, staff.salaryInfo);
+      } else if (staff.salaryInfo && !staff.salaryInfo.id) {
+        staff.salaryInfo.staff_person = staff.id;
+        staff.salaryInfo.budget_calc_sheet = this.budgetId;
+        this.service.createSalary(staff.salaryInfo);
+      }
+    });
+  }
+  // ENDREGION: PUT Calls
+// ENDREGION: Call to Service Functions
+
+  clearValue(value) {
+    let returnValue;
+    if (typeof value === 'boolean') {
+      returnValue = false;
+    } else if (typeof value === 'number') {
+      returnValue = 0;
+    } else {
+      returnValue = value;
     }
+    return returnValue;
+  }
+
+  clearValues() {
+    for (let key in this.form) {
+      if (key !== 'border_station' || key !== 'id') {
+        this.form[key] = this.clearValue(this.form[key]);
+      }
+    }
+
+    for (let index in this.form.staff) {
+      this.form.staff[index].salaryInfo.salary = this.clearValue(this.form.staff[index].salaryInfo.salary);
+    }
+    this.setTotals();
   }
 
 }

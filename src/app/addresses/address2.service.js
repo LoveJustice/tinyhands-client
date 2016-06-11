@@ -1,14 +1,11 @@
-import BaseService from '../base.service';
-
-class Address2Service extends BaseService {
-	constructor ($http) {
+class Address2Service {
+	constructor (BaseService) {
 		'ngInject';
-		super();
-        this.$http = $http;
+        this.service = BaseService;
 	}
 
 	listAddresses(queryParams) {
-        return this.get('api/address2/', queryParams);
+        return this.service.get('api/address2/', queryParams);
     }
 
 	searchAddresses(queryParams) {
@@ -16,15 +13,15 @@ class Address2Service extends BaseService {
     }
 
 	loadMoreAddresses(queryParams) {
-        return this.get('api/address2/', queryParams);
+        return this.service.get('api/address2/', queryParams);
     }
 
 	saveAddress(address) {
-        return this.put('api/address2/' + address.id + '/', address);
+        return this.service.put('api/address2/' + address.id + '/', address);
     }
 
     getFuzzyAddress2s (val) {
-        return this.get('api/address2/fuzzy/?vdc=' + val);
+        return this.service.get('api/address2/fuzzy/?address2=' + val);
     }
 }
 

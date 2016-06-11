@@ -27,8 +27,9 @@ class Address2Controller {
                 case "longitude":
                     return this.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
                 case "name":
-                case "cannonical_name.name":
-                case "district.name":
+                case "canonical_name.name":
+                case "address1.name":
+                case "level":
                 case "verified":
                     return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
                 default:
@@ -41,9 +42,9 @@ class Address2Controller {
     getAddresses() {
         this.loading = true;
         this.address2Service.listAddresses(this.getQueryParams())
-            .success((data) => {
-                this.addresses = data.results;
-                this.nextPageUrl = this.nextUrl(data.next);
+            .then((promise) => {
+                this.addresses = promise.data.results;
+                this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
     }
@@ -51,9 +52,9 @@ class Address2Controller {
     loadMoreAddresses() {
         this.loading = true;
         this.address2Service.loadMoreAddresses(this.getQueryParams(true))
-            .success((data) => {
-                this.addresses = this.addresses.concat(data.results);
-                this.nextPageUrl = this.nextUrl(data.next);
+            .then((promise) => {
+                this.addresses = this.addresses.concat(promise.data.results);
+                this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
     }
@@ -61,9 +62,9 @@ class Address2Controller {
     searchAddresses() {
         this.loading = true;
         this.address2Service.searchAddresses(this.getQueryParams())
-            .success((data) => {
-                this.addresses = data.results;
-                this.nextPageUrl = this.nextUrl(data.next);
+            .then((promise) => {
+                this.addresses = promise.data.results;
+                this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
     }
@@ -101,8 +102,11 @@ class Address2Controller {
         });
         modalInstance.result.then((address) => {
             this.address2Service.saveAddress(address)
-                .success(() => {
+                .then(() => {
                     this.getAddresses();
+                    window.toastr.success(`Address 2 Successfully Updated!`);
+                }, () => {
+                    window.toastr.error(`Address 2 Did Not Save Successfully!`);
                 });
         });
     }
@@ -117,4 +121,3 @@ class Address2Controller {
 }
 
 export default Address2Controller;
-

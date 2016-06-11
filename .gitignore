@@ -5,5 +5,7 @@ bower_components/
 .tmp/
 dist/
 .DS_Store
+*.swp
+*.d.ts
 
 jsconfig.json

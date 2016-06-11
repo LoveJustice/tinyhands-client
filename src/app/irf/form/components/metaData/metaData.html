@@ -1,0 +1,41 @@
+<div id="irf-metadata">
+    <div class="container-fluid text-center">
+        <img class="" src="http://edwards.cse.taylor.edu/static/images/logo.png">
+        <h2>Interception Record Form (IRF)</h2>
+        <h4>Version 3.0 Tiny Hands Nepal</h4>
+    </div>
+
+    <div class="form-group text-left">
+        <div class="has-error">
+            <label class="control-label">IRF Number*</label>
+            <input type="text" ng-model="irfCtrl.form.irf_number" class="form-control" placeholder="IRF Number"
+                   uib-tooltip="IRF Number is Required"
+                   tooltip-enable="irfCtrl.errors.irf_number"
+                   tooltip-is-open="irfCtrl.errors.irf_number">
+
+            <label class="control-label">Date/Time*</label>
+            <input class="form-control" placeholder="Date of Interception" type="datetime-local" ng-model="irfCtrl.form.date_time_of_interception"
+                   uib-tooltip="Date/Time is Required"
+                   tooltip-enable="irfCtrl.errors.date_time_of_interception"
+                   tooltip-is-open="irfCtrl.errors.date_time_of_interception">
+
+            <label class="control-label">Location*</label>
+            <input type="text" ng-model="irfCtrl.form.location" class="form-control" placeholder="Location"
+                   uib-tooltip="Location is Required"
+                   tooltip-enable="irfCtrl.errors.location"
+                   tooltip-is-open="irfCtrl.errors.location">
+
+            <label class="control-label">Staff Name*</label>
+            <input type="text" ng-model="irfCtrl.form.staff_name" class="form-control" placeholder="Staff Name"
+                   uib-tooltip="Staff Name is Required"
+                   tooltip-enable="irfCtrl.errors.staff_name"
+                   tooltip-is-open="irfCtrl.errors.staff_name">
+        </div>
+
+        <label class="control-label"># of Victims</label>
+        <input type="text" ng-model="irfCtrl.form.number_of_victims" class="form-control" placeholder="# of Victims">
+
+        <label class="control-label"># of Traffickers</label>
+        <input type="text" ng-model="irfCtrl.form.number_of_traffickers" class="form-control" placeholder="# of Traffickers">
+    </div>
+</div>

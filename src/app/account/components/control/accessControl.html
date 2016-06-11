@@ -39,107 +39,107 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="account in accountCtrl.accounts.local">
+        <tr ng-repeat="account in accessControlCtrl.accounts.local">
             <td>
                 <span>{{account.first_name+" "+account.last_name}}</span>
                 <br/>
-                <select ng-change="accountCtrl.changeUserRole($index)" ng-model="account.user_designation"
-                        ng-options="p.id as p.name for p in accountCtrl.permissions.local">
+                <select ng-change="accessControlCtrl.changeUserRole($index)" ng-model="account.user_designation"
+                        ng-options="p.id as p.name for p in accessControlCtrl.permissions.local">
                 </select>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_irf_view', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_irf_view);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_irf_view', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_irf_view);">
                   {{ account.permission_irf_view ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_irf_add', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_irf_add);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_irf_add', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_irf_add);">
                   {{ account.permission_irf_add ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_irf_edit', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_irf_edit);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_irf_edit', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_irf_edit);">
                   {{ account.permission_irf_edit ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_irf_delete', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_irf_delete);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_irf_delete', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_irf_delete);">
                   {{ account.permission_irf_delete ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_vif_view', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_vif_view);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_vif_view', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_vif_view);">
                   {{ account.permission_vif_view ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_vif_add', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_vif_add);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_vif_add', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_vif_add);">
                   {{ account.permission_vif_add ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_vif_edit', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_vif_edit);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_vif_edit', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_vif_edit);">
                   {{ account.permission_vif_edit ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_vif_delete', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_vif_delete);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_vif_delete', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_vif_delete);">
                   {{ account.permission_vif_delete ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_border_stations_view', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_border_stations_view);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_border_stations_view', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_border_stations_view);">
                   {{ account.permission_border_stations_view ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_border_stations_add', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_border_stations_add);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_border_stations_add', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_border_stations_add);">
                   {{ account.permission_border_stations_add ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_border_stations_edit', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_border_stations_edit);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_border_stations_edit', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_border_stations_edit);">
                   {{ account.permission_border_stations_edit ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_border_stations_delete', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_border_stations_delete);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_border_stations_delete', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_border_stations_delete);">
                   {{ account.permission_border_stations_delete ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_accounts_manage', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_accounts_manage);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_accounts_manage', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_accounts_manage);">
                   {{ account.permission_accounts_manage ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_receive_email', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_receive_email);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_receive_email', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_receive_email);">
                   {{ account.permission_receive_email ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_address2_manage', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_address2_manage);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_address2_manage', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_address2_manage);">
                   {{ account.permission_address2_manage ? "Yes" : "No" }}
               </label>
             </td>
             <td>
-              <label ng-click="accountCtrl.togglePermission(account, 'permission_budget_manage', $index)"
-                     ng-class="accountCtrl.getStyling(account.permission_budget_manage);">
+              <label ng-click="accessControlCtrl.togglePermission(account, 'permission_budget_manage', $index)"
+                     ng-class="accessControlCtrl.getStyling(account.permission_budget_manage);">
                   {{ account.permission_budget_manage ? "Yes" : "No" }}
               </label>
             </td>
@@ -147,14 +147,14 @@
         </tbody>
     </table>
     <div class="btn-toolbar">
-        <button ng-disabled="!accountCtrl.saveButtonInfo.unsavedChanges"
-            ng-click="accountCtrl.discardChanges(accountCtrl.accounts)"
+        <button ng-disabled="!accessControlCtrl.saveButtonInfo.unsavedChanges"
+            ng-click="accessControlCtrl.discardChanges(accessControlCtrl.accounts)"
             class="col-xs-2 col-md-2 col-lg-2 clear btn btn-primary pull-right">Discard Changes
         </button>
-        <button ng-disabled="!accountCtrl.saveButtonInfo.unsavedChanges"
-                ng-click="accountCtrl.saveAll(accountCtrl.accounts, accountCtrl.AccountService)"
-                class="col-xs-2 col-md-2 col-lg-2 clear btn pull-right {{accountCtrl.saveButtonInfo.saveButtonColor}}">
-                {{accountCtrl.saveButtonInfo.saveButtonText}}
+        <button ng-disabled="!accessControlCtrl.saveButtonInfo.unsavedChanges"
+                ng-click="accessControlCtrl.saveAll(accessControlCtrl.accounts, accessControlCtrl.AccountService)"
+                class="col-xs-2 col-md-2 col-lg-2 clear btn pull-right {{accessControlCtrl.saveButtonInfo.saveButtonColor}}">
+                {{accessControlCtrl.saveButtonInfo.saveButtonText}}
         </button>
     </div>
 </div>

@@ -1,13 +1,13 @@
 <div id="accountNav">
-    <div class="verticalOffset accounts" ng-controller="AccountController as accountCtrl" ng-cloak>
+    <div class="verticalOffset accounts" ng-cloak>
         <div class="col-xs-1 col-xs-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
             <ul class="nav nav-tabs">
-                <li ng-repeat="section in accountCtrl.sections.allSections" ng-class="{active: accountCtrl.tabInfo.active == $index}" ng-click="accountCtrl.switchActive($index)"; >
+                <li ng-repeat="section in accountCtrl.sections" ng-class="{active: accountCtrl.activeTabIndex === $index}" ng-click="accountCtrl.switchActive($index)"; >
                     <a>{{section.name}}</a>
                 </li>
             </ul>
 
-            <div id="accountDiv" ng-cloak="" ng-include="accountCtrl.tabInfo.sectionTemplateUrl"></div>
+            <div id="accountDiv" ui-view></div>
         </div>
     </div>
 </div>

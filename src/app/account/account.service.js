@@ -1,49 +1,45 @@
-import BaseService from '../base.service';
-
-export default class AccountService extends BaseService {
-    constructor($http) {
+export default class AccountService{
+    constructor(BaseService) {
         'ngInject';
-        super();
-
-        this.$http = $http;
+        this.service = BaseService;
     }
 
     // GETs
     getAccounts() {
-        return this.get('api/account/all/');
+        return this.service.get('api/account/all/');
     }
 
     getAccount(id) {
-        return this.get(`api/account/${id}/`);
+        return this.service.get(`api/account/${id}/`);
     }
 
     getMe() {
-        return this.get('api/me/');
+        return this.service.get('api/me/');
     }
 
     update(id, data) {
-        return this.put(`api/account/${id}/`, data);
+        return this.service.put(`api/account/${id}/`, data);
     }
 
     activateAccount(activationKey){
-        return this.get(`api/account/activate/${activationKey}/`);
+        return this.service.get(`api/account/activate/${activationKey}/`);
     }
 
     // POSTs
     create(data) {
-        return this.post('api/account/', data);
+        return this.service.post('api/account/', data);
     }
 
     resendActivationEmail(id){
-        return this.post(`api/account/resend-activation-email/${id}/`);
+        return this.service.post(`api/account/resend-activation-email/${id}/`);
     }
 
     activateAccountPassword(activationKey, data){
-        return this.post(`api/account/activate/${activationKey}/`, data);
+        return this.service.post(`api/account/activate/${activationKey}/`, data);
     }
 
     // DELETE
     destroy(id) {
-        return this.delete(`api/account/${id}/`);
+        return this.service.delete(`api/account/${id}/`);
     }
 }

@@ -4,6 +4,7 @@ import ActivateAccountController from './components/activate/activateAccount.con
 import AccountController from './account.controller';
 import AccountListController from './components/list/accountList.controller';
 import AccessControlController from './components/control/accessControl.controller';
+import AccountEditController from './components/edit/accountEdit.controller';
 import UnsavedChangesModalController from './components/modal/unsavedChangesModal.controller';
 
 import AccountService from './account.service';
@@ -16,6 +17,7 @@ export default angular.module('tinyhands.Account', ['ui.router', 'tinyhands.Shar
     .controller('AccountController', AccountController)
     .controller('AccountListController', AccountListController)
     .controller('AccessControlController', AccessControlController)
+    .controller('AccountEditController', AccountEditController)
     .controller('UnsavedChangesModalController', UnsavedChangesModalController)
 
     .service('AccountService', AccountService)

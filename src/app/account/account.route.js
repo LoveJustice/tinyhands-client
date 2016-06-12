@@ -40,8 +40,10 @@ function accountRouteConfig ($stateProvider) {
         }
     })
     .state('account', {
-        url: '/account/{id:^([0-9]+|create)$}',
-        templateUrl: 'app/account/account.html',
+        url: '/account/{id:[0-9]+|create}',
+        controller: 'AccountEditController',
+        controllerAs: 'accountEditCtrl',
+        templateUrl: 'app/account/components/edit/accountEdit.html',
         data: {
             requireLogin: true
         }

@@ -10,7 +10,7 @@
           <th ng-click="vm.sortColumn = 'last_login'; vm.reverse = ! vm.reverse;">Last Login</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
-          <th id="create"><button class="btn btn-sm btn-success pull-right"  ui-sref="account">Create Account</button></th>
+          <th id="create"><a class="btn btn-sm btn-success pull-right"  ui-sref="account({id: 'create'})">Create Account</a></th>
         </tr>
       </thead>
 
@@ -23,7 +23,7 @@
           <td>{{account.date_joined | date:"yyyy/MM/dd h:mm:ssa"}}</td>
           <td>{{account.last_login | date:"yyyy/MM/dd h:mm:ssa"}}</td>
           <td>
-            <a class="btn btn-sm btn-primary pull-right" id="edit" ui-sref="account">Edit</a>
+            <a class="btn btn-sm btn-primary pull-right" id="edit" ui-sref="account({id: account.id})">Edit</a>
           </td>
           <td>
             <button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>

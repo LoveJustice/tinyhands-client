@@ -33,6 +33,8 @@ function accountRouteConfig ($stateProvider) {
     })
     .state('accounts.defaults', {
         url: '/defaults',
+        controller: 'AccessDefaultsController',
+        controllerAs: 'accessDefaultsCtrl',
         templateUrl: 'app/account/components/defaults/accessDefaults.html',
         data: {
             requireLogin: true,

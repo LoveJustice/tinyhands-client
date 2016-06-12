@@ -1,17 +1,14 @@
-import Constants from '../../constants.js';
-export default class AccessControlController {
-    constructor(AccountService, PermissionsSetsService, $timeout, $q, $state, $uibModal, $scope) {
-        this.AccountService = AccountService;
-        this.PermissionsSetsService = PermissionsSetsService;
+import Constants from '../../constants';
+export default class AccessDefaultsController {
+    constructor($scope, $timeout, $q, $uibModal, $state, PermissionsSetsService) {
+        'ngInject';
+        this.$scope = $scope;
         this.$timeout = $timeout;
         this.$q = $q;
-        this.$state = $state;
         this.$uibModal = $uibModal;
-        this.$scope = $scope;
-        this.accounts = {
-            local: [],
-            saved: []
-        };
+        this.$state = $state;
+        this.PermissionsSetsService = PermissionsSetsService;
+        
         this.permissions = {
             local: [],
             saved: []
@@ -23,28 +20,10 @@ export default class AccessControlController {
             unsavedChanges: false
         };
         
-        this.getAccounts();
         this.getPermissions();
+        
         this.createOnStateChangeListener();
-    }
-    
-    createOnStateChangeListener(){
-        this.$scope.$on('$stateChangeStart', (e, toState) => {
-            if (this.saveButtonInfo.unsavedChanges) {
-                e.preventDefault();
-                this.openUnsavedChangesModal(toState.name);
-            }
-        });
-    }
-
-    
-    getAccounts(){
-        this.AccountService.getAccounts().then((result) => {
-            this.accounts.local = result.data;
-            // Creates a deep copy of accounts.local
-            this.accounts.saved = angular.copy(this.accounts.local);
-            // accounts.local is compared against accounts.saved to check for unsaved changes.
-        });
+        
     }
     
     getPermissions(){
@@ -56,6 +35,15 @@ export default class AccessControlController {
         });
     }
     
+    createOnStateChangeListener(){
+        this.$scope.$on('$stateChangeStart', (e, toState) => {
+            if (this.saveButtonInfo.unsavedChanges) {
+                e.preventDefault();
+                this.openUnsavedChangesModal(toState.name);
+            }
+        });
+    }
+    
     getStyling(attribute) {
         if (attribute){
             return 'btn btn-success';
@@ -63,18 +51,6 @@ export default class AccessControlController {
         else {
             return 'btn btn-danger';
         }
-    }
-    
-    changeUserRole(index) {
-        this.PermissionsSetsService.getPermission(this.accounts.local[index].user_designation).then((result) => {
-            this.applyDesignationToAccount(this.accounts.local[index], result.data);
-        });
-        this.checkIfModified(index, this.accounts);
-    }
-    
-    togglePermission(account, permission, index) {
-        account[permission] = !account[permission];
-        this.checkIfModified(index, this.accounts);
     }
     
     checkIfModified(index, arrays) {
@@ -99,7 +75,7 @@ export default class AccessControlController {
         }
         this.checkForUnsavedChanges(arrays);
     }
-    
+
     checkForUnsavedChanges(arrays) {
         var unsaved = false;
         if (arrays.local.length > arrays.saved.length){
@@ -119,12 +95,7 @@ export default class AccessControlController {
             this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false);
         }
     }
-    
-    discardChanges(arrays) {
-        arrays.local = angular.copy(arrays.saved);
-        this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false);
-    }
-    
+
     updateSaveButton(text, color, unsavedChanges, time) {
         this.$timeout(() => {
             this.saveButtonInfo.saveButtonText = text;
@@ -133,6 +104,50 @@ export default class AccessControlController {
                 this.saveButtonInfo.unsavedChanges = unsavedChanges;
             }
         }, time);
+    }
+    
+    addAnother() {
+        this.permissions.local.push({
+            is_new: true,
+            is_used_by_accounts: false
+        });
+        this.checkForUnsavedChanges(this.permissions);
+    }
+
+    //Account Defaults Tab
+    deletePermissionRole(index) {
+        let permissionSet = this.permissions.local[index];
+        if (!permissionSet.is_used_by_accounts){
+            if(permissionSet.accountRemoved){
+                if (permissionSet.is_new) {
+                    // Local delete
+                    window.toastr.success("Account Role Successfully Removed");
+                    this.permissions.local.splice(index, 1);
+                    this.checkForUnsavedChanges(this.permissions);
+                } else {
+                    // Database delete
+                    var call = null;
+                    this.permissions.local.splice(index, 1);
+                    call =this.PermissionsSetsService.destroy(permissionSet.id);
+
+                    call.then(() => {
+                        window.toastr.success("Account Role Successfully Deleted");
+                        this.permissions.saved = angular.copy(this.permissions.local);
+                        this.checkForUnsavedChanges(this.permissions);
+                    }, () => {
+                        window.toastr.error("Deleting Unsuccessful");
+                    });
+                }
+            }
+            else{
+                permissionSet.accountRemoved = true;
+            }
+        }
+    }
+    
+    discardChanges(arrays) {
+        arrays.local = angular.copy(arrays.saved);
+        this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false);
     }
     
     saveAll(arrays, serviceToUse) {
@@ -163,7 +178,7 @@ export default class AccessControlController {
             });
         });
     }
-    
+
     saveSet(index, local, serviceToUse) {
         var call = null;
         var elm = local[index];
@@ -186,16 +201,7 @@ export default class AccessControlController {
         });
     }
     
-    applyDesignationToAccount(account, designation) {
-        var designationKeys = Object.keys(designation);
-        designationKeys.forEach( function(attribute) {
-            if (attribute.substring(0,10) === "permission") {
-                account[attribute] = designation[attribute];
-            }
-        });
-    }
-    
-     openUnsavedChangesModal(toState = null) {
+    openUnsavedChangesModal(toState = null) {
         var selection = this.$uibModal.open({
             templateUrl:'app/account/components/modal/unsavedChangesModal.html',
             controller: 'UnsavedChangesModalController',
@@ -204,7 +210,7 @@ export default class AccessControlController {
         selection.result.then((result) => {
             let promise;
             if (result === Constants.unsavedChangesModalOptions.save) {
-                promise = this.saveAll(this.accounts, this.AccountService);
+                promise = this.saveAll(this.permissions, this.PermissionsSetsService);
             } else {
                 promise = this.$q.resolve();
             }

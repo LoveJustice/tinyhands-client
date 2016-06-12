@@ -2,8 +2,8 @@
     <div class="verticalOffset accounts" ng-cloak>
         <div class="col-xs-1 col-xs-10 col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
             <ul class="nav nav-tabs">
-                <li ng-repeat="section in accountCtrl.sections" ng-class="{active: accountCtrl.activeTabIndex === $index}" ng-click="accountCtrl.switchActive($index)"; >
-                    <a>{{section.name}}</a>
+                <li ng-repeat="tab in accountCtrl.tabs" ng-class="{active: accountCtrl.activeTabIndex === $index}" ng-click="accountCtrl.switchTab($index)"; >
+                    <a>{{tab.name}}</a>
                 </li>
             </ul>
 

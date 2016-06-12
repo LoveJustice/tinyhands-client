@@ -13,7 +13,8 @@ function accountRouteConfig ($stateProvider) {
     })
     .state('accounts.list', {
         url: '/list',
-        
+        controller: 'AccountListController',
+        controllerAs: 'accountListCtrl',
         templateUrl: 'app/account/components/list/accountList.html',
         data: {
             requireLogin: true,
@@ -39,7 +40,7 @@ function accountRouteConfig ($stateProvider) {
         }
     })
     .state('account', {
-        url: '/account/:id',
+        url: '/account/{id:^([0-9]+|create)$}',
         templateUrl: 'app/account/account.html',
         data: {
             requireLogin: true

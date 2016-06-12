@@ -6,12 +6,12 @@ export default class AccessControlController {
         this.$timeout = $timeout;
         this.$q = $q;
         this.accounts = {
-            local: {},
-            saved: {}
+            local: [],
+            saved: []
         };
         this.permissions = {
-            local: {},
-            saved: {}
+            local: [],
+            saved: []
         };
         
         this.saveButtonInfo = {

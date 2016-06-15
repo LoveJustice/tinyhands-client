@@ -1,20 +1,18 @@
-import Constants from './../../constants.js';
-
 export default class UnsavedChangesModalController {
-    constructor($scope, $uibModalInstance) {
+    constructor($uibModalInstance) {
 
         this.$uibModalInstance = $uibModalInstance;
     }
 
     saveAndContinue() {
-        this.$uibModalInstance.close(Constants.unsavedChangesModalOptions.save);
+        this.$uibModalInstance.close(true);
     }
 
     discardAndContinue() {
-        this.$uibModalInstance.close(Constants.unsavedChangesModalOptions.discard);
+        this.$uibModalInstance.close(false);
     }
 
     cancel() {
-        this.$uibModalInstance.dismiss(Constants.unsavedChangesModalOptions.cancel);
+        this.$uibModalInstance.dismiss();
     }
 }

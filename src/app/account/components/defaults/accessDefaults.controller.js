@@ -53,13 +53,13 @@ export default class AccessDefaultsController {
         }
     }
     
-    checkIfModified(index, arrays) {
-        arrays.local[index].is_modified = false;
+    checkIfModified(index) {
+        this.permissions.local[index].is_modified = false;
         // Checks if index is new. If it is, there is no need to check if it has been modified.
-        if (arrays.local[index].is_new){
-            arrays.local[index].is_modified = true;
+        if (this.permissions.local[index].is_new){
+            this.permissions.local[index].is_modified = true;
         } else {
-            var keys = Object.keys(arrays.local[index]);
+            var keys = Object.keys(this.permissions.local[index]);
             keys.forEach((key) => {
                 /*  Checks if a value on the local copy differs from a value on the database copy.
                 *  Ignores '$$hashKey' key, which angular adds when copying an object.
@@ -68,20 +68,20 @@ export default class AccessDefaultsController {
                 *  Ignores 'accountRemove', which this controller adds to local copy in order to prevent the deletion of
                 *  user roles that are used by active accounts.
                 */
-                if (key !== '$$hashKey' && key !== 'hover' && key !== 'is_modified' && key !== 'accountRemoved' && arrays.local[index][key] !== arrays.saved[index][key]) {
-                    arrays.local[index].is_modified = true;
+                if (key !== '$$hashKey' && key !== 'hover' && key !== 'is_modified' && key !== 'accountRemoved' && this.permissions.local[index][key] !== this.permissions.saved[index][key]) {
+                    this.permissions.local[index].is_modified = true;
                 }
             });
         }
-        this.checkForUnsavedChanges(arrays);
+        this.checkForUnsavedChanges();
     }
 
-    checkForUnsavedChanges(arrays) {
+    checkForUnsavedChanges() {
         var unsaved = false;
-        if (arrays.local.length > arrays.saved.length){
+        if (this.permissions.local.length > this.permissions.saved.length){
             unsaved = true;
         } else {
-            arrays.local.forEach((elm) => {
+            this.permissions.local.forEach((elm) => {
                 if (elm.is_modified) {
                     unsaved = true;
                     return;
@@ -145,22 +145,22 @@ export default class AccessDefaultsController {
         }
     }
     
-    discardChanges(arrays) {
-        arrays.local = angular.copy(arrays.saved);
+    discardChanges() {
+        this.permissions.local = angular.copy(this.permissions.saved);
         this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false);
     }
     
-    saveAll(arrays, serviceToUse) {
+    saveAll() {
         this.updateSaveButton(Constants.saveButton.savingText, Constants.saveButton.savingColor, true);
         return this.$q( (resolve) => {
             var promises = [];
-            arrays.local.forEach((elm, index) => {
-                promises.push(this.saveSet(index, arrays.local, serviceToUse));
+            this.permissions.local.forEach((elm, index) => {
+                promises.push(this.saveSet(index, this.permissions.local));
             });
 
             // Waiting for all permissionsSets to be saved via saveSet()
             this.$q.all(promises).then( () => {
-                arrays.saved = angular.copy(arrays.local);
+                this.permissions.saved = angular.copy(this.permissions.local);
                 this.updateSaveButton(Constants.saveButton.savedText, Constants.saveButton.savedColor, false, 800);
                 resolve();
             }, () => {
@@ -169,7 +169,7 @@ export default class AccessDefaultsController {
                 }
                 else if (this.sections.allSections[this.tabInfo.active].name === this.tab_3_name) {
                     this.PermissionsSetsService.getPermissions().then((result) => {
-                        arrays.saved = result.data.results;
+                        this.permissions.saved = result.data.results;
                     });
                     this.updateSaveButton(Constants.saveButton.saveText, Constants.saveButton.saveColor, true, 800);
                     resolve();
@@ -179,14 +179,14 @@ export default class AccessDefaultsController {
         });
     }
 
-    saveSet(index, local, serviceToUse) {
+    saveSet(index, local) {
         var call = null;
         var elm = local[index];
         return this.$q((resolve, reject) => {
             if (elm.is_new) {
-                call = serviceToUse.create(elm);
+                call = this.PermissionsSetsService.create(elm);
             } else if (elm.is_modified) {
-                call = serviceToUse.update(elm.id, elm);
+                call = this.PermissionsSetsService.update(elm.id, elm);
             } else {
                 resolve(); //"no reason call a request";
                 return;
@@ -207,15 +207,12 @@ export default class AccessDefaultsController {
             controller: 'UnsavedChangesModalController',
             controllerAs: 'UnsavedChangesModalCtrl'
         });
-        selection.result.then((result) => {
-            let promise;
-            if (result === Constants.unsavedChangesModalOptions.save) {
+        selection.result.then((shouldSave) => {
+            let promise = this.$q.resolve();
+            if (shouldSave) {
                 promise = this.saveAll(this.permissions, this.PermissionsSetsService);
-            } else {
-                promise = this.$q.resolve();
             }
             promise.then( () => {
-                //If saving was successful and a toState has been provided, redirect to that state
                 this.saveButtonInfo.unsavedChanges = false;
                 if (toState !== null) {
                     this.$state.go(toState);

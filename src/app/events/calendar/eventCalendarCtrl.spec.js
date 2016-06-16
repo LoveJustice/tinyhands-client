@@ -1,57 +1,50 @@
-describe("eventCalendarCtrl", function() {
-    var scope, controller, mockModal;
+import EventCalendarController from './eventCalendar.controller';
+import EventsService from '../events.service';
 
-    beforeEach(module('EventsMod'));
+describe('EventCalendarController', () => {
+    let vm;
+    let $state,
+        $uibModal,
+        eventsService,
+        $http;
 
-    beforeEach(inject(function($rootScope, $controller){
-        scope = $rootScope.$new();
-        mockModal = jasmine.createSpyObj('mockModal', ['open']);
-        controller = $controller('CalendarCtrl', {$modal: mockModal});
+    beforeEach(inject(($http) => {
+        var eventsService = new EventsService($http);
+        vm = new EventCalendarController($state, $uibModal, eventsService);
     }));
 
-    describe('getToday', function() {
-        it('should return today as YYYY-MM-DD', function() {
+
+    describe('getToday', () => {
+        beforeEach( () => {
+            vm.constructor();
+        });
+
+        it('should return today as YYYY-MM-DD', () => {
             var testDate = new Date(2016, 10, 29); //setting month to 10=Nov. as 0=Jan.
             jasmine.clock().mockDate(testDate);
 
-            var result = controller.getToday();
+            var result = vm.getToday();
 
             expect(result).toEqual("2016-11-29");
         });
 
-        it('when month is a single digit should append leading zero', function() {
+        it('when month is a single digit should append leading zero', () => {
             var testDate = new Date(2016, 0, 29); //setting date to Jan. 1st 2016
             jasmine.clock().mockDate(testDate);
 
-            var result = controller.getToday();
+            var result = vm.getToday();
 
             expect(result).toEqual("2016-01-29");
         });
 
-        it('when month is a single digit should append leading zero', function() {
+        it('when month is a single digit should append leading zero', () => {
             var testDate = new Date(2016, 10, 9); //setting date to Jan. 1st 2016
             jasmine.clock().mockDate(testDate);
 
-            var result = controller.getToday();
+            var result = vm.getToday();
 
             expect(result).toEqual("2016-11-09");
         });
     });
 
-    describe('onCalendarEventClicked', function() {
-        it('should open Event Modal', function() {
-            var mockEvent = {title: 'foo'};
-
-            controller.onCalendarEventClicked(mockEvent);
-            scope.$apply();
-
-            expect(mockModal.open).toHaveBeenCalled();
-            var modalArgs = mockModal.open.calls.mostRecent().args[0];
-            expect(modalArgs.templateUrl).toEqual('modal.html');
-            expect(modalArgs.controller).toEqual('EventModalCtrl');
-            expect(modalArgs.controllerAs).toEqual('modalCtrl');
-            expect(modalArgs.bindToController).toEqual(true);
-            expect(modalArgs.resolve.event()).toEqual(mockEvent);
-        });
-    });
 });

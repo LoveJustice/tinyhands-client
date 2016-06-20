@@ -37,7 +37,7 @@
         </thead>
 
         <tbody id="permissions-rows-container">
-        <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.local" ng-show="!permissionsSet.delete"
+        <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.items" 
             ng-mouseenter="permissionsSet.hover = true"
             ng-mouseleave="permissionsSet.hover = false; permissionsSet.accountRemoved = false">
 
@@ -47,67 +47,67 @@
                 </div>
             </td>
             <td><label
-                    ng-click="permissionsSet.permission_irf_view = !permissionsSet.permission_irf_view; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_irf_view = !permissionsSet.permission_irf_view;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_view)">{{
                 permissionsSet.permission_irf_view ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_irf_add = !permissionsSet.permission_irf_add; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_irf_add = !permissionsSet.permission_irf_add;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_add)">{{
                 permissionsSet.permission_irf_add ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_irf_edit = !permissionsSet.permission_irf_edit; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_irf_edit = !permissionsSet.permission_irf_edit;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_edit)">{{
                 permissionsSet.permission_irf_edit ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_irf_delete = !permissionsSet.permission_irf_delete; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_irf_delete = !permissionsSet.permission_irf_delete;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_delete)">{{
                 permissionsSet.permission_irf_delete ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_vif_view = !permissionsSet.permission_vif_view; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_vif_view = !permissionsSet.permission_vif_view;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_view)">{{
                 permissionsSet.permission_vif_view ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_vif_add = !permissionsSet.permission_vif_add; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_vif_add = !permissionsSet.permission_vif_add;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_add)">{{
                 permissionsSet.permission_vif_add ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_vif_edit = !permissionsSet.permission_vif_edit; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_vif_edit = !permissionsSet.permission_vif_edit;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_edit)">{{
                 permissionsSet.permission_vif_edit ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_vif_delete = !permissionsSet.permission_vif_delete; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_vif_delete = !permissionsSet.permission_vif_delete;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_delete)">{{
                 permissionsSet.permission_vif_delete ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_border_stations_view = !permissionsSet.permission_border_stations_view; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_border_stations_view = !permissionsSet.permission_border_stations_view;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_view)">{{
                 permissionsSet.permission_border_stations_view ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_border_stations_add = !permissionsSet.permission_border_stations_add; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_border_stations_add = !permissionsSet.permission_border_stations_add;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_add)">{{
                 permissionsSet.permission_border_stations_add ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_border_stations_edit = !permissionsSet.permission_border_stations_edit; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_border_stations_edit = !permissionsSet.permission_border_stations_edit;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_edit)">{{
                 permissionsSet.permission_border_stations_edit ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_border_stations_delete = !permissionsSet.permission_border_stations_delete; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_border_stations_delete = !permissionsSet.permission_border_stations_delete;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_delete)">{{
                 permissionsSet.permission_border_stations_delete ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_accounts_manage = !permissionsSet.permission_accounts_manage; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_accounts_manage = !permissionsSet.permission_accounts_manage;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_accounts_manage)">{{
                 permissionsSet.permission_accounts_manage ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_receive_email = !permissionsSet.permission_receive_email; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_receive_email = !permissionsSet.permission_receive_email;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_email)">{{
                 permissionsSet.permission_receive_email ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_address2_manage = !permissionsSet.permission_address2_manage; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_address2_manage = !permissionsSet.permission_address2_manage; accessDefaultsCtrl.checkIfModified(x)"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_address2_manage)">{{
                 permissionsSet.permission_address2_manage ? "Yes" : "No" }}</label></td>
             <td><label
-                    ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage; accessDefaultsCtrl.checkIfModified($index)"
+                    ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_manage)">{{
                 permissionsSet.permission_budget_manage ? "Yes" : "No" }}</label></td>
             <td id="removeButton" class="col-md-1">
@@ -126,7 +126,7 @@
         <button id="addAnotherButton" ng-click="accessDefaultsCtrl.addAnother()" class="col-xs-4 col-md-4 col-lg-4 clear btn btn-primary btn-sm">Add Another</button>
     </div>
     <div class="btn-toolbar col-md-6">
-        <button ng-disabled="!accessDefaultsCtrl.saveButtonInfo.unsavedChanges" ng-click="accessDefaultsCtrl.discardChanges()" class=" col-xs-4 col-md-4 col-lg-4 clear btn btn-primary btn-sm pull-right"> Discard Changes</button>
-        <button ng-disabled="!accessDefaultsCtrl.saveButtonInfo.unsavedChanges" ng-click="accessDefaultsCtrl.saveAll(accessDefaultsCtrl.permissions, accessDefaultsCtrl.PermissionsSetsService)" class="col-xs-4 col-md-4 col-lg-4 clear btn btn-sm pull-right {{accessDefaultsCtrl.saveButtonInfo.saveButtonColor}}">{{accessDefaultsCtrl.saveButtonInfo.saveButtonText}} </button>
+        <button ng-disabled="!accessDefaultsCtrl.permissions.hasChanges" ng-click="accessDefaultsCtrl.discardChanges()" class=" col-xs-4 col-md-4 col-lg-4 clear btn btn-primary btn-sm pull-right"> Discard Changes</button>
+        <button ng-disabled="!accessDefaultsCtrl.permissions.hasChanges" ng-click="accessDefaultsCtrl.saveAll()" class="col-xs-4 col-md-4 col-lg-4 clear btn btn-sm pull-right {{accessDefaultsCtrl.saveButtonStyle}}">{{accessDefaultsCtrl.saveButtonText}} </button>
     </div>
 </div>

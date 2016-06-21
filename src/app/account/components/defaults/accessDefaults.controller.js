@@ -1,9 +1,8 @@
 import ChangesArray from '../../changesArray';
 export default class AccessDefaultsController {
-    constructor($scope, $timeout, $q, $uibModal, $state, PermissionsSetsService) {
+    constructor($scope, $q, $uibModal, $state, PermissionsSetsService) {
         'ngInject';
         this.$scope = $scope;
-        this.$timeout = $timeout;
         this.$q = $q;
         this.$uibModal = $uibModal;
         this.$state = $state;
@@ -14,7 +13,6 @@ export default class AccessDefaultsController {
         this.getPermissions();
         
         this.createOnStateChangeListener();
-        
     }
     
      get saveButtonText() {
@@ -77,7 +75,7 @@ export default class AccessDefaultsController {
     }
 
     //Account Defaults Tab
-    deletePermissionRole(index) {
+    removePermissionRole(index) {
         this.permissions.remove(index);
     }
     

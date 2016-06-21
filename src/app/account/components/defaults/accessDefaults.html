@@ -39,7 +39,7 @@
         <tbody id="permissions-rows-container">
         <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.items" 
             ng-mouseenter="permissionsSet.hover = true"
-            ng-mouseleave="permissionsSet.hover = false; permissionsSet.accountRemoved = false">
+            ng-mouseleave="permissionsSet.hover = false">
 
             <td>
                 <div ng-class="{'has-error': permissionsSet.nameError}">
@@ -111,13 +111,13 @@
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_manage)">{{
                 permissionsSet.permission_budget_manage ? "Yes" : "No" }}</label></td>
             <td id="removeButton" class="col-md-1">
-                <button type="button"
+                <confirm-button 
                         class="btn btn-sm btn-danger animated pull-left"
                         ng-show="!permissionsSet.is_used_by_accounts"
-                        ng-click="accessDefaultsCtrl.deletePermissionRole($index)"
-                        ng-class="{fadeIn: permissionsSet.hover && permissionsSet.accountRemoved, fadeOut: !permissionsSet.hover, pulse: permissionsSet.accountRemoved}">
-                    {{ permissionsSet.accountRemoved ? "Are you sure?" : "Remove Role" }}
-                </button>
+                        ng-class="{fadeIn: permissionsSet.hover, fadeOut: !permissionsSet.hover}"
+                        text="Remove Role"
+                        confirm-text="Are you sure?"
+                        on-confirm="accessDefaultsCtrl.removePermissionRole($index)"/>
             </td>
         </tr>
         </tbody>

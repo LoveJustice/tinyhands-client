@@ -8,6 +8,8 @@ import AccessDefaultsController from './components/defaults/accessDefaults.contr
 import AccountEditController from './components/edit/accountEdit.controller';
 import UnsavedChangesModalController from './components/modal/unsavedChangesModal.controller';
 
+import ConfirmButton from './components/confirmButton/confirmButton.directive';
+
 import AccountService from './account.service';
 import PermissionsSetsService from './permissionsSets.service';
 
@@ -21,6 +23,8 @@ export default angular.module('tinyhands.Account', ['ui.router', 'tinyhands.Shar
     .controller('AccessDefaultsController', AccessDefaultsController)
     .controller('AccountEditController', AccountEditController)
     .controller('UnsavedChangesModalController', UnsavedChangesModalController)
+    
+    .directive('confirmButton', ConfirmButton)
 
     .service('AccountService', AccountService)
     .service('PermissionsSetsService', PermissionsSetsService);

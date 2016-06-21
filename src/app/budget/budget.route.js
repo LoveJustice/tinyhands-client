@@ -18,6 +18,15 @@ function budgetRouteConfig ($stateProvider) {
           data: {
             requireLogin: true
           }
+        })
+        .state('mdf', {
+          url: '/budget/:id/mdf',
+          templateUrl: 'app/budget/mdf/mdf.html',
+          controller: 'MdfController',
+          controllerAs: 'vm',
+          data: {
+            requireLogin: true
+          }
         });
 }
 

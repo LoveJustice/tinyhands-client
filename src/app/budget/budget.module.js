@@ -2,6 +2,7 @@ import budgetRouteConfig from './budget.route';
 
 import BudgetController from './form/budget.controller';
 import BudgetListController from './list/budgetList.controller';
+import MdfController from './mdf/mdf.controller';
 
 import MathOperator from './mathOperator/mathOperator.directive';
 
@@ -13,8 +14,9 @@ export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Share
 
     .controller('BudgetController', BudgetController)
     .controller('BudgetListController', BudgetListController)
+    .controller('MdfController', MdfController)
 
     .directive('operator', MathOperator)
-    
+
     .service('BudgetListService', BudgetListService)
     .service('BudgetService', BudgetService);

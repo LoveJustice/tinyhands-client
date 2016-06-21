@@ -108,12 +108,19 @@ export default class AccessDefaultsController {
     saveNewSet(set) {
         return this.PermissionsSetsService.create(set).then((response) => {
             set.id = response.data.id;
-        }, () => {
+        }, (error) => {
+            set.error = error.data.name[0];
+            return this.$q.reject(error);
         });
     }
     
     updateSet(set) {
-        return this.PermissionsSetsService.update(set.id, set);
+        return this.PermissionsSetsService.update(set.id, set).then(() => {},
+            (error) => {
+                set.error = error.data.name[0];
+                return this.$q.reject(error);
+            }
+        );
     }
     
     removeSet(set) {

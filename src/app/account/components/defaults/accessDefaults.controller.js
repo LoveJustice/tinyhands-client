@@ -15,7 +15,7 @@ export default class AccessDefaultsController {
         this.createOnStateChangeListener();
     }
     
-     get saveButtonText() {
+    get saveButtonText() {
         if(this.saveButtonClicked) {
             return 'Saving...';
         } else if(this.permissions.hasChanges) {
@@ -52,7 +52,7 @@ export default class AccessDefaultsController {
     
     createOnStateChangeListener(){
         this.$scope.$on('$stateChangeStart', (e, toState) => {
-            if (this.saveButtonInfo.unsavedChanges) {
+            if (this.permissions.hasChanges) {
                 e.preventDefault();
                 this.openUnsavedChangesModal(toState.name);
             }
@@ -88,7 +88,7 @@ export default class AccessDefaultsController {
         var promises = [];
         this.permissions.updatedItems.forEach((set) => {
             promises.push(this.updateSet(set));
-        })
+        });
         this.permissions.newItems.forEach((set) => {
             promises.push(this.saveNewSet(set));
         });
@@ -96,7 +96,7 @@ export default class AccessDefaultsController {
             promises.push(this.removeSet(set));
         });
         
-        this.$q.all(promises).then( () => {
+        return this.$q.all(promises).then( () => {
             this.saveButtonClicked = false;
             this.permissions.saveChanges();
         }, () => {
@@ -137,9 +137,10 @@ export default class AccessDefaultsController {
             let promise = this.$q.resolve();
             if (shouldSave) {
                 promise = this.saveAll();
+            } else {
+                this.discardChanges();
             }
             promise.then( () => {
-                this.saveButtonInfo.unsavedChanges = false;
                 if (toState !== null) {
                     this.$state.go(toState);
                 }

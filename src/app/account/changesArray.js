@@ -16,7 +16,7 @@ export default class ChangesArray {
     }
     
     get newItems() {
-        return this._local.filter((item) => { return item._ca_is_new === true});        
+        return this._local.filter((item) => { return item._ca_is_new === true;});        
     }
     
     get updatedItems() {
@@ -26,7 +26,7 @@ export default class ChangesArray {
     }
     
     get removedItems() {
-        return this._local.filter((item) => { return item._ca_should_remove === true});
+        return this._local.filter((item) => { return item._ca_should_remove === true;});
     }
     
     get hasChanges() {
@@ -47,7 +47,7 @@ export default class ChangesArray {
     }
     
     saveChanges() {
-        this._local = this._local.filter((item) => { return item._ca_should_remove !== true})
+        this._local = this._local.filter((item) => { return item._ca_should_remove !== true;})
             .map((item) => {
                 item._ca_is_new = false;
                 return item;

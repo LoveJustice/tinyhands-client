@@ -13,7 +13,7 @@ export default function ConfirmButton() {
         controllerAs: 'ctrl',
         restrict: 'E',
         templateUrl: 'app/account/components/confirmButton/confirmButton.html'
-    }
+    };
     
     return directive;
 }

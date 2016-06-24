@@ -28,25 +28,23 @@ export default class MdfController {
     createIframe(src) {
         src = this.sce.trustAsResourceUrl(src);
         this.pdfFrame = this.sce.trustAsHtml(`<iframe src="${src.toString()}" class="pdf" width="100%" height="600px"></iframe>`);
+        return this.pdfFrame;
+    }
+
+    getIds(sourceObject, destinationObject, attribute) {
+        sourceObject.forEach( (object) => {
+            if (object.receives_money_distribution_form) {
+                destinationObject[attribute].push(object.id);
+            }
+        });
+        return destinationObject;
     }
 
     sendEmails(){
-        var people = {};
+        var people = {"staff_ids": [], "committee_ids": []};
+        people = this.getIds(this.staff, people, "staff_ids");
+        people = this.getIds(this.committeeMembers, people, "committee_ids");
         people.budget_id = this.stateParams.id;
-        people.staff_ids = [];
-        people.committee_ids = [];
-
-        for(var x = 0; x < this.staff.length; x++) {
-            if (this.staff[x].receives_money_distribution_form) {
-                people.staff_ids.push(this.staff[x].id);
-            }
-        }
-
-        for(x=0; x < this.committeeMembers.length; x++){
-            if (this.committeeMembers[x].receives_money_distribution_form) {
-                people.committee_ids.push(this.committeeMembers[x].id);
-            }
-        }
 
         this.service.sendMdfEmails(people).then( () => {
             window.toastr.success(`Successfully emailed the MDF`);
@@ -56,5 +54,6 @@ export default class MdfController {
                 window.toastr.error(`Could not send emails`);
             }
         );
+        return people;
     }
 }

@@ -16,7 +16,7 @@ import httpProviderConfig from './httpProvider.config';
 import runBlock from './index.run';
 
 import NavbarDirective from './components/navbar/navbar.directive';
-
+import CsvExportDirective from './components/csv-export/csv-export.directive';
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResource', 'ngSanitize', 'ngTouch',
     'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget', 'tinyhands.Dashboard', 'tinyhands.IRF', 'tinyhands.Login', 'tinyhands.VIF',
@@ -27,4 +27,5 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     .config(httpProviderConfig)
     .config(routerConfig)
     .run(runBlock)
+    .directive('csvexport', CsvExportDirective)
     .directive('navbar', NavbarDirective);

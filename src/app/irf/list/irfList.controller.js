@@ -1,74 +1,71 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService) {
+    constructor(IrfListService, SessionService, $stateParams, $timeout) {
         'ngInject';
-
         this.service = IrfListService;
         this.session = SessionService;
+        this.timeout = $timeout;
 
-        this.numShowing = 25;
-        this.paginateBy = 25;
-        this.reverse = false;
-        this.searchValue = '';
-        this.showingIrfs = [];
-        this.sort = 'irf_number';
+        this.timer = {};
+        this.irfs = [];
+        this.nextPage = "";
+        this.queryParameters = {
+            "page_size": 25,
+            "reverse": true,
+            "ordering": 'irf_number',
+            "search": ''
+        };
+        // If there was a search value provided in the url, set it
+        if($stateParams) {
+            this.queryParameters.search = $stateParams.search;
+        }
 
-        this.getIrfList();
+        this.getIrfList(this.queryParameters);
     }
 
     getIrfList() {
-        this.numShowing = this.paginateBy;
-
-        this.service.getIrfList().then((response) => {
-            this.listOfIrfs = response.data.results;
-            this.showingIrfs = this.listOfIrfs.slice(0, this.numShowing);
-        });
+        this.service.getIrfList(this.queryParameters).then( (promise) => {
+            this.irfs = promise.data.results;
+            this.nextPage = this.extractPage(promise.data.next);
+        })
     }
 
-    getSort() {
-        if (this.reverse === false) {
-            return this.sort;
-        } else {
-            return '-' + this.sort;
+    extractPage(url) {
+        return url.slice(url.indexOf('page=')).split('&')[0].split('=')[1]
+    }
+
+    searchIrfs() {
+        this.timeout.cancel(this.timer);
+        this.timer = this.timeout( () => {
+            this.getIrfList();
+            console.log('update with timeout fired')
+        }, 500);
+    }
+
+    getSortIcon(column, reverse) {
+        if(reverse === 'reverse'){
+            return (column === this.queryParameters.ordering) && !this.queryParameters.reverse;
         }
+        return (column === this.queryParameters.ordering) && this.queryParameters.reverse;
     }
 
-    reverseList() {
-        this.reverse = !this.reverse;
+    updateSort(column) {
+        if (column === this.queryParameters.ordering) {
+            this.queryParameters.reverse = ! this.queryParameters.reverse;
+        }
+        this.queryParameters.ordering = column;
+        this.getIrfList();
     }
 
     showMoreIrfs() {
-        this.numShowing = parseInt(this.numShowing) + parseInt(this.paginateBy);
-        this.showingIrfs = this.listOfIrfs.slice(0, this.numShowing);
-
+        var params = angular.copy(this.queryParameters);
+        params.page = this.nextPage;
+        this.service.getMoreIrfs(params).then( (promise) => {
+            this.irfs = this.irfs.concat(promise.data.results);
+            this.nextPage = this.extractPage(promise.data.next);
+        });
     }
 
     deleteIrf(id) {
         this.service.deleteIrf(id);
-    }
-
-    cleanDeleteUrl(url) {
-        return String(url).replace('http/:','');
-    }
-
-    getCsvArray() {
-        //[{'Irf #'}, {'Staff Name'}, {'# of Victims'}, {'# of Traffickers'}, {'Date of Interception'}, {'Time Entered Into System'}, {'Time Last Edited'}];
-        this.getArray = [];
-        var i;
-        for (i = 0; i < this.showingIrfs.length; i++) {
-            this.getArray.push(
-                {'Irf #': this.showingIrfs[i].irf_number,
-                'Staff Name': this.showingIrfs[i].staff_name,
-                '# of Victims': this.showingIrfs[i].number_of_victims,
-                '# of Traffickers': this.showingIrfs[i].number_of_traffickers,
-                'Date of Interception': this.showingIrfs[i].date,
-                'Time Entered Into System': this.showingIrfs[i].date_time_entered_into_system,
-                'Time Last Edited': this.showingIrfs[i].date_time_last_updated}
-            );
-        }
-        return this.getArray;
-    }
-
-    getCsvHeader() {
-        return ['Irf #', 'Staff Name', '# of Victims', '# of Traffickers', 'Date of Interception', 'Time Entered Into System', 'Time Last Edited'];
     }
 }

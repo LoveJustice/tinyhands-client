@@ -1,32 +1,31 @@
 import UnsavedChangesModalController from './unsavedChangesModal.controller';
 
 describe('UnsavedChangesModalController', () => {
-    let vm;
-    let $uibModalInstance,
-    $scope;
+    let controller
+        $uibModalInstance,
 
-
-    beforeEach(inject(($rootScope) => {
-        $scope = $rootScope.$new();
+    beforeEach(() => {
         $uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close', 'dismiss']);
-        vm = new UnsavedChangesModalController($scope, $uibModalInstance);
-    }));
+        controller = new UnsavedChangesModalController($uibModalInstance);
+    });
 
-    describe('function saveAndContinue', () => {
-        it(`close should be called`, () => {
-            vm.saveAndContinue();
-            expect($uibModalInstance.close).toHaveBeenCalled();
+    describe('when saving and continueing', () => {
+        it(`should close with true`, () => {
+            controller.saveAndContinue();
+            expect($uibModalInstance.close).toHaveBeenCalledWith(true);
         });
     });
-    describe('function discardAndContinue', () => {
-        it(`close should be called`, () => {
-            vm.discardAndContinue();
-            expect($uibModalInstance.close).toHaveBeenCalled();
+    
+    describe('when discarding and continueing', () => {
+        it(`should close with false`, () => {
+            controller.discardAndContinue();
+            expect($uibModalInstance.close).toHaveBeenCalledWith(false);
         });
     });
-    describe('function cancel', () => {
-        it(`dismiss should be called`, () => {
-            vm.cancel();
+    
+    describe('when canceling navigation', () => {
+        it(`should call dismiss`, () => {
+            controller.cancel();
             expect($uibModalInstance.dismiss).toHaveBeenCalled();
         });
     });

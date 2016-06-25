@@ -1,6 +1,5 @@
 export default class UnsavedChangesModalController {
     constructor($uibModalInstance) {
-
         this.$uibModalInstance = $uibModalInstance;
     }
 

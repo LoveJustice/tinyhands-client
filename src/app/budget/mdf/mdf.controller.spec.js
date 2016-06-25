@@ -1,110 +1,97 @@
 import MdfController from './mdf.controller';
-import BudgetListService from '../list/budgetList.service';
 
 describe('MDF Controller',() => {
-    let vm;
-    let $state;
-    let $stateParams = {"id": 1};
+    let vm,
+        $state,
+        mockBudgetListService,
+        $stateParams,
+        $sce;
 
-    beforeEach(inject(($http, $sce) => {
-        let service = new BudgetListService($http);
-        vm = new MdfController(service, $stateParams, $state, $sce);
+    beforeEach(inject((_$sce_) => {
+        $sce = _$sce_;
+        $stateParams = {"id": 1}
+
+        let response = {'data':{
+            "committee_members": [],
+            "staff_members": [],
+            "pdf_url": ""}
+        };
+
+        mockBudgetListService = jasmine.createSpyObj('BudgetListService', [
+            'getMdf',
+            'sendMdfEmails'
+        ]);
+
+        mockBudgetListService.getMdf.and.callFake( () => {
+            return {
+                then: (f) => {
+                    f(response);
+                }
+            };
+        });
+
+        vm = new MdfController(mockBudgetListService, $stateParams, $state, $sce);
     }));
 
     describe('function constructor', () => {
-        it('expect getBudgetList to be called', () => {
+        it('expect retrieveMdf to be called', () => {
             spyOn(vm, 'retrieveMdf');
             vm.constructor();
+
             expect(vm.retrieveMdf).toHaveBeenCalled();
         });
     });
 
-    describe('function listofBudgets', () => {
-        let response = {'data':{
-            "committee_members":
-            [
-                {"id":169,"email":"benaduggan1@mailinator.com","first_name":"asdf","last_name":"assd","phone":null,"position":null,"receives_money_distribution_form":true,"border_station":25}
-            ],
-            "staff_members":
-            [
-                {"id":110,"email":"benaduggan@mailinator.com","first_name":"ben","last_name":"duggan","phone":"","position":null,"receives_money_distribution_form":true,"border_station":25}
-            ],
-            "pdf_url":"http://localhost/api/mdf/6/pdf/"}
-        };
+    describe('function createIframe', () => {
+        it('expect createIframe to create an iframe with the pdf_url', () => {
+            let url = 'http://localhost/'
+            var val = vm.createIframe(url);
+            expect(val.toString()).toContain(url);
+        });
+    });
 
+    describe('function getIds', () => {
+        it('expect getIds to contain staff id because it is checked', () => {
+            let people = {"staff_ids": [], "committee_ids": []};
+            let sourceObject = [{"id":169, "receives_money_distribution_form": true}];
 
-        describe('function createIframe', () => {
-            beforeEach(() => {
-                vm.service.retrieveMdf = () => {
-                    return {
-                        then: (f) => {
-                            f(response);
-                        }
-                    };
-                };
-            });
-
-            it('expect createIframe to create an iframe with the pdf_url', () => {
-                var data = vm.service.retrieveMdf();
-                data.then( (promise) => {
-                    var val = vm.createIframe(promise.data.pdf_url);
-                    expect(val.toString()).toContain(promise.data.pdf_url);
-                });
-            });
+            var val = vm.getIds(sourceObject, people, 'staff_ids');
+            expect(val.staff_ids).toEqual([169]);
         });
 
+        it('expect getIds to contain committee_member id because it is checked', () => {
+            let people = {"staff_ids": [], "committee_ids": []};
+            let sourceObject = [{"id":169, "receives_money_distribution_form": true}];
 
-        describe('function getIds', () => {
-            beforeEach(() => {
-                vm.service.retrieveMdf = () => {
-                    return {
-                        then: (f) => {
-                            f(response);
-                        }
-                    };
-                };
-            });
-
-            it('expect getIds to contain staff id because it is checked', () => {
-                let people = {"staff_ids": [], "committee_ids": []};
-                var data = vm.service.retrieveMdf();
-                data.then( (promise) => {
-                    var val = vm.getIds(promise.data.staff_members, people, 'staff_ids');
-                    expect(val.staff_ids).toEqual([110]);
-                });
-            });
-
-            it('expect getIds to contain committee_member id because it is checked', () => {
-                let people = {"staff_ids": [], "committee_ids": []};
-                var data = vm.service.retrieveMdf();
-                data.then( (promise) => {
-                    var val = vm.getIds(promise.data.committee_members, people, 'committee_ids');
-                    expect(val.committee_ids).toEqual([169]);
-                });
-            });
-
-            it('expect getIds to not contain committee_member id because it is unchecked', () => {
-                let people = {"staff_ids": [], "committee_ids": []};
-                var data = vm.service.retrieveMdf();
-                data.then( (promise) => {
-                    var data = promise.data.committee_members;
-                    data[0].receives_money_distribution_form = false;
-                    var val = vm.getIds(data, people, 'committee_ids');
-                    expect(val.committee_ids).toEqual([]);
-                });
-            });
-
-            it('expect getIds to not contain staff member id because it is unchecked', () => {
-                let people = {"staff_ids": [], "committee_ids": []};
-                var data = vm.service.retrieveMdf();
-                data.then( (promise) => {
-                    var data = promise.data.staff_members;
-                    data[0].receives_money_distribution_form = false;
-                    var val = vm.getIds(data, people, 'staff_ids');
-                    expect(val.staff_ids).toEqual([]);
-                });
-            });
+            var val = vm.getIds(sourceObject, people, 'committee_ids');
+            expect(val.committee_ids).toEqual([169]);
         });
 
+        it('expect getIds to contain two committee_member id because they are checked', () => {
+            let people = {"staff_ids": [], "committee_ids": []};
+            let sourceObject = [
+                {"id":169, "receives_money_distribution_form": true},
+                {"id":170, "receives_money_distribution_form": true}
+            ];
+
+            var val = vm.getIds(sourceObject, people, 'committee_ids');
+            expect(val.committee_ids).toEqual([169, 170]);
+        });
+
+        it('expect getIds to not contain committee_member id because it is unchecked', () => {
+            let people = {"staff_ids": [], "committee_ids": []};
+            let sourceObject = [{"id":169, "receives_money_distribution_form": false}];
+
+            var val = vm.getIds(sourceObject, people, 'committee_ids');
+            expect(val.committee_ids).toEqual([]);
+        });
+
+        it('expect getIds to not contain staff member id because it is unchecked', () => {
+            let people = {"staff_ids": [], "committee_ids": []};
+            let sourceObject = [{"id":169, "receives_money_distribution_form": false}];
+
+            var val = vm.getIds(sourceObject, people, 'staff_ids');
+            expect(val.staff_ids).toEqual([]);
+        });
     });
 });

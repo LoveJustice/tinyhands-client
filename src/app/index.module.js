@@ -8,6 +8,7 @@ import dashboardModule from './dashboard/dashboard.module';
 import loginModule from './login/login.module';
 import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
+import PhotoExportModule from './components/photo-export/photo-export.module';
 /* jshint ignore:end */
 
 import config from './index.config';
@@ -19,7 +20,7 @@ import NavbarDirective from './components/navbar/navbar.directive';
 import CsvExportDirective from './components/csv-export/csv-export.directive';
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResource', 'ngSanitize', 'ngTouch',
-    'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget', 'tinyhands.Dashboard', 'tinyhands.IRF', 'tinyhands.Login', 'tinyhands.VIF',
+    'tinyhands.Addresses', 'tinyhands.BorderStation', 'tinyhands.Budget', 'tinyhands.Dashboard', 'tinyhands.IRF', 'tinyhands.Login', 'tinyhands.VIF', 'tinyhands.PhotoExport',
     'ui.bootstrap', 'ui.router'])
     .constant('toastr', toastr)
     .constant('moment', moment)

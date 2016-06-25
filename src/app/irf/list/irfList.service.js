@@ -5,11 +5,11 @@ export default class IrfListService {
     }
 
     getIrfList(queryParameters) {
-        return this.service.get('api/irf/', this.transform(queryParameters));
+        return this.service.get('api/irf/', queryParameters);
     }
 
     getMoreIrfs(queryParameters) {
-        return this.service.get('api/irf/', this.transform(queryParameters));
+        return this.service.get('api/irf/', queryParameters);
     }
 
     deleteIrf(id){
@@ -17,20 +17,6 @@ export default class IrfListService {
     }
 
     irfExists(irfNumber) {
-        return $http.post('irfExists/' + irfNumber);
-    }
-
-    transform(queryParams) {
-        var queryParameters = angular.copy(queryParams);
-        if (queryParameters.reverse) {
-            queryParameters.ordering = '-' + queryParameters.ordering;
-        }
-        delete queryParameters.reverse;
-        var params = [];
-        Object.keys(queryParameters).forEach( (name) => {
-
-            params.push({"name": name, "value": queryParameters[name]});
-        })
-        return params;
+        return this.service.post('irfExists/' + irfNumber);
     }
 }

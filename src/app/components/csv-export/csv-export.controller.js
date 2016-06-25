@@ -1,4 +1,4 @@
-import constants from '../../constants'
+import constants from '../../constants';
 
 export default class CsvExportController {
 	constructor ($scope) {
@@ -12,7 +12,10 @@ export default class CsvExportController {
         var url;
 		switch (type) {
 			case 'irf':
-				url = 'data-entry/irfs/export/'
+				url = 'data-entry/irfs/export/';
+				break;
+			case 'vif':
+				url = 'data-entry/vifs/export/';
 				break;
 			default:
 		}

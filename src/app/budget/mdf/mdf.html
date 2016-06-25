@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row" id="mdf">
+
+    <div class="col-lg-6" >
+        <div class="row">
+            <h2 class="text-center col-lg-8">Money Distribution Form</h2>
+            <a style="margin-top: 20px; margin-bottom:25px;" ui-sref="budget({id: vm.stateParams.id})" class="btn btn-primary col-lg-3">Update Budget</a>
+        </div>
+
+        <!-- The Money Distribution Form PDF -->
+        <div ng-bind-html="vm.pdfFrame"></div>
+    </div>
+
+
+    <div class="col-lg-6">
+        <h2 class="text-center">Staff Email Recipients</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center" width="150px">Send Email</th>
+                    <th>Staff Name</th>
+                    <th>Staff Email</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="staff in vm.staff" ng-class="{'notReceiving': !staff.receives_money_distribution_form, 'receiving': staff.receives_money_distribution_form}">
+                <td class="text-center"><input type="checkbox" ng-model="staff.receives_money_distribution_form"></td>
+                <td>{{ staff.first_name }} {{ staff.last_name }}</td>
+                <td>{{ staff.email}}</td>
+            </tr>
+        </table>
+
+        <br/>
+
+        <h2 class="text-center">Committee Email Recipients</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center" width="150px">Send Email</th>
+                    <th>Member Name</th>
+                    <th>Member Email</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="member in vm.committeeMembers" ng-class="{'notReceiving': !member.receives_money_distribution_form, 'receiving': member.receives_money_distribution_form}">
+                <td class="text-center"><input type="checkbox" ng-model="member.receives_money_distribution_form"></td>
+                <td>{{ member.first_name }} {{ member.last_name }}</td>
+                <td>{{ member.email}}</td>
+            </tr>
+        </table>
+
+        <div class="row text-center">
+            <a type="button" id="sendEmails" style="margin-top: 50px"
+               class="btn btn-primary" value="Send to Selected Staff and Members"
+               ng-click="vm.sendEmails()">
+                  Send to Selected Staff and Members
+            </a>
+        </div>
+    </div>
+
+  </div>
+</div>

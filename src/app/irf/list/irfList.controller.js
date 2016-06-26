@@ -15,6 +15,8 @@ export default class IrfListController {
             "search": ''
         };
 
+        // TODO: Add authentication dom stuff to the controller for edit/view/delete buttons
+
         // If there was a search value provided in the url, set it
         if($stateParams) {
             this.queryParameters.search = $stateParams.search;

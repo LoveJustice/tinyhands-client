@@ -1,4 +1,4 @@
-import PhotoExportModalController from './photo-export-modal.controller';
+import CsvExportController from './csv-export.controller';
 
 describe('MDF Controller',() => {
     let vm,
@@ -7,7 +7,7 @@ describe('MDF Controller',() => {
     beforeEach(inject(() => {
         $scope = {"type": "", "buttonText": ""};
 
-        vm = new PhotoExportModalController($scope);
+        vm = new CsvExportController($scope);
     }));
 
     describe('function typeToUrl', () => {

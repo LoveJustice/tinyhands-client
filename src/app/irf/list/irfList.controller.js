@@ -1,9 +1,10 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, $stateParams, $timeout) {
+    constructor(IrfListService, SessionService, $stateParams, $timeout, $window) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
         this.timeout = $timeout;
+        this.window = $window;
 
         this.timer = {};
         this.irfs = [];
@@ -14,8 +15,6 @@ export default class IrfListController {
             "ordering": 'irf_number',
             "search": ''
         };
-
-        // TODO: Add authentication dom stuff to the controller for edit/view/delete buttons
 
         // If there was a search value provided in the url, set it
         if($stateParams) {
@@ -38,7 +37,11 @@ export default class IrfListController {
     }
 
     extractPage(url) {
-        return url.slice(url.indexOf('page=')).split('&')[0].split('=')[1];
+        try {
+            return url.slice(url.indexOf('page=')).split('&')[0].split('=')[1];
+        } catch (e) {
+            return 0;
+        }
     }
 
     searchIrfs() {
@@ -73,13 +76,26 @@ export default class IrfListController {
     showMoreIrfs() {
         var params = angular.copy(this.queryParameters);
         params.page = this.nextPage;
-        this.service.getMoreIrfs(params).then( (promise) => {
+        this.service.getMoreIrfs(this.transform(params)).then( (promise) => {
             this.irfs = this.irfs.concat(promise.data.results);
             this.nextPage = this.extractPage(promise.data.next);
         });
     }
 
-    deleteIrf(id) {
-        this.service.deleteIrf(id);
+    deleteIrf(irf, index) {
+        if (irf.confirmedDelete) {
+            this.service.deleteIrf(irf.id).then(
+                () => {
+                    this.window.toastr.success("Successfully Deleted IRF!");
+                    this.irfs.splice(index, 1);
+                },
+                () => {
+                    this.window.toastr.error("Unable to Delete IRF!");
+                }
+            );
+        }
+        else {
+            irf.confirmedDelete = true;
+        }
     }
 }

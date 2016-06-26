@@ -96,6 +96,10 @@ describe('IRF List Controller',() => {
             var val = vm.extractPage('http://tinyhandsdreamsuite.org/api/irf/?page=6&ordering=irf_number');
             expect(val).toBe('6');
         });
+        it('expect it to extract the page number so it can load the next page', () => {
+            var val = vm.extractPage(null);
+            expect(val).toBe(0);
+        });
     });
 
     describe('function getSortIcon', () => {

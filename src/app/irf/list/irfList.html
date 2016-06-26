@@ -6,10 +6,10 @@
         </div>
 
         <div class="pull-right"><br>
-            <photoexport></photoexport>
-            <csvexport type="irf" buttontext="Export All IRFs to CSV"></csvexport>
+            <photoexport ng-if="irfListCtrl.session.user.permission_irf_view == true"></photoexport>
+            <csvexport type="irf" buttontext="Export All IRFs to CSV" ng-if="irfListCtrl.session.user.permission_irf_view == true"></csvexport>
             &nbsp;
-            <button class="btn btn-success pull-right" ui-sref="irf">
+            <button ng-if="irfListCtrl.session.user.permission_irf_add == true" class="btn btn-success pull-right" ui-sref="irf">
                 Input A New IRF
             </button>
         </div>
@@ -88,7 +88,7 @@
                 <td class="hidden-xs">{{ irf.date_time_last_updated | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
                 <td ng-if="irfListCtrl.session.user.permission_irf_view == true"><a class="btn btn-sm btn-primary" ng-href="{{irf.view_url}}">View</a></td>
                 <td ng-if="irfListCtrl.session.user.permission_irf_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_irf_button" ng-href="{{irf.edit_url}}">Edit</a></td>
-                <td ng-if="irfListCtrl.session.user.permission_irf_delete == true"><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteIrf(irf.id)">
+                <td ng-if="irfListCtrl.session.user.permission_irf_delete == true"><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteIrf(irf, $index)">
                     {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>
             <tr ng-show="irfListCtrl.irfs.length == 0">
@@ -98,7 +98,7 @@
     </table>
 
     <div class="row text-center">
-        <button ng-disabled="!irfListCtrl.nextPage" ng-click="irfListCtrl.showMoreIrfs()" class="btn btn-primary">
+        <button ng-disabled="!irfListCtrl.nextPage" ng-click="irfListCtrl.showMoreIrfs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
             Load more results
         </button>
     </div>

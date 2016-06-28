@@ -6,6 +6,9 @@ export default class VifListController {
         this.timeout = $timeout;
         this.window = $window;
 
+
+        this.timeZoneDifference ="+0545";
+
         this.timer = {};
         this.vifs = [];
         this.nextPage = "";

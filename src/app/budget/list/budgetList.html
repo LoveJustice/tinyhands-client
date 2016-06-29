@@ -51,7 +51,7 @@
         <td>
           <a ui-sref="budget({id:form.id, isViewing:true})" class="btn btn-sm btn-primary">View</a>
           <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary">Edit</a>
-          <a ui-sref="#" class="btn btn-sm btn-primary">Resend MDF</a>
+          <a ui-sref="mdf({id: form.id})" class="btn btn-sm btn-primary">Resend MDF</a>
 
           <button ng-if="budgetListCtrl.session.user.permission_border_stations_delete" class="btn btn-sm btn-danger animated" ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
           ng-class="{fadeIn: form.hover && !form.budgetRemoved, fadeOut: !form.hover, pulse: form.budgetRemoved}">

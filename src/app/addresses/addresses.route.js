@@ -7,7 +7,8 @@ function addressesRouteConfig ($stateProvider) {
           controller: 'Address1Controller',
           controllerAs: 'vm',
           data: {
-            requireLogin: true
+            requireLogin: true,
+            permissions_required: ['permission_address2_manage']
           }
         })
         .state('address2', {
@@ -16,7 +17,8 @@ function addressesRouteConfig ($stateProvider) {
           controller: 'Address2Controller',
           controllerAs: 'vm',
           data: {
-            requireLogin: true
+            requireLogin: true,
+            permissions_required: ['permission_address2_manage']
           }
         });
 }

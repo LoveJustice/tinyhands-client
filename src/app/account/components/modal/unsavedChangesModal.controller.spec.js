@@ -1,8 +1,8 @@
 import UnsavedChangesModalController from './unsavedChangesModal.controller';
 
 describe('UnsavedChangesModalController', () => {
-    let controller
-        $uibModalInstance,
+    let controller,
+        $uibModalInstance;
 
     beforeEach(() => {
         $uibModalInstance = jasmine.createSpyObj('$uibModalInstance', ['close', 'dismiss']);

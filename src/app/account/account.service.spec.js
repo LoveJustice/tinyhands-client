@@ -1,94 +1,105 @@
 import AccountService from './account.service'
 
 describe ('AccountService', () => {
-    let service;
+    let service, 
+        mockBaseSerivce;
 
     let id=123,
     data = {id: 'dataId'},
     activationKey = 'abc';
 
-    beforeEach(inject(($http) =>{
-        service = new AccountService($http);
-    }));
+    beforeEach( () => {
+        mockBaseSerivce = jasmine.createSpyObj('mockBaseSerivce', ['get', 'post', 'put', 'delete']);
+        service = new AccountService(mockBaseSerivce);
+    });
 
-    describe('function getAccounts', () =>{
-        let url = 'api/account/all/';
-        it(`should get called with ${url}`, () =>{
-            spyOn(service, 'get');
+    describe('getAccounts', () =>{
+        it('should call BaseService.get with correct url', () =>{
+            let url = 'api/account/all/';
+                    
             service.getAccounts();
-            expect(service.get).toHaveBeenCalledWith(url);
+            
+            expect(mockBaseSerivce.get).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function getAccount', () =>{
-        let url = `api/account/${id}/`;
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'get');
+    describe('getAccount', () =>{
+        it('should call BaseService.get with correct url', () => {
+            let url = `api/account/${id}/`;
+            
             service.getAccount(id);
-            expect(service.get).toHaveBeenCalledWith(url);
+
+            expect(mockBaseSerivce.get).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function getMe', () => {
-        let url = 'api/me/';
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'get');
+    describe('getMe', () => {
+        it('should call BaseService.get with correct url', () => {
+            let url = 'api/me/';
+            
             service.getMe();
-            expect(service.get).toHaveBeenCalledWith(url);
+    
+            expect(mockBaseSerivce.get).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function update', () =>{
-        let url = `api/account/${id}/`;
-        it(`should get called with ${url} and ${data}`, () => {
-            spyOn(service, 'put');
+    describe('update', () =>{
+        it('should call BaseService.put with correct url and data', () => {
+            let url = `api/account/${id}/`;
+            
             service.update(id, data);
-            expect(service.put).toHaveBeenCalledWith(url, data);
+    
+            expect(mockBaseSerivce.put).toHaveBeenCalledWith(url, data);
         });
     });
 
-    describe('function activateAccount', () => {
-        let url = `api/account/activate/${activationKey}/`;
-        it(`should get called with ${url} and ${activationKey}`, () => {
-            spyOn(service, 'get');
+    describe('activateAccount', () => {
+        it('should call BaseService.get with correct url', () => {
+            let url = `api/account/activate/${activationKey}/`;
+            
             service.activateAccount(activationKey);
-            expect(service.get).toHaveBeenCalledWith(url);
+            
+            expect(mockBaseSerivce.get).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function create', () =>{
-        let url = 'api/account/';
-        it(`should get called with ${url} and ${data}`, () => {
-            spyOn(service, 'post');
+    describe('create', () =>{
+        it('should call BaseService.post with correct url and data', () => {
+            let url = 'api/account/';
+            
             service.create(data);
-            expect(service.post).toHaveBeenCalledWith(url, data);
+
+            expect(mockBaseSerivce.post).toHaveBeenCalledWith(url, data);
         });
     });
 
-    describe('function resendActivationEmail', () => {
-        let url = `api/account/resend-activation-email/${id}/`;
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'post');
+    describe('resendActivationEmail', () => {
+        it('should call BaseService.post with correct url', () => {
+            let url = `api/account/resend-activation-email/${id}/`;
+            
             service.resendActivationEmail(id);
-            expect(service.post).toHaveBeenCalledWith(url);
+    
+            expect(mockBaseSerivce.post).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function activateAccountPassword', () => {
-        let url = `api/account/activate/${activationKey}/`;
-        it(`should get called with ${url} and ${data}`, () => {
-            spyOn(service, 'post');
+    describe('activateAccountPassword', () => {
+        it('should call BaseService.post with correct url and data', () => {
+            let url = `api/account/activate/${activationKey}/`;
+            
             service.activateAccountPassword(activationKey, data);
-            expect(service.post).toHaveBeenCalledWith(url, data);
+    
+            expect(mockBaseSerivce.post).toHaveBeenCalledWith(url, data);
         });
     });
 
-    describe('function destroy', () => {
-        let url = `api/account/${id}/`;
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'delete');
+    describe('destroy', () => {
+        it('should call BaseService.delete with correct url', () => {
+            let url = `api/account/${id}/`;
+            
             service.destroy(id);
-            expect(service.delete).toHaveBeenCalledWith(url);
+    
+            expect(mockBaseSerivce.delete).toHaveBeenCalledWith(url);
         });
     });
 

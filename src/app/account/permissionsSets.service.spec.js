@@ -1,57 +1,64 @@
 import PermissionsSetsService from './permissionsSets.service'
 
 describe('PermissionsSetsService', () => {
-    let service;
+    let service,
+        mockBaseService;
 
     let id = 234,
     data = {id: 'dataId'};
 
-    beforeEach(inject(($http) => {
-        service = new PermissionsSetsService($http);
-    }));
+    beforeEach(() => {
+        mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'post', 'put', 'delete']);
+        service = new PermissionsSetsService(mockBaseService);
+    });
 
-    describe('function getPermissions', () => {
-        let url = 'api/defaultPermissionsSet/';
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'get');
+    describe('getPermissions', () => {
+        it('should call BaseService.get with correct url', () => {
+            let url = 'api/defaultPermissionsSet/';
+            
             service.getPermissions();
-            expect(service.get).toHaveBeenCalledWith(url);
+
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function getPermission', () => {
-        let url = `api/defaultPermissionsSet/${id}/`;
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'get');
+    describe('getPermission', () => {
+        it('should call BaseService.get with correct url', () => {
+            let url = `api/defaultPermissionsSet/${id}/`;
+            
             service.getPermission(id);
-            expect(service.get).toHaveBeenCalledWith(url);
+
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
         });
     });
 
-    describe('function create', () => {
-        let url = 'api/defaultPermissionsSet/';
-        it(`should get called with ${url} and ${data}`, () => {
-            spyOn(service, 'post');
+    describe('create', () => {
+        it('should call BaseService.post with correct url and data', () => {
+            let url = 'api/defaultPermissionsSet/';
+            
             service.create(data);
-            expect(service.post).toHaveBeenCalledWith(url, data);
+    
+            expect(mockBaseService.post).toHaveBeenCalledWith(url, data);
         });
     });
 
-    describe('function update', () => {
-        let url = `api/defaultPermissionsSet/${id}/`;
-        it(`should get called with ${url} and ${data}`, () => {
-            spyOn(service, 'put');
+    describe('update', () => {
+        it('should call BaseService.put with correct url and data', () => {
+            let url = `api/defaultPermissionsSet/${id}/`;
+
             service.update(id, data);
-            expect(service.put).toHaveBeenCalledWith(url, data);
+
+            expect(mockBaseService.put).toHaveBeenCalledWith(url, data);
         });
     });
 
-    describe('function destroy', () => {
-        let url = `api/defaultPermissionsSet/${id}/`;
-        it(`should get called with ${url}`, () => {
-            spyOn(service, 'delete');
+    describe('destroy', () => {
+        it('should call BaseService.delete with correct url', () => {
+            let url = `api/defaultPermissionsSet/${id}/`;
+            
             service.destroy(id);
-            expect(service.delete).toHaveBeenCalledWith(url);
+
+            expect(mockBaseService.delete).toHaveBeenCalledWith(url);
         });
     });
 });

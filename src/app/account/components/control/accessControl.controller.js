@@ -1,14 +1,16 @@
 import ChangesArray from '../../changesArray';
 export default class AccessControlController {
-    constructor(AccountService, PermissionsSetsService, $timeout, $q, $state, $uibModal, $scope) {
+    constructor(AccountService, PermissionsSetsService, $q, $state, $uibModal, $scope, toastr) {
         this.AccountService = AccountService;
         this.PermissionsSetsService = PermissionsSetsService;
-        this.$timeout = $timeout;
         this.$q = $q;
         this.$state = $state;
         this.$uibModal = $uibModal;
         this.$scope = $scope;
+        this.toastr = toastr;
+        
         this.accounts = {};
+        this.saveButtonClicked = false;
         
         this.getAccounts();
         this.getPermissions();
@@ -104,20 +106,16 @@ export default class AccessControlController {
             this.accounts.saveChanges();
         }, () => {
             this.saveButtonClicked = false;
-            window.toastr.error("One or more Account Settings could not be saved");
+            this.toastr.error("One or more Account Settings could not be saved");
         });
         
     }
     
     updateAccount(account) {
-        return this.AccountService.update(account.id, account).then(() => {
-            
-        }, () => {
-            
-        });
+        return this.AccountService.update(account.id, account);
     }
     
-     openUnsavedChangesModal(toState = null) {
+    openUnsavedChangesModal(toState = null) {
         var selection = this.$uibModal.open({
             templateUrl:'app/account/components/modal/unsavedChangesModal.html',
             controller: 'UnsavedChangesModalController',

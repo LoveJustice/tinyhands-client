@@ -72,12 +72,26 @@ describe('AccessDefaultsController', () => {
          });
      });
      
+     describe('when saveButtonClicked is false and permissions has no changes', () => {
+             it('should return "Saved"', () => {
+                 expect(controller.saveButtonText).toEqual('Saved');
+             });
+         });
+     
      describe('saveButtonStyle', () => {
          describe('when saveButtonClicked', () => {
              it('should return "btn-success"', () => {
                  controller.saveButtonClicked = true;
                  
                  expect(controller.saveButtonStyle).toEqual('btn-success');
+             });
+         });
+         
+         describe('when saveButtonClicked is false', () => {
+             it('should return "btn-primary"', () => {
+                 controller.saveButtonClicked = false;
+                 
+                 expect(controller.saveButtonStyle).toEqual('btn-primary');
              });
          });
      });

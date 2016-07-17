@@ -15,7 +15,7 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat="account in accountListCtrl.accounts.local | orderBy:vm.sortColumn:vm.reverse" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
+        <tr ng-repeat="account in accountListCtrl.accounts | orderBy:vm.sortColumn:vm.reverse" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
           <td>{{account.email}}</td>
           <td class="name">{{account.first_name}}</td>
           <td class="name">{{account.last_name}}</td>
@@ -28,11 +28,16 @@
           <td>
             <button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
           </td>
-          <td><button type="button" class="btn btn-sm btn-danger animated pull-right"
-                      ng-click="accountListCtrl.deleteAccount(account)"
-                      ng-show="accountListCtrl.currentUser.id !== account.id"
-                      ng-class="{fadeIn: account.hover && account.accountdelete, fadeOut: !account.hover, pulse: account.accountdelete}">
-                {{account.accountdelete ? "Are you sure" : "Delete Account"}}</button></td>
+          <td>
+              <confirm-button 
+                        class="btn btn-sm btn-danger animated pull-left"
+                        ng-disabled="accountListCtrl.currentUser.id == account.id"
+                        ng-show="accountListCtrl.currentUser.id !== account.id"
+                        ng-class="{fadeIn: account.hover, fadeOut: !account.hover}"
+                        text="Delete Account"
+                        confirm-text="Are you sure?"
+                        on-confirm="accountListCtrl.deleteAccount(account)"/>
+            </td>
         </tr>
       </tbody>
     </table>

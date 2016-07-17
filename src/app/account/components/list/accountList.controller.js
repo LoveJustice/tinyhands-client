@@ -1,12 +1,10 @@
 export default class AccountListController {
-    constructor(AccountService) {
+    constructor(AccountService, toastr) {
         'ngInject';
         this.AccountService = AccountService;
+        this.toastr = toastr;
         
-        this.accounts = {
-            local: [],
-            saved: []
-        };
+        this.accounts = [];
         
         this.getAccounts();
         this.getCurrentUser();
@@ -20,10 +18,7 @@ export default class AccountListController {
     
     getAccounts(){
         this.AccountService.getAccounts().then((result) => {
-            this.accounts.local = result.data;
-            // Creates a deep copy of accounts.local
-            this.accounts.saved = angular.copy(this.accounts.local);
-            // accounts.local is compared against accounts.saved to check for unsaved changes.
+            this.accounts = result.data;
         });
     }
     
@@ -32,10 +27,10 @@ export default class AccountListController {
         this.AccountService.resendActivationEmail(accountID)
             .then(
                 () => {
-                    window.toastr.success("Email Sent!");
+                    this.toastr.success("Email Sent!");
                 },
                 () => {
-                    window.toastr.error("Email Not Sent!");
+                    this.toastr.error("Email Not Sent!");
                 }
         );
     }
@@ -44,18 +39,10 @@ export default class AccountListController {
     //Account List Tab
     deleteAccount(account){
         if(this.currentUser.id !== account.id){
-            if(account.accountdelete){
-                this.AccountService.destroy(account.id).then(() =>{
-                    window.toastr.success("Account Successfully Deleted");
-                    this.AccountService.getAccounts().then((response) =>{
-                        this.accounts.local = response.data;
-                        this.accounts.saved = angular.copy(this.accounts.local);
-                    });
-                });
-            }
-            else{
-                account.accountdelete = true;
-            }
+            this.AccountService.destroy(account.id).then(() =>{
+                this.toastr.success("Account Successfully Deleted");
+                this.getAccounts();
+            });
         }
     }
 }

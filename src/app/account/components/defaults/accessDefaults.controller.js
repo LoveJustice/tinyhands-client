@@ -37,7 +37,7 @@ export default class AccessDefaultsController {
     
     getPermissions(){
         this.PermissionsSetsService.getPermissions().then((result) => {
-            this.permissions = new ChangesArray(result.data.results, (set1,set2) => {
+            this.permissions = new ChangesArray(result.data.results, angular.copy, (set1,set2) => {
                 if(set1.id !== set2.id || set1.name !== set2.name) {
                     return false;
                 }

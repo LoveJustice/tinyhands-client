@@ -1,7 +1,8 @@
 export default class ChangesArray {
-    constructor(objectsArray, comparer) {
+    constructor(objectsArray, copier, comparer) {
+        this._copier = copier;
         this._local = objectsArray;
-        this._original = angular.copy(objectsArray);
+        this._original = this._copier(objectsArray);
         this._comparer = comparer;
     }
     
@@ -21,7 +22,7 @@ export default class ChangesArray {
     
     get updatedItems() {
         return this._local.filter((item, index) => { 
-            return item._ca_is_new !== true && !this.compare(index);
+            return item._ca_is_new !== true && !this._compare(index);
         });
     }
     
@@ -30,7 +31,7 @@ export default class ChangesArray {
     }
     
     get hasChanges() {
-        return this.checkForChanges();
+        return this._checkForChanges();
     }
     
     add(object) {
@@ -52,21 +53,21 @@ export default class ChangesArray {
                 item._ca_is_new = false;
                 return item;
             });
-        this._original = angular.copy(this._local);
+        this._original = this._copier(this._local);
     }
     
     discardChanges() {
-        this._local = angular.copy(this._original);
+        this._local = this._copier(this._original);
     }
     
-    checkForChanges() {
+    _checkForChanges() {
         if(this._local.length !== this._original.length) {
             return true;
         } else if( this.removedItems.length > 0){
             return true;
         } else {
             for(let i = 0; i < this._local.length; i++) {
-                let areDifferences = !this.compare(i);
+                let areDifferences = !this._compare(i);
                 if(areDifferences) {
                     return true;
                 }
@@ -75,7 +76,7 @@ export default class ChangesArray {
         }
     }
     
-    compare(index) {
+    _compare(index) {
         return this._comparer(this._local[index], this._original[index]);
     }
         

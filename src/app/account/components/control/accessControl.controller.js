@@ -46,7 +46,7 @@ export default class AccessControlController {
     
     getAccounts(){
         this.AccountService.getAccounts().then((response) => {
-            this.accounts = new ChangesArray(response.data, (account1, account2) => {
+            this.accounts = new ChangesArray(response.data, angular.copy, (account1, account2) => {
                 if(account1.user_designation !== account2.user_designation) {
                     return false;
                 }

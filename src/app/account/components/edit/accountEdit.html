@@ -28,7 +28,7 @@
                 <div class="col-md-12 form-group" ng-class="{'has-error': accountEditCtrl.userDesignationError}">
                     <label ng-class="{'text-danger': accountEditCtrl.userDesignationError}">User Designation</label>
                     <select ng-model="accountEditCtrl.account.user_designation"
-                            ng-options="set.id as set.name for set in accountEditCtrl.permissions.local"
+                            ng-options="set.id as set.name for set in accountEditCtrl.permissions"
                             ng-change="accountEditCtrl.onUserDesignationChanged(accountEditCtrl.account.user_designation)"
                             class="form-control">
                         <option value="" selected>-- Please select --</option>
@@ -215,8 +215,8 @@
             <br/>
             <div class="row">
                 <div class="col-lg-12">
-                    <button class="clear btn {{accountEditCtrl.accountButtonInfo.accountButtonColor}} pull-right btn-lg col-sm-4 col-md-4 col-lg-4" ng-click="accountEditCtrl.updateOrCreate()">
-                        {{accountEditCtrl.accountButtonInfo.accountButtonText}}
+                    <button class="clear btn {{accountEditCtrl.saveButtonStyle}} pull-right btn-lg col-sm-4 col-md-4 col-lg-4" ng-click="accountEditCtrl.updateOrCreate()">
+                        {{accountEditCtrl.saveButtonText}}
                     </button>
                 </div>
             </div>

@@ -1,88 +1,69 @@
-import Constants from '../../constants';
 export default class AccountEditController {
-    constructor($state, $stateParams, $timeout, AccountService, PermissionsSetsService) {
+    constructor($state, $stateParams, AccountService, PermissionsSetsService, toastr) {
         'ngInject';
         this.$state = $state;
         this.AccountService = AccountService;
         this.PermissionsSetsService = PermissionsSetsService;
-        this.$timeout = $timeout;
+        this.toastr = toastr;
+        this.account = null;        
+        this.resetErrors();        
         if($stateParams.id !== 'create') {
+            this.isEditingAccount = true;
             this.retrieveAccount($stateParams.id);
         }else {
-            this.accountCreate();
+            this.isEditingAccount = false;            
+            this.account = {};
         }
-        
+        this.permissions = [];
+
+        this.saveButtonClicked = false;
+
         this.getPermissions();
-        
-        this.permissions = {
-            local: [],
-            saved: []
-        };
-        
-        this.accountButtonInfo = {
-            accountButtonText: "",
-            accountButtonColor: Constants.createOrUpdateButton.inputColor
-        };
     }
+
+    get title() {
+        if(this.isEditingAccount && this.account) {
+            return `Edit ${this.account.first_name} ${this.account.last_name}'s Account`;
+        } else if(this.isEditingAccount) {
+            return '';
+        } else {
+            return 'Create Account';
+        }
+    }
+
+    get saveButtonText() {
+        if(this.isEditingAccount && this.saveButtonClicked) {
+            return 'Updating';
+        } else if(this.isEditingAccount) {
+            return 'Update';
+        } else if(this.saveButtonClicked) {
+            return 'Creating';
+        } else {
+            return 'Create';
+        }
+    }
+
+    get saveButtonStyle() {
+        if(this.saveButtonClicked) {
+            return 'btn-success';
+        } else {
+            return 'btn-primary';
+        }
+    }
+
     getPermissions(){
         this.PermissionsSetsService.getPermissions().then((result) => {
-            this.permissions.local = result.data.results;
-            // Creates a deep copy of permissions.local
-            this.permissions.saved = angular.copy(this.permissions.local);
-            // permissions.local is compared against permissions.saved to check for unsaved changes.
+            this.permissions = result.data.results;
         });
     }
     
     retrieveAccount(id){
         this.AccountService.getAccount(id).then((result) => {
-            this.accountEdit(result.data);
+            this.account = result.data;
         }, (error) => {
             if (error.status === 404){
-                this.accountNotFound(id);
             }
         });
-    }
-
-    accountEdit(account) {
-        this.account = account;
-        this.editing = true;
-        this.resetErrors();
-        this.getUpdateButtonText();
-        this.title = `Edit ${this.account.first_name} ${this.account.last_name}'s Account`;
-
-        //Change to the Edit User State
-    }
-
-    accountCreate(){
-        this.editing = false;
-        this.resetErrors();
-        this.getUpdateButtonText();
-        this.title = 'Create Account';
-        this.account = {};
-    }
-
-    accountNotFound(id){
-        this.idNotFound = id;
-    }
-    
-     resetErrors() {
-        this.emailError = '';
-        this.userDesignationError = '';
-    }
-    
-     getUpdateButtonText() {
-        if(this.editing) {
-            this.updateAccountButton(Constants.createOrUpdateButton.updateText, Constants.createOrUpdateButton.inputColor);
-        } else {
-            this.updateAccountButton(Constants.createOrUpdateButton.createText, Constants.createOrUpdateButton.inputColor);
-        }
-    }
-    
-    updateAccountButton(text, color, time) {
-        this.$timeout(() => {
-            this.accountButtonInfo.accountButtonText = text;
-            this.accountButtonInfo.accountButtonColor = color;
-        }, time);
     }
     
     onUserDesignationChanged(permissionSetId) {
@@ -95,57 +76,56 @@ export default class AccountEditController {
     
     applyDesignationToAccount(account, designation) {
         var designationKeys = Object.keys(designation);
-        designationKeys.forEach( function(attribute) {
+        designationKeys.forEach((attribute) => {
             if (attribute.substring(0,10) === "permission") {
                 account[attribute] = designation[attribute];
             }
         });
     }
     
-     updateOrCreate() {
-        if(!this.checkFields()){
+    updateOrCreate() {
+        if(!this.checkRequiredFieldsHaveValue()){
             return;
         }
+        this.saveButtonClicked = true;
         var call;
-        if(this.editing) {
-            this.updateAccountButton(Constants.createOrUpdateButton.updatingText, Constants.createOrUpdateButton.updatingOrCreatingColor);
+        if(this.isEditingAccount) {
             call = this.AccountService.update(this.account.id, this.account);
         }else {
-            this.updateAccountButton(Constants.createOrUpdateButton.creatingText, Constants.createOrUpdateButton.updatingOrCreatingColor);
             call= this.AccountService.create(this.account);
         }
         call.then(() => {
-            this.$timeout(() => {
-                if(this.editing){
-                    window.toastr.success("Account Updated");
-                } else {
-                    window.toastr.success("Account Created");
-                }
-                this.$state.go('accounts.list');
-            }, 300);
+            if(this.isEditingAccount){
+                this.toastr.success("Account Updated");
+            } else {
+                this.toastr.success("Account Created");
+            }
+            this.saveButtonClicked = false;
+            this.$state.go('accounts.list');
         }, (err) => {
-            this.$timeout(() => {
-                if (err.data.email) {
-                    this.emailError = err.data.email[0];
-                    this.getUpdateButtonText();
-                }
-            }, 300);
+            this.saveButtonClicked = false;
+            if (err.data.email) {
+                this.emailError = err.data.email[0];
+            }
         });
     }
 
-    //Account Edit Tab
-    checkFields() {
-        this.emailError = '';
-        this.userDesignationError = '';
+    checkRequiredFieldsHaveValue() {
+        this.resetErrors();
+        let areRequiredFieldsFilledIn = true;
         if(!this.account.email) {
-            this.emailError = Constants.errors.emailIsRequired;
+            this.emailError = 'An email is required.';
+            areRequiredFieldsFilledIn = false;
         }
         if(!this.account.user_designation){
-            this.userDesignationError = Constants.errors.aUserDesignationIsRequired;
+            this.userDesignationError = 'A user designation is required.';
+            areRequiredFieldsFilledIn = false;            
         }
-        if(this.emailError === Constants.errors.emailIsRequired || this.userDesignationError === Constants.errors.aUserDesignationIsRequired) {
-            return false;
-        }
-        return true;
+        return areRequiredFieldsFilledIn;
+    }
+
+    resetErrors() {
+        this.emailError = '';
+        this.userDesignationError = '';
     }
 }

@@ -16,7 +16,8 @@ function budgetRouteConfig ($stateProvider) {
           controller: 'BudgetListController',
           controllerAs: 'budgetListCtrl',
           data: {
-            requireLogin: true
+            requireLogin: true,
+            permissions_required: ['permission_budget_manage']
           }
         })
         .state('mdf', {

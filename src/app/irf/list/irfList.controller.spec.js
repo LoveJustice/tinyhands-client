@@ -36,17 +36,16 @@ describe('IRF List Controller',() => {
 
         vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout);
     }));
-    //
+
     describe('function constructor', () => {
         it('expect the search parameter to be set', () => {
             expect(vm.queryParameters.search).toBe("BHD");
         });
 
-        // TODO: Ask Andrew if this is the best way to do this
         it('expect the search parameter to be set', () => {
             $stateParams = {};
             vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout);
-            expect(vm.queryParameters.search).toBe();
+            expect(vm.queryParameters.search).not.toBe(null);
         });
     });
 
@@ -96,7 +95,7 @@ describe('IRF List Controller',() => {
             var val = vm.extractPage('http://tinyhandsdreamsuite.org/api/irf/?page=6&ordering=irf_number');
             expect(val).toBe('6');
         });
-        it('expect it to extract the page number so it can load the next page', () => {
+        it('When a null is passed in, expect to return 0', () => {
             var val = vm.extractPage(null);
             expect(val).toBe(0);
         });

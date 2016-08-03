@@ -36,17 +36,16 @@ describe('VIF List Controller',() => {
 
         vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout);
     }));
-    //
+
     describe('function constructor', () => {
         it('expect the search parameter to be set', () => {
             expect(vm.queryParameters.search).toBe("BHD");
         });
 
-        // TODO: Ask Andrew if this is the best way to do this
         it('expect the search parameter to be set', () => {
             $stateParams = {};
             vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout);
-            expect(vm.queryParameters.search).toBe();
+            expect(vm.queryParameters.search).not.toBe(null);
         });
     });
 
@@ -96,7 +95,7 @@ describe('VIF List Controller',() => {
             var val = vm.extractPage('http://tinyhandsdreamsuite.org/api/vif/?page=6&ordering=vif_number');
             expect(val).toBe('6');
         });
-        it('expect it to extract the page number so it can load the next page', () => {
+        it('When a null is passed in, expect to return 0', () => {
             var val = vm.extractPage(null);
             expect(val).toBe(0);
         });

@@ -3,7 +3,7 @@ export default function GreenLightDirective() {
 
     let directive = {
       restrict: 'E',
-      template: '<div><img src="http://edwards.cse.taylor.edu/static/images/green-light.png"> <span class="text-success" ng-transclude></span></div>',
+      template: '<div><img src="/static/images/green-light.png"> <span class="text-success" ng-transclude></span></div>',
       transclude: true
     };
 

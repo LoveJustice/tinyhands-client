@@ -51,6 +51,14 @@ function accountRouteConfig ($stateProvider) {
         }
     })
 
+    .state('accountNotFound', {
+        url: '/account/notfound',
+        templateUrl: 'app/account/components/edit/accountNotFound.html',
+        data: {
+            requireLogin: true
+        }
+    })
+
     .state('account activate', {
         url: '/account/activate/:activation_key',
         templateUrl: 'app/account/components/activate/activateAccount.html',

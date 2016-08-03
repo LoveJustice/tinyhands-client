@@ -62,6 +62,7 @@ export default class AccountEditController {
             this.account = result.data;
         }, (error) => {
             if (error.status === 404){
+                this.$state.go('accountNotFound');
             }
         });
     }

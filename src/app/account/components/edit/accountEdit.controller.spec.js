@@ -21,6 +21,9 @@ describe('AccountEditController', () => {
         
         mockAccountService = jasmine.createSpyObj('AccountService', ['getAccount','create','update']);
         mockAccountService.getAccount.and.callFake((id) => {
+            if(id == 100) {
+                return $q.reject({status: 404});
+            }
             getAccountResponse = {
                 data: {
                     id,
@@ -168,8 +171,12 @@ describe('AccountEditController', () => {
             expect(controller.account).toEqual(getAccountResponse.data);
         });
 
-        it('should show error when account cannot be retrieved', () => {
-            
+        it('when account cannot be found should go to accountNotFound state', () => {
+            let id = 100;
+            controller.retrieveAccount(id);
+            rootScope.$apply();
+
+            expect(mockState.go).toHaveBeenCalledWith('accountNotFound');
         });
     });
 

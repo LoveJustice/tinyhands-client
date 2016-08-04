@@ -4,7 +4,6 @@ export default class AccountService{
         this.service = BaseService;
     }
 
-    // GETs
     getAccounts() {
         return this.service.get('api/account/all/');
     }
@@ -25,7 +24,6 @@ export default class AccountService{
         return this.service.get(`api/account/activate/${activationKey}/`);
     }
 
-    // POSTs
     create(data) {
         return this.service.post('api/account/', data);
     }
@@ -38,7 +36,6 @@ export default class AccountService{
         return this.service.post(`api/account/activate/${activationKey}/`, data);
     }
 
-    // DELETE
     destroy(id) {
         return this.service.delete(`api/account/${id}/`);
     }

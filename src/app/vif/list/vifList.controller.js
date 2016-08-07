@@ -1,16 +1,15 @@
 export default class VifListController {
-    constructor(VifListService, SessionService, $stateParams, $timeout, $window) {
+    constructor(VifListService, SessionService, $stateParams, $timeout, $window, toastr) {
         'ngInject';
         this.service = VifListService;
         this.session = SessionService;
         this.timeout = $timeout;
         this.window = $window;
-
-
-        this.timeZoneDifference ="+0545";
+        this.toastr = toastr;
 
         this.timer = {};
         this.vifs = [];
+        this.timeZoneDifference ="+0545";
         this.nextPage = "";
         this.queryParameters = {
             "page_size": 25,
@@ -89,11 +88,11 @@ export default class VifListController {
         if (vif.confirmedDelete) {
             this.service.deleteVif(vif.id).then(
                 () => {
-                    this.window.toastr.success("Successfully Deleted VIF!");
+                    this.toastr.success("Successfully Deleted VIF!");
                     this.vifs.splice(index, 1);
                 },
                 () => {
-                    this.window.toastr.error("Unable to Delete VIF!");
+                    this.toastr.error("Unable to Delete VIF!");
                 }
             );
         }

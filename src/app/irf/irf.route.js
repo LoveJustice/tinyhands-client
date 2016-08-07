@@ -1,7 +1,7 @@
 function IRFRoutes($stateProvider) {
   $stateProvider
     .state('irfList', {
-      url: '/irf',
+      url: '/irf?search',
       templateUrl: 'app/irf/list/irfList.html',
       controller: 'IrfListController',
       controllerAs: 'irfListCtrl',

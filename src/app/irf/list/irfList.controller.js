@@ -1,17 +1,17 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, $stateParams, $timeout, $window) {
+    constructor(IrfListService, SessionService, $stateParams, $timeout, $window, toastr) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
         this.timeout = $timeout;
         this.window = $window;
+        this.toastr = toastr;
 
-
-        this.timeZoneDifference ="+0545";
 
         this.timer = {};
         this.irfs = [];
         this.nextPage = "";
+        this.timeZoneDifference ="+0545";
         this.queryParameters = {
             "page_size": 25,
             "reverse": false,
@@ -89,11 +89,11 @@ export default class IrfListController {
         if (irf.confirmedDelete) {
             this.service.deleteIrf(irf.id).then(
                 () => {
-                    this.window.toastr.success("Successfully Deleted IRF!");
+                    this.toastr.success("Successfully Deleted IRF!");
                     this.irfs.splice(index, 1);
                 },
                 () => {
-                    this.window.toastr.error("Unable to Delete IRF!");
+                    this.toastr.error("Unable to Delete IRF!");
                 }
             );
         }

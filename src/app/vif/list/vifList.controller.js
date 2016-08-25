@@ -1,69 +1,103 @@
 export default class VifListController {
-    constructor(VifListService, SessionService) {
+    constructor(VifListService, SessionService, $stateParams, $timeout, $window, toastr) {
         'ngInject';
-
         this.service = VifListService;
         this.session = SessionService;
+        this.timeout = $timeout;
+        this.window = $window;
+        this.toastr = toastr;
 
-        this.numShowing = 25;
-        this.paginateBy = 25;
-        this.reverse = false;
-        this.searchValue = "";
-        this.showingVifs = [];
-        this.sort = 'vif_number';
+        this.timer = {};
+        this.vifs = [];
+        this.timeZoneDifference ="+0545";
+        this.nextPage = "";
+        this.queryParameters = {
+            "page_size": 25,
+            "reverse": false,
+            "ordering": 'vif_number',
+            "search": ''
+        };
 
+        // If there was a search value provided in the url, set it
+        if($stateParams) {
+            this.queryParameters.search = $stateParams.search;
+        }
         this.getVifList();
     }
 
-    deleteVif(id) {
-        this.service.deleteVif(id);
-    }
-
-    getCsvArray() {
-        this.getArray = [];
-        var i;
-        for (i = 0; i < this.showingVifs.length; i++) {
-            this.getArray.push(
-                {'Vif #': this.showingVifs[i].vif_number,
-                'Interviewer': this.showingVifs[i].interviewer,
-                '# of Victims': this.showingVifs[i].number_of_victims,
-                '# of Traffickers': this.showingVifs[i].number_of_traffickers,
-                'Date of Interview': this.showingVifs[i].date,
-                'Time Entered Into System': this.showingVifs[i].date_time_entered_into_system,
-                'Time Last Edited': this.showingVifs[i].date_time_last_updated}
-            );
+    transform(queryParams) {
+        var queryParameters = angular.copy(queryParams);
+        if (queryParameters.reverse) {
+            queryParameters.ordering = '-' + queryParameters.ordering;
         }
-        return this.getArray;
+        delete queryParameters.reverse;
+        var params = [];
+        Object.keys(queryParameters).forEach( (name) => {
+            params.push({"name": name, "value": queryParameters[name]});
+        });
+        return params;
     }
 
-    getCsvHeader() {
-        return ['Vif #', 'Interviewer', '# of Victims', '# of Traffickers', 'Date of Interview', 'Time Entered Into System', 'Time Last Edited'];
+    extractPage(url) {
+        try {
+            return url.slice(url.indexOf('page=')).split('&')[0].split('=')[1];
+        } catch (e) {
+            return 0;
+        }
+    }
+
+    searchVifs() {
+        this.timeout.cancel(this.timer);
+        this.timer = this.timeout( () => {
+            this.getVifList();
+        }, 500);
+    }
+
+    getSortIcon(column, reverse) {
+        if(reverse === 'reverse'){
+            return (column === this.queryParameters.ordering) && this.queryParameters.reverse;
+        }
+        return (column === this.queryParameters.ordering) && !this.queryParameters.reverse;
+    }
+
+    updateSort(column) {
+        if (column === this.queryParameters.ordering) {
+            this.queryParameters.reverse = ! this.queryParameters.reverse;
+        }
+        this.queryParameters.ordering = column;
+        this.getVifList();
     }
 
     getVifList() {
-        this.numShowing = this.paginateBy;
-
-        this.service.getVifList().then((response) => {
-            this.listOfVifs = response.data.results;
-            this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
+        this.service.getVifList(this.transform(this.queryParameters)).then( (promise) => {
+            this.vifs = promise.data.results;
+            this.nextPage = this.extractPage(promise.data.next);
         });
     }
 
-    getSort() {
-        if (this.reverse === false) {
-            return this.sort;
-        } else {
-            return "-" + this.sort;
-        }
-    }
-
     showMoreVifs() {
-        this.numShowing = parseInt(this.numShowing) + parseInt(this.paginateBy);
-        this.showingVifs = this.listOfVifs.slice(0, this.numShowing);
+        var params = angular.copy(this.queryParameters);
+        params.page = this.nextPage;
+        this.service.getMoreVifs(this.transform(params)).then( (promise) => {
+            this.vifs = this.vifs.concat(promise.data.results);
+            this.nextPage = this.extractPage(promise.data.next);
+        });
     }
 
-    sortCol(column) {
-        this.sort = column;
-        this.reverse = !this.reverse;
+    deleteVif(vif, index) {
+        if (vif.confirmedDelete) {
+            this.service.deleteVif(vif.id).then(
+                () => {
+                    this.toastr.success("Successfully Deleted VIF!");
+                    this.vifs.splice(index, 1);
+                },
+                () => {
+                    this.toastr.error("Unable to Delete VIF!");
+                }
+            );
+        }
+        else {
+            vif.confirmedDelete = true;
+        }
     }
 }

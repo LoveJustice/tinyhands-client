@@ -30,7 +30,7 @@ describe('MapController', () => {
       expect(vm.showAddress2Layer).toBe(true);
     });
 
-    let templateUrl = 'app/components/map/infoWindow.html';
+    let templateUrl = 'app/dashboard/map/infoWindow.html';
     it(`should set templateUrl to '${templateUrl}'`, () => {
       expect(vm.templateUrl).toEqual(templateUrl);
     });
@@ -81,9 +81,7 @@ describe('MapController', () => {
         vm.borderStationService.getBorderStations = () => { return {
           then: (f) => {f(response)}
         };};
-        vm.getBorderStationStaff = () => { return {
-          then: (f) => {f();}
-        };};
+
         // need to do this here because of read-only properties stuff
         spyOn(vm, 'setInfoWindowParams');
       });
@@ -92,24 +90,6 @@ describe('MapController', () => {
         vm.borderStations = [];
         vm.getBorderStations();
         expect(vm.borderStations).toEqual(response.data);
-      });
-
-      it('should call getBorderStationStaff with 1', () => {
-        spyOn(vm, 'getBorderStationStaff').and.callThrough();
-        vm.getBorderStations();
-        expect(vm.getBorderStationStaff).toHaveBeenCalledWith(1);
-      });
-
-      it('should call getBorderStationStaff with 2', () => {
-        spyOn(vm, 'getBorderStationStaff').and.callThrough();
-        vm.getBorderStations();
-        expect(vm.getBorderStationStaff).toHaveBeenCalledWith(2);
-      });
-
-      it('should call getBorderStationStaff with 3', () => {
-        spyOn(vm, 'getBorderStationStaff').and.callThrough();
-        vm.getBorderStations();
-        expect(vm.getBorderStationStaff).toHaveBeenCalledWith(3);
       });
 
       it('should call setInfoWindowParams with 1', () => {
@@ -127,24 +107,6 @@ describe('MapController', () => {
         expect(vm.setInfoWindowParams).toHaveBeenCalledWith(3);
       });
 
-    });
-
-  });
-
-  describe('function getBorderStationStaff', () => {
-
-    it('should set borderStation numberOfStaff to 0', () => {
-      let borderStation = {numberOfStaff: 1};
-      vm.getBorderStationStaff(borderStation);
-      expect(borderStation.numberOfStaff).toEqual(0);
-    });
-
-    it('should set borderStation numberOfStaff to 10', () => {
-      let borderStation = {numberOfStaff: 1};
-      let response = {data: {count: 10}};
-      vm.borderStationService.getStaff = () => {return {then: (f) => {f(response)}};};
-      vm.getBorderStationStaff(borderStation);
-      expect(borderStation.numberOfStaff).toEqual(10);
     });
 
   });
@@ -229,7 +191,8 @@ describe('MapController', () => {
         date_established: 123,
         has_shelter: true,
         id: 321,
-        numberOfStaff: 10,
+        number_of_staff: 10,
+        number_of_interceptions: 10,
         station_code: 100,
         station_name: 200
       };
@@ -249,7 +212,6 @@ describe('MapController', () => {
           ZoomControlStyle: {SMALL: 'qux'},
         },
         data = {
-          center: {latitude: nepal.lat, longitude: nepal.lon},
           control: {},
           options: {
             mapTypeControlOptions: {
@@ -263,7 +225,6 @@ describe('MapController', () => {
               style: maps.ZoomControlStyle.SMALL
             }
           },
-          zoom: 8
         };
 
     it(`should set data to ${data}`, () => {

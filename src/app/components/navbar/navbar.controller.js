@@ -1,3 +1,5 @@
+import constants from './../../constants.js';
+
 export default class NavbarController {
 	constructor ($interval, $scope, $timeout, BorderStationService, SessionService) {
 		'ngInject';
@@ -6,7 +8,7 @@ export default class NavbarController {
 		this.$timeout = $timeout;
 		this.borderStationService = BorderStationService;
 		this.session = SessionService;
-
+		this.constants = constants;
 
 		this.borderStations = [];
 		this.nepalTime = window.moment.tz("Asia/Kathmandu").format("MMMM Do YYYY, h:mm:ssA");

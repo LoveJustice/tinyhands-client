@@ -2,37 +2,42 @@
     <table class="table table-striped table-condensed">
       <thead>
         <tr>
-          <th>Email</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>User Designation</th>
-          <th>Date Created</th>
-          <th>Last Login</th>
+          <th ng-click="vm.sortColumn = 'email'; vm.reverse = ! vm.reverse;">Email</th>
+          <th ng-click="vm.sortColumn = 'first_name'; vm.reverse = ! vm.reverse;">First Name</th>
+          <th ng-click="vm.sortColumn = 'last_name'; vm.reverse = ! vm.reverse;">Last Name</th>
+          <th ng-click="vm.sortColumn = 'user_designation'; vm.reverse = ! vm.reverse;">User Designation</th>
+          <th ng-click="vm.sortColumn = 'date_joined'; vm.reverse = ! vm.reverse;">Date Created</th>
+          <th ng-click="vm.sortColumn = 'last_login'; vm.reverse = ! vm.reverse;">Last Login</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
-          <th id="create"><button class="btn btn-sm btn-success pull-right"  ng-click="accountCtrl.editUser('new')">Create Account</button></th>
+          <th id="create"><a class="btn btn-sm btn-success pull-right"  ui-sref="account({id: 'create'})">Create Account</a></th>
         </tr>
       </thead>
 
       <tbody>
-        <tr ng-repeat="account in accountCtrl.accounts.local" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
+        <tr ng-repeat="account in accountListCtrl.accounts | orderBy:vm.sortColumn:vm.reverse" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
           <td>{{account.email}}</td>
           <td class="name">{{account.first_name}}</td>
           <td class="name">{{account.last_name}}</td>
-          <td>{{account.user_designation}}</td>
+          <td>{{account.user_designation_name}}</td>
           <td>{{account.date_joined | date:"yyyy/MM/dd h:mm:ssa"}}</td>
           <td>{{account.last_login | date:"yyyy/MM/dd h:mm:ssa"}}</td>
           <td>
-            <a class="btn btn-sm btn-primary pull-right" id="edit" ng-click="accountCtrl.editUser(account.id)">Edit</a>
+            <a class="btn btn-sm btn-primary pull-right" id="edit" ui-sref="account({id: account.id})">Edit</a>
           </td>
           <td>
-            <button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="accountCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
+            <button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
           </td>
-          <td><button type="button" class="btn btn-sm btn-danger animated pull-right"
-                      ng-click="accountCtrl.deleteAccount(account)"
-                      ng-show="accountCtrl.currentuser.id != account.id"
-                      ng-class="{fadeIn: account.hover && account.accountdelete, fadeOut: !account.hover, pulse: account.accountdelete}">
-                {{account.accountdelete ? "Are you sure" : "Delete Account"}}</button></td>
+          <td>
+              <confirm-button 
+                        class="btn btn-sm btn-danger animated pull-left"
+                        ng-disabled="accountListCtrl.currentUser.id == account.id"
+                        ng-show="accountListCtrl.currentUser.id !== account.id"
+                        ng-class="{fadeIn: account.hover, fadeOut: !account.hover}"
+                        text="Delete Account"
+                        confirm-text="Are you sure?"
+                        on-confirm="accountListCtrl.deleteAccount(account)"/>
+            </td>
         </tr>
       </tbody>
     </table>

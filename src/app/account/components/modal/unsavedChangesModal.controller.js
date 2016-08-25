@@ -1,18 +1,17 @@
 export default class UnsavedChangesModalController {
-  constructor($scope, $uibModalInstance) {
+    constructor($uibModalInstance) {
+        this.$uibModalInstance = $uibModalInstance;
+    }
 
-    this.$uibModalInstance = $uibModalInstance;
-  }
+    saveAndContinue() {
+        this.$uibModalInstance.close(true);
+    }
 
-  saveAndContinue() {
-    this.$uibModalInstance.close('save');
-  };
+    discardAndContinue() {
+        this.$uibModalInstance.close(false);
+    }
 
-  discardAndContinue() {
-    this.$uibModalInstance.close('discard');
-  }
-
-  cancel() {
-    this.$uibModalInstance.dismiss("cancel");
-  };
+    cancel() {
+        this.$uibModalInstance.dismiss();
+    }
 }

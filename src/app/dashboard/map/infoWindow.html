@@ -5,16 +5,16 @@
 
 	<div class="row text-center">
 		<button class="btn btn-default" ui-sref="border-station({id: parameter.id})">Details</button>
-		<button class="btn btn-default">IRFs</button>
-		<button class="btn btn-default">VIFs</button>
+		<button class="btn btn-default" ui-sref="irfList({search: parameter.station_code})">IRFs</button>
+		<button class="btn btn-default" ui-sref="vifList({search: parameter.station_code})">VIFs</button>
 	</div>
-	
+
 	<br/>
-	
+
 	<div class="row panel panel-default panel-body">
 		<p>Est. {{ parameter.date_established ? parameter.date_established : 'N/A' }}</p>
 		<p>Has shelter: {{ parameter.has_shelter ? 'Yes' : 'No' }}</p>
-		<p>Interceptions: </p>
-		<p># of Staff: {{ parameter.numberOfStaff }}</p>
+		<p>Interceptions: {{ parameter.number_of_interceptions }}</p>
+		<p># of Staff: {{ parameter.number_of_staff }}</p>
 	</div>
 </div>

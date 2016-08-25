@@ -13,9 +13,8 @@ class MapController {
 
 		this.borderStations = [];
 		this.showAddress2Layer = true;
-		this.templateUrl = 'app/components/map/infoWindow.html'; // Abs path is needed
+		this.templateUrl = 'app/dashboard/map/infoWindow.html'; // Abs path is needed
 
-		
 		this.createMapListeners();
 		this.initializeGoogleMaps(uiGmapGoogleMapApi);
 	}
@@ -28,9 +27,7 @@ class MapController {
 		this.borderStationService.getBorderStations().then((response) => {
 			this.borderStations = response.data;
 			this.borderStations.forEach((borderStation) => {
-				this.getBorderStationStaff(borderStation).then(() => {
-					this.setInfoWindowParams(borderStation);
-				});
+				this.setInfoWindowParams(borderStation);
 			});
 		});
 	}
@@ -45,8 +42,8 @@ class MapController {
 	initializeGoogleMaps(gMapsApi) {
 		gMapsApi.then((maps) => {
 			this.maps = maps;
-			this.setMapData();
 			this.setAddress2Layer();
+			this.setMapData();
 
 			this.getBorderStations();
 		});
@@ -75,7 +72,8 @@ class MapController {
 			date_established: borderStation.date_established,
 			has_shelter: borderStation.has_shelter,
 			id: borderStation.id,
-			numberOfStaff: borderStation.numberOfStaff,
+			number_of_staff: borderStation.number_of_staff,
+			number_of_interceptions: borderStation.number_of_interceptions,
 			station_code: borderStation.station_code,
 			station_name: borderStation.station_name
 		};
@@ -83,7 +81,6 @@ class MapController {
 
 	setMapData() {
 		this.data = {
-			center: {latitude: this.nepal.lat, longitude: this.nepal.lon},
 			control: {},
 			options: {
 				mapTypeControlOptions: {
@@ -97,7 +94,6 @@ class MapController {
 					style: this.maps.ZoomControlStyle.SMALL
 				}
 			},
-			zoom: 8
 		};
 	}
 

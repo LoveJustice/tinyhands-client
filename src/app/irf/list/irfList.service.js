@@ -4,11 +4,19 @@ export default class IrfListService {
         this.service = BaseService;
     }
 
-    getIrfList() {
-        return this.service.get('api/irf/');
+    getIrfList(queryParameters) {
+        return this.service.get('api/irf/', queryParameters);
+    }
+
+    getMoreIrfs(queryParameters) {
+        return this.service.get('api/irf/', queryParameters);
     }
 
     deleteIrf(id){
-        return this.service.delete(`/api/irf/${id}/`);
+        return this.service.delete(`api/irf/${id}/`);
+    }
+
+    irfExists(irfNumber) {
+        return this.service.post('irfExists/' + irfNumber);
     }
 }

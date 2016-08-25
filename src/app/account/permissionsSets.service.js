@@ -1,32 +1,27 @@
-import BaseService from '../base.service';
+export default class PermissionsSetsService {
+    constructor(BaseService) {
+        'ngInject';
+        this.service = BaseService;
+    }
 
-export default class PermissionsSetsService extends BaseService {
-	constructor($http, $q) {
-		'ngInject';
-		super();
+    getPermissions() {
+        return this.service.get('api/defaultPermissionsSet/');
+    }
 
-		this.$http = $http;
-		this.$q = $q;
-	}
+    getPermission(id) {
+        return this.service.get(`api/defaultPermissionsSet/${id}/`);
+    }
 
-  getPermissions() {
-    return this.get('/api/defaultPermissionsSet/')
-  }
+    create(data) {
+        return this.service.post('api/defaultPermissionsSet/', data);
+    }
 
-	getPermission(id) {
-		return this.get(`/api/defaultPermissionsSet/${id}/`)
-	}
+    update(id, data) {
+        return this.service.put(`api/defaultPermissionsSet/${id}/`, data);
+    }
 
-	create(data) {
-		return this.post('/api/defaultPermissionsSet/', data)
-	}
-
-	update(id, data) {
-		return this.put(`/api/defaultPermissionsSet/${id}/`, data)
-	}
-
-	destroy(id) {
-		return this.delete(`/api/defaultPermissionsSet/${id}/`)
-	}
+    destroy(id) {
+        return this.service.delete(`api/defaultPermissionsSet/${id}/`);
+    }
 
 }

@@ -28,6 +28,7 @@
   },
   "resolutions": {
     "jquery": "~2.2.3",
-    "angular": "~1.5.3"
+      "angular": "~1.5.3",
+      "moment": "2.12.0"
   }
 }

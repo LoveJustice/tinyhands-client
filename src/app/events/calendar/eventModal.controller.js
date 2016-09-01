@@ -7,12 +7,12 @@ export default class EventModalCtrl {
     }
 
     close () {
-        this.uibModalInstance.dismiss('cancel');
+        this.uibModalInstance.dismiss();
     }
 
     delete (event) {
         if (event.delete_event) {
-            this.uibModalInstance.dismiss('delete');
+            this.uibModalInstance.close();
         } else {
             event.delete_event = true;
         }

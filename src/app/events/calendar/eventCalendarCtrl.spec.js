@@ -2,49 +2,62 @@ import EventCalendarController from './eventCalendar.controller';
 import EventsService from '../events.service';
 
 describe('EventCalendarController', () => {
-    let vm;
-    let $state,
-        $uibModal,
-        eventsService,
-        $http;
+    let $q,
+        rootScope,
+        mockUibModal,
+        mockUiCalendarConfig,
+        mockEventsService,
+        target;
 
-    beforeEach(inject(($http) => {
-        var eventsService = new EventsService($http);
-        vm = new EventCalendarController($state, $uibModal, eventsService);
+    beforeEach(inject((_$q_, $rootScope) => {
+        $q = _$q_;
+        rootScope = $rootScope
+        mockUibModal = jasmine.createSpyObj('MockUibModal', ['open']);
+        mockUiCalendarConfig = {calendars: 
+            {eventCalendar: 
+                jasmine.createSpyObj('eventCalendar', ['fullCalendar'])
+            }
+        };
+        mockEventsService = jasmine.createSpyObj('MockAccountService', ['destroyEvent']);
+
+        target = new EventCalendarController(mockUibModal, mockUiCalendarConfig, mockEventsService);
     }));
 
+    describe('onCalendarEventClicked', () => {
+        it('should open modal', () => {
+            let event = {id: 1, name: 'Foo'};
+            mockUibModal.open.and.callFake(() => {return {result: $q.resolve()}});
 
-    describe('getToday', () => {
-        beforeEach( () => {
-            vm.constructor();
+            target.onCalendarEventClicked(event);
+
+            expect(mockUibModal.open).toHaveBeenCalled();
         });
 
-        it('should return today as YYYY-MM-DD', () => {
-            var testDate = new Date(2016, 10, 29); //setting month to 10=Nov. as 0=Jan.
-            jasmine.clock().mockDate(testDate);
+        describe('when event deletion confirmed', () => {
+            it('should delete event', () => {
+                let event = {id: 1, name: 'Foo'};
+                mockUibModal.open.and.callFake(() => {return {result: $q.resolve()}});
+                mockEventsService.destroyEvent.and.callFake(() => {return $q.resolve()});
 
-            var result = vm.getToday();
+                target.onCalendarEventClicked(event);
+                rootScope.$apply();
 
-            expect(result).toEqual("2016-11-29");
+                expect(mockEventsService.destroyEvent).toHaveBeenCalledWith(event.id);
+            });
+
+            describe('and event deleted', () => {
+                it('should remove event from calendar', () => {
+                    let event = {id: 1, name: 'Foo'};
+                    mockUibModal.open.and.callFake(() => {return {result: $q.resolve()}});
+                    mockEventsService.destroyEvent.and.callFake(() => {return $q.resolve()});
+
+                    target.onCalendarEventClicked(event);
+                    rootScope.$apply();
+
+                    expect(mockUiCalendarConfig.calendars.eventCalendar.fullCalendar).toHaveBeenCalledWith('removeEvents', event.id);
+                });
+            });
         });
-
-        it('when month is a single digit should append leading zero', () => {
-            var testDate = new Date(2016, 0, 29); //setting date to Jan. 1st 2016
-            jasmine.clock().mockDate(testDate);
-
-            var result = vm.getToday();
-
-            expect(result).toEqual("2016-01-29");
-        });
-
-        it('when month is a single digit should append leading zero', () => {
-            var testDate = new Date(2016, 10, 9); //setting date to Jan. 1st 2016
-            jasmine.clock().mockDate(testDate);
-
-            var result = vm.getToday();
-
-            expect(result).toEqual("2016-11-09");
-        });
-    });
+    })
 
 });

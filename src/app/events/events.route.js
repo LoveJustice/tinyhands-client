@@ -4,7 +4,7 @@ export default function routerConfig ($stateProvider) {
   $stateProvider
     .state('events', {
       url: '/events',
-      templateUrl: 'app/events/calendar/event_calendar.html',
+      templateUrl: 'app/events/calendar/eventCalendar.html',
       controller: 'EventCalendarController',
       controllerAs: 'calendarCtrl',
       data: {

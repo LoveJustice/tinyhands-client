@@ -112,10 +112,10 @@
                 permissionsSet.permission_budget_manage ? "Yes" : "No" }}</label></td>
             <td id="removeButton" class="col-md-1">
                 <confirm-button 
-                        class="btn btn-sm btn-danger animated pull-left"
+                        btn-class="btn btn-sm btn-danger animated pull-left"
                         ng-disabled="permissionsSet.is_used_by_accounts"
                         ng-show="!permissionsSet.is_used_by_accounts"
-                        ng-class="{fadeIn: permissionsSet.hover, fadeOut: !permissionsSet.hover}"
+                        invisible="!permissionsSet.hover"
                         text="Remove Role"
                         confirm-text="Are you sure?"
                         on-confirm="accessDefaultsCtrl.removePermissionRole($index)"/>

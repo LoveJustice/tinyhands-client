@@ -9,6 +9,8 @@ export default class ConfirmButtonController {
         }
         this.text = $scope.text;
         this.confirmText = $scope.confirmText;
+        this.btnClass = $scope.btnClass;
+        this.invisible = $scope.invisible;
         this.isFirstClick = true;
     }
     

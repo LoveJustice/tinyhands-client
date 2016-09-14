@@ -16,6 +16,16 @@ function budgetRouteConfig ($stateProvider) {
           controller: 'BudgetListController',
           controllerAs: 'budgetListCtrl',
           data: {
+            requireLogin: true,
+            permissions_required: ['permission_budget_manage']
+          }
+        })
+        .state('mdf', {
+          url: '/budget/:id/mdf',
+          templateUrl: 'app/budget/mdf/mdf.html',
+          controller: 'MdfController',
+          controllerAs: 'vm',
+          data: {
             requireLogin: true
           }
         });

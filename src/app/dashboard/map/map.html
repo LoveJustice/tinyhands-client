@@ -1,4 +1,4 @@
-<ui-gmap-google-map center="map.data.center" control="map.data.control" zoom="map.data.zoom" options="map.data.options">
+<ui-gmap-google-map center="{latitude: map.nepal.lat, longitude: map.nepal.lon}" control="map.data.control" zoom="8" options="map.data.options">
 	<ui-gmap-layer type="FusionTablesLayer" options="map.layerOptions" ng-if="map.showAddress2Layer"></ui-gmap-layer>
 	<ui-gmap-markers models="map.borderStations" coords="'self'">
 		<ui-gmap-windows show="'show'" templateUrl="'templateUrl'" templateParameter="'templateParameter'">

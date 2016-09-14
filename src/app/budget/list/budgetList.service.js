@@ -15,4 +15,13 @@ export default class BudgetListService{
   getNextBudgetPage(nextPageUrl) {
     return this.service.get(nextPageUrl);
   }
+
+  getMdf(id) {
+      return this.service.get(`/api/mdf/${id}/`);
+  }
+
+  sendMdfEmails(people) {
+      return this.service.post(`/api/mdf/${people.budget_id}/`, people);
+  }
+
 }

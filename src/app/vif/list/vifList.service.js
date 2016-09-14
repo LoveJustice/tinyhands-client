@@ -8,7 +8,11 @@ export default class VifListService {
         return this.service.delete(`api/vif/${id}/`);
     }
 
-    getVifList() {
-        return this.service.get('api/vif/');
+    getVifList(queryParameters) {
+        return this.service.get('api/vif/', queryParameters);
+    }
+
+    getMoreVifs(queryParameters) {
+        return this.service.get('api/vif/', queryParameters);
     }
 }

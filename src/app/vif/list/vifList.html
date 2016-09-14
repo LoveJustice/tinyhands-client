@@ -8,9 +8,9 @@
         <div class="pull-right"><br>
             <csvexport type="vif" buttontext="Export All VIFs to CSV" ng-if="vifListCtrl.session.user.permission_vif_view == true"></csvexport>
             &nbsp;
-            <button ng-if="vifListCtrl.session.user.permission_vif_add == true" class="btn btn-success pull-right" ui-sref="vif">
+            <a ng-if="vifListCtrl.session.user.permission_vif_add == true" class="btn btn-success pull-right" href="/data-entry/irfs/create/">
                 Input A New VIF
-            </button>
+            </a>
         </div>
     </div>
 

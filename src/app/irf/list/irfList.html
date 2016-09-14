@@ -9,9 +9,9 @@
             <photoexport ng-if="irfListCtrl.session.user.permission_irf_view == true"></photoexport>
             <csvexport type="irf" buttontext="Export All IRFs to CSV" ng-if="irfListCtrl.session.user.permission_irf_view == true"></csvexport>
             &nbsp;
-            <button ng-if="irfListCtrl.session.user.permission_irf_add == true" class="btn btn-success pull-right" ui-sref="irf">
+            <a ng-if="irfListCtrl.session.user.permission_irf_add == true" class="btn btn-success pull-right" href="/data-entry/irfs/create/">
                 Input A New IRF
-            </button>
+            </a>
         </div>
     </div>
 

@@ -5,7 +5,7 @@ class TallyService {
 	}
 
 	getTallyDays() {
-		return this.service.get('portal/tally/days/').then((data) => {
+		return this.service.get('api/portal/tally/days/').then((data) => {
 			// Data should be:
 			// {0:{dayOfWeek:'Monday',
 			//     interceptions: {<String of StationCode>:<Num of Interceptions>}},

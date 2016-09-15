@@ -1,0 +1,14 @@
+<div id="dashboard-events-container">
+  <div class="col-md-3 events" ng-repeat="day in dasheventsCtrl.days">
+      <div ng-repeat="event in day">
+          <div ng-if="$index == 0"><span class="day">{{ event.weekday }}</span> </div>
+          <div ng-if="$index != 0">
+              <span class="event">
+                  <a href="" ng-click="dasheventsCtrl.showEventModal(event)">
+                      {{ event.title }}
+                  </a>
+              </span>
+          </div>
+      </div>
+  </div>
+</div>

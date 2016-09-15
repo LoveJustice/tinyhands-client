@@ -38,10 +38,10 @@ export default class BaseService {
 	 * @param {Object} [headers] JSON object containing header options.
 	 * @returns Promise of http response.
    */
-  delete(url, headers = {}) {
-    this.addToken(headers);
-    return this.$http.delete(this.baseUrl + url, { headers: headers });
-  }
+    delete(url, headers = {}) {
+        this.addToken(headers);
+        return this.$http.delete(this.baseUrl + url, { headers: headers });
+    }
 
 	/**
 	 * HTTP get function

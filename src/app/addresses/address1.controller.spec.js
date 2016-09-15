@@ -16,7 +16,7 @@ describe('Address1Controller', () => {
 
     describe('function constructor', () => {
 
-        beforeEach(() => {
+        beforeEach( () => {
             vm.getAddresses = () => { };
             vm.constructor();
         });

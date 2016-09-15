@@ -30,10 +30,10 @@
           </td>
           <td>
               <confirm-button 
-                        class="btn btn-sm btn-danger animated pull-left"
                         ng-disabled="accountListCtrl.currentUser.id == account.id"
                         ng-show="accountListCtrl.currentUser.id !== account.id"
-                        ng-class="{fadeIn: account.hover, fadeOut: !account.hover}"
+                        btn-class="btn btn-sm btn-danger animated pull-left"
+                        invisible="!account.hover"
                         text="Delete Account"
                         confirm-text="Are you sure?"
                         on-confirm="accountListCtrl.deleteAccount(account)"/>

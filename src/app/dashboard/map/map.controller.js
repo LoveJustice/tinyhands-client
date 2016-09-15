@@ -15,7 +15,6 @@ class MapController {
 		this.showAddress2Layer = true;
 		this.templateUrl = 'app/dashboard/map/infoWindow.html'; // Abs path is needed
 
-
 		this.createMapListeners();
 		this.initializeGoogleMaps(uiGmapGoogleMapApi);
 	}
@@ -30,6 +29,13 @@ class MapController {
 			this.borderStations.forEach((borderStation) => {
 				this.setInfoWindowParams(borderStation);
 			});
+		});
+	}
+
+	getBorderStationStaff(borderStation) {
+		borderStation.numberOfStaff = 0;
+		return this.borderStationService.getStaff(borderStation.id).then((response) => {
+			borderStation.numberOfStaff += response.data.count;
 		});
 	}
 

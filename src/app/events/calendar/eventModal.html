@@ -1,0 +1,37 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="modalCtrl.close()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h3 class="modal-title">{{modalCtrl.event.title}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-2 text-right">Starts:</div>
+            <div class="col-md-10">{{modalCtrl.start}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 text-right">Ends:</div>
+            <div class="col-md-10">{{modalCtrl.end}}</div>
+        </div>
+        <div class="row" ng-if="modalCtrl.event.is_repeat">
+            <div class="col-md-2 text-right">Repeats:</div>
+            <div class="col-md-10">{{modalCtrl.repetition}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 text-right">Location:</div>
+            <div class="col-md-10">{{ modalCtrl.event.location }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 text-right">Description:</div>            
+            <div class="col-md-10">{{ modalCtrl.event.description }}</div>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <confirm-button 
+            btn-class="btn btn-danger pull-left"
+            text="Delete"
+            confirm-text="Are you sure?"
+            on-confirm="modalCtrl.delete()"></confirm-button>
+        <button type="button" class="btn btn-primary" ng-click="modalCtrl.close()" >Close</button>
+    </div>
+</div>

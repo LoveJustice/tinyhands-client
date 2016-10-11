@@ -1,4 +1,4 @@
-function addressesRouteConfig ($stateProvider) {
+function addressesRouteConfig ($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('address1', {
@@ -7,8 +7,10 @@ function addressesRouteConfig ($stateProvider) {
           controller: 'Address1Controller',
           controllerAs: 'vm',
           data: {
-            requireLogin: true,
             permissions_required: ['permission_address2_manage']
+          },
+          resolve: {
+            requireLogin: RequireLogin
           }
         })
         .state('address2', {
@@ -17,8 +19,10 @@ function addressesRouteConfig ($stateProvider) {
           controller: 'Address2Controller',
           controllerAs: 'vm',
           data: {
-            requireLogin: true,
             permissions_required: ['permission_address2_manage']
+          },
+          resolve: {
+            requireLogin: RequireLogin
           }
         });
 }

@@ -1,4 +1,4 @@
-function VIFRoutes($stateProvider) {
+function VIFRoutes($stateProvider, RequireLogin) {
   'ngInject';
   $stateProvider
     .state('vifList', {
@@ -6,11 +6,11 @@ function VIFRoutes($stateProvider) {
       templateUrl: 'app/vif/list/vifList.html',
       controller: 'VifListController',
       controllerAs: 'vifListCtrl',
-      data: {
-        requireLogin: true
+      resolve: {
+        requireLogin: RequireLogin
       }
-    })
-    .state('vif', {
+    });
+    /*.state('vif', {
       abstract: true,
       url: '/vif',
       templateUrl: 'app/vif/form/vif.html',
@@ -129,7 +129,7 @@ function VIFRoutes($stateProvider) {
         requireLogin: true,
         index: 10
       }
-    });
+    });*/
 }
 
 export default VIFRoutes;

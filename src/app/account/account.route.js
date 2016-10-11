@@ -1,4 +1,4 @@
-function accountRouteConfig ($stateProvider) {
+function accountRouteConfig ($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
     .state('accounts', {
@@ -7,8 +7,8 @@ function accountRouteConfig ($stateProvider) {
         controller: 'AccountController',
         controllerAs: 'accountCtrl',
         templateUrl: 'app/account/account.html',
-        data: {
-            requireLogin: true
+        resolve: {
+            requireLogin: RequireLogin
         }
     })
     .state('accounts.list', {
@@ -17,8 +17,10 @@ function accountRouteConfig ($stateProvider) {
         controllerAs: 'accountListCtrl',
         templateUrl: 'app/account/components/list/accountList.html',
         data: {
-            requireLogin: true,
             index: 0,
+        },
+        resolve: {
+            requireLogin: RequireLogin
         }
     })
     .state('accounts.control', {
@@ -27,8 +29,10 @@ function accountRouteConfig ($stateProvider) {
         controllerAs: 'accessControlCtrl',
         templateUrl: 'app/account/components/control/accessControl.html',
         data: {
-            requireLogin: true,
             index: 1,            
+        },
+        resolve: {
+            requireLogin: RequireLogin
         }
     })
     .state('accounts.defaults', {
@@ -37,8 +41,10 @@ function accountRouteConfig ($stateProvider) {
         controllerAs: 'accessDefaultsCtrl',
         templateUrl: 'app/account/components/defaults/accessDefaults.html',
         data: {
-            requireLogin: true,
             index: 2,
+        },
+        resolve: {
+            requireLogin: RequireLogin
         }
     })
     .state('account', {
@@ -46,16 +52,16 @@ function accountRouteConfig ($stateProvider) {
         controller: 'AccountEditController',
         controllerAs: 'accountEditCtrl',
         templateUrl: 'app/account/components/edit/accountEdit.html',
-        data: {
-            requireLogin: true
+        resolve: {
+            requireLogin: RequireLogin
         }
     })
 
     .state('accountNotFound', {
         url: '/account/notfound',
         templateUrl: 'app/account/components/edit/accountNotFound.html',
-        data: {
-            requireLogin: true
+        resolve: {
+            requireLogin: RequireLogin
         }
     })
 
@@ -64,8 +70,8 @@ function accountRouteConfig ($stateProvider) {
         templateUrl: 'app/account/components/activate/activateAccount.html',
         controller: 'ActivateAccountController',
         controllerAs: 'activateAcctCtrl',
-        data: {
-            requireLogin: false
+        resolve: {
+            requireLogin: RequireLogin
         }
     });
 }

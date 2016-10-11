@@ -1,4 +1,4 @@
-function budgetRouteConfig ($stateProvider) {
+function budgetRouteConfig ($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('budget', {
@@ -6,8 +6,8 @@ function budgetRouteConfig ($stateProvider) {
           templateUrl: 'app/budget/form/budget.html',
           controller: 'BudgetController',
           controllerAs: 'budgetCtrl',
-          data: {
-            requireLogin: true
+          resolve: {
+            requireLogin: RequireLogin
           }
         })
         .state('budgetList', {
@@ -16,8 +16,10 @@ function budgetRouteConfig ($stateProvider) {
           controller: 'BudgetListController',
           controllerAs: 'budgetListCtrl',
           data: {
-            requireLogin: true,
             permissions_required: ['permission_budget_manage']
+          },
+          resolve: {
+            requireLogin: RequireLogin
           }
         })
         .state('mdf', {
@@ -25,8 +27,8 @@ function budgetRouteConfig ($stateProvider) {
           templateUrl: 'app/budget/mdf/mdf.html',
           controller: 'MdfController',
           controllerAs: 'vm',
-          data: {
-            requireLogin: true
+          resolve: {
+            requireLogin: RequireLogin
           }
         });
 }

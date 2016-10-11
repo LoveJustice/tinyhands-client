@@ -1,4 +1,4 @@
-export default function routerConfig ($stateProvider) {
+export default function routerConfig ($stateProvider, RequireLogin) {
   'ngInject';
 
   $stateProvider
@@ -7,8 +7,8 @@ export default function routerConfig ($stateProvider) {
       templateUrl: 'app/events/calendar/eventCalendar.html',
       controller: 'EventCalendarController',
       controllerAs: 'calendarCtrl',
-      data: {
-        requireLogin: true
+      resolve: {
+        requireLogin: RequireLogin
       }
     })
     .state('eventsList', {
@@ -16,9 +16,8 @@ export default function routerConfig ($stateProvider) {
       templateUrl: 'app/events/list/event_list.html',
       controller: 'EventsController',
       controllerAs: 'eventsCtrl',
-
-      data: {
-        requireLogin: true
+      resolve: {
+        requireLogin: RequireLogin
       }
     })
     .state('eventsCreate', {
@@ -26,8 +25,8 @@ export default function routerConfig ($stateProvider) {
       templateUrl: 'app/events/form/event_form.html',
       controller: 'EditEventController',
       controllerAs: 'editCtrl',
-      data: {
-        requireLogin: true
+      resolve: {
+        requireLogin: RequireLogin
       }
     })
     .state('eventsEdit', {
@@ -35,8 +34,8 @@ export default function routerConfig ($stateProvider) {
       templateUrl: 'app/events/form/event_form.html',
       controller: 'EditEventController',
       controllerAs: 'editCtrl',
-      data: {
-        requireLogin: true
+      resolve: {
+        requireLogin: RequireLogin
       }
     });
 }

@@ -1,6 +1,6 @@
 import BaseService from '../base.service';
-import SessionService from '../utils/session.service';
-import UtilService from '../utils/util.service';
+import SessionService from './services/session.service';
+import UtilService from './services/util.service';
 import RequireLogin from './requireLogin';
 
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';

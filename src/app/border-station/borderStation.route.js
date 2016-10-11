@@ -1,4 +1,4 @@
-function borderStationRouteConfig ($stateProvider) {
+function borderStationRouteConfig ($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('border-station', {
@@ -6,8 +6,8 @@ function borderStationRouteConfig ($stateProvider) {
           templateUrl: 'app/border-station/borderStation.html',
           controller: 'BorderStationController',
           controllerAs: 'bsCtrl',
-          data: {
-            requireLogin: true
+          resolve: {
+            requireLogin: RequireLogin
           }
         });
 }

@@ -5,10 +5,7 @@ function loginRouteConfig ($stateProvider) {
           url: '/login',
           templateUrl: 'app/login/login.html',
           controller: 'LoginController',
-          controllerAs: 'login',
-          data: {
-            requireLogin: false
-          }
+          controllerAs: 'login'
         });
 }
 

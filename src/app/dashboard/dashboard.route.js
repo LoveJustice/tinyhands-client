@@ -1,4 +1,4 @@
-function dashboardRouteConfig ($stateProvider) {
+function dashboardRouteConfig ($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('dashboard', {
@@ -6,8 +6,8 @@ function dashboardRouteConfig ($stateProvider) {
           templateUrl: 'app/dashboard/dashboard.html',
           controller: 'DashboardController',
           controllerAs: 'dashboard',
-          data: {
-            requireLogin: true
+          resolve: {
+            requireLogin: RequireLogin
           }
         });
 }

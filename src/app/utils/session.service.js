@@ -1,33 +1,38 @@
 export default class SessionService {
-  constructor($rootScope, $state, $timeout, BaseService) {
+  constructor($rootScope, $state, $timeout, $q, BaseService) {
     'ngInject';
 
     this.service = BaseService;
     this.root = $rootScope;
     this.routeState = $state;
     this.timeout = $timeout;
+    this.$q = $q;
 
     this.user = {};
   }
 
   attemptLogin(username, password) {
     return this.service.post('api/login/', { "username": username, "password": password })
-      .then(
-      (promise) => {
+      .then((promise) => {
         sessionStorage.token = "Token " + promise.data.token;
         this.root.authenticated = true;
-        this.routeState.go('dashboard');
-      },
-      () => {
-        window.toastr.error("Invalid Login");
-      }
-      );
+        return true;
+      }, (reason) => {
+        let error;
+        if(reason.status === 400) {
+          error = "Invalid Login";
+        }else {
+          error = "Unable to connect to server"
+        }
+        return this.$q.reject(error);
+      });
   }
 
   me() {
     return this.service.get('api/me/').then((result) => {
       this.user = result.data;
       this.root.$broadcast('GetNavBarBorderStations');
+      return this.user;
     });
   }
   // See if page loading needs to have user logged in
@@ -60,11 +65,21 @@ export default class SessionService {
                 }
             });
         }
-
     }
 
+  checkIfAuthenticated() {
+    let defer = this.$q.defer();
+    if(typeof sessionStorage.token === 'undefined') {
+      defer.reject('Not Authenticated');
+      return defer.promise;
+    }else {
+      this.root.authenticated = true;
+      return this.me();
+    }
+  }
+
   createStateChangeListener() {
-    this.root.$on('$stateChangeStart', (event, toState) => {
+    this.root.$on('$stateChangeStart', (event, toState, toParams, fromState, fromParams, options) => {
       var requireLogin = toState.data.requireLogin; // See if page requires login
       var token = sessionStorage.token; // Get user token from storage if already logged in
       

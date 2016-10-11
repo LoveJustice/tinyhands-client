@@ -1,11 +1,7 @@
-import constants from './../../constants.js';
-
 export default class NavbarController {
-	constructor ($interval, $scope, $timeout, BorderStationService, SessionService) {
+	constructor($scope, constants, BorderStationService, SessionService) {
 		'ngInject';
 
-		this.$interval = $interval;
-		this.$timeout = $timeout;
 		this.borderStationService = BorderStationService;
 		this.session = SessionService;
 		this.constants = constants;

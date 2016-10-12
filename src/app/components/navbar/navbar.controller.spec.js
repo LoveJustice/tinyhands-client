@@ -5,12 +5,11 @@ describe('NavbarController', () => {
   let vm, session;
 
   beforeEach(inject(($http, $q) => {
-    let $interval,
-        $scope = {$on: () => {}},
+    let $scope = {$on: () => {}},
         $timeout,
         bss = new BorderStationService($http, $q);
     session = {logout: () => {}, user: {}};
-    vm = new NavbarController($interval, $scope, $timeout, bss, session);
+    vm = new NavbarController($scope, $timeout, bss, session);
   }));
 
   describe('function constructor', () => {
@@ -25,21 +24,21 @@ describe('NavbarController', () => {
 
     it('should call window.moment.tz', () => {
       spyOn(window.moment, 'tz').and.callThrough();
-      vm.constructor(null, {$on: () => {}});
+      vm.constructor({$on: () => {}});
       expect(window.moment.tz).toHaveBeenCalledWith('Asia/Kathmandu');
     });
 
     it("should call $scope.$on with first argument as 'GetNavBarBorderStations'", () => {
       let firstArg,
           $scope = {$on: (a) => { firstArg = a}};
-      vm.constructor(null, $scope, null, null, session);
+      vm.constructor($scope, null, null, session);
       expect(firstArg).toEqual('GetNavBarBorderStations');
     });
 
     it('should call getBorderStations', () => {
       let $scope = {$on: (_, f) => { f() }};
       spyOn(vm, 'getBorderStations');
-      vm.constructor(null, $scope, null, null, session);
+      vm.constructor($scope, null, null, session);
       expect(vm.getBorderStations).toHaveBeenCalled();
     });
 

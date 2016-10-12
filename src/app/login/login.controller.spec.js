@@ -1,18 +1,26 @@
 import LoginController from './login.controller';
-import SessionService from './../utils/session.service';
 
 describe('LoginController', () => {
 
-  let vm;
+  let vm,
+    mockState,
+    mockToastr,
+    mockSessionService,
+    $q,
+    $rootScope;
 
-  beforeEach(() => {
-    let $http = null;
-    let $rootScope = null;
-    let $state = {go: () => {}};
-    let $timeout = null;
-    let service = new SessionService($http, $rootScope, $state, $timeout);
-    vm = new LoginController(service);
-  });
+  beforeEach(inject((_$q_, _$rootScope_) => {
+    $q = _$q_;
+    $rootScope = _$rootScope_;
+    mockState = jasmine.createSpyObj('state', ['go']);
+    mockToastr = jasmine.createSpyObj('toastr', ['error']);
+    mockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin']);
+    mockSessionService.attemptLogin.and.callFake(() => {
+      return $q.resolve();
+    }); 
+
+    vm = new LoginController(mockState, mockToastr, mockSessionService);
+  }));
 
   describe('function constructor', () => {
 
@@ -28,11 +36,35 @@ describe('LoginController', () => {
 
   describe('function attemptLogin', () => {
     it('should call sesssion attemptLogin with username and password', () => {
-      spyOn(vm.session, 'attemptLogin');
 
       vm.attemptLogin();
 
-      expect(vm.session.attemptLogin).toHaveBeenCalledWith(vm.username, vm.password);
+      expect(mockSessionService.attemptLogin).toHaveBeenCalledWith(vm.username, vm.password);
     });
+
+    describe('when login succeeds', () => {
+      it('should go to dashboard', () => {
+        vm.attemptLogin();
+        $rootScope.$apply();
+
+        expect(mockState.go).toHaveBeenCalledWith('dashboard');
+      });
+    });
+
+    describe('when login fails', () => {
+      it('should show toastr error', () => {
+        let reason = "Bad password";
+        mockSessionService.attemptLogin.and.callFake(() => {
+          return $q.reject(reason);
+        });
+        
+        vm.attemptLogin();
+        $rootScope.$apply();
+
+        expect(mockToastr.error).toHaveBeenCalledWith(reason);
+      });
+    });
+
+
   });
 });

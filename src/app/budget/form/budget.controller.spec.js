@@ -1,7 +1,6 @@
 import Constants from './constants.js';
 import BudgetService from './budget.service';
 import BudgetController from './budget.controller';
-import UtilService from './../../utils/util.service';
 
 
 describe('BudgetController', () => {
@@ -12,7 +11,8 @@ describe('BudgetController', () => {
         utils;
 
     beforeEach(inject(($http) => {
-        utils = new UtilService();
+        utils = jasmine.createSpyObj('mockUtilService', ['handleErrors', 'validId']);
+        utils.validId.and.callFake(() => {return true;});
         stateParams = { borderStationId: 123, id: 1, isViewing: "true" };
         budgetService = new BudgetService($http, utils);
         vm = new BudgetController(state, stateParams, budgetService, utils);

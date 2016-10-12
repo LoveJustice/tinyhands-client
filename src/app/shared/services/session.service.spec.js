@@ -2,17 +2,17 @@ import SessionService from './session.service';
 
 describe('SessionService', () => {
 
-  let service, mockBaseService;
+  let service, mockBaseService, $rootScope;
 
-  beforeEach(inject(($http) => {
-    let $rootScope = {
-          authenticated: null,
-          $broadcast: () => {}
-        },
-        $state = {go: () => {}},
+  beforeEach(inject(($q,_$rootScope_) => {
+    $rootScope = _$rootScope_;
+    let $state = {go: () => {}},
         $timeout = (f) => {f();};
     mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'post']);
-    service = new SessionService($rootScope, $state, $timeout, mockBaseService);
+    mockBaseService.get.and.callFake(() => {
+      return $q.resolve('success');
+    });
+    service = new SessionService($rootScope, $state, $timeout, $q, mockBaseService);
   }));
 
 
@@ -51,13 +51,6 @@ describe('SessionService', () => {
       service.attemptLogin(username, password);
       expect(service.root.authenticated).toBe(true);
     });
-
-    it(`should call routeState go with 'dashboard'`, () => {
-      spyOn(service.routeState, 'go');
-      service.attemptLogin(username, password);
-      expect(service.routeState.go).toHaveBeenCalledWith('dashboard');
-    });
-
   });
 
   describe('function me', () => {
@@ -120,7 +113,57 @@ describe('SessionService', () => {
       service.checkAuthenticityLogic(null, true);
       expect(service.me).toHaveBeenCalled();
     });
+  });
 
+  describe('checkIfAuthenticated', () => {
+    describe('when no token stored', () => {
+      it('should reject promise', (done) => {
+        sessionStorage.clear();
+
+        let result = service.checkIfAuthenticated();
+
+        result.then(() => {
+          done.fail('User is authenticated when they should not be');
+        }, (reason) => {
+          expect(reason).toBe('Not Authenticated');
+          done();
+        });
+        $rootScope.$apply();
+      });
+    });
+
+    describe('when token is stored', () => {
+      it('should set rootScope autheticated to true', (done) => {
+        $rootScope.authenticated = false;
+        sessionStorage.token = 'validToken';
+        
+        let result = service.checkIfAuthenticated();      
+
+        result.then(() => {
+          expect($rootScope.authenticated).toBe(true);
+          done();
+        }, () => {
+          done.fail('User not authenticated when they should be');
+        });
+        $rootScope.$apply();
+      });
+
+      it('should get current user', (done) => {
+        $rootScope.authenticated = false;
+        sessionStorage.token = 'validToken';
+        spyOn(service, 'me').and.callThrough();
+        
+        let result = service.checkIfAuthenticated();  
+
+        result.then(() => {
+          expect(service.me).toHaveBeenCalled();
+          done();
+        }, () => {
+          done.fail('User not authenticated when they should be');
+        });
+        $rootScope.$apply();
+      });
+    });
   });
 
   describe('function createStateChangeListener', () => {

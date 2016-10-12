@@ -30,6 +30,6 @@ export default class EventModalCtrl {
     }
 
     delete() {
-        this.uibModalInstance.close();        
+        this.uibModalInstance.close();
     }
 }

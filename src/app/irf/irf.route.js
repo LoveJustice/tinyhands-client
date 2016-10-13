@@ -1,15 +1,15 @@
-function IRFRoutes($stateProvider) {
+function IRFRoutes($stateProvider, RequireLogin) {
   $stateProvider
     .state('irfList', {
-      url: '/irf',
+      url: '/irf?search',
       templateUrl: 'app/irf/list/irfList.html',
       controller: 'IrfListController',
       controllerAs: 'irfListCtrl',
-      data: {
-        requireLogin: true
+      resolve: {
+        requireLogin: RequireLogin
       }
-    })
-    .state('irf', {
+    });
+    /*.state('irf', {
       url: '/irf/:id?isViewing',
       templateUrl: 'app/irf/form/irf.html',
       controller: 'IrfController',
@@ -17,7 +17,7 @@ function IRFRoutes($stateProvider) {
       data: {
         requireLogin: true
       }
-    });
+    });*/
 }
 
 export default IRFRoutes;

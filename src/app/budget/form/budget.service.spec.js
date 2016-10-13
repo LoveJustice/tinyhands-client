@@ -1,5 +1,4 @@
 import BudgetService from './budget.service';
-import UtilService from './../../utils/util.service';
 
 describe('BudgetService', () => {
     let mockBaseService, service;
@@ -16,9 +15,10 @@ describe('BudgetService', () => {
 
 
     beforeEach(() => {
-        let utils = new UtilService();
+        let mockUtilService = jasmine.createSpyObj('mockUtilService', ['handleErrors', 'validId']);
+        mockUtilService.validId.and.callFake(() => { return true; });
         mockBaseService = jasmine.createSpyObj('mockBaseService', ['delete', 'get', 'post', 'put']);
-        service = new BudgetService(mockBaseService, utils);
+        service = new BudgetService(mockBaseService, mockUtilService);
     });
 
     describe('function createOtherItem', () => {

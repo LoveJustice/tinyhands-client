@@ -1,0 +1,33 @@
+<div class="container">
+<h2> Edit Events </h2>
+
+
+    <div ng-cloak>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Repeat</th>
+                <th>Repetition</th>
+                <th>Ends On</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in eventsCtrl.events">
+                    <td>{{event.title}}</td>
+                    <td>{{event.location}}</td>
+                    <td>{{event.start_date}}</td>
+                    <td>{{event.end_date}}</td>
+                    <td>{{event.description}}</td>
+                    <td>{{event.is_repeat}}</td>
+                    <td>{{event.get_repetition_display}}</td>
+                    <td>{{event.ends}}</td>
+                    <td><a ui-sref="eventsEdit({id: event.id})">Edit</a> <a ng-click="eventsCtrl.openModal(event)" >Delete</a> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,31 +1,30 @@
-<div class="container" id="container">
-    <hr>
+<div class="container" id="vifList"><br/>
+
     <div class="row">
         <div class="col-xs-5">
             <h1>All VIFs</h1>
         </div>
-        <div class="pull-right" >
-            <button ng-if="vifListCtrl.showingVifs.length > 0" class="btn btn-primary" id="export" csv-header="vifListCtrl.getCsvHeader()" field-separator="," decimal-separator="." ng-csv="vifListCtrl.getCsvArray()" >
-                Export as CSV
-            </button>
-            <a id="id_input_new_vif" class="btn btn-success pull-right" ui-sref="vif.info">
+
+        <div class="pull-right"><br>
+            <csvexport type="vif" buttontext="Export All VIFs to CSV" ng-if="vifListCtrl.session.user.permission_vif_view == true"></csvexport>
+            &nbsp;
+            <a ng-if="vifListCtrl.session.user.permission_vif_add == true" class="btn btn-success pull-right" href="/data-entry/vifs/create/">
                 Input A New VIF
             </a>
         </div>
     </div>
+
     <div class="row">
         <!-- Results per page dropdown -->
         <div class="col-sm-2 col-xs-3">
-            <select ng-init="vifListCtrl.paginateBy='25'" ng-model="vifListCtrl.paginateBy" ng-change="vifListCtrl.getVifList()" class="form-control">
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
-                <option>500</option>
+            <select ng-options="value for value in [25, 50, 75, 100, 500]"
+                    ng-model="vifListCtrl.queryParameters.page_size"
+                    ng-change="vifListCtrl.getVifList()"
+                    class="form-control">
             </select>
         </div>
         <div class="col-sm-3 col-xs-1">
-
-            <p id="results_text">Results <span class="hidden-xs">per page</span></p>
+            <p>Results <span class="hidden-xs">per page</span></p>
         </div>
         <!-- End dropdown -->
 
@@ -33,44 +32,44 @@
         <div class="col-md-3 search-bar pull-right">
             <form>
                   <label class="pull-right">
-                      <input ng-model="vifListCtrl.searchValue" placeholder="Search" class="form-control">
+                      <input ng-change="vifListCtrl.searchVifs()" ng-model="vifListCtrl.queryParameters.search" placeholder="Search" class="form-control">
                   </label>
             </form>
         </div>
         <!-- End search -->
     </div>
     <br/>
-
-    <table ng-if="vifListCtrl.listOfVifs.length > 0" class="table table-striped table-condensed crud-datatable">
+    <div id="sticky-anchor"></div>
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th ng-click="vifListCtrl.sortCol('vif_number')">VIF #
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'vif_number',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-vif_number' }"></i>
+                <th ng-click="vifListCtrl.updateSort('vif_number')" width="8%">VIF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('vif_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('vif_number', 'reverse') }"></i>
                 </th>
-                <th ng-click="vifListCtrl.sortCol('interviewer')">Interviewer
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'interviewer',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-interviewer' }"></i>
+                <th ng-click="vifListCtrl.updateSort('staff_name')" width="15%">Staff Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('staff_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
                 </th>
-                <th ng-click="vifListCtrl.sortCol('number_of_victims')"># of Victims
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'number_of_victims',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-number_of_victims' }"></i>
+                <th ng-click="vifListCtrl.updateSort('number_of_victims')" width="10%">Number of Victims
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('number_of_victims', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('number_of_victims', 'reverse')}"></i>
                 </th>
-                <th ng-click="vifListCtrl.sortCol('number_of_traffickers')"># of Traffickers
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'number_of_traffickers',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-number_of_traffickers' }"></i>
+                <th ng-click="vifListCtrl.updateSort('number_of_traffickers')" width="10%">Number of Traffickers
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('number_of_traffickers', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('number_of_traffickers', 'reverse')}"></i>
                 </th>
-                <th ng-click="vifListCtrl.sortCol('date_of_interview')">Date of Interview
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'date_of_interview',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-date_of_interview' }"></i>
+                <th ng-click="vifListCtrl.updateSort('date_time_of_interception')" width="16%">Time of Interception
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('date_time_of_interception', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('date_time_of_interception', 'reverse')}"></i>
                 </th>
-                <th ng-click="vifListCtrl.sortCol('date_time_entered_into_system')">Time Entered Into System
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'date_time_entered_into_system',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-date_time_entered_into_system' }"></i>
+                <th ng-click="vifListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
                 </th>
-                <th ng-click="vifListCtrl.sortCol('date_time_last_updated')">Time Last Edited
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSort() == 'date_time_last_updated',
-                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSort() == '-date_time_last_updated' }"></i>
+                <th ng-click="vifListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vifListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
                 </th>
                 <th></th>
                 <th></th>
@@ -78,23 +77,27 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="form in vifListCtrl.showingVifs | filter: vifListCtrl.searchValue | orderBy: vifListCtrl.getSort()">
-                <td>{{ form.vif_number }}</td>
-                <td>{{ form.interviewer }}</td>
-                <td>{{ form.number_of_victims }}</td>
-                <td>{{ form.number_of_traffickers }}</td>
-                <td>{{ form.date_time_of_interception | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ form.date_time_entered_into_system | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ form.date_time_last_updated | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_view == true"><a class="btn btn-sm btn-primary" ng-href="{{form.view_url}}">View</a></td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_vif_button" ng-href="{{form.edit_url}}">Edit</a></td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_delete == true"><button class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif({{form.id}})">
-                    {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}</button></td>
+            <tr ng-repeat="vif in vifListCtrl.vifs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ vif.vif_number }}</td>
+                <td>{{ vif.interviewer }}</td>
+                <td>{{ vif.number_of_victims | number }}</td>
+                <td>{{ vif.number_of_traffickers | number }}</td>
+                <td>{{ vif.date | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ vif.date_time_entered_into_system | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ vif.date_time_last_updated | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
+                <td ng-if="vifListCtrl.session.user.permission_vif_view == true"><a class="btn btn-sm btn-primary" ng-href="{{vif.view_url}}">View</a></td>
+                <td ng-if="vifListCtrl.session.user.permission_vif_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_vif_button" ng-href="{{vif.edit_url}}">Edit</a></td>
+                <td ng-if="vifListCtrl.session.user.permission_vif_delete == true"><a class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif(vif, $index)">
+                    {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="vifListCtrl.vifs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No VIFs Matched your search for: "{{ vifListCtrl.queryParameters.search }}"</h2></td>
             </tr>
         </tbody>
     </table>
+
     <div class="row text-center">
-        <button id="show_more_button" ng-show="vifListCtrl.showingVifs.length < vifListCtrl.listOfVifs.length" ng-click="vifListCtrl.showMoreVifs()" class="btn btn-primary">
+        <button ng-disabled="!vifListCtrl.nextPage" ng-click="vifListCtrl.showMoreVifs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
             Load more results
         </button>
     </div>

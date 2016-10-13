@@ -1,15 +1,15 @@
 import IrfController from './irf.controller';
 import IrfService from './irf.service';
-import UtilService from './../../utils/util.service';
 
 describe('IrfController', () => {
-    let service, stateParams, vm, rootScope;
+    let service, stateParams, vm, rootScope, mockUtilService;
 
     beforeEach(inject(($http, $rootScope) => {
+        mockUtilService = jasmine.createSpyObj('mockUtilService', ['handleErrors']);
         stateParams = { id: 1 };
         rootScope = $rootScope;
         service = new IrfService($http);
-        vm = new IrfController(rootScope, stateParams, UtilService, service);
+        vm = new IrfController(rootScope, stateParams, mockUtilService, service);
     }));
 
 
@@ -48,7 +48,7 @@ describe('IrfController', () => {
             vm.sections = [1, 2, 3, 4, 5, 6];
             spyOn(vm, 'addSections');
 
-            vm.constructor(rootScope, stateParams, UtilService, service);
+            vm.constructor(rootScope, stateParams, mockUtilService, service);
 
             expect(vm.sections).toEqual([]);
         });
@@ -60,7 +60,7 @@ describe('IrfController', () => {
         it('should call addSections', () => {
             spyOn(vm, 'addSections');
 
-            vm.constructor(rootScope, stateParams, UtilService, service);
+            vm.constructor(rootScope, stateParams, mockUtilService, service);
 
             expect(vm.addSections).toHaveBeenCalled();
         });
@@ -68,7 +68,7 @@ describe('IrfController', () => {
         it('should call getIrf', () => {
             spyOn(vm, 'getIrf');
 
-            vm.constructor(rootScope, stateParams, UtilService, service);
+            vm.constructor(rootScope, stateParams, mockUtilService, service);
 
             expect(vm.getIrf).toHaveBeenCalled();
         });

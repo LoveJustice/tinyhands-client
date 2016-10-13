@@ -69,36 +69,36 @@ class Address1Controller {
             });
     }
 
-    getQueryParams(loadMore=false) {
+    getQueryParams(loadMore = false) {
         var params = [];
-        params.push({"name": "page_size", "value": this.paginateBy});
+        params.push({ "name": "page_size", "value": this.paginateBy });
         if (this.nextPageUrl && loadMore) {
-            params.push({"name": "page", "value": this.nextPageUrl});
+            params.push({ "name": "page", "value": this.nextPageUrl });
         }
         if (this.searchValue) {
-            params.push({"name": "search", "value": this.searchValue});
+            params.push({ "name": "search", "value": this.searchValue });
         }
         if (this.sortColumn) {
             if (this.reverse) {
-                params.push({"name": "ordering", "value": ("-" + this.sortColumn.replace(".", "__"))});
+                params.push({ "name": "ordering", "value": ("-" + this.sortColumn.replace(".", "__")) });
             } else {
-                params.push({"name": "ordering", "value": (this.sortColumn.replace(".", "__"))});
+                params.push({ "name": "ordering", "value": (this.sortColumn.replace(".", "__")) });
             }
         }
         return params;
     }
 
-    editAddress1(address){
+    editAddress1(address) {
         var modalInstance = this.modal.open({
-          animation: true,
-          templateUrl: 'app/addresses/address1Modal.html',
-          controller: 'Address1EditModalController as vm',
-          size: 'md',
-          resolve: {
-            address: function () {
-                return address;
+            animation: true,
+            templateUrl: 'app/addresses/address1Modal.html',
+            controller: 'Address1EditModalController as vm',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
             }
-          }
         });
         modalInstance.result.then((address) => {
             this.address1Service.saveAddress(address)
@@ -108,8 +108,8 @@ class Address1Controller {
         });
     }
 
-    nextUrl(url){
-        if(url) {
+    nextUrl(url) {
+        if (url) {
             url = url.match(/page=\d+/);
             if (url) {
                 url = url[0].match(/\d+/)[0];

@@ -31,21 +31,17 @@ export default class BaseService {
         }
     }
 
-
     /**
      * HTTP delete function
      *
        * @param {string} url Url string for api endpoint
-       * @param {Object} data Data that is being updated.
        * @param {Object} [headers] JSON object containing header options.
        * @returns Promise of http response.
      */
-    delete(url, data, headers = {}) {
+    delete(url, headers = {}) {
         this.addToken(headers);
-
-        return this.$http.delete(this.baseUrl + url, data, { headers: headers });
+        return this.$http.delete(this.baseUrl + url, { headers: headers });
     }
-
 
 	/**
 	 * HTTP get function

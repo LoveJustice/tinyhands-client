@@ -1,0 +1,31 @@
+<div class="container" ng-cloak="">
+        <h1>Activate Your Account</h1>
+        <div ng-show="activateAcctCtrl.invalidAccount">
+            <p>This account has already been activated or your activation key is invalid.  Please contact your administrator.</p>
+        </div>
+        <div id="leftDiv" class="col-xs-4 col-md-4 col-lg-4" ng-hide="activateAcctCtrl.invalidAccount">
+            <p ng-hide="activateAcctCtrl.nonMatchingPasswords"> Your account is almost ready &mdash; just enter a password.</p>
+            <p ng-show="activateAcctCtrl.nonMatchingPasswords" class="text-danger">Passwords do not match. Try again.</p>
+            <div class="row">
+                <div class="col-md-12 form-group" ng-class="{'has-error': activateAcctCtrl.nonMatchingPasswords}">
+                    <label>Password</label>
+                    <input type="password" class="form-control" placeholder="Password"
+                           ng-model="activateAcctCtrl.account.password1"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group" ng-class="{'has-error': activateAcctCtrl.nonMatchingPasswords}">
+                    <label>Re-enter Password</label>
+                    <input type="password" class="form-control" placeholder="Re-enter Password"
+                           ng-model="activateAcctCtrl.account.password2"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="clear btn btn-primary pull-left btn-lg" ng-click="activateAcctCtrl.update()">
+                        Update
+                    </button>
+                </div>
+            </div>
+        </div>
+</div>

@@ -14,9 +14,9 @@ export default class EventModalCtrl {
     }
 
     get repetition() {
-        if(this.event.is_repeat) {
+        if (this.event.is_repeat) {
             var message = this.event.repetition;
-            if(this.event.ends) {
+            if (this.event.ends) {
                 message += " until " + this.event.ends;
             }
             return message;

@@ -1,19 +1,19 @@
 export default class DashboardEventsController {
-    constructor ($scope, $uibModal, EventsService) {
+    constructor($scope, $uibModal, EventsService) {
         'ngInject';
         this.eventService = EventsService;
         this.modal = $uibModal;
 
-		this.loadEvents();
+        this.loadEvents();
     }
 
-	loadEvents() {
-		this.eventService.getDashboard().then( (promise) => {
-			this.days = promise.data;
-		});
-	}
+    loadEvents() {
+        this.eventService.getDashboard().then((promise) => {
+            this.days = promise.data;
+        });
+    }
 
-    showEventModal (event) {
+    showEventModal(event) {
         var modalPromise = this.modal.open({
             templateUrl: 'app/events/calendar/eventModal.html',
             controller: 'EventModalController',
@@ -27,7 +27,7 @@ export default class DashboardEventsController {
         });
 
         modalPromise.result.then(() => {
-            this.eventService.destroyEvent(event.id).then(() =>{
+            this.eventService.destroyEvent(event.id).then(() => {
                 window.location.reload();
             });
         });

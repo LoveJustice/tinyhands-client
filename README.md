@@ -5,15 +5,11 @@
 ### Codeship Status
 [ ![Codeship Status for tu-software-studio/tinyhands-client](https://codeship.com/projects/be6ab140-e41a-0133-4db8-3aa3f222b1f1/status?branch=develop)](https://codeship.com/projects/146238)
 
-### Front-End Installation
-1. `npm install -g gulp bower`
+### Front-End Setup
+1. `sudo npm install -g gulp bower`
 2. Install dependencies: `npm install`
 3. Install more dependencies: `bower install`
-
-#### Troubleshooting Installation
-- If `npm install -g` fails because of permission errors (it's most likely trying to install in `/usr/local`), run the following commands. This makes it so the global (`-g`) node packages are installed on your home directory instead of attempting to install it for the whole computer:
-  1. `echo 'prefix = ${HOME}/.npm-packages' >> ~/.npmrc`
-  2. `echo 'export PATH="$PATH:$HOME/.npm-packages/bin"' >> ~/.bashrc`
+4. `gulp serve` will start the local server and launch the application in your browser
 
 --------------------
 ### Developing
@@ -39,13 +35,6 @@
 `gulp build:local`    -> Build project and change rest endpoint url (BaseUrl) to local rest endpoint  
 `gulp build:develop`    -> Build project and change rest endpoint url (BaseUrl) to develop rest endpoint  
 `gulp build:master`    -> Build project and change rest endpoint url (BaseUrl) to master rest endpoint  
-
-#### Misc (Typically never called directly from Command Line)
-`gulp inject`	-> UNKNOWN  
-`gulp scripts`	-> UNKNOWN  
-`gulp scripts`  -> UNKNOWN  
-`gulp styles`	-> UNKNOWN  
-`gulp watch`	-> UNKNOWN  
 
 --------------------
 ### Frameworks Used

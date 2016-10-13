@@ -6,7 +6,7 @@ class LoginController {
     this.username = "";
     this.session = SessionService;
   }
-  
+
   attemptLogin() {
     this.session.attemptLogin(this.username, this.password);
   }

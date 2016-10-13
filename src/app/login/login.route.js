@@ -9,6 +9,15 @@ function loginRouteConfig ($stateProvider) {
           data: {
             requireLogin: false
           }
+        })
+        .state('password-reset', {
+          url: '/password-reset',
+          templateUrl: 'app/login/password-reset/password-reset.html',
+          controller: 'PasswordResetController',
+          controllerAs: 'pwReset',
+          data: {
+            requireLogin: false
+          }
         });
 }
 

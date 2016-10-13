@@ -4,7 +4,7 @@ export default class EventCalendarController {
         this.modal = $uibModal;
         this.uiCalendarConfig = uiCalendarConfig;
         this.EventsService = EventsService;
-    
+
         this.eventSources = [
             {
                 events: (start, end, timezone, callback) => {
@@ -21,12 +21,12 @@ export default class EventCalendarController {
     get calendarConfig() {
         return {
             header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			editable: false,
-			eventLimit: true,
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            editable: false,
+            eventLimit: true,
             eventClick: (event) => {
                 this.onCalendarEventClicked(event);
             },

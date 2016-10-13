@@ -1,15 +1,21 @@
 class LoginController {
-  constructor (SessionService) {
-    'ngInject';
+    constructor($state, toastr, SessionService) {
+        'ngInject';
 
-    this.password = "";
-    this.username = "";
-    this.session = SessionService;
-  }
+        this.password = "";
+        this.username = "";
+        this.$state = $state;
+        this.toastr = toastr;
+        this.session = SessionService;
+    }
 
-  attemptLogin() {
-    this.session.attemptLogin(this.username, this.password);
-  }
+    attemptLogin() {
+        this.session.attemptLogin(this.username, this.password).then(() => {
+            this.$state.go('dashboard');
+        }, (reason) => {
+            this.toastr.error(reason);
+        });
+    }
 }
 
 export default LoginController;

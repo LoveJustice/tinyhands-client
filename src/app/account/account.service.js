@@ -1,4 +1,4 @@
-export default class AccountService{
+export default class AccountService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
@@ -20,7 +20,7 @@ export default class AccountService{
         return this.service.put(`api/account/${id}/`, data);
     }
 
-    activateAccount(activationKey){
+    activateAccount(activationKey) {
         return this.service.get(`api/account/activate/${activationKey}/`);
     }
 
@@ -28,11 +28,11 @@ export default class AccountService{
         return this.service.post('api/account/', data);
     }
 
-    resendActivationEmail(id){
+    resendActivationEmail(id) {
         return this.service.post(`api/account/resend-activation-email/${id}/`);
     }
 
-    activateAccountPassword(activationKey, data){
+    activateAccountPassword(activationKey, data) {
         return this.service.post(`api/account/activate/${activationKey}/`, data);
     }
 

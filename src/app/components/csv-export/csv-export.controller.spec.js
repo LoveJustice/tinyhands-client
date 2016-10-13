@@ -1,11 +1,11 @@
 import CsvExportController from './csv-export.controller';
 
-describe('MDF Controller',() => {
+describe('MDF Controller', () => {
     let vm,
         $scope;
 
     beforeEach(inject(() => {
-        $scope = {"type": "", "buttonText": ""};
+        $scope = { "type": "", "buttonText": "" };
 
         vm = new CsvExportController($scope);
     }));

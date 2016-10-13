@@ -9,12 +9,12 @@ import Address2Service from './address2.service';
 import Address1Service from './address1.service';
 
 export default angular.module('tinyhands.Addresses', ['ui.router', 'tinyhands.Shared'])
-  .config(addressesRouteConfig)
+    .config(addressesRouteConfig)
 
-  .controller('Address1Controller', Address1Controller)
-  .controller('Address1EditModalController', Address1EditModalController)
-  .controller('Address2Controller', Address2Controller)
-  .controller('Address2EditModalController', Address2EditModalController)
+    .controller('Address1Controller', Address1Controller)
+    .controller('Address1EditModalController', Address1EditModalController)
+    .controller('Address2Controller', Address2Controller)
+    .controller('Address2EditModalController', Address2EditModalController)
 
-  .service('address1Service', Address1Service)
-  .service('address2Service', Address2Service);
+    .service('address1Service', Address1Service)
+    .service('address2Service', Address2Service);

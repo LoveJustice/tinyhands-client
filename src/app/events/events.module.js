@@ -10,7 +10,7 @@ import EventsService from './events.service';
 
 import timepicker from '../../../bower_components/ngTimepicker/src/js/ngTimepicker.js';
 
-export default angular.module('tinyhands.Events', ['ui.router', 'ui.bootstrap', 'ui.calendar', 'tinyhands.Shared','jkuri.timepicker'])
+export default angular.module('tinyhands.Events', ['ui.router', 'ui.bootstrap', 'ui.calendar', 'tinyhands.Shared', 'jkuri.timepicker'])
     .config(EventsRoutes)
     .constant('timepicker', timepicker)
 

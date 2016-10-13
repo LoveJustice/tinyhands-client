@@ -1,10 +1,10 @@
 export default class ConfirmButtonController {
     constructor($scope) {
         'ngInject';
-        if(typeof $scope.onClick === 'function') {
+        if (typeof $scope.onClick === 'function') {
             this.onClickCallback = $scope.onClick;
         }
-        if(typeof $scope.onConfirm === 'function') {
+        if (typeof $scope.onConfirm === 'function') {
             this.onConfirmCallback = $scope.onConfirm;
         }
         this.text = $scope.text;
@@ -13,36 +13,36 @@ export default class ConfirmButtonController {
         this.invisible = $scope.invisible;
         this.isFirstClick = true;
     }
-    
+
     get buttonText() {
-        if(this.isFirstClick) {
+        if (this.isFirstClick) {
             return this.text;
         } else {
             return this.confirmText;
         }
     }
-    
+
     onClick() {
-        if(this.isFirstClick) {
+        if (this.isFirstClick) {
             this.onFirstClick();
-        }else {
+        } else {
             this.onSecondClick();
         }
         this.isFirstClick = !this.isFirstClick;
     }
-    
+
     onFirstClick() {
-        if(this.onClickCallback) {
+        if (this.onClickCallback) {
             this.onClickCallback();
         }
     }
-    
+
     onSecondClick() {
-        if(this.onConfirmCallback) {
+        if (this.onConfirmCallback) {
             this.onConfirmCallback();
         }
     }
-    
+
     onCancel() {
         this.isFirstClick = true;
     }

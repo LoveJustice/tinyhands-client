@@ -15,14 +15,14 @@ describe('UnsavedChangesModalController', () => {
             expect($uibModalInstance.close).toHaveBeenCalledWith(true);
         });
     });
-    
+
     describe('when discarding and continueing', () => {
         it(`should close with false`, () => {
             controller.discardAndContinue();
             expect($uibModalInstance.close).toHaveBeenCalledWith(false);
         });
     });
-    
+
     describe('when canceling navigation', () => {
         it(`should call dismiss`, () => {
             controller.cancel();

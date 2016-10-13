@@ -1,7 +1,7 @@
 import constants from '../../constants';
 
 export default class CsvExportController {
-    constructor ($scope) {
+    constructor($scope) {
         'ngInject';
 
         this.href = this.typeToUrl($scope.type);

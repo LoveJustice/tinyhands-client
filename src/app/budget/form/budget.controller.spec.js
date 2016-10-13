@@ -1,7 +1,6 @@
 import Constants from './constants.js';
 import BudgetService from './budget.service';
 import BudgetController from './budget.controller';
-import UtilService from './../../utils/util.service';
 
 
 describe('BudgetController', () => {
@@ -12,7 +11,8 @@ describe('BudgetController', () => {
         utils;
 
     beforeEach(inject(($http) => {
-        utils = new UtilService();
+        utils = jasmine.createSpyObj('mockUtilService', ['handleErrors', 'validId']);
+        utils.validId.and.callFake(() => { return true; });
         stateParams = { borderStationId: 123, id: 1, isViewing: "true" };
         budgetService = new BudgetService($http, utils);
         vm = new BudgetController(state, stateParams, budgetService, utils);
@@ -23,15 +23,15 @@ describe('BudgetController', () => {
             let budgetFormPath = 'app/budget/form/components/';
             let sections = {
                 allSections: [{ name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
-                    { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
-                    { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
-                    { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
-                    { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
-                    { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
-                    { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
-                    { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
-                    { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
-                    { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }]
+                { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
+                { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
+                { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
+                { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
+                { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
+                { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
+                { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
+                { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
+                { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }]
             };
             expect(vm.sections).toEqual(sections);
         });

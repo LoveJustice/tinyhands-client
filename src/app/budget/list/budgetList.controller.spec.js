@@ -1,7 +1,7 @@
 import BudgetListController from './budgetList.controller';
 import BudgetListService from './budgetList.service';
 
-describe('budgetList Controller',() => {
+describe('budgetList Controller', () => {
     let vm;
 
     beforeEach(inject(($http) => {
@@ -13,7 +13,7 @@ describe('budgetList Controller',() => {
     just services. We only want to test local variables.*/
 
     describe('function constructor', () => {
-        
+
         it('expect getBudgetList to be called', () => {
             spyOn(vm, 'getBudgetList');
             vm.constructor();
@@ -21,14 +21,18 @@ describe('budgetList Controller',() => {
         });
 
     });
-    
+
     describe('function listofBudgets', () => {
-        let response = {'data':{'results':[{'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'}, 
-            {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
-            {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
-            {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'},
-            {'month_year':'0001 2000', 'date_time_entered':'123', 'date_time_last_updated':'123'} ], 'next':'page2'}};    
-        
+        let response = {
+            'data': {
+                'results': [{ 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
+                { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
+                { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
+                { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
+                { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' }], 'next': 'page2'
+            }
+        };
+
         describe('function getBudgetList', () => {
             beforeEach(() => {
                 vm.service.getBudgetList = () => {
@@ -39,7 +43,7 @@ describe('budgetList Controller',() => {
                     };
                 };
             });
-            
+
             describe('tests that getBudgetList sets responses', () => {
                 it('listOfBudgets should be the tested response[results]', () => {
                     vm.getBudgetList();
@@ -51,7 +55,7 @@ describe('budgetList Controller',() => {
                     expect(vm.nextBudgetPage).toEqual(response.data.next);
                 });
             });
-            
+
             describe('tests all possible combinations of sortValue', () => {
                 it('tests that sortValue gets set', () => {
                     vm.getBudgetList(null, 'month_year');
@@ -78,46 +82,46 @@ describe('budgetList Controller',() => {
                 });
             });
         });
-        
-        describe('function getNextBudgetPage', () => {   
-            
-            beforeEach( () => {
-            
-            vm.service.getBudgetList = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
+
+        describe('function getNextBudgetPage', () => {
+
+            beforeEach(() => {
+
+                vm.service.getBudgetList = () => {
+                    return {
+                        then: (f) => {
+                            f(response);
+                        }
+                    };
                 };
-            };
-            vm.getBudgetList();
-                 
-            vm.service.getNextBudgetPage = () => {
-                return {
-                    then: (f) => {
-                        f(response);
-                    }
+                vm.getBudgetList();
+
+                vm.service.getNextBudgetPage = () => {
+                    return {
+                        then: (f) => {
+                            f(response);
+                        }
+                    };
                 };
-            };
-            
-            vm.nextBudgetPage = true;
-            vm.getNextBudgetPage();
+
+                vm.nextBudgetPage = true;
+                vm.getNextBudgetPage();
             });
-           
-           it('nextBudgetPage should be the tested response[next]', () => {
+
+            it('nextBudgetPage should be the tested response[next]', () => {
                 expect(vm.nextBudgetPage).toEqual(response.data.next);
             });
-            
+
             it('listOfBudgets should be the tested response[results]', () => {
                 expect(vm.listOfBudgets).toEqual(response.data.results);
             });
-            
+
             it('size of listOfBudgets after the function is called should equal 80 based on the tests', () => {
-                expect(vm.listOfBudgets.length).toEqual(40); 
+                expect(vm.listOfBudgets.length).toEqual(40);
             });
-            
+
         });
-        
+
         describe('function removeBudget', () => {
             let array = [
                 {
@@ -169,60 +173,60 @@ describe('budgetList Controller',() => {
                     "date_time_last_updated": "2016-03-03T20:20:21.503480Z"
                 }
             ];
-            
+
             it('tests that budgetRemoved set to true by the second conditional', () => {
-                let budget = {budgetRemoved:false};
+                let budget = { budgetRemoved: false };
                 vm.removeBudget([], budget);
                 expect(budget.budgetRemoved).toBe(true);
             });
-            
+
             it('tests that budgetRemoved fails due to 403 error', () => {
-                let response = {status: 403};
+                let response = { status: 403 };
                 vm.service.deleteBorderStationBudget = () => {
-                    return {then: (f) => { f(response) }};
+                    return { then: (f) => { f(response) } };
                 };
                 spyOn(window.toastr, 'error');
-                vm.removeBudget([], {budgetRemoved: true});
-                
+                vm.removeBudget([], { budgetRemoved: true });
+
                 expect(window.toastr.error).toHaveBeenCalledWith("Unable to Delete Budget Form");
             });
-            
+
             it('tests that budgetRemoved succeeds with a 200 status', () => {
-                let response = {status: 200};
+                let response = { status: 200 };
                 vm.service.deleteBorderStationBudget = () => {
-                    return {then: (f) => { f(response) }};
+                    return { then: (f) => { f(response) } };
                 };
                 vm.listOfBudgets = array;
                 spyOn(window.toastr, 'success');
-                vm.removeBudget([], {budgetRemoved: true});
-                
+                vm.removeBudget([], { budgetRemoved: true });
+
                 expect(window.toastr.success).toHaveBeenCalledWith("Form Successfully Deleted");
             });
-            
+
             it('tests that budgetRemoved succeeds with a 204 status', () => {
-                let response = {status: 204};
+                let response = { status: 204 };
                 vm.service.deleteBorderStationBudget = () => {
-                    return {then: (f) => { f(response) }};
+                    return { then: (f) => { f(response) } };
                 };
                 vm.listOfBudgets = array;
                 spyOn(window.toastr, 'success');
-                vm.removeBudget([], {budgetRemoved: true});
-                
+                vm.removeBudget([], { budgetRemoved: true });
+
                 expect(window.toastr.success).toHaveBeenCalledWith("Form Successfully Deleted");
             });
-            
+
             it('tests that the listOfBudgets is correctly spliced to remove the selected budget', () => {
-                let response = {status: 200};
+                let response = { status: 200 };
                 vm.service.deleteBorderStationBudget = () => {
-                    return {then: (f) => { f(response) }};
+                    return { then: (f) => { f(response) } };
                 };
                 vm.listOfBudgets = array;
                 spyOn(vm.listOfBudgets, 'splice');
-                vm.removeBudget([], {budgetRemoved: true});
+                vm.removeBudget([], { budgetRemoved: true });
                 expect(vm.listOfBudgets.splice).toHaveBeenCalledWith(-1, 1);
             });
         });
-        
+
     });
 
 });

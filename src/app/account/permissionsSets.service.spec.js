@@ -5,7 +5,7 @@ describe('PermissionsSetsService', () => {
         mockBaseService;
 
     let id = 234,
-    data = {id: 'dataId'};
+        data = { id: 'dataId' };
 
     beforeEach(() => {
         mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'post', 'put', 'delete']);
@@ -15,7 +15,7 @@ describe('PermissionsSetsService', () => {
     describe('getPermissions', () => {
         it('should call BaseService.get with correct url', () => {
             let url = 'api/defaultPermissionsSet/';
-            
+
             service.getPermissions();
 
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -25,7 +25,7 @@ describe('PermissionsSetsService', () => {
     describe('getPermission', () => {
         it('should call BaseService.get with correct url', () => {
             let url = `api/defaultPermissionsSet/${id}/`;
-            
+
             service.getPermission(id);
 
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -35,9 +35,9 @@ describe('PermissionsSetsService', () => {
     describe('create', () => {
         it('should call BaseService.post with correct url and data', () => {
             let url = 'api/defaultPermissionsSet/';
-            
+
             service.create(data);
-    
+
             expect(mockBaseService.post).toHaveBeenCalledWith(url, data);
         });
     });
@@ -55,7 +55,7 @@ describe('PermissionsSetsService', () => {
     describe('destroy', () => {
         it('should call BaseService.delete with correct url', () => {
             let url = `api/defaultPermissionsSet/${id}/`;
-            
+
             service.destroy(id);
 
             expect(mockBaseService.delete).toHaveBeenCalledWith(url);

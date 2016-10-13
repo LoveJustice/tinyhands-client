@@ -1,4 +1,4 @@
-export default class EventsService{
+export default class EventsService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;

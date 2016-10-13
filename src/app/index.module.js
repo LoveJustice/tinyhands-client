@@ -13,10 +13,10 @@ import EventsModule from './events/events.module';
 import PhotoExportModule from './components/photo-export/photo-export.module';
 /* jshint ignore:end */
 
+import constants from './constants.js';
 import config from './index.config';
 import routerConfig from './index.route';
 import httpProviderConfig from './httpProvider.config';
-import runBlock from './index.run';
 
 import NavbarDirective from './components/navbar/navbar.directive';
 import CsvExportDirective from './components/csv-export/csv-export.directive';
@@ -32,13 +32,14 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     'tinyhands.Login',
     'tinyhands.VIF',
     'tinyhands.PhotoExport',
-    ])
+])
     .constant('toastr', toastr)
     .constant('moment', moment)
+    .constant('constants', constants)
 
     .config(config)
     .config(httpProviderConfig)
     .config(routerConfig)
-    .run(runBlock)
+
     .directive('csvexport', CsvExportDirective)
     .directive('navbar', NavbarDirective);

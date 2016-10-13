@@ -4,6 +4,10 @@ export default class DashboardEventsController {
         this.eventService = EventsService;
         this.modal = $uibModal;
 
+        this.loadEvents();
+    }
+
+    loadEvents() {
         this.eventService.getDashboard().then((promise) => {
             this.days = promise.data;
         });
@@ -22,11 +26,10 @@ export default class DashboardEventsController {
             }
         });
 
-        modalPromise.result.then(() => { }, (reason) => {
-            if (reason === 'delete') {
-                this.eventService.destroyEvent(event.id);
+        modalPromise.result.then(() => {
+            this.eventService.destroyEvent(event.id).then(() => {
                 window.location.reload();
-            }
+            });
         });
     }
 }

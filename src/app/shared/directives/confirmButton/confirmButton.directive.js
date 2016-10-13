@@ -16,6 +16,6 @@ export default function ConfirmButton() {
         restrict: 'E',
         templateUrl: 'app/shared/directives/confirmButton/confirmButton.html',
     };
-    
+
     return directive;
 }

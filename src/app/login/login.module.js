@@ -3,6 +3,6 @@ import loginRouteConfig from './login.route';
 import LoginController from './login.controller';
 
 export default angular.module('tinyhands.Login', ['ui.router', 'tinyhands.Shared'])
-  .config(loginRouteConfig)
+    .config(loginRouteConfig)
 
-  .controller('LoginController', LoginController);
+    .controller('LoginController', LoginController);

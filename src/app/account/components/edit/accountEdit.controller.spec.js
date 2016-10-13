@@ -1,12 +1,12 @@
 import AccountEditController from './accountEdit.controller';
 
 describe('AccountEditController', () => {
-    
+
     let controller,
         rootScope,
         $q,
         mockState,
-        mockStateParams,    
+        mockStateParams,
         mockAccountService,
         mockPermissionsSetService,
         mockToastr,
@@ -18,11 +18,11 @@ describe('AccountEditController', () => {
         $q = _$q_;
         rootScope = $rootScope;
         mockState = jasmine.createSpyObj('state', ['go']);
-        
-        mockAccountService = jasmine.createSpyObj('AccountService', ['getAccount','create','update']);
+
+        mockAccountService = jasmine.createSpyObj('AccountService', ['getAccount', 'create', 'update']);
         mockAccountService.getAccount.and.callFake((id) => {
-            if(id == 100) {
-                return $q.reject({status: 404});
+            if (id == 100) {
+                return $q.reject({ status: 404 });
             }
             getAccountResponse = {
                 data: {
@@ -43,7 +43,7 @@ describe('AccountEditController', () => {
         });
 
         mockPermissionsSetService = jasmine.createSpyObj('PermissionsSetService', ['getPermission', 'getPermissions']);
-        getPermissionsResponse = {data: {results: [{id: 1, name: 'Foo'}]}};
+        getPermissionsResponse = { data: { results: [{ id: 1, name: 'Foo' }] } };
         mockPermissionsSetService.getPermissions.and.callFake(() => {
             return $q.resolve(getPermissionsResponse);
         });
@@ -60,21 +60,21 @@ describe('AccountEditController', () => {
 
         mockToastr = jasmine.createSpyObj('toastr', ['success']);
 
-        mockStateParams = {id: 2};
-            
+        mockStateParams = { id: 2 };
+
         controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockPermissionsSetService, mockToastr);
     }));
 
     describe('when creating a new account', () => {
         beforeEach(() => {
-            mockStateParams = {id: 'create'};
+            mockStateParams = { id: 'create' };
             controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockPermissionsSetService, mockToastr);
         });
 
         describe('title', () => {
             it('should return "Create Account"', () => {
                 expect(controller.title).toEqual("Create Account");
-            });    
+            });
         });
 
         describe('saveButtonText', () => {
@@ -102,7 +102,7 @@ describe('AccountEditController', () => {
         });
     });
 
-    describe('when editing an account', () => {        
+    describe('when editing an account', () => {
 
         describe('title', () => {
             it('should return empty string when account is not loaded', () => {
@@ -112,7 +112,7 @@ describe('AccountEditController', () => {
             it("should return 'Edit Foo Bar's Account'", () => {
                 rootScope.$apply();
                 expect(controller.title).toEqual("Edit Foo Bar's Account");
-            });    
+            });
         });
 
         describe('saveButtonText', () => {
@@ -198,8 +198,8 @@ describe('AccountEditController', () => {
 
         it('should apply permissions to account', () => {
             spyOn(controller, 'applyDesignationToAccount');
-            let id = 2;            
-            
+            let id = 2;
+
             controller.onUserDesignationChanged(id)
             rootScope.$apply();
 
@@ -236,22 +236,22 @@ describe('AccountEditController', () => {
 
         beforeEach(() => {
             controller.account = {
-                    id: 2,
-                    email: 'foo@bar.org',
-                    first_name: 'Foo',
-                    last_name: 'Bar',
-                    user_designation: 4
-                };
+                id: 2,
+                email: 'foo@bar.org',
+                first_name: 'Foo',
+                last_name: 'Bar',
+                user_designation: 4
+            };
         })
 
         describe('when checkRequiredFieldsHaveValue returns false', () => {
             it('should not update or create account', () => {
-                controller.account = {id: 2};
+                controller.account = { id: 2 };
 
                 controller.updateOrCreate();
 
                 expect(mockAccountService.create).not.toHaveBeenCalled();
-                expect(mockAccountService.update).not.toHaveBeenCalled();                
+                expect(mockAccountService.update).not.toHaveBeenCalled();
             });
         });
 
@@ -269,14 +269,14 @@ describe('AccountEditController', () => {
             it('should update account through AccountService', () => {
                 controller.updateOrCreate();
 
-                expect(mockAccountService.update).toHaveBeenCalledWith(controller.account.id, controller.account);                
+                expect(mockAccountService.update).toHaveBeenCalledWith(controller.account.id, controller.account);
             });
 
             describe('and account update successful', () => {
                 it('should show successful toast message', () => {
                     controller.updateOrCreate();
                     rootScope.$apply();
-                    
+
                     expect(mockToastr.success).toHaveBeenCalledWith("Account Updated");
                 });
 
@@ -290,7 +290,7 @@ describe('AccountEditController', () => {
                 it('should navigate to list of accounts', () => {
                     controller.updateOrCreate();
                     rootScope.$apply();
-                    
+
                     expect(mockState.go).toHaveBeenCalledWith('accounts.list');
                 });
             });
@@ -300,7 +300,7 @@ describe('AccountEditController', () => {
 
                 beforeEach(() => {
                     mockAccountService.update.and.callFake((id, account) => {
-                        return $q.reject({data: {email: [error]}});
+                        return $q.reject({ data: { email: [error] } });
                     });
                 });
 
@@ -328,14 +328,14 @@ describe('AccountEditController', () => {
             it('should update account through AccountService', () => {
                 controller.updateOrCreate();
 
-                expect(mockAccountService.create).toHaveBeenCalledWith(controller.account);                
+                expect(mockAccountService.create).toHaveBeenCalledWith(controller.account);
             });
 
             describe('and account creation successful', () => {
                 it('should show successful toast message', () => {
                     controller.updateOrCreate();
                     rootScope.$apply();
-                    
+
                     expect(mockToastr.success).toHaveBeenCalledWith("Account Created");
                 });
 
@@ -349,7 +349,7 @@ describe('AccountEditController', () => {
                 it('should navigate to list of accounts', () => {
                     controller.updateOrCreate();
                     rootScope.$apply();
-                    
+
                     expect(mockState.go).toHaveBeenCalledWith('accounts.list');
                 });
             });
@@ -359,7 +359,7 @@ describe('AccountEditController', () => {
 
                 beforeEach(() => {
                     mockAccountService.create.and.callFake((account) => {
-                        return $q.reject({data: {email: [error]}});
+                        return $q.reject({ data: { email: [error] } });
                     });
                 });
 
@@ -384,8 +384,8 @@ describe('AccountEditController', () => {
     describe('checkRequiredFieldsHaveValue', () => {
         it('should reset errors', () => {
             spyOn(controller, 'resetErrors');
-            controller.account = {id: 2, user_designation: 2};
-            
+            controller.account = { id: 2, user_designation: 2 };
+
 
             controller.checkRequiredFieldsHaveValue();
 
@@ -394,7 +394,7 @@ describe('AccountEditController', () => {
 
         describe('when account has no email', () => {
             it('should set error on email', () => {
-                controller.account = {id: 2, user_designation: 2};
+                controller.account = { id: 2, user_designation: 2 };
 
                 controller.checkRequiredFieldsHaveValue();
 
@@ -402,7 +402,7 @@ describe('AccountEditController', () => {
             });
 
             it('should return false', () => {
-                controller.account = {id: 2, user_designation: 2};
+                controller.account = { id: 2, user_designation: 2 };
 
                 let result = controller.checkRequiredFieldsHaveValue();
 
@@ -412,7 +412,7 @@ describe('AccountEditController', () => {
 
         describe('when account has no user designation', () => {
             it('should set error on user designation', () => {
-                controller.account = {id: 2, email: 'foo@bar.org'};
+                controller.account = { id: 2, email: 'foo@bar.org' };
 
                 controller.checkRequiredFieldsHaveValue();
 
@@ -420,7 +420,7 @@ describe('AccountEditController', () => {
             });
 
             it('should return false', () => {
-                controller.account = {id: 2, email: 'foo@bar.org'};
+                controller.account = { id: 2, email: 'foo@bar.org' };
 
                 let result = controller.checkRequiredFieldsHaveValue();
 
@@ -430,7 +430,7 @@ describe('AccountEditController', () => {
 
         describe('when all required fields filled in', () => {
             it('should return true', () => {
-                controller.account = {id: 2, email: 'foo@bar.org', user_designation: 3};
+                controller.account = { id: 2, email: 'foo@bar.org', user_designation: 3 };
 
                 let result = controller.checkRequiredFieldsHaveValue();
 
@@ -438,7 +438,7 @@ describe('AccountEditController', () => {
             });
 
             it('should have no error on user designation', () => {
-                controller.account = {id: 2, email: 'foo@bar.org', user_designation: 3};
+                controller.account = { id: 2, email: 'foo@bar.org', user_designation: 3 };
 
                 controller.checkRequiredFieldsHaveValue();
 
@@ -447,19 +447,19 @@ describe('AccountEditController', () => {
         });
 
         it('should have no error on email', () => {
-                controller.account = {id: 2, email: 'foo@bar.org', user_designation: 3};
-            
-                controller.checkRequiredFieldsHaveValue();
+            controller.account = { id: 2, email: 'foo@bar.org', user_designation: 3 };
 
-                expect(controller.emailError).toEqual('');
-            });
+            controller.checkRequiredFieldsHaveValue();
+
+            expect(controller.emailError).toEqual('');
+        });
 
     });
 
     describe('resetErrors', () => {
         it('should set emailError to empty string', () => {
             controller.emailError = "Error";
-            
+
             controller.resetErrors();
 
             expect(controller.emailError).toEqual('');
@@ -467,7 +467,7 @@ describe('AccountEditController', () => {
 
         it('should set userDesignationError to empty string', () => {
             controller.userDesignationError = "Error";
-            
+
             controller.resetErrors();
 
             expect(controller.userDesignationError).toEqual('');

@@ -13,15 +13,15 @@ import DashboardEventsDirective from './events/dashboardEvents.directive';
 import TallyService from './tally/tally.service';
 
 export default angular.module('tinyhands.Dashboard', ['uiGmapgoogle-maps', 'ui.router', 'tinyhands.Shared', 'tinyhands.Events'])
-  .config(dashboardRouteConfig)
-  .config(googleMapsConfig) // Pass google maps config
+    .config(dashboardRouteConfig)
+    .config(googleMapsConfig) // Pass google maps config
 
-  .controller('DashboardController', DashboardController)
-  .controller('DashboardEventsController', DashboardEventsController)
-  .controller('TallyController', TallyController)
+    .controller('DashboardController', DashboardController)
+    .controller('DashboardEventsController', DashboardEventsController)
+    .controller('TallyController', TallyController)
 
-  .directive('googlemap', MapDirective)
-  .directive('tally', TallyDirective)
-  .directive('dashevents', DashboardEventsDirective)
+    .directive('googlemap', MapDirective)
+    .directive('tally', TallyDirective)
+    .directive('dashevents', DashboardEventsDirective)
 
-  .service('TallyService', TallyService);
+    .service('TallyService', TallyService);

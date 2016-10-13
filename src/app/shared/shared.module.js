@@ -12,7 +12,7 @@ export default angular.module('tinyhands.Shared', [])
         };
     })
     .constant('RequireLogin', RequireLogin)
-    
+
     .service('BaseService', BaseService)
     .service('SessionService', SessionService)
     .service('UtilService', UtilService)

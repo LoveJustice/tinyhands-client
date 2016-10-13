@@ -1,6 +1,6 @@
 import PhotoExportModalController from './photo-export-modal.controller';
 
-describe('Photo Export Controller',() => {
+describe('Photo Export Controller', () => {
     let vm,
         $uibModalInstance,
         $window,

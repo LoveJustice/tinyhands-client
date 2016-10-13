@@ -5,13 +5,13 @@ export default class AccountEditController {
         this.AccountService = AccountService;
         this.PermissionsSetsService = PermissionsSetsService;
         this.toastr = toastr;
-        this.account = null;        
-        this.resetErrors();        
-        if($stateParams.id !== 'create') {
+        this.account = null;
+        this.resetErrors();
+        if ($stateParams.id !== 'create') {
             this.isEditingAccount = true;
             this.retrieveAccount($stateParams.id);
-        }else {
-            this.isEditingAccount = false;            
+        } else {
+            this.isEditingAccount = false;
             this.account = {};
         }
         this.permissions = [];
@@ -22,9 +22,9 @@ export default class AccountEditController {
     }
 
     get title() {
-        if(this.isEditingAccount && this.account) {
+        if (this.isEditingAccount && this.account) {
             return `Edit ${this.account.first_name} ${this.account.last_name}'s Account`;
-        } else if(this.isEditingAccount) {
+        } else if (this.isEditingAccount) {
             return '';
         } else {
             return 'Create Account';
@@ -32,11 +32,11 @@ export default class AccountEditController {
     }
 
     get saveButtonText() {
-        if(this.isEditingAccount && this.saveButtonClicked) {
+        if (this.isEditingAccount && this.saveButtonClicked) {
             return 'Updating';
-        } else if(this.isEditingAccount) {
+        } else if (this.isEditingAccount) {
             return 'Update';
-        } else if(this.saveButtonClicked) {
+        } else if (this.saveButtonClicked) {
             return 'Creating';
         } else {
             return 'Create';
@@ -44,59 +44,59 @@ export default class AccountEditController {
     }
 
     get saveButtonStyle() {
-        if(this.saveButtonClicked) {
+        if (this.saveButtonClicked) {
             return 'btn-success';
         } else {
             return 'btn-primary';
         }
     }
 
-    getPermissions(){
+    getPermissions() {
         this.PermissionsSetsService.getPermissions().then((result) => {
             this.permissions = result.data.results;
         });
     }
-    
-    retrieveAccount(id){
+
+    retrieveAccount(id) {
         this.AccountService.getAccount(id).then((result) => {
             this.account = result.data;
         }, (error) => {
-            if (error.status === 404){
+            if (error.status === 404) {
                 this.$state.go('accountNotFound');
             }
         });
     }
-    
+
     onUserDesignationChanged(permissionSetId) {
-        if (permissionSetId){
+        if (permissionSetId) {
             this.PermissionsSetsService.getPermission(permissionSetId).then((permissions) => {
                 this.applyDesignationToAccount(this.account, permissions.data);
             });
         }
     }
-    
+
     applyDesignationToAccount(account, designation) {
         var designationKeys = Object.keys(designation);
         designationKeys.forEach((attribute) => {
-            if (attribute.substring(0,10) === "permission") {
+            if (attribute.substring(0, 10) === "permission") {
                 account[attribute] = designation[attribute];
             }
         });
     }
-    
+
     updateOrCreate() {
-        if(!this.checkRequiredFieldsHaveValue()){
+        if (!this.checkRequiredFieldsHaveValue()) {
             return;
         }
         this.saveButtonClicked = true;
         var call;
-        if(this.isEditingAccount) {
+        if (this.isEditingAccount) {
             call = this.AccountService.update(this.account.id, this.account);
-        }else {
-            call= this.AccountService.create(this.account);
+        } else {
+            call = this.AccountService.create(this.account);
         }
         call.then(() => {
-            if(this.isEditingAccount){
+            if (this.isEditingAccount) {
                 this.toastr.success("Account Updated");
             } else {
                 this.toastr.success("Account Created");
@@ -114,13 +114,13 @@ export default class AccountEditController {
     checkRequiredFieldsHaveValue() {
         this.resetErrors();
         let areRequiredFieldsFilledIn = true;
-        if(!this.account.email) {
+        if (!this.account.email) {
             this.emailError = 'An email is required.';
             areRequiredFieldsFilledIn = false;
         }
-        if(!this.account.user_designation){
+        if (!this.account.user_designation) {
             this.userDesignationError = 'A user designation is required.';
-            areRequiredFieldsFilledIn = false;            
+            areRequiredFieldsFilledIn = false;
         }
         return areRequiredFieldsFilledIn;
     }

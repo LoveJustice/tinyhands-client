@@ -13,8 +13,10 @@ describe('EventCalendarController', () => {
         $q = _$q_;
         rootScope = $rootScope
         mockUibModal = jasmine.createSpyObj('MockUibModal', ['open']);
-        mockUiCalendarConfig = {calendars: 
-            {eventCalendar: 
+        mockUiCalendarConfig = {
+            calendars:
+            {
+                eventCalendar:
                 jasmine.createSpyObj('eventCalendar', ['fullCalendar'])
             }
         };
@@ -25,8 +27,8 @@ describe('EventCalendarController', () => {
 
     describe('onCalendarEventClicked', () => {
         it('should open modal', () => {
-            let event = {id: 1, name: 'Foo'};
-            mockUibModal.open.and.callFake(() => {return {result: $q.resolve()}});
+            let event = { id: 1, name: 'Foo' };
+            mockUibModal.open.and.callFake(() => { return { result: $q.resolve() } });
 
             target.onCalendarEventClicked(event);
 
@@ -35,9 +37,9 @@ describe('EventCalendarController', () => {
 
         describe('when event deletion confirmed', () => {
             it('should delete event', () => {
-                let event = {id: 1, name: 'Foo'};
-                mockUibModal.open.and.callFake(() => {return {result: $q.resolve()}});
-                mockEventsService.destroyEvent.and.callFake(() => {return $q.resolve()});
+                let event = { id: 1, name: 'Foo' };
+                mockUibModal.open.and.callFake(() => { return { result: $q.resolve() } });
+                mockEventsService.destroyEvent.and.callFake(() => { return $q.resolve() });
 
                 target.onCalendarEventClicked(event);
                 rootScope.$apply();
@@ -47,9 +49,9 @@ describe('EventCalendarController', () => {
 
             describe('and event deleted', () => {
                 it('should remove event from calendar', () => {
-                    let event = {id: 1, name: 'Foo'};
-                    mockUibModal.open.and.callFake(() => {return {result: $q.resolve()}});
-                    mockEventsService.destroyEvent.and.callFake(() => {return $q.resolve()});
+                    let event = { id: 1, name: 'Foo' };
+                    mockUibModal.open.and.callFake(() => { return { result: $q.resolve() } });
+                    mockEventsService.destroyEvent.and.callFake(() => { return $q.resolve() });
 
                     target.onCalendarEventClicked(event);
                     rootScope.$apply();

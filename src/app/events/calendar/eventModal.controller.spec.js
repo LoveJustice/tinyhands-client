@@ -2,11 +2,11 @@ import EventModalController from './eventModal.controller';
 
 describe('EventModalController', () => {
     let target,
-        event, 
+        event,
         mockUibModalInstance;
 
-    beforeEach(()=> {
-        event = {id:1, name: 'Foo'};
+    beforeEach(() => {
+        event = { id: 1, name: 'Foo' };
         mockUibModalInstance = jasmine.createSpyObj('MockUibModalInstance', ['close', 'dismiss'])
 
         target = new EventModalController(mockUibModalInstance, event);
@@ -16,7 +16,7 @@ describe('EventModalController', () => {
         it('should return correct start date and time', () => {
             event = {
                 start_date: "2016-02-01",
-                start_time: "12:34:56"    
+                start_time: "12:34:56"
             };
             target = new EventModalController(mockUibModalInstance, event);
 
@@ -28,7 +28,7 @@ describe('EventModalController', () => {
         it('should return correct end date and time', () => {
             event = {
                 end_date: "2016-02-01",
-                end_time: "12:34:56"    
+                end_time: "12:34:56"
             };
             target = new EventModalController(mockUibModalInstance, event);
 

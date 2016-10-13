@@ -1,6 +1,6 @@
 export default class ModalController {
     constructor($scope, $uibModalInstance, eventTitle) {
-	    'ngInject';
+        'ngInject';
 
         this.modalInstance = $uibModalInstance;
         this.eventTitle = eventTitle;

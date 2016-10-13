@@ -32,7 +32,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     'tinyhands.Login',
     'tinyhands.VIF',
     'tinyhands.PhotoExport',
-    ])
+])
     .constant('toastr', toastr)
     .constant('moment', moment)
     .constant('constants', constants)
@@ -40,6 +40,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     .config(config)
     .config(httpProviderConfig)
     .config(routerConfig)
-    
+
     .directive('csvexport', CsvExportDirective)
     .directive('navbar', NavbarDirective);

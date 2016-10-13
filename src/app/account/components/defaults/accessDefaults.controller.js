@@ -8,51 +8,51 @@ export default class AccessDefaultsController {
         this.$state = $state;
         this.PermissionsSetsService = PermissionsSetsService;
         this.toastr = toastr;
-        
+
         this.permissions = {};
         this.saveButtonClicked = false;
-                
+
         this.getPermissions();
-        
+
         this.createOnStateChangeListener();
     }
-    
+
     get saveButtonText() {
-        if(this.saveButtonClicked) {
+        if (this.saveButtonClicked) {
             return 'Saving...';
-        } else if(this.permissions.hasChanges) {
+        } else if (this.permissions.hasChanges) {
             return 'Save All';
-        }else {
+        } else {
             return 'Saved';
         }
     }
-    
+
     get saveButtonStyle() {
-        if(this.saveButtonClicked) {
+        if (this.saveButtonClicked) {
             return 'btn-success';
         } else {
             return 'btn-primary';
         }
     }
-    
-    getPermissions(){
+
+    getPermissions() {
         this.PermissionsSetsService.getPermissions().then((result) => {
-            this.permissions = new ChangesArray(result.data.results, angular.copy, (set1,set2) => {
-                if(set1.id !== set2.id || set1.name !== set2.name) {
+            this.permissions = new ChangesArray(result.data.results, angular.copy, (set1, set2) => {
+                if (set1.id !== set2.id || set1.name !== set2.name) {
                     return false;
                 }
-                let permissions = Object.keys(set1).filter((key) => {return key.substring(0,10) === 'permission';});
-                for(let i = 0; i < permissions.length; i++) {
-                   if(set1[permissions[i]] !== set2[permissions[i]]) {
-                       return false;
-                   }
+                let permissions = Object.keys(set1).filter((key) => { return key.substring(0, 10) === 'permission'; });
+                for (let i = 0; i < permissions.length; i++) {
+                    if (set1[permissions[i]] !== set2[permissions[i]]) {
+                        return false;
+                    }
                 }
                 return true;
             });
         });
     }
-    
-    createOnStateChangeListener(){
+
+    createOnStateChangeListener() {
         this.$scope.$on('$stateChangeStart', (e, toState) => {
             if (this.permissions.hasChanges) {
                 e.preventDefault();
@@ -60,16 +60,16 @@ export default class AccessDefaultsController {
             }
         });
     }
-    
+
     getStyling(attribute) {
-        if (attribute){
+        if (attribute) {
             return 'btn btn-success';
         }
         else {
             return 'btn btn-danger';
         }
     }
-    
+
     addAnother() {
         this.permissions.add({
             is_used_by_accounts: false
@@ -80,11 +80,11 @@ export default class AccessDefaultsController {
     removePermissionRole(index) {
         this.permissions.remove(index);
     }
-    
+
     discardChanges() {
         this.permissions.discardChanges();
     }
-    
+
     saveAll() {
         this.saveButtonClicked = true;
         let promises = [];
@@ -97,8 +97,8 @@ export default class AccessDefaultsController {
         this.permissions.removedItems.forEach((set) => {
             promises.push(this.removeSet(set));
         });
-        
-        return this.$q.all(promises).then( () => {
+
+        return this.$q.all(promises).then(() => {
             this.saveButtonClicked = false;
             this.permissions.saveChanges();
         }, () => {
@@ -106,7 +106,7 @@ export default class AccessDefaultsController {
             this.toastr.error("One or more Designations could not be saved");
         });
     }
-    
+
     createSet(set) {
         return this.PermissionsSetsService.create(set).then((response) => {
             set.id = response.data.id;
@@ -115,23 +115,23 @@ export default class AccessDefaultsController {
             return this.$q.reject(error);
         });
     }
-    
+
     updateSet(set) {
-        return this.PermissionsSetsService.update(set.id, set).then(() => {},
+        return this.PermissionsSetsService.update(set.id, set).then(() => { },
             (error) => {
                 set.error = error.data.name[0];
                 return this.$q.reject(error);
             }
         );
     }
-    
+
     removeSet(set) {
         return this.PermissionsSetsService.destroy(set.id);
     }
-    
+
     openUnsavedChangesModal(toState = null) {
         this.$uibModal.open({
-            templateUrl:'app/account/components/modal/unsavedChangesModal.html',
+            templateUrl: 'app/account/components/modal/unsavedChangesModal.html',
             controller: 'UnsavedChangesModalController',
             controllerAs: 'UnsavedChangesModalCtrl'
         }).result.then((shouldSave) => {
@@ -141,7 +141,7 @@ export default class AccessDefaultsController {
             } else {
                 this.discardChanges();
             }
-            promise.then( () => {
+            promise.then(() => {
                 if (toState !== null) {
                     this.$state.go(toState);
                 }

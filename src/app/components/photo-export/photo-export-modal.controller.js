@@ -1,8 +1,8 @@
 import constants from '../../constants.js';
 
 export default class PhotoExportModalController {
-	constructor ($uibModalInstance, $window, BaseService) {
-		'ngInject';
+    constructor($uibModalInstance, $window, BaseService) {
+        'ngInject';
         this.uibModalInstance = $uibModalInstance;
 
         this.window = $window;
@@ -10,7 +10,7 @@ export default class PhotoExportModalController {
 
         this.fromDate = new Date();
         this.toDate = new Date();
-	}
+    }
 
     getExportUrl(fromDate, toDate) {
         return constants.BaseUrl + 'api/photos/' + this.parseDate(fromDate) + '/' + this.parseDate(toDate) + '/';
@@ -27,7 +27,7 @@ export default class PhotoExportModalController {
 
     photoCount() {
         var url = this.getPhotoCountUrl(this.fromDate, this.toDate);
-        this.service.get(url).then( (promise) => {
+        this.service.get(url).then((promise) => {
             this.numberOfPhotos = promise.data.count;
         });
     }
@@ -37,7 +37,7 @@ export default class PhotoExportModalController {
     }
 
     validDate() {
-        if(this.fromDate instanceof Date && this.toDate instanceof Date) {
+        if (this.fromDate instanceof Date && this.toDate instanceof Date) {
             return (this.fromDate.getTime() < this.toDate.getTime()) && this.numberOfPhotos > 0;
         }
         return false;

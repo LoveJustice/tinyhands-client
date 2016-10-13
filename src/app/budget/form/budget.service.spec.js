@@ -16,7 +16,7 @@ describe('BudgetService', () => {
 
     beforeEach(() => {
         let mockUtilService = jasmine.createSpyObj('mockUtilService', ['handleErrors', 'validId']);
-        mockUtilService.validId.and.callFake(() => {return true;});
+        mockUtilService.validId.and.callFake(() => { return true; });
         mockBaseService = jasmine.createSpyObj('mockBaseService', ['delete', 'get', 'post', 'put']);
         service = new BudgetService(mockBaseService, mockUtilService);
     });

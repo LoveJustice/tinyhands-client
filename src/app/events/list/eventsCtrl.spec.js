@@ -7,13 +7,13 @@ describe('EventCalendarController', () => {
         $q = _$q_;
         scope = $rootScope.$new();
         mockModal = jasmine.createSpyObj('mockModal', ['open']);
-        mockEvent = {title:'foo', id:1};
+        mockEvent = { title: 'foo', id: 1 };
 
-        mockEventsService = jasmine.createSpyObj('mockEventsService', ['getAll','destroyEvent']);
-        mockEventsService.getAll.and.returnValue( {"then": () => {return mockEvent;}});
-        mockEventsService.destroyEvent.and.returnValue({"then": () => {return mockEvent;}});
+        mockEventsService = jasmine.createSpyObj('mockEventsService', ['getAll', 'destroyEvent']);
+        mockEventsService.getAll.and.returnValue({ "then": () => { return mockEvent; } });
+        mockEventsService.destroyEvent.and.returnValue({ "then": () => { return mockEvent; } });
 
-        controller = new EventsController (mockEventsService, mockModal);
+        controller = new EventsController(mockEventsService, mockModal);
     }));
 
     describe('on activate', () => {
@@ -24,7 +24,7 @@ describe('EventCalendarController', () => {
 
     describe('when delete button onclick', () => {
         it('should open Modal', () => {
-            mockModal.open.and.returnValue({result: $q.when(true)});
+            mockModal.open.and.returnValue({ result: $q.when(true) });
             controller.openModal(mockEvent);
             scope.$apply();
 
@@ -35,7 +35,7 @@ describe('EventCalendarController', () => {
 
         it('should delete the event after the result', () => {
 
-            mockModal.open.and.returnValue({result: $q.when(true)});
+            mockModal.open.and.returnValue({ result: $q.when(true) });
             controller.openModal(mockEvent);
             scope.$apply();
 
@@ -44,7 +44,7 @@ describe('EventCalendarController', () => {
 
         it('should load all events after an event is deleted', () => {
 
-            mockModal.open.and.returnValue({result: $q.when(true)});
+            mockModal.open.and.returnValue({ result: $q.when(true) });
             controller.openModal(mockEvent);
             scope.$apply();
 

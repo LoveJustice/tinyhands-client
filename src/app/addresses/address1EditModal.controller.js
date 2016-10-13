@@ -1,5 +1,5 @@
 class Address1EditModalController {
-    constructor($uibModalInstance, address, $scope){
+    constructor($uibModalInstance, address, $scope) {
         'ngInject';
 
         this.modalInstance = $uibModalInstance;
@@ -7,11 +7,11 @@ class Address1EditModalController {
         this.scope.address = angular.copy(address);
     }
 
-    save () {
+    save() {
         this.modalInstance.close(this.scope.address);
     }
 
-    cancel () {
+    cancel() {
         this.modalInstance.dismiss('close');
     }
 }

@@ -8,7 +8,7 @@ describe('MDF Controller', () => {
     beforeEach(inject(() => {
         $scope = { "type": "", "buttonText": "" };
         $window = jasmine.createSpyObj('$window', ['open']);
-        vm = new CsvExportController($scope);
+        vm = new CsvExportController($scope, $window);
     }));
 
     describe('function typeToUrl', () => {

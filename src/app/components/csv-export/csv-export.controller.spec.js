@@ -2,12 +2,13 @@ import CsvExportController from './csv-export.controller';
 
 describe('MDF Controller', () => {
     let vm,
-        $scope;
+        $scope,
+        $window;
 
     beforeEach(inject(() => {
         $scope = { "type": "", "buttonText": "" };
-
-        vm = new CsvExportController($scope);
+        $window = jasmine.createSpyObj('$window', ['open']);
+        vm = new CsvExportController($scope, $window);
     }));
 
     describe('function typeToUrl', () => {
@@ -18,6 +19,14 @@ describe('MDF Controller', () => {
         it('expect it to create the vif url', () => {
             var val = vm.typeToUrl('vif');
             expect(val).toContain('vif');
+        });
+    });
+
+    describe('exportCSV', () => {
+        it('should call window.open with url', () => {
+            vm.exportCSV();
+
+            expect($window.open).toHaveBeenCalledWith(vm.url, '_blank');
         });
     });
 });

@@ -27,20 +27,20 @@ describe('BaseService', () => {
 
         it("should set headers Authorization if getItem('token')", () => {
             let headers = {};
-            let old = sessionStorage.getItem('token');
-            sessionStorage.setItem('token', true);
+            let old = localStorage.getItem('token');
+            localStorage.setItem('token', true);
             service.get('', [], headers);
             expect(headers.Authorization).toBeDefined();
-            sessionStorage.setItem('token', old);
+            localStorage.setItem('token', old);
         });
 
         it("should not set headers Authorization if not getItem('token')", () => {
             let headers = {};
-            let old = sessionStorage.getItem('token');
-            sessionStorage.removeItem('token');
+            let old = localStorage.getItem('token');
+            localStorage.removeItem('token');
             service.get('', [], headers);
             expect(headers.Authorization).not.toBeDefined();
-            sessionStorage.setItem('token', old);
+            localStorage.setItem('token', old);
         });
 
         it(`should call $http get with '${testUrl}' and ${finalHeaders}`, () => {
@@ -66,12 +66,12 @@ describe('BaseService', () => {
         let finalHeaders = { headers: headers };
 
         it(`should call $http post with '${finalUrl}', ${data}, and ${finalHeaders}`, () => {
-            let old = sessionStorage.getItem('token');
-            sessionStorage.removeItem('token');
+            let old = localStorage.getItem('token');
+            localStorage.removeItem('token');
             spyOn(service.$http, 'post');
             service.post(url, data, headers);
             expect(service.$http.post).toHaveBeenCalledWith(finalUrl, data, finalHeaders);
-            sessionStorage.setItem('token', old);
+            localStorage.setItem('token', old);
         });
     });
 
@@ -85,12 +85,12 @@ describe('BaseService', () => {
         let finalHeaders = { headers: headers };
 
         it(`should call $http put with '${finalUrl}', ${data}, and ${finalHeaders}`, () => {
-            let old = sessionStorage.getItem('token');
-            sessionStorage.removeItem('token');
+            let old = localStorage.getItem('token');
+            localStorage.removeItem('token');
             spyOn(service.$http, 'put');
             service.put(url, data, headers);
             expect(service.$http.put).toHaveBeenCalledWith(finalUrl, data, finalHeaders);
-            sessionStorage.setItem('token', old);
+            localStorage.setItem('token', old);
         });
     });
 });

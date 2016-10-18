@@ -30,7 +30,7 @@ describe('SessionService', () => {
 
         beforeEach(() => {
             let promise = { data: { token: 123 } };
-            sessionStorage.token = null;
+            localStorage.token = null;
             mockBaseService.post.and.callFake(() => {
                 return {
                     then: (f) => {
@@ -46,9 +46,9 @@ describe('SessionService', () => {
         });
 
         let token = "Token 123";
-        it(`should set sessionStorage token to "${token}"`, () => {
+        it(`should set localStorage token to "${token}"`, () => {
             service.attemptLogin(username, password);
-            expect(sessionStorage.token).toEqual(token);
+            expect(localStorage.token).toEqual(token);
         });
 
         it(`should set root authenticated to true`, () => {
@@ -130,7 +130,7 @@ describe('SessionService', () => {
     describe('checkIfAuthenticated', () => {
         describe('when no token stored', () => {
             it('should reject promise', (done) => {
-                sessionStorage.clear();
+                localStorage.clear();
 
                 let result = service.checkIfAuthenticated();
 
@@ -147,7 +147,7 @@ describe('SessionService', () => {
         describe('when token is stored', () => {
             it('should set rootScope autheticated to true', (done) => {
                 $rootScope.authenticated = false;
-                sessionStorage.token = 'validToken';
+                localStorage.token = 'validToken';
 
                 let result = service.checkIfAuthenticated();
 
@@ -162,7 +162,7 @@ describe('SessionService', () => {
 
             it('should get current user', (done) => {
                 $rootScope.authenticated = false;
-                sessionStorage.token = 'validToken';
+                localStorage.token = 'validToken';
                 spyOn(service, 'me').and.callThrough();
 
                 let result = service.checkIfAuthenticated();
@@ -190,7 +190,7 @@ describe('SessionService', () => {
         it("should call checkAuthenticityLogic with true and 'foo'", () => {
             let toState = { data: { requireLogin: true } };
             service.root.$on = (_, f) => { f(null, toState); };
-            sessionStorage.token = 'foo';
+            localStorage.token = 'foo';
             spyOn(service, 'checkAuthenticityLogic');
             service.createStateChangeListener();
             expect(service.checkAuthenticityLogic).toHaveBeenCalledWith(true, 'foo');

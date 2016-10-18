@@ -26,8 +26,8 @@ export default class BaseService {
      * @param {Object} [headers] JSON object containing header options.
      */
     addToken(headers) {
-        if (sessionStorage.getItem('token')) {
-            headers.Authorization = sessionStorage.token;
+        if (localStorage.getItem('token')) {
+            headers.Authorization = localStorage.token;
         }
     }
 

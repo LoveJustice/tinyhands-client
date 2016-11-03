@@ -1,11 +1,12 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, $stateParams, $timeout, $window, toastr) {
+    constructor(IrfListService, SessionService, $stateParams, $timeout, $window, toastr, constants) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
         this.timeout = $timeout;
         this.window = $window;
         this.toastr = toastr;
+        this.constants = constants;
 
 
         this.timer = {};

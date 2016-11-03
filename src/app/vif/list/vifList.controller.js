@@ -2,9 +2,8 @@ export default class VifListController {
     constructor(VifListService, SessionService, $stateParams, $timeout, $window, toastr, constants) {
         'ngInject';
 
-        console.log(constants);
-
-        this.createVifUrl = constants.base
+        this.constants = constants;
+        this.createVifUrl = constants.BaseUrl;
         this.service = VifListService;
         this.session = SessionService;
         this.timeout = $timeout;

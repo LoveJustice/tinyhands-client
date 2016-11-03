@@ -34,7 +34,7 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout);
+        vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {

@@ -34,7 +34,7 @@ describe('IRF List Controller',() => {
             };
         });
 
-        vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout);
+        vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {

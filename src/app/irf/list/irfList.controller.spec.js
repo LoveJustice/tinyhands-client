@@ -3,14 +3,16 @@ import IrfListController from './irfList.controller';
 describe('IRF List Controller',() => {
     let vm,
         $timeout,
+        $window,
         MockIrfListService,
         MockSessionService,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
 
-    beforeEach(inject((_$timeout_) => {
+    beforeEach(inject((_$timeout_, _$window_) => {
         $timeout = _$timeout_;
+        $window = _$window_;
         $stateParams = {"search": "BHD"};
 
         MockIrfListService = jasmine.createSpyObj('IrfListService', [
@@ -34,7 +36,7 @@ describe('IRF List Controller',() => {
             };
         });
 
-        vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, {BaseUrl: "asdf"});
+        vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -44,7 +46,7 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout);
+            vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
         });
     });

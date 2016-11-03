@@ -3,14 +3,16 @@ import VifListController from './vifList.controller';
 describe('VIF List Controller',() => {
     let vm,
         $timeout,
+        $window,
         MockVifListService,
         MockSessionService,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
 
-    beforeEach(inject((_$timeout_) => {
-        $timeout = _$timeout_;
+    beforeEach(inject((_$timeout_, _$window_) => {
+            $timeout = _$timeout_;
+            $window = _$window_;
         $stateParams = {"search": "BHD"};
 
         MockVifListService = jasmine.createSpyObj('VifListService', [
@@ -34,7 +36,7 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout, {BaseUrl: "asdf"});
+        vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -44,7 +46,7 @@ describe('VIF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout);
+            vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
         });
     });

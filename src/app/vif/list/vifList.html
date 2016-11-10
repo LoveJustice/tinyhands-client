@@ -40,8 +40,8 @@
     </div>
     <br/>
     <div id="sticky-anchor"></div>
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-striped" float-thead="{ scrollingTop: 50, useAbsolutePositioning: false }">
+        <thead style="background: white">
             <tr>
                 <th ng-click="vifListCtrl.updateSort('vif_number')" width="8%">VIF #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('vif_number', '!reverse'),

@@ -20,7 +20,8 @@
     "toastr": "~2.1.2",
     "moment-timezone": "~0.5.3",
     "ng-csv": "~0.3.6",
-    "angular-ui-calendar": "1.0.1"
+    "angular-ui-calendar": "1.0.1",
+    "angular-floatThead": "0.1.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3",

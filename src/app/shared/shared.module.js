@@ -5,7 +5,7 @@ import RequireLogin from './requireLogin';
 
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 
-export default angular.module('tinyhands.Shared', [])
+export default angular.module('tinyhands.Shared', ['floatThead'])
     .filter('capitalize', function () {
         return function (input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';

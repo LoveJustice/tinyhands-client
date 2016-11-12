@@ -1,7 +1,8 @@
 export default class VifListService {
-    constructor(BaseService) {
+    constructor(BaseService, StickyHeader) {
         'ngInject';
         this.service = BaseService;
+        this.sticky = StickyHeader.sticky;
     }
 
     deleteVif(id) {

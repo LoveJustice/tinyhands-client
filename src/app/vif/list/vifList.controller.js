@@ -20,6 +20,7 @@ export default class VifListController {
             "ordering": 'vif_number',
             "search": ''
         };
+        this.sticky = this.service.sticky;
 
         // If there was a search value provided in the url, set it
         if($stateParams) {

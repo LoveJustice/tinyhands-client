@@ -108,6 +108,26 @@ class Address1Controller {
         });
     }
 
+    deleteAddress1(address) {
+        var modalInstance = this.modal.open({
+            animation: true,
+            templateUrl: 'app/addresses/address1DeleteModal.html',
+            controller: 'Address1DeleteModalController as delCtrl',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
+            }
+        });
+        modalInstance.result.then((address) => {
+            this.address1Service.saveAddress(address)
+                .then(() => {
+                    this.getAddresses();
+                });
+        });
+    }
+
     nextUrl(url) {
         if (url) {
             url = url.match(/page=\d+/);

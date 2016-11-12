@@ -26,6 +26,10 @@ class Address1Service {
     getFuzzyAddress1s(val) {
         return this.service.get('api/address1/fuzzy/?address1=' + val);
     }
+
+    getRelatedItems(address) {
+        return this.service.get(`api/address1/${address.id}/related-items/`);
+    }
 }
 
 export default Address1Service;

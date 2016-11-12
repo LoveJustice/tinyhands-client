@@ -49,6 +49,7 @@
                 <td class="text-center address-name">{{ address.completed }}</td>
                 <td class="text-center">
                     <button ng-click="vm.editAddress1(address)" class="edit btn btn-warning">Edit</button>
+                    <button ng-click="vm.deleteAddress1(address)" class="edit btn btn-danger">Delete</button>
                 </td>
             </tr>
             <tr ng-show="vm.addresses.length == 0">

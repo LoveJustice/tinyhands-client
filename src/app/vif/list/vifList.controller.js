@@ -26,6 +26,7 @@ export default class VifListController {
             this.queryParameters.search = $stateParams.search;
         }
         this.getVifList();
+        this.checkForExistingVifs();
     }
 
     transform(queryParams) {
@@ -102,5 +103,29 @@ export default class VifListController {
         else {
             vif.confirmedDelete = true;
         }
+    }
+
+    checkForExistingVifs() {
+        var savedForLaterVifs = this.getSaveForLaterObject();
+        if (savedForLaterVifs == null) return;
+
+        savedForLaterVifs = Object.keys(savedForLaterVifs);
+        savedForLaterVifs.forEach((vifNumber) => {
+            this.service.vifExists(vifNumber).then((promise) => {
+                if (promise.data == vifNumber) {
+                    this.removeVifFromSaveForLater(vifNumber);
+                }
+            });
+        });
+    }
+
+    removeVifFromSaveForLater(vifNumber) {
+        var obj = this.getSaveForLaterObject();
+        delete obj[vifNumber];
+        localStorage.setItem('saved-vifs', JSON.stringify(obj));
+    }
+
+    getSaveForLaterObject() {
+        return JSON.parse(localStorage.getItem('saved-vifs'));
     }
 }

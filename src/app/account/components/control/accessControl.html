@@ -7,7 +7,7 @@
             <th colspan="4">Victim Interview Forms</th>
             <th colspan="4">Border Stations</th>
             <th>Accounts</th>
-            <th>Alerts</th>
+            <th colspan="2">Alerts</th>
             <th>VDC</th>
             <th>Budget</th>
         </tr>
@@ -30,7 +30,8 @@
             <th>Delete</th>
             <th>Manage</th>
             <!--Accounts-->
-            <th>Can Receive</th>
+            <th>Investigation</th>
+            <th>Legal</th>
             <!--Alerts-->
             <th>Manage</th>
             <!--VDC-->
@@ -126,9 +127,15 @@
               </label>
             </td>
             <td>
-              <label ng-click="account.permission_receive_email = !account.permission_receive_email"
-                     ng-class="accessControlCtrl.getStyling(account.permission_receive_email);">
-                  {{ account.permission_receive_email ? "Yes" : "No" }}
+              <label ng-click="account.permission_receive_investigation_alert = !account.permission_receive_investigation_alert"
+                     ng-class="accessControlCtrl.getStyling(account.permission_receive_investigation_alert);">
+                  {{ account.permission_receive_investigation_alert ? "Yes" : "No" }}
+              </label>
+            </td>
+            <td>
+              <label ng-click="account.permission_receive_legal_alert = !account.permission_receive_legal_alert"
+                     ng-class="accessControlCtrl.getStyling(account.permission_receive_legal_alert);">
+                  {{ account.permission_receive_legal_alert ? "Yes" : "No" }}
               </label>
             </td>
             <td>

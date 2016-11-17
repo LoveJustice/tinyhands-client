@@ -44,7 +44,7 @@
             <td>
                 <span>{{account.first_name+" "+account.last_name}}</span>
                 <br/>
-                <select ng-change="accessControlCtrl.changeUserRole(account)" ng-model="account.user_designation"
+                <select style="width: 90%;" ng-change="accessControlCtrl.changeUserRole(account)" ng-model="account.user_designation"
                         ng-options="p.id as p.name for p in accessControlCtrl.permissions">
                 </select>
             </td>
@@ -127,9 +127,6 @@
               </label>
             </td>
             <td>
-              <label ng-click="account.permission_receive_email = !account.permission_receive_email"
-                     ng-class="accessControlCtrl.getStyling(account.permission_receive_email);">
-                <span class="glyphicon {{ account.permission_receive_email ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               <label ng-click="account.permission_receive_investigation_alert = !account.permission_receive_investigation_alert"
                      ng-class="accessControlCtrl.getStyling(account.permission_receive_investigation_alert);">
                 <span class="glyphicon {{ account.permission_receive_investigation_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>

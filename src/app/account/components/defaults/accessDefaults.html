@@ -11,7 +11,7 @@
             <th colspan="4">Victim Interview Forms</th>
             <th colspan="4">Border Stations</th>
             <th>Accounts</th>
-            <th>Alerts</th>
+            <th colspan="2">Alerts</th>
             <th>VDC</th>
             <th>Budget</th>
         </tr>
@@ -30,14 +30,15 @@
             <th>Edit</th>
             <th>Delete</th>
             <th>Manage</th>
-            <th>Can Receive</th>
+            <th>Investigation</th>
+            <th>Legal</th>
             <th>Manage</th>
             <th>Manage</th>
         </tr>
         </thead>
 
         <tbody id="permissions-rows-container">
-        <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.items" 
+        <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.items"
             ng-mouseenter="permissionsSet.hover = true"
             ng-mouseleave="permissionsSet.hover = false">
 
@@ -125,9 +126,15 @@
                 </label>
             </td>
             <td><label
-                    ng-click="permissionsSet.permission_receive_email = !permissionsSet.permission_receive_email;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_email)">
-                    <span class="glyphicon {{ permissionsSet.permission_receive_email ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                    ng-click="permissionsSet.permission_receive_legal_alert = !permissionsSet.permission_receive_legal_alert;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_legal_alert)">{{
+                    <span class="glyphicon {{ permissionsSet.permission_receive_legal_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
+            <td><label
+                    ng-click="permissionsSet.permission_receive_investigation_alert = !permissionsSet.permission_receive_investigation_alert;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_investigation_alert)">{{
+                    <span class="glyphicon {{ permissionsSet.permission_investigation_legal_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
                 </label>
             </td>
             <td><label
@@ -143,7 +150,7 @@
                 </label>
             </td>
             <td id="removeButton" class="col-md-1">
-                <confirm-button 
+                <confirm-button
                         btn-class="btn btn-sm btn-danger animated pull-left"
                         ng-disabled="permissionsSet.is_used_by_accounts"
                         ng-show="!permissionsSet.is_used_by_accounts"

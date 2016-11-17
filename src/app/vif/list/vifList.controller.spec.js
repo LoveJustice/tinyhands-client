@@ -6,6 +6,7 @@ describe('VIF List Controller',() => {
         $window,
         MockVifListService,
         MockSessionService,
+        MockStickyHeader,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
@@ -14,6 +15,8 @@ describe('VIF List Controller',() => {
             $timeout = _$timeout_;
             $window = _$window_;
         $stateParams = {"search": "BHD"};
+
+        MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
         MockVifListService = jasmine.createSpyObj('VifListService', [
             'getVifList',
@@ -36,7 +39,7 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -46,7 +49,7 @@ describe('VIF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new VifListController(MockVifListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
         });
     });

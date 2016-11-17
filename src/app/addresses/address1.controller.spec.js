@@ -3,15 +3,17 @@ import Address1Service from './address1.service';
 
 describe('Address1Controller', () => {
     let vm;
-    let $rootScope,
+    let mockStickyHeader,
+        $rootScope,
         $scope,
         $timeout,
         address1Service,
         $uibModal;
 
     beforeEach(inject(($http) => {
+        mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         address1Service = new Address1Service($http);
-        vm = new Address1Controller($rootScope, $scope, $http, $timeout, address1Service, $uibModal);
+        vm = new Address1Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal);
     }));
 
     describe('function constructor', () => {

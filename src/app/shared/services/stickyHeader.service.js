@@ -5,6 +5,6 @@ export default class StickyHeaderController {
         this.stickyOptions = {
             scrollingTop: 50,
             useAbsolutePositioning: false
-        }
+        };
     }
 }

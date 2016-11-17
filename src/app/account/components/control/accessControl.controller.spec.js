@@ -46,7 +46,7 @@ describe('AccessControlController', () => {
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['error']);
 
-        controller = new AccessControlController(mockAccountService, mockPermissionsService, $q, mockState, mockUibModal, scope, mockToastr);
+        controller = new AccessControlController(mockAccountService, mockPermissionsService, StickyHeader, $q, mockState, mockUibModal, scope, mockToastr);
     }));
 
     describe('saveButtonText', () => {

@@ -22,7 +22,28 @@ class Address1DeleteModalController {
 
     getUisrefForIdAndType(id, type) {
         this.modalInstance.close('close');
-        this.state.go('address2')
+        if (type === "address2"){
+            this.state.go('address2', {deleteId: id})
+        }
+
+    }
+
+    getPrettyTypeName(item) {
+        let name = "";
+        switch (item.type) {
+            case "address2":
+                name = "Address 2";
+                break;
+            case "person":
+                name = "Person";
+                break;
+            case "victiminterview":
+                name = "VIF";
+                break;
+            case "victiminterviewlocationbox":
+                name = "Victim Interview Location Box";
+        }
+        return name;
     }
 
     delete() {

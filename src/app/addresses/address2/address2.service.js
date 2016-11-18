@@ -23,6 +23,18 @@ class Address2Service {
     getFuzzyAddress2s(val) {
         return this.service.get('api/address2/fuzzy/?address2=' + val);
     }
+
+    getRelatedItems(address) {
+        return this.service.get(`api/address2/${address.id}/related-items/`);
+    }
+
+    getAddress(id) {
+        return this.service.get(`api/address2/${id}/`);
+    }
+
+    deleteAddress(id) {
+        return this.service.delete(`api/address2/${id}/`);
+    }
 }
 
 export default Address2Service;

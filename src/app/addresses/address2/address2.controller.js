@@ -1,5 +1,5 @@
 class Address2Controller {
-    constructor($rootScope, $scope, $http, $timeout, address2Service, $uibModal) {
+    constructor($rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams) {
         'ngInject';
 
         this.rootScope = $rootScope;
@@ -8,6 +8,7 @@ class Address2Controller {
         this.timeout = $timeout;
         this.address2Service = address2Service;
         this.modal = $uibModal;
+        this.stateParams = $stateParams;
 
         this.loading = false;
         this.reverse = false;
@@ -18,6 +19,12 @@ class Address2Controller {
         this.sortColumn = "";
 
         this.getAddresses();
+        if (this.stateParams.deleteId) {
+            this.address2Service.getAddress(this.stateParams.deleteId).then((promise) => {
+                this.deleteAddress2(promise.data);
+            });
+        }
+
     }
 
     sortIcon(column) {
@@ -91,7 +98,7 @@ class Address2Controller {
     editAddress2(address) {
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address2Modal.html',
+            templateUrl: 'app/addresses/address2/address2Modal.html',
             controller: 'Address2EditModalController as vm',
             size: 'md',
             resolve: {
@@ -110,6 +117,28 @@ class Address2Controller {
                 });
         });
     }
+
+    deleteAddress2(address) {
+        var modalInstance = this.modal.open({
+            animation: true,
+            templateUrl: 'app/addresses/address2/address2DeleteModal.html',
+            controller: 'Address2DeleteModalController as delCtrl',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
+            }
+        });
+        modalInstance.result.then((address) => {
+            this.address2Service.deleteAddress(address.id)
+                .then(() => {
+                    this.getAddresses();
+                });
+        });
+    }
+
+
 
     nextUrl(url) {
         if (url) {

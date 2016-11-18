@@ -1,0 +1,27 @@
+<div class="modal-header">
+    <h3 class="modal-title">Delete Address 2</h3>
+</div>
+
+
+<div class="modal-body">
+    <p>Name: {{ address.name }}</p>
+    <p>Location: {{ address.latitude + ' ' + address.longitude }}</p>
+    <p>Level: {{ address.level }}</p>
+    <p>Address1: {{ address.address1.name }}</p>
+    <p>Canonical Name: {{ address.canonical_name.name }}</p>
+    <p>verified: {{ address.verified }}</p>
+
+  <div ng-repeat="item in delCtrl.related_items" ng-if="item.ids.length > 0">
+      <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
+      <div ng-repeat="id in item.ids">
+          <a ng-click="delCtrl.getUisrefForIdAndType(id, item.type)">{{ id }}</a>
+      </div>
+  </div>
+
+
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-disabled="!delCtrl.canDelete" ng-click="delCtrl.delete()">Delete</button>
+    <button class="btn btn-primary" type="button" ng-click="delCtrl.cancel()">Cancel</button>
+</div>

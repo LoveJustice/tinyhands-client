@@ -91,7 +91,7 @@ class Address1Controller {
     editAddress1(address) {
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address1Modal.html',
+            templateUrl: 'app/addresses/address1/address1Modal.html',
             controller: 'Address1EditModalController as vm',
             size: 'md',
             resolve: {
@@ -111,7 +111,7 @@ class Address1Controller {
     deleteAddress1(address) {
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address1DeleteModal.html',
+            templateUrl: 'app/addresses/address1/address1DeleteModal.html',
             controller: 'Address1DeleteModalController as delCtrl',
             size: 'md',
             resolve: {

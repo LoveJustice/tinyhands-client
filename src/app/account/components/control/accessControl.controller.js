@@ -71,10 +71,10 @@ export default class AccessControlController {
 
     getStyling(attribute) {
         if (attribute) {
-            return 'btn btn-thin btn-success';
+            return 'btn btn-success btn-thin';
         }
         else {
-            return 'btn btn-thin btn-danger';
+            return 'btn btn-danger btn-thin';
         }
     }
 

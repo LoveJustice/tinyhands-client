@@ -11,6 +11,7 @@ describe('Address1Controller', () => {
         $uibModal;
 
     beforeEach(inject(($http) => {
+        //mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
         mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         address1Service = new Address1Service($http);
         vm = new Address1Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal);

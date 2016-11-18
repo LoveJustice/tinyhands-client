@@ -7,6 +7,7 @@ describe('budgetList Controller', () => {
         MockStickyHeader;
 
     beforeEach(inject(($http) => {
+        MockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin']);
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
         let service = new BudgetListService($http);

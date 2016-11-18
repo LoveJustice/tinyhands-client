@@ -35,7 +35,7 @@ describe('Address2Controller', () => {
                 }
             };
 
-        mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
+        mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
 
         vm = new Address2Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal);
     }));

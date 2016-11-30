@@ -1,8 +1,9 @@
 import ChangesArray from '../../changesArray';
 export default class AccessControlController {
-    constructor(AccountService, PermissionsSetsService, $q, $state, $uibModal, $scope, toastr) {
+    constructor(AccountService, PermissionsSetsService, StickyHeader, $q, $state, $uibModal, $scope, toastr) {
         this.AccountService = AccountService;
         this.PermissionsSetsService = PermissionsSetsService;
+        this.sticky = StickyHeader;
         this.$q = $q;
         this.$state = $state;
         this.$uibModal = $uibModal;
@@ -11,6 +12,7 @@ export default class AccessControlController {
 
         this.accounts = {};
         this.saveButtonClicked = false;
+        this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAccounts();
         this.getPermissions();
@@ -69,10 +71,10 @@ export default class AccessControlController {
 
     getStyling(attribute) {
         if (attribute) {
-            return 'btn btn-success';
+            return 'btn btn-success btn-thin';
         }
         else {
-            return 'btn btn-danger';
+            return 'btn btn-danger btn-thin';
         }
     }
 

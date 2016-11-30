@@ -40,9 +40,8 @@
         <!-- End search -->
     </div>
     <br/>
-    <div id="sticky-anchor"></div>
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-striped" float-thead="irfListCtrl.stickyOptions">
+        <thead class="sticky-table-header">
             <tr>
                 <th ng-click="irfListCtrl.updateSort('irf_number')" width="8%">IRF #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSortIcon('irf_number', '!reverse'),

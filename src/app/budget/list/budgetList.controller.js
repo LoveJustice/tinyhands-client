@@ -11,14 +11,16 @@ export default class BudgetList {
      * @param BudgetListService (set of functions that controls data flow from front-end to back-end)
      * @param session (user session data)
      */
-    constructor(BudgetListService, SessionService) {
+    constructor(BudgetListService, SessionService, StickyHeader) {
         'ngInject';
 
         this.service = BudgetListService;
         this.session = SessionService;
+        this.sticky = StickyHeader;
 
         this.searchTerm = '';
         this.sortValue = 'month_year';
+        this.stickyOptions = this.sticky.stickyOptions;
 
         this.getBudgetList(this.searchTerm, this.sortValue);
     }

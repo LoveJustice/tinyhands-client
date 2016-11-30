@@ -39,9 +39,8 @@
         <!-- End search -->
     </div>
     <br/>
-    <div id="sticky-anchor"></div>
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-striped" float-thead="vifListCtrl.stickyOptions">
+        <thead class="sticky-table-header">
             <tr>
                 <th ng-click="vifListCtrl.updateSort('vif_number')" width="8%">VIF #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('vif_number', '!reverse'),

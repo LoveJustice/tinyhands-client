@@ -3,7 +3,8 @@ import Address2Service from './address2.service';
 
 describe('Address2Controller', () => {
 
-    let vm;
+    let vm,
+        mockStickyHeader;
     let address = { id: '123' };
 
     let mockThen = (...args) => {
@@ -33,7 +34,10 @@ describe('Address2Controller', () => {
                     };
                 }
             };
-        vm = new Address2Controller($rootScope, $scope, $http, $timeout, address2Service, $uibModal);
+
+        mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
+
+        vm = new Address2Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal);
     }));
 
     describe('function constructor', () => {
@@ -68,7 +72,7 @@ describe('Address2Controller', () => {
 
         it('should call getAddresses', () => {
             spyOn(vm, 'getAddresses');
-            vm.constructor();
+            vm.constructor({}, {}, {}, {}, {}, {}, {});
             expect(vm.getAddresses).toHaveBeenCalled();
         });
 

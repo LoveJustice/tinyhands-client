@@ -13,6 +13,7 @@ describe('AccessControlController', () => {
         response,
         mockPermissionsService,
         mockAccountService,
+        mockStickyHeader,
         mockToastr;
 
     beforeEach(inject((_$q_, $rootScope) => {
@@ -39,6 +40,8 @@ describe('AccessControlController', () => {
 
         mockPermissionsService = jasmine.createSpyObj('PermissionsService', ['getPermissions', 'getPermission', 'create', 'update', 'destroy']);
 
+        mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
+
         response = { data: { results: [{ id: 1, name: 'Foo' }] } };
         mockPermissionsService.getPermissions.and.callFake(() => {
             return $q.resolve(response);
@@ -46,7 +49,7 @@ describe('AccessControlController', () => {
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['error']);
 
-        controller = new AccessControlController(mockAccountService, mockPermissionsService, $q, mockState, mockUibModal, scope, mockToastr);
+        controller = new AccessControlController(mockAccountService, mockPermissionsService, mockStickyHeader, $q, mockState, mockUibModal, scope, mockToastr);
     }));
 
     describe('saveButtonText', () => {
@@ -123,16 +126,16 @@ describe('AccessControlController', () => {
 
     describe('getStyling', () => {
         describe('when called with true', () => {
-            it('should return "btn btn-success"', () => {
+            it('should return "btn btn-success btn-thin"', () => {
                 let result = controller.getStyling(true);
-                expect(result).toEqual('btn btn-success');
+                expect(result).toEqual('btn btn-success btn-thin');
             });
         });
 
         describe('when called with false', () => {
-            it('should return "btn btn-danger"', () => {
+            it('should return "btn btn-danger btn-thin"', () => {
                 let result = controller.getStyling(false);
-                expect(result).toEqual('btn btn-danger');
+                expect(result).toEqual('btn btn-danger btn-thin');
             });
         });
     });

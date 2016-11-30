@@ -4,6 +4,7 @@ describe('AccessDefaultsController', () => {
 
     let controller,
         rootScope,
+        mockStickyHeader,
         scope,
         mockEvent,
         stateName,
@@ -16,6 +17,7 @@ describe('AccessDefaultsController', () => {
 
     beforeEach(inject((_$q_, $rootScope) => {
         rootScope = $rootScope;
+        mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
         scope = jasmine.createSpyObj('mockScope', ['$on']);
         mockEvent = jasmine.createSpyObj('mockEvent', ['preventDefault']);
         stateName = 'FooState';
@@ -50,7 +52,7 @@ describe('AccessDefaultsController', () => {
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['error']);
 
-        controller = new AccessDefaultsController(scope, $q, mockUibModal, mockState, mockPermissionsService, mockToastr);
+        controller = new AccessDefaultsController(mockStickyHeader, scope, $q, mockUibModal, mockState, mockPermissionsService, mockToastr);
     }));
 
     describe('saveButtonText', () => {
@@ -145,16 +147,16 @@ describe('AccessDefaultsController', () => {
 
     describe('getStyling', () => {
         describe('when called with true', () => {
-            it('should return "btn btn-success"', () => {
+            it('should return "btn btn-success btn-thin"', () => {
                 let result = controller.getStyling(true);
-                expect(result).toEqual('btn btn-success');
+                expect(result).toEqual('btn btn-success btn-thin');
             });
         });
 
         describe('when called with false', () => {
-            it('should return "btn btn-danger"', () => {
+            it('should return "btn btn-danger btn-thin"', () => {
                 let result = controller.getStyling(false);
-                expect(result).toEqual('btn btn-danger');
+                expect(result).toEqual('btn btn-danger btn-thin');
             });
         });
     });

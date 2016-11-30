@@ -1,6 +1,6 @@
 <div id="accountControl" class="container verticalOffset" ng-cloak>
-    <table class="table table-condensed">
-        <thead>
+    <table class="table table-condensed" float-thead="accessControlCtrl.stickyOptions">
+        <thead class="sticky-table-header">
         <tr>
             <th>&nbsp;</th>
             <th colspan="4">Interception Record Forms</th>
@@ -12,7 +12,7 @@
             <th>Budget</th>
         </tr>
         <tr>
-            <th>User</th>
+            <th width="200px">User</th>
             <th>View</th>
             <!--IRF-->
             <th>Add</th>
@@ -44,110 +44,110 @@
             <td>
                 <span>{{account.first_name+" "+account.last_name}}</span>
                 <br/>
-                <select ng-change="accessControlCtrl.changeUserRole(account)" ng-model="account.user_designation"
+                <select style="width: 90%;" ng-change="accessControlCtrl.changeUserRole(account)" ng-model="account.user_designation"
                         ng-options="p.id as p.name for p in accessControlCtrl.permissions">
                 </select>
             </td>
             <td>
               <label ng-click="account.permission_irf_view = !account.permission_irf_view"
                      ng-class="accessControlCtrl.getStyling(account.permission_irf_view);">
-                  {{ account.permission_irf_view ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_irf_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_irf_add = !account.permission_irf_add"
                      ng-class="accessControlCtrl.getStyling(account.permission_irf_add);">
-                  {{ account.permission_irf_add ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_irf_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_irf_edit = !account.permission_irf_edit"
                      ng-class="accessControlCtrl.getStyling(account.permission_irf_edit);">
-                  {{ account.permission_irf_edit ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_irf_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_irf_delete = !account.permission_irf_delete"
                      ng-class="accessControlCtrl.getStyling(account.permission_irf_delete);">
-                  {{ account.permission_irf_delete ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_irf_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_vif_view = !account.permission_vif_view"
                      ng-class="accessControlCtrl.getStyling(account.permission_vif_view);">
-                  {{ account.permission_vif_view ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_vif_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_vif_add = !account.permission_vif_add"
                      ng-class="accessControlCtrl.getStyling(account.permission_vif_add);">
-                  {{ account.permission_vif_add ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_vif_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_vif_edit = !account.permission_vif_edit"
                      ng-class="accessControlCtrl.getStyling(account.permission_vif_edit);">
-                  {{ account.permission_vif_edit ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_vif_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_vif_delete = !account.permission_vif_delete"
                      ng-class="accessControlCtrl.getStyling(account.permission_vif_delete);">
-                  {{ account.permission_vif_delete ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_vif_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_border_stations_view = !account.permission_border_stations_view"
                      ng-class="accessControlCtrl.getStyling(account.permission_border_stations_view);">
-                  {{ account.permission_border_stations_view ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_border_stations_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_border_stations_add = !account.permission_border_stations_add"
                      ng-class="accessControlCtrl.getStyling(account.permission_border_stations_add);">
-                  {{ account.permission_border_stations_add ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_border_stations_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_border_stations_edit = !account.permission_border_stations_edit"
                      ng-class="accessControlCtrl.getStyling(account.permission_border_stations_edit);">
-                  {{ account.permission_border_stations_edit ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_border_stations_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_border_stations_delete = !account.permission_border_stations_delete"
                      ng-class="accessControlCtrl.getStyling(account.permission_border_stations_delete);">
-                  {{ account.permission_border_stations_delete ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_border_stations_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_accounts_manage = !account.permission_accounts_manage"
                      ng-class="accessControlCtrl.getStyling(account.permission_accounts_manage);">
-                  {{ account.permission_accounts_manage ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_accounts_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_receive_investigation_alert = !account.permission_receive_investigation_alert"
                      ng-class="accessControlCtrl.getStyling(account.permission_receive_investigation_alert);">
-                  {{ account.permission_receive_investigation_alert ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_receive_investigation_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_receive_legal_alert = !account.permission_receive_legal_alert"
                      ng-class="accessControlCtrl.getStyling(account.permission_receive_legal_alert);">
-                  {{ account.permission_receive_legal_alert ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_receive_legal_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_address2_manage = !account.permission_address2_manage"
                      ng-class="accessControlCtrl.getStyling(account.permission_address2_manage);">
-                  {{ account.permission_address2_manage ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_address2_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>
               <label ng-click="account.permission_budget_manage = !account.permission_budget_manage"
                      ng-class="accessControlCtrl.getStyling(account.permission_budget_manage);">
-                  {{ account.permission_budget_manage ? "Yes" : "No" }}
+                <span class="glyphicon {{ account.permission_budget_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
         </tr>

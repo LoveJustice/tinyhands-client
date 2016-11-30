@@ -72,7 +72,7 @@ describe('Address2Controller', () => {
 
         it('should call getAddresses', () => {
             spyOn(vm, 'getAddresses');
-            vm.constructor();
+            vm.constructor({}, {}, {}, {}, {}, {}, {});
             expect(vm.getAddresses).toHaveBeenCalled();
         });
 

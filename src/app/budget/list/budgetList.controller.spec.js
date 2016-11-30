@@ -21,7 +21,7 @@ describe('budgetList Controller', () => {
 
         it('expect getBudgetList to be called', () => {
             spyOn(vm, 'getBudgetList');
-            vm.constructor();
+            vm.constructor({}, {}, {});
             expect(vm.getBudgetList).toHaveBeenCalled();
         });
 

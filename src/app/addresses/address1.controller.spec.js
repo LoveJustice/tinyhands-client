@@ -18,16 +18,6 @@ describe('Address1Controller', () => {
     }));
 
     describe('function constructor', () => {
-
-        beforeEach(() => {
-            vm.getAddresses = () => { };
-            vm.constructor();
-        });
-
-        it('loading should be false', () => {
-            expect(vm.loading).toBe(false);
-        });
-
         it('reverse should be false', () => {
             expect(vm.reverse).toBe(false);
         });
@@ -51,7 +41,6 @@ describe('Address1Controller', () => {
         it('sortColumn should be an empty string', () => {
             expect(vm.sortColumn).toEqual("");
         });
-
     });
 
     describe("function loadMoreAddresses", () => {

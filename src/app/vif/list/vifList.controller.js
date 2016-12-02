@@ -1,8 +1,12 @@
 export default class VifListController {
-    constructor(VifListService, SessionService, $stateParams, $timeout, $window, toastr) {
+    constructor(VifListService, SessionService, StickyHeader, $stateParams, $timeout, $window, toastr, constants) {
         'ngInject';
+
+        this.constants = constants;
+        this.createVifUrl = constants.BaseUrl;
         this.service = VifListService;
         this.session = SessionService;
+        this.sticky = StickyHeader;
         this.timeout = $timeout;
         this.window = $window;
         this.toastr = toastr;
@@ -17,6 +21,7 @@ export default class VifListController {
             "ordering": 'vif_number',
             "search": ''
         };
+        this.stickyOptions = this.sticky.stickyOptions;
 
         // If there was a search value provided in the url, set it
         if($stateParams) {

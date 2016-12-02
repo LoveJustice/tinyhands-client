@@ -3,6 +3,7 @@ import AccountListController from './accountList.controller';
 describe('AccountListController', () => {
     let controller,
         mockAccountService,
+        mockStickyHeader,
         rootScope,
         $q,
         getMeResponse,
@@ -34,8 +35,9 @@ describe('AccountListController', () => {
         });
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['success', 'error']);
+        mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
-        controller = new AccountListController(mockAccountService, mockToastr);
+        controller = new AccountListController(mockAccountService, mockStickyHeader, mockToastr);
     }));
 
     describe('getCurrentUser', () => {

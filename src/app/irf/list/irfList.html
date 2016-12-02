@@ -9,7 +9,7 @@
             <photoexport ng-if="irfListCtrl.session.user.permission_irf_view == true"></photoexport>
             <csvexport type="irf" buttontext="Export All IRFs to CSV" ng-if="irfListCtrl.session.user.permission_irf_view == true"></csvexport>
             &nbsp;
-            <a ng-if="irfListCtrl.session.user.permission_irf_add == true" class="btn btn-success pull-right" href="/data-entry/irfs/create/">
+            <a ng-if="irfListCtrl.session.user.permission_irf_add == true" class="btn btn-success pull-right" href="{{ irfListCtrl.constants.BaseUrl + '/data-entry/irfs/create/'}}">
                 Input A New IRF
             </a>
         </div>
@@ -40,9 +40,8 @@
         <!-- End search -->
     </div>
     <br/>
-    <div id="sticky-anchor"></div>
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-striped" float-thead="irfListCtrl.stickyOptions">
+        <thead class="sticky-table-header">
             <tr>
                 <th ng-click="irfListCtrl.updateSort('irf_number')" width="8%">IRF #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfListCtrl.getSortIcon('irf_number', '!reverse'),

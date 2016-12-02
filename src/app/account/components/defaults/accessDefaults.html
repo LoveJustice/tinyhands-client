@@ -3,15 +3,15 @@
         to be given to a new user designated as &quot;Field Staff?&quot;</p> -->
 
     <p ng-show="accessDefaultsCtrl.nameError" class="text-danger">All access defaults must have a designation.</p>
-    <table class="table table-condensed defaultsTable">
-        <thead>
+    <table class="table table-condensed defaultsTable" float-thead="accessDefaultsCtrl.stickyOptions">
+        <thead class="sticky-table-header">
         <tr>
             <th>&nbsp;</th>
             <th colspan="4">Interception Record Forms</th>
             <th colspan="4">Victim Interview Forms</th>
             <th colspan="4">Border Stations</th>
             <th>Accounts</th>
-            <th>Alerts</th>
+            <th colspan="2">Alerts</th>
             <th>VDC</th>
             <th>Budget</th>
         </tr>
@@ -30,14 +30,15 @@
             <th>Edit</th>
             <th>Delete</th>
             <th>Manage</th>
-            <th>Can Receive</th>
+            <th>Investigation</th>
+            <th>Legal</th>
             <th>Manage</th>
             <th>Manage</th>
         </tr>
         </thead>
 
         <tbody id="permissions-rows-container">
-        <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.items" 
+        <tr ng-repeat="permissionsSet in accessDefaultsCtrl.permissions.items"
             ng-mouseenter="permissionsSet.hover = true"
             ng-mouseleave="permissionsSet.hover = false">
 
@@ -48,70 +49,108 @@
             </td>
             <td><label
                     ng-click="permissionsSet.permission_irf_view = !permissionsSet.permission_irf_view;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_view)">{{
-                permissionsSet.permission_irf_view ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_view)">
+                    <span class="glyphicon {{ permissionsSet.permission_irf_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_irf_add = !permissionsSet.permission_irf_add;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_add)">{{
-                permissionsSet.permission_irf_add ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_add)">
+                    <span class="glyphicon {{ permissionsSet.permission_irf_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_irf_edit = !permissionsSet.permission_irf_edit;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_edit)">{{
-                permissionsSet.permission_irf_edit ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_edit)">
+                    <span class="glyphicon {{ permissionsSet.permission_irf_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_irf_delete = !permissionsSet.permission_irf_delete;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_delete)">{{
-                permissionsSet.permission_irf_delete ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_irf_delete)">
+                    <span class="glyphicon {{ permissionsSet.permission_irf_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_vif_view = !permissionsSet.permission_vif_view;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_view)">{{
-                permissionsSet.permission_vif_view ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_view)">
+                    <span class="glyphicon {{ permissionsSet.permission_vif_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_vif_add = !permissionsSet.permission_vif_add;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_add)">{{
-                permissionsSet.permission_vif_add ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_add)">
+                    <span class="glyphicon {{ permissionsSet.permission_vif_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_vif_edit = !permissionsSet.permission_vif_edit;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_edit)">{{
-                permissionsSet.permission_vif_edit ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_edit)">
+                    <span class="glyphicon {{ permissionsSet.permission_vif_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_vif_delete = !permissionsSet.permission_vif_delete;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_delete)">{{
-                permissionsSet.permission_vif_delete ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_delete)">
+                    <span class="glyphicon {{ permissionsSet.permission_vif_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_border_stations_view = !permissionsSet.permission_border_stations_view;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_view)">{{
-                permissionsSet.permission_border_stations_view ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_view)">
+                    <span class="glyphicon {{ permissionsSet.permission_border_stations_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_border_stations_add = !permissionsSet.permission_border_stations_add;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_add)">{{
-                permissionsSet.permission_border_stations_add ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_add)">
+                    <span class="glyphicon {{ permissionsSet.permission_border_stations_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_border_stations_edit = !permissionsSet.permission_border_stations_edit;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_edit)">{{
-                permissionsSet.permission_border_stations_edit ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_edit)">
+                    <span class="glyphicon {{ permissionsSet.permission_border_stations_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_border_stations_delete = !permissionsSet.permission_border_stations_delete;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_delete)">{{
-                permissionsSet.permission_border_stations_delete ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_border_stations_delete)">
+                    <span class="glyphicon {{ permissionsSet.permission_border_stations_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_accounts_manage = !permissionsSet.permission_accounts_manage;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_accounts_manage)">{{
-                permissionsSet.permission_accounts_manage ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_accounts_manage)">
+                    <span class="glyphicon {{ permissionsSet.permission_accounts_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
-                    ng-click="permissionsSet.permission_receive_email = !permissionsSet.permission_receive_email;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_email)">{{
-                permissionsSet.permission_receive_email ? "Yes" : "No" }}</label></td>
+                    ng-click="permissionsSet.permission_receive_legal_alert = !permissionsSet.permission_receive_legal_alert;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_legal_alert)">
+                    <span class="glyphicon {{ permissionsSet.permission_receive_legal_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
+            <td><label
+                    ng-click="permissionsSet.permission_receive_investigation_alert = !permissionsSet.permission_receive_investigation_alert;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_receive_investigation_alert)">
+                    <span class="glyphicon {{ permissionsSet.permission_investigation_legal_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_address2_manage = !permissionsSet.permission_address2_manage; accessDefaultsCtrl.checkIfModified(x)"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_address2_manage)">{{
-                permissionsSet.permission_address2_manage ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_address2_manage)">
+                    <span class="glyphicon {{ permissionsSet.permission_address2_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td><label
                     ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_manage)">{{
-                permissionsSet.permission_budget_manage ? "Yes" : "No" }}</label></td>
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_manage)">
+                    <span class="glyphicon {{ permissionsSet.permission_budget_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
             <td id="removeButton" class="col-md-1">
-                <confirm-button 
+                <confirm-button
                         btn-class="btn btn-sm btn-danger animated pull-left"
                         ng-disabled="permissionsSet.is_used_by_accounts"
                         ng-show="!permissionsSet.is_used_by_accounts"

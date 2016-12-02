@@ -171,13 +171,14 @@
                 <thead>
                 <tr>
                     <th>Accounts</th>
-                    <th>Alerts</th>
+                    <th colspan="2">Alerts</th>
                     <th>VDC</th>
                     <th>Budget</th>
                 </tr>
                 <tr>
                     <th>Manage</th>
-                    <th>Recieve</th>
+                    <th>Investigation</th>
+                    <th>Legal</th>
                     <th>Manage</th>
                     <th>Manage</th>
                 </tr>
@@ -192,9 +193,15 @@
                     </td>
                     <td>
                         <label class="btn"
-                               ng-class="accountEditCtrl.account.permission_receive_email ? 'btn btn-success' : 'btn btn-danger'"
-                               ng-click="accountEditCtrl.account.permission_receive_email = !accountEditCtrl.account.permission_receive_email">{{
-                            accountEditCtrl.account.permission_receive_email ? "Yes" : "No" }}</label>
+                               ng-class="accountEditCtrl.account.permission_receive_legal_alert ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_receive_legal_alert = !accountEditCtrl.account.permission_receive_legal_alert">{{
+                            accountEditCtrl.account.permission_receive_legal_alert ? "Yes" : "No" }}</label>
+                    </td>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_receive_investigation_alert ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_receive_investigation_alert = !accountEditCtrl.account.permission_receive_investigation_alert">{{
+                            accountEditCtrl.account.permission_receive_investigation_alert ? "Yes" : "No" }}</label>
                     </td>
                     <td>
                         <label class="btn"
@@ -211,15 +218,12 @@
                 </tr>
                 </tbody>
             </table>
-            <br/>
-            <br/>
-            <div class="row">
-                <div class="col-lg-12">
-                    <button class="clear btn {{accountEditCtrl.saveButtonStyle}} pull-right btn-lg col-sm-4 col-md-4 col-lg-4" ng-click="accountEditCtrl.updateOrCreate()">
-                        {{accountEditCtrl.saveButtonText}}
-                    </button>
-                </div>
-            </div>
         </div>
+
+    </div>
+    <div class="row">
+        <button class="clear btn {{accountEditCtrl.saveButtonStyle}} btn-lg pull-right" ng-click="accountEditCtrl.updateOrCreate()">
+          {{accountEditCtrl.saveButtonText}}
+        </button>
     </div>
 </div>

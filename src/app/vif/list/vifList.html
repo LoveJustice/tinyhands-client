@@ -8,7 +8,7 @@
         <div class="pull-right"><br>
             <csvexport type="vif" buttontext="Export All VIFs to CSV" ng-if="vifListCtrl.session.user.permission_vif_view == true"></csvexport>
             &nbsp;
-            <a ng-if="vifListCtrl.session.user.permission_vif_add == true" class="btn btn-success pull-right" href="/data-entry/vifs/create/">
+            <a ng-if="vifListCtrl.session.user.permission_vif_add == true" class="btn btn-success pull-right" href="{{vifListCtrl.constants.BaseUrl + 'data-entry/vifs/create/'}}">
                 Input A New VIF
             </a>
         </div>
@@ -39,9 +39,8 @@
         <!-- End search -->
     </div>
     <br/>
-    <div id="sticky-anchor"></div>
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-striped" float-thead="vifListCtrl.stickyOptions">
+        <thead class="sticky-table-header">
             <tr>
                 <th ng-click="vifListCtrl.updateSort('vif_number')" width="8%">VIF #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vifListCtrl.getSortIcon('vif_number', '!reverse'),

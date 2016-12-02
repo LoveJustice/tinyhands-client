@@ -1,11 +1,13 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, $stateParams, $timeout, $window, toastr) {
+    constructor(IrfListService, SessionService, StickyHeader, $stateParams, $timeout, $window, toastr, constants) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
+        this.sticky = StickyHeader;
         this.timeout = $timeout;
         this.window = $window;
         this.toastr = toastr;
+        this.constants = constants;
 
 
         this.timer = {};
@@ -18,6 +20,7 @@ export default class IrfListController {
             "ordering": 'irf_number',
             "search": ''
         };
+        this.stickyOptions = this.sticky.stickyOptions;
 
         // If there was a search value provided in the url, set it
         if($stateParams) {

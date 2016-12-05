@@ -1,10 +1,11 @@
 export default class ActivateAccountController {
-    constructor($scope, $state, AccountService, SessionService) {
+    constructor($scope, $state, AccountService, SessionService, toastr) {
         'ngInject';
         this.$scope = $scope;
         this.$state = $state;
         this.AccountService = AccountService;
         this.session = SessionService;
+        this.toastr = toastr;
 
         this.activateAccount();
     }
@@ -33,7 +34,12 @@ export default class ActivateAccountController {
                 this.invalidAccount = true;
             }
             else if (response.data === "acount_saved") {
-                this.session.attemptLogin(this.account.email, this.account.password1);
+                this.session.attemptLogin(this.account.email, this.account.password1).then(() => {
+                    this.toastr.success("Password set successfully!");
+                    this.$state.go('dashboard');
+                }, (reason) => {
+                    this.toastr.error(reason);
+                });
             }
         });
     }

@@ -6,6 +6,7 @@ describe('IRF List Controller',() => {
         $window,
         MockIrfListService,
         MockSessionService,
+        MockStickyHeader,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
@@ -14,6 +15,8 @@ describe('IRF List Controller',() => {
         $timeout = _$timeout_;
         $window = _$window_;
         $stateParams = {"search": "BHD"};
+
+        MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
         MockIrfListService = jasmine.createSpyObj('IrfListService', [
             'getIrfList',
@@ -45,7 +48,7 @@ describe('IRF List Controller',() => {
             };
         });
 
-        vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -55,7 +58,7 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
         });
 

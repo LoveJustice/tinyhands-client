@@ -69,10 +69,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             url: '/account/activate/:activation_key',
             templateUrl: 'app/account/components/activate/activateAccount.html',
             controller: 'ActivateAccountController',
-            controllerAs: 'activateAcctCtrl',
-            resolve: {
-                requireLogin: RequireLogin
-            }
+            controllerAs: 'activateAcctCtrl'
         });
 }
 

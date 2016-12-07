@@ -56,7 +56,7 @@ describe('activateAccount Controller', () => {
             expect(vm.invalidAccount).toEqual(true);
         });
         it(`session.attemptLogin should be called`, () => {
-            let response = { data: "acount_saved" };
+            let response = { data: "account_saved" };
             accountService.activateAccountPassword = () => { return { then: (f) => { f(response) } } };
             vm.update();
             expect(vm.session.attemptLogin).toHaveBeenCalled();

@@ -19,8 +19,8 @@
         </div>
     </div>
 
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-striped" float-thead="vm.stickyOptions">
+        <thead class="sticky-table-header">
             <tr>
                 <th id="addressNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
                     Name <i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
@@ -37,7 +37,7 @@
                 <th id="addressCompletedHeader" ng-click="vm.sortColumn = 'completed'; vm.reverse = ! vm.reverse; vm.getAddresses()" class="text-center">
                     Completed <i class="glyphicon" ng-class="vm.sortIcon('completed')"></i>
                 </th>
-                <th class="text-center">&nbsp;</th>
+                <th class="text-center">&nbsp;&nbsp;</th>
             </tr>
         </thead>
         <tbody ng-init="vm.sortColumn = 'name'">

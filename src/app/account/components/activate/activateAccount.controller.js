@@ -32,7 +32,7 @@ export default class ActivateAccountController {
             else if (response.data === "account_already_active/invalid_key") {
                 this.invalidAccount = true;
             }
-            else if (response.data === "acount_saved") {
+            else if (response.data === "account_saved") {
                 this.session.attemptLogin(this.account.email, this.account.password1);
             }
         });

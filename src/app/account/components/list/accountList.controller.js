@@ -1,10 +1,12 @@
 export default class AccountListController {
-    constructor(AccountService, toastr) {
+    constructor(AccountService, StickyHeader, toastr) {
         'ngInject';
         this.AccountService = AccountService;
+        this.sticky = StickyHeader;
         this.toastr = toastr;
 
         this.accounts = [];
+        this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAccounts();
         this.getCurrentUser();

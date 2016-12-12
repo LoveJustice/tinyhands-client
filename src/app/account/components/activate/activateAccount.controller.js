@@ -21,6 +21,9 @@ export default class ActivateAccountController {
                     this.invalidAccount = false;
                     this.account = response.data;
                 }
+            },
+            () => {
+                this.invalidAccount = true;
             });
         }
     }

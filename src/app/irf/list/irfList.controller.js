@@ -27,6 +27,8 @@ export default class IrfListController {
             this.queryParameters.search = $stateParams.search;
         }
         this.getIrfList();
+
+        this.checkForExistingIrfs();
     }
 
     transform(queryParams) {
@@ -103,5 +105,29 @@ export default class IrfListController {
         else {
             irf.confirmedDelete = true;
         }
+    }
+
+    checkForExistingIrfs() {
+        var savedForLaterIrfs = this.getSaveForLaterObject();
+        if (savedForLaterIrfs == null) return;
+
+        savedForLaterIrfs = Object.keys(savedForLaterIrfs);
+        savedForLaterIrfs.forEach((irfNumber) => {
+            this.service.irfExists(irfNumber).then((promise) => {
+                if (promise.data == irfNumber) {
+                    this.removeIrfFromSaveForLater(irfNumber);
+                }
+            });
+        });
+    }
+
+    removeIrfFromSaveForLater(irfNumber) {
+        var obj = this.getSaveForLaterObject();
+        delete obj[irfNumber];
+        localStorage.setItem('saved-irfs', JSON.stringify(obj));
+    }
+
+    getSaveForLaterObject() {
+        return JSON.parse(localStorage.getItem('saved-irfs'));
     }
 }

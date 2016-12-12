@@ -6,6 +6,7 @@ export default class ActivateAccountController {
         this.AccountService = AccountService;
         this.session = SessionService;
 
+        SessionService.clearSession();
         this.activateAccount();
     }
 
@@ -33,7 +34,11 @@ export default class ActivateAccountController {
                 this.invalidAccount = true;
             }
             else if (response.data === "account_saved") {
-                this.session.attemptLogin(this.account.email, this.account.password1);
+                this.session.attemptLogin(this.account.email, this.account.password1).then(() => {
+                    this.$state.go('dashboard');
+                }, (reason) => {
+                    this.toastr.error(reason);
+                });
             }
         });
     }

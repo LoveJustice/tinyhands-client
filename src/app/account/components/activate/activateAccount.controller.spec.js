@@ -10,9 +10,12 @@ describe('activateAccount Controller', () => {
 
     beforeEach(inject(($rootScope, $http) => {
         $scope = $rootScope.$new();
-        $state = { params: { activation_key: null } };
+
+        $state = { params: { activation_key: null } , go: () => {}};
         accountService = new AccountService($http);
-        session = jasmine.createSpyObj('session', ['attemptLogin']);
+        session = jasmine.createSpyObj('session', ['attemptLogin', 'clearSession']);
+
+
         vm = new ActivateAccountController($scope, $state, accountService, session);
     }));
 
@@ -58,6 +61,7 @@ describe('activateAccount Controller', () => {
         it(`session.attemptLogin should be called`, () => {
             let response = { data: "account_saved" };
             accountService.activateAccountPassword = () => { return { then: (f) => { f(response) } } };
+            session.attemptLogin.and.callFake(() => { return { then: (f) => { f({data: "account_saved"}) } } });
             vm.update();
             expect(vm.session.attemptLogin).toHaveBeenCalled();
         });

@@ -14,7 +14,7 @@ describe('LoginController', () => {
         $rootScope = _$rootScope_;
         mockState = jasmine.createSpyObj('state', ['go']);
         mockToastr = jasmine.createSpyObj('toastr', ['error']);
-        mockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin']);
+        mockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin', 'clearSession']);
         mockSessionService.attemptLogin.and.callFake(() => {
             return $q.resolve();
         });

@@ -11,6 +11,7 @@
     "angular-sanitize": "~1.5.3",
     "angular-touch": "~1.5.3",
     "angular-ui-router": "~0.2.18",
+    "angular-ui-validate": "1.2.2",
     "animate.css": "~3.5.1",
     "bootstrap": "~3.3.6",
     "jquery": "~2.2.3",

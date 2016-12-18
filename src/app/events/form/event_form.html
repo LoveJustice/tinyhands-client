@@ -1,94 +1,109 @@
 <div ng-cloak class="container">
-    <div class="row">
-        <h1>{{editCtrl.title}}</h1>
-        <div class="col-md-12 form-group" ng-class="{'has-error': editCtrl.hasTitleError && editCtrl.saveButtonClicked}"> 
-            <label class="control-label">Title</label>
-            <input type="text" class="form-control" ng-model="editCtrl.event.title"/>
-            <p class="help-block" ng-show="editCtrl.hasTitleError && editCtrl.saveButtonClicked">A title is required</p>
-        </div>
-        
-    </div>
-    <div class="row">
-        <div class="col-md-12 form-group"> 
-            <label>Location</label>
-            <input type="text" class="form-control" ng-model="editCtrl.event.location"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 form-group"> 
-            <label>Description</label>
-            <textarea type="text" class="form-control" rows="7"
-                    ng-model="editCtrl.event.description">
-            </textarea>
-        </div>
-    </div>
-
-    <div class="row">
-        <label class="form-group vcenter text-center label-on"> Occurs on </label>
-        <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasStartDateError && editCtrl.saveButtonClicked}">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.startDate" ng-click="editCtrl.openStartDatePopup()" is-open="editCtrl.startDatePopupOpened" ng-required="true" close-text="Close"/>
-        </div>
-        <label class="form-group vcenter text-center"> at </label>
-        <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasStartTimeError && editCtrl.saveButtonClicked}">
-            <uib-timepicker class="center-block" ng-model="editCtrl.startTime" show-meridian="false"></uib-timepicker>
-        </div>
-        <label class="form-group vcenter text-center"> to </label>
-        <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasEndDateError && editCtrl.saveButtonClicked}">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" ng-click="editCtrl.openEndDatePopup()" is-open="editCtrl.endDatePopupOpened" ng-required="true" close-text="Close"/>
-        </div>
-        <label class="form-group vcenter text-center"> at </label>
-        <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasEndTimeError && editCtrl.saveButtonClicked}">
-            <uib-timepicker class="center-block" ng-model="editCtrl.endTime" show-meridian="false"></uib-timepicker>
-        </div>
-    </div>
-
-    <div class="row has-error" ng-show="editCtrl.hasDateTimeError && editCtrl.saveButtonClicked">
-        <div class="col-sm-12">
-            <p class="help-block" ng-show="editCtrl.startDateIsBlank">The event's start date is required and must be in the format YYYY-MM-DD</p>
-            <p class="help-block" ng-show="editCtrl.startTimeIsBlank">The event's start time is required</p>
-            <p class="help-block" ng-show="editCtrl.hasEndDateError">The event's end date is required and must be in the format YYYY-MM-DD</p>
-            <p class="help-block" ng-show="editCtrl.hasEndTimeError">The event's end time is required</p>
-            <p class="help-block" ng-show="editCtrl.startDateIsAfterEndDate">The event's start date must be before the end date</p>
-            <p class="help-block" ng-show="editCtrl.startTimeIsAfterEndTimeOnSameDay">The event's start time must be before the end time when the event ends on the same day</p>            
-        </div>
-    </div>
-
-    <div class="row form-inline repetition-row">
-        <div class="col-sm-12">
-            <div class="form-group"> 
-                <input type="checkbox" ng-model="editCtrl.event.is_repeat">
-                <label>Repeats</label>
+    <form name="editCtrl.form" novalidate>
+        <div class="row">
+            <h1>{{editCtrl.title}}</h1>
+            <div class="col-md-12 form-group" ng-class="{'has-error': editCtrl.form.title.$invalid && editCtrl.form.$submitted}"> 
+                <label class="control-label">Title</label>
+                <input type="text" class="form-control" ng-model="editCtrl.event.title" name="title" required/>
+                <p class="help-block" ng-show="editCtrl.form.title.$error.required && editCtrl.form.$submitted">A title is required</p>
             </div>
-            <div class="form-group" ng-show="editCtrl.event.is_repeat" ng-class="{'has-error': editCtrl.noRepetitionIntervalSelected && editCtrl.saveButtonClicked}">
-                <label>every</label>
-                <select class="form-control" id="id_repetition" name="repetition" ng-model="editCtrl.event.repetition">
-                    <option value="D">Day</option>
-                    <option value="W">Week</option>
-                    <option value="M">Month</option>
-                </select>
-            </div>
-
-            <div class="form-group" ng-show="editCtrl.event.is_repeat" ng-class="{'has-error': (editCtrl.repetitionEndsBeforeEndDate || editCtrl.repetitionSelectedWithNoEndDate) && editCtrl.saveButtonClicked}">
-                <label>until</label>
-                <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.repetitionEndDate" ng-click="editCtrl.openEndRepeatPopup()" is-open="editCtrl.endRepeatPopupOpened" ng-required="true" close-text="Close"/>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group"> 
+                <label>Location</label>
+                <input type="text" class="form-control" ng-model="editCtrl.event.location"/>
             </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col-md-12 form-group"> 
+                <label>Description</label>
+                <textarea type="text" class="form-control" rows="7"
+                        ng-model="editCtrl.event.description">
+                </textarea>
+            </div>
+        </div>
 
-    <div class="row has-error" ng-show="editCtrl.hasRepetitionError && editCtrl.saveButtonClicked">
-        <div class="col-sm-12">
-            <p class="help-block" ng-show="editCtrl.noRepetitionIntervalSelected">A repetition interval is required if the event is repeating</p>
-            <p class="help-block" ng-show="editCtrl.repetitionSelectedWithNoEndDate">A repetition end date is required if the event is repeating</p>
-            <p class="help-block" ng-show="editCtrl.repetitionEndsBeforeEndDate">The repetition end date must be on or after the event's end date</p>            
+        <div class="row">
+            <label class="form-group vcenter text-center label-on"> Occurs on </label>
+            <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.startDate.$invalid}">
+                <input type="text" class="form-control" uib-datepicker-popup 
+                    ng-model="editCtrl.startDate" name="startDate" required 
+                    ng-click="editCtrl.openStartDatePopup()" is-open="editCtrl.startDatePopupOpened"  
+                    close-text="Close" ui-validate="{ afterEnd: 'editCtrl.isStartDateBeforeOrSameAsEndDate'}" 
+                    ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endDate'"/>
+            </div>
+            <label class="form-group vcenter text-center"> at </label>
+            <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.startTime.$invalid}">
+                <uib-timepicker class="center-block" ng-model="editCtrl.startTime" 
+                name="startTime" required show-meridian="false" 
+                ui-validate="{afterEnd: 'editCtrl.isStartTimeAfterEndTimeOnSameDay'}" 
+                ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endTime'"></uib-timepicker>
+            </div>
+            <label class="form-group vcenter text-center"> to </label>
+            <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.endDate.$invalid}">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" name="endDate" required ng-click="editCtrl.openEndDatePopup()" is-open="editCtrl.endDatePopupOpened" required close-text="Close"/>
+            </div>
+            <label class="form-group vcenter text-center"> at </label>
+            <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.endTime.$invalid}">
+                <uib-timepicker class="center-block" ng-model="editCtrl.endTime" name="endTime" required show-meridian="false"></uib-timepicker>
+            </div>
         </div>
-    </div>
 
-    <div class="row button-row"> 
-        <div class="col-sm-2 ">
-            <input ui-sref="eventsList" type="button" class="btn btn-danger btn-block" value="Cancel"/>
+        <div class="row has-error" ng-show="editCtrl.form.$submitted && editCtrl.form.$invalid">
+            <div class="col-sm-12">
+                <p class="help-block" ng-show="editCtrl.form.startDate.$error.date || editCtrl.form.startDate.$error.required">The event's start date is required and must be in the format YYYY-MM-DD</p>
+                <p class="help-block" ng-show="editCtrl.form.startDate.$error.afterEnd && !(editCtrl.form.startDate.$error.date || editCtrl.form.startDate.$error.required)">The event's start date must be before the end date</p>                
+                <p class="help-block" ng-show="editCtrl.form.startTime.$error.required">The event's start time is required</p>
+                <p class="help-block" ng-show="editCtrl.form.startTime.$error.afterEnd">The event's start time must be before the end time when the event ends on the same day</p>            
+                <p class="help-block" ng-show="editCtrl.form.endDate.$invalid">The event's end date is required and must be in the format YYYY-MM-DD</p>
+                <p class="help-block" ng-show="editCtrl.form.endTime.$error.required">The event's end time is required</p>
+            </div>
         </div>
-        <div class="col-sm-2 col-sm-offset-8">
-            <input type="button" class="btn btn-primary btn-block" ng-click="editCtrl.saveChanges()" value="Save"/>
+
+        <div class="row form-inline repetition-row">
+            <div class="col-sm-12">
+                <div class="form-group"> 
+                    <input type="checkbox" ng-model="editCtrl.event.is_repeat">
+                    <label>Repeats</label>
+                </div>
+                <div class="form-group" ng-show="editCtrl.event.is_repeat" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.repetition.$invalid}">
+                    <label>every</label>
+                    <select class="form-control" name="repetition" ng-required="editCtrl.event.is_repeat" ng-model="editCtrl.event.repetition">
+                        <option value="D">Day</option>
+                        <option value="W">Week</option>
+                        <option value="M">Month</option>
+                    </select>
+                </div>
+
+                <div class="form-group" ng-show="editCtrl.event.is_repeat" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.repetitionEndDate.$invalid}">
+                    <label>until</label>
+                    <input type="text" class="form-control" uib-datepicker-popup 
+                        ng-model="editCtrl.repetitionEndDate" name="repetitionEndDate" 
+                        ng-required="editCtrl.event.is_repeat" ng-click="editCtrl.openEndRepeatPopup()" 
+                        is-open="editCtrl.endRepeatPopupOpened" close-text="Close" 
+                        ui-validate="{ beforeEnd: 'editCtrl.isRepetitionEndAfterEndDate'}" 
+                        ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endDate'"/>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div class="row has-error" ng-show="editCtrl.form.$submitted && editCtrl.form.$invalid">
+            <div class="col-sm-12">
+                <p class="help-block" ng-show="editCtrl.form.repetition.$error.required">A repetition interval is required if the event is repeating</p>
+                <p class="help-block" ng-show="editCtrl.form.repetitionEndDate.$error.required">A repetition end date is required if the event is repeating</p>
+                <p class="help-block" ng-show="editCtrl.form.repetitionEndDate.$error.date">The repetition end date must be in the format YYYY-MM-DD</p>
+                <p class="help-block" ng-show="editCtrl.form.repetitionEndDate.$error.beforeEnd && !editCtrl.form.repetitionEndDate.$error.date && !editCtrl.form.repetitionEndDate.$error.required">The repetition end date must be after the event's end date</p>            
+            </div>
+        </div>
+
+        <div class="row button-row"> 
+            <div class="col-sm-2 ">
+                <input ui-sref="eventsList" type="button" class="btn btn-danger btn-block" value="Cancel"/>
+            </div>
+            <div class="col-sm-2 col-sm-offset-8">
+                <input type="submit" class="btn btn-primary btn-block" ng-click="editCtrl.saveChanges()" value="Save"/>
+            </div>
+        </div>
+    </form>
 </div>

@@ -93,86 +93,23 @@ export default class EditEventCtrl {
     }
 
     //Error checking
-    get isFormValid() {
-        return !this.hasTitleError
-            && !this.hasStartDateError
-            && !this.hasStartTimeError
-            && !this.hasEndDateError
-            && !this.hasEndTimeError
-            && !this.hasRepetitionError;
+    get isStartDateBeforeOrSameAsEndDate() {
+        return this.moment(this._startDate).isSameOrBefore(this._endDate, 'day');
     }
 
-    get hasTitleError() {
-        return !this.event.title;
+    get isStartTimeAfterEndTimeOnSameDay() {
+        if(this.moment(this._startDate).isSame(this._endDate, 'day') && this._startTime && this._endTime) {
+            return this._startTime.getHours() < this._endTime.getHours()
+            || (this._startTime.getHours() === this._endTime.getHours() && this._startTime.getMinutes() < this._endTime.getMinutes());
+        } //possible improvements by using same date obj for start date and time
+        return true; 
     }
 
-    get hasDateTimeError() {
-        return this.hasStartDateError 
-            || this.hasStartTimeError
-            || this.hasEndDateError
-            || this.hasEndTimeError;
-    }
-
-    get hasStartDateError() {
-        return this.startDateIsBlank || this.startDateIsAfterEndDate;
-    }
-
-    get startDateIsBlank() {
-        return !this._startDate;
-    }
-
-    get startDateIsAfterEndDate() {
-        return this._startDate 
-            && this._endDate 
-            && moment(this._startDate).isAfter(this._endDate, 'day');
-    }
-
-    get hasStartTimeError() {
-        return this.startTimeIsBlank || this.startTimeIsAfterEndTimeOnSameDay;
-    }
-
-    get startTimeIsBlank() {
-        return !this._startTime;
-    }
-
-    get startTimeIsAfterEndTimeOnSameDay() {
-        return this._startDate
-            && this._endDate
-            && moment(this._startDate).isSame(this._endDate, 'day')
-            && this.isStartTimeAfterEndTime;
-    }
-
-    get isStartTimeAfterEndTime() {
-        return this._startTime 
-            && this._endTime
-            && (this._startTime.getHours() > this._endTime.getHours()
-                || (this._startTime.getHours() === this._endTime.getHours() && this._startTime.getMinutes() >= this._endTime.getMinutes()));
-    }
-
-    get hasEndDateError() {
-        return !this._endDate;
-    }
-
-    get hasEndTimeError() {
-        return !this._endTime;
-    }
-
-    get hasRepetitionError() {
-        return this.noRepetitionIntervalSelected || this.repetitionSelectedWithNoEndDate || this.repetitionEndsBeforeEndDate;
-    }
-
-    get noRepetitionIntervalSelected() {
-        return this.event.is_repeat && !this.event.repetition;
-    }
-
-    get repetitionSelectedWithNoEndDate() {
-        return this.event.is_repeat && !this._repetitionEndDate;
-    }
-
-    get repetitionEndsBeforeEndDate() {
-        return this._endDate 
-            && this._repetitionEndDate
-            && moment(this._repetitionEndDate).isBefore(this._endDate, 'day');
+    get isRepetitionEndAfterEndDate() {
+        if(this.event.is_repeat) {
+            return this.moment(this._repetitionEndDate).isAfter(this._endDate, 'day');
+        }
+        return true;
     }
 
     // functions
@@ -205,8 +142,7 @@ export default class EditEventCtrl {
     }
 
     saveChanges() {
-        this.saveButtonClicked = true;
-        if(!this.isFormValid) {
+        if(!this.form.$valid) {
             return;
         }
         if (!this.event.is_repeat) {

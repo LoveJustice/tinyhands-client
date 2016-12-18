@@ -7,7 +7,7 @@ export default class EditEventCtrl {
         this.stateParams = $stateParams;
         this.toastr = toastr
         this.moment = moment;        
-        this.Events = EventsService;
+        this.EventsService = EventsService;
         this.saveButtonClicked = false;
 
         //for datepicker
@@ -30,7 +30,7 @@ export default class EditEventCtrl {
 
         if (this.stateParams.id) {
             this.editing = true;
-            this.Events.getEvent(this.stateParams.id).then((response) => {
+            this.EventsService.getEvent(this.stateParams.id).then((response) => {
                 this.event = response.data;
                 this.setDatesAndTimes(this.event);
             });
@@ -38,6 +38,13 @@ export default class EditEventCtrl {
             this.editing = false;
             this.setDatesAndTimes();
         }
+    }
+
+    get title() {
+        if (this.editing) {
+            return 'Edit Event';
+        }
+        return 'Create Event';
     }
 
     get startDate() {
@@ -185,15 +192,15 @@ export default class EditEventCtrl {
         }
     }
 
-    startDateOpen() {
+    openStartDatePopup() {
         this.startDatePopupOpened = true;
     }
 
-    endDateOpen() {
+    openEndDatePopup() {
         this.endDatePopupOpened = true;
     }
 
-    endRepeatOpen() {
+    openEndRepeatPopup() {
         this.endRepeatPopupOpened = true;
     }
 
@@ -204,32 +211,19 @@ export default class EditEventCtrl {
         }
         if (!this.event.is_repeat) {
             this.event.repetition = '';
-            this.event.ends = null;
+            this.event.ends = '';
         }
         let call;
         if (this.editing) {
-            call = this.Events.updateEvent(this.event.id, this.event);
+            call = this.EventsService.updateEvent(this.event.id, this.event);
         } else {
-            call = this.Events.createEvent(this.event);
+            call = this.EventsService.createEvent(this.event);
         }
         call.then(() => {
             this.toastr.success(`Event ${this.editing ? 'Updated' : 'Created'}!`);
             this.state.go('eventsList');
         }, (err) => {
-            if (err.data.title) {
-                this.titleError = err.data.title[0];
-                this.startDateError = err.data.title[1];
-                this.startTimeError = err.data.title[2];
-                this.endDateError = err.data.title[3];
-                this.endTimeError = err.data.title[4];
-            }
+            
         });
-    }
-
-    getTitle() {
-        if (this.editing) {
-            return 'Edit Event';
-        }
-        return 'Create Event';
     }
 }

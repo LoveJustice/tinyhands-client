@@ -1,6 +1,6 @@
 <div ng-cloak class="container">
     <div class="row">
-        <h1>{{editCtrl.getTitle()}}</h1>
+        <h1>{{editCtrl.title}}</h1>
         <div class="col-md-12 form-group" ng-class="{'has-error': editCtrl.hasTitleError && editCtrl.saveButtonClicked}"> 
             <label class="control-label">Title</label>
             <input type="text" class="form-control" ng-model="editCtrl.event.title"/>
@@ -23,10 +23,10 @@
         </div>
     </div>
 
-     <div class="row">
+    <div class="row">
         <label class="form-group vcenter text-center label-on"> Occurs on </label>
         <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasStartDateError && editCtrl.saveButtonClicked}">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.startDate" ng-click="editCtrl.startDateOpen()" is-open="editCtrl.startDatePopupOpened" ng-required="true" close-text="Close"/>
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.startDate" ng-click="editCtrl.openStartDatePopup()" is-open="editCtrl.startDatePopupOpened" ng-required="true" close-text="Close"/>
         </div>
         <label class="form-group vcenter text-center"> at </label>
         <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasStartTimeError && editCtrl.saveButtonClicked}">
@@ -34,7 +34,7 @@
         </div>
         <label class="form-group vcenter text-center"> to </label>
         <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasEndDateError && editCtrl.saveButtonClicked}">
-            <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" ng-click="editCtrl.endDateOpen()" is-open="editCtrl.endDatePopupOpened" ng-required="true" close-text="Close"/>
+            <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" ng-click="editCtrl.openEndDatePopup()" is-open="editCtrl.endDatePopupOpened" ng-required="true" close-text="Close"/>
         </div>
         <label class="form-group vcenter text-center"> at </label>
         <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.hasEndTimeError && editCtrl.saveButtonClicked}">
@@ -70,7 +70,7 @@
 
             <div class="form-group" ng-show="editCtrl.event.is_repeat" ng-class="{'has-error': (editCtrl.repetitionEndsBeforeEndDate || editCtrl.repetitionSelectedWithNoEndDate) && editCtrl.saveButtonClicked}">
                 <label>until</label>
-                <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.repetitionEndDate" ng-click="editCtrl.endRepeatOpen()" is-open="editCtrl.endRepeatPopupOpened" ng-required="true" close-text="Close"/>
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.repetitionEndDate" ng-click="editCtrl.openEndRepeatPopup()" is-open="editCtrl.endRepeatPopupOpened" ng-required="true" close-text="Close"/>
             </div>
         </div>
     </div>

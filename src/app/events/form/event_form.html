@@ -37,7 +37,7 @@
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.startTime.$invalid}">
                 <uib-timepicker class="center-block" ng-model="editCtrl.startTime" 
                 name="startTime" required show-meridian="false" 
-                ui-validate="{afterEnd: 'editCtrl.isStartTimeAfterEndTimeOnSameDay'}" 
+                ui-validate="{afterEnd: 'editCtrl.isStartTimeBeforeEndTime'}" 
                 ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endTime'"></uib-timepicker>
             </div>
             <label class="form-group vcenter text-center"> to </label>

@@ -8,36 +8,13 @@ export default class EditEventCtrl {
         this.toastr = toastr
         this.moment = moment;        
         this.EventsService = EventsService;
-        this.saveButtonClicked = false;
 
         //for datepicker
         this.startDatePopupOpened = false;
         this.endDatePopupOpened = false;
         this.endRepeatPopupOpened = false;
 
-        this.event = {
-            title: '',
-            location: '',
-            start_date: '',
-            start_time: '',
-            end_date: '',
-            end_time: '',
-            description: '',
-            is_repeat: false,
-            repetition: '',
-            ends: '',
-        };
-
-        if (this.stateParams.id) {
-            this.editing = true;
-            this.EventsService.getEvent(this.stateParams.id).then((response) => {
-                this.event = response.data;
-                this.setDatesAndTimes(this.event);
-            });
-        } else {
-            this.editing = false;
-            this.setDatesAndTimes();
-        }
+        this.setupEvent();
     }
 
     get title() {
@@ -97,11 +74,11 @@ export default class EditEventCtrl {
         return this.moment(this._startDate).isSameOrBefore(this._endDate, 'day');
     }
 
-    get isStartTimeAfterEndTimeOnSameDay() {
+    get isStartTimeBeforeEndTime() {
         if(this.moment(this._startDate).isSame(this._endDate, 'day') && this._startTime && this._endTime) {
             return this._startTime.getHours() < this._endTime.getHours()
             || (this._startTime.getHours() === this._endTime.getHours() && this._startTime.getMinutes() < this._endTime.getMinutes());
-        } //possible improvements by using same date obj for start date and time
+        }
         return true; 
     }
 
@@ -113,6 +90,31 @@ export default class EditEventCtrl {
     }
 
     // functions
+    setupEvent() {
+        if (this.stateParams.id) {
+            this.editing = true;
+            this.EventsService.getEvent(this.stateParams.id).then((response) => {
+                this.event = response.data;
+                this.setDatesAndTimes(this.event);
+            });
+        } else {
+            this.editing = false;
+            this.event = {
+                title: '',
+                location: '',
+                start_date: '',
+                start_time: '',
+                end_date: '',
+                end_time: '',
+                description: '',
+                is_repeat: false,
+                repetition: '',
+                ends: '',
+            };
+            this.setDatesAndTimes();
+        }
+    }
+
     setDatesAndTimes(event = null) {
         if(event) {
             this.startDate = this.moment(event.start_date, 'YYYY-MM-DD').toDate();
@@ -147,7 +149,7 @@ export default class EditEventCtrl {
         }
         if (!this.event.is_repeat) {
             this.event.repetition = '';
-            this.event.ends = '';
+            this.event.ends = null;
         }
         let call;
         if (this.editing) {

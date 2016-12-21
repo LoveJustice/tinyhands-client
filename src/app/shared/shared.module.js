@@ -1,3 +1,4 @@
+/* global toastr:false, moment:false */
 import BaseService from '../base.service';
 import SessionService from './services/session.service';
 import StickyHeaderService from './services/stickyHeader.service';
@@ -13,6 +14,8 @@ export default angular.module('tinyhands.Shared', ['floatThead', 'ui.validate'])
         };
     })
     .constant('RequireLogin', RequireLogin)
+    .constant('toastr', toastr)
+    .constant('moment', moment)
 
     .service('StickyHeader', StickyHeaderService)
 

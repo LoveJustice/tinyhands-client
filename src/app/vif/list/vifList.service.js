@@ -15,4 +15,8 @@ export default class VifListService {
     getMoreVifs(queryParameters) {
         return this.service.get('api/vif/', queryParameters);
     }
+
+    vifExists(vifNumber) {
+        return this.service.post(`data-entry/vifs/vifExists/${vifNumber}`);
+    }
 }

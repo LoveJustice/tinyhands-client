@@ -1,10 +1,12 @@
 class PasswordResetController {
-    constructor (BaseService, toastr) {
+    constructor (BaseService, SessionService, toastr) {
         'ngInject';
 
         this.email = "";
         this.service = BaseService;
         this.toastr = toastr;
+
+        SessionService.clearSession();
     }
 
     resetPassword() {

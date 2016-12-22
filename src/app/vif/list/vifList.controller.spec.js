@@ -21,7 +21,8 @@ describe('VIF List Controller',() => {
         MockVifListService = jasmine.createSpyObj('VifListService', [
             'getVifList',
             'getMoreVifs',
-            'deleteVif'
+            'deleteVif',
+            'vifExists'
         ]);
 
         let response = {'data':{
@@ -39,6 +40,14 @@ describe('VIF List Controller',() => {
             };
         });
 
+        MockVifListService.vifExists.and.callFake( () => {
+            return {
+                then: (f) => {
+                    f({data: "BHD123"});
+                }
+            };
+        });
+
         vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
@@ -51,6 +60,13 @@ describe('VIF List Controller',() => {
             $stateParams = {};
             vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
+        });
+
+        it('should be called with the constructor', () => {
+            spyOn(vm, 'checkForExistingVifs');
+            vm.constructor(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+
+            expect(vm.checkForExistingVifs).toHaveBeenCalled();
         });
     });
 
@@ -163,6 +179,59 @@ describe('VIF List Controller',() => {
             vm.updateSort('rf_number');
             expect(vm.queryParameters.reverse).toBe(false);
             expect(vm.queryParameters.ordering).toBe('rf_number');
+        });
+    });
+
+    describe('function checkForExistingVifs', () => {
+        let savedVifs;
+        beforeEach(() => {
+            savedVifs = {
+                BHD123: {asdf: "asdf"},
+                BHD1234: {asdf: "asdf"}
+            }
+            localStorage.setItem('saved-vifs', JSON.stringify(savedVifs));
+        });
+
+        it('should return undefined if no saved-vifs', () => {
+            localStorage.removeItem('saved-vifs');
+            var result = vm.checkForExistingVifs();
+
+            expect(result).toEqual(undefined);
+        });
+
+        it('should call vifExists on each form in savedVifs', () => {
+            var result = vm.checkForExistingVifs();
+
+            expect(vm.service.vifExists).toHaveBeenCalledWith('BHD123');
+            expect(vm.service.vifExists).toHaveBeenCalledWith('BHD1234');
+        });
+
+        it('should call removeVifFromSaveForLater on response with same name', () => {
+            spyOn(vm, 'removeVifFromSaveForLater');
+
+            var result = vm.checkForExistingVifs();
+
+            expect(vm.removeVifFromSaveForLater).toHaveBeenCalledWith('BHD123');
+            expect(vm.removeVifFromSaveForLater).not.toHaveBeenCalledWith('BHD1234');
+        });
+    });
+
+    describe('function removeVifFromSaveForLater', () => {
+        let savedVifs;
+        beforeEach(() => {
+            savedVifs = {
+                BHD123: {asdf: "asdf"},
+                BHD1234: {asdf: "asdf"}
+            }
+            localStorage.setItem('saved-vifs', JSON.stringify(savedVifs));
+        });
+
+        it('Should remove object with passed in parameter from local storage', () => {
+            expect(savedVifs).toEqual(JSON.parse(localStorage.getItem('saved-vifs')));
+
+            vm.removeVifFromSaveForLater('BHD123');
+
+            expect(savedVifs).not.toEqual(JSON.parse(localStorage.getItem('saved-vifs')));
         });
     });
 });

@@ -109,7 +109,14 @@ describe('BorderStationService', () => {
         let url = 'api/border-station/';
         it(`should call get with '${url}'`, () => {
             service.getBorderStations();
-            expect(mockBaseService.get).toHaveBeenCalledWith(url);
+            expect(mockBaseService.get).toHaveBeenCalledWith(url, []);
+        });
+
+        describe('when bool passed in', () => {
+            it('should set open param in params array', () => {
+                service.getBorderStations(true);
+                expect(mockBaseService.get).toHaveBeenCalledWith(url, [{name: 'open', value: true}]);
+            });
         });
     });
 

@@ -2,6 +2,9 @@ export default class EditEventCtrl {
     constructor($state, $stateParams, toastr, moment, EventsService) {
         'ngInject';
 
+        this.dateFormat = 'YYYY-MM-DD';
+        this.timeFormat = 'HH:mm';
+
         //variable declarations
         this.state = $state;
         this.stateParams = $stateParams;
@@ -29,7 +32,7 @@ export default class EditEventCtrl {
     }
     
     set startDate(newDate) {
-        this.event.start_date = this.moment(newDate).format('YYYY-MM-DD');
+        this.event.start_date = this.moment(newDate).format(this.dateFormat);
         this._startDate = newDate;
     }
 
@@ -38,7 +41,7 @@ export default class EditEventCtrl {
     }
     
     set startTime(newTime) {
-        this.event.start_time = this.moment(newTime).format('HH:mm');
+        this.event.start_time = this.moment(newTime).format(this.timeFormat);
         this._startTime = newTime;
     }
 
@@ -47,7 +50,7 @@ export default class EditEventCtrl {
     }
     
     set endDate(newDate) {
-        this.event.end_date = this.moment(newDate).format('YYYY-MM-DD');
+        this.event.end_date = this.moment(newDate).format(this.dateFormat);
         this._endDate = newDate;
     }
 
@@ -56,7 +59,7 @@ export default class EditEventCtrl {
     }
     
     set endTime(newTime) {
-        this.event.end_time = this.moment(newTime).format('HH:mm');
+        this.event.end_time = this.moment(newTime).format(this.timeFormat);
         this._endTime = newTime;
     }
 
@@ -65,7 +68,7 @@ export default class EditEventCtrl {
     }
 
     set repetitionEndDate(newDate) {
-        this.event.ends = this.moment(newDate).format('YYYY-MM-DD');
+        this.event.ends = this.moment(newDate).format(this.dateFormat);
         this._repetitionEndDate = newDate;
     }
 
@@ -117,11 +120,11 @@ export default class EditEventCtrl {
 
     setDatesAndTimes(event = null) {
         if(event) {
-            this.startDate = this.moment(event.start_date, 'YYYY-MM-DD').toDate();
-            this.startTime = this.moment(event.start_time, 'HH:mm').toDate();
-            this.endDate = this.moment(event.end_date, 'YYYY-MM-DD').toDate();
-            this.endTime = this.moment(event.end_time, 'HH:mm').toDate();
-            this.repetitionEndDate = this.moment(event.ends, 'YYYY-MM-DD').toDate();            
+            this.startDate = this.moment(event.start_date, this.dateFormat).toDate();
+            this.startTime = this.moment(event.start_time, this.timeFormat).toDate();
+            this.endDate = this.moment(event.end_date, this.dateFormat).toDate();
+            this.endTime = this.moment(event.end_time, this.timeFormat).toDate();
+            this.repetitionEndDate = this.moment(event.ends, this.dateFormat).toDate();            
         } else {
             this.startDate = new Date();
             this.startTime = this.moment('2016-01-01T12:00').toDate();

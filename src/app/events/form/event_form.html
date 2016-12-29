@@ -42,7 +42,7 @@
             </div>
             <label class="form-group vcenter text-center"> to </label>
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.endDate.$invalid}">
-                <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" name="endDate" required ng-click="editCtrl.openEndDatePopup()" is-open="editCtrl.endDatePopupOpened" required close-text="Close"/>
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" name="endDate" ng-click="editCtrl.openEndDatePopup()" is-open="editCtrl.endDatePopupOpened" required close-text="Close"/>
             </div>
             <label class="form-group vcenter text-center"> at </label>
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.endTime.$invalid}">

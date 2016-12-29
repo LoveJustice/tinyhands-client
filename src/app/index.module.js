@@ -1,4 +1,3 @@
-/* global toastr:false, moment:false */
 /* jshint ignore:start */
 import SharedModule from './shared/shared.module';
 import accountModule from './account/account.module';
@@ -33,8 +32,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     'tinyhands.VIF',
     'tinyhands.PhotoExport',
 ])
-    .constant('toastr', toastr)
-    .constant('moment', moment)
+    
     .constant('constants', constants)
 
     .config(config)

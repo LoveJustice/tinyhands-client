@@ -197,6 +197,7 @@ describe('MapController', () => {
                 id: 321,
                 number_of_staff: 10,
                 number_of_interceptions: 10,
+                ytd_interceptions: 10,
                 station_code: 100,
                 station_name: 200
             };

@@ -17,17 +17,17 @@
         <tr>
           <td>Last Month</td>
           <td>{{ budgetCtrl.form.previousData.last_month }}</td>
-          <td>{{ budgetCtrl.form.previousData.last_months_cost | currency }}</td>
+          <td>{{ budgetCtrl.form.previousData.last_months_cost | currency:'Rs. ' }}</td>
         </tr>
         <tr>
           <td>Last 3 Months</td>
           <td>{{ budgetCtrl.form.previousData.last_3_months }}</td>
-          <td>{{ budgetCtrl.form.previousData.last_3_months_cost | currency }}</td>
+          <td>{{ budgetCtrl.form.previousData.last_3_months_cost | currency:'Rs. ' }}</td>
         </tr>
         <tr>
           <td>All Time</td>
           <td>{{ budgetCtrl.form.previousData.all }}</td>
-          <td>{{ budgetCtrl.form.previousData.all_cost | currency }}</td>
+          <td>{{ budgetCtrl.form.previousData.all_cost | currency:'Rs. ' }}</td>
         </tr>
         <tr>
           <td># of Staff</td>
@@ -86,14 +86,14 @@
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.borderMonitoringStation">
           <td>{{section | capitalize}}</td>
           <td width="25%">
-            <p class="text-right">{{total | currency}}</p>
+            <p class="text-right">{{total | currency:'Rs. '}}</p>
           </td>
           <td class="active" width="25%"></td>
         </tr>
         <tr>
           <td class="text-right"><b>TOTAL</b></td>
           <td colspan="2">
-            <p class="text-right">{{budgetCtrl.borderMonitoringStationTotal | currency}}</p>
+            <p class="text-right">{{budgetCtrl.borderMonitoringStationTotal | currency:'Rs. '}}</p>
           </td>
         </tr>
       </tbody>
@@ -107,14 +107,14 @@
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.safeHouse">
           <td class="warning">{{section == 'foodAndGas' ? 'Food And Gas' : section.charAt(0).toUpperCase() + section.substr(1)}}</td>
           <td class="warning">
-            <p class="text-right">{{total | currency}}</p>
+            <p class="text-right">{{total | currency:'Rs. '}}</p>
           </td>
           <td class="active"></td>
         </tr>
         <tr class="warning">
           <td class="text-right"><b>TOTAL</b></td>
           <td colspan="2">
-            <p class="text-right">{{budgetCtrl.safeHouseTotal | currency}}</p>
+            <p class="text-right">{{budgetCtrl.safeHouseTotal | currency:'Rs. '}}</p>
           </td>
         </tr>
       </tbody>
@@ -123,18 +123,18 @@
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.other">
           <td class="text-center"><b>{{section | capitalize}}</b></td>
           <td colspan="2">
-            <p class="text-right">{{total | currency}}</p>
+            <p class="text-right">{{total | currency:'Rs. '}}</p>
           </td>
         </tr>
         <tr>
           <td class="text-center"><b>STATION TOTAL</b></td>
           <td colspan="2">
-            <p class="text-right">{{budgetCtrl.total | currency}}</p>
+            <p class="text-right">{{budgetCtrl.total | currency:'Rs. '}}</p>
           </td>
         </tr>
         <tr>
           <td class="text-center">Last month's TOTAL</td>
-          <td class="text-right" colspan="2">{{ budgetCtrl.form.previousData.last_months_cost | currency }}</td>
+          <td class="text-right" colspan="2">{{ budgetCtrl.form.previousData.last_months_cost | currency:'Rs. ' }}</td>
         </tr>
       </tbody>
     </table>

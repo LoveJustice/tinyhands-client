@@ -102,7 +102,7 @@ export default class BudgetController {
     }
 
     adminTotal() {
-        let amount = this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal();
+        let amount = this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal() + this.getOtherCost(this.form.other.Administration);
         this.form.totals.borderMonitoringStation.administration = amount;
         return amount;
     }
@@ -184,8 +184,9 @@ export default class BudgetController {
 
     // REGION: Medical
     medicalTotal() {
-        this.form.totals.borderMonitoringStation.medical = this.form.medical_last_months_expense;
-        return this.form.medical_last_months_expense;
+        let total = this.form.medical_last_months_expense + this.getOtherCost(this.form.other.Medical);
+        this.form.totals.borderMonitoringStation.medical = total;
+        return this.form.medical_last_months_expense + total;
     }
     // ENDREGION: Medical
 

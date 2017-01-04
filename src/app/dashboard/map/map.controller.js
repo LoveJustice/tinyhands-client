@@ -24,7 +24,7 @@ class MapController {
     }
 
     getBorderStations() {
-        this.borderStationService.getBorderStations().then((response) => {
+        this.borderStationService.getBorderStations(true).then((response) => {
             this.borderStations = response.data;
             this.borderStations.forEach((borderStation) => {
                 this.setInfoWindowParams(borderStation);
@@ -75,6 +75,7 @@ class MapController {
             id: borderStation.id,
             number_of_staff: borderStation.number_of_staff,
             number_of_interceptions: borderStation.number_of_interceptions,
+            ytd_interceptions: borderStation.ytd_interceptions,
             station_code: borderStation.station_code,
             station_name: borderStation.station_name
         };

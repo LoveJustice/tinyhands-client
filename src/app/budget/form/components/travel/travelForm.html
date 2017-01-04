@@ -37,7 +37,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">$</div>
+      <div class="input-group-addon">Rs.</div>
       <input class="form-control text-center" ng-value="budgetCtrl.travelNumberOfStaffUsingBikesTotal() | number"
       disabled="disabled" />
     </div>
@@ -67,7 +67,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">$</div>
+      <div class="input-group-addon">Rs.</div>
       <input class="form-control text-center" ng-value="budgetCtrl.travelMotorbikeOtherTotal() | number" disabled="disabled"/>
     </div>
   </div>
@@ -94,7 +94,7 @@
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Travel</label>
-      <input class="form-control text-center" ng-value="budgetCtrl.travelTotal() | currency" disabled="disabled"/>
+      <input class="form-control text-center" ng-value="budgetCtrl.travelTotal() | currency:'Rs. '" disabled="disabled"/>
     </div>
   </div>
 </div>

@@ -41,7 +41,7 @@ describe('BudgetService', () => {
         let url = `api/budget/${budgetId}/item/${otherItem.id}/`;
         it(`should be called with ${url}`, () => {
             service.deleteOtherItem(budgetId, otherItem);
-            expect(mockBaseService.delete).toHaveBeenCalledWith(url, otherItem);
+            expect(mockBaseService.delete).toHaveBeenCalledWith(url);
         });
     });
 

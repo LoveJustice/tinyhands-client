@@ -7,6 +7,7 @@ class LoginController {
         this.$state = $state;
         this.toastr = toastr;
         this.session = SessionService;
+        this.session.clearSession();
     }
 
     attemptLogin() {

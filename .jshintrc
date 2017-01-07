@@ -9,6 +9,7 @@
   "unused": true,
   "validthis": true,
   "jasmine": true,
+  "laxbreak": true,
   "globals": {
     "_": false,
     "$": false,
@@ -16,7 +17,9 @@
     "inject": false,
     "module": false,
     "navigator": false,
+    "localStorage": false,
     "sessionStorage": false,
-    "window": false
+    "window": false,
+    "moment": false
   }
 }

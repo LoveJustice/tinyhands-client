@@ -22,16 +22,18 @@ describe('BudgetController', () => {
         it(`sections should be object`, () => {
             let budgetFormPath = 'app/budget/form/components/';
             let sections = {
-                allSections: [{ name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
-                { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
-                { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
-                { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
-                { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
-                { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
-                { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
-                { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
-                { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
-                { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` }]
+                allSections: [
+                    { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
+                    { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
+                    { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` },
+                    { name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
+                    { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
+                    { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
+                    { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
+                    { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
+                    { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
+                    { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
+                ]
             };
             expect(vm.sections).toEqual(sections);
         });

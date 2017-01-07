@@ -1,8 +1,13 @@
 <div class="container">
-<h2> Edit Events </h2>
-
-
-    <div ng-cloak>
+    <div class="row">
+        <h1>Events</h1>
+    </div>
+    <div class="row button-row">
+        <div class="pull-right">
+            <a ui-sref="eventsCreate" class="btn btn-primary">Create an Event</a>
+        </div>
+    </div>
+    <div class="row event-grid-row" ng-cloak>
         <table class="table table-bordered table-hover">
             <thead>
                 <th>Title</th>

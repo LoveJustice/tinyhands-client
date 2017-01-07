@@ -6,6 +6,7 @@ describe('IRF List Controller',() => {
         $window,
         MockIrfListService,
         MockSessionService,
+        MockStickyHeader,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
@@ -15,10 +16,13 @@ describe('IRF List Controller',() => {
         $window = _$window_;
         $stateParams = {"search": "BHD"};
 
+        MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
+
         MockIrfListService = jasmine.createSpyObj('IrfListService', [
             'getIrfList',
             'getMoreIrfs',
-            'deleteIrf'
+            'deleteIrf',
+            'irfExists'
         ]);
 
         let response = {'data':{
@@ -36,7 +40,15 @@ describe('IRF List Controller',() => {
             };
         });
 
-        vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        MockIrfListService.irfExists.and.callFake( () => {
+            return {
+                then: (f) => {
+                    f({data: "BHD123"});
+                }
+            };
+        });
+
+        vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -46,8 +58,14 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
+        });
+
+        it('expect checkForExistingIrfs to be called', () => {
+            spyOn(vm, 'checkForExistingIrfs');
+            vm.constructor(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            expect(vm.checkForExistingIrfs).toHaveBeenCalled();
         });
     });
 
@@ -160,6 +178,59 @@ describe('IRF List Controller',() => {
             vm.updateSort('rf_number');
             expect(vm.queryParameters.reverse).toBe(false);
             expect(vm.queryParameters.ordering).toBe('rf_number');
+        });
+    });
+
+    describe('function checkForExistingIrfs', () => {
+        let savedIrfs;
+        beforeEach(() => {
+            savedIrfs = {
+                BHD123: {asdf: "asdf"},
+                BHD1234: {asdf: "asdf"}
+            }
+            localStorage.setItem('saved-irfs', JSON.stringify(savedIrfs));
+        });
+
+        it('should return undefined if no saved-irfs', () => {
+            localStorage.removeItem('saved-irfs');
+            var result = vm.checkForExistingIrfs();
+
+            expect(result).toEqual(undefined);
+        });
+
+        it('should call irfExists on each form in savedIrfs', () => {
+            var result = vm.checkForExistingIrfs();
+
+            expect(vm.service.irfExists).toHaveBeenCalledWith('BHD123');
+            expect(vm.service.irfExists).toHaveBeenCalledWith('BHD1234');
+        });
+
+        it('should call removeIrfFromSaveForLater on response with same name', () => {
+            spyOn(vm, 'removeIrfFromSaveForLater');
+
+            var result = vm.checkForExistingIrfs();
+
+            expect(vm.removeIrfFromSaveForLater).toHaveBeenCalledWith('BHD123');
+            expect(vm.removeIrfFromSaveForLater).not.toHaveBeenCalledWith('BHD1234');
+        });
+    });
+
+    describe('function removeIrfFromSaveForLater', () => {
+        let savedIrfs;
+        beforeEach(() => {
+            savedIrfs = {
+                BHD123: {asdf: "asdf"},
+                BHD1234: {asdf: "asdf"}
+            }
+            localStorage.setItem('saved-irfs', JSON.stringify(savedIrfs));
+        });
+
+        it('Should remove object with passed in parameter from local storage', () => {
+            expect(savedIrfs).toEqual(JSON.parse(localStorage.getItem('saved-irfs')));
+
+            vm.removeIrfFromSaveForLater('BHD123');
+
+            expect(savedIrfs).not.toEqual(JSON.parse(localStorage.getItem('saved-irfs')));
         });
     });
 });

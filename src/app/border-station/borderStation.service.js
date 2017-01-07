@@ -52,8 +52,12 @@ export default class BorderStationService {
 
 
     // GETs
-    getBorderStations() {
-        return this.service.get('api/border-station/');
+    getBorderStations(open = null) {
+        let params = [];
+        if(open !== null) {
+            params.push({name: 'open', value: open});
+        }
+        return this.service.get('api/border-station/', params);
     }
 
     getCommitteeMembers(bsId = this.borderStationId) {

@@ -1,7 +1,9 @@
 import ChangesArray from '../../changesArray';
 export default class AccessDefaultsController {
-    constructor($scope, $q, $uibModal, $state, PermissionsSetsService, toastr) {
+    constructor(StickyHeader, $scope, $q, $uibModal, $state, PermissionsSetsService, toastr) {
         'ngInject';
+
+        this.sticky = StickyHeader;
         this.$scope = $scope;
         this.$q = $q;
         this.$uibModal = $uibModal;
@@ -11,6 +13,7 @@ export default class AccessDefaultsController {
 
         this.permissions = {};
         this.saveButtonClicked = false;
+        this.stickyOptions = this.sticky.stickyOptions;
 
         this.getPermissions();
 
@@ -63,10 +66,10 @@ export default class AccessDefaultsController {
 
     getStyling(attribute) {
         if (attribute) {
-            return 'btn btn-success';
+            return 'btn btn-success btn-thin';
         }
         else {
-            return 'btn btn-danger';
+            return 'btn btn-danger btn-thin';
         }
     }
 

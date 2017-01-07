@@ -17,6 +17,6 @@ export default class IrfListService {
     }
 
     irfExists(irfNumber) {
-        return this.service.post('irfExists/' + irfNumber);
+        return this.service.post(`data-entry/irfs/irfExists/${irfNumber}`);
     }
 }

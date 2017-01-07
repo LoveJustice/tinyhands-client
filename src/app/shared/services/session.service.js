@@ -24,6 +24,7 @@ export default class SessionService {
                 } else {
                     error = "Unable to connect to server";
                 }
+                this.clearSession()
                 return this.$q.reject(error);
             });
     }
@@ -87,9 +88,13 @@ export default class SessionService {
     }
 
     logout() {
-        localStorage.clear();
+        this.clearSession();
+        this.routeState.go('login');
+    }
+
+    clearSession() {
+        localStorage.removeItem('token');
         this.user = {};
         this.root.authenticated = false; // Set authenticated to false
-        this.routeState.go('login');
     }
 }

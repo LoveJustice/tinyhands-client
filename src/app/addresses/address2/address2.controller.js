@@ -1,7 +1,8 @@
 class Address2Controller {
-    constructor($rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams) {
         'ngInject';
 
+        this.sticky = StickyHeader;
         this.rootScope = $rootScope;
         this.scope = $scope;
         this.http = $http;
@@ -17,6 +18,7 @@ class Address2Controller {
         this.searchValue = "";
         this.nextPageUrl = "";
         this.sortColumn = "";
+        this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAddresses();
         if (this.stateParams.deleteId) {

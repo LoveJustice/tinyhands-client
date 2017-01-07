@@ -1,7 +1,7 @@
 import PasswordResetController from './password-reset.controller';
 
 describe('PasswordResetController', () => {
-    let vm, mockBaseService, mockToastr, $q, $rootScope;
+    let vm, mockBaseService, mockToastr, mockSessionService, $q, $rootScope;
 
     beforeEach(inject((_$q_, _$rootScope_) => {
         $q = _$q_;
@@ -9,6 +9,7 @@ describe('PasswordResetController', () => {
 
         mockBaseService = jasmine.createSpyObj('mockBaseService', ['post']);
         mockToastr = jasmine.createSpyObj('toastr', ['error', 'success']);
+        mockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin', 'clearSession']);
 
         mockBaseService.post.and.callFake(() => {
             return {"then": (f) => {
@@ -16,7 +17,7 @@ describe('PasswordResetController', () => {
             }};
         });
 
-        vm = new PasswordResetController(mockBaseService, mockToastr);
+        vm = new PasswordResetController(mockBaseService, mockSessionService, mockToastr);
     }));
 
     describe('function constructor', () => {

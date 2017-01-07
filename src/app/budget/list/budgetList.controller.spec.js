@@ -2,11 +2,16 @@ import BudgetListController from './budgetList.controller';
 import BudgetListService from './budgetList.service';
 
 describe('budgetList Controller', () => {
-    let vm;
+    let vm,
+        MockSessionService,
+        MockStickyHeader;
 
     beforeEach(inject(($http) => {
+        MockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin']);
+        MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
+
         let service = new BudgetListService($http);
-        vm = new BudgetListController(service);
+        vm = new BudgetListController(service, MockSessionService, MockStickyHeader);
     }));
 
     /*No tests verifying $rootScope, $scope, etc (constructor pass ins) because they are
@@ -16,7 +21,7 @@ describe('budgetList Controller', () => {
 
         it('expect getBudgetList to be called', () => {
             spyOn(vm, 'getBudgetList');
-            vm.constructor();
+            vm.constructor({}, {}, {});
             expect(vm.getBudgetList).toHaveBeenCalled();
         });
 

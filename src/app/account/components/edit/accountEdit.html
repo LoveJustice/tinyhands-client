@@ -130,12 +130,15 @@
                 <thead>
                 <tr>
                     <th colspan="4">Border Stations</th>
+                    <th colspan="2">Alerts</th>
                 </tr>
                 <tr>
                     <th>View</th>
                     <th>Add</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>Investigation</th>
+                    <th>Legal</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -164,33 +167,6 @@
                                ng-click="accountEditCtrl.account.permission_border_stations_delete= !accountEditCtrl.account.permission_border_stations_delete">{{
                             accountEditCtrl.account.permission_border_stations_delete ? "Yes" : "No" }}</label>
                     </td>
-                </tr>
-                </tbody>
-            </table>
-            <table class="table table-condensed editTable">
-                <thead>
-                <tr>
-                    <th>Accounts</th>
-                    <th colspan="2">Alerts</th>
-                    <th>VDC</th>
-                    <th>Budget</th>
-                </tr>
-                <tr>
-                    <th>Manage</th>
-                    <th>Investigation</th>
-                    <th>Legal</th>
-                    <th>Manage</th>
-                    <th>Manage</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        <label class="btn"
-                               ng-class="accountEditCtrl.account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"
-                               ng-click="accountEditCtrl.account.permission_accounts_manage= !accountEditCtrl.account.permission_accounts_manage">{{
-                            accountEditCtrl.account.permission_accounts_manage ? "Yes" : "No" }}</label>
-                    </td>
                     <td>
                         <label class="btn"
                                ng-class="accountEditCtrl.account.permission_receive_legal_alert ? 'btn btn-success' : 'btn btn-danger'"
@@ -203,6 +179,33 @@
                                ng-click="accountEditCtrl.account.permission_receive_investigation_alert = !accountEditCtrl.account.permission_receive_investigation_alert">{{
                             accountEditCtrl.account.permission_receive_investigation_alert ? "Yes" : "No" }}</label>
                     </td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-condensed editTable">
+                <thead>
+                <tr>
+                    <th>Accounts</th>
+                    <th>VDC</th>
+                    <th colspan="4">Budget</th>
+                </tr>
+                <tr>
+                    <th>Manage</th>
+                    <th>Manage</th>
+                    <th>View</th>
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_accounts_manage ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_accounts_manage= !accountEditCtrl.account.permission_accounts_manage">{{
+                            accountEditCtrl.account.permission_accounts_manage ? "Yes" : "No" }}</label>
+                    </td>
                     <td>
                         <label class="btn"
                                ng-class="accountEditCtrl.account.permission_address2_manage ? 'btn btn-success' : 'btn btn-danger'"
@@ -211,9 +214,27 @@
                     </td>
                     <td>
                         <label class="btn"
-                               ng-class="accountEditCtrl.account.permission_budget_manage ? 'btn btn-success' : 'btn btn-danger'"
-                               ng-click="accountEditCtrl.account.permission_budget_manage = !accountEditCtrl.account.permission_budget_manage">{{
-                            accountEditCtrl.account.permission_budget_manage ? "Yes" : "No" }}</label>
+                               ng-class="accountEditCtrl.account.permission_budget_view ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_budget_view = !accountEditCtrl.account.permission_budget_view">{{
+                            accountEditCtrl.account.permission_budget_view ? "Yes" : "No" }}</label>
+                    </td>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_budget_add ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_budget_add = !accountEditCtrl.account.permission_budget_add">{{
+                            accountEditCtrl.account.permission_budget_add ? "Yes" : "No" }}</label>
+                    </td>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_budget_edit ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_budget_edit = !accountEditCtrl.account.permission_budget_edit">{{
+                            accountEditCtrl.account.permission_budget_edit ? "Yes" : "No" }}</label>
+                    </td>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_budget_delete ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_budget_delete = !accountEditCtrl.account.permission_budget_delete">{{
+                            accountEditCtrl.account.permission_budget_delete ? "Yes" : "No" }}</label>
                     </td>
                 </tr>
                 </tbody>

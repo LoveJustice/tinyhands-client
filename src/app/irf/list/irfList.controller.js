@@ -16,8 +16,8 @@ export default class IrfListController {
         this.timeZoneDifference ="+0545";
         this.queryParameters = {
             "page_size": 25,
-            "reverse": false,
-            "ordering": 'irf_number',
+            "reverse": true,
+            "ordering": 'date_time_of_interception',
             "search": ''
         };
         this.stickyOptions = this.sticky.stickyOptions;

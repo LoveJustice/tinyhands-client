@@ -1,13 +1,14 @@
 import constants from './constants.js';
 
 export default class BorderStationController {
-    constructor($scope, $state, $stateParams, $timeout, BorderStationService) {
+    constructor($scope, $state, $stateParams, $timeout, SessionService, BorderStationService) {
         'ngInject';
 
         this.$scope = $scope;
         this.$state = $state;
         this.$timeout = $timeout;
         this.service = BorderStationService;
+        this.session = SessionService;
 
         BorderStationService.borderStationId = $stateParams.id;
 

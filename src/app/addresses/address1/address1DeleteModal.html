@@ -2,12 +2,11 @@
     <h3 class="modal-title">Delete Address 1</h3>
 </div>
 
-
 <div class="modal-body">
-  <div ng-repeat="item in delCtrl.related_items" ng-if="!delCtrl.canDelete && item.ids.length > 0">
+  <div ng-repeat="item in delCtrl.related_items" ng-if="!delCtrl.canDelete && item.objects.length > 0">
       <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
-      <div ng-repeat="id in item.ids">
-          <a ng-click="delCtrl.getUisrefForIdAndType(id, item.type)">{{ id }}</a>
+      <div ng-repeat="obj in item.objects">
+          <a ng-click="delCtrl.getUisrefForIdAndType(obj.id, item.type)">{{ obj.name }}</a>
       </div>
   </div>
 </div>

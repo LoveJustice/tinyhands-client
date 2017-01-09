@@ -21,6 +21,7 @@ class Address2Controller {
         this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAddresses();
+        
         if (this.stateParams.deleteId) {
             this.address2Service.getAddress(this.stateParams.deleteId).then((promise) => {
                 this.deleteAddress2(promise.data);

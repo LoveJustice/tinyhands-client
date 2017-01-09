@@ -4,6 +4,18 @@ class Address1Service {
         this.service = BaseService;
     }
 
+    getAddress(id) {
+        return this.service.get(`api/address1/${id}/`);
+    }
+
+    swapAddresses(id1, id2) {
+        return this.service.delete(`api/address1/${id1}/swap-with/${id2}/`);
+    }
+
+    deleteAddress(id) {
+        return this.service.delete(`api/address1/${id}/`);
+    }
+
     listAddresses(queryParams) {
         return this.service.get('api/address1/', queryParams);
     }

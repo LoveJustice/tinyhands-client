@@ -2,7 +2,7 @@ function addressesRouteConfig($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('address1', {
-            url: '/address1',
+            url: '/address1?deleteId',
             templateUrl: 'app/addresses/address1/address1.html',
             controller: 'Address1Controller',
             controllerAs: 'vm',

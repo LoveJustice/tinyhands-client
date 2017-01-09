@@ -1,17 +1,39 @@
 <div class="modal-header">
-    <h3 class="modal-title">Delete Address 1</h3>
+    <h3 class="modal-title">Delete Address 1 - {{delCtrl.address.name}}</h3>
 </div>
 
 <div class="modal-body">
-  <div ng-repeat="item in delCtrl.related_items" ng-if="!delCtrl.canDelete && item.objects.length > 0">
-      <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
-      <div ng-repeat="obj in item.objects">
-          <a ng-click="delCtrl.getUisrefForIdAndType(obj.id, item.type)">{{ obj.name }}</a>
-      </div>
+  <div ng-if="!delCtrl.canDelete">
+    <h3 style="margin-top:0;">Swap all related items to another Address 1</h3>
+    <autocomplete-address1 label="'Address 1 to Swap'" ng-model="delCtrl.addressToSwapWith"></autocomplete-address1>
+    <button ng-click="delCtrl.swapAndDelete()" ng-disabled="!delCtrl.addressToSwapWith.id" class="btn btn-danger">{{ delCtrl.confirm ? "Are you sure?" : "Swap and Delete"}}</button>
+    <span class="glyphicon glyphicon-question-sign" uib-tooltip="{{delCtrl.swapTooltip}}" aria-hidden="true"></span>
+
+    <hr>
+
+
+    <div ng-repeat="item in delCtrl.related_items" ng-if="item.objects.length > 0" ng-init="item.limit = 5">
+        <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
+        <div ng-repeat="obj in item.objects | limitTo : item.limit">
+            <a ng-click="delCtrl.getUisrefForIdAndType(obj, item.type)">{{ obj.name }}</a>
+        </div>
+
+        <br>
+        <button ng-click="delCtrl.showMore(item)" ng-hide="item.objects.length < item.limit " class="btn btn-primary">
+          Show more related {{ delCtrl.getPrettyTypeName(item) }}s
+        </button>
+    </div>
   </div>
+
+  <div ng-if="delCtrl.canDelete">
+    <h3 style="text-align: center">There are no related items to this Address</h3>
+    <h4 style="text-align: center">Click the button below to delete the address</h4>
+  </div>
+
 </div>
 
+
 <div class="modal-footer">
-    <button class="btn btn-danger" type="button" ng-click="delCtrl.delete()">Delete</button>
+    <button class="btn btn-danger" type="button" ng-disabled="!delCtrl.canDelete" ng-click="delCtrl.delete()">{{ delCtrl.confirm ? "Are you sure?" : "Delete Address"}}</button>
     <button class="btn btn-primary" type="button" ng-click="delCtrl.cancel()">Cancel</button>
 </div>

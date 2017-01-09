@@ -1,10 +1,12 @@
 class Address1Controller {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, $stateParams, address1Service, $uibModal, $state) {
         'ngInject';
 
+        this.state = $state;
         this.sticky = StickyHeader;
         this.rootScope = $rootScope;
         this.scope = $scope;
+        this.stateParams = $stateParams;
         this.http = $http;
         this.timeout = $timeout;
         this.address1Service = address1Service;
@@ -20,6 +22,12 @@ class Address1Controller {
         this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAddresses();
+
+        if (this.stateParams.deleteId) {
+            this.address1Service.getAddress(this.stateParams.deleteId).then((promise) => {
+                this.deleteAddress1(promise.data);
+            });
+        }
     }
 
 
@@ -95,8 +103,9 @@ class Address1Controller {
             animation: true,
             templateUrl: 'app/addresses/address1/address1Modal.html',
             controller: 'Address1EditModalController as vm',
+            backdrop: 'static',
             size: 'md',
-            resolve: {
+            resolve: {  
                 address: function () {
                     return address;
                 }
@@ -111,22 +120,19 @@ class Address1Controller {
     }
 
     deleteAddress1(address) {
+        this.state.go('address1', {deleteId: address.id}, {notify: false});
+
         var modalInstance = this.modal.open({
             animation: true,
             templateUrl: 'app/addresses/address1/address1DeleteModal.html',
             controller: 'Address1DeleteModalController as delCtrl',
+            backdrop: 'static',
             size: 'md',
             resolve: {
                 address: function () {
                     return address;
                 }
             }
-        });
-        modalInstance.result.then((address) => {
-            this.address1Service.saveAddress(address)
-                .then(() => {
-                    this.getAddresses();
-                });
         });
     }
 

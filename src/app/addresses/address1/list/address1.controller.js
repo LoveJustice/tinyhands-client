@@ -28,6 +28,11 @@ class Address1Controller {
                 this.deleteAddress1(promise.data);
             });
         }
+        if (this.stateParams.editId) {
+            this.address1Service.getAddress(this.stateParams.editId).then((promise) => {
+                this.editAddress1(promise.data);
+            });
+        }
     }
 
 
@@ -99,13 +104,15 @@ class Address1Controller {
     }
 
     editAddress1(address) {
+        this.state.go('address1', {editId: address.id}, {notify: false});
+
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address1/address1Modal.html',
+            templateUrl: 'app/addresses/address1/edit/address1EditModal.html',
             controller: 'Address1EditModalController as vm',
             backdrop: 'static',
             size: 'md',
-            resolve: {  
+            resolve: {
                 address: function () {
                     return address;
                 }
@@ -124,7 +131,7 @@ class Address1Controller {
 
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address1/address1DeleteModal.html',
+            templateUrl: 'app/addresses/address1/delete/address1DeleteModal.html',
             controller: 'Address1DeleteModalController as delCtrl',
             backdrop: 'static',
             size: 'md',

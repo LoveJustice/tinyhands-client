@@ -5,32 +5,18 @@ class Address1DeleteModalController {
         this.state = $state;
         this.service = address1Service;
         this.modalInstance = $uibModalInstance;
-        this.confirm = false;
-        this.scope = $scope;
         this.toastr = toastr;
+        this.scope = $scope;
+        this.scope.address = angular.copy(address);
+        this.confirmSwap = false;
+        this.confirm = false;
+        this.canDelete = false;
+        this.limit = 5;
 
         this.address = angular.copy(address);
-        this.scope.address = angular.copy(address);
 
-        this.canDelete = false;
         this.getAddressRelatedItems();
-        this.limit = 5;
         this.swapTooltip = 'Swapping with another Address 1 will associate all of the related items to the selected Address and delete the Address you have selected to delete.';
-    }
-
-    swapAndDelete() {
-        if (!this.confirm) {
-            return this.confirm = !this.confirm;
-        } else {
-            this.service.swapAddresses(this.address.id, this.addressToSwapWith.id).then((response) => {
-                this.modalInstance.dismiss('close');
-                this.state.reload();
-                this.toastr.success("Addresses successfully swapped and deleted!")
-            },
-            () => {
-                this.toastr.error("Address swapping failed!")
-            });
-        }
     }
 
     showMore(item) {
@@ -85,6 +71,11 @@ class Address1DeleteModalController {
         return name;
     }
 
+    cancel() {
+        this.state.go('address1', {deleteId: null}, {notify: false});
+        this.modalInstance.dismiss('close');
+    }
+
     delete() {
         if (!this.confirm) {
             return this.confirm = !this.confirm;
@@ -101,9 +92,19 @@ class Address1DeleteModalController {
         }
     }
 
-    cancel() {
-        this.state.go('address1', {deleteId: null}, {notify: false});
-        this.modalInstance.dismiss('close');
+    swapAndDelete() {
+        if (!this.confirmSwap) {
+            return this.confirmSwap = !this.confirmSwap;
+        } else {
+            this.service.swapAddresses(this.address.id, this.addressToSwapWith.id).then((response) => {
+                this.modalInstance.dismiss('close');
+                this.state.reload();
+                this.toastr.success("Addresses successfully swapped and deleted!")
+            },
+            () => {
+                this.toastr.error("Address swapping failed!")
+            });
+        }
     }
 }
 export default Address1DeleteModalController;

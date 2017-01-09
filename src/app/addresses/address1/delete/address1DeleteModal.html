@@ -6,8 +6,12 @@
   <div ng-if="!delCtrl.canDelete">
     <h3 style="margin-top:0;">Swap all related items to another Address 1</h3>
     <autocomplete-address1 label="'Address 1 to Swap'" ng-model="delCtrl.addressToSwapWith"></autocomplete-address1>
-    <button ng-click="delCtrl.swapAndDelete()" ng-disabled="!delCtrl.addressToSwapWith.id" class="btn btn-danger">{{ delCtrl.confirm ? "Are you sure?" : "Swap and Delete"}}</button>
+
+    <button ng-click="delCtrl.swapAndDelete()" ng-disabled="!delCtrl.addressToSwapWith.id" class="btn btn-danger">
+      {{ delCtrl.confirmSwap ? "Are you sure?" : "Swap and Delete"}}
+    </button>
     <span class="glyphicon glyphicon-question-sign" uib-tooltip="{{delCtrl.swapTooltip}}" aria-hidden="true"></span>
+
 
     <hr>
 

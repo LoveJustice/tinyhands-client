@@ -13,27 +13,37 @@
             <th>Accounts</th>
             <th colspan="2">Alerts</th>
             <th>VDC</th>
-            <th>Budget</th>
+            <th colspan="4">Budget</th>
         </tr>
         <tr>
             <th>Designation</th>
+            <!--IRF-->
             <th>View</th>
             <th>Add</th>
             <th>Edit</th>
             <th>Delete</th>
+            <!--VIF-->
             <th>View</th>
             <th>Add</th>
             <th>Edit</th>
             <th>Delete</th>
+            <!--Border Stations-->
             <th>View</th>
             <th>Add</th>
             <th>Edit</th>
             <th>Delete</th>
+            <!--Accounts-->
             <th>Manage</th>
+            <!--Alerts-->
             <th>Investigation</th>
             <th>Legal</th>
+            <!--VDC-->
             <th>Manage</th>
-            <th>Manage</th>
+            <!--Budget-->
+            <th>View</th>
+            <th>Add</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
 
@@ -144,9 +154,27 @@
                 </label>
             </td>
             <td><label
-                    ng-click="permissionsSet.permission_budget_manage = !permissionsSet.permission_budget_manage;"
-                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_manage)">
-                    <span class="glyphicon {{ permissionsSet.permission_budget_manage ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                    ng-click="permissionsSet.permission_budget_view = !permissionsSet.permission_budget_view;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_view)">
+                    <span class="glyphicon {{ permissionsSet.permission_budget_view ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
+            <td><label
+                    ng-click="permissionsSet.permission_budget_add = !permissionsSet.permission_budget_add;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_add)">
+                    <span class="glyphicon {{ permissionsSet.permission_budget_add ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
+            <td><label
+                    ng-click="permissionsSet.permission_budget_edit = !permissionsSet.permission_budget_edit;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_edit)">
+                    <span class="glyphicon {{ permissionsSet.permission_budget_edit ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
+            <td><label
+                    ng-click="permissionsSet.permission_budget_delete = !permissionsSet.permission_budget_delete;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_budget_delete)">
+                    <span class="glyphicon {{ permissionsSet.permission_budget_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
                 </label>
             </td>
             <td id="removeButton" class="col-md-1">

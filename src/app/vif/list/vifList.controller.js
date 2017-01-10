@@ -17,8 +17,8 @@ export default class VifListController {
         this.nextPage = "";
         this.queryParameters = {
             "page_size": 25,
-            "reverse": false,
-            "ordering": 'vif_number',
+            "reverse": true,
+            "ordering": 'date',
             "search": ''
         };
         this.stickyOptions = this.sticky.stickyOptions;

@@ -15,7 +15,7 @@ function addressesRouteConfig($stateProvider, RequireLogin) {
         })
         .state('address2', {
             url: '/address2?deleteId?editId',
-            templateUrl: 'app/addresses/address2/address2.html',
+            templateUrl: 'app/addresses/address2/list/address2.html',
             controller: 'Address2Controller',
             controllerAs: 'vm',
             data: {

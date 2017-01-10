@@ -3,9 +3,9 @@ import addressesRouteConfig from './addresses.route';
 import Address1Controller from './address1/list/address1.controller';
 import Address1EditModalController from './address1/edit/address1EditModal.controller';
 import Address1DeleteModalController from './address1/delete/address1DeleteModal.controller';
-import Address2Controller from './address2/address2.controller';
-import Address2EditModalController from './address2/address2EditModal.controller';
-import Address2DeleteModalController from './address2/address2DeleteModal.controller';
+import Address2Controller from './address2/list/address2.controller';
+import Address2EditModalController from './address2/edit/address2EditModal.controller';
+import Address2DeleteModalController from './address2/delete/address2DeleteModal.controller';
 
 import Address1Service from './address1/address1.service';
 import Address2Service from './address2/address2.service';

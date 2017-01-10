@@ -2,9 +2,9 @@ class Address2DeleteModalController {
     constructor($uibModalInstance, address, $scope, address2Service, $state) {
         'ngInject';
 
-        this.state = $state;
         this.service = address2Service;
         this.modalInstance = $uibModalInstance;
+        this.state = $state;
         this.scope = $scope;
         this.scope.address = angular.copy(address);
 
@@ -51,10 +51,12 @@ class Address2DeleteModalController {
     }
 
     delete() {
+        this.state.go('address2', {deleteId: null}, {notify: false});
         this.modalInstance.close(this.scope.address);
     }
 
     cancel() {
+        this.state.go('address2', {deleteId: null}, {notify: false});
         this.modalInstance.dismiss('close');
     }
 }

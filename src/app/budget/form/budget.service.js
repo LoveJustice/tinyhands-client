@@ -51,7 +51,7 @@ export default class BudgetService {
      * @returns Promise that provides the status and data of the request.
      */
     deleteOtherItem(budgetId, otherItem) {
-        return this.service.delete(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
+        return this.service.delete(`api/budget/${budgetId}/item/${otherItem.id}/`);
     }
 
     /**

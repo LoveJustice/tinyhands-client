@@ -3,7 +3,7 @@
   <hr>
   <div class="row">
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month" ng-change="budgetCtrl.setTotals()" ng-init="budgetCtrl.form.administration_number_of_intercepts_last_month=budgetCtrl.form.previousData.last_month" ng-disabled="budgetCtrl.isViewing"/>
           <small># of intercepts last month</small>
       </div>
       <operator>*</operator>

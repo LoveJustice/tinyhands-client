@@ -124,12 +124,12 @@ describe('VIF List Controller',() => {
 
     describe('function getSortIcon', () => {
         it('expect it to return false when column is equal, but not reverse is not true', () => {
-            var val = vm.getSortIcon('vif_number', 'reverse');
+            var val = vm.getSortIcon('date', '!reverse');
             expect(val).toBe(false);
         });
 
-        it('expect it to return true when column is equal, but not reverse is true', () => {
-            var val = vm.getSortIcon('vif_number', '!reverse');
+        it('expect it to return true when column is equal and reverse is true', () => {
+            var val = vm.getSortIcon('date', 'reverse');
             expect(val).toBe(true);
         });
 

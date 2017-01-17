@@ -87,7 +87,7 @@ class Address1DeleteModalController {
                 this.state.reload();
             },
             (response) => {
-                this.toastr.error("Address failed to be delete!")
+                this.toastr.error("Address failed to be deleted!")
             });
         }
     }

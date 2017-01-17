@@ -1,41 +1,29 @@
 <div id="tally" ng-cloak>
-		<div>
-				<!--   REGION: Tally w/Larger screens    -->
-				<div class="col-lg-2 hidden-md hidden-sm hidden-xs"></div>
-
-				<div class="hidden-md hidden-sm hidden-xs" ng-repeat="day in tally.days">
-						<div class="text-center col-lg-1 tally-tab"
-									ng-init="showInt = !tally.isEmptyObject(day.interceptions)"
-									ng-mousedown="showInt = !showInt"
-									ng-mouseleave="tally.onMouseLeave(day)"
-									ng-style="tally.changeColor(day)">
-								<h3 class="day-of-week">{{tally.getDayOfWeek(day.date)}}</h3>
-								<div ng-repeat="(station,numIntercepts) in day.interceptions">
-										<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} INT in {{station}}</h4>
-								</div>
-								<h4 ng-show="showInt && tally.isEmptyObject(day.interceptions)" class="animated tallyFade">No Interceptions</h4>
-						</div>
+	<div>
+		<!--   REGION: Tally w/Larger screens    -->
+		<div class="hidden-md hidden-sm hidden-xs col-lg-10 col-lg-offset-1">
+			<div class="text-center tally-tab" ng-repeat="day in tally.days" ng-init="showInt = !tally.isEmptyObject(day.interceptions)"
+				ng-mousedown="showInt = !showInt" ng-mouseleave="tally.onMouseLeave(day)" ng-style="tally.changeColor(day)">
+				<h3 class="day-of-week">{{tally.getDayOfWeek(day.date)}}</h3>
+				<div ng-repeat="(station,numIntercepts) in day.interceptions">
+					<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} INT in {{station}}</h4>
 				</div>
+				<h4 ng-show="showInt && tally.isEmptyObject(day.interceptions)" class="animated tallyFade">No Interceptions</h4>
+			</div>
 
-				<div class="hidden-md hidden-sm hidden-xs">
-					<div class="text-center col-lg-1 tally-tab">
-						<h3 class="day-of-week">YTD: {{ tally.ytd }}</h3>
-					</div>
-				</div>
-
-				<div class="col-lg-1 hidden-md hidden-sm hidden-xs"></div>
-				<!--   ENDREGION: Tally w/Larger screens     -->
-
-				<!--   REGION: Tally w/Smaller screens    -->
-				<div class="hidden-lg tally-tab-small">
-						<div class="text-center"
-									ng-repeat="day in tally.days"
-									ng-style="tally.changeColor(day)"
-									ng-mouseleave="tally.onMouseLeave(day)">
-								<h3 class="day-of-week">{{tally.getDayOfWeek(day.date).substring(0,2)}}</h3>
-								<h4>{{tally.sumNumIntercepts(day)}}</h4>
-						</div>
-				</div>
-				<!--   ENDREGION: Tally w/Smaller screens     -->
+			<div class="text-center tally-tab">
+				<h3 class="day-of-week">YTD: {{ tally.ytd }}</h3>
+			</div>
 		</div>
+		<!--   ENDREGION: Tally w/Larger screens     -->
+
+		<!--   REGION: Tally w/Smaller screens    -->
+		<div class="hidden-lg tally-tab-small">
+			<div class="text-center" ng-repeat="day in tally.days" ng-style="tally.changeColor(day)" ng-mouseleave="tally.onMouseLeave(day)">
+				<h3 class="day-of-week">{{tally.getDayOfWeek(day.date).substring(0,2)}}</h3>
+				<h4>{{tally.sumNumIntercepts(day)}}</h4>
+			</div>
+		</div>
+		<!--   ENDREGION: Tally w/Smaller screens     -->
+	</div>
 </div>

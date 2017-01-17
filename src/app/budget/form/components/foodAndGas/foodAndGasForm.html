@@ -7,7 +7,7 @@
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls" ng-disabled="budgetCtrl.isViewing"/>
+      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls" ng-init="budgetCtrl.form.food_and_gas_number_of_intercepted_girls=budgetCtrl.form.previousData.last_month" ng-disabled="budgetCtrl.isViewing"/>
       <small># of Girls</small>
     </div>
     <operator>*</operator>
@@ -16,7 +16,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group text-center">
-      <div class="input-group-addon">$</div>
+      <div class="input-group-addon">Rs.</div>
       <input class="form-control text-center" ng-value="budgetCtrl.foodGasInterceptedGirls() | number" disabled="disabled" />
     </div>
     <small>Intercepted Girls</small>
@@ -38,7 +38,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">$</div>
+      <div class="input-group-addon">Rs.</div>
       <input class="form-control text-center" ng-value="budgetCtrl.foodGasLimboGirls() | number" disabled="disabled" />
     </div>
     <small>Limbo Girls</small>
@@ -66,7 +66,7 @@
   <div class="row text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Food</label>
-      <input class="form-control text-center" ng-value="budgetCtrl.foodAndGasTotal() | currency" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.foodAndGasTotal() | currency:'Rs. '" disabled="disabled" />
     </div>
     <div class="col-md-4"></div>
   </div>

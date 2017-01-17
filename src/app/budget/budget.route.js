@@ -16,7 +16,7 @@ function budgetRouteConfig($stateProvider, RequireLogin) {
             controller: 'BudgetListController',
             controllerAs: 'budgetListCtrl',
             data: {
-                permissions_required: ['permission_budget_manage']
+                permissions_required: ['permission_budget_view']
             },
             resolve: {
                 requireLogin: RequireLogin

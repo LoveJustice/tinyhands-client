@@ -1,8 +1,10 @@
 let Constants = {
     FormSections: {
         Awareness: 3,
+        Administration: 10,
         Communication: 7,
         FoodAndGas: 6,
+        Medical: 9,
         Miscellaneous: 2,
         Salaries: 8,
         Shelter: 5,

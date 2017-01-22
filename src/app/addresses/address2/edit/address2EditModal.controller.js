@@ -16,12 +16,12 @@ class Address2EditModalController {
         if (this.scope.address.canonical_name === "" || this.scope.address.canonical_name === undefined || this.scope.address.canonical_name === null) {
             this.scope.address.canonical_name = { id: -1, name: "Empty" };
         }
+        this.state.go('address2', {editId: null}, {notify: false});
         this.modalInstance.close(this.scope.address);
     }
 
     cancel() {
         this.state.go('address2', {editId: null}, {notify: false});
-
         this.modalInstance.dismiss('close');
     }
 

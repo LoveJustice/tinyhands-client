@@ -29,8 +29,11 @@ describe('Address2EditModalController', () => {
 
         it(`should call modalInstance close with scope.address`, () => {
             spyOn(vm.modalInstance, 'close');
+            spyOn(vm.state, 'go');
+
             vm.save();
             expect(vm.modalInstance.close).toHaveBeenCalledWith(vm.scope.address);
+            expect(vm.state.go).toHaveBeenCalledWith('address2', {editId: null}, {notify: false});
         });
 
     });
@@ -38,7 +41,11 @@ describe('Address2EditModalController', () => {
     describe('function cancel', () => {
         it('should call modalInstance dismiss with "close"', () => {
             spyOn(vm.modalInstance, 'dismiss');
+            spyOn(vm.state, 'go');
+
             vm.cancel();
+
+            expect(vm.state.go).toHaveBeenCalledWith('address2', {editId: null}, {notify: false});
             expect(vm.modalInstance.dismiss).toHaveBeenCalledWith('close');
         });
     });

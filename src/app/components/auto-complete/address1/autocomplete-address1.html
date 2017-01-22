@@ -7,6 +7,8 @@
            uib-typeahead="address1 as address1.name for address1 in acAddress1Ctrl.getFuzzyAddress1s($viewValue)"
            uib-typeahead-loading="loadingAddress1"
            uib-typeahead-no-results="noResults"
+           typeahead-wait-ms="300"
+           typeahead-min-length="3"
            />
 
 

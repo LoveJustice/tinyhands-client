@@ -7,6 +7,8 @@
            uib-typeahead="address2 as address2.name for address2 in acAddress2Ctrl.getFuzzyAddress2s($viewValue)"
            uib-typeahead-loading="loadingAddress2"
            uib-typeahead-no-results="noResults"
+           typeahead-wait-ms="300"
+           typeahead-min-length="3"
            />
 
     <div ng-show="noResults">

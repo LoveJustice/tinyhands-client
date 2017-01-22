@@ -40,7 +40,7 @@ class Address1DeleteModalController {
         this.canDelete = count === 0;
     }
 
-    getUisrefForIdAndType(obj, type) {
+    goToUisrefForIdAndType(obj, type) {
         this.modalInstance.close('close');
         switch (type) {
             case "address2":
@@ -83,9 +83,8 @@ class Address1DeleteModalController {
         } else {
             this.service.deleteAddress(this.address.id).then(() => {
                 this.toastr.success("Address successfully deleted!");
-                this.state.go('address1', {deleteId: null}, {notify: false});
                 this.modalInstance.dismiss('close');
-                this.state.reload();
+                this.state.go('address1', {deleteId: null});
             },
             () => {
                 this.toastr.error("Address failed to be deleted!");
@@ -100,7 +99,7 @@ class Address1DeleteModalController {
         } else {
             this.service.swapAddresses(this.address.id, this.addressToSwapWith.id).then(() => {
                 this.modalInstance.dismiss('close');
-                this.state.reload();
+                this.state.go('address1', {deleteId: null});
                 this.toastr.success("Addresses successfully swapped and deleted!");
             },
             () => {

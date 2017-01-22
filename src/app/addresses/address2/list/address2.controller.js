@@ -33,7 +33,6 @@ class Address2Controller {
                 this.editAddress2(promise.data);
             });
         }
-
     }
 
     sortIcon(column) {
@@ -135,7 +134,7 @@ class Address2Controller {
     deleteAddress2(address) {
         this.state.go('address2', {deleteId: address.id}, {notify: false});
 
-        var modalInstance = this.modal.open({
+        this.modal.open({
             animation: true,
             templateUrl: 'app/addresses/address2/delete/address2DeleteModal.html',
             controller: 'Address2DeleteModalController as delCtrl',

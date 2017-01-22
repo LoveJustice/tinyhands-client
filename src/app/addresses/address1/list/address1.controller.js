@@ -1,5 +1,5 @@
 class Address1Controller {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, $stateParams, address1Service, $uibModal, $state) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal, $state, $stateParams) {
         'ngInject';
 
         this.state = $state;
@@ -129,7 +129,7 @@ class Address1Controller {
     deleteAddress1(address) {
         this.state.go('address1', {deleteId: address.id}, {notify: false});
 
-        var modalInstance = this.modal.open({
+        this.modal.open({
             animation: true,
             templateUrl: 'app/addresses/address1/delete/address1DeleteModal.html',
             controller: 'Address1DeleteModalController as delCtrl',

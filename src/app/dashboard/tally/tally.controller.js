@@ -65,7 +65,7 @@ class TallyController {
             let data = promise.data;
             if (firstCall) {
                 this.userId = data.id;
-                this.ytd = data.ytd
+                this.ytd = data.ytd;
                 this.getTallyLocalStorage();
                 this.checkDifferences(data.days);
                 window.setInterval(() => { this.getTallyData(); }, 60000);

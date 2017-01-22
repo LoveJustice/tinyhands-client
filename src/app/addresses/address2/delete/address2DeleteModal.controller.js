@@ -1,7 +1,8 @@
 class Address2DeleteModalController {
-    constructor($uibModalInstance, address, $scope, address2Service, $state) {
+    constructor($uibModalInstance, address, $scope, address2Service, $state, toastr) {
         'ngInject';
 
+        this.toastr = toastr;
         this.service = address2Service;
         this.modalInstance = $uibModalInstance;
         this.state = $state;
@@ -9,6 +10,7 @@ class Address2DeleteModalController {
         this.scope.address = angular.copy(address);
         this.address = angular.copy(address);
 
+        this.swapTooltip = 'Swapping with another Address 2 will associate all of the related items to the selected Address and delete the Address you have selected to delete.';
         this.canDelete = false;
 
         this.getAddressRelatedItems();
@@ -25,22 +27,22 @@ class Address2DeleteModalController {
     updateCanDelete() {
         var count = 0;
         this.related_items.forEach((riCategory) => {
-            riCategory.objects.forEach((riItem) => {
+            riCategory.objects.forEach(() => {
                 count += 1;
-            })
-        })
-        this.canDelete = count == 0;
+            });
+        });
+        this.canDelete = count === 0;
     }
 
     getUisrefForIdAndType(obj, type) {
         this.modalInstance.close('close');
         switch (type) {
             case "address2":
-                this.state.go('address2', {deleteId: obj.id})
+                this.state.go('address2', {deleteId: obj.id});
                 break;
             case "victiminterview":
             case "victiminterviewlocationbox":
-                this.state.go('vifList', {search: obj.name})
+                this.state.go('vifList', {search: obj.name});
                 break;
         }
     }
@@ -61,7 +63,7 @@ class Address2DeleteModalController {
             case "victiminterview":
                 name = "VIF";
                 break;
-            case "canonical_name":
+            case "victiminterviewlocationbox":
                 name = "Victim Interview Location Box";
         }
         return name;
@@ -74,31 +76,33 @@ class Address2DeleteModalController {
 
     delete() {
         if (!this.confirm) {
-            return this.confirm = !this.confirm;
+            this.confirm = !this.confirm;
+            return this.confirm;
         } else {
-            this.service.deleteAddress(this.address.id).then((response) => {
-                this.toastr.success("Address successfully deleted!")
+            this.service.deleteAddress(this.address.id).then(() => {
+                this.toastr.success("Address successfully deleted!");
                 this.state.go('address2', {deleteId: null}, {notify: false});
                 this.modalInstance.dismiss('close');
                 this.state.reload();
             },
-            (response) => {
-                this.toastr.error("Address failed to be deleted!")
+            () => {
+                this.toastr.error("Address failed to be deleted!");
             });
         }
     }
 
     swapAndDelete() {
         if (!this.confirmSwap) {
-            return this.confirmSwap = !this.confirmSwap;
+            this.confirmSwap = !this.confirmSwap;
+            return this.confirmSwap;
         } else {
-            this.service.swapAddresses(this.address.id, this.addressToSwapWith.id).then((response) => {
+            this.service.swapAddresses(this.address.id, this.addressToSwapWith.id).then(() => {
                 this.modalInstance.dismiss('close');
                 this.state.reload();
-                this.toastr.success("Addresses successfully swapped and deleted!")
+                this.toastr.success("Addresses successfully swapped and deleted!");
             },
             () => {
-                this.toastr.error("Address swapping failed!")
+                this.toastr.error("Address swapping failed!");
             });
         }
     }

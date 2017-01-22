@@ -2,13 +2,16 @@ import Address1EditModalController from './address1EditModal.controller';
 
 describe('Address1EditModalController', () => {
 
-    let vm;
+    let vm,
+        $state;
 
     beforeEach(() => {
         let $uibModalInstance = { close: () => { }, dismiss: () => { } };
         let address = null;
         let $scope = {};
-        vm = new Address1EditModalController($uibModalInstance, address, $scope);
+        $state = {go: () => {}};
+
+        vm = new Address1EditModalController($uibModalInstance, address, $scope, $state);
     });
 
     describe('function save', () => {

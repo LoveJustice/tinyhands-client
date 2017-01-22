@@ -39,10 +39,6 @@ class Address2Service {
     getAddress(id) {
         return this.service.get(`api/address2/${id}/`);
     }
-
-    deleteAddress(id) {
-        return this.service.delete(`api/address2/${id}/`);
-    }
 }
 
 export default Address2Service;

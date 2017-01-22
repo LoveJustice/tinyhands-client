@@ -1,7 +1,8 @@
 import Address2EditModalController from './address2EditModal.controller';
 
 describe('Address2EditModalController', () => {
-    let vm;
+    let vm,
+        $state;
 
     beforeEach(() => {
         let uibModal = {
@@ -12,7 +13,9 @@ describe('Address2EditModalController', () => {
             scope = { address: null },
             addr2Service = { getFuzzyAddress2s: null },
             addr1Service = { getFuzzyAddress1s: null };
-        vm = new Address2EditModalController(uibModal, address, scope, addr2Service, addr1Service);
+
+            $state = {go: () => {}};
+        vm = new Address2EditModalController(uibModal, address, scope, addr2Service, addr1Service, $state);
     });
 
     describe('function save', () => {
@@ -47,7 +50,7 @@ describe('Address2EditModalController', () => {
                     then: (f) => {
                         return f({ data: 'foo' });
                     }
-                }
+                };
             };
             expect(vm.getFuzzyAddress1s()).toEqual('foo');
         });
@@ -60,7 +63,7 @@ describe('Address2EditModalController', () => {
                     then: (f) => {
                         return f({ data: 'foo' });
                     }
-                }
+                };
             };
             expect(vm.getFuzzyAddress2s()).toEqual('foo');
         });

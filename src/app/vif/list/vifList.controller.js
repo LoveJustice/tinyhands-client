@@ -109,12 +109,12 @@ export default class VifListController {
 
     checkForExistingVifs() {
         var savedForLaterVifs = this.getSaveForLaterObject();
-        if (savedForLaterVifs == null) return;
+        if (savedForLaterVifs === null) { return; }
 
         savedForLaterVifs = Object.keys(savedForLaterVifs);
         savedForLaterVifs.forEach((vifNumber) => {
             this.service.vifExists(vifNumber).then((promise) => {
-                if (promise.data == vifNumber) {
+                if (promise.data === vifNumber) {
                     this.removeVifFromSaveForLater(vifNumber);
                 }
             });

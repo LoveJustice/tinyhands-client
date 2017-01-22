@@ -19,7 +19,7 @@
     <div ng-repeat="item in delCtrl.related_items" ng-if="item.objects.length > 0" ng-init="item.limit = 5">
         <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
         <div ng-repeat="obj in item.objects | limitTo : item.limit">
-            <a ng-click="delCtrl.getUisrefForIdAndType(obj, item.type)">{{ obj.name }}</a>
+            <a ng-click="delCtrl.goToUisrefForIdAndType(obj, item.type)">{{ obj.name }}</a>
         </div>
 
         <br>

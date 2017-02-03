@@ -70,10 +70,10 @@ describe('Address2DeleteModalController', () => {
         $q = _$q_;
         $rootScope = _$rootScope_;
         $scope = {};
-        state = jasmine.createSpyObj('state', ['go', 'reload']);
+        state = jasmine.createSpyObj('state', ['go', 'reload', 'href']);
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['success', 'error']);
-        uibModalInstance = jasmine.createSpyObj('mockToastr', ['close', 'dismiss']);
+        uibModalInstance = jasmine.createSpyObj('uibModalInstance', ['close', 'dismiss']);
 
 
         mockAdreess1Service = jasmine.createSpyObj('mockAdreess1Service', ['getRelatedItems', 'deleteAddress', 'swapAddresses']);
@@ -167,26 +167,22 @@ describe('Address2DeleteModalController', () => {
         });
     });
 
-    describe('- function goToUisrefForIdAndType - ', () => {
-        it('should close the modal', () => {
-            vm.goToUisrefForIdAndType();
-            expect(vm.modalInstance.close).toHaveBeenCalled();
-        });
+    describe('- function getHrefForIdAndType - ', () => {
+        let test = {id: 23, name: "test"};
 
-        it('if address to is passed in, should go to address2 state with delete id set to address2 passed in', () => {
-            vm.goToUisrefForIdAndType({id: 23, name: "test"}, "address2");
-
-            expect(vm.state.go).toHaveBeenCalledWith("address2", {deleteId: 23});
+        it('if address to is passed in, should make url to address2 state with delete id set to address2 passed in', () => {
+            vm.getHrefForIdAndType(test, "address2");
+            expect(state.href).toHaveBeenCalledWith('address2', {deleteId: test.id});
         });
 
         it('if vif passed in, should go to viflist state with search set to the objects name', () => {
-            vm.goToUisrefForIdAndType({id: 23, name: "test"}, "victiminterview");
-            expect(vm.state.go).toHaveBeenCalledWith("vifList", {search: "test"});
+            vm.getHrefForIdAndType({id: 23, name: "test"}, "victiminterview");
+            expect(state.href).toHaveBeenCalledWith('vifList', {search: test.name});
         });
 
         it('if viflb passed in, should go to viflist state with search set to the objects name', () => {
-            vm.goToUisrefForIdAndType({id: 23, name: "test"}, "victiminterviewlocationbox");
-            expect(vm.state.go).toHaveBeenCalledWith("vifList", {search: "test"});
+            vm.getHrefForIdAndType({id: 23, name: "test"}, "victiminterviewlocationbox");
+            expect(state.href).toHaveBeenCalledWith('vifList', {search: test.name});
         });
     });
 
@@ -219,12 +215,6 @@ describe('Address2DeleteModalController', () => {
     });
 
     describe('- function delete - ', () => {
-        it('should set confirm to true the first time it is called', () => {
-            vm.delete(address);
-
-            expect(vm.confirm).toBe(true);
-        });
-
         it('should call api delete address with address id', () => {
             vm.confirm = true;
             vm.delete(address);
@@ -270,12 +260,6 @@ describe('Address2DeleteModalController', () => {
     });
 
     describe('- function swapAndDelete - ', () => {
-        it('should set confirmSwap to true the first time it is called', () => {
-            vm.swapAndDelete(address);
-
-            expect(vm.confirmSwap).toBe(true);
-        });
-
         it('should call api swap address with address id of both objects', () => {
             vm.confirmSwap = true;
             vm.swapAndDelete();

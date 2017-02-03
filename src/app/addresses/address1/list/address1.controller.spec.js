@@ -13,7 +13,6 @@ describe('Address1Controller', () => {
         $stateParams;
 
     beforeEach(inject(($http) => {
-        //mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
         mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         address1Service = new Address1Service($http);
         $stateParams = {};

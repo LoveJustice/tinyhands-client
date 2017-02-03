@@ -40,17 +40,18 @@ class Address1DeleteModalController {
         this.canDelete = count === 0;
     }
 
-    goToUisrefForIdAndType(obj, type) {
-        this.modalInstance.close('close');
+    getHrefForIdAndType(obj, type) {
+        let url;
         switch (type) {
             case "address2":
-                this.state.go('address2', {deleteId: obj.id});
+                url = this.state.href('address2', {deleteId: obj.id});
                 break;
             case "victiminterview":
             case "victiminterviewlocationbox":
-                this.state.go('vifList', {search: obj.name});
+                url = this.state.href('vifList', {search: obj.name});
                 break;
         }
+        return url;
     }
 
     getPrettyTypeName(item) {

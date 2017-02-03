@@ -7,6 +7,7 @@ export default function ConfirmButton() {
             btnClass: '@',
             text: '@',
             confirmText: '@',
+            disabled: '=',
             invisible: '&',
             onClick: '&',
             onConfirm: '&',

@@ -1,7 +1,8 @@
-<div
+<button
     class="{{ctrl.btnClass}}"
     ng-class="{fadeIn: !ctrl.invisible(), fadeOut: ctrl.invisible()}"
     ng-click="ctrl.onClick()"
-    ng-mouseleave="ctrl.onCancel()">
+    ng-mouseleave="ctrl.onCancel()"
+    ng-disabled="ctrl.disabled">
     {{ctrl.buttonText}}
-</div>
+</button>

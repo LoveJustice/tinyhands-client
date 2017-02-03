@@ -7,23 +7,30 @@
     <h3 style="margin-top:0;">Swap all related items to another Address 1</h3>
     <autocomplete-address1 label="'Address 1 to Swap'" ng-model="delCtrl.addressToSwapWith"></autocomplete-address1>
 
-    <button ng-click="delCtrl.swapAndDelete()" ng-disabled="!delCtrl.addressToSwapWith.id" class="btn btn-danger">
-      {{ delCtrl.confirmSwap ? "Are you sure?" : "Swap and Delete"}}
-    </button>
+    <confirm-button
+        btn-class="btn btn-danger"
+        text="Swap and Delete"
+        confirm-text="Are you sure?"
+        on-confirm="delCtrl.swapAndDelete()"
+        disabled="!delCtrl.addressToSwapWith.id">
+    </confirm-button>
+
     <span class="glyphicon glyphicon-question-sign" uib-tooltip="{{delCtrl.swapTooltip}}" aria-hidden="true"></span>
 
-
     <hr>
-
 
     <div ng-repeat="item in delCtrl.related_items" ng-if="item.objects.length > 0" ng-init="item.limit = 5">
         <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
         <div ng-repeat="obj in item.objects | limitTo : item.limit">
-            <a ng-click="delCtrl.goToUisrefForIdAndType(obj, item.type)">{{ obj.name }}</a>
+          <a  ng-click="delCtrl.modalInstance.close('close');"
+              href="{{ delCtrl.getHrefForIdAndType(obj, item.type) }}"
+              ng-class="{badLink: item.type == 'person'}">
+              {{ obj.name }}
+          </a>
         </div>
 
         <br>
-        <button ng-click="delCtrl.showMore(item)" ng-hide="item.objects.length < item.limit " class="btn btn-primary">
+        <button ng-click="delCtrl.showMore(item)" ng-hide="item.objects.length <= item.limit " class="btn btn-primary">
           Show more related {{ delCtrl.getPrettyTypeName(item) }}s
         </button>
     </div>
@@ -38,6 +45,13 @@
 
 
 <div class="modal-footer">
-    <button class="btn btn-danger" type="button" ng-disabled="!delCtrl.canDelete" ng-click="delCtrl.delete()">{{ delCtrl.confirm ? "Are you sure?" : "Delete Address"}}</button>
+    <confirm-button
+        btn-class="btn btn-danger"
+        disabled="!delCtrl.canDelete"
+        text="Delete Address"
+        confirm-text="Are you sure?"
+        on-confirm="delCtrl.delete()">
+    </confirm-button>
+
     <button class="btn btn-primary" type="button" ng-click="delCtrl.cancel()">Cancel</button>
 </div>

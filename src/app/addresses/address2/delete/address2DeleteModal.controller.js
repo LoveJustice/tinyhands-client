@@ -23,7 +23,6 @@ class Address2DeleteModalController {
         });
     }
 
-
     updateCanDelete() {
         var count = 0;
         this.related_items.forEach((riCategory) => {
@@ -34,17 +33,20 @@ class Address2DeleteModalController {
         this.canDelete = count === 0;
     }
 
-    goToUisrefForIdAndType(obj, type) {
-        this.modalInstance.close('close');
+    getHrefForIdAndType(obj, type) {
+        let url;
         switch (type) {
             case "address2":
-                this.state.go('address2', {deleteId: obj.id});
+                url = this.state.href('address2', {deleteId: obj.id});
                 break;
             case "victiminterview":
             case "victiminterviewlocationbox":
-                this.state.go('vifList', {search: obj.name});
+                url = this.state.href('vifList', {search: obj.name});
                 break;
+            case "person":
+                url = "#";
         }
+        return url;
     }
 
     showMore(item) {
@@ -75,26 +77,18 @@ class Address2DeleteModalController {
     }
 
     delete() {
-        if (!this.confirm) {
-            this.confirm = !this.confirm;
-            return this.confirm;
-        } else {
-            this.service.deleteAddress(this.address.id).then(() => {
-                this.modalInstance.dismiss('close');
-                this.state.go('address2', {deleteId: null});
-                this.toastr.success("Address successfully deleted!");
-            },
-            () => {
-                this.toastr.error("Address failed to be deleted!");
-            });
-        }
+        this.service.deleteAddress(this.address.id).then(() => {
+            this.modalInstance.dismiss('close');
+            this.state.go('address2', {deleteId: null});
+            this.toastr.success("Address successfully deleted!");
+        },
+        () => {
+            this.toastr.error("Address failed to be deleted!");
+        });
     }
 
     swapAndDelete() {
-        if (!this.confirmSwap) {
-            this.confirmSwap = !this.confirmSwap;
-            return this.confirmSwap;
-        } else {
+        if (this.addressToSwapWith && this.addressToSwapWith.id) {
             this.service.swapAddresses(this.address.id, this.addressToSwapWith.id).then(() => {
                 this.modalInstance.dismiss('close');
                 this.state.go('address2', {deleteId: null});

@@ -28,7 +28,7 @@ class Address1Controller {
                 this.deleteAddress1(promise.data);
             });
         }
-        if (this.stateParams.editId) {
+        else if (this.stateParams.editId) {
             this.address1Service.getAddress(this.stateParams.editId).then((promise) => {
                 this.editAddress1(promise.data);
             });

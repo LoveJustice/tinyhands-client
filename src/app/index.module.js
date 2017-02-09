@@ -19,6 +19,8 @@ import httpProviderConfig from './httpProvider.config';
 
 import NavbarDirective from './components/navbar/navbar.directive';
 import CsvExportDirective from './components/csv-export/csv-export.directive';
+import AutocompleteAddress1Directive from './components/auto-complete/address1/autocomplete-address1.directive';
+import AutocompleteAddress2Directive from './components/auto-complete/address2/autocomplete-address2.directive';
 
 angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResource', 'ngSanitize', 'ngTouch', 'ui.bootstrap', 'ui.router',
     'tinyhands.Account',
@@ -32,7 +34,7 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     'tinyhands.VIF',
     'tinyhands.PhotoExport',
 ])
-    
+
     .constant('constants', constants)
 
     .config(config)
@@ -40,4 +42,6 @@ angular.module('tinyhandsFrontend', ['ngAnimate', 'ngCookies', 'ngCsv', 'ngResou
     .config(routerConfig)
 
     .directive('csvexport', CsvExportDirective)
-    .directive('navbar', NavbarDirective);
+    .directive('navbar', NavbarDirective)
+    .directive('autocompleteAddress1', AutocompleteAddress1Directive)
+    .directive('autocompleteAddress2', AutocompleteAddress2Directive);

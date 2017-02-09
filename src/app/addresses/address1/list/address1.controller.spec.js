@@ -1,5 +1,5 @@
 import Address1Controller from './address1.controller';
-import Address1Service from './address1.service';
+import Address1Service from '../address1.service';
 
 describe('Address1Controller', () => {
     let vm;
@@ -8,13 +8,17 @@ describe('Address1Controller', () => {
         $scope,
         $timeout,
         address1Service,
-        $uibModal;
+        $uibModal,
+        $state,
+        $stateParams;
 
     beforeEach(inject(($http) => {
-        //mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
         mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         address1Service = new Address1Service($http);
-        vm = new Address1Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal);
+        $stateParams = {};
+        $state = {go: () => {}};
+
+        vm = new Address1Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal, $state, $stateParams);
     }));
 
     describe('function constructor', () => {
@@ -86,7 +90,7 @@ describe('Address1Controller', () => {
     });
 
     describe("function search addresses", () => {
-        let response = { "data": { 'results': 'page1', 'next': 'test.com/page=469876' } }
+        let response = { "data": { 'results': 'page1', 'next': 'test.com/page=469876' } };
         beforeEach(() => {
             vm.address1Service.searchAddresses = () => {
                 return {
@@ -146,7 +150,7 @@ describe('Address1Controller', () => {
     });
 
     describe("function getAddresses", () => {
-        let response = { "data": { 'results': 'page1', 'next': 'test.com/page=469876' } }
+        let response = { "data": { 'results': 'page1', 'next': 'test.com/page=469876' } };
         beforeEach(() => {
             vm.address1Service.listAddresses = () => {
                 return {
@@ -172,7 +176,7 @@ describe('Address1Controller', () => {
     });
 
     describe('function editAddress1', () => {
-        let address = 'foo';
+        let address = {name: 'foo', id: 123};
         let modal = {
             open: () => {
                 return {
@@ -181,7 +185,7 @@ describe('Address1Controller', () => {
                             f(address);
                         }
                     }
-                }
+                };
             }
         };
 
@@ -190,7 +194,7 @@ describe('Address1Controller', () => {
                 then: (f) => {
                     f();
                 }
-            }
+            };
         };
 
         beforeEach(() => {
@@ -200,7 +204,7 @@ describe('Address1Controller', () => {
 
         it("function getAddresses should be called", () => {
             spyOn(vm, "getAddresses").and.callThrough();
-            vm.editAddress1();
+            vm.editAddress1(address);
             expect(vm.getAddresses).toHaveBeenCalled();
         });
 

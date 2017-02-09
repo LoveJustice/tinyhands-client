@@ -24,7 +24,7 @@ export default class SessionService {
                 } else {
                     error = "Unable to connect to server";
                 }
-                this.clearSession()
+                this.clearSession();
                 return this.$q.reject(error);
             });
     }

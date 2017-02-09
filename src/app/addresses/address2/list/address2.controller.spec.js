@@ -1,10 +1,12 @@
 import Address2Controller from './address2.controller';
-import Address2Service from './address2.service';
+import Address2Service from '../address2.service';
 
 describe('Address2Controller', () => {
 
     let vm,
-        mockStickyHeader;
+        mockStickyHeader,
+        $state,
+        $stateParams;
     let address = { id: '123' };
 
     let mockThen = (...args) => {
@@ -35,9 +37,12 @@ describe('Address2Controller', () => {
                 }
             };
 
+        $stateParams = {};
+        $state = {go: () => {}};
+
         mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
 
-        vm = new Address2Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal);
+        vm = new Address2Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams, $state);
     }));
 
     describe('function constructor', () => {
@@ -72,7 +77,7 @@ describe('Address2Controller', () => {
 
         it('should call getAddresses', () => {
             spyOn(vm, 'getAddresses');
-            vm.constructor({}, {}, {}, {}, {}, {}, {});
+            vm.constructor({}, {}, {}, {}, {}, {}, {}, {}, {});
             expect(vm.getAddresses).toHaveBeenCalled();
         });
 

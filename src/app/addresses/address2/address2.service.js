@@ -8,6 +8,14 @@ class Address2Service {
         return this.service.get('api/address2/', queryParams);
     }
 
+    swapAddresses(id1, id2) {
+        return this.service.delete(`api/address2/${id1}/swap-with/${id2}/`);
+    }
+
+    deleteAddress(id) {
+        return this.service.delete(`api/address2/${id}/`);
+    }
+
     searchAddresses(queryParams) {
         return this.listAddresses(queryParams);
     }
@@ -22,6 +30,14 @@ class Address2Service {
 
     getFuzzyAddress2s(val) {
         return this.service.get('api/address2/fuzzy/?address2=' + val);
+    }
+
+    getRelatedItems(address) {
+        return this.service.get(`api/address2/${address.id}/related-items/`);
+    }
+
+    getAddress(id) {
+        return this.service.get(`api/address2/${id}/`);
     }
 }
 

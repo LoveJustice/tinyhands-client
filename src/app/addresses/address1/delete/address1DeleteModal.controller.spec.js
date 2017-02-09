@@ -215,12 +215,6 @@ describe('Address1DeleteModalController', () => {
     });
 
     describe('- function delete - ', () => {
-        it('should set confirm to true the first time it is called', () => {
-            vm.delete(address);
-
-            expect(vm.confirm).toBe(true);
-        });
-
         it('should call api delete address with address id', () => {
             vm.confirm = true;
             vm.delete(address);
@@ -266,12 +260,6 @@ describe('Address1DeleteModalController', () => {
     });
 
     describe('- function swapAndDelete - ', () => {
-        it('should set confirmSwap to true the first time it is called', () => {
-            vm.swapAndDelete(address);
-
-            expect(vm.confirmSwap).toBe(true);
-        });
-
         it('should call api swap address with address id of both objects', () => {
             vm.confirmSwap = true;
             vm.swapAndDelete();

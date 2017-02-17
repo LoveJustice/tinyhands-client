@@ -93,8 +93,8 @@ export default class BudgetService {
      * @param {number} year The year of the current budget form.
      * @returns Promise that provides the status and data of the request.
      */
-    getPreviousData(borderStationId, month, year) {
-        return this.service.get(`api/budget/previous_data/${borderStationId}/${month}/${year}/`);
+    getFormForMonthYear(borderStationId, month, year) {
+        return this.service.get(`api/budget/${borderStationId}/${month}/${year}/`);
     }
 
     /**

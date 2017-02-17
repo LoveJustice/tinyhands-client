@@ -8,8 +8,6 @@ export default class BudgetController {
         this.service = BudgetService;
         this.utils = UtilService;
 
-
-        // Variable Declarations
         let budgetFormPath = 'app/budget/form/components/';
         this.sections = {
             allSections: [
@@ -45,11 +43,13 @@ export default class BudgetController {
         this.total = 0;
 
         this.validRoute();
-        this.getBudgetForm();
+
+        if(this.isCreating) {
+            this.newBudgetForm();
+        } else {
+            this.getBudgetForm();
+        }        
     }
-
-
-    // Functions
 
     getOtherCost(otherItems) {
         let amount = 0;
@@ -346,8 +346,6 @@ export default class BudgetController {
     // REGION: GET Calls
     getAllData() {
         this.getStaff();
-        this.getBorderStation();
-        this.getPreviousData();
         this.getOtherData();
     }
 
@@ -357,21 +355,31 @@ export default class BudgetController {
         });
     }
 
+    newBudgetForm() {
+        let month = window.moment(this.form.month_year).format('M');
+        let year = window.moment(this.form.month_year).format('YYYY');
+
+        this.service.getFormForMonthYear(this.form.border_station, month, year).then((response) => {
+            this.form = response.data.form;
+            this.form.totals = {
+                borderMonitoringStation: {},
+                other: {},
+                safeHouse: {}
+            };
+            this.getBorderStation();
+        });
+    }
+
     getBudgetForm() {
-        if (this.utils.validId(this.budgetId)) {
-            this.service.getBudgetForm(this.budgetId).then((response) => {
-                this.form = response.data;
-                this.form.totals = {
-                    borderMonitoringStation: {},
-                    other: {},
-                    safeHouse: {}
-                };
-                this.getAllData();
-            });
-        } else {
-            this.form.month_year = window.moment().format();
+        this.service.getBudgetForm(this.budgetId).then((response) => {
+            this.form = response.data;
+            this.form.totals = {
+                borderMonitoringStation: {},
+                other: {},
+                safeHouse: {}
+            };
             this.getAllData();
-        }
+        });
     }
 
     getOtherData() {

@@ -81,8 +81,8 @@ export default class BudgetService {
      * @param {number} formSection The form section you are attempting to access. Travel: 1, Miscellaneous: 2, Awareness: 3, Supplies: 4, Shelter: 5, FoodAndGas: 6, Communication: 7, Salaries: 8
      * @returns Promise that provides the status and data of the request.
      */
-    getOtherItems(budgetId, formSection) {
-        return this.service.get(`api/budget/${budgetId}/item/?form_section=${formSection}`);
+    getOtherItems(budgetId) {
+        return this.service.get(`api/budget/${budgetId}/item/`);
     }
 
     /**

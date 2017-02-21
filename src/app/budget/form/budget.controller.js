@@ -367,6 +367,15 @@ export default class BudgetController {
                 safeHouse: {}
             };
             this.getBorderStation();
+
+            this.form.previousData = response.data.top_table_data;
+
+            this.form.other = [];
+            for (let key in Constants.FormSections) {
+                this.setOtherItemsForSection(key, response.data.other_items);
+            }
+
+            this.getStaff(this.form.id);
         });
     }
 
@@ -382,12 +391,20 @@ export default class BudgetController {
         });
     }
 
+    getAllOtherItems() {
+        return this.service.getOtherItems(this.budgetId).then((response) => {
+            this.otherItems = response.data;
+        });
+    }
+
     getOtherData() {
         this.form.other = {};
         if (this.utils.validId(this.budgetId)) {
-            for (let key in Constants.FormSections) {
-                this.getOtherItemsForSection(key);
-            }
+            this.getAllOtherItems().then(() => {
+                for (let key in Constants.FormSections) {
+                    this.setOtherItemsForSection(key, this.otherItems);
+                }
+            });
         } else {
             for (let key in Constants.FormSections) {
                 this.form.other[key] = [];
@@ -395,9 +412,9 @@ export default class BudgetController {
         }
     }
 
-    getOtherItemsForSection(key) {
-        this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
-            this.form.other[key] = response.data;
+    setOtherItemsForSection(key, items) {
+        this.form.other[key] = items.filter((item) => {
+            return item.form_section === Constants.FormSections[key]; 
         });
     }
 
@@ -409,26 +426,30 @@ export default class BudgetController {
         });
     }
 
-    getStaff() {
+    getStaff(budgetId = null) {
         this.service.getStaff(this.form.border_station).then((response) => {
             this.form.staff = response.data.results;
-            this.getStaffSalaries();
+            this.getStaffSalaries(budgetId);
         });
     }
 
-    getStaffSalaries() {
-        if (this.utils.validId(this.budgetId)) {
-            this.service.getStaffSalaries(this.budgetId).then((response) => {
-                this.form.staff.map((staff) => {
-                    if (response.data.length > 0) {
-                        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
-                    } else {
-                        staff.salaryInfo = { salary: 0 };
-                    }
-                });
-                this.setTotals();
-            });
+    getStaffSalaries(budgetId) {
+        let id = this.utils.validId(this.budgetId) ? this.budgetId : budgetId;
+
+        if (id === null) {
+            return;
         }
+
+        this.service.getStaffSalaries(id).then((response) => {
+            this.form.staff.map((staff) => {
+                if (response.data.length > 0) {
+                    staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
+                } else {
+                    staff.salaryInfo = { salary: 0 };
+                }
+            });
+            this.setTotals();
+        });
     }
     // ENDREGION: GET Calls
 

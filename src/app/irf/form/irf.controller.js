@@ -40,7 +40,7 @@ export default class IrfController {
             this.sections.push(`app/irf/form/components/page${pageNum}/page${pageNum}.html`);
         }
     }
-    
+
     calculateFlagTotal() {
         for (let key in this.form) {
             if (this.form[key] && this.form[key].weight && this.form[key].value === true) {
@@ -51,8 +51,7 @@ export default class IrfController {
 
     createIrf() {
         this.form.date_form_received = new Date();
-        this.service.createIrf().then((response) => {
-
+        this.service.createIrf().then(() => {
         }, (response) => {
             this.errors = response.data;
             this.errorList = this.utils.handleErrors(response);

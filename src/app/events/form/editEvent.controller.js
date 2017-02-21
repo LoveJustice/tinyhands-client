@@ -8,8 +8,8 @@ export default class EditEventCtrl {
         //variable declarations
         this.state = $state;
         this.stateParams = $stateParams;
-        this.toastr = toastr
-        this.moment = moment;        
+        this.toastr = toastr;
+        this.moment = moment;
         this.EventsService = EventsService;
 
         //for datepicker
@@ -30,7 +30,7 @@ export default class EditEventCtrl {
     get startDate() {
         return this._startDate;
     }
-    
+
     set startDate(newDate) {
         this.event.start_date = this.moment(newDate).format(this.dateFormat);
         this._startDate = newDate;
@@ -39,7 +39,7 @@ export default class EditEventCtrl {
     get startTime() {
         return this._startTime;
     }
-    
+
     set startTime(newTime) {
         this.event.start_time = this.moment(newTime).format(this.timeFormat);
         this._startTime = newTime;
@@ -48,7 +48,7 @@ export default class EditEventCtrl {
     get endDate() {
         return this._endDate;
     }
-    
+
     set endDate(newDate) {
         this.event.end_date = this.moment(newDate).format(this.dateFormat);
         this._endDate = newDate;
@@ -57,7 +57,7 @@ export default class EditEventCtrl {
     get endTime() {
         return this._endTime;
     }
-    
+
     set endTime(newTime) {
         this.event.end_time = this.moment(newTime).format(this.timeFormat);
         this._endTime = newTime;
@@ -82,7 +82,7 @@ export default class EditEventCtrl {
             return this._startTime.getHours() < this._endTime.getHours()
             || (this._startTime.getHours() === this._endTime.getHours() && this._startTime.getMinutes() < this._endTime.getMinutes());
         }
-        return true; 
+        return true;
     }
 
     get isRepetitionEndAfterEndDate() {
@@ -124,7 +124,7 @@ export default class EditEventCtrl {
             this.startTime = this.moment(event.start_time, this.timeFormat).toDate();
             this.endDate = this.moment(event.end_date, this.dateFormat).toDate();
             this.endTime = this.moment(event.end_time, this.timeFormat).toDate();
-            this.repetitionEndDate = this.moment(event.ends, this.dateFormat).toDate();            
+            this.repetitionEndDate = this.moment(event.ends, this.dateFormat).toDate();
         } else {
             this.startDate = new Date();
             this.startTime = this.moment('2016-01-01T12:00').toDate();
@@ -163,8 +163,8 @@ export default class EditEventCtrl {
         call.then(() => {
             this.toastr.success(`Event ${this.editing ? 'Updated' : 'Created'}!`);
             this.state.go('eventsList');
-        }, (err) => {
-            
+        }, () => {
+            this.toastr.error(`There was a problem ${this.editing ? 'Updating' : 'Creating'} the Event!`);
         });
     }
 }

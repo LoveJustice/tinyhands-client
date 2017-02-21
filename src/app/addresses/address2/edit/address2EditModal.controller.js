@@ -1,11 +1,12 @@
 class Address2EditModalController {
-    constructor($uibModalInstance, address, $scope, address2Service, address1Service) {
+    constructor($uibModalInstance, address, $scope, address2Service, address1Service, $state) {
         'ngInject';
 
         this.address2Service = address2Service;
         this.address1Service = address1Service;
 
         this.modalInstance = $uibModalInstance;
+        this.state = $state;
         this.scope = $scope;
         this.scope.address = angular.copy(address);
     }
@@ -15,10 +16,12 @@ class Address2EditModalController {
         if (this.scope.address.canonical_name === "" || this.scope.address.canonical_name === undefined || this.scope.address.canonical_name === null) {
             this.scope.address.canonical_name = { id: -1, name: "Empty" };
         }
+        this.state.go('address2', {editId: null}, {notify: false});
         this.modalInstance.close(this.scope.address);
     }
 
     cancel() {
+        this.state.go('address2', {editId: null}, {notify: false});
         this.modalInstance.dismiss('close');
     }
 

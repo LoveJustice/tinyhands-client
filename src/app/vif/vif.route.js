@@ -2,7 +2,7 @@ function VIFRoutes($stateProvider, RequireLogin) {
   'ngInject';
   $stateProvider
     .state('vifList', {
-      url: '/vif',
+      url: '/vif?search',
       templateUrl: 'app/vif/list/vifList.html',
       controller: 'VifListController',
       controllerAs: 'vifListCtrl',

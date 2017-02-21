@@ -27,8 +27,8 @@
             <button type="submit" class="btn btn-sm btn-primary" ng-click="accountListCtrl.resendActivationEmail(account.id)" ng-show="!account.has_been_activated">Resend Activation Email</button>
           </td>
           <td>
-              <confirm-button 
-                        ng-disabled="accountListCtrl.currentUser.id == account.id"
+              <confirm-button
+                        disabled="accountListCtrl.currentUser.id == account.id"
                         ng-show="accountListCtrl.currentUser.id !== account.id"
                         btn-class="btn btn-sm btn-danger pull-right animated"
                         invisible="!account.hover"

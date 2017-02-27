@@ -4,21 +4,32 @@ var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 
-var $ = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
-});
+var angularTemplatecache = require('gulp-angular-templatecache');
+var csso = require('gulp-csso');
+var del = require('del');
+var filter = require('gulp-filter');
+var flatten = require('gulp-flatten');
+var inject = require('gulp-inject');
+var mainBowerFiles = require('main-bower-files');
+var minifyHtml = require('gulp-minify-html');
+var ngAnnotate = require('gulp-ng-annotate');
+var replace = require('gulp-replace');
+var rev = require('gulp-rev');
+var revReplace = require('gulp-rev-replace');
+var size = require('gulp-size');
+var useref = require('gulp-useref');
 
 gulp.task('partials', function () {
   return gulp.src([
     path.join(conf.paths.src, '/app/**/*.html'),
     path.join(conf.paths.tmp, '/serve/app/**/*.html')
   ])
-    .pipe($.minifyHtml({
+    .pipe(minifyHtml({
       empty: true,
       spare: true,
       quotes: true
     }))
-    .pipe($.angularTemplatecache('templateCacheHtml.js', {
+    .pipe(angularTemplatecache('templateCacheHtml.js', {
       module: 'tinyhandsFrontend',
       root: 'app'
     }))
@@ -33,25 +44,25 @@ gulp.task('html', ['inject', 'partials'], function () {
     addRootSlash: false
   };
 
-  var htmlFilter = $.filter('*.html', {restore: true});
-  var jsFilter = $.filter('**/*.js', {restore: true});
-  var cssFilter = $.filter('**/*.css', {restore: true});
+  var htmlFilter = filter('*.html', {restore: true});
+  var jsFilter = filter('**/*.js', {restore: true});
+  var cssFilter = filter('**/*.css', {restore: true});
   var assets;
 
   return gulp.src(path.join(conf.paths.tmp, '/serve/*.html'))
-    .pipe($.inject(partialsInjectFile, partialsInjectOptions))
-    .pipe($.rev())
+    .pipe(inject(partialsInjectFile, partialsInjectOptions))
+    .pipe(rev())
     .pipe(jsFilter)
-    .pipe($.ngAnnotate())
+    .pipe(ngAnnotate())
     .pipe(jsFilter.restore)
     .pipe(cssFilter)
-    .pipe($.replace('../../bower_components/bootstrap/fonts/', '../fonts/'))
-    .pipe($.csso())
+    .pipe(replace('../../bower_components/bootstrap/fonts/', '../fonts/'))
+    .pipe(csso())
     .pipe(cssFilter.restore)
-    .pipe($.useref())
-    .pipe($.revReplace())
+    .pipe(useref())
+    .pipe(revReplace())
     .pipe(htmlFilter)
-    .pipe($.minifyHtml({
+    .pipe(minifyHtml({
       empty: true,
       spare: true,
       quotes: true,
@@ -59,20 +70,20 @@ gulp.task('html', ['inject', 'partials'], function () {
     }))
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')))
-    .pipe($.size({ title: path.join(conf.paths.dist, '/'), showFiles: true }));
+    .pipe(size({ title: path.join(conf.paths.dist, '/'), showFiles: true }));
 });
 
 // Only applies for fonts from bower dependencies
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
-  return gulp.src($.mainBowerFiles().concat('bower_components/bootstrap/fonts/*'))
-    .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
-    .pipe($.flatten())
+  return gulp.src(mainBowerFiles().concat('bower_components/bootstrap/fonts/*'))
+    .pipe(filter('**/*.{eot,svg,ttf,woff,woff2}'))
+    .pipe(flatten())
     .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
 });
 
 gulp.task('other', function () {
-  var fileFilter = $.filter(function (file) {
+  var fileFilter = filter(function (file) {
     return file.stat.isFile();
   });
 
@@ -85,7 +96,7 @@ gulp.task('other', function () {
 });
 
 gulp.task('clean', function (done) {
-  $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], done);
+  del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], done);
 });
 
 gulp.task('api:local', function () {
@@ -103,7 +114,7 @@ gulp.task('api:master', function () {
 function changeBaseUrl(url) {
     var config = path.join(conf.paths.src, 'app/constants.js');
     gulp.src([config])
-        .pipe($.replace(/BaseUrl:\s'http.+'/i, "BaseUrl: '" + url + "'"))
+        .pipe(replace(/BaseUrl:\s'http.+'/i, "BaseUrl: '" + url + "'"))
         .pipe(gulp.dest(path.join(conf.paths.src, 'app')));
 }
 

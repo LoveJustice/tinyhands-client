@@ -4,10 +4,11 @@ var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 
+var autoprefixer = require('gulp-autoprefixer');
 var browserSync = require('browser-sync');
-
-var $ = require('gulp-load-plugins')();
-
+var inject = require('gulp-inject');
+var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
@@ -38,12 +39,12 @@ gulp.task('styles', function () {
   return gulp.src([
     path.join(conf.paths.src, '/app/index.less')
   ])
-    .pipe($.inject(injectFiles, injectOptions))
+    .pipe(inject(injectFiles, injectOptions))
     .pipe(wiredep(_.extend({}, conf.wiredep)))
-    .pipe($.sourcemaps.init())
-    .pipe($.less(lessOptions)).on('error', conf.errorHandler('Less'))
-    .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
-    .pipe($.sourcemaps.write())
+    .pipe(sourcemaps.init())
+    .pipe(less(lessOptions)).on('error', conf.errorHandler('Less'))
+    .pipe(autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/app/')))
     .pipe(browserSync.reload({ stream: true }));
 });

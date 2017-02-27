@@ -7,67 +7,62 @@ var _ = require('lodash');
 var wiredep = require('wiredep');
 
 function listFiles() {
-  var wiredepOptions = _.extend({}, conf.wiredep, {
-    dependencies: true,
-    devDependencies: true
-  });
+    var wiredepOptions = _.extend({}, conf.wiredep, {
+        dependencies: true,
+        devDependencies: true
+    });
 
-  return wiredep(wiredepOptions).js
-    .concat([
-      path.join(conf.paths.tmp, '/serve/app/index.module.js'),
-      path.join(conf.paths.src, '/**/*.spec.js'),
-      path.join(conf.paths.src, '/**/*.html')
-    ]);
+    return wiredep(wiredepOptions).js
+        .concat([
+            path.join(conf.paths.tmp, '/serve/app/index.module.js'),
+            path.join(conf.paths.src, '/**/*.spec.js'),
+            path.join(conf.paths.src, '/**/*.html')
+        ]);
+}
+
+function generateWebpackConfig() {
+    return {
+        files: listFiles(),
+
+        singleRun: true,
+
+        autoWatch: false,
+
+        frameworks: ['jasmine'],
+
+        ngHtml2JsPreprocessor: {
+            stripPrefix: 'src/',
+            moduleName: 'tinyhandsFrontend'
+        },
+
+        browsers : ['PhantomJS'],
+
+        plugins : [
+            'karma-phantomjs-launcher',
+            'karma-jasmine',
+            'karma-ng-html2js-preprocessor',
+            'karma-webpack'
+        ],
+
+        preprocessors: {
+            'src/**/*.html': ['ng-html2js'],
+            'src/**/*.spec.js': ['webpack']
+        },
+
+        webpack: {
+            watch: false,
+            module: {
+                loaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}]
+            },
+        },
+
+        webpackMiddleware: {
+           noInfo: true,
+        }
+    };
 }
 
 module.exports = function(config) {
-
-  var configuration = {
-    files: listFiles(),
-
-    singleRun: true,
-
-    autoWatch: false,
-
-    frameworks: ['jasmine', 'browserify'],
-
-    ngHtml2JsPreprocessor: {
-      stripPrefix: 'src/',
-      moduleName: 'tinyhandsFrontend'
-    },
-
-    browsers : ['PhantomJS'],
-
-    plugins : [
-      'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-ng-html2js-preprocessor',
-      'karma-browserify'
-    ],
-
-    preprocessors: {
-      'src/**/*.html': ['ng-html2js'],
-      'src/**/*.spec.js': ['browserify']
-    },
-
-    browserify: {
-      transform: ['babelify']
-    }
-  };
-
-  // This block is needed to execute Chrome on Travis
-  // If you ever plan to use Chrome and Travis, you can keep it
-  // If not, you can safely remove it
-  // https://github.com/karma-runner/karma/issues/1144#issuecomment-53633076
-  if(configuration.browsers[0] === 'Chrome' && process.env.TRAVIS) {
-    configuration.customLaunchers = {
-      'chrome-travis-ci': {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    };
-    configuration.browsers = ['chrome-travis-ci'];
-  }
-
-  config.set(configuration);
+    config.set(generateWebpackConfig());
 };
+

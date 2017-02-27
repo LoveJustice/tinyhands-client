@@ -7,13 +7,13 @@
 'use strict';
 
 var gulp = require('gulp');
-var wrench = require('wrench');
+var fse = require('fs-extra');
 
 /**
  *  This will load all js or coffee files in the gulp directory
  *  in order to load all gulp tasks
  */
-wrench.readdirSyncRecursive('./gulp').filter(function(file) {
+fse.readdirSync('./gulp').filter(function(file) {
   return (/\.(js|coffee)$/i).test(file);
 }).map(function(file) {
   require('./gulp/' + file);

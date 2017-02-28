@@ -5,16 +5,25 @@ var gulp = require('gulp');
 var conf = require('./conf');
 
 var browserSync = require('browser-sync');
+var ngAnnotatePlugin = require('ng-annotate-webpack-plugin')
+var uglifyJsPlugin = require('uglifyjs-webpack-plugin');
 var util = require('gulp-util');
+var webpack = require('webpack');
 var webpackStream = require('webpack-stream');
 
-function webpack(watch, callback) {
+function webpackBuild(watch, callback) {
   var webpackOptions = {
     watch: watch,
     module: {
-      preLoaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'jshint-loader'}],
-      loaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}]
+        rules: [
+            { test: /\.js$/, exclude: /node_modules/, enforce: 'pre', loader: 'jshint-loader'},
+            { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}
+        ]
     },
+    plugins: [
+        new ngAnnotatePlugin(),
+        new uglifyJsPlugin({sourceMap: true, mangle: false})
+    ],
     output: { filename: 'index.module.js' }
   };
 
@@ -40,14 +49,14 @@ function webpack(watch, callback) {
   };
 
   return gulp.src(path.join(conf.paths.src, '/app/index.module.js'))
-    .pipe(webpackStream(webpackOptions, null, webpackChangeHandler))
+    .pipe(webpackStream(webpackOptions, webpack, webpackChangeHandler))
     .pipe(gulp.dest(path.join(conf.paths.tmp, '/serve/app')));
 }
 
 gulp.task('scripts', function () {
-  return webpack(false);
+  return webpackBuild(false);
 });
 
 gulp.task('scripts:watch', ['scripts'], function (callback) {
-  return webpack(true, callback);
+  return webpackBuild(true, callback);
 });

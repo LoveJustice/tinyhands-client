@@ -12,7 +12,6 @@ var flatten = require('gulp-flatten');
 var inject = require('gulp-inject');
 var mainBowerFiles = require('main-bower-files');
 var minifyHtml = require('gulp-minify-html');
-var ngAnnotate = require('gulp-ng-annotate');
 var replace = require('gulp-replace');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
@@ -45,16 +44,12 @@ gulp.task('html', ['inject', 'partials'], function () {
   };
 
   var htmlFilter = filter('*.html', {restore: true});
-  var jsFilter = filter('**/*.js', {restore: true});
   var cssFilter = filter('**/*.css', {restore: true});
   var assets;
 
   return gulp.src(path.join(conf.paths.tmp, '/serve/*.html'))
     .pipe(inject(partialsInjectFile, partialsInjectOptions))
     .pipe(rev())
-    .pipe(jsFilter)
-    .pipe(ngAnnotate())
-    .pipe(jsFilter.restore)
     .pipe(cssFilter)
     .pipe(replace('../../bower_components/bootstrap/fonts/', '../fonts/'))
     .pipe(csso())

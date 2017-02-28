@@ -11,7 +11,7 @@ var filter = require('gulp-filter');
 var flatten = require('gulp-flatten');
 var inject = require('gulp-inject');
 var mainBowerFiles = require('main-bower-files');
-var minifyHtml = require('gulp-minify-html');
+var htmlmin = require('gulp-htmlmin');
 var replace = require('gulp-replace');
 var rev = require('gulp-rev');
 var revReplace = require('gulp-rev-replace');
@@ -23,10 +23,12 @@ gulp.task('partials', function () {
     path.join(conf.paths.src, '/app/**/*.html'),
     path.join(conf.paths.tmp, '/serve/app/**/*.html')
   ])
-    .pipe(minifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      removeComments: true,
+      collapseBooleanAttributes: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: true,
     }))
     .pipe(angularTemplatecache('templateCacheHtml.js', {
       module: 'tinyhandsFrontend',
@@ -57,11 +59,12 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(useref())
     .pipe(revReplace())
     .pipe(htmlFilter)
-    .pipe(minifyHtml({
-      empty: true,
-      spare: true,
-      quotes: true,
-      conditionals: true
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      removeComments: true,
+      collapseBooleanAttributes: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: true,
     }))
     .pipe(htmlFilter.restore)
     .pipe(gulp.dest(path.join(conf.paths.dist, '/')))

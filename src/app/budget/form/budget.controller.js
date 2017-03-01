@@ -5,6 +5,7 @@ export default class BudgetController {
         'ngInject';
 
         this.$state = $state;
+        this.$stateParams = $stateParams;
         this.service = BudgetService;
         this.utils = UtilService;
 
@@ -23,9 +24,16 @@ export default class BudgetController {
                 { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
             ]
         };
+
         this.active = null;
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
+        this.borderStationId = $stateParams.borderStationId;
+
+        this.month = parseInt(window.moment().format('M'));
+        this.year = parseInt(window.moment().format('YYYY'));
+
+
         this.deletedItems = [];
         this.form = {
             other: {},
@@ -35,11 +43,12 @@ export default class BudgetController {
                 safeHouse: {}
             }
         };
-        this.form.border_station = $stateParams.borderStationId;
-        this.isCreating = !this.budgetId && this.form.border_station;
+
+        this.isCreating = !this.budgetId && this.borderStationId;
         this.isViewing = $stateParams.isViewing === "true";
-        this.safeHouseTotal = 0;
+        
         this.sectionTemplateUrl = null;
+        this.safeHouseTotal = 0;
         this.total = 0;
 
         this.validRoute();
@@ -350,24 +359,22 @@ export default class BudgetController {
     }
 
     getBorderStation() {
-        this.service.getBorderStation(this.form.border_station).then((response) => {
+        this.service.getBorderStation(this.borderStationId).then((response) => {
             this.form.station_name = response.data.station_name;
         });
     }
 
     newBudgetForm() {
-        let month = window.moment(this.form.month_year).format('M');
-        let year = window.moment(this.form.month_year).format('YYYY');
-
-        this.service.getFormForMonthYear(this.form.border_station, month, year).then((response) => {
+        this.service.getFormForMonthYear(this.borderStationId, this.month, this.year).then((response) => {
+            this.getBorderStation();
+            
             this.form = response.data.form;
             this.form.totals = {
                 borderMonitoringStation: {},
                 other: {},
                 safeHouse: {}
             };
-            this.getBorderStation();
-
+            this.form.month_year = moment().year(this.year).month(this.month - 1).date(15);
             this.form.previousData = response.data.top_table_data;
 
             this.form.other = [];
@@ -375,13 +382,16 @@ export default class BudgetController {
                 this.setOtherItemsForSection(key, response.data.other_items);
             }
 
-            this.getStaff(this.form.id);
+            this.getStaffForNewBudget(this.form.id);
+
+            this.setTotals();
         });
     }
 
     getBudgetForm() {
         this.service.getBudgetForm(this.budgetId).then((response) => {
             this.form = response.data;
+            this.borderStationId = response.data.border_station;
             this.form.totals = {
                 borderMonitoringStation: {},
                 other: {},
@@ -421,13 +431,23 @@ export default class BudgetController {
     getPreviousData() {
         let month = window.moment(this.form.month_year).format('M');
         let year = window.moment(this.form.month_year).format('YYYY');
-        this.service.getPreviousData(this.form.border_station, month, year).then((response) => {
+
+        return this.service.getPreviousData(this.borderStationId, month, year).then((response) => {
             this.form.previousData = response.data;
         });
     }
 
+    getStaffForNewBudget(budgetId = null) {
+        return this.service.getStaff(this.borderStationId).then((response) => {
+            this.form.staff = response.data.results;
+            if (budgetId !== null) {
+                this.getStaffSalaries(budgetId);
+            }
+        });
+    }
+
     getStaff(budgetId = null) {
-        this.service.getStaff(this.form.border_station).then((response) => {
+        return this.service.getStaff(this.borderStationId).then((response) => {
             this.form.staff = response.data.results;
             this.getStaffSalaries(budgetId);
         });
@@ -435,12 +455,12 @@ export default class BudgetController {
 
     getStaffSalaries(budgetId) {
         let id = this.utils.validId(this.budgetId) ? this.budgetId : budgetId;
-
-        if (id === null) {
+        console.log(id, budgetId, this.budgetId);
+        if (id === "") {
             return;
         }
 
-        this.service.getStaffSalaries(id).then((response) => {
+        return this.service.getStaffSalaries(id).then((response) => {
             this.form.staff.map((staff) => {
                 if (response.data.length > 0) {
                     staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
@@ -464,6 +484,7 @@ export default class BudgetController {
 
     updateOrCreateForm() {
         if (this.isCreating) {
+            console.log(this.form.month_year);
             this.service.createForm(this.form).then((response) => {
                 this.budgetId = response.data.id;
                 this.updateOrCreateAll();

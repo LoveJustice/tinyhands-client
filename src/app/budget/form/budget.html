@@ -1,6 +1,8 @@
 <form id="budget-calc-form" class="container-fluid col-xs-12">
   <h2 class="text-center">
-    {{ budgetCtrl.form.station_name }} Budget Form For {{ budgetCtrl.form.month_year | date:'MMMM yyyy'}}
+    {{ budgetCtrl.form.station_name }} Budget Form For 
+    <input ng-model="budgetCtrl.month" ng-change="budgetCtrl.newBudgetForm()" type="number">
+    <input ng-model="budgetCtrl.year" ng-change="budgetCtrl.newBudgetForm()" type="number">
   </h2>
 
   <!-- Budget Past/Current Info -->

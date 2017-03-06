@@ -25,6 +25,21 @@ export default class BudgetController {
             ]
         };
 
+        this.months = [
+            {name: "January", value: 1},
+            {name: "February", value: 2},
+            {name: "March", value: 3},
+            {name: "April", value: 4},
+            {name: "May", value: 5},
+            {name: "June", value: 6},
+            {name: "July", value: 7},
+            {name: "August", value: 8},
+            {name: "September", value: 9},
+            {name: "October", value: 10},
+            {name: "November", value: 11},
+            {name: "December", value: 12},
+        ];
+
         this.active = null;
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
@@ -369,6 +384,7 @@ export default class BudgetController {
             this.getBorderStation();
             
             this.form = response.data.form;
+            this.form.id = null;
             this.form.totals = {
                 borderMonitoringStation: {},
                 other: {},
@@ -376,6 +392,11 @@ export default class BudgetController {
             };
             this.form.month_year = moment().year(this.year).month(this.month - 1).date(15);
             this.form.previousData = response.data.top_table_data;
+
+            response.data.other_items.forEach((item) => {
+                item.id = null;
+                item.budget_item_parent = null;
+            });
 
             this.form.other = [];
             for (let key in Constants.FormSections) {
@@ -398,6 +419,15 @@ export default class BudgetController {
                 safeHouse: {}
             };
             this.getAllData();
+        }).then(() => {
+            var date = new Date(this.form.month_year)
+            this.month = date.getMonth() + 1;
+            this.year = date.getFullYear();
+
+
+            this.service.getFormForMonthYear(this.form.id, this.month, this.year).then((response) => {
+                this.form.previousData = response.data.top_table_data;
+            });
         });
     }
 
@@ -455,7 +485,6 @@ export default class BudgetController {
 
     getStaffSalaries(budgetId) {
         let id = this.utils.validId(this.budgetId) ? this.budgetId : budgetId;
-        console.log(id, budgetId, this.budgetId);
         if (id === "") {
             return;
         }
@@ -466,6 +495,10 @@ export default class BudgetController {
                     staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
                 } else {
                     staff.salaryInfo = { salary: 0 };
+                }
+
+                if(this.isCreating) {
+                    staff.id = null;
                 }
             });
             this.setTotals();

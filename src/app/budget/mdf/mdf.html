@@ -50,7 +50,7 @@
         <div class="row text-center">
             <a type="button" id="sendEmails" style="margin-top: 50px"
                class="btn btn-primary" value="Send to Selected Staff and Members"
-               ng-click="vm.sendEmails()">
+               ng-click="vm.sendEmails()" ng-disabled="!vm.recipientSelected()">
                   Send to Selected Staff and Members
             </a>
         </div>

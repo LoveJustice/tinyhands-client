@@ -141,4 +141,12 @@ export default class BorderStationService {
     updateStaff(staffId, data) {
         return this.service.put('api/staff/' + staffId + '/', data);
     }
+
+    getAllCountries() {
+      return this.service.get('api/country/');
+    }
+
+    getCountry(countryId) {
+        return this.service.get('api/country/' + countryId + '/');
+    }
 }

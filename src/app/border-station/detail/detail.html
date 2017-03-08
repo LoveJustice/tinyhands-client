@@ -2,7 +2,7 @@
   <h1>Details
   <div class="row">
       <div class="col-xs-12">
-          <button class="btn" 
+          <button class="btn"
                   ng-class="{'btn-success':detailCtrl.details.open, 'btn-danger':!detailCtrl.details.open}"
                   ng-click="detailCtrl.changeStationStatus()">Station Status: {{detailCtrl.details.open ? "Open" : "Closed"}}</button>
       </div>
@@ -24,7 +24,7 @@
   <div class="row">
       <div class="col-sm-6 form-group">
         <label for="dateEstablished">Date Established</label>
-        <input type="text" class="form-control" id="dateEstablished" placeholder="Date Established" 
+        <input type="text" class="form-control" id="dateEstablished" placeholder="Date Established"
                ng-model="detailCtrl.details.date_established">
       </div>
       <div class="col-sm-6 checkbox" style="margin: 20px 0px">
@@ -44,6 +44,16 @@
         <label for="longitude">Longitude</label>
         <input type="text" class="form-control" id="longitude" placeholder="Longitude"
                ng-model="detailCtrl.details.longitude">
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm-6 form-group">
+        <label for="operating_country">Operating Country</label>
+        <select name='operating_country' class="form-control" id="operating_country"
+                ng-options="option.id as option.name for option in detailCtrl.countryOptions"
+                ng-model="detailCtrl.details.operating_country">
+                <option value="">Select a country</option>
+        </select>
       </div>
   </div>
 </div>

@@ -1,10 +1,12 @@
 class Address1Controller {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address1Service, $uibModal, $state, $stateParams) {
         'ngInject';
 
+        this.state = $state;
         this.sticky = StickyHeader;
         this.rootScope = $rootScope;
         this.scope = $scope;
+        this.stateParams = $stateParams;
         this.http = $http;
         this.timeout = $timeout;
         this.address1Service = address1Service;
@@ -20,6 +22,17 @@ class Address1Controller {
         this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAddresses();
+
+        if (this.stateParams.deleteId) {
+            this.address1Service.getAddress(this.stateParams.deleteId).then((promise) => {
+                this.deleteAddress1(promise.data);
+            });
+        }
+        else if (this.stateParams.editId) {
+            this.address1Service.getAddress(this.stateParams.editId).then((promise) => {
+                this.editAddress1(promise.data);
+            });
+        }
     }
 
 
@@ -91,10 +104,13 @@ class Address1Controller {
     }
 
     editAddress1(address) {
+        this.state.go('address1', {editId: address.id}, {notify: false});
+
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address1Modal.html',
+            templateUrl: 'app/addresses/address1/edit/address1EditModal.html',
             controller: 'Address1EditModalController as vm',
+            backdrop: 'static',
             size: 'md',
             resolve: {
                 address: function () {
@@ -107,6 +123,23 @@ class Address1Controller {
                 .then(() => {
                     this.getAddresses();
                 });
+        });
+    }
+
+    deleteAddress1(address) {
+        this.state.go('address1', {deleteId: address.id}, {notify: false});
+
+        this.modal.open({
+            animation: true,
+            templateUrl: 'app/addresses/address1/delete/address1DeleteModal.html',
+            controller: 'Address1DeleteModalController as delCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
+            }
         });
     }
 

@@ -7,11 +7,16 @@ export default class ConfirmButtonController {
         if (typeof $scope.onConfirm === 'function') {
             this.onConfirmCallback = $scope.onConfirm;
         }
+        this.scope = $scope;
         this.text = $scope.text;
         this.confirmText = $scope.confirmText;
         this.btnClass = $scope.btnClass;
         this.invisible = $scope.invisible;
         this.isFirstClick = true;
+    }
+
+    get disabled() {
+        return this.scope.disabled;
     }
 
     get buttonText() {

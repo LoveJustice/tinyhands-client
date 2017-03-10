@@ -109,12 +109,12 @@ export default class IrfListController {
 
     checkForExistingIrfs() {
         var savedForLaterIrfs = this.getSaveForLaterObject();
-        if (savedForLaterIrfs == null) return;
+        if (savedForLaterIrfs === null) { return; }
 
         savedForLaterIrfs = Object.keys(savedForLaterIrfs);
         savedForLaterIrfs.forEach((irfNumber) => {
             this.service.irfExists(irfNumber).then((promise) => {
-                if (promise.data == irfNumber) {
+                if (promise.data === irfNumber) {
                     this.removeIrfFromSaveForLater(irfNumber);
                 }
             });

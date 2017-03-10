@@ -45,7 +45,7 @@
             <label>
               <input type="checkbox"
                      ng-attr-id="{{persons.name[0] + '-receivesMoneyDistributionForm-' + $index}}"
-                     ng-model="person.receives_money_distribution_form"> Recieves Money Distribution Form
+                     ng-model="person.receives_money_distribution_form" ng-disabled="!person.email"> Recieves Money Distribution Form
             </label>
           </div>
       </div>

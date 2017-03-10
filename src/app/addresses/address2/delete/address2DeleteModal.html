@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h3 class="modal-title">Delete Address 2 - {{delCtrl.address.name}}</h3>
+</div>
+
+<div class="modal-body">
+  <div ng-if="!delCtrl.canDelete">
+    <h3 style="margin-top:0;">Swap all related items to another Address 2</h3>
+    <autocomplete-address2 label="'Address 2 to Swap'" ng-model="delCtrl.addressToSwapWith"></autocomplete-address2>
+
+    <confirm-button
+        btn-class="btn btn-danger"
+        text="Swap and Delete"
+        confirm-text="Are you sure?"
+        on-confirm="delCtrl.swapAndDelete()"
+        disabled="!delCtrl.addressToSwapWith.id">
+    </confirm-button>
+
+    <span class="glyphicon glyphicon-question-sign" uib-tooltip="{{delCtrl.swapTooltip}}" aria-hidden="true"></span>
+
+
+    <hr>
+
+
+    <div ng-repeat="item in delCtrl.related_items" ng-if="item.objects.length > 0" ng-init="item.limit = 5">
+        <h3>{{ delCtrl.getPrettyTypeName(item) }}</h3>
+        <div ng-repeat="obj in item.objects | limitTo : item.limit">
+            <a ng-click="delCtrl.modalInstance.close('close');"
+               href="{{ delCtrl.getHrefForIdAndType(obj, item.type) }}"
+               ng-class="{badLink: item.type == 'person'}">
+               {{ obj.name }}
+             </a>
+        </div>
+
+        <br>
+        <button ng-click="delCtrl.showMore(item)" ng-hide="item.objects.length <= item.limit " class="btn btn-primary">
+          Show more related {{ delCtrl.getPrettyTypeName(item) }}s
+        </button>
+    </div>
+  </div>
+
+  <div ng-if="delCtrl.canDelete">
+    <h3 style="text-align: center">There are no related items to this Address</h3>
+    <h4 style="text-align: center">Click the button below to delete the address</h4>
+  </div>
+
+</div>
+
+
+<div class="modal-footer">
+  <confirm-button
+      btn-class="btn btn-danger"
+      disabled="!delCtrl.canDelete"
+      text="Delete Address"
+      confirm-text="Are you sure?"
+      on-confirm="delCtrl.delete()">
+  </confirm-button>
+
+    <button class="btn btn-primary" type="button" ng-click="delCtrl.cancel()">Cancel</button>
+</div>

@@ -1,7 +1,8 @@
 import Address2EditModalController from './address2EditModal.controller';
 
 describe('Address2EditModalController', () => {
-    let vm;
+    let vm,
+        $state;
 
     beforeEach(() => {
         let uibModal = {
@@ -12,7 +13,9 @@ describe('Address2EditModalController', () => {
             scope = { address: null },
             addr2Service = { getFuzzyAddress2s: null },
             addr1Service = { getFuzzyAddress1s: null };
-        vm = new Address2EditModalController(uibModal, address, scope, addr2Service, addr1Service);
+
+            $state = {go: () => {}};
+        vm = new Address2EditModalController(uibModal, address, scope, addr2Service, addr1Service, $state);
     });
 
     describe('function save', () => {
@@ -26,8 +29,11 @@ describe('Address2EditModalController', () => {
 
         it(`should call modalInstance close with scope.address`, () => {
             spyOn(vm.modalInstance, 'close');
+            spyOn(vm.state, 'go');
+
             vm.save();
             expect(vm.modalInstance.close).toHaveBeenCalledWith(vm.scope.address);
+            expect(vm.state.go).toHaveBeenCalledWith('address2', {editId: null}, {notify: false});
         });
 
     });
@@ -35,7 +41,11 @@ describe('Address2EditModalController', () => {
     describe('function cancel', () => {
         it('should call modalInstance dismiss with "close"', () => {
             spyOn(vm.modalInstance, 'dismiss');
+            spyOn(vm.state, 'go');
+
             vm.cancel();
+
+            expect(vm.state.go).toHaveBeenCalledWith('address2', {editId: null}, {notify: false});
             expect(vm.modalInstance.dismiss).toHaveBeenCalledWith('close');
         });
     });
@@ -47,7 +57,7 @@ describe('Address2EditModalController', () => {
                     then: (f) => {
                         return f({ data: 'foo' });
                     }
-                }
+                };
             };
             expect(vm.getFuzzyAddress1s()).toEqual('foo');
         });
@@ -60,7 +70,7 @@ describe('Address2EditModalController', () => {
                     then: (f) => {
                         return f({ data: 'foo' });
                     }
-                }
+                };
             };
             expect(vm.getFuzzyAddress2s()).toEqual('foo');
         });

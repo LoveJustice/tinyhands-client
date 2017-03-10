@@ -378,15 +378,19 @@ export default class BudgetController {
         this.form.other = {};
         if (this.utils.validId(this.budgetId)) {
             for (let key in Constants.FormSections) {
-                this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
-                    this.form.other[key] = response.data;
-                });
+                this.getOtherItemsForSection(key);
             }
         } else {
             for (let key in Constants.FormSections) {
                 this.form.other[key] = [];
             }
         }
+    }
+
+    getOtherItemsForSection(key) {
+        this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
+            this.form.other[key] = response.data;
+        });
     }
 
     getPreviousData() {

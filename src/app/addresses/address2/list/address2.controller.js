@@ -1,14 +1,16 @@
 class Address2Controller {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams, $state) {
         'ngInject';
 
         this.sticky = StickyHeader;
         this.rootScope = $rootScope;
         this.scope = $scope;
+        this.state = $state;
         this.http = $http;
         this.timeout = $timeout;
         this.address2Service = address2Service;
         this.modal = $uibModal;
+        this.stateParams = $stateParams;
 
         this.loading = false;
         this.reverse = false;
@@ -20,6 +22,17 @@ class Address2Controller {
         this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAddresses();
+
+        if (this.stateParams.deleteId) {
+            this.address2Service.getAddress(this.stateParams.deleteId).then((promise) => {
+                this.deleteAddress2(promise.data);
+            });
+        }
+        else if (this.stateParams.editId) {
+            this.address2Service.getAddress(this.stateParams.editId).then((promise) => {
+                this.editAddress2(promise.data);
+            });
+        }
     }
 
     sortIcon(column) {
@@ -91,10 +104,13 @@ class Address2Controller {
     }
 
     editAddress2(address) {
+        this.state.go('address2', {editId: address.id}, {notify: false});
+
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address2Modal.html',
+            templateUrl: 'app/addresses/address2/edit/address2EditModal.html',
             controller: 'Address2EditModalController as vm',
+            backdrop: 'static',
             size: 'md',
             resolve: {
                 address: function () {
@@ -106,10 +122,29 @@ class Address2Controller {
             this.address2Service.saveAddress(address)
                 .then(() => {
                     this.getAddresses();
+                    this.state.go('address2', {editId: null}, {notify: false});
                     window.toastr.success(`Address 2 Successfully Updated!`);
                 }, () => {
+                    this.state.go('address2', {editId: null}, {notify: false});
                     window.toastr.error(`Address 2 Did Not Save Successfully!`);
                 });
+        });
+    }
+
+    deleteAddress2(address) {
+        this.state.go('address2', {deleteId: address.id}, {notify: false});
+
+        this.modal.open({
+            animation: true,
+            templateUrl: 'app/addresses/address2/delete/address2DeleteModal.html',
+            controller: 'Address2DeleteModalController as delCtrl',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
+            }
         });
     }
 

@@ -1,3 +1,9 @@
+import 'angular-google-maps';
+import 'angular-simple-logger';
+import uiRouter from 'angular-ui-router';
+import eventsModule from '../events/events.module';
+import sharedModule from '../shared/shared.module';
+
 import dashboardRouteConfig from './dashboard.route';
 import googleMapsConfig from './map/map.config';
 
@@ -12,7 +18,7 @@ import DashboardEventsDirective from './events/dashboardEvents.directive';
 
 import TallyService from './tally/tally.service';
 
-export default angular.module('tinyhands.Dashboard', ['uiGmapgoogle-maps', 'ui.router', 'tinyhands.Shared', 'tinyhands.Events'])
+export default angular.module('tinyhands.Dashboard', ['nemLogging', 'uiGmapgoogle-maps', uiRouter, eventsModule, sharedModule])
     .config(dashboardRouteConfig)
     .config(googleMapsConfig) // Pass google maps config
 
@@ -24,4 +30,5 @@ export default angular.module('tinyhands.Dashboard', ['uiGmapgoogle-maps', 'ui.r
     .directive('tally', TallyDirective)
     .directive('dashevents', DashboardEventsDirective)
 
-    .service('TallyService', TallyService);
+    .service('TallyService', TallyService)
+    .name;

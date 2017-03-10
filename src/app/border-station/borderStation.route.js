@@ -1,9 +1,11 @@
+import borderStationTemplate from './borderStation.html';
+
 function borderStationRouteConfig($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('border-station', {
             url: '/border-station/:id',
-            templateUrl: 'app/border-station/borderStation.html',
+            templateUrl: borderStationTemplate,
             controller: 'BorderStationController',
             controllerAs: 'bsCtrl',
             resolve: {

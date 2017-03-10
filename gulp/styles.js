@@ -15,7 +15,6 @@ var _ = require('lodash');
 gulp.task('styles', function () {
   var lessOptions = {
     options: [
-      'bower_components',
       path.join(conf.paths.src, '/app')
     ]
   };

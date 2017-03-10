@@ -1,9 +1,8 @@
-function httpProviderConfig($httpProvider, $resourceProvider) {
+function httpProviderConfig($httpProvider) {
     'ngInject';
 
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-    $resourceProvider.defaults.stripTrailingSlashes = false;
 }
 
 export default httpProviderConfig;

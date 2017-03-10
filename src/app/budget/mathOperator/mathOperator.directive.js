@@ -1,3 +1,5 @@
+import mathOperatorTemplate from './mathOperator.html';
+
 export default function MathOperatorDirective() {
     'ngInject';
 
@@ -11,7 +13,7 @@ export default function MathOperatorDirective() {
             }
         },
         restrict: 'E',
-        templateUrl: 'app/budget/mathOperator/mathOperator.html',
+        templateUrl: mathOperatorTemplate,
         transclude: true
     };
 

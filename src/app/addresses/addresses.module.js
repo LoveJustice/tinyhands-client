@@ -1,3 +1,6 @@
+import uiRouter from 'angular-ui-router';
+import sharedModule from '../shared/shared.module';
+
 import addressesRouteConfig from './addresses.route';
 
 import Address1Controller from './address1/list/address1.controller';
@@ -10,7 +13,7 @@ import Address2DeleteModalController from './address2/delete/address2DeleteModal
 import Address1Service from './address1/address1.service';
 import Address2Service from './address2/address2.service';
 
-export default angular.module('tinyhands.Addresses', ['ui.router', 'tinyhands.Shared'])
+export default angular.module('tinyhands.Addresses', [uiRouter, sharedModule])
     .config(addressesRouteConfig)
 
     .controller('Address1Controller', Address1Controller)
@@ -21,4 +24,5 @@ export default angular.module('tinyhands.Addresses', ['ui.router', 'tinyhands.Sh
     .controller('Address2EditModalController', Address2EditModalController)
 
     .service('address1Service', Address1Service)
-    .service('address2Service', Address2Service);
+    .service('address2Service', Address2Service)
+    .name;

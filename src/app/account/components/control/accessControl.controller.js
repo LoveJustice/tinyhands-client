@@ -1,4 +1,7 @@
+import unsavedChangesModalTemplate from '../modal/unsavedChangesModal.html';
+
 import ChangesArray from '../../changesArray';
+
 export default class AccessControlController {
     constructor(AccountService, PermissionsSetsService, StickyHeader, $q, $state, $uibModal, $scope, toastr) {
         this.AccountService = AccountService;
@@ -119,7 +122,7 @@ export default class AccessControlController {
 
     openUnsavedChangesModal(toState = null) {
         var selection = this.$uibModal.open({
-            templateUrl: 'app/account/components/modal/unsavedChangesModal.html',
+            templateUrl: unsavedChangesModalTemplate,
             controller: 'UnsavedChangesModalController',
             controllerAs: 'UnsavedChangesModalCtrl'
         });

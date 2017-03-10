@@ -1,3 +1,5 @@
+import infoWindowTemplate from './infoWindow.html'
+
 class MapController {
     constructor($rootScope, BorderStationService, uiGmapGoogleMapApi) {
         'ngInject';
@@ -13,7 +15,7 @@ class MapController {
 
         this.borderStations = [];
         this.showAddress2Layer = true;
-        this.templateUrl = 'app/dashboard/map/infoWindow.html'; // Abs path is needed
+        this.templateUrl = infoWindowTemplate;
 
         this.createMapListeners();
         this.initializeGoogleMaps(uiGmapGoogleMapApi);

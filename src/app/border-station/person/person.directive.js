@@ -1,11 +1,12 @@
 import PersonController from './person.controller';
+import personTemplate from './person.html';
 
 export default function PersonDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/border-station/person/person.html',
+        templateUrl: personTemplate,
         controller: PersonController,
         controllerAs: 'personCtrl'
     };

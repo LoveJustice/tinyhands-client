@@ -1,3 +1,5 @@
+import eventModalTemplate from '../../events/calendar/eventModal.html';
+
 export default class DashboardEventsController {
     constructor($scope, $uibModal, EventsService) {
         'ngInject';
@@ -15,7 +17,7 @@ export default class DashboardEventsController {
 
     showEventModal(event) {
         var modalPromise = this.modal.open({
-            templateUrl: 'app/events/calendar/eventModal.html',
+            templateUrl: eventModalTemplate,
             controller: 'EventModalController',
             controllerAs: 'modalCtrl',
             bindToController: true,

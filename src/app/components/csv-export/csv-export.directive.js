@@ -1,11 +1,12 @@
 import CsvExportController from './csv-export.controller';
+import csvExportTemplate from './csv-export.html';
 
 export default function CsvExportDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/components/csv-export/csv-export.html',
+        templateUrl: csvExportTemplate,
         controller: CsvExportController,
         controllerAs: 'exportCtrl',
         scope: {

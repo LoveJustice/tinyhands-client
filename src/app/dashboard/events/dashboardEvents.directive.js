@@ -1,11 +1,13 @@
 import DashboardEventsController from './dashboardEvents.controller';
+import dashboardEventsTemplate from './events.html';
+import './events.less';
 
 export default function DashboardEventsDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/dashboard/events/events.html',
+        templateUrl: dashboardEventsTemplate,
         controller: DashboardEventsController,
         controllerAs: 'dasheventsCtrl'
     };

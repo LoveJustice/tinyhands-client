@@ -1,4 +1,10 @@
-/* global toastr:false, moment:false */
+import 'floatthead';
+import 'angular-float-thead';
+import moment from 'moment';
+import 'moment-timezone';
+import toastr from 'toastr';
+import 'angular-ui-validate';
+
 import BaseService from '../base.service';
 import SessionService from './services/session.service';
 import StickyHeaderService from './services/stickyHeader.service';
@@ -23,4 +29,5 @@ export default angular.module('tinyhands.Shared', ['floatThead', 'ui.validate'])
     .service('SessionService', SessionService)
     .service('UtilService', UtilService)
 
-    .directive('confirmButton', ConfirmButton);
+    .directive('confirmButton', ConfirmButton)
+    .name;

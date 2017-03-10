@@ -1,3 +1,5 @@
+import './index.less';
+
 function routerConfig($urlRouterProvider) {
     'ngInject';
 

@@ -1,4 +1,5 @@
 import CheckBoxController from './checkBox.controller';
+import checkBoxTemplate from './checkBox.html';
 
 export default function CheckBoxDirective() {
     'ngInject';
@@ -16,7 +17,7 @@ export default function CheckBoxDirective() {
         ngModel: '=',
         number: '='
       },
-      templateUrl: 'app/irf/form/components/checkBox/checkBox.html',
+      templateUrl: checkBoxTemplate,
       transclude: true
     };
 

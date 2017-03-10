@@ -1,10 +1,18 @@
+import calendarTemplate from './calendar/eventCalendar.html';
+import './calendar/eventCalendar.less';
+import './calendar/eventModal.less';
+import eventsListTemplate from './list/event_list.html';
+import './list/eventList.less';
+import eventTemplate from './form/event_form.html';
+import './form/eventFrom.less';
+
 export default function routerConfig($stateProvider, RequireLogin) {
     'ngInject';
 
     $stateProvider
         .state('events', {
             url: '/events',
-            templateUrl: 'app/events/calendar/eventCalendar.html',
+            templateUrl: calendarTemplate,
             controller: 'EventCalendarController',
             controllerAs: 'calendarCtrl',
             resolve: {
@@ -13,7 +21,7 @@ export default function routerConfig($stateProvider, RequireLogin) {
         })
         .state('eventsList', {
             url: '/events/list',
-            templateUrl: 'app/events/list/event_list.html',
+            templateUrl: eventsListTemplate,
             controller: 'EventsController',
             controllerAs: 'eventsCtrl',
             resolve: {
@@ -22,7 +30,7 @@ export default function routerConfig($stateProvider, RequireLogin) {
         })
         .state('eventsCreate', {
             url: '/events/create',
-            templateUrl: 'app/events/form/event_form.html',
+            templateUrl: eventTemplate,
             controller: 'EditEventController',
             controllerAs: 'editCtrl',
             resolve: {
@@ -31,7 +39,7 @@ export default function routerConfig($stateProvider, RequireLogin) {
         })
         .state('eventsEdit', {
             url: '/events/update/:id',
-            templateUrl: 'app/events/form/event_form.html',
+            templateUrl: eventTemplate,
             controller: 'EditEventController',
             controllerAs: 'editCtrl',
             resolve: {

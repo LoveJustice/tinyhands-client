@@ -1,3 +1,5 @@
+import deleteModalTemplate from './deleteModal.html';
+
 export default class EventsController {
     constructor(EventsService, $uibModal) {
         "ngInject";
@@ -10,7 +12,7 @@ export default class EventsController {
     openModal(event) {
         var eventTitle = event.title;
         var deleteModal = this.modal.open({
-            templateUrl: 'app/events/list/deleteModal.html',
+            templateUrl: deleteModalTemplate,
             controller: 'ModalController',
             controllerAs: 'modalCtrl',
             bindToController: true,

@@ -1,3 +1,6 @@
+import address2DeleteModalTemplate from '../delete/address2DeleteModal.html';
+import address2EditModalTemplate from '../edit/address2EditModal.html';
+
 class Address2Controller {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams, $state) {
         'ngInject';
@@ -108,7 +111,7 @@ class Address2Controller {
 
         var modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address2/edit/address2EditModal.html',
+            templateUrl: address2EditModalTemplate,
             controller: 'Address2EditModalController as vm',
             backdrop: 'static',
             size: 'md',
@@ -136,7 +139,7 @@ class Address2Controller {
 
         this.modal.open({
             animation: true,
-            templateUrl: 'app/addresses/address2/delete/address2DeleteModal.html',
+            templateUrl: address2DeleteModalTemplate,
             controller: 'Address2DeleteModalController as delCtrl',
             backdrop: 'static',
             size: 'md',

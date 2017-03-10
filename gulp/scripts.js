@@ -13,7 +13,6 @@ var webpackStream = require('webpack-stream');
 
 function webpackBuild(watch, callback) {
   var webpackOptions = {
-    watch: watch,
     module: {
         rules: [
             { test: /\.js$/, exclude: /node_modules/, enforce: 'pre', loader: 'jshint-loader'},
@@ -21,8 +20,16 @@ function webpackBuild(watch, callback) {
         ]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            '_': 'lodash',
+            '$': 'jquery',
+            'jQuery': 'jquery',
+            'window.jQuery': 'jquery',
+            'moment': 'moment',
+            'window.moment': 'moment',
+        }),
         new ngAnnotatePlugin(),
-        new uglifyJsPlugin({sourceMap: true, mangle: false})
+        //new uglifyJsPlugin({sourceMap: false, mangle: false})
     ],
     output: { filename: 'index.module.js' }
   };

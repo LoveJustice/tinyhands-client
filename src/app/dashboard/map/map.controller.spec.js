@@ -117,7 +117,7 @@ describe('MapController', () => {
                 $rootScope.$apply();
 
                 expect(controller.borderStations).toEqual([ expectedMappedStation ]);
-            })
+            });
         });
     });
 

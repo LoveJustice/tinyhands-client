@@ -7,5 +7,6 @@ dist/
 .DS_Store
 *.swp
 *.d.ts
+build/
 
 jsconfig.json

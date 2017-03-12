@@ -1,10 +1,11 @@
 var path = require('path');
 var webpack = require('webpack');
 var ngAnnotatePlugin = require('ng-annotate-webpack-plugin')
-var uglifyJsPlugin = require('uglifyjs-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    entry: path.resolve(__dirname, './src/app/index.module.js'),
+    context: __dirname + '/src',
+    entry: './app/index.module.js',
     module: {
         rules: [
             { test: /\.js$/, exclude: /node_modules/, enforce: 'pre', loader: 'jshint-loader'},
@@ -25,24 +26,24 @@ module.exports = {
                 ]
             },
             {
-                test: /\.woff$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=100000&minetype=application/font-woff'
             },
             {
-                test: /\.woff2$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.woff2(\?v=\d+\.\d+\.\d+)?/,
+                loader: 'url-loader?limit=100000&minetype=application/font-woff'
             },
             {
-                test: /\.ttf$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=100000&minetype=application/octet-stream'
             },
             {
-                test: /\.eot$/,
-                loader: 'file'
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader'
             },
             {
-                test: /\.svg$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=100000&minetype=image/svg+xml'
             }
         ]
     },
@@ -56,7 +57,7 @@ module.exports = {
             'window.moment': 'moment',
         }),
         new ngAnnotatePlugin(),
-        //new uglifyJsPlugin({sourceMap: false, mangle: false})
+        new CopyWebpackPlugin([{from: 'assets/images/', to: 'images/'}]),
     ],
-    output: { path: path.resolve(__dirname, "./build"), publicPath: "/assets/", filename: 'bundle.js' }
+    output: { path: path.resolve(__dirname, "./build/assets"), publicPath: "/assets/", filename: 'bundle.js' }
 }

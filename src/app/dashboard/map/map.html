@@ -1,7 +1,35 @@
-<ui-gmap-google-map center="{latitude: map.nepal.lat, longitude: map.nepal.lon}" control="map.data.control" zoom="8" options="map.data.options">
-	<ui-gmap-layer type="FusionTablesLayer" options="map.layerOptions" ng-if="map.showAddress2Layer"></ui-gmap-layer>
-	<ui-gmap-markers models="map.borderStations" coords="'self'">
-		<ui-gmap-windows show="'show'" templateUrl="'templateUrl'" templateParameter="'templateParameter'">
-		</ui-gmap-windows>
-	</ui-gmap-markers>
-</ui-gmap-google-map>
+<div class='map' map-lazy-load="http://maps.google.com/maps/api/js" map-lazy-load-params="{{ctrl.apiUrl}}">
+	<ng-map class='map' center="{{ctrl.center}}" zoom="8">
+		<fusion-tables-layer ng-if="ctrl.showAddress2Layer" query={{ctrl.fusionLayerOptions.query}} styles={{ctrl.fusionLayerOptions.styles}}
+			style-id="{{ctrl.fusionLayerOptions.styleId}}" template-id="{{ctrl.fusionLayerOptions.templateId}}">
+		</fusion-tables-layer>
+
+		<info-window id="marker-info-window" >
+			<div class="col-xs-12" ng-non-bindable="">
+				<div class="row">
+					<h3 class="text-center">{{ ctrl.station.stationName + '-' + ctrl.station.stationCode }}</h3>
+				</div>
+
+				<div class="row text-center">
+					<button class="btn btn-default" ui-sref="border-station({id: ctrl.station.id})">Details</button>
+					<button class="btn btn-default" ui-sref="irfList({search: ctrl.station.stationCode})">IRFs</button>
+					<button class="btn btn-default" ui-sref="vifList({search: ctrl.station.stationCode})">VIFs</button>
+				</div>
+
+				<br/>
+
+				<div class="row panel panel-default panel-body">
+					<p>Est. {{ ctrl.station.dateEstablished ? ctrl.station.dateEstablished : 'N/A' }}</p>
+					<p>Has shelter: {{ ctrl.station.hasShelter ? 'Yes' : 'No' }}</p>
+					<p>Interceptions: {{ ctrl.station.interceptions }}</p>
+					<p>YTD Interceptions: {{ ctrl.station.ytdInterceptions}}</p>
+					<p># of Staff: {{ ctrl.station.numberOfStaff }}</p>
+				</div>
+			</div>
+		</info-window>
+
+		<marker ng-repeat="station in ctrl.borderStations" id='{{station.markerId}}' position="{{station.position}}" on-click="ctrl.showInfoWindow(station)">
+
+		</marker>
+	</ng-map>
+</div>

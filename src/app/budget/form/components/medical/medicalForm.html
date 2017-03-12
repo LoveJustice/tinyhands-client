@@ -15,11 +15,11 @@
     <div class="row">
         <div ng-repeat="otherMedItem in budgetCtrl.form.other.Medical">
             <div class="col-md-4 col-md-offset-2">
-                <input class="form-control" type="text" ng-model="otherMedItem.name" ng-disabled="budgetCtrl.isViewing" />
+                <input class="form-control" type="text" ng-model="otherMedItem.name" ng-disabled="budgetCtrl.isViewing" required/>
             </div>
             <div class="col-md-4">
-                <input class="text-right form-control" type="number" ng-model="otherMedItem.cost" ng-change="budgetCtrl.setTotals()"
-                       ng-disabled="budgetCtrl.isViewing" />
+                <input class="text-right form-control" type="number" ng-model="otherMedItem.cost" ng-change="budgetCtrl.setTotals()" 
+                       ng-disabled="budgetCtrl.isViewing" required/>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Medical, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>

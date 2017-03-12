@@ -1,11 +1,17 @@
-<form id="budget-calc-form" class="container-fluid col-xs-12">
+<form id="budget-calc-form" name="budgetForm" class="container-fluid col-xs-12">
   <h2 class="text-center">
     {{ budgetCtrl.form.station_name }} Budget Form For 
 
-    <select ng-change="budgetCtrl.newBudgetForm()" ng-model="budgetCtrl.month" ng-disabled="budgetCtrl.isViewing"
-            ng-options="p.value as p.name for p in budgetCtrl.months">
-    </select>
-    <input ng-model="budgetCtrl.year" ng-change="budgetCtrl.newBudgetForm()" type="number" ng-disabled="budgetCtrl.isViewing">
+    <span ng-if="budgetCtrl.isCreating">
+      <select ng-change="budgetCtrl.newBudgetForm()" ng-model="budgetCtrl.month"
+              ng-options="p.value as p.name for p in budgetCtrl.months">
+      </select>
+      <input ng-model="budgetCtrl.year" ng-change="budgetCtrl.newBudgetForm()" type="number">
+    </span>
+
+    <span ng-if="!budgetCtrl.isCreating">
+      <span>{{ budgetCtrl.getMonthName() }} {{ budgetCtrl.year }}</span>
+    </span>
   </h2>
 
   <!-- Budget Past/Current Info -->
@@ -75,7 +81,9 @@
 
   <div class="col-xs-12 text-center" ng-if="!budgetCtrl.isViewing">
     <br>
-    <button class="btn btn-lg" ng-class="{'btn-primary': !budgetCtrl.isCreating, 'btn-success': budgetCtrl.isCreating}" ng-click="budgetCtrl.updateOrCreateForm()">{{budgetCtrl.isCreating ? "Create" : "Update"}}</button>
+    <button class="btn btn-lg" ng-class="{'btn-primary': !budgetCtrl.isCreating, 'btn-success': budgetCtrl.isCreating}" 
+      ng-disabled="budgetForm.$invalid || budgetForm.$pristine"
+    ng-click="budgetCtrl.updateOrCreateForm()">{{budgetCtrl.isCreating ? "Create" : "Update"}}</button>
   </div>
 
 

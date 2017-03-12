@@ -40,14 +40,13 @@ export default class BudgetController {
             {name: "December", value: 12},
         ];
 
-        this.active = null;
+        this.active = null; 
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
         this.borderStationId = $stateParams.borderStationId;
 
         this.month = parseInt(window.moment().format('M'));
         this.year = parseInt(window.moment().format('YYYY'));
-
 
         this.deletedItems = [];
         this.form = {
@@ -420,13 +419,8 @@ export default class BudgetController {
             };
             this.getAllData();
         }).then(() => {
-            var date = new Date(this.form.month_year)
-            this.month = date.getMonth() + 1;
-            this.year = date.getFullYear();
-
-
-            this.service.getFormForMonthYear(this.form.id, this.month, this.year).then((response) => {
-                this.form.previousData = response.data.top_table_data;
+            this.service.getTopTableData(this.form.id).then((response) => {
+                this.form.previousData = response.data;
             });
         });
     }
@@ -522,6 +516,8 @@ export default class BudgetController {
                 this.budgetId = response.data.id;
                 this.updateOrCreateAll();
                 window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+            }, (error) => {
+                window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
             });
         } else {
             this.service.updateForm(this.budgetId, this.form).then(() => {
@@ -536,11 +532,15 @@ export default class BudgetController {
             for (let i in this.form.other[section]) {
                 let item = this.form.other[section][i];
                 if (item.id) {
-                    this.service.updateOtherItem(this.budgetId, item);
+                    this.service.updateOtherItem(this.budgetId, item).catch((error) => {
+                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                });
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
-                    this.service.createOtherItem(this.budgetId, item);
+                    this.service.createOtherItem(this.budgetId, item).catch((error) => {
+                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    });
                 }
             }
         }
@@ -549,11 +549,15 @@ export default class BudgetController {
     updateOrCreateSalaries() {
         this.form.staff.forEach((staff) => {
             if (staff.salaryInfo && staff.salaryInfo.id) {
-                this.service.updateSalary(this.budgetId, staff.salaryInfo);
+                this.service.updateSalary(this.budgetId, staff.salaryInfo).catch((error) => {
+                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                });
             } else if (staff.salaryInfo && !staff.salaryInfo.id) {
                 staff.salaryInfo.staff_person = staff.id;
                 staff.salaryInfo.budget_calc_sheet = this.budgetId;
-                this.service.createSalary(staff.salaryInfo);
+                this.service.createSalary(staff.salaryInfo).catch((error) => {
+                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                });
             }
         });
     }
@@ -583,6 +587,12 @@ export default class BudgetController {
             this.form.staff[index].salaryInfo.salary = this.clearValue(this.form.staff[index].salaryInfo.salary);
         }
         this.setTotals();
+    }
+
+    getMonthName() {
+        return this.months.filter((month) => {
+            return month.value === this.month;
+        })[0].name;
     }
 
 }

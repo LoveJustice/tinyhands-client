@@ -74,6 +74,10 @@ export default class BudgetService {
         return this.service.get(`api/budget/${id}/`);
     }
 
+    getTopTableData(id) {
+        return this.service.get(`api/budget/${id}/top_table_data/`);
+    }
+
     /**
      * Function to get other items for a form section within a budget form.
      *

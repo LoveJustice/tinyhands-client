@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "test": "gulp test",
-    "dev": "webpack-dev-server --content-base build/ --devtool eval --progress --colors",
-    "build": "webpack -p"
+    "dev": "webpack-dev-server --env.dev --content-base build/ --devtool eval --progress --colors",
+    "stage": "webpack -p --env.staging",
+    "prod": "webpack -p --env.production"
   },
   "dependencies": {
     "angular": "1.6.2",

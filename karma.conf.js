@@ -1,28 +1,15 @@
 'use strict';
 
 var path = require('path');
-var conf = require('./gulp/conf');
-
 var _ = require('lodash');
-var wiredep = require('wiredep');
-
-function listFiles() {
-    var wiredepOptions = _.extend({}, conf.wiredep, {
-        dependencies: true,
-        devDependencies: true
-    });
-
-    return wiredep(wiredepOptions).js
-        .concat([
-            path.join(conf.paths.tmp, '/serve/app/index.module.js'),
-            path.join(conf.paths.src, '/**/*.spec.js'),
-            path.join(conf.paths.src, '/**/*.html')
-        ]);
-}
+var webpack = require('webpack');
+var config = require('./webpack.config');
+var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function generateWebpackConfig() {
     return {
-        files: listFiles(),
+        files: ['test.webpack.js'],
 
         singleRun: true,
 
@@ -30,30 +17,86 @@ function generateWebpackConfig() {
 
         frameworks: ['jasmine'],
 
-        ngHtml2JsPreprocessor: {
-            stripPrefix: 'src/',
-            moduleName: 'tinyhandsFrontend'
-        },
-
         browsers : ['PhantomJS'],
 
         plugins : [
             'karma-phantomjs-launcher',
             'karma-jasmine',
-            'karma-ng-html2js-preprocessor',
             'karma-webpack'
         ],
 
         preprocessors: {
-            'src/**/*.html': ['ng-html2js'],
-            'src/**/*.spec.js': ['webpack']
+            'test.webpack.js': ['webpack']
         },
 
         webpack: {
-            watch: false,
+            context: __dirname + '/src',
             module: {
-                rules: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}]
+                rules: [
+                    {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+                    {
+                        test: /src\/app\/.*\.html$/,
+                        use: [
+                            {loader: 'ngtemplate-loader?relativeTo=/src/app/'},
+                            {loader: 'html-loader'}
+                        ]
+                    },
+                    {
+                        test: /.*\/index.html$/,
+                        loader: 'html-loader'
+                    },
+                    {
+                        test: /\.less$/,
+                        use: [
+                            'style-loader',
+                            {loader: 'css-loader', options: {importLoaders: 1}},
+                            'less-loader'
+                        ]
+                    },
+                    {
+                        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                        loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
+                    },
+                    {
+                        test: /\.woff2(\?v=\d+\.\d+\.\d+)?/,
+                        loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
+                    },
+                    {
+                        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                        loader: 'url-loader?limit=100000&minetype=application/octet-stream&publicPath=assets/&outputPath=/assets/'
+                    },
+                    {
+                        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                        loader: 'file-loader?publicPath=assets/&outputPath=/assets/'
+                    },
+                    {
+                        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                        loader: 'url-loader?limit=100000&minetype=image/svg+xml&publicPath=assets/&outputPath=/assets/'
+                    }
+                ]
             },
+            plugins: [
+                new webpack.ProvidePlugin({
+                    '_': 'lodash',
+                    '$': 'jquery',
+                    'jQuery': 'jquery',
+                    'window.jQuery': 'jquery',
+                    'moment': 'moment',
+                    'window.moment': 'moment',
+                }),
+                new webpack.DefinePlugin({
+                    API_URL: '"http://localhost/"'
+                }),
+                new NgAnnotatePlugin(),
+                new HtmlWebpackPlugin({
+                    template: 'index.html'
+                })
+            ],
+            output: {
+                path: path.resolve(__dirname, './build'),
+                publicPath: "/",
+                filename: "js/bundle.js"
+            }
         },
 
         webpackMiddleware: {

@@ -5,7 +5,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function getOutputFileName(env) {
-    return `js/[name]${env.production ? '.[chunkhash]' : ''}.js`;
+    let addHash = env.production || env.staging;
+    return `js/[name]${addHash ? '.[chunkhash]' : ''}.js`;
 }
 
 function getServerApiUrl(env) {

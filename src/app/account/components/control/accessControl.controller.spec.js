@@ -16,6 +16,8 @@ describe('AccessControlController', () => {
         mockStickyHeader,
         mockToastr;
 
+    beforeEach(angular.mock.module('tinyhands.Account'));
+
     beforeEach(inject((_$q_, $rootScope) => {
         rootScope = $rootScope;
         scope = jasmine.createSpyObj('mockScope', ['$on']);

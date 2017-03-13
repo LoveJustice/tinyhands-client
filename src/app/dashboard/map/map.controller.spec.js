@@ -30,7 +30,7 @@ describe('MapController', () => {
             expect(vm.showAddress2Layer).toBe(true);
         });
 
-        let templateUrl = 'app/dashboard/map/infoWindow.html';
+        let templateUrl = 'dashboard/map/infoWindow.html';
         it(`should set templateUrl to '${templateUrl}'`, () => {
             expect(vm.templateUrl).toEqual(templateUrl);
         });

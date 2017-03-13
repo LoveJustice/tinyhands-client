@@ -4,7 +4,7 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
     "dev": "webpack-dev-server --env.dev --content-base build/ --devtool eval --progress --colors",
-    "stage": "webpack -p --env.staging --json >> stats.json",
+    "stage": "webpack -p --env.staging",
     "prod": "webpack -p --env.production"
   },
   "dependencies": {

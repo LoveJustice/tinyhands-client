@@ -9,7 +9,7 @@ export default function MapDirective() {
         restrict: 'E',
         templateUrl: mapTemplate,
         controller: MapController,
-        controllerAs: 'map'
+        controllerAs: 'ctrl'
     };
 
     return directive;

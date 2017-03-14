@@ -56,4 +56,19 @@ export default class MdfController {
         );
         return people;
     }
+
+    recipientSelected() {
+        var recipientSelected = false;
+        this.staff.forEach((object) => {
+            if (object.receives_money_distribution_form) {
+                recipientSelected = true;
+            }
+        });
+        this.committeeMembers.forEach((object) => {
+            if (object.receives_money_distribution_form) {
+                recipientSelected = true;
+            }
+        });
+        return recipientSelected;
+    }
 }

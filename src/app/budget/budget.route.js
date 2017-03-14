@@ -1,7 +1,7 @@
 import budgetTemplate from './form/budget.html';
 import './form/budget.less';
 import budgetListTemplate from './list/budgetList.html';
-import mdfTemplate from './mdf/mdf.html'
+import mdfTemplate from './mdf/mdf.html';
 import './mdf/mdf.less';
 
 function budgetRouteConfig($stateProvider, RequireLogin) {

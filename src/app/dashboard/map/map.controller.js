@@ -1,24 +1,51 @@
-import infoWindowTemplate from './infoWindow.html'
-
 class MapController {
-    constructor($rootScope, BorderStationService, uiGmapGoogleMapApi) {
+    constructor($rootScope, NgMap, BorderStationService) {
         'ngInject';
 
         this.borderStationService = BorderStationService;
-        this.maps = null;
         this.rootScope = $rootScope;
 
-        this.nepal = {
-            lat: 28.394857,
-            lon: 84.124008
-        };
-
+        this.infoWindowId = 'marker-info-window';
         this.borderStations = [];
+        this._fusionLayerOptions = null;
         this.showAddress2Layer = true;
-        this.templateUrl = infoWindowTemplate;
 
         this.createMapListeners();
-        this.initializeGoogleMaps(uiGmapGoogleMapApi);
+        this.getBorderStations();
+
+        NgMap.getMap().then((map) => { this.map = map; });
+
+        //fix to get showInfoWindow to have the controller as this.
+        //Due to using an on-click callback with ng-map. ng-click does not work.
+        this.showInfoWindow = this.showInfoWindow.bind(this);
+    }
+
+    get center() {
+        return '28.394857, 84.124008';
+    }
+
+    get apiUrl() {
+        return "https://maps.google.com/maps/api/js?key=AIzaSyChNFPd_bOOnk59AkeKM862OqN80Lvp56g";
+    }
+
+    get fusionLayerOptions() {
+        if(!this._fusionLayerOptions) {
+            this._fusionLayerOptions = {
+                query: {
+                    select: 'col13',
+                    from: '1r-omWhMz1wzQG3-e55K7dmCetVe3fRWX4Ai4G_U1'
+                },
+                styles: [{
+                    polygonOptions: {
+                        fillOpacity: 0.2,
+                        fillColor: '#FFFFFF'
+                    }
+                }],
+                styleId: 2,
+                templateId: 2
+            };
+        }
+        return this._fusionLayerOptions;
     }
 
     createMapListeners() {
@@ -27,78 +54,29 @@ class MapController {
 
     getBorderStations() {
         this.borderStationService.getBorderStations(true).then((response) => {
-            this.borderStations = response.data;
-            this.borderStations.forEach((borderStation) => {
-                this.setInfoWindowParams(borderStation);
-            });
+            this.borderStations = response.data.map(this.mapStationData);
         });
     }
 
-    getBorderStationStaff(borderStation) {
-        borderStation.numberOfStaff = 0;
-        return this.borderStationService.getStaff(borderStation.id).then((response) => {
-            borderStation.numberOfStaff += response.data.count;
-        });
-    }
-
-    initializeGoogleMaps(gMapsApi) {
-        gMapsApi.then((maps) => {
-            this.maps = maps;
-            this.setAddress2Layer();
-            this.setMapData();
-
-            this.getBorderStations();
-        });
-    }
-
-    setAddress2Layer() {
-        this.layerOptions = {
-            query: {
-                select: 'col13',
-                from: '1r-omWhMz1wzQG3-e55K7dmCetVe3fRWX4Ai4G_U1'
-            },
-            styles: [{
-                polygonOptions: {
-                    fillOpacity: 0.2
-                }
-            }],
-            options: {
-                styleId: 2,
-                templateId: 2
-            }
-        };
-    }
-
-    setInfoWindowParams(borderStation) {
-        borderStation.templateUrl = this.templateUrl;
-        borderStation.templateParameter = {
-            date_established: borderStation.date_established,
-            has_shelter: borderStation.has_shelter,
+    mapStationData(borderStation) {
+        return {
             id: borderStation.id,
-            number_of_staff: borderStation.number_of_staff,
-            number_of_interceptions: borderStation.number_of_interceptions,
-            ytd_interceptions: borderStation.ytd_interceptions,
-            station_code: borderStation.station_code,
-            station_name: borderStation.station_name
+            markerId: `station-${borderStation.id}`,
+            stationName: borderStation.station_name,
+            stationCode: borderStation.station_code,
+            position: [borderStation.latitude, borderStation.longitude],
+            dateEstablished: borderStation.date_established,
+            hasShelter: borderStation.has_shelter,
+            interceptions: borderStation.number_of_interceptions,
+            ytdInterceptions: borderStation.ytd_interceptions,
+            numberOfStaff: borderStation.number_of_staff
         };
     }
 
-    setMapData() {
-        this.data = {
-            control: {},
-            options: {
-                mapTypeControlOptions: {
-                    position: this.maps.ControlPosition.TOP_LEFT,
-                    style: this.maps.MapTypeControlStyle.HORIZONTAL_BAR
-                },
-                panControl: false,
-                streetViewControl: false,
-                zoomControlOptions: {
-                    position: this.maps.ControlPosition.RIGHT_BOTTOM,
-                    style: this.maps.ZoomControlStyle.SMALL
-                }
-            },
-        };
+    showInfoWindow(e, station) {
+        this.map.hideInfoWindow(this.infoWindowId);       
+        this.station = station;
+        this.map.showInfoWindow(this.infoWindowId, station.markerId);
     }
 
     toggleAddress2Layer(event, showAddress2Layer) {

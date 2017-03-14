@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
+    "clean": "rimraf ./dist/*",
     "dev": "webpack-dev-server --env.dev --content-base build/ --devtool eval --progress --colors",
-    "stage": "webpack -p --env.staging",
-    "prod": "webpack -p --env.production"
+    "stage": "rimraf ./dist/* && webpack -p --env.staging",
+    "prod": "npm run clean && webpack -p --env.production"
   },
   "dependencies": {
     "angular": "1.6.3",
@@ -55,6 +56,7 @@
     "ngtemplate-loader": "1.3.1",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "2.1.14",
+    "rimraf": "^2.6.1",
     "style-loader": "0.13.2",
     "uglify-js": "2.8.4",
     "uglifyjs-webpack-plugin": "0.2.1",

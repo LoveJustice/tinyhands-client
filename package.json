@@ -47,7 +47,6 @@
     "jshint-loader": "0.8.4",
     "karma": "1.5.0",
     "karma-jasmine": "1.1.0",
-    "karma-ng-html2js-preprocessor": "1.0.0",
     "karma-phantomjs-launcher": "1.0.2",
     "karma-webpack": "2.0.2",
     "less-loader": "2.2.3",

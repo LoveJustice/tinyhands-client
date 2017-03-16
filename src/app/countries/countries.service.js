@@ -4,7 +4,7 @@ class CountriesService {
         this.service = BaseService;
     }
 
-    searchCountries(queryParams) {
+    getCountries(queryParams) {
         return this.service.get('api/country/', queryParams);
     }
 

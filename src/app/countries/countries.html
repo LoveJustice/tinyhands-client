@@ -10,11 +10,11 @@
             <p style="margin-top: 5px;">Results per page</p>
         </div>
         <div class="pull-right">
-            <form ng-submit="vm.searchCountries()">
+            <form ng-submit="vm.getCountries()">
                   <label>
                       <input type="search" placeholder="by Country name..." ng-model="vm.searchValue" class="form-control">
                   </label>
-                  <a class="btn btn-primary" ng-click="vm.searchCountries()">Search</a>
+                  <a class="btn btn-primary" ng-click="vm.getCountries()">Search</a>
             </form>
             <th class="text-center pull-right">
                 <button ng-click="vm.addCountry()" class="btn btn-success pull-right">Add Country</button>

@@ -83,7 +83,7 @@ export default class DetailController {
 
     getAllCountries() {
       this.service.getAllCountries().then((response) => {
-        this.countryOptions = response.data.results
+        this.countryOptions = response.data.results;
       });
     }
 

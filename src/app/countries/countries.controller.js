@@ -30,17 +30,7 @@ class CountriesController {
 
     getCountries() {
         this.loading = true;
-        this.countriesService.searchCountries(this.getQueryParams())
-            .then((promise) => {
-                this.countries = promise.data.results;
-                this.nextPageUrl = this.nextUrl(promise.data.next);
-                this.loading = false;
-            });
-    }
-
-    searchCountries() {
-        this.loading = true;
-        this.countriesService.searchCountries(this.getQueryParams())
+        this.countriesService.getCountries(this.getQueryParams())
             .then((promise) => {
                 this.countries = promise.data.results;
                 this.nextPageUrl = this.nextUrl(promise.data.next);

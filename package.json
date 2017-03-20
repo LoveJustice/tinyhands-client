@@ -6,7 +6,7 @@
     "clean": "rimraf ./dist/*",
     "dev": "webpack-dev-server --env.dev --content-base build/ --devtool eval --progress --colors",
     "stage": "rimraf ./dist/* && webpack -p --env.staging",
-    "prod": "npm run clean && webpack -p --env.production"
+    "prod": "rimraf ./dist/* && webpack -p --env.production"
   },
   "dependencies": {
     "angular": "1.6.3",

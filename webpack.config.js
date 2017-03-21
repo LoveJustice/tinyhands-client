@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
@@ -5,7 +6,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function getOutputFileName(env) {
-    let addHash = env.production || env.staging;
+    var  addHash = env.production || env.staging;
     return `js/[name]${addHash ? '.[chunkhash]' : ''}.js`;
 }
 
@@ -22,9 +23,9 @@ function getServerApiUrl(env) {
 }
 
 function getOutputPath(env) {
-    let outputPath = './build';
+    var outputPath = 'build';
     if(env.production || env.staging) {
-        outputPath = "./dist";
+        outputPath = "dist";
     }
     return path.resolve(__dirname, outputPath);
 }
@@ -40,14 +41,14 @@ module.exports = function(env) {
                 {test: /\.js$/, exclude: /node_modules/, enforce: 'pre', loader: 'jshint-loader'},
                 {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
                 {
-                    test: /src\/app\/.*\.html$/,
+                    test: /src[\/|\\]app[\/|\\].*\.html$/,
                     use: [
                         {loader: 'ngtemplate-loader?relativeTo=/src/app/'},
                         {loader: 'html-loader'}
                     ]
                 },
                 {
-                    test: /.*\/index.html$/,
+                    test: /.index.html$/,
                     loader: 'html-loader'
                 },
                 {

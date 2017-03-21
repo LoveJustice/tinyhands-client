@@ -16,10 +16,10 @@
     <div class="row">
       <div ng-repeat="otherSalaryItem in budgetCtrl.form.other.Salaries | orderBy:'name'">
         <div class="col-md-6">
-          <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.name" ng-disabled="budgetCtrl.isViewing" />
+          <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.name" ng-disabled="budgetCtrl.isViewing" required/>
         </div>
         <div class="col-md-4">
-          <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.isViewing"/>
+          <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherSalaryItem.cost" ng-disabled="budgetCtrl.isViewing" required/>
         </div>
         <div class="col-md-2">
           <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Salaries, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>

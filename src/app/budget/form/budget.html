@@ -1,12 +1,15 @@
 <form id="budget-calc-form" name="budgetForm" class="container-fluid col-xs-12">
-  <h2 class="text-center">
+    
+  <h2 class="text-center form-inline">
     {{ budgetCtrl.form.station_name }} Budget Form For 
 
     <span ng-if="budgetCtrl.isCreating">
-      <select ng-change="budgetCtrl.newBudgetForm()" ng-model="budgetCtrl.month"
-              ng-options="p.value as p.name for p in budgetCtrl.months">
+      <select ng-change="budgetCtrl.newBudgetForm()" 
+              ng-model="budgetCtrl.month"
+              ng-options="p.value as p.name for p in budgetCtrl.months"
+              class="form-control" style="width: 125px;">
       </select>
-      <input ng-model="budgetCtrl.year" ng-change="budgetCtrl.newBudgetForm()" type="number">
+      <input ng-model="budgetCtrl.year" ng-change="budgetCtrl.newBudgetForm()" type="number" class="form-control" style="width: 125px;">
     </span>
 
     <span ng-if="!budgetCtrl.isCreating">

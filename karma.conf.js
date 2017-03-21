@@ -22,15 +22,17 @@ function generateWebpackConfig() {
         plugins : [
             'karma-phantomjs-launcher',
             'karma-jasmine',
-            'karma-webpack'
+            'karma-webpack',
+            'karma-sourcemap-loader'
         ],
 
         preprocessors: {
-            'test.webpack.js': ['webpack']
+            'test.webpack.js': ['webpack', 'sourcemap']
         },
 
         webpack: {
             context: __dirname + '/src',
+            devtool: 'cheap-module-source-map',
             module: {
                 rules: [
                     {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},

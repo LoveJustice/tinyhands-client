@@ -49,10 +49,10 @@
   <div class="row">
     <div ng-repeat="otherShelterItem in budgetCtrl.form.other.Shelter">
       <div class="col-md-4 col-md-offset-2">
-        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherShelterItem.name" ng-disabled="budgetCtrl.isViewing" />
+        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherShelterItem.name" ng-disabled="budgetCtrl.isViewing" required/>
       </div>
       <div class="col-md-4">
-        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherShelterItem.cost" ng-disabled="budgetCtrl.isViewing" />
+        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherShelterItem.cost" ng-disabled="budgetCtrl.isViewing" required/>
       </div>
       <div class="col-md-2">
         <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Shelter, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>

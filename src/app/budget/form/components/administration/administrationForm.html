@@ -65,11 +65,11 @@
     <div class="row">
         <div ng-repeat="otherAdminItem in budgetCtrl.form.other.Administration">
             <div class="col-md-4 col-md-offset-2">
-                <input class="form-control" type="text" ng-model="otherAdminItem.name" ng-disabled="budgetCtrl.isViewing" />
+                <input class="form-control" type="text" ng-model="otherAdminItem.name" ng-disabled="budgetCtrl.isViewing" required/>
             </div>
             <div class="col-md-4">
                 <input class="text-right form-control" type="number" ng-model="otherAdminItem.cost" ng-change="budgetCtrl.setTotals()"
-                       ng-disabled="budgetCtrl.isViewing" />
+                       ng-disabled="budgetCtrl.isViewing" required/>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Administration, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>

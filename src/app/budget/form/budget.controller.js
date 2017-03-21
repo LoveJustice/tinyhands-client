@@ -5,11 +5,10 @@ export default class BudgetController {
         'ngInject';
 
         this.$state = $state;
+        this.$stateParams = $stateParams;
         this.service = BudgetService;
         this.utils = UtilService;
 
-
-        // Variable Declarations
         let budgetFormPath = 'app/budget/form/components/';
         this.sections = {
             allSections: [
@@ -25,9 +24,30 @@ export default class BudgetController {
                 { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
             ]
         };
-        this.active = null;
+
+        this.months = [
+            {name: "January", value: 1},
+            {name: "February", value: 2},
+            {name: "March", value: 3},
+            {name: "April", value: 4},
+            {name: "May", value: 5},
+            {name: "June", value: 6},
+            {name: "July", value: 7},
+            {name: "August", value: 8},
+            {name: "September", value: 9},
+            {name: "October", value: 10},
+            {name: "November", value: 11},
+            {name: "December", value: 12},
+        ];
+
+        this.active = null; 
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
+        this.borderStationId = $stateParams.borderStationId;
+
+        this.month = parseInt(window.moment().format('M'));
+        this.year = parseInt(window.moment().format('YYYY'));
+
         this.deletedItems = [];
         this.form = {
             other: {},
@@ -37,19 +57,22 @@ export default class BudgetController {
                 safeHouse: {}
             }
         };
-        this.form.border_station = $stateParams.borderStationId;
-        this.isCreating = !this.budgetId && this.form.border_station;
+
+        this.isCreating = !this.budgetId && this.borderStationId;
         this.isViewing = $stateParams.isViewing === "true";
-        this.safeHouseTotal = 0;
+        
         this.sectionTemplateUrl = null;
+        this.safeHouseTotal = 0;
         this.total = 0;
 
         this.validRoute();
-        this.getBudgetForm();
+
+        if(this.isCreating) {
+            this.newBudgetForm();
+        } else {
+            this.getBudgetForm();
+        }        
     }
-
-
-    // Functions
 
     getOtherCost(otherItems) {
         let amount = 0;
@@ -346,40 +369,76 @@ export default class BudgetController {
     // REGION: GET Calls
     getAllData() {
         this.getStaff();
-        this.getBorderStation();
-        this.getPreviousData();
         this.getOtherData();
     }
 
     getBorderStation() {
-        this.service.getBorderStation(this.form.border_station).then((response) => {
+        this.service.getBorderStation(this.borderStationId).then((response) => {
             this.form.station_name = response.data.station_name;
         });
     }
 
-    getBudgetForm() {
-        if (this.utils.validId(this.budgetId)) {
-            this.service.getBudgetForm(this.budgetId).then((response) => {
-                this.form = response.data;
-                this.form.totals = {
-                    borderMonitoringStation: {},
-                    other: {},
-                    safeHouse: {}
-                };
-                this.getAllData();
+    newBudgetForm() {
+        this.service.getFormForMonthYear(this.borderStationId, this.month, this.year).then((response) => {
+            this.getBorderStation();
+            
+            this.form = response.data.form;
+            this.form.id = null;
+            this.form.totals = {
+                borderMonitoringStation: {},
+                other: {},
+                safeHouse: {}
+            };
+            this.form.month_year = moment().year(this.year).month(this.month - 1).date(15);
+            this.form.previousData = response.data.top_table_data;
+
+            response.data.other_items.forEach((item) => {
+                item.id = null;
+                item.budget_item_parent = null;
             });
-        } else {
-            this.form.month_year = window.moment().format();
+
+            this.form.other = [];
+            for (let key in Constants.FormSections) {
+                this.setOtherItemsForSection(key, response.data.other_items);
+            }
+
+            this.getStaffForNewBudget(this.form.id);
+
+            this.setTotals();
+        });
+    }
+
+    getBudgetForm() {
+        this.service.getBudgetForm(this.budgetId).then((response) => {
+            this.form = response.data;
+            this.borderStationId = response.data.border_station;
+            this.form.totals = {
+                borderMonitoringStation: {},
+                other: {},
+                safeHouse: {}
+            };
             this.getAllData();
-        }
+        }).then(() => {
+            this.service.getTopTableData(this.form.id).then((response) => {
+                this.form.previousData = response.data;
+            });
+        });
+    }
+
+    getAllOtherItems() {
+        return this.service.getOtherItems(this.budgetId).then((response) => {
+            this.otherItems = response.data;
+        });
     }
 
     getOtherData() {
         this.form.other = {};
         if (this.utils.validId(this.budgetId)) {
-            for (let key in Constants.FormSections) {
-                this.getOtherItemsForSection(key);
-            }
+            this.getAllOtherItems().then(() => {
+                for (let key in Constants.FormSections) {
+                    this.setOtherItemsForSection(key, this.otherItems);
+                }
+            });
         } else {
             for (let key in Constants.FormSections) {
                 this.form.other[key] = [];
@@ -387,40 +446,57 @@ export default class BudgetController {
         }
     }
 
-    getOtherItemsForSection(key) {
-        this.service.getOtherItems(this.budgetId, Constants.FormSections[key]).then((response) => {
-            this.form.other[key] = response.data;
+    setOtherItemsForSection(key, items) {
+        this.form.other[key] = items.filter((item) => {
+            return item.form_section === Constants.FormSections[key]; 
         });
     }
 
     getPreviousData() {
         let month = window.moment(this.form.month_year).format('M');
         let year = window.moment(this.form.month_year).format('YYYY');
-        this.service.getPreviousData(this.form.border_station, month, year).then((response) => {
+
+        return this.service.getPreviousData(this.borderStationId, month, year).then((response) => {
             this.form.previousData = response.data;
         });
     }
 
-    getStaff() {
-        this.service.getStaff(this.form.border_station).then((response) => {
+    getStaffForNewBudget(budgetId = null) {
+        return this.service.getStaff(this.borderStationId).then((response) => {
             this.form.staff = response.data.results;
-            this.getStaffSalaries();
+            if (budgetId !== null) {
+                this.getStaffSalaries(budgetId);
+            }
         });
     }
 
-    getStaffSalaries() {
-        if (this.utils.validId(this.budgetId)) {
-            this.service.getStaffSalaries(this.budgetId).then((response) => {
-                this.form.staff.map((staff) => {
-                    if (response.data.length > 0) {
-                        staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
-                    } else {
-                        staff.salaryInfo = { salary: 0 };
-                    }
-                });
-                this.setTotals();
-            });
+    getStaff(budgetId = null) {
+        return this.service.getStaff(this.borderStationId).then((response) => {
+            this.form.staff = response.data.results;
+            this.getStaffSalaries(budgetId);
+        });
+    }
+
+    getStaffSalaries(budgetId) {
+        let id = this.utils.validId(this.budgetId) ? this.budgetId : budgetId;
+        if (id === "") {
+            return;
         }
+
+        return this.service.getStaffSalaries(id).then((response) => {
+            this.form.staff.map((staff) => {
+                if (response.data.length > 0) {
+                    staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
+                } else {
+                    staff.salaryInfo = { salary: 0 };
+                }
+
+                if(this.isCreating) {
+                    staff.id = null;
+                }
+            });
+            this.setTotals();
+        });
     }
     // ENDREGION: GET Calls
 
@@ -439,6 +515,8 @@ export default class BudgetController {
                 this.budgetId = response.data.id;
                 this.updateOrCreateAll();
                 window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+            }, (error) => {
+                window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
             });
         } else {
             this.service.updateForm(this.budgetId, this.form).then(() => {
@@ -453,11 +531,15 @@ export default class BudgetController {
             for (let i in this.form.other[section]) {
                 let item = this.form.other[section][i];
                 if (item.id) {
-                    this.service.updateOtherItem(this.budgetId, item);
+                    this.service.updateOtherItem(this.budgetId, item).catch((error) => {
+                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                });
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
-                    this.service.createOtherItem(this.budgetId, item);
+                    this.service.createOtherItem(this.budgetId, item).catch((error) => {
+                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    });
                 }
             }
         }
@@ -466,11 +548,15 @@ export default class BudgetController {
     updateOrCreateSalaries() {
         this.form.staff.forEach((staff) => {
             if (staff.salaryInfo && staff.salaryInfo.id) {
-                this.service.updateSalary(this.budgetId, staff.salaryInfo);
+                this.service.updateSalary(this.budgetId, staff.salaryInfo).catch((error) => {
+                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                });
             } else if (staff.salaryInfo && !staff.salaryInfo.id) {
                 staff.salaryInfo.staff_person = staff.id;
                 staff.salaryInfo.budget_calc_sheet = this.budgetId;
-                this.service.createSalary(staff.salaryInfo);
+                this.service.createSalary(staff.salaryInfo).catch((error) => {
+                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                });
             }
         });
     }
@@ -500,6 +586,12 @@ export default class BudgetController {
             this.form.staff[index].salaryInfo.salary = this.clearValue(this.form.staff[index].salaryInfo.salary);
         }
         this.setTotals();
+    }
+
+    getMonthName() {
+        return this.months.filter((month) => {
+            return month.value === this.month;
+        })[0].name;
     }
 
 }

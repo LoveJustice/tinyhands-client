@@ -511,7 +511,6 @@ export default class BudgetController {
 
     updateOrCreateForm() {
         if (this.isCreating) {
-            console.log(this.form.month_year);
             this.service.createForm(this.form).then((response) => {
                 this.budgetId = response.data.id;
                 this.updateOrCreateAll();

@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
-    "clean": "rimraf ./dist/*",
     "dev": "webpack-dev-server --env.dev --content-base build/ --devtool eval --progress --colors --open",
     "stage": "rimraf ./dist/* && webpack -p --env.staging",
     "prod": "rimraf ./dist/* && webpack -p --env.production"

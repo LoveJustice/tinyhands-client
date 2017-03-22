@@ -1,11 +1,13 @@
 'use strict';
 
 var path = require('path');
-var _ = require('lodash');
 var webpack = require('webpack');
 var config = require('./webpack.config');
 var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+var srcPath = path.resolve(__dirname, "src/" );
+var appPath = path.resolve(srcPath, "app/");
 
 function generateWebpackConfig() {
     return {
@@ -23,57 +25,26 @@ function generateWebpackConfig() {
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-webpack',
-            'karma-sourcemap-loader'
         ],
-
         preprocessors: {
-            'test.webpack.js': ['webpack', 'sourcemap']
+            'test.webpack.js': ['webpack']
         },
-
         webpack: {
             context: __dirname + '/src',
-            devtool: 'cheap-module-source-map',
             module: {
                 rules: [
                     {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
                     {
-                        test: /src\/app\/.*\.html$/,
+                        test: /\.html$/,
+                        include: appPath,
                         use: [
                             {loader: 'ngtemplate-loader?relativeTo=/src/app/'},
                             {loader: 'html-loader'}
                         ]
                     },
                     {
-                        test: /.*\/index.html$/,
-                        loader: 'html-loader'
-                    },
-                    {
                         test: /\.less$/,
-                        use: [
-                            'style-loader',
-                            {loader: 'css-loader', options: {importLoaders: 1}},
-                            'less-loader'
-                        ]
-                    },
-                    {
-                        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-                        loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
-                    },
-                    {
-                        test: /\.woff2(\?v=\d+\.\d+\.\d+)?/,
-                        loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
-                    },
-                    {
-                        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                        loader: 'url-loader?limit=100000&minetype=application/octet-stream&publicPath=assets/&outputPath=/assets/'
-                    },
-                    {
-                        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-                        loader: 'file-loader?publicPath=assets/&outputPath=/assets/'
-                    },
-                    {
-                        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                        loader: 'url-loader?limit=100000&minetype=image/svg+xml&publicPath=assets/&outputPath=/assets/'
+                        loader: 'null-loader'
                     }
                 ]
             },

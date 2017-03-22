@@ -30,26 +30,26 @@ function getOutputPath(env) {
     return path.resolve(__dirname, outputPath);
 }
 
+var srcPath = path.resolve(__dirname, "src/" );
+var appPath = path.resolve(srcPath, "app/");
+
 module.exports = function(env) {
     return {
-        context: __dirname + '/src',
+        context: srcPath,
         entry: {
             app: './app/index.module.js'
         },
         module: {
             rules: [
-                {test: /\.js$/, exclude: /node_modules/, enforce: 'pre', loader: 'jshint-loader'},
-                {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+                {test: /\.js$/, include: srcPath, enforce: 'pre', loader: 'jshint-loader'},
+                {test: /\.js$/, include: srcPath, loader: 'babel-loader'},
                 {
-                    test: /src[\/|\\]app[\/|\\].*\.html$/,
+                    test: /\.html$/,
+                    include: appPath,
                     use: [
                         {loader: 'ngtemplate-loader?relativeTo=/src/app/'},
                         {loader: 'html-loader'}
                     ]
-                },
-                {
-                    test: /.index.html$/,
-                    loader: 'html-loader'
                 },
                 {
                     test: /\.less$/,
@@ -112,6 +112,10 @@ module.exports = function(env) {
                 template: 'index.html'
             })
         ],
+
+        devServer: {
+            port: 3000
+        },
         output: {
             path: getOutputPath(env),
             publicPath: "/",

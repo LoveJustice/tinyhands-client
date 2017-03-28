@@ -74,6 +74,10 @@ export default class BudgetService {
         return this.service.get(`api/budget/${id}/`);
     }
 
+    getTopTableData(id) {
+        return this.service.get(`api/budget/${id}/top_table_data/`);
+    }
+
     /**
      * Function to get other items for a form section within a budget form.
      *
@@ -81,8 +85,8 @@ export default class BudgetService {
      * @param {number} formSection The form section you are attempting to access. Travel: 1, Miscellaneous: 2, Awareness: 3, Supplies: 4, Shelter: 5, FoodAndGas: 6, Communication: 7, Salaries: 8
      * @returns Promise that provides the status and data of the request.
      */
-    getOtherItems(budgetId, formSection) {
-        return this.service.get(`api/budget/${budgetId}/item/?form_section=${formSection}`);
+    getOtherItems(budgetId) {
+        return this.service.get(`api/budget/${budgetId}/item/`);
     }
 
     /**
@@ -93,8 +97,8 @@ export default class BudgetService {
      * @param {number} year The year of the current budget form.
      * @returns Promise that provides the status and data of the request.
      */
-    getPreviousData(borderStationId, month, year) {
-        return this.service.get(`api/budget/previous_data/${borderStationId}/${month}/${year}/`);
+    getFormForMonthYear(borderStationId, month, year) {
+        return this.service.get(`api/budget/${borderStationId}/${month}/${year}/`);
     }
 
     /**

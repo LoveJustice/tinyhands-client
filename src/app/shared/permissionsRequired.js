@@ -1,4 +1,4 @@
-export default function CheckPermissions($rootScope, $state, SessionService) {
+export default function CheckPermissions($rootScope, $state, SessionService, toastr) {
     $rootScope.$on('$stateChangeStart', (event, toState) => {
         let stateData = toState.data;
         if (angular.isDefined(stateData) && angular.isDefined(stateData.permissions_required)) {
@@ -7,7 +7,7 @@ export default function CheckPermissions($rootScope, $state, SessionService) {
                     if (!result[permission]) {
                         event.preventDefault();
                         $state.go('dashboard');
-                        window.toastr.error(`You are not authorized to view the ${toState.name} page!`);
+                        toastr.error(`You are not authorized to view the ${toState.name} page!`);
                     }
                 });
             });

@@ -70,17 +70,17 @@ describe('BorderStationController', () => {
     describe('function authorize', () => {
         it('when no add permission and the user is trying to add, should go to dashboard', () => {
             spyOn(state, 'go');            
-            vm.authorize({permission_border_stations_add: false, permission_border_stations_edit: true}, "")
+            vm.authorize({permission_border_stations_add: false, permission_border_stations_edit: true}, "");
             expect(state.go).toHaveBeenCalledWith("dashboard");
         });
 
         it('when no add permission and the user is trying to add, should toast an error', () => {
-            vm.authorize({permission_border_stations_add: false, permission_border_stations_edit: true}, "")
+            vm.authorize({permission_border_stations_add: false, permission_border_stations_edit: true}, "");
             expect(mockToastr.error).toHaveBeenCalled();
         });
 
         it('when the user is on a page with an id and does not have the edit permission, it should set isViewing to true', () => {
-            vm.authorize({permission_border_stations_add: true, permission_border_stations_edit: false}, 1)
+            vm.authorize({permission_border_stations_add: true, permission_border_stations_edit: false}, 1);
             expect(vm.isViewing).toBe(true);
         });
 

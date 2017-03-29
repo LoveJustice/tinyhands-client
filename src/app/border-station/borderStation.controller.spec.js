@@ -55,13 +55,13 @@ describe('BorderStationController', () => {
 
         it('when stateParams id is not null then updateStatusText should be "Update Station"', () => {
             vm.updateStatusText = null;
-            vm.constructor(rootScope, state, { id: 1 }, timeout, borderss, mockSessionService, toastr);
+            vm.constructor(rootScope, state, { id: 1 }, timeout, borderss, mockSessionService, mockToastr);
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Default);
         });
 
         it('when stateParams id is equal to null then updateStatusText should be "Create Station"', () => {
             vm.updateStatusText = null;
-            vm.constructor(rootScope, state, { id: null }, timeout, borderss, mockSessionService, toastr);
+            vm.constructor(rootScope, state, { id: null }, timeout, borderss, mockSessionService, mockToastr);
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Create);
 
         });

@@ -26,12 +26,12 @@
                  ng-model="location.longitude">
         </div>
     </div>
-    <button class="btn btn-xs btn-danger pull-left hidden-xs animated"
+    <button class="btn btn-xs btn-danger pull-left hidden-xs animated" ng-hide="bsCtrl.isViewing"
             ng-click="locationCtrl.removeLocation(location)"
             ng-class="{fadeIn: location.hover && !location.removeConfirmed, fadeOut: !location.hover, pulse: location.removeConfirmed}">
       {{ location.removeConfirmed ? "Are you sure?" : "Remove " + location.name }}
     </button>
-    <button class="btn btn-xs btn-danger pull-left col-xs-12 visible-xs animated"
+    <button class="btn btn-xs btn-danger pull-left col-xs-12 visible-xs animated" ng-hide="bsCtrl.isViewing"
             ng-click="locationCtrl.removeLocation(location)"
             ng-class="{fadeIn: location.hover && !location.removeConfirmed, fadeOut: !location.hover, pulse: location.removeConfirmed}">
       {{ location.removeConfirmed ? "Are you sure?" : "Remove " + location.name }}
@@ -43,5 +43,5 @@
   <h4 class="col-xs-12 text-center"
       ng-if="locationCtrl.locations.length == 0">No Locations</h4>
   <button class="btn btn-sm btn-success col-xs-12 col-sm-offset-4 col-sm-4"
-          ng-click="locationCtrl.addLocation()">Add Location</button>
+          ng-click="locationCtrl.addLocation()" ng-hide="bsCtrl.isViewing">Add Location</button>
 </div>

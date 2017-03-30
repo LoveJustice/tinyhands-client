@@ -89,44 +89,6 @@ describe('SessionService', () => {
 
     });
 
-    describe('function checkAuthenticity', () => {
-        it('should call createStateChangeListener', () => {
-            spyOn(service, 'createStateChangeListener');
-            service.checkAuthenticity();
-            expect(service.createStateChangeListener).toHaveBeenCalled();
-        });
-    });
-
-    describe('function checkAuthenticityLogic with requireLogin and token', () => {
-
-        it("should call routeState go with 'login' if requireLogin and token undefined", () => {
-            spyOn(service.routeState, 'go');
-            service.checkAuthenticityLogic(true, undefined);
-            expect(service.routeState.go).toHaveBeenCalledWith('login');
-        });
-
-        it('should set root authenticated to true if token', () => {
-            let result = { data: 'foobar' };
-            mockBaseService.get.and.callFake(() => {
-                return {
-                    then: (f) => {
-                        f(result);
-                    }
-                };
-            });
-
-            service.root.authenticated = false;
-            service.checkAuthenticityLogic(null, true);
-            expect(service.root.authenticated).toBe(true);
-        });
-
-        it('should call me if token', () => {
-            spyOn(service, 'me');
-            service.checkAuthenticityLogic(null, true);
-            expect(service.me).toHaveBeenCalled();
-        });
-    });
-
     describe('checkIfAuthenticated', () => {
         describe('when no token stored', () => {
             it('should reject promise', (done) => {
@@ -176,26 +138,6 @@ describe('SessionService', () => {
                 $rootScope.$apply();
             });
         });
-    });
-
-    describe('function createStateChangeListener', () => {
-
-        it("should call root $on with first arg '$stateChangeStart'", () => {
-            let firstArg;
-            service.root.$on = (fa) => { firstArg = fa; };
-            service.createStateChangeListener();
-            expect(firstArg).toEqual('$stateChangeStart');
-        });
-
-        it("should call checkAuthenticityLogic with true and 'foo'", () => {
-            let toState = { data: { requireLogin: true } };
-            service.root.$on = (_, f) => { f(null, toState); };
-            localStorage.token = 'foo';
-            spyOn(service, 'checkAuthenticityLogic');
-            service.createStateChangeListener();
-            expect(service.checkAuthenticityLogic).toHaveBeenCalledWith(true, 'foo');
-        });
-
     });
 
     describe('function logout', () => {

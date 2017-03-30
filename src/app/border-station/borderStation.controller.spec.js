@@ -8,7 +8,9 @@ describe('BorderStationController', () => {
         state,
         stateParams,
         timeout,
-        borderss;
+        borderss,
+        mockSessionService,
+        mockToastr;
 
     beforeEach(inject(($rootScope, $timeout, $http, $q) => {
         state = { go: () => { } };
@@ -17,7 +19,15 @@ describe('BorderStationController', () => {
         stateParams = { id: true };
         timeout = $timeout;
         borderss = new BorderStationService($http, $q);
-        vm = new BorderStationController(rootScope, state, stateParams, timeout, borderss);
+
+        mockSessionService = jasmine.createSpyObj('sessionService', ['me']);
+        mockSessionService.me.and.callFake(() => {
+            return $q.resolve({user: { permission_border_stations_add: true, permission_border_stations_edit: true}});
+        });
+
+        mockToastr = jasmine.createSpyObj('toastr', ['error']);
+
+        vm = new BorderStationController(rootScope, state, stateParams, timeout, borderss, mockSessionService, mockToastr);
     }));
 
 
@@ -31,6 +41,10 @@ describe('BorderStationController', () => {
             expect(vm.modifyDetailDone).toBe(false);
         });
 
+        it('isViewing should be false', () => {
+            expect(vm.isViewing).toBe(false);
+        });
+
         it('updateLocationDone should be false', () => {
             expect(vm.updateLocationDone).toBe(false);
         });
@@ -41,18 +55,37 @@ describe('BorderStationController', () => {
 
         it('when stateParams id is not null then updateStatusText should be "Update Station"', () => {
             vm.updateStatusText = null;
-            vm.constructor(rootScope, state, { id: 1 }, timeout, borderss);
+            vm.constructor(rootScope, state, { id: 1 }, timeout, borderss, mockSessionService, mockToastr);
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Default);
         });
 
         it('when stateParams id is equal to null then updateStatusText should be "Create Station"', () => {
             vm.updateStatusText = null;
-            vm.constructor(rootScope, state, { id: null }, timeout, borderss);
+            vm.constructor(rootScope, state, { id: null }, timeout, borderss, mockSessionService, mockToastr);
             expect(vm.updateStatusText).toEqual(constants.UpdateButtonText.Create);
 
         });
+    });
+
+    describe('function authorize', () => {
+        it('when no add permission and the user is trying to add, should go to dashboard', () => {
+            spyOn(state, 'go');            
+            vm.authorize({permission_border_stations_add: false, permission_border_stations_edit: true}, "");
+            expect(state.go).toHaveBeenCalledWith("dashboard");
+        });
+
+        it('when no add permission and the user is trying to add, should toast an error', () => {
+            vm.authorize({permission_border_stations_add: false, permission_border_stations_edit: true}, "");
+            expect(mockToastr.error).toHaveBeenCalled();
+        });
+
+        it('when the user is on a page with an id and does not have the edit permission, it should set isViewing to true', () => {
+            vm.authorize({permission_border_stations_add: true, permission_border_stations_edit: false}, 1);
+            expect(vm.isViewing).toBe(true);
+        });
 
     });
+
 
     describe('function checkDone', () => {
         it('when modifyDetailDone, updateLocationDone and updatePeopleDone are true then updateStatusText should equal to "Update Station"', () => {

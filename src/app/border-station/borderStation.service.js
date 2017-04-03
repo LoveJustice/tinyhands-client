@@ -61,19 +61,19 @@ export default class BorderStationService {
     }
 
     getCommitteeMembers(bsId = this.borderStationId) {
-        return this.service.get('api/committee-member/?border_station=' + bsId);
+        return this.service.get(`api/committee-member/?border_station=${bsId}`);
     }
 
     getDetails() {
-        return this.service.get('api/border-station/' + this.borderStationId + '/');
+        return this.service.get(`api/border-station/${this.borderStationId}/`);
     }
 
     getLocations() {
-        return this.service.get('api/location/?border_station=' + this.borderStationId);
+        return this.service.get(`api/location/?border_station=${this.borderStationId}`);
     }
 
     getStaff(bsId = this.borderStationId) {
-        return this.service.get('api/staff/?border_station=' + bsId);
+        return this.service.get(`api/staff/?border_station=${bsId}`);
     }
 
 
@@ -102,15 +102,15 @@ export default class BorderStationService {
 
     // PUTs
     updateCommitteeMembers(memberId, data) {
-        return this.service.put('api/committee-member/' + memberId + '/', data);
+        return this.service.put(`api/committee-member/${memberId}/`, data);
     }
 
     updateDetails(borderStationId, data) {
-        return this.service.put('api/border-station/' + borderStationId + '/', data);
+        return this.service.put(`api/border-station/${borderStationId}/`, data);
     }
 
     updateLocations(locationId, data) {
-        return this.service.put('api/location/' + locationId + '/', data);
+        return this.service.put(`api/location/${locationId}/`, data);
     }
 
     updateRelationship(updateArray, updateApiFunction, numNew = 0) {
@@ -139,6 +139,14 @@ export default class BorderStationService {
     }
 
     updateStaff(staffId, data) {
-        return this.service.put('api/staff/' + staffId + '/', data);
+        return this.service.put(`api/staff/${staffId}/`, data);
+    }
+
+    getAllCountries() {
+      return this.service.get('api/country/');
+    }
+
+    getCountry(countryId) {
+        return this.service.get(`api/country/${countryId}/`);
     }
 }

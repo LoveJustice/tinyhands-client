@@ -55,7 +55,7 @@ export default class DetailController {
     getDetails() {
         this.service.getDetails().then((response) => {
             this.details = response.data;
-            var operating_country_id = response.data.operating_country;
+            let operating_country_id = response.data.operating_country;
             if(operating_country_id) {
               this.setOperatingCountry(operating_country_id);
             }
@@ -89,7 +89,7 @@ export default class DetailController {
 
     setOperatingCountry(countryId) {
       this.service.getCountry(countryId).then((response) => {
-        var country = response.data;
+        let country = response.data;
         this.operating_country = {id: country.id, name: country.name};
       });
     }

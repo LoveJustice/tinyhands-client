@@ -9,7 +9,7 @@ class CountriesService {
     }
 
     saveCountry(country) {
-        return this.service.put('api/country/' + country.id + '/', country);
+        return this.service.put(`api/country/${country.id}/`, country);
     }
 
     addCountry(country) {

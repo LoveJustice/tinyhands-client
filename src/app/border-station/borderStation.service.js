@@ -147,6 +147,6 @@ export default class BorderStationService {
     }
 
     getCountry(countryId) {
-        return this.service.get('api/country/' + countryId + '/');
+        return this.service.get(`api/country/#{countryId}/`);
     }
 }

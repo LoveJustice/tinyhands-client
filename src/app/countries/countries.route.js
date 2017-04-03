@@ -7,7 +7,7 @@ function countriesRouteConfig($stateProvider, RequireLogin) {
             controller: 'CountriesController',
             controllerAs: 'vm',
             data: {
-                permissions_required: ['permission_border_stations_edit']
+                permissions_required: ['permission_address2_manage']
             },
             resolve: {
                 requireLogin: RequireLogin

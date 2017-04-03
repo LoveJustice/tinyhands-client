@@ -39,7 +39,7 @@ class CountriesController {
     }
 
     getQueryParams(loadMore = false) {
-        var params = [];
+        let params = [];
         params.push({ "name": "page_size", "value": this.paginateBy });
         if (this.nextPageUrl && loadMore) {
             params.push({ "name": "page", "value": this.nextPageUrl });
@@ -58,10 +58,10 @@ class CountriesController {
     }
 
     editCountry(country) {
-        var modalInstance = this.modal.open({
+        let modalInstance = this.modal.open({
             animation: true,
             templateUrl: 'app/countries/countryModal.html',
-            controller: 'CountryEditModalController as vm',
+            controller: 'CountryModalController as vm',
             size: 'md',
             resolve: {
                 country: function () {
@@ -77,12 +77,17 @@ class CountriesController {
         });
     }
 
-    addCountry() {
-      var modalInstance = this.modal.open({
+    addCountry(country) {
+      let modalInstance = this.modal.open({
           animation: true,
           templateUrl: 'app/countries/countryModal.html',
-          controller: 'CountryAddModalController as vm',
+          controller: 'CountryModalController as vm',
           size: 'md',
+          resolve: {
+              country: function () {
+                  return country;
+              }
+          }
       });
       modalInstance.result.then((country) => {
           this.countriesService.addCountry(country)

@@ -1,4 +1,4 @@
-class CountryEditModalController {
+class CountryModalController {
     constructor($uibModalInstance, country, $scope) {
         'ngInject';
 
@@ -15,4 +15,4 @@ class CountryEditModalController {
         this.modalInstance.dismiss('close');
     }
 }
-export default CountryEditModalController;
+export default CountryModalController;

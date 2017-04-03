@@ -1,9 +1,10 @@
-class CountryAddModalController {
-    constructor($uibModalInstance, $scope) {
+class CountryModalController {
+    constructor($uibModalInstance, country, $scope) {
         'ngInject';
 
         this.modalInstance = $uibModalInstance;
         this.scope = $scope;
+        this.scope.country = angular.copy(country);
     }
 
     save() {
@@ -14,4 +15,4 @@ class CountryAddModalController {
         this.modalInstance.dismiss('close');
     }
 }
-export default CountryAddModalController;
+export default CountryModalController;

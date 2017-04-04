@@ -2,7 +2,6 @@
 
 var path = require('path');
 var webpack = require('webpack');
-var config = require('./webpack.config');
 var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 

@@ -1,4 +1,3 @@
-var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
 var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
@@ -100,7 +99,7 @@ module.exports = function(env) {
             ]),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',
-                minChunks: function (module) {
+                minChunks: (module) => {
                     return module.context && module.context.indexOf('node_modules') !== -1;
                 }
             }),

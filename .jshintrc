@@ -13,6 +13,9 @@
   "globals": {
     "_": false,
     "$": false,
+    "require": false,
+    "API_URL": false,
+    "__dirname": false,
     "angular": false,
     "inject": false,
     "module": false,

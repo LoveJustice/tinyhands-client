@@ -1,3 +1,16 @@
+import accountTemplate from './account.html';
+import './account.less';
+import accountListTemplate from './components/list/accountList.html';
+import './components/list/accountList.less';
+import activateTemplate from './components/activate/activateAccount.html';
+import controlTemplate from './components/control/accessControl.html';
+import './components/control/accessControl.less';
+import defaultsTemplate from './components/defaults/accessDefaults.html';
+import './components/defaults/accessDefaults.less';
+import editTemplate from './components/edit/accountEdit.html';
+import './components/edit/accountEdit.less';
+import notFoundTemplate from './components/edit/accountNotFound.html';
+
 function accountRouteConfig($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
@@ -6,7 +19,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             abstract: true,
             controller: 'AccountController',
             controllerAs: 'accountCtrl',
-            templateUrl: 'app/account/account.html',
+            templateUrl: accountTemplate,
             resolve: {
                 requireLogin: RequireLogin
             }
@@ -15,7 +28,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             url: '/list',
             controller: 'AccountListController',
             controllerAs: 'accountListCtrl',
-            templateUrl: 'app/account/components/list/accountList.html',
+            templateUrl: accountListTemplate,
             data: {
                 index: 0,
             },
@@ -27,7 +40,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             url: '/control',
             controller: 'AccessControlController',
             controllerAs: 'accessControlCtrl',
-            templateUrl: 'app/account/components/control/accessControl.html',
+            templateUrl: controlTemplate,
             data: {
                 index: 1,
             },
@@ -39,7 +52,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             url: '/defaults',
             controller: 'AccessDefaultsController',
             controllerAs: 'accessDefaultsCtrl',
-            templateUrl: 'app/account/components/defaults/accessDefaults.html',
+            templateUrl: defaultsTemplate,
             data: {
                 index: 2,
             },
@@ -51,7 +64,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             url: '/account/{id:[0-9]+|create}',
             controller: 'AccountEditController',
             controllerAs: 'accountEditCtrl',
-            templateUrl: 'app/account/components/edit/accountEdit.html',
+            templateUrl: editTemplate,
             resolve: {
                 requireLogin: RequireLogin
             }
@@ -59,7 +72,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
 
         .state('accountNotFound', {
             url: '/account/notfound',
-            templateUrl: 'app/account/components/edit/accountNotFound.html',
+            templateUrl: notFoundTemplate,
             resolve: {
                 requireLogin: RequireLogin
             }
@@ -67,7 +80,7 @@ function accountRouteConfig($stateProvider, RequireLogin) {
 
         .state('account activate', {
             url: '/account/activate/:activation_key',
-            templateUrl: 'app/account/components/activate/activateAccount.html',
+            templateUrl: activateTemplate,
             controller: 'ActivateAccountController',
             controllerAs: 'activateAcctCtrl'
         });

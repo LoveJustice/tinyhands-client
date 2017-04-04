@@ -1,11 +1,13 @@
 import TallyController from './tally.controller.js';
+import tallyTemplate from './tally.html';
+import './tally.less';
 
 export default function TallyDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/dashboard/tally/tally.html',
+        templateUrl: tallyTemplate,
         controller: TallyController,
         controllerAs: 'tally'
     };

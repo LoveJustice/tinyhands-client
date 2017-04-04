@@ -1,11 +1,13 @@
 import NavbarController from './navbar.controller';
+import navbarTemplate from './navbar.html';
+import './navbar.less';
 
 export default function NavbarDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/components/navbar/navbar.html',
+        templateUrl: navbarTemplate,
         controller: NavbarController,
         controllerAs: 'navbarCtrl'
     };

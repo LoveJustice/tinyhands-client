@@ -1,3 +1,6 @@
+import EditCountryModalTemplate from './countryModal.html';
+
+
 class CountriesController {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, countriesService, $uibModal) {
         'ngInject';
@@ -60,7 +63,7 @@ class CountriesController {
     editCountry(country) {
         let modalInstance = this.modal.open({
             animation: true,
-            templateUrl: 'app/countries/countryModal.html',
+            templateUrl: EditCountryModalTemplate,
             controller: 'CountryModalController as vm',
             size: 'md',
             resolve: {
@@ -80,7 +83,7 @@ class CountriesController {
     addCountry(country) {
       let modalInstance = this.modal.open({
           animation: true,
-          templateUrl: 'app/countries/countryModal.html',
+          templateUrl: EditCountryModalTemplate,
           controller: 'CountryModalController as vm',
           size: 'md',
           resolve: {

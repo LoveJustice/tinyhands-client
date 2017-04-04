@@ -1,9 +1,11 @@
+import autocompleteTemplate from './autocomplete-address2.html';
+
 export default function AutocompleteAddress2Directive() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/components/auto-complete/address2/autocomplete-address2.html',
+        templateUrl: autocompleteTemplate,
         controller: AutocompleteAddress2Controller,
         controllerAs: 'acAddress2Ctrl',
         scope: {

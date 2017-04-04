@@ -1,73 +1,83 @@
 'use strict';
 
 var path = require('path');
-var conf = require('./gulp/conf');
+var webpack = require('webpack');
+var NgAnnotatePlugin = require('ng-annotate-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var _ = require('lodash');
-var wiredep = require('wiredep');
+var srcPath = path.resolve(__dirname, "src/" );
+var appPath = path.resolve(srcPath, "app/");
 
-function listFiles() {
-  var wiredepOptions = _.extend({}, conf.wiredep, {
-    dependencies: true,
-    devDependencies: true
-  });
+function generateWebpackConfig() {
+    return {
+        files: ['test.webpack.js'],
 
-  return wiredep(wiredepOptions).js
-    .concat([
-      path.join(conf.paths.tmp, '/serve/app/index.module.js'),
-      path.join(conf.paths.src, '/**/*.spec.js'),
-      path.join(conf.paths.src, '/**/*.html')
-    ]);
+        singleRun: true,
+
+        autoWatch: false,
+
+        frameworks: ['jasmine'],
+
+        browsers : ['PhantomJS'],
+
+        plugins : [
+            'karma-phantomjs-launcher',
+            'karma-jasmine',
+            'karma-webpack',
+        ],
+        preprocessors: {
+            'test.webpack.js': ['webpack']
+        },
+        webpack: {
+            context: __dirname + '/src',
+            module: {
+                rules: [
+                    {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'},
+                    {
+                        test: /\.html$/,
+                        include: appPath,
+                        use: [
+                            {loader: 'ngtemplate-loader?relativeTo=/src/app/'},
+                            {loader: 'html-loader'}
+                        ]
+                    },
+                    {
+                        test: /\.less$/,
+                        loader: 'null-loader'
+                    }
+                ]
+            },
+            plugins: [
+                new webpack.ProvidePlugin({
+                    '_': 'lodash',
+                    '$': 'jquery',
+                    'jQuery': 'jquery',
+                    'window.jQuery': 'jquery',
+                    'moment': 'moment',
+                    'window.moment': 'moment',
+                }),
+                new webpack.DefinePlugin({
+                    API_URL: '"http://localhost/"'
+                }),
+                new NgAnnotatePlugin(),
+                new HtmlWebpackPlugin({
+                    template: 'index.html'
+                })
+            ],
+            output: {
+                path: path.resolve(__dirname, './build'),
+                publicPath: "/",
+                filename: "js/bundle.js"
+            }
+        },
+
+        webpackMiddleware: {
+           noInfo: true,
+        }
+    };
 }
 
 module.exports = function(config) {
-
-  var configuration = {
-    files: listFiles(),
-
-    singleRun: true,
-
-    autoWatch: false,
-
-    frameworks: ['jasmine', 'browserify'],
-
-    ngHtml2JsPreprocessor: {
-      stripPrefix: 'src/',
-      moduleName: 'tinyhandsFrontend'
-    },
-
-    browsers : ['PhantomJS'],
-
-    plugins : [
-      'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-ng-html2js-preprocessor',
-      'karma-browserify'
-    ],
-
-    preprocessors: {
-      'src/**/*.html': ['ng-html2js'],
-      'src/**/*.spec.js': ['browserify']
-    },
-
-    browserify: {
-      transform: ['babelify']
-    }
-  };
-
-  // This block is needed to execute Chrome on Travis
-  // If you ever plan to use Chrome and Travis, you can keep it
-  // If not, you can safely remove it
-  // https://github.com/karma-runner/karma/issues/1144#issuecomment-53633076
-  if(configuration.browsers[0] === 'Chrome' && process.env.TRAVIS) {
-    configuration.customLaunchers = {
-      'chrome-travis-ci': {
-        base: 'Chrome',
-        flags: ['--no-sandbox']
-      }
-    };
-    configuration.browsers = ['chrome-travis-ci'];
-  }
-
-  config.set(configuration);
+    config.set(generateWebpackConfig());
 };
+

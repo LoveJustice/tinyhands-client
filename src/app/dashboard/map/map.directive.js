@@ -1,11 +1,13 @@
 import MapController from './map.controller.js';
+import mapTemplate from './map.html';
+import './map.less';
 
 export default function MapDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/dashboard/map/map.html',
+        templateUrl: mapTemplate,
         controller: MapController,
         controllerAs: 'ctrl'
     };

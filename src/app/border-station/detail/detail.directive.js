@@ -1,11 +1,12 @@
 import DetailController from './detail.controller';
+import DetailTemplate from './detail.html';
 
 export default function DetailDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/border-station/detail/detail.html',
+        templateUrl: DetailTemplate,
         controller: DetailController,
         controllerAs: 'detailCtrl'
     };

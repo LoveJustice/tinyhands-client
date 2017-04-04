@@ -1,3 +1,6 @@
+import uiRouter from 'angular-ui-router';
+import sharedModule from '../shared/shared.module';
+
 import accountRouteConfig from './account.route';
 
 import ActivateAccountController from './components/activate/activateAccount.controller';
@@ -11,7 +14,7 @@ import UnsavedChangesModalController from './components/modal/unsavedChangesModa
 import AccountService from './account.service';
 import PermissionsSetsService from './permissionsSets.service';
 
-export default angular.module('tinyhands.Account', ['ui.router', 'tinyhands.Shared'])
+export default angular.module('tinyhands.Account', [uiRouter, sharedModule])
     .config(accountRouteConfig)
 
     .controller('ActivateAccountController', ActivateAccountController)
@@ -23,4 +26,5 @@ export default angular.module('tinyhands.Account', ['ui.router', 'tinyhands.Shar
     .controller('UnsavedChangesModalController', UnsavedChangesModalController)
 
     .service('AccountService', AccountService)
-    .service('PermissionsSetsService', PermissionsSetsService);
+    .service('PermissionsSetsService', PermissionsSetsService)
+    .name;

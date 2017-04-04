@@ -1,9 +1,11 @@
+import countryTemplate from './countries.html';
+
 function countriesRouteConfig($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('countries', {
             url: '/countries',
-            templateUrl: 'app/countries/countries.html',
+            templateUrl: countryTemplate,
             controller: 'CountriesController',
             controllerAs: 'vm',
             data: {

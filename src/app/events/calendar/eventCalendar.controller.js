@@ -1,3 +1,5 @@
+import eventModalTemplate from './eventModal.html';
+
 export default class EventCalendarController {
     constructor($uibModal, uiCalendarConfig, EventsService) {
         'ngInject';
@@ -35,7 +37,7 @@ export default class EventCalendarController {
 
     onCalendarEventClicked(event) {
         let modalPromise = this.modal.open({
-            templateUrl: 'app/events/calendar/eventModal.html',
+            templateUrl: eventModalTemplate,
             controller: 'EventModalController',
             controllerAs: 'modalCtrl',
             bindToController: true,

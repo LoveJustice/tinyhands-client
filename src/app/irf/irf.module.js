@@ -1,3 +1,6 @@
+import uiRouter from 'angular-ui-router';
+import sharedModule from '../shared/shared.module';
+
 import IRFRoutes from './irf.route';
 
 import IrfListController from './list/irfList.controller';
@@ -10,7 +13,7 @@ import VerticalWordDirective from './form/components/verticalWord/verticalWord.d
 import IrfListService from './list/irfList.service';
 import IrfService from './form/irf.service';
 
-export default angular.module('tinyhands.IRF', ['ui.router', 'tinyhands.Shared'])
+export default angular.module('tinyhands.IRF', [uiRouter, sharedModule])
   .config(IRFRoutes)
 
   .controller('IrfController', IrfController)
@@ -21,4 +24,5 @@ export default angular.module('tinyhands.IRF', ['ui.router', 'tinyhands.Shared']
   .directive('verticalWord', VerticalWordDirective)
 
   .service('IrfListService', IrfListService)
-  .service('IrfService', IrfService);
+  .service('IrfService', IrfService)
+    .name;

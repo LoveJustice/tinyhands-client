@@ -7,4 +7,5 @@ export default angular.module('tinyhands.Countries', ['ui.router', 'tinyhands.Sh
                       .config(countriesRouteConfig)
                       .controller('CountriesController', CountriesController)
                       .controller('CountryModalController', CountryModalController)
-                      .service('countriesService', CountriesService);
+                      .service('countriesService', CountriesService)
+                      .name;

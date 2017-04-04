@@ -1,11 +1,12 @@
 import constants from './../constants.js';
 
 export default class DetailController {
-    constructor($scope, BorderStationService) {
+    constructor($scope, BorderStationService, moment) {
         'ngInject';
 
         this.$scope = $scope;
         this.service = BorderStationService;
+        this.moment = moment;
 
         this.details = {};
         this.countryOptions = this.getAllCountries();
@@ -47,7 +48,7 @@ export default class DetailController {
 
     // Date Formatting
     formatDate(dateToFormat) { // Formats date string to YYYY[-MM[-DD]]
-        return dateToFormat ? window.moment(dateToFormat).format('YYYY-MM-DD') : window.moment().format('YYYY-MM-DD');
+        return dateToFormat ? this.moment(dateToFormat).format('YYYY-MM-DD') : this.moment().format('YYYY-MM-DD');
     }
 
 

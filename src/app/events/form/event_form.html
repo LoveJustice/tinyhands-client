@@ -25,28 +25,28 @@
         </div>
 
         <div class="row">
-            <label class="form-group vcenter text-center label-on"> Occurs on </label>
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.startDate.$invalid}">
+            <label class="form-group vcenter text-center label-on"> Occurs on </label>
                 <input type="text" class="form-control" uib-datepicker-popup 
                     ng-model="editCtrl.startDate" name="startDate" required 
                     ng-click="editCtrl.openStartDatePopup()" is-open="editCtrl.startDatePopupOpened"  
                     close-text="Close" ui-validate="{ afterEnd: 'editCtrl.isStartDateBeforeOrSameAsEndDate'}" 
                     ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endDate'"/>
             </div>
-            <label class="form-group vcenter text-center"> at </label>
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.startTime.$invalid}">
-                <uib-timepicker class="center-block" ng-model="editCtrl.startTime" 
+            <label class="form-group vcenter text-center"> at </label>
+                <div uib-timepicker class="center-block" ng-model="editCtrl.startTime" 
                 name="startTime" required show-meridian="false" 
                 ui-validate="{afterEnd: 'editCtrl.isStartTimeBeforeEndTime'}" 
-                ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endTime'"></uib-timepicker>
+                ng-model-options="{allowInvalid:true}" ui-validate-watch="'editCtrl.endTime'"></div >
             </div>
-            <label class="form-group vcenter text-center"> to </label>
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.endDate.$invalid}">
+            <label class="form-group vcenter text-center"> to </label>
                 <input type="text" class="form-control" uib-datepicker-popup ng-model="editCtrl.endDate" name="endDate" ng-click="editCtrl.openEndDatePopup()" is-open="editCtrl.endDatePopupOpened" required close-text="Close"/>
             </div>
-            <label class="form-group vcenter text-center"> at </label>
             <div class="col-sm-2 form-group vcenter text-center" ng-class="{'has-error': editCtrl.form.$submitted && editCtrl.form.endTime.$invalid}">
-                <uib-timepicker class="center-block" ng-model="editCtrl.endTime" name="endTime" required show-meridian="false"></uib-timepicker>
+            <label class="form-group vcenter text-center"> at </label>
+                <div uib-timepicker class="center-block" ng-model="editCtrl.endTime" name="endTime" required show-meridian="false"></div>
             </div>
         </div>
 

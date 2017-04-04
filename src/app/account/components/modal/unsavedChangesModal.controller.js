@@ -1,5 +1,7 @@
 export default class UnsavedChangesModalController {
     constructor($uibModalInstance) {
+        'ngInject';
+
         this.$uibModalInstance = $uibModalInstance;
     }
 

@@ -4,6 +4,8 @@ import ChangesArray from '../../changesArray';
 
 export default class AccessControlController {
     constructor(AccountService, PermissionsSetsService, StickyHeader, $q, $state, $uibModal, $scope, toastr) {
+        'ngInject';
+
         this.AccountService = AccountService;
         this.PermissionsSetsService = PermissionsSetsService;
         this.sticky = StickyHeader;

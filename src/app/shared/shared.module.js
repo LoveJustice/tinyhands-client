@@ -12,6 +12,7 @@ import SessionService from './services/session.service';
 import StickyHeaderService from './services/stickyHeader.service';
 import UtilService from './services/util.service';
 import RequireLogin from './requireLogin';
+import PermissionsRequired from './permissionsRequired';
 
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 
@@ -33,4 +34,6 @@ export default angular.module('tinyhands.Shared', ['floatThead', 'ui.validate'])
     .service('UtilService', UtilService)
 
     .directive('confirmButton', ConfirmButton)
+    
+    .run(PermissionsRequired)
     .name;

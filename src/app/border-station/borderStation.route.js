@@ -8,6 +8,9 @@ function borderStationRouteConfig($stateProvider, RequireLogin) {
             templateUrl: borderStationTemplate,
             controller: 'BorderStationController',
             controllerAs: 'bsCtrl',
+            data: {
+                permissions_required: ['permission_border_stations_view']
+            },
             resolve: {
                 requireLogin: RequireLogin
             }

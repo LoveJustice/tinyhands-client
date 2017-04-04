@@ -18,6 +18,7 @@ import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
 import eventsModule from './events/events.module';
 import photoExportModule from './components/photo-export/photo-export.module';
+import countriesModule from './countries/countries.module';
 
 import constants from './constants.js';
 import config from './index.config';
@@ -40,7 +41,8 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     IRFModule,
     loginModule,
     VIFModule,
-    photoExportModule
+    photoExportModule,
+    countriesModule,
 ])
 
     .constant('constants', constants)

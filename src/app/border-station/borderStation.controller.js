@@ -1,27 +1,40 @@
 import constants from './constants.js';
 
 export default class BorderStationController {
-    constructor($scope, $state, $stateParams, $timeout, BorderStationService, SessionService) {
+    constructor($scope, $state, $stateParams, $timeout, BorderStationService, SessionService, toastr) {
         'ngInject';
-
         this.$scope = $scope;
         this.$state = $state;
+        this.$stateParams = $stateParams;
         this.$timeout = $timeout;
         this.service = BorderStationService;
         this.session = SessionService;
+        this.toastr = toastr;
+        this.isViewing = false;
 
         BorderStationService.borderStationId = $stateParams.id;
-
-
         this.loading = false;
         this.modifyDetailDone = false;
         this.updateLocationDone = false;
         this.updatePeopleDone = false;
         this.updateStatusText = $stateParams.id ? constants.UpdateButtonText.Default : constants.UpdateButtonText.Create;
 
-        this.createListeners();
+        SessionService.me().then((response) => {
+            this.authorize(response, this.$stateParam.id);
+        }).then(() => {
+            this.createListeners();
+        });
     }
 
+    authorize(user, id) {
+        if (user.permission_border_stations_add === false && id === "") {
+            this.$state.go("dashboard");
+            this.toastr.error("You do not have permission to create a border station");
+        }
+        if (id !== "" && user.permission_border_stations_edit === false) {
+            this.isViewing = true;
+        }
+    }
 
     checkDone() {
         if (this.modifyDetailDone && this.updateLocationDone && this.updatePeopleDone) {

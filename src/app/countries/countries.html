@@ -1,0 +1,66 @@
+<h1 class="text-center">Countries</h1>
+<br/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getCountries()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
+        </div>
+        <div class="col-md-3">
+            <p style="margin-top: 5px;">Results per page</p>
+        </div>
+        <div class="pull-right">
+            <form ng-submit="vm.getCountries()">
+                  <label>
+                      <input type="search" placeholder="by Country name..." ng-model="vm.searchValue" class="form-control">
+                  </label>
+                  <a class="btn btn-primary" ng-click="vm.getCountries()">Search</a>
+            </form>
+            <th class="text-center pull-right">
+                <button ng-click="vm.addCountry()" class="btn btn-success pull-right">Add Country</button>
+            </th>
+        </div>
+    </div>
+
+    <table class="table table-striped" float-thead="vm.stickyOptions">
+        <thead class="sticky-table-header">
+            <tr>
+                <th id="countryNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getCountries()" class="text-center">
+                    Name <i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
+                </th>
+                <th id="countryLatitudeHeader" ng-click="vm.sortColumn = 'latitude'; vm.reverse = ! vm.reverse; vm.getCountries()" class="text-center">
+                    Latitude <i class="glyphicon" ng-class="vm.sortIcon('latitude')"></i>
+                </th>
+                <th id="countryLongitudeHeader" ng-click="vm.sortColumn = 'longitude'; vm.reverse = ! vm.reverse; vm.getCountries()" class="text-center">
+                    Longitude <i class="glyphicon" ng-class="vm.sortIcon('longitude')"></i>
+                </th>
+                <th id="countryZoomLevelHeader" ng-click="vm.sortColumn = 'zoom_level'; vm.reverse = ! vm.reverse; vm.getCountries()" class="text-center">
+                    Level <i class="glyphicon" ng-class="vm.sortIcon('zoom_level')"></i>
+                </th>
+                <th class="text-center">&nbsp;&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody ng-init="vm.sortColumn = 'name'">
+            <tr ng-repeat="country in vm.countries | orderBy:vm.sortColumn:vm.reverse">
+                <td class="text-center country-name">{{ country.name }}</td>
+                <td class="text-center country-latitude">{{ country.latitude }}</td>
+                <td class="text-center country-longitude">{{ country.longitude }}</td>
+                <td class="text-center country-zoom_level">{{ country.zoom_level }}</td>
+                <td class="text-center">
+                    <button ng-click="vm.editCountry(country)" class="edit btn btn-warning">Edit</button>
+                </td>
+            </tr>
+            <tr ng-show="vm.countries.length == 0">
+                <td colspan="12" style="text-align:center;" ng-show="vm.searchValue == ''"><h2>No countries found</h2></td>
+                <td colspan="12" style="text-align:center;" ng-show="vm.searchValue != ''"><h2>Nothing Matched your search for: "{{ vm.searchValue }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row text-center">
+        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreCountries()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">Load more results</button>
+    </div>
+
+    <div ng-show="vm.loading" class="loader-container">
+        <div class="loader">Loading...</div>
+    </div>
+</div>

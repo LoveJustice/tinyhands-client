@@ -1,7 +1,7 @@
 <div class="col-xs-12">
 	<br>
 	<form id="borderstation-form">
-		<fieldset disabled="{{bsCtrl.isViewing}}">
+		<fieldset ng-disabled="bsCtrl.isViewing">
 
 		<h2 class="text-center" ng-if="bsCtrl.loading"><img src="/static/images/spinner.gif" width="25" height="25"> Loading Border Station Data...</h2>
 

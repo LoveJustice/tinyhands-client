@@ -21,14 +21,6 @@ function getServerApiUrl(env) {
     }
 }
 
-function getOutputPath(env) {
-    var outputPath = 'build';
-    if(env.production || env.staging) {
-        outputPath = "dist";
-    }
-    return path.resolve(__dirname, outputPath);
-}
-
 var srcPath = path.resolve(__dirname, "src/" );
 var appPath = path.resolve(srcPath, "app/");
 
@@ -116,7 +108,7 @@ module.exports = function(env) {
             port: 3000
         },
         output: {
-            path: getOutputPath(env),
+            path: path.resolve(__dirname, 'dist'),
             publicPath: "/",
             filename: getOutputFileName(env)
         }

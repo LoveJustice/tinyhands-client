@@ -6,6 +6,7 @@ import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiBootstrap from 'angular-ui-bootstrap';
 import uiRouter from 'angular-ui-router';
+import 'toastr/toastr.less';
 
 import sharedModule from './shared/shared.module';
 import accountModule from './account/account.module';

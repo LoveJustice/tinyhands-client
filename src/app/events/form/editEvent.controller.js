@@ -94,6 +94,18 @@ export default class EditEventCtrl {
 
     // functions
     setupEvent() {
+        this.event = {
+            title: '',
+            location: '',
+            start_date: '',
+            start_time: '',
+            end_date: '',
+            end_time: '',
+            description: '',
+            is_repeat: false,
+            repetition: '',
+            ends: '',
+        };
         if (this.stateParams.id) {
             this.editing = true;
             this.EventsService.getEvent(this.stateParams.id).then((response) => {
@@ -102,18 +114,6 @@ export default class EditEventCtrl {
             });
         } else {
             this.editing = false;
-            this.event = {
-                title: '',
-                location: '',
-                start_date: '',
-                start_time: '',
-                end_date: '',
-                end_time: '',
-                description: '',
-                is_repeat: false,
-                repetition: '',
-                ends: '',
-            };
             this.setDatesAndTimes();
         }
     }

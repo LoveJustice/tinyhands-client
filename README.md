@@ -14,14 +14,15 @@
 
 --------------------
 #### Local Development
-`npm run dev` 	  -> Runs website and reloads when files are changed
+`npm run dev` 	  -> Runs the website locally and automatically reloads when files are changed
 
 #### Unit Testing
 `npm run test`	  -> To run unit tests  
 
 #### Building
+`npm run local`   -> Bundles project for local environment
 `npm run stage`    -> Bundles project for staging environment  
-`npm run prod`    -> Bundles project for staging environment  
+`npm run prod`    -> Bundles project for production environment  
 
 --------------------
 ### Frameworks Used

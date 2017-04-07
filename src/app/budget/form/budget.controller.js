@@ -38,7 +38,7 @@ export default class BudgetController {
 
         this.months = [
             {name: "January", value: 1},
-            {name: "February", value: 2},t
+            {name: "February", value: 2},
             {name: "March", value: 3},
             {name: "April", value: 4},
             {name: "May", value: 5},
@@ -381,6 +381,7 @@ export default class BudgetController {
     getAllData() {
         this.getStaff();
         this.getOtherData();
+        this.getBorderStation();
     }
 
     getBorderStation() {

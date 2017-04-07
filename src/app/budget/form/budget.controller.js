@@ -12,13 +12,14 @@ import awarenessForm from './components/awareness/awarenessForm.html';
 import suppliesForm from './components/supplies/suppliesForm.html';
 
 export default class BudgetController {
-    constructor($state, $stateParams, BudgetService, UtilService) {
+    constructor($state, $stateParams, BudgetService, UtilService, toastr) {
         'ngInject';
 
         this.$state = $state;
         this.$stateParams = $stateParams;
         this.service = BudgetService;
         this.utils = UtilService;
+        this.toastr = toastr;
 
         let budgetFormPath = 'app/budget/form/components/';
         this.sections = {
@@ -526,13 +527,13 @@ export default class BudgetController {
             this.service.createForm(this.form).then((response) => {
                 this.budgetId = response.data.id;
                 this.updateOrCreateAll();
-                window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+                this.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
             }, (error) => {
-                window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
             });
         } else {
             this.service.updateForm(this.budgetId, this.form).then(() => {
-                window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+                this.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
             });
             this.updateOrCreateAll();
         }
@@ -544,13 +545,13 @@ export default class BudgetController {
                 let item = this.form.other[section][i];
                 if (item.id) {
                     this.service.updateOtherItem(this.budgetId, item).catch((error) => {
-                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
                     this.service.createOtherItem(this.budgetId, item).catch((error) => {
-                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                     });
                 }
             }
@@ -561,13 +562,13 @@ export default class BudgetController {
         this.form.staff.forEach((staff) => {
             if (staff.salaryInfo && staff.salaryInfo.id) {
                 this.service.updateSalary(this.budgetId, staff.salaryInfo).catch((error) => {
-                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             } else if (staff.salaryInfo && !staff.salaryInfo.id) {
                 staff.salaryInfo.staff_person = staff.id;
                 staff.salaryInfo.budget_calc_sheet = this.budgetId;
                 this.service.createSalary(staff.salaryInfo).catch((error) => {
-                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             }
         });

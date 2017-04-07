@@ -1,5 +1,5 @@
 export default class MdfController {
-    constructor(BudgetListService, $stateParams, $state, $sce) {
+    constructor(BudgetListService, $stateParams, $state, $sce, toastr) {
         'ngInject';
         this.staff = {};
         this.committeeMembers = {};
@@ -8,6 +8,7 @@ export default class MdfController {
         this.stateParams = $stateParams;
         this.state = $state;
         this.sce = $sce;
+        this.toastr = toastr;
 
         this.retrieveMdf();
     }
@@ -19,7 +20,7 @@ export default class MdfController {
             this.createIframe(promise.data.pdf_url);
         },
             () => {
-                window.toastr.error(`Could not find requested MDF`);
+                this.toastr.error(`Could not find requested MDF`);
             }
         );
     }
@@ -47,11 +48,11 @@ export default class MdfController {
         people.budget_id = this.stateParams.id;
 
         this.service.sendMdfEmails(people).then(() => {
-            window.toastr.success(`Successfully emailed the MDF`);
+            this.toastr.success(`Successfully emailed the MDF`);
             this.state.go('budgetList'); // When the emails have been sent, load next page in the workflow (the dashboard)
         },
             () => {
-                window.toastr.error(`Could not send emails`);
+                this.toastr.error(`Could not send emails`);
             }
         );
         return people;

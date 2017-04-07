@@ -1,5 +1,16 @@
 import Constants from './constants.js';
 
+import salariesForm from './components/salaries/salariesForm.html';
+import communicationForm from './components/communication/communicationForm.html';
+import travelForm from './components/travel/travelForm.html';
+import administrationForm from './components/administration/administrationForm.html';
+import medicalForm from './components/medical/medicalForm.html';
+import miscellaneousForm from './components/miscellaneous/miscellaneousForm.html';
+import shelterForm from './components/shelter/shelterForm.html';
+import foodAndGasForm from './components/foodAndGas/foodAndGasForm.html';
+import awarenessForm from './components/awareness/awarenessForm.html';
+import suppliesForm from './components/supplies/suppliesForm.html';
+
 export default class BudgetController {
     constructor($state, $stateParams, BudgetService, UtilService) {
         'ngInject';
@@ -12,22 +23,22 @@ export default class BudgetController {
         let budgetFormPath = 'app/budget/form/components/';
         this.sections = {
             allSections: [
-                { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
-                { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
-                { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` },
-                { name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
-                { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
-                { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
-                { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
-                { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
-                { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
-                { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
+                { name: 'Salaries', templateUrl: salariesForm },
+                { name: 'Communication', templateUrl: communicationForm },
+                { name: 'Travel', templateUrl: travelForm },
+                { name: 'Administration', templateUrl: administrationForm },
+                { name: 'Medical', templateUrl: medicalForm },
+                { name: 'Miscellaneous', templateUrl: miscellaneousForm },
+                { name: 'Shelter', templateUrl: shelterForm },
+                { name: 'Food And Gas', templateUrl: foodAndGasForm },
+                { name: 'Awareness', templateUrl: awarenessForm },
+                { name: 'Supplies', templateUrl: suppliesForm },
             ]
         };
 
         this.months = [
             {name: "January", value: 1},
-            {name: "February", value: 2},
+            {name: "February", value: 2},t
             {name: "March", value: 3},
             {name: "April", value: 4},
             {name: "May", value: 5},

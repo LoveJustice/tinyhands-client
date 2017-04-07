@@ -1,27 +1,39 @@
 import Constants from './constants.js';
 
+import salariesForm from './components/salaries/salariesForm.html';
+import communicationForm from './components/communication/communicationForm.html';
+import travelForm from './components/travel/travelForm.html';
+import administrationForm from './components/administration/administrationForm.html';
+import medicalForm from './components/medical/medicalForm.html';
+import miscellaneousForm from './components/miscellaneous/miscellaneousForm.html';
+import shelterForm from './components/shelter/shelterForm.html';
+import foodAndGasForm from './components/foodAndGas/foodAndGasForm.html';
+import awarenessForm from './components/awareness/awarenessForm.html';
+import suppliesForm from './components/supplies/suppliesForm.html';
+
 export default class BudgetController {
-    constructor($state, $stateParams, BudgetService, UtilService) {
+    constructor($state, $stateParams, BudgetService, UtilService, toastr) {
         'ngInject';
 
         this.$state = $state;
         this.$stateParams = $stateParams;
         this.service = BudgetService;
         this.utils = UtilService;
+        this.toastr = toastr;
 
         let budgetFormPath = 'app/budget/form/components/';
         this.sections = {
             allSections: [
-                { name: 'Salaries', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
-                { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
-                { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` },
-                { name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
-                { name: 'Medical', templateUrl: `${budgetFormPath}medical/medicalForm.html` },
-                { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
-                { name: 'Shelter', templateUrl: `${budgetFormPath}shelter/shelterForm.html` },
-                { name: 'Food And Gas', templateUrl: `${budgetFormPath}foodAndGas/foodAndGasForm.html` },
-                { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
-                { name: 'Supplies', templateUrl: `${budgetFormPath}supplies/suppliesForm.html` },
+                { name: 'Salaries', templateUrl: salariesForm },
+                { name: 'Communication', templateUrl: communicationForm },
+                { name: 'Travel', templateUrl: travelForm },
+                { name: 'Administration', templateUrl: administrationForm },
+                { name: 'Medical', templateUrl: medicalForm },
+                { name: 'Miscellaneous', templateUrl: miscellaneousForm },
+                { name: 'Shelter', templateUrl: shelterForm },
+                { name: 'Food And Gas', templateUrl: foodAndGasForm },
+                { name: 'Awareness', templateUrl: awarenessForm },
+                { name: 'Supplies', templateUrl: suppliesForm },
             ]
         };
 
@@ -370,6 +382,7 @@ export default class BudgetController {
     getAllData() {
         this.getStaff();
         this.getOtherData();
+        this.getBorderStation();
     }
 
     getBorderStation() {
@@ -514,13 +527,13 @@ export default class BudgetController {
             this.service.createForm(this.form).then((response) => {
                 this.budgetId = response.data.id;
                 this.updateOrCreateAll();
-                window.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+                this.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
             }, (error) => {
-                window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
             });
         } else {
             this.service.updateForm(this.budgetId, this.form).then(() => {
-                window.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+                this.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
             });
             this.updateOrCreateAll();
         }
@@ -532,13 +545,13 @@ export default class BudgetController {
                 let item = this.form.other[section][i];
                 if (item.id) {
                     this.service.updateOtherItem(this.budgetId, item).catch((error) => {
-                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
                     this.service.createOtherItem(this.budgetId, item).catch((error) => {
-                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                     });
                 }
             }
@@ -549,13 +562,13 @@ export default class BudgetController {
         this.form.staff.forEach((staff) => {
             if (staff.salaryInfo && staff.salaryInfo.id) {
                 this.service.updateSalary(this.budgetId, staff.salaryInfo).catch((error) => {
-                    window.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             } else if (staff.salaryInfo && !staff.salaryInfo.id) {
                 staff.salaryInfo.staff_person = staff.id;
                 staff.salaryInfo.budget_calc_sheet = this.budgetId;
                 this.service.createSalary(staff.salaryInfo).catch((error) => {
-                        window.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             }
         });

@@ -35,7 +35,8 @@
 **Testing**  
 [Jasmine](http://jasmine.github.io/) JS Unit testing  
 [Karma](http://karma-runner.github.io/) JS Unit testing  
-[Protractor](https://github.com/angular/protractor) E2E Testing  
+[Protractor](https://github.com/angular/protractor) E2E Testing 
+[webdriver-manger](https://www.npmjs.com/package/webdriver-manager) E2E Testing
 **Building/Compiling**  
 [ES6 Babel](https://babeljs.io/) ES6to5 Transpiler  
 [Webpack 2](https://webpack.js.org/)

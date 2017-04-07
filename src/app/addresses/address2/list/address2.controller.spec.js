@@ -41,8 +41,9 @@ describe('Address2Controller', () => {
         $state = {go: () => {}};
 
         mockStickyHeader = jasmine.createSpyObj('mockStickyHeader', ['stickyOptions']);
+        let toastr = jasmine.createSpyObj('toastr', ['success', 'error']);
 
-        vm = new Address2Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams, $state);
+        vm = new Address2Controller(mockStickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams, $state, toastr);
     }));
 
     describe('function constructor', () => {

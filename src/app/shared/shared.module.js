@@ -1,4 +1,12 @@
-/* global toastr:false, moment:false */
+import 'floatthead';
+import 'angular-float-thead';
+import moment from 'moment';
+import 'moment-timezone';
+import toastr from 'toastr';
+import 'angular-ui-validate';
+
+import config from './shared.config';
+
 import BaseService from '../base.service';
 import SessionService from './services/session.service';
 import StickyHeaderService from './services/stickyHeader.service';
@@ -14,6 +22,7 @@ export default angular.module('tinyhands.Shared', ['floatThead', 'ui.validate'])
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
         };
     })
+    .config(config)
     .constant('RequireLogin', RequireLogin)
     .constant('toastr', toastr)
     .constant('moment', moment)
@@ -26,4 +35,5 @@ export default angular.module('tinyhands.Shared', ['floatThead', 'ui.validate'])
 
     .directive('confirmButton', ConfirmButton)
     
-    .run(PermissionsRequired);
+    .run(PermissionsRequired)
+    .name;

@@ -1,3 +1,5 @@
+import photoExportModalTemplate from './photo-export-modal.html';
+
 export default class PhotoExportController {
     constructor($scope, $uibModal) {
         'ngInject';
@@ -8,7 +10,7 @@ export default class PhotoExportController {
     openModal() {
         this.modal.open({
             animation: true,
-            templateUrl: 'app/components/photo-export/photo-export-modal.html',
+            templateUrl: photoExportModalTemplate,
             controller: 'PhotoExportModalController as vm',
             size: 'lg'
         });

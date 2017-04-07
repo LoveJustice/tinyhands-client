@@ -5,16 +5,16 @@
 <div class="modal-body">
     <div class="row">
       <div class="col-md-5">
-        <h3>From</h3>
-        <uib-datepicker ng-model="vm.fromDate" ng-change="vm.photoCount()" class="well well-sm" datepicker-options="options"></uib-datepicker>
+        <h3>From: {{vm.fromDate | date:' MMMM d yyyy' }}</h3>
+        <div uib-datepicker ng-model="vm.fromDate" ng-change="vm.photoCount()" class="well well-sm" datepicker-options="options"></div>
       </div>
 
       <div class="col-md-2"></div>
 
       <div class="col-md-5">
 
-        <h3>To</h3>
-        <div class="well well-sm"><uib-datepicker ng-model="vm.toDate" ng-change="vm.photoCount()" datepicker-options="options"></uib-datepicker></div>
+        <h3>To {{vm.toDate | date:' MMMM d yyyy' }}</h3>
+        <div class="well well-sm"><div uib-datepicker ng-model="vm.toDate" ng-change="vm.photoCount()" datepicker-options="options"></div></div>
       </div>
     </div>
 

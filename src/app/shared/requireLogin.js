@@ -1,4 +1,5 @@
-export default function ($q, $state, SessionService) {
+export default function RequireLogin($q, $state, SessionService) {
+	'ngInject';
 	let defer = $q.defer();
 	SessionService.checkIfAuthenticated().then(() => {
 		defer.resolve();

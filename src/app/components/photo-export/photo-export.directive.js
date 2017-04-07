@@ -1,9 +1,11 @@
+import photoExportTemplate from './photo-export.html';
+
 export default function PhotoExportDirective() {
     'ngInject';
 
     let directive = {
         restrict: 'E',
-        templateUrl: 'app/components/photo-export/photo-export.html',
+        templateUrl: photoExportTemplate,
         controller: 'PhotoExportController',
         controllerAs: 'photoCtrl'
     };

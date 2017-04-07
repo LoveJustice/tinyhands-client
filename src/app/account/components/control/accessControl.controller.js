@@ -1,6 +1,11 @@
+import unsavedChangesModalTemplate from '../modal/unsavedChangesModal.html';
+
 import ChangesArray from '../../changesArray';
+
 export default class AccessControlController {
     constructor(AccountService, PermissionsSetsService, StickyHeader, $q, $state, $uibModal, $scope, toastr) {
+        'ngInject';
+
         this.AccountService = AccountService;
         this.PermissionsSetsService = PermissionsSetsService;
         this.sticky = StickyHeader;
@@ -119,7 +124,7 @@ export default class AccessControlController {
 
     openUnsavedChangesModal(toState = null) {
         var selection = this.$uibModal.open({
-            templateUrl: 'app/account/components/modal/unsavedChangesModal.html',
+            templateUrl: unsavedChangesModalTemplate,
             controller: 'UnsavedChangesModalController',
             controllerAs: 'UnsavedChangesModalCtrl'
         });

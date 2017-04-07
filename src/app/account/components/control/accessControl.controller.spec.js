@@ -16,6 +16,8 @@ describe('AccessControlController', () => {
         mockStickyHeader,
         mockToastr;
 
+    beforeEach(angular.mock.module('tinyhands.Account'));
+
     beforeEach(inject((_$q_, $rootScope) => {
         rootScope = $rootScope;
         scope = jasmine.createSpyObj('mockScope', ['$on']);
@@ -313,7 +315,7 @@ describe('AccessControlController', () => {
     describe('openUnsavedChangesModal', () => {
         it('should open modal with correct options', () => {
             let modalOptions = {
-                templateUrl: 'app/account/components/modal/unsavedChangesModal.html',
+                templateUrl: 'account/components/modal/unsavedChangesModal.html',
                 controller: 'UnsavedChangesModalController',
                 controllerAs: 'UnsavedChangesModalCtrl'
             };

@@ -1,15 +1,18 @@
+import loginTemplate from './login.html';
+import passwordResetTemplate from './password-reset/password-reset.html';
+
 function loginRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('login', {
             url: '/login',
-            templateUrl: 'app/login/login.html',
+            templateUrl: loginTemplate,
             controller: 'LoginController',
             controllerAs: 'login'
         })
         .state('password-reset', {
             url: '/password-reset',
-            templateUrl: 'app/login/password-reset/password-reset.html',
+            templateUrl: passwordResetTemplate,
             controller: 'PasswordResetController',
             controllerAs: 'pwReset',
         });

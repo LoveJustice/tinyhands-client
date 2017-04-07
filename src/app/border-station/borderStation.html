@@ -1,18 +1,18 @@
 <div class="col-xs-12">
 	<br>
 	<form id="borderstation-form">
-		<fieldset disabled="{{bsCtrl.isViewing}}">
 
 		<h2 class="text-center" ng-if="bsCtrl.loading"><img src="/static/images/spinner.gif" width="25" height="25"> Loading Border Station Data...</h2>
 
+		<button class="btn btn-success pull-right" ui-sref="budget({borderStationId: bsCtrl.service.borderStationId})" ng-if="bsCtrl.session.user.permission_budget_add && bsCtrl.$stateParams.id">New Budget Form</button>
 
-		<button class="btn btn-success pull-right" ui-sref="budget({borderStationId: bsCtrl.service.borderStationId})" ng-if="bsCtrl.session.user.permission_budget_add">New Budget Form</button>
 		<br>
 		<br>
 		<br>
 
 		<div class="col-xs-12" ng-show="!bsCtrl.loading">
 
+		<fieldset ng-disabled="bsCtrl.isViewing">
 			<border-station-detail></border-station-detail>
 			<border-station-person></border-station-person>
 			<border-station-location></border-station-location>
@@ -33,8 +33,8 @@
 			<br/>
 			<br/>
 			<br/>
+		</fieldset>
 
 		</div>
-		</fieldset>
 	</form>
 </div>

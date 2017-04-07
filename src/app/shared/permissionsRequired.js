@@ -1,4 +1,5 @@
 export default function CheckPermissions($rootScope, $state, SessionService, toastr) {
+    'ngInject';
     $rootScope.$on('$stateChangeStart', (event, toState) => {
         let stateData = toState.data;
         if (angular.isDefined(stateData) && angular.isDefined(stateData.permissions_required)) {

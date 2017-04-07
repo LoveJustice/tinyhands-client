@@ -20,7 +20,7 @@ export default class BorderStationController {
         this.updateStatusText = $stateParams.id ? constants.UpdateButtonText.Default : constants.UpdateButtonText.Create;
 
         SessionService.me().then((response) => {
-            this.authorize(response, this.$stateParam.id);
+            this.authorize(response, this.$stateParams.id);
         }).then(() => {
             this.createListeners();
         });

@@ -1,4 +1,7 @@
+
+import unsavedChangesModalTemplate from '../modal/unsavedChangesModal.html';
 import ChangesArray from '../../changesArray';
+
 export default class AccessDefaultsController {
     constructor(StickyHeader, $scope, $q, $uibModal, $state, PermissionsSetsService, toastr) {
         'ngInject';
@@ -134,7 +137,7 @@ export default class AccessDefaultsController {
 
     openUnsavedChangesModal(toState = null) {
         this.$uibModal.open({
-            templateUrl: 'app/account/components/modal/unsavedChangesModal.html',
+            templateUrl: unsavedChangesModalTemplate,
             controller: 'UnsavedChangesModalController',
             controllerAs: 'UnsavedChangesModalCtrl'
         }).result.then((shouldSave) => {

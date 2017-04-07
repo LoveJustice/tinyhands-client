@@ -1,9 +1,15 @@
+import budgetTemplate from './form/budget.html';
+import './form/budget.less';
+import budgetListTemplate from './list/budgetList.html';
+import mdfTemplate from './mdf/mdf.html';
+import './mdf/mdf.less';
+
 function budgetRouteConfig($stateProvider, RequireLogin) {
     'ngInject';
     $stateProvider
         .state('budget', {
             url: '/budget/:id?borderStationId&isViewing',
-            templateUrl: 'app/budget/form/budget.html',
+            templateUrl: budgetTemplate,
             controller: 'BudgetController',
             controllerAs: 'budgetCtrl',
             resolve: {
@@ -12,7 +18,7 @@ function budgetRouteConfig($stateProvider, RequireLogin) {
         })
         .state('budgetList', {
             url: '/budget',
-            templateUrl: 'app/budget/list/budgetList.html',
+            templateUrl: budgetListTemplate,
             controller: 'BudgetListController',
             controllerAs: 'budgetListCtrl',
             data: {
@@ -24,7 +30,7 @@ function budgetRouteConfig($stateProvider, RequireLogin) {
         })
         .state('mdf', {
             url: '/budget/:id/mdf',
-            templateUrl: 'app/budget/mdf/mdf.html',
+            templateUrl: mdfTemplate,
             controller: 'MdfController',
             controllerAs: 'vm',
             resolve: {

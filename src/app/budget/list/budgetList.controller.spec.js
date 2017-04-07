@@ -4,14 +4,16 @@ import BudgetListService from './budgetList.service';
 describe('budgetList Controller', () => {
     let vm,
         MockSessionService,
-        MockStickyHeader;
+        MockStickyHeader,
+        mockToastr;
 
     beforeEach(inject(($http) => {
         MockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin']);
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
+        mockToastr = jasmine.createSpyObj('toastr', ['success', 'error']);
 
         let service = new BudgetListService($http);
-        vm = new BudgetListController(service, MockSessionService, MockStickyHeader);
+        vm = new BudgetListController(service, MockSessionService, MockStickyHeader, mockToastr);
     }));
 
     /*No tests verifying $rootScope, $scope, etc (constructor pass ins) because they are
@@ -190,10 +192,9 @@ describe('budgetList Controller', () => {
                 vm.service.deleteBorderStationBudget = () => {
                     return { then: (f) => { f(response) } };
                 };
-                spyOn(window.toastr, 'error');
                 vm.removeBudget([], { budgetRemoved: true });
 
-                expect(window.toastr.error).toHaveBeenCalledWith("Unable to Delete Budget Form");
+                expect(mockToastr.error).toHaveBeenCalledWith("Unable to Delete Budget Form");
             });
 
             it('tests that budgetRemoved succeeds with a 200 status', () => {
@@ -202,10 +203,9 @@ describe('budgetList Controller', () => {
                     return { then: (f) => { f(response) } };
                 };
                 vm.listOfBudgets = array;
-                spyOn(window.toastr, 'success');
                 vm.removeBudget([], { budgetRemoved: true });
 
-                expect(window.toastr.success).toHaveBeenCalledWith("Form Successfully Deleted");
+                expect(mockToastr.success).toHaveBeenCalledWith("Form Successfully Deleted");
             });
 
             it('tests that budgetRemoved succeeds with a 204 status', () => {
@@ -214,10 +214,9 @@ describe('budgetList Controller', () => {
                     return { then: (f) => { f(response) } };
                 };
                 vm.listOfBudgets = array;
-                spyOn(window.toastr, 'success');
                 vm.removeBudget([], { budgetRemoved: true });
 
-                expect(window.toastr.success).toHaveBeenCalledWith("Form Successfully Deleted");
+                expect(mockToastr.success).toHaveBeenCalledWith("Form Successfully Deleted");
             });
 
             it('tests that the listOfBudgets is correctly spliced to remove the selected budget', () => {

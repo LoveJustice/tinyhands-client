@@ -2,16 +2,18 @@ import DetailController from './detail.controller';
 import BorderStationService from './../borderStation.service';
 import constants from './../constants';
 
+beforeEach(angular.mock.module('tinyhands.BorderStation'));
+
 describe('DetailController', () => {
     let vm, scope, bss;
 
-    beforeEach(inject(($http, $q) => {
+    beforeEach(inject(($http, $q, _moment_) => {
         scope = {
             $on: () => { },
             $emit: () => { }
         };
         bss = new BorderStationService($http, $q);
-        vm = new DetailController(scope, bss);
+        vm = new DetailController(scope, bss, _moment_);
     }));
 
     describe('function constructor', () => {
@@ -133,9 +135,9 @@ describe('DetailController', () => {
 
     describe('function formatDate', () => {
         it('should call window.moment', () => {
-            spyOn(window, 'moment').and.callThrough();
+            spyOn(vm, 'moment').and.callThrough();
             vm.formatDate();
-            expect(window.moment).toHaveBeenCalled();
+            expect(vm.moment).toHaveBeenCalled();
         });
     });
 

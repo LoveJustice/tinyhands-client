@@ -1,43 +1,28 @@
 # Tiny Hands Dreamsuite
 
-**Note:** Used [Generator-gulp-angular](https://github.com/Swiip/generator-gulp-angular) to generate project
-
 ### Codeship Status
 [ ![Codeship Status for tu-software-studio/tinyhands-client](https://codeship.com/projects/be6ab140-e41a-0133-4db8-3aa3f222b1f1/status?branch=develop)](https://codeship.com/projects/146238)
 
 ### Front-End Setup
-1. `sudo npm install -g gulp bower`
+1. Have [npm](http://blog.npmjs.org/post/85484771375/how-to-install-npm) installed on your machine
 2. Install dependencies: `npm install`
-3. Install more dependencies: `bower install`
-4. `gulp serve` will start the local server and launch the application in your browser
+3. `npm run dev` will start the local server and launch the application in your browser
 
 --------------------
 ### Developing
-**Important Note:** the URLs for the rest endpoints when developing, on staging, or master are in [`gulp/conf.js`](gulp/conf.js).  
+**Important Note:** the URLs for the rest endpoints when developing, on staging, or master are in [`webpack.config.js`](webpack.config.js).  
 
 --------------------
-### Gulp Usage
-#### Running
-`gulp serve` 	  -> To run the project and watch file changes run. **Changes api url to point at local rest endpoint**  
-`gulp serve:dist` -> To build the project, run the project and watch file changes run  
+#### Local Development
+`npm run dev` 	  -> Runs the website locally and automatically reloads when files are changed
 
 #### Unit Testing
-`gulp test`			  -> To run Karma tests  
-`gulp test:auto`	  -> To run Karma tests and watch changes  
-
-#### E2E Testing
-**Note:** Requires `protractor.config.js` to contain paths to test files  
-
-`webdriver-manager start` -> Must be running in a separate terminal tab before launching protractor  
-`gulp protractor`		-> To run Protractor e2e tests  
-`gulp protractor:src`	-> To run Protractor e2e tests from src  
-`gulp protractor:dist`	-> To run Protractor e2e tests from compiled build  
+`npm run test`	  -> To run unit tests  
 
 #### Building
-`gulp build`	-> To Build project without changing rest endpoint url (BaseUrl)  
-`gulp build:local`    -> Build project and change rest endpoint url (BaseUrl) to local rest endpoint  
-`gulp build:develop`    -> Build project and change rest endpoint url (BaseUrl) to develop rest endpoint  
-`gulp build:master`    -> Build project and change rest endpoint url (BaseUrl) to master rest endpoint  
+`npm run local`   -> Bundles project for local environment
+`npm run stage`    -> Bundles project for staging environment  
+`npm run prod`    -> Bundles project for production environment  
 
 --------------------
 ### Frameworks Used
@@ -54,5 +39,4 @@
 [webdriver-manger](https://www.npmjs.com/package/webdriver-manager) E2E Testing
 **Building/Compiling**  
 [ES6 Babel](https://babeljs.io/) ES6to5 Transpiler  
-[GulpJS](http://gulpjs.com/) Build System  
-[BrowserSync](http://browsersync.io/) Sync browser on changes  
+[Webpack 2](https://webpack.js.org/)

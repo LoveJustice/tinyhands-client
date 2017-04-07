@@ -1,3 +1,6 @@
+import uiRouter from 'angular-ui-router';
+import sharedModule from '../shared/shared.module';
+
 import budgetRouteConfig from './budget.route';
 
 import BudgetController from './form/budget.controller';
@@ -9,7 +12,7 @@ import MathOperator from './mathOperator/mathOperator.directive';
 import BudgetListService from './list/budgetList.service';
 import BudgetService from './form/budget.service';
 
-export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Shared'])
+export default angular.module('tinyhands.Budget', [uiRouter, sharedModule])
     .config(budgetRouteConfig)
 
     .controller('BudgetController', BudgetController)
@@ -19,4 +22,5 @@ export default angular.module('tinyhands.Budget', ['ui.router', 'tinyhands.Share
     .directive('operator', MathOperator)
 
     .service('BudgetListService', BudgetListService)
-    .service('BudgetService', BudgetService);
+    .service('BudgetService', BudgetService)
+    .name;

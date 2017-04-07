@@ -3,8 +3,7 @@ export default class StickyHeaderController {
         'ngInject';
 
         this.stickyOptions = {
-            scrollingTop: 50,
-            useAbsolutePositioning: false
+            top: 50
         };
     }
 }

@@ -21,7 +21,6 @@ export default class BudgetController {
         this.utils = UtilService;
         this.toastr = toastr;
 
-        let budgetFormPath = 'app/budget/form/components/';
         this.sections = {
             allSections: [
                 { name: 'Salaries', templateUrl: salariesForm },

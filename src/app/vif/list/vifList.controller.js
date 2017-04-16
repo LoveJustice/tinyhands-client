@@ -3,7 +3,6 @@ export default class VifListController {
         'ngInject';
 
         this.constants = constants;
-        this.createVifUrl = constants.BaseUrl;
         this.service = VifListService;
         this.session = SessionService;
         this.stateParams = $stateParams;

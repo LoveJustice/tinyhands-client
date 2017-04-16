@@ -6,6 +6,7 @@ export default class VifListController {
         this.createVifUrl = constants.BaseUrl;
         this.service = VifListService;
         this.session = SessionService;
+        this.stateParams = $stateParams;
         this.sticky = StickyHeader;
         this.state = $state;
         this.timeout = $timeout;

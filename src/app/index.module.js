@@ -13,6 +13,7 @@ import accountModule from './account/account.module';
 import budgetModule from './budget/budget.module';
 import borderStationModule from './border-station/borderStation.module';
 import addressesModule from './addresses/addresses.module';
+import knownpersonModule from './knownperson/knownperson.module';
 import dashboardModule from './dashboard/dashboard.module';
 import loginModule from './login/login.module';
 import VIFModule from './vif/vif.module';
@@ -20,6 +21,7 @@ import IRFModule from './irf/irf.module';
 import eventsModule from './events/events.module';
 import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';
+import idmanagementModule from './idmanagement/idmanagement.module';
 
 import constants from './constants.js';
 import config from './index.config';
@@ -35,6 +37,7 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     sharedModule,
     accountModule,
     addressesModule,
+    knownpersonModule,
     borderStationModule,
     budgetModule,
     dashboardModule,
@@ -44,6 +47,7 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     VIFModule,
     photoExportModule,
     countriesModule,
+    idmanagementModule,
 ])
 
     .constant('constants', constants)

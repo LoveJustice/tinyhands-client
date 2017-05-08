@@ -7,11 +7,13 @@ describe('IRF List Controller',() => {
         MockIrfListService,
         MockSessionService,
         MockStickyHeader,
+        $state,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
 
-    beforeEach(inject((_$timeout_, _$window_) => {
+    beforeEach(inject((_$state_, _$timeout_, _$window_) => {
+        $state = _$state_;
         $timeout = _$timeout_;
         $window = _$window_;
         $stateParams = {"search": "BHD"};
@@ -48,7 +50,7 @@ describe('IRF List Controller',() => {
             };
         });
 
-        vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $state,  $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -58,13 +60,13 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $state, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('expect checkForExistingIrfs to be called', () => {
             spyOn(vm, 'checkForExistingIrfs');
-            vm.constructor(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm.constructor(MockIrfListService, MockSessionService, $state, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.checkForExistingIrfs).toHaveBeenCalled();
         });
     });

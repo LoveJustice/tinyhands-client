@@ -1,12 +1,13 @@
 export default class VifListController {
-    constructor(VifListService, SessionService, StickyHeader, $stateParams, $timeout, $window, toastr, constants) {
+    constructor(VifListService, SessionService, StickyHeader, $state, $stateParams, $timeout, $window, toastr, constants) {
         'ngInject';
 
         this.constants = constants;
-        this.createVifUrl = constants.BaseUrl;
         this.service = VifListService;
         this.session = SessionService;
+        this.stateParams = $stateParams;
         this.sticky = StickyHeader;
+        this.state = $state;
         this.timeout = $timeout;
         this.window = $window;
         this.toastr = toastr;
@@ -55,6 +56,7 @@ export default class VifListController {
     searchVifs() {
         this.timeout.cancel(this.timer);
         this.timer = this.timeout( () => {
+            this.state.go('vifList', {search: this.queryParameters.search}, {reload: false, notify: false});
             this.getVifList();
         }, 500);
     }

@@ -7,13 +7,15 @@ describe('VIF List Controller',() => {
         MockVifListService,
         MockSessionService,
         MockStickyHeader,
+        $state,
         $stateParams,
         queryParameters,
         transformedQueryParameters;
 
-    beforeEach(inject((_$timeout_, _$window_) => {
-            $timeout = _$timeout_;
-            $window = _$window_;
+    beforeEach(inject((_$state_, _$timeout_, _$window_) => {
+        $state = _$state_;
+        $timeout = _$timeout_;
+        $window = _$window_;
         $stateParams = {"search": "BHD"};
 
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
@@ -48,7 +50,7 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $state, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
     }));
 
     describe('function constructor', () => {
@@ -58,13 +60,13 @@ describe('VIF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $state, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('should be called with the constructor', () => {
             spyOn(vm, 'checkForExistingVifs');
-            vm.constructor(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm.constructor(MockVifListService, MockSessionService, MockStickyHeader, $state, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
 
             expect(vm.checkForExistingVifs).toHaveBeenCalled();
         });

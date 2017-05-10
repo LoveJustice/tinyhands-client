@@ -12,9 +12,9 @@ function generateWebpackConfig() {
     return {
         files: ['test.webpack.js'],
 
-        singleRun: true,
+        singleRun: false,
 
-        autoWatch: false,
+        autoWatch: true,
 
         frameworks: ['jasmine'],
 

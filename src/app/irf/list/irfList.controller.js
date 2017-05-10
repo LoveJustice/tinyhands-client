@@ -1,9 +1,11 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, StickyHeader, $stateParams, $timeout, $window, toastr, constants) {
+    constructor(IrfListService, SessionService, StickyHeader, $state, $stateParams, $timeout, $window, toastr, constants) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
+        this.stateParams = $stateParams;
         this.sticky = StickyHeader;
+        this.state = $state;
         this.timeout = $timeout;
         this.window = $window;
         this.toastr = toastr;
@@ -55,6 +57,7 @@ export default class IrfListController {
     searchIrfs() {
         this.timeout.cancel(this.timer);
         this.timer = this.timeout( () => {
+            this.state.go('irfList', {search: this.queryParameters.search}, {reload: false, notify: false});
             this.getIrfList();
         }, 500);
     }

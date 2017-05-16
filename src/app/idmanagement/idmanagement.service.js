@@ -11,21 +11,17 @@ class IdManagementService {
     getKnownPerson(person_id) {
         return this.service.get('api/knownperson/aperson/?person_id=' + person_id);
     }
-    
-    searchKnownPersons(queryParams) {
-        return this.listKnownPersons(queryParams);
-    }
 
     loadMoreKnownPersons(queryParams) {
         return this.service.get('api/knownperson/', queryParams);
     }
 
-    saveAddress(knownPerson) {
-        return this.service.put('api/knownperson/' + knownPerson.id + '/', knownPerson);
-    }
-
     getFuzzyKnownPersons(val) {
         return this.service.get('api/knownperson/fuzzy/?name=' + val);
+    }
+    
+    getPhoneKnownPersons(val) {
+        return this.service.get('api/knownperson/phone/?phone=' + val);
     }
     
     getKnownPersonForms(val) {
@@ -34,6 +30,14 @@ class IdManagementService {
     
     getAliasMembers(val) {
     	return this.service.get('api/knownperson/group/?group_id=' + val);
+    }
+    
+    addAliasGroup(id1, id2) {
+    	return this.service.put(`api/knownperson/${id1}/addgroup/${id2}/`);
+    }
+    
+    removeAliasGroup(id1) {
+    	 return this.service.put(`api/knownperson/${id1}/removegroup/`);
     }
 }
 

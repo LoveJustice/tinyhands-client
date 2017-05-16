@@ -1,8 +1,8 @@
-<h1 class="text-center">ID Management</h1>
-<br/>
+
 
 <div class="container">
 	<div ng-show="vm.showIdMgmt">
+		<h1 class="text-center">ID Management</h1>
 	    <div class="row">
 	        <div class="col-md-2">
 	            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getKnownPersons()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
@@ -11,11 +11,11 @@
 	            <p style="margin-top: 5px;">Results per page</p>
 	        </div>
 	        <div class="pull-right">
-	            <form ng-submit="vm.getFuzzyMatch()">
+	            <form ng-submit="vm.addGroupSearch()">
 	                  <label>
 	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control">
 	                  </label>
-	                  <a class="btn btn-primary" ng-click="vm.searchKnownPersons()">Search</a>
+	                  <a class="btn btn-primary" ng-click="vm.getKnownPersons()">Search</a>
 	            </form>
 	        </div>
 	    </div>
@@ -82,11 +82,13 @@
 	        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreKnownPersons()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">Load more results</button>
 	    </div>
 	
-	    <div ng-show="vm.loading" class="loader-container">
-	        <div class="loader">Loading...</div>
-	    </div>
+
 	</div>
-	<div ng-show="vm.showAddAlias">
+	<div ng-show="vm.showAddAlias || vm.showRemoveAlias">
+		<h1 class="text-center" ng-show="vm.showAddAlias">Add To Alias Group</h1>
+		<h1 class="text-center" ng-show="vm.showRemoveAlias && !vm.isViewing">Remove From Alias Group</h1>
+		<h1 class="text-center" ng-show="vm.showRemoveAlias && vm.isViewing">Alias Group Details</h1>
+		<br/>
 		<div style="display:inline-block;width:100%;">
 			<div style="display:inline-block;width:100%;">
 				<div  style="float:left; width:33%;height:201px;"><img src="{{vm.knownperson.form_photo}}"></div>
@@ -124,17 +126,19 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div ng-show="vm.showAddAlias">
 		<div>
 			<div class="radio" style="display:inline-block; float:left; width:20%">
-				&nbsp;&nbsp;&nbsp;<label><input type="radio" name="optradio" checked>Name</label> &nbsp;
-				<label><input type="radio" name="optradio">Phone</label>
+				&nbsp;&nbsp;&nbsp;<label><input type="radio" ng-model="vm.addSearchOption" value="name" checked>Name</label> &nbsp;
+				<label><input type="radio" ng-model="vm.addSearchOption" value="phone">Phone</label>
 			</div>
 			<div style="display:inline-block">
-				<form ng-submit="vm.getFuzzyMatch()">
+				<form ng-submit="vm.addGroupSearch()">
 	              <label>
 	                  <input type="search" placeholder="Person name..." ng-model="vm.addSearchValue" class="form-control">
 	              </label>
-	              <a class="btn btn-primary" ng-click="vm.getFuzzyMatch()">Search</a>
+	              <a class="btn btn-primary" ng-click="vm.addGroupSearch()">Search</a>
 	        	</form>
 			</div>
 		</div>
@@ -156,7 +160,7 @@
         </thead>
         <tbody ng-init="vm.sortColumn = 'name'">
             <tr ng-repeat="candidate in vm.addCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()" ng-show="{{candidate.id}} != {{vm.knownperson.id}}">
-            	<td class="text-center"><input type="radio" name="matchRadio"  ng-click="vm.enableMatch()"></td>
+            	<td class="text-center"><input type="radio" name="matchRadio" ng-click="vm.enableMatch(candidate.id)"></td>
                 <td class="text-left">{{ candidate.full_name }}</td>
                 <td class="text-center">{{ candidate.gender }}</td>
                 <td class="text-right">{{ candidate.age }}</td>
@@ -184,7 +188,7 @@
 			<button class="btn btn-primary" type="button" ng-click="vm.cancelAdd()">No Match</button>
 		</div>
 		<div  class="pull-right" ng-show="vm.matchSelected">
-			<button class="btn btn-primary" type="button" ng-click="vm.cancelAdd()">Match</button>
+			<button class="btn btn-primary" type="button" ng-click="vm.addAliasGroup()">Match</button>
 		</div>
 	</div>
 	<div ng-show="vm.showRemoveAlias">
@@ -192,7 +196,6 @@
 		    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
 	        <thead class="sticky-table-header">
 	            <tr>
-	            	<th id="candidateHeader" class="text-center" ng-if="!vm.isViewing" width="8%"></th>
 	                <th id="candidateNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="12%">Name</th>
 	                <th id="candidateGenderHeader" ng-click="vm.sortColumn = 'gender'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="7%">Gender</th>
 	                <th id="candidateAgeHeader" ng-click="vm.sortColumn = 'age'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="5%">Age</th>
@@ -201,12 +204,12 @@
 	                <th id="candidatePhoneHeader" ng-click="vm.sortColumn = 'phone'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="10%">Phone</th>
 	                <th id="candidateFormKindHeader" class="text-center" width="8%">Role</th>
 	                <th id="candidateFormHeader" class="text-center" width="8%">Form</th>
-	                <th id="candidateFormDateHeader" class="text-center" width="10%">Form Date</th>	
+	                <th id="candidateFormDateHeader" class="text-center" width="10%">Form Date</th>
+	                <th id="candidateHeader" class="text-center" ng-if="!vm.isViewing" width="10%"></th>
 	            </tr>
 	        </thead>
 	        <tbody ng-init="vm.sortColumn = 'name'">
 	            <tr ng-repeat="candidate in vm.delCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()">
-	            	<td class="text-center" ng-if="!vm.isViewing"><input type="checkbox" name="delCheckbox" ng-click="enableMatch()"></td>
 	                <td class="text-left">{{ candidate.full_name }}</td>
 	                <td class="text-center">{{ candidate.gender }}</td>
 	                <td class="text-right">{{ candidate.age }}</td>
@@ -216,17 +219,18 @@
 	                <td class="text-left">{{ candidate.form_kind }}</td>
 	                <td class="text-left"><a href="">{{ candidate.form_number }}</a></td>
 	                <td class="text-center">{{ candidate.form_date }}</td>
+	                <td><button class="btn btn-sm btn-primary"  ng-show="!vm.isViewing" ng-click="vm.deleteFromGroup(candidate)">Remove</button></td>
 	            </tr>
 	        </tbody>
 		    </table>
 		</div>
 		
 		<div  class="pull-left">
-			<button class="btn btn-primary" type="button" ng-click="vm.cancelAdd()">Cancel</button>
+			<button class="btn btn-primary" type="button" ng-click="vm.viewDeleteDone()">Done</button>
 		</div>
-		<div  class="pull-right" ng-show="matchSelected">
-			<button class="btn btn-primary" type="button" ng-click="vm.close()">Delete</button>
-		</div>
+	</div>
+	<div ng-show="vm.loading" class="loader-container">
+		<div class="loader">Loading...</div>
 	</div>
     <div id="popupDiv" ng-show="showPopup">
     	<img id="popupImageId" src="">

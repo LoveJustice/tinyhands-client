@@ -1,6 +1,6 @@
 
 class IdManagementController {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, $document) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, $document,toastr) {
         'ngInject';
 
         this.state = $state;
@@ -12,6 +12,7 @@ class IdManagementController {
         this.timeout = $timeout;
         this.idManagementService = idManagementService;
         this.modal = $uibModal;
+        this.toastr = toastr;
 
         this.loading = false;
         this.reverse = false;
@@ -42,6 +43,10 @@ class IdManagementController {
         };
         $scope.hidePopup=function(){
             $scope.showPopup=false;
+        };
+        
+        $scope.radioSelected=function(event, id) {
+        	this.addSelectedId = id;
         };
 
         this.getKnownPersons();
@@ -81,16 +86,6 @@ class IdManagementController {
         this.idManagementService.loadMoreKnownPersons(this.getQueryParams(true))
             .then((promise) => {
                 this.knownPersons = this.knownPersons.concat(promise.data.results);
-                this.nextPageUrl = this.nextUrl(promise.data.next);
-                this.loading = false;
-            });
-    }
-
-    searchKnownPersons() {
-        this.loading = true;
-        this.idManagementService.searchKnownPersons(this.getQueryParams())
-            .then((promise) => {
-                this.knownPersons = promise.data.results;
                 this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
@@ -139,23 +134,32 @@ class IdManagementController {
     	this.addCandidates = [];
     	this.knownperson = knownperson;
         this.addSearchValue = knownperson.full_name;
+        this.addSearchOption="name";
         
         this.showIdMgmt = false;
         this.showAddAlias = true;
         this.showremoveAlias = false;
         this.matchSelected = false;
         
-        this.getFuzzyMatch();
+        this.addGroupSearch();
         this.getForms(knownperson.id);
     }
     
-    getFuzzyMatch() {
+    addGroupSearch() {
         this.loading = true;
-        this.idManagementService.getFuzzyKnownPersons(this.addSearchValue)
-            .then((promise) => {
-                this.addCandidates = promise.data;
-                this.loading = false;
-            });
+        if (this.addSearchOption==="name") {
+	        this.idManagementService.getFuzzyKnownPersons(this.addSearchValue)
+	            .then((promise) => {
+	                this.addCandidates = promise.data;
+	                this.loading = false;
+	            });
+    	} else {
+    		 this.idManagementService.getPhoneKnownPersons(this.addSearchValue)
+	            .then((promise) => {
+	                this.addCandidates = promise.data;
+	                this.loading = false;
+	            });
+    	}
     }
     
     getForms(person_id) {
@@ -177,29 +181,46 @@ class IdManagementController {
         this.isViewing = false;
     }
     
-    enableMatch() {
+    addAliasGroup() {
+    	 this.idManagementService.addAliasGroup(this.knownperson.id, this.addSelectedId).then(() => {
+    		 this.toastr.success("Person added to alias group!");
+    		 this.showIdMgmt = true;
+    		 this.showAddAlias = false;
+    		 this.getKnownPersons();
+    	 },
+    	 () => {
+    		 this.toastr.success("Failed to add p to alias group!");
+    	 });
+    }
+    
+    enableMatch(id) {
+    	this.addSelectedId = id;
     	this.matchSelected = true;
     }
     
     aliasGroupDetail(knownperson) {
     	this.delCandidates = [];
+    	this.knownperson = knownperson;
     	this.isViewing = true;
         
         this.showIdMgmt = false;
         this.showAddAlias = false;
         this.showRemoveAlias = true;
         
+        this.removeModified = false;
         this.getAliasGroup(knownperson.alias_group);	
     }
     
     aliasMgmtDelete(knownperson) {
     	this.delCandidates = [];
+    	this.knownperson = knownperson;
     	this.isViewing = false;
         
         this.showIdMgmt = false;
         this.showAddAlias = false;
         this.showRemoveAlias = true;
         
+        this.removeModified = false;
         this.getAliasGroup(knownperson.alias_group);
     }
     
@@ -210,6 +231,33 @@ class IdManagementController {
                 this.delCandidates = promise.data;
                 this.loading = false;
             });
+    }
+    
+    deleteFromGroup(person) {
+    	var alias_grp = person.alias_group;
+		this.idManagementService.removeAliasGroup(person.id).then(() => {
+			this.toastr.success("Person(s) removed from alias group!");
+			this.removeModified = true;
+			this.getAliasGroup(alias_grp);
+		},
+		() => {
+			this.toastr.success("Failed to remove from alias group!");
+		});
+    }
+    
+    viewDeleteDone() {
+       	if (this.isViewing) {
+    		this.showIdMgmt = false;
+    		this.showAddAlias = true;
+    	} else {
+    		this.showIdMgmt = true;
+    		this.showAddAlias = false;
+    		if (this.removeModified) {
+    			this.getKnownPersons();
+    		}
+    	}
+        this.showRemoveAlias = false; 
+        this.isViewing = false;
     }
 
 }

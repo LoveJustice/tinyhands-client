@@ -13,7 +13,6 @@ import accountModule from './account/account.module';
 import budgetModule from './budget/budget.module';
 import borderStationModule from './border-station/borderStation.module';
 import addressesModule from './addresses/addresses.module';
-import knownpersonModule from './knownperson/knownperson.module';
 import dashboardModule from './dashboard/dashboard.module';
 import loginModule from './login/login.module';
 import VIFModule from './vif/vif.module';
@@ -37,7 +36,6 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     sharedModule,
     accountModule,
     addressesModule,
-    knownpersonModule,
     borderStationModule,
     budgetModule,
     dashboardModule,

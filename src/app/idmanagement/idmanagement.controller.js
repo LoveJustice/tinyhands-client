@@ -1,6 +1,6 @@
 
 class IdManagementController {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, $document,toastr) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, $document, toastr) {
         'ngInject';
 
         this.state = $state;

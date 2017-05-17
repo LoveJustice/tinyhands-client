@@ -7,6 +7,7 @@ describe('IdManagementController', () => {
         $rootScope,
         $scope,
         $timeout,
+        $q,
         idManagementService,
         $uibModal,
         $state,
@@ -14,12 +15,25 @@ describe('IdManagementController', () => {
         document,
         mockToastr;
 
-    beforeEach(inject(($http) => {
+    let knownPersons = [
+
+    ];
+
+    beforeEach(inject(($http, _$rootScope_, _$q_) => {
+        $q = _$q_;
         mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         mockToastr = jasmine.createSpyObj('mockToastr', ['success', 'error']);
-        idManagementService = new IdManagementService($http);
+        idManagementService = jasmine.createSpyObj('mockService', ['listKnownPersons']);
+
+
+        idManagementService.listKnownPersons.and.callFake(() => {
+            return $q.resolve({data: knownPersons});
+        });
+
         $stateParams = {};
         $state = {go: () => {}};
+        $rootScope = _$rootScope_;
+        $scope = {};
 
         vm = new IdManagementController(mockStickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, document, mockToastr);
     }));

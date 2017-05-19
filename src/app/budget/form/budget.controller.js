@@ -423,6 +423,8 @@ export default class BudgetController {
     getBudgetForm() {
         this.service.getBudgetForm(this.budgetId).then((response) => {
             this.form = response.data;
+            this.month = parseInt(window.moment(this.form.month_year).format('M'));
+            this.year = parseInt(window.moment(this.form.month_year).format('YYYY'));
             this.borderStationId = response.data.border_station;
             this.form.totals = {
                 borderMonitoringStation: {},
@@ -465,8 +467,8 @@ export default class BudgetController {
     }
 
     getPreviousData() {
-        let month = window.moment(this.form.month_year).format('M');
-        let year = window.moment(this.form.month_year).format('YYYY');
+        let month = parseInt(window.moment(this.form.month_year).format('M'));
+        let year = parseInt(window.moment(this.form.month_year).format('YYYY'));
 
         return this.service.getPreviousData(this.borderStationId, month, year).then((response) => {
             this.form.previousData = response.data;

@@ -415,6 +415,10 @@ export default class BudgetController {
                 this.setOtherItemsForSection(key, response.data.other_items);
             }
             
+            // Reset medical and miscellaneous values
+            this.form.medical_last_months_expense = 0;
+            this.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
+
             this.getStaffForNewBudget();
             
             this.setTotals();
@@ -449,7 +453,7 @@ export default class BudgetController {
         if (this.utils.validId(this.budgetId)) {
             this.getAllOtherItems().then(() => {
                 for (let key in Constants.FormSections) {
-                    this.setOtherItemsForSection(key, this.otherItems);
+                        this.setOtherItemsForSection(key, this.otherItems);
                 }
             });
         } else {
@@ -459,10 +463,13 @@ export default class BudgetController {
         }
     }
 
+    // Don't set medical and miscellaneous to last month's values (they are one time expenses)
     setOtherItemsForSection(key, items) {
-        this.form.other[key] = items.filter((item) => {
-            return item.form_section === Constants.FormSections[key];
-        });
+        if (["Medical", "Miscellaneous"].indexOf(key) === -1){
+            this.form.other[key] = items.filter((item) => {
+                return item.form_section === Constants.FormSections[key];
+            });
+        }
     }
 
     getPreviousData() {
@@ -511,7 +518,7 @@ export default class BudgetController {
                 } else {
                     staff.salaryInfo = { salary: 0 };
                 }
-                
+
                 if(this.isCreating) {
                     staff.id = null;
                 }

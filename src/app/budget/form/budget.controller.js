@@ -226,12 +226,8 @@ export default class BudgetController {
 
 
     // REGION: Miscellaneous
-    miscellaneousMaximum() {
-        return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
-    }
-
     miscellaneousTotal() {
-        let amount = this.miscellaneousMaximum() + this.getOtherCost(this.form.other.Miscellaneous);
+        let amount = this.getOtherCost(this.form.other.Miscellaneous);
         this.form.totals.borderMonitoringStation.miscellaneous = amount;
         return amount;
     }

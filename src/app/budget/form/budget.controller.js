@@ -51,7 +51,7 @@ export default class BudgetController {
             {name: "December", value: 12},
         ];
 
-        this.active = null; 
+        this.active = null;
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
         this.borderStationId = $stateParams.borderStationId;
@@ -71,7 +71,7 @@ export default class BudgetController {
 
         this.isCreating = !this.budgetId && this.borderStationId;
         this.isViewing = $stateParams.isViewing === "true";
-        
+
         this.sectionTemplateUrl = null;
         this.safeHouseTotal = 0;
         this.total = 0;
@@ -82,7 +82,7 @@ export default class BudgetController {
             this.newBudgetForm();
         } else {
             this.getBudgetForm();
-        }        
+        }
     }
 
     getOtherCost(otherItems) {
@@ -389,7 +389,7 @@ export default class BudgetController {
     newBudgetForm() {
         this.service.getFormForMonthYear(this.borderStationId, this.month, this.year).then((response) => {
             this.getBorderStation();
-            
+
             this.form = response.data.form;
             this.form.id = null;
             this.form.totals = {
@@ -399,6 +399,7 @@ export default class BudgetController {
             };
             this.form.month_year = moment().year(this.year).month(this.month - 1).date(15);
             this.form.previousData = response.data.top_table_data;
+            this.form.staffSalaries = response.data.staff_salaries;
 
             response.data.other_items.forEach((item) => {
                 item.id = null;
@@ -409,9 +410,13 @@ export default class BudgetController {
             for (let key in Constants.FormSections) {
                 this.setOtherItemsForSection(key, response.data.other_items);
             }
+            
+            // Reset medical and miscellaneous values
+            this.form.medical_last_months_expense = 0;
+            this.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
 
-            this.getStaffForNewBudget(this.form.id);
-
+            this.getStaffForNewBudget();
+            
             this.setTotals();
         });
     }
@@ -446,7 +451,7 @@ export default class BudgetController {
         if (this.utils.validId(this.budgetId)) {
             this.getAllOtherItems().then(() => {
                 for (let key in Constants.FormSections) {
-                    this.setOtherItemsForSection(key, this.otherItems);
+                        this.setOtherItemsForSection(key, this.otherItems);
                 }
             });
         } else {
@@ -456,10 +461,13 @@ export default class BudgetController {
         }
     }
 
+    // Don't set medical and miscellaneous to last month's values (they are one time expenses)
     setOtherItemsForSection(key, items) {
-        this.form.other[key] = items.filter((item) => {
-            return item.form_section === Constants.FormSections[key]; 
-        });
+        if (["Medical", "Miscellaneous"].indexOf(key) === -1){
+            this.form.other[key] = items.filter((item) => {
+                return item.form_section === Constants.FormSections[key];
+            });
+        }
     }
 
     getPreviousData() {
@@ -471,12 +479,20 @@ export default class BudgetController {
         });
     }
 
-    getStaffForNewBudget(budgetId = null) {
+    getStaffForNewBudget() {
         return this.service.getStaff(this.borderStationId).then((response) => {
             this.form.staff = response.data.results;
-            if (budgetId !== null) {
-                this.getStaffSalaries(budgetId);
-            }
+            this.form.staff.map((staff) => {
+                if (this.form.staffSalaries.length > 0) {
+                    staff.salaryInfo = $.grep(this.form.staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
+                } else {
+                    staff.salaryInfo = { salary: 0 };
+                }
+                if(this.isCreating) {
+                    staff.id = null;
+                }
+            });
+            this.setTotals();
         });
     }
 
@@ -542,8 +558,8 @@ export default class BudgetController {
                 let item = this.form.other[section][i];
                 if (item.id) {
                     this.service.updateOtherItem(this.budgetId, item).catch((error) => {
-                    this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
-                });
+                        this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    });
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
@@ -565,7 +581,7 @@ export default class BudgetController {
                 staff.salaryInfo.staff_person = staff.id;
                 staff.salaryInfo.budget_calc_sheet = this.budgetId;
                 this.service.createSalary(staff.salaryInfo).catch((error) => {
-                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             }
         });

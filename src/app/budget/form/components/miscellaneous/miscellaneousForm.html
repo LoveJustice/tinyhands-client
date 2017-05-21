@@ -2,22 +2,6 @@
   <h2 class="text-center">Miscellaneous</h2>
   <hr>
   <div class="row">
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month" ng-init="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month= budgetCtrl.form.miscellaneous_number_of_intercepts_last_month ? budgetCtrl.form.miscellaneous_number_of_intercepts_last_month : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)" ng-disabled="budgetCtrl.isViewing"/>
-      <small># of intercepts last month</small>
-    </div>
-    <operator>*</operator>
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.miscellaneous_number_of_intercepts_last_month_multiplier" ng-disabled="budgetCtrl.isViewing"/>
-    </div>
-    <operator>=</operator>
-    <div class="col-md-4 input-group">
-      <div class="input-group-addon">Rs.</div>
-      <input class="form-control text-center" ng-value="budgetCtrl.miscellaneousMaximum() | number" disabled="disabled" />
-    </div>
-  </div>
-  <hr>
-  <div class="row">
     <div ng-repeat="otherMiscellaneousItem in budgetCtrl.form.other.Miscellaneous">
       <div class="col-md-4 col-md-offset-2">
         <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherMiscellaneousItem.name" ng-disabled="budgetCtrl.isViewing" required/>

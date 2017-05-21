@@ -226,12 +226,8 @@ export default class BudgetController {
 
 
     // REGION: Miscellaneous
-    miscellaneousMaximum() {
-        return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
-    }
-
     miscellaneousTotal() {
-        let amount = this.miscellaneousMaximum() + this.getOtherCost(this.form.other.Miscellaneous);
+        let amount = this.getOtherCost(this.form.other.Miscellaneous);
         this.form.totals.borderMonitoringStation.miscellaneous = amount;
         return amount;
     }
@@ -428,6 +424,8 @@ export default class BudgetController {
     getBudgetForm() {
         this.service.getBudgetForm(this.budgetId).then((response) => {
             this.form = response.data;
+            this.month = parseInt(window.moment(this.form.month_year).format('M'));
+            this.year = parseInt(window.moment(this.form.month_year).format('YYYY'));
             this.borderStationId = response.data.border_station;
             this.form.totals = {
                 borderMonitoringStation: {},
@@ -473,8 +471,8 @@ export default class BudgetController {
     }
 
     getPreviousData() {
-        let month = window.moment(this.form.month_year).format('M');
-        let year = window.moment(this.form.month_year).format('YYYY');
+        let month = parseInt(window.moment(this.form.month_year).format('M'));
+        let year = parseInt(window.moment(this.form.month_year).format('YYYY'));
 
         return this.service.getPreviousData(this.borderStationId, month, year).then((response) => {
             this.form.previousData = response.data;

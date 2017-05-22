@@ -407,6 +407,8 @@ export default class BudgetController {
             });
 
             this.form.other = [];
+            
+            // Don't set medical and miscellaneous to last month's values (they are one time expenses)
             for (let key in Constants.FormSections) {
                 if (["Medical", "Miscellaneous"].indexOf(key) === -1){
                     this.setOtherItemsForSection(key, response.data.other_items);
@@ -416,7 +418,7 @@ export default class BudgetController {
                 }
             }
             
-            // Reset medical values
+            // Reset medical expense since it comes in with response.data.form
             this.form.medical_last_months_expense = 0;
 
             this.getStaffForNewBudget();
@@ -465,7 +467,6 @@ export default class BudgetController {
         }
     }
 
-    // Don't set medical and miscellaneous to last month's values (they are one time expenses)
     setOtherItemsForSection(key, items) {
         this.form.other[key] = items.filter((item) => {
             return item.form_section === Constants.FormSections[key];

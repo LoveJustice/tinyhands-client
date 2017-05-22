@@ -408,12 +408,16 @@ export default class BudgetController {
 
             this.form.other = [];
             for (let key in Constants.FormSections) {
-                this.setOtherItemsForSection(key, response.data.other_items);
+                if (["Medical", "Miscellaneous"].indexOf(key) === -1){
+                    this.setOtherItemsForSection(key, response.data.other_items);
+                }
+                else {
+                    this.form.other[key] = []
+                }
             }
             
-            // Reset medical and miscellaneous values
+            // Reset medical values
             this.form.medical_last_months_expense = 0;
-            this.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
 
             this.getStaffForNewBudget();
             
@@ -463,11 +467,9 @@ export default class BudgetController {
 
     // Don't set medical and miscellaneous to last month's values (they are one time expenses)
     setOtherItemsForSection(key, items) {
-        if (["Medical", "Miscellaneous"].indexOf(key) === -1){
-            this.form.other[key] = items.filter((item) => {
-                return item.form_section === Constants.FormSections[key];
-            });
-        }
+        this.form.other[key] = items.filter((item) => {
+            return item.form_section === Constants.FormSections[key];
+        });
     }
 
     getPreviousData() {

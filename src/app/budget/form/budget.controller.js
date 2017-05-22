@@ -414,7 +414,7 @@ export default class BudgetController {
                     this.setOtherItemsForSection(key, response.data.other_items);
                 }
                 else {
-                    this.form.other[key] = []
+                    this.form.other[key] = [];
                 }
             }
             

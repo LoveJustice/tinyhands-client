@@ -483,48 +483,9 @@
 //         });
 //     });
 
-//     describe(`function miscellaneousMaximum`, () => {
-//         beforeEach(() => {
-//             vm.form.miscellaneous_number_of_intercepts_last_month = 2;
-//             vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 2;
-//         });
-
-//         it(`when miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 2 it should return 4`, () => {
-//             let result = vm.miscellaneousMaximum();
-//             expect(result).toEqual(4);
-//         });
-
-//         it(`when miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 2 it should return 0`, () => {
-//             vm.form.miscellaneous_number_of_intercepts_last_month = 0;
-//             let result = vm.miscellaneousMaximum();
-//             expect(result).toEqual(0);
-//         });
-
-//         it(`when miscellaneous_number_of_intercepts_last_month 2 and miscellaneous_number_of_intercepts_last_month_multiplier 0 it should return 0`, () => {
-//             vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
-//             let result = vm.miscellaneousMaximum();
-//             expect(result).toEqual(0);
-//         });
-
-//         it(`when miscellaneous_number_of_intercepts_last_month 0 and miscellaneous_number_of_intercepts_last_month_multiplier 0 it should return 0`, () => {
-//             vm.form.miscellaneous_number_of_intercepts_last_month = 0;
-//             vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 0;
-//             let result = vm.miscellaneousMaximum();
-//             expect(result).toEqual(0);
-//         });
-//     });
-
 //     describe(`function miscellaneousTotal`, () => {
 //         beforeEach(() => {
-//             vm.form.miscellaneous_number_of_intercepts_last_month = 2;
-//             vm.form.miscellaneous_number_of_intercepts_last_month_multiplier = 2;
 //             vm.form.other.Miscellaneous = [{ cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }];
-//         });
-
-//         it(`should have called miscellaneousMaximum `, () => {
-//             spyOn(vm, 'miscellaneousMaximum');
-//             vm.miscellaneousTotal();
-//             expect(vm.miscellaneousMaximum).toHaveBeenCalled();
 //         });
 
 //         it(`should have called getOtherCost `, () => {
@@ -533,14 +494,14 @@
 //             expect(vm.getOtherCost).toHaveBeenCalled();
 //         });
 
-//         it(`should set borderMonitoringStation.miscellaneous to 9`, () => {
+//         it(`should set borderMonitoringStation.miscellaneous to 4`, () => {
 //             vm.miscellaneousTotal();
-//             expect(vm.form.totals.borderMonitoringStation.miscellaneous).toEqual(9);
+//             expect(vm.form.totals.borderMonitoringStation.miscellaneous).toEqual(4);
 //         });
 
-//         it(`should return 9`, () => {
+//         it(`should return 4`, () => {
 //             let result = vm.miscellaneousTotal();
-//             expect(result).toEqual(9);
+//             expect(result).toEqual(4);
 //         });
 //     });
 

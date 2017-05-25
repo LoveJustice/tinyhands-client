@@ -458,7 +458,7 @@ describe('IdManagementController', () => {
     
     describe('function aliasMgmtDelete', () => {
     	let knownperson = {full_name: 'foo', id: 123, alias_group : 987};
-    	let aliasMembersResponse = {data : 'aliasMembers'}
+    	let aliasMembersResponse = {data : 'aliasMembers'};
 
     	beforeEach(() => {
     		vm.idManagementService.getAliasMembers = () => {
@@ -502,7 +502,7 @@ describe('IdManagementController', () => {
 
     describe('function getAliasGroup', () => {
     	let group_id = 987;
-    	let aliasMembersResponse = {data : 'aliasMembers'}
+    	let aliasMembersResponse = {data : 'aliasMembers'};
 
     	beforeEach(() => {
     		vm.idManagementService.getAliasMembers = () => {
@@ -526,7 +526,7 @@ describe('IdManagementController', () => {
     
     describe('function deleteFromGroup', () => {
     	let group_id = 987;
-    	let aliasMembersResponse = {data : 'aliasMembers'}
+    	let aliasMembersResponse = {data : 'aliasMembers'};
 
     	beforeEach(() => {
     		vm.idManagementService.removeAliasGroup = () => {

@@ -1,5 +1,4 @@
 import IdManagementController from './idmanagement.controller';
-import IdManagementService from './idmanagement.service';
 
 describe('IdManagementController', () => {
     let vm;
@@ -123,7 +122,7 @@ describe('IdManagementController', () => {
     });
     
     describe("function loadMoreKnownPersons", () => {
-        let response = { "data": { 'results': 'page1', 'next': 'test.com/page=469876' } }
+        let response = { "data": { 'results': 'page1', 'next': 'test.com/page=469876' } };
         beforeEach(() => {
             vm.idManagementService.loadMoreKnownPersons = () => {
                 return {
@@ -204,8 +203,8 @@ describe('IdManagementController', () => {
     });
     
     describe('function addGroupSearch', () => {
-    	let fuzzyResponse = { "data": 'Name-Candidates' }
-    	let phoneResponse = { "data": 'Phone-Candidates' }
+    	let fuzzyResponse = { "data": 'Name-Candidates' };
+    	let phoneResponse = { "data": 'Phone-Candidates' };
     	let knownperson = {full_name: 'foo', id: 123};
     	
         beforeEach(() => {
@@ -239,7 +238,7 @@ describe('IdManagementController', () => {
     });
     
     describe('function getForms', () => {
-    	let formsResponse = { "data": 'Forms' }
+    	let formsResponse = { "data": 'Forms' };
     	let person_id = 123;
     	
         beforeEach(() => {
@@ -259,8 +258,8 @@ describe('IdManagementController', () => {
     });
     
     describe('function aliasMgmtAdd', () => {
-    	let fuzzyResponse = { "data": 'Candidates' }
-    	let formsResponse = { "data": 'Forms' }
+    	let fuzzyResponse = { "data": 'Candidates' };
+    	let formsResponse = { "data": 'Forms' };
     	let knownperson = {full_name: 'foo', id: 123};
     	
         beforeEach(() => {
@@ -415,7 +414,7 @@ describe('IdManagementController', () => {
     
     describe('function aliasGroupDetail', () => {
     	 let knownperson = {full_name: 'foo', id: 123, alias_group : 987};
-    	 let aliasMembersResponse = {data : 'aliasMembers'}
+    	 let aliasMembersResponse = {data : 'aliasMembers'};
 
         beforeEach(() => {
         	vm.idManagementService.getAliasMembers = () => {

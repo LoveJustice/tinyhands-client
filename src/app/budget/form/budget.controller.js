@@ -51,7 +51,7 @@ export default class BudgetController {
             {name: "December", value: 12},
         ];
 
-        this.active = null; 
+        this.active = null;
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
         this.borderStationId = $stateParams.borderStationId;
@@ -71,7 +71,7 @@ export default class BudgetController {
 
         this.isCreating = !this.budgetId && this.borderStationId;
         this.isViewing = $stateParams.isViewing === "true";
-        
+
         this.sectionTemplateUrl = null;
         this.safeHouseTotal = 0;
         this.total = 0;
@@ -82,7 +82,7 @@ export default class BudgetController {
             this.newBudgetForm();
         } else {
             this.getBudgetForm();
-        }        
+        }
     }
 
     getOtherCost(otherItems) {
@@ -226,12 +226,8 @@ export default class BudgetController {
 
 
     // REGION: Miscellaneous
-    miscellaneousMaximum() {
-        return this.validAmount(this.form.miscellaneous_number_of_intercepts_last_month * this.form.miscellaneous_number_of_intercepts_last_month_multiplier);
-    }
-
     miscellaneousTotal() {
-        let amount = this.miscellaneousMaximum() + this.getOtherCost(this.form.other.Miscellaneous);
+        let amount = this.getOtherCost(this.form.other.Miscellaneous);
         this.form.totals.borderMonitoringStation.miscellaneous = amount;
         return amount;
     }
@@ -393,7 +389,7 @@ export default class BudgetController {
     newBudgetForm() {
         this.service.getFormForMonthYear(this.borderStationId, this.month, this.year).then((response) => {
             this.getBorderStation();
-            
+
             this.form = response.data.form;
             this.form.id = null;
             this.form.totals = {
@@ -403,6 +399,7 @@ export default class BudgetController {
             };
             this.form.month_year = moment().year(this.year).month(this.month - 1).date(15);
             this.form.previousData = response.data.top_table_data;
+            this.form.staffSalaries = response.data.staff_salaries;
 
             response.data.other_items.forEach((item) => {
                 item.id = null;
@@ -410,12 +407,22 @@ export default class BudgetController {
             });
 
             this.form.other = [];
+            
+            // Don't set medical and miscellaneous to last month's values (they are one time expenses)
             for (let key in Constants.FormSections) {
-                this.setOtherItemsForSection(key, response.data.other_items);
+                if (["Medical", "Miscellaneous"].indexOf(key) === -1){
+                    this.setOtherItemsForSection(key, response.data.other_items);
+                }
+                else {
+                    this.form.other[key] = [];
+                }
             }
+            
+            // Reset medical expense since it comes in with response.data.form
+            this.form.medical_last_months_expense = 0;
 
-            this.getStaffForNewBudget(this.form.id);
-
+            this.getStaffForNewBudget();
+            
             this.setTotals();
         });
     }
@@ -423,6 +430,8 @@ export default class BudgetController {
     getBudgetForm() {
         this.service.getBudgetForm(this.budgetId).then((response) => {
             this.form = response.data;
+            this.month = parseInt(window.moment(this.form.month_year).format('M'));
+            this.year = parseInt(window.moment(this.form.month_year).format('YYYY'));
             this.borderStationId = response.data.border_station;
             this.form.totals = {
                 borderMonitoringStation: {},
@@ -448,7 +457,7 @@ export default class BudgetController {
         if (this.utils.validId(this.budgetId)) {
             this.getAllOtherItems().then(() => {
                 for (let key in Constants.FormSections) {
-                    this.setOtherItemsForSection(key, this.otherItems);
+                        this.setOtherItemsForSection(key, this.otherItems);
                 }
             });
         } else {
@@ -460,25 +469,33 @@ export default class BudgetController {
 
     setOtherItemsForSection(key, items) {
         this.form.other[key] = items.filter((item) => {
-            return item.form_section === Constants.FormSections[key]; 
+            return item.form_section === Constants.FormSections[key];
         });
     }
 
     getPreviousData() {
-        let month = window.moment(this.form.month_year).format('M');
-        let year = window.moment(this.form.month_year).format('YYYY');
+        let month = parseInt(window.moment(this.form.month_year).format('M'));
+        let year = parseInt(window.moment(this.form.month_year).format('YYYY'));
 
         return this.service.getPreviousData(this.borderStationId, month, year).then((response) => {
             this.form.previousData = response.data;
         });
     }
 
-    getStaffForNewBudget(budgetId = null) {
+    getStaffForNewBudget() {
         return this.service.getStaff(this.borderStationId).then((response) => {
             this.form.staff = response.data.results;
-            if (budgetId !== null) {
-                this.getStaffSalaries(budgetId);
-            }
+            this.form.staff.map((staff) => {
+                if (this.form.staffSalaries.length > 0) {
+                    staff.salaryInfo = $.grep(this.form.staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
+                } else {
+                    staff.salaryInfo = { salary: 0 };
+                }
+                if(this.isCreating) {
+                    staff.id = null;
+                }
+            });
+            this.setTotals();
         });
     }
 
@@ -544,8 +561,8 @@ export default class BudgetController {
                 let item = this.form.other[section][i];
                 if (item.id) {
                     this.service.updateOtherItem(this.budgetId, item).catch((error) => {
-                    this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
-                });
+                        this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    });
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
@@ -567,7 +584,7 @@ export default class BudgetController {
                 staff.salaryInfo.staff_person = staff.id;
                 staff.salaryInfo.budget_calc_sheet = this.budgetId;
                 this.service.createSalary(staff.salaryInfo).catch((error) => {
-                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             }
         });

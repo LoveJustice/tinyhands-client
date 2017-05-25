@@ -10,7 +10,7 @@ describe('IdManagementService', () => {
     });
 
     describe('function listKnownPersons with queryParams', () => {
-        let url = 'api/knownperson/';
+        let url = 'api/idmgmt/';
         let params = 'test param';
         it(`should call get with '${url}' and '${params}'`, () => {
             service.listKnownPersons(params);
@@ -20,7 +20,7 @@ describe('IdManagementService', () => {
     
     describe('function getKnownPerson with val', () => {
     	let val = '123';
-        let url = 'api/knownperson/aperson/?person_id=' + val;
+        let url = 'api/idmgmt/aperson/?person_id=' + val;
         it(`should call get with '${url}'`, () => {
             service.getKnownPerson(val);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -28,7 +28,7 @@ describe('IdManagementService', () => {
     });
     
     describe('function loadMoreKnownPersons with queryParams', () => {
-        let url = 'api/knownperson/';
+        let url = 'api/idmgmt/';
         let params = 'test param';
         it(`should call get with '${url}' and '${params}'`, () => {
             service.loadMoreKnownPersons(params);
@@ -38,7 +38,7 @@ describe('IdManagementService', () => {
     
     describe('function getFuzzyKnownPersons with val', () => {
     	let val = 'John Smith';
-        let url = 'api/knownperson/fuzzy/?name=' + val;
+        let url = 'api/idmgmt/fuzzy/?name=' + val;
         it(`should call get with '${url}'`, () => {
             service.getFuzzyKnownPersons(val);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -47,7 +47,7 @@ describe('IdManagementService', () => {
     
     describe('function getPhoneKnownPersons with val', () => {
     	let val = '1234567890';
-        let url = 'api/knownperson/phone/?phone=' + val;
+        let url = 'api/idmgmt/phone/?phone=' + val;
         it(`should call get with '${url}'`, () => {
             service.getPhoneKnownPersons(val);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -56,7 +56,7 @@ describe('IdManagementService', () => {
     
     describe('function getKnownPersonForms with val', () => {
     	let val = '123';
-        let url = 'api/knownperson/forms/?person_id=' + val;
+        let url = 'api/idmgmt/forms/?person_id=' + val;
         it(`should call get with '${url}'`, () => {
             service.getKnownPersonForms(val);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -65,7 +65,7 @@ describe('IdManagementService', () => {
     
     describe('function getAliasMembers with val', () => {
     	let val = '123';
-        let url = 'api/knownperson/group/?group_id=' + val;
+        let url = 'api/idmgmt/group/?group_id=' + val;
         it(`should call get with '${url}'`, () => {
             service.getAliasMembers(val);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -75,7 +75,7 @@ describe('IdManagementService', () => {
     describe('function addAliasGroup with val', () => {
     	let val = '123';
     	let val2 = '456';
-        let url = 'api/knownperson/' + val + '/addgroup/' + val2 + '/';
+        let url = 'api/idmgmt/' + val + '/addgroup/' + val2 + '/';
         it(`should call put with '${url}'`, () => {
             service.addAliasGroup(val, val2);
             expect(mockBaseService.put).toHaveBeenCalledWith(url);
@@ -84,7 +84,7 @@ describe('IdManagementService', () => {
     
     describe('function removeAliasGroup with val', () => {
     	let val = '123';
-        let url = 'api/knownperson/' + val + '/removegroup/';
+        let url = 'api/idmgmt/' + val + '/removegroup/';
         it(`should call put with '${url}'`, () => {
             service.removeAliasGroup(val);
             expect(mockBaseService.put).toHaveBeenCalledWith(url);

@@ -28,6 +28,7 @@ class IdManagementController {
         this.showIdMgmt = true;
         this.showAddAlias = false;
         this.showRemoveAlias = false;
+        this.isViewing = false;
         
         $scope.showPopup=false;
         $scope.displayPopup=function(event, photo){

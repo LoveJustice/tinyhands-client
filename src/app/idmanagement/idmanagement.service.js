@@ -5,39 +5,39 @@ class IdManagementService {
     }
 
     listKnownPersons(queryParams) {
-        return this.service.get('api/knownperson/', queryParams);
+        return this.service.get('api/idmgmt/', queryParams);
     }
     
     getKnownPerson(person_id) {
-        return this.service.get('api/knownperson/aperson/?person_id=' + person_id);
+        return this.service.get('api/idmgmt/aperson/?person_id=' + person_id);
     }
 
     loadMoreKnownPersons(queryParams) {
-        return this.service.get('api/knownperson/', queryParams);
+        return this.service.get('api/idmgmt/', queryParams);
     }
 
     getFuzzyKnownPersons(val) {
-        return this.service.get('api/knownperson/fuzzy/?name=' + val);
+        return this.service.get('api/idmgmt/fuzzy/?name=' + val);
     }
     
     getPhoneKnownPersons(val) {
-        return this.service.get('api/knownperson/phone/?phone=' + val);
+        return this.service.get('api/idmgmt/phone/?phone=' + val);
     }
     
     getKnownPersonForms(val) {
-        return this.service.get('api/knownperson/forms/?person_id=' + val);
+        return this.service.get('api/idmgmt/forms/?person_id=' + val);
     }
     
     getAliasMembers(val) {
-    	return this.service.get('api/knownperson/group/?group_id=' + val);
+    	return this.service.get('api/idmgmt/group/?group_id=' + val);
     }
     
     addAliasGroup(id1, id2) {
-    	return this.service.put(`api/knownperson/${id1}/addgroup/${id2}/`);
+    	return this.service.put(`api/idmgmt/${id1}/addgroup/${id2}/`);
     }
     
     removeAliasGroup(id1) {
-    	 return this.service.put(`api/knownperson/${id1}/removegroup/`);
+    	 return this.service.put(`api/idmgmt/${id1}/removegroup/`);
     }
 }
 

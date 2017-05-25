@@ -10,8 +10,10 @@ export default function CsvExportDirective() {
         controller: CsvExportController,
         controllerAs: 'exportCtrl',
         scope: {
-            type: '@',
-            buttontext: '@'
+            buttontext: '@',
+            exportServiceFunc: '&',
+            getFileName: '&',
+            onExportComplete: '&',
         }
     };
 

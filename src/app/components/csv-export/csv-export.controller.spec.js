@@ -1,32 +1,59 @@
 import CsvExportController from './csv-export.controller';
 
 describe('MDF Controller', () => {
-    let vm,
+    let target,
         $scope,
-        $window;
+        response,
+        fileName,
+        getFileName,
+        serviceFunc,
+        onExportComplete,
+        mockFileDownloaderService,
+        $q,
+        $rootScope;
 
-    beforeEach(inject(() => {
-        $scope = { "type": "", "buttonText": "" };
-        $window = jasmine.createSpyObj('$window', ['open']);
-        vm = new CsvExportController($scope, $window);
+    beforeEach(inject((_$q_, _$rootScope_) => {
+        $q = _$q_;
+        $rootScope = _$rootScope_;
+        response = {data: 1};
+        fileName = 'test';
+        getFileName = jasmine.createSpy('getFileName').and.callFake(() => fileName);
+        serviceFunc = jasmine.createSpy('serviceFunc').and.callFake(() => $q.resolve(response));
+        onExportComplete = jasmine.createSpy('onExportComplete');
+
+        $scope = {
+            "buttonText": "",
+            "getFileName": getFileName,
+            "exportServiceFunc": serviceFunc,
+            "onExportComplete": onExportComplete
+        };
+        mockFileDownloaderService = jasmine.createSpyObj('mockFileDownloaderService', ['downloadFileAs']);
+        target = new CsvExportController($scope, mockFileDownloaderService);
     }));
 
-    describe('function typeToUrl', () => {
-        it('expect it to create the irf url', () => {
-            var val = vm.typeToUrl('irf');
-            expect(val).toContain('irf');
-        });
-        it('expect it to create the vif url', () => {
-            var val = vm.typeToUrl('vif');
-            expect(val).toContain('vif');
-        });
-    });
+
 
     describe('exportCSV', () => {
-        it('should call window.open with url', () => {
-            vm.exportCSV();
+        it('should call service function', () => {
+            target.exportCSV();
 
-            expect($window.open).toHaveBeenCalledWith(vm.url, '_blank');
+            expect(serviceFunc).toHaveBeenCalled();
+        });
+
+        describe('when data received', () => {
+            it('should save data to file', () => {
+                target.exportCSV();
+                $rootScope.$apply();
+
+                expect(mockFileDownloaderService.downloadFileAs).toHaveBeenCalledWith([response.data], fileName, 'text/csv');
+            });
+
+            it('should call onExportComplete', () => {
+                target.exportCSV();
+                $rootScope.$apply();
+
+                expect(onExportComplete).toHaveBeenCalled();
+            });
         });
     });
 });

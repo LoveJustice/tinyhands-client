@@ -497,21 +497,41 @@ export default class BudgetController {
         
         if (id === null) {
             console.log("New");
-            console.log(this.form.staff);
-            mapStaffSalaries(this.form.staffSalaries);
+            this.mapStaffSalaries(this.form.staffSalaries);
             this.setTotals();
         }
 
         else {
             return this.service.getStaffSalaries(id).then((response) => {
                 console.log("Old");
-                mapStaffSalaries(response.data);
+                this.mapStaffSalaries(response.data);
                 this.setTotals();
             });
         }
     }
 
-    
+    mapStaffSalaries(staffSalaries){
+        console.log("Mapping staff");
+        console.log(this.form.staff);
+        
+        return this.form.staff.map((staff) => {
+            if (staffSalaries.length > 0) {
+                if (staff.id){
+                    console.log(staff);
+                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
+                }
+                else {
+                    console.log("Faker");
+                }
+            } else {
+                staff.salaryInfo = { salary: 0 };
+            }
+
+            if(this.isCreating) {
+                staff.id = null;
+            }
+        });
+    }
     
     // ENDREGION: GET Calls
 
@@ -577,30 +597,7 @@ export default class BudgetController {
     }
     // ENDREGION: PUT Calls
     // ENDREGION: Call to Service Functions
-
-    mapStaffSalaries(staffSalaries){
-        console.log("Mapping staff");
-        console.log(this.form.staff);
-        
-        return this.form.staff.map((staff) => {
-            if (staffSalaries.length > 0) {
-                if (staff.id){
-                    console.log(staff);
-                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
-                }
-                else {
-                    console.log("Faker");
-                }
-            } else {
-                staff.salaryInfo = { salary: 0 };
-            }
-
-            if(this.isCreating) {
-                staff.id = null;
-            }
-        });
-    }
-
+    
     clearValue(value) {
         let returnValue;
         if (typeof value === 'boolean') {

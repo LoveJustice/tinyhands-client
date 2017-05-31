@@ -7,15 +7,17 @@ describe('VIF List Controller',() => {
         MockSessionService,
         MockSpinnerOverlayService,
         MockStickyHeader,
+        $state,
         $stateParams,
         queryParameters,
         transformedQueryParameters,
         moment,
         $rootScope;
 
-    beforeEach(angular.mock.module('tinyhands.VIF'))
+    beforeEach(angular.mock.module('tinyhands.VIF'));
 
-    beforeEach(inject((_$timeout_, _moment_, _$rootScope_) => {
+    beforeEach(inject((_$state_, _$timeout_, _moment_, _$rootScope_) => {
+        $state = _$state_;
         $timeout = _$timeout_;
         $stateParams = {"search": "BHD"};
         moment = _moment_;
@@ -55,7 +57,7 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+        vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
     }));
 
     describe('function constructor', () => {
@@ -65,13 +67,13 @@ describe('VIF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+            vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('should be called with the constructor', () => {
             spyOn(vm, 'checkForExistingVifs');
-            vm.constructor(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+            vm.constructor(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
 
             expect(vm.checkForExistingVifs).toHaveBeenCalled();
         });
@@ -267,19 +269,19 @@ describe('VIF List Controller',() => {
             savedVifs = {
                 BHD123: {asdf: "asdf"},
                 BHD1234: {asdf: "asdf"}
-            }
+            };
             localStorage.setItem('saved-vifs', JSON.stringify(savedVifs));
         });
 
         it('should return undefined if no saved-vifs', () => {
             localStorage.removeItem('saved-vifs');
-            var result = vm.checkForExistingVifs();
+            let result = vm.checkForExistingVifs();
 
             expect(result).toEqual(undefined);
         });
 
         it('should call vifExists on each form in savedVifs', () => {
-            var result = vm.checkForExistingVifs();
+            vm.checkForExistingVifs();
 
             expect(vm.service.vifExists).toHaveBeenCalledWith('BHD123');
             expect(vm.service.vifExists).toHaveBeenCalledWith('BHD1234');
@@ -288,7 +290,7 @@ describe('VIF List Controller',() => {
         it('should call removeVifFromSaveForLater on response with same name', () => {
             spyOn(vm, 'removeVifFromSaveForLater');
 
-            var result = vm.checkForExistingVifs();
+            vm.checkForExistingVifs();
 
             expect(vm.removeVifFromSaveForLater).toHaveBeenCalledWith('BHD123');
             expect(vm.removeVifFromSaveForLater).not.toHaveBeenCalledWith('BHD1234');

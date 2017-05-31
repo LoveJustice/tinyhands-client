@@ -7,6 +7,7 @@ describe('IRF List Controller',() => {
         MockSessionService,
         MockSpinnerOverlayService,
         MockStickyHeader,
+        $state,
         $stateParams,
         moment,
         $rootScope,
@@ -15,7 +16,8 @@ describe('IRF List Controller',() => {
 
     beforeEach(angular.mock.module('tinyhands.IRF'))
 
-    beforeEach(inject((_$timeout_, _moment_, _$rootScope_) => {
+    beforeEach(inject((_$state_, _$timeout_, _moment_, _$rootScope_) => {
+        $state = _$state_;
         $timeout = _$timeout_;
         $stateParams = {"search": "BHD"};
         MockSessionService = { user: { } };
@@ -55,7 +57,7 @@ describe('IRF List Controller',() => {
 
         moment = _moment_;
         $rootScope = _$rootScope_;
-        vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+        vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
     }));
 
     describe('function constructor', () => {
@@ -65,13 +67,13 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+            vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('expect checkForExistingIrfs to be called', () => {
             spyOn(vm, 'checkForExistingIrfs');
-            vm.constructor(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+            vm.constructor(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
             expect(vm.checkForExistingIrfs).toHaveBeenCalled();
         });
     });
@@ -266,19 +268,19 @@ describe('IRF List Controller',() => {
             savedIrfs = {
                 BHD123: {asdf: "asdf"},
                 BHD1234: {asdf: "asdf"}
-            }
+            };
             localStorage.setItem('saved-irfs', JSON.stringify(savedIrfs));
         });
 
         it('should return undefined if no saved-irfs', () => {
             localStorage.removeItem('saved-irfs');
-            var result = vm.checkForExistingIrfs();
+            let result = vm.checkForExistingIrfs();
 
             expect(result).toEqual(undefined);
         });
 
         it('should call irfExists on each form in savedIrfs', () => {
-            var result = vm.checkForExistingIrfs();
+            vm.checkForExistingIrfs();
 
             expect(vm.service.irfExists).toHaveBeenCalledWith('BHD123');
             expect(vm.service.irfExists).toHaveBeenCalledWith('BHD1234');
@@ -287,7 +289,7 @@ describe('IRF List Controller',() => {
         it('should call removeIrfFromSaveForLater on response with same name', () => {
             spyOn(vm, 'removeIrfFromSaveForLater');
 
-            var result = vm.checkForExistingIrfs();
+            vm.checkForExistingIrfs();
 
             expect(vm.removeIrfFromSaveForLater).toHaveBeenCalledWith('BHD123');
             expect(vm.removeIrfFromSaveForLater).not.toHaveBeenCalledWith('BHD1234');
@@ -300,7 +302,7 @@ describe('IRF List Controller',() => {
             savedIrfs = {
                 BHD123: {asdf: "asdf"},
                 BHD1234: {asdf: "asdf"}
-            }
+            };
             localStorage.setItem('saved-irfs', JSON.stringify(savedIrfs));
         });
 

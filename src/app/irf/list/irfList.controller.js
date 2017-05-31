@@ -1,14 +1,14 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, StickyHeader, $stateParams, $timeout, $window, toastr, constants) {
+    constructor(IrfListService, SessionService, SpinnerOverlayService, StickyHeader, $stateParams, $timeout,  toastr, constants, moment, $rootScope ) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
         this.sticky = StickyHeader;
+        this.spinnerOverlayService = SpinnerOverlayService;
         this.timeout = $timeout;
-        this.window = $window;
         this.toastr = toastr;
         this.constants = constants;
-
+        this.moment = moment;
 
         this.timer = {};
         this.irfs = [];
@@ -29,6 +29,28 @@ export default class IrfListController {
         this.getIrfList();
 
         this.checkForExistingIrfs();
+
+        $rootScope.$on('$stateChangeStart', (event) => {
+            if(this.spinnerOverlayService.isVisible) {
+                event.preventDefault();
+            }
+        });
+    }
+
+    get hasAddPermission() {
+        return this.session.user.permission_irf_add === true;
+    }
+
+    get hasDeletePermission() {
+        return this.session.user.permission_irf_delete === true;
+    }
+
+    get hasEditPermission() {
+        return this.session.user.permission_irf_edit === true;
+    }
+
+    get hasViewPermission() {
+        return this.session.user.permission_irf_view === true;
     }
 
     transform(queryParams) {
@@ -82,7 +104,7 @@ export default class IrfListController {
     }
 
     showMoreIrfs() {
-        var params = angular.copy(this.queryParameters);
+        let params = angular.copy(this.queryParameters);
         params.page = this.nextPage;
         this.service.getMoreIrfs(this.transform(params)).then( (promise) => {
             this.irfs = this.irfs.concat(promise.data.results);
@@ -108,7 +130,7 @@ export default class IrfListController {
     }
 
     checkForExistingIrfs() {
-        var savedForLaterIrfs = this.getSaveForLaterObject();
+        let savedForLaterIrfs = this.getSaveForLaterObject();
         if (savedForLaterIrfs === null) { return; }
 
         savedForLaterIrfs = Object.keys(savedForLaterIrfs);
@@ -129,5 +151,19 @@ export default class IrfListController {
 
     getSaveForLaterObject() {
         return JSON.parse(localStorage.getItem('saved-irfs'));
+    }
+
+    exportCsv() {
+        this.spinnerOverlayService.show("Exporting to CSV");
+        return this.service.getCsvExport();
+    }
+
+    onExportComplete() {
+        this.spinnerOverlayService.hide();
+    }
+
+    getExportFileName() {
+        let date = this.moment().format('Y-M-D');
+        return `irf-all-data-${date}.csv`;
     }
 }

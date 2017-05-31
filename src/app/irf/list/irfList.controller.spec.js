@@ -3,26 +3,31 @@ import IrfListController from './irfList.controller';
 describe('IRF List Controller',() => {
     let vm,
         $timeout,
-        $window,
         MockIrfListService,
         MockSessionService,
+        MockSpinnerOverlayService,
         MockStickyHeader,
         $stateParams,
+        moment,
+        $rootScope,
         queryParameters,
         transformedQueryParameters;
 
-    beforeEach(inject((_$timeout_, _$window_) => {
-        $timeout = _$timeout_;
-        $window = _$window_;
-        $stateParams = {"search": "BHD"};
+    beforeEach(angular.mock.module('tinyhands.IRF'))
 
+    beforeEach(inject((_$timeout_, _moment_, _$rootScope_) => {
+        $timeout = _$timeout_;
+        $stateParams = {"search": "BHD"};
+        MockSessionService = { user: { } };
+        MockSpinnerOverlayService = jasmine.createSpyObj('SpinnerOverlayService', ['show', 'hide']);
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
         MockIrfListService = jasmine.createSpyObj('IrfListService', [
             'getIrfList',
             'getMoreIrfs',
             'deleteIrf',
-            'irfExists'
+            'irfExists',
+            'getCsvExport'
         ]);
 
         let response = {'data':{
@@ -48,7 +53,9 @@ describe('IRF List Controller',() => {
             };
         });
 
-        vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        moment = _moment_;
+        $rootScope = _$rootScope_;
+        vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
     }));
 
     describe('function constructor', () => {
@@ -58,14 +65,86 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('expect checkForExistingIrfs to be called', () => {
             spyOn(vm, 'checkForExistingIrfs');
-            vm.constructor(MockIrfListService, MockSessionService, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm.constructor(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
             expect(vm.checkForExistingIrfs).toHaveBeenCalled();
+        });
+    });
+
+    describe('hasAddPermission', () => {
+        describe('when user has irf add permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_irf_add = true;
+
+                expect(vm.hasAddPermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have irf add permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_irf_add = false;
+
+                expect(vm.hasAddPermission).toBe(false);
+            });
+        });
+    });
+
+    describe('hasDeletePermission', () => {
+        describe('when user has irf delete permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_irf_delete = true;
+
+                expect(vm.hasDeletePermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have irf delete permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_irf_delete = false;
+
+                expect(vm.hasDeletePermission).toBe(false);
+            });
+        });
+    });
+
+    describe('hasEditPermission', () => {
+        describe('when user has irf edit permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_irf_edit = true;
+
+                expect(vm.hasEditPermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have irf edit permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_irf_edit = false;
+
+                expect(vm.hasEditPermission).toBe(false);
+            });
+        });
+    });
+
+    describe('hasViewPermission', () => {
+        describe('when user has irf view permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_irf_view = true;
+
+                expect(vm.hasViewPermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have irf view permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_irf_view = false;
+
+                expect(vm.hasViewPermission).toBe(false);
+            });
         });
     });
 
@@ -231,6 +310,36 @@ describe('IRF List Controller',() => {
             vm.removeIrfFromSaveForLater('BHD123');
 
             expect(savedIrfs).not.toEqual(JSON.parse(localStorage.getItem('saved-irfs')));
+        });
+    });
+
+    describe('exportCSV', () => {
+        it('should show spinner', () => {
+            vm.exportCsv();
+
+            expect(MockSpinnerOverlayService.show).toHaveBeenCalledWith('Exporting to CSV');
+        });
+
+        it('should get CSV from service', () => {
+            vm.exportCsv();
+
+            expect(MockIrfListService.getCsvExport).toHaveBeenCalled();
+        });
+    });
+
+    describe('onExportComplete', () => {
+        it('should hide spinner', () => {
+            vm.onExportComplete();
+
+            expect(MockSpinnerOverlayService.hide).toHaveBeenCalled();
+        });
+    });
+
+    describe('getExportFileName', () => {
+        it('should return filename with date', () => {
+            let result = vm.getExportFileName();
+
+            expect(result).toBe(`irf-all-data-${moment().format('Y-M-D')}.csv`);
         });
     });
 });

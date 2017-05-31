@@ -1,14 +1,14 @@
 export default class VifListController {
-    constructor(VifListService, SessionService, StickyHeader, $stateParams, $timeout, $window, toastr, constants) {
+    constructor(VifListService, SessionService, SpinnerOverlayService, StickyHeader, $stateParams, $timeout, toastr, constants, moment, $rootScope) {
         'ngInject';
 
         this.constants = constants;
-        this.createVifUrl = constants.BaseUrl;
+        this.moment = moment;
         this.service = VifListService;
         this.session = SessionService;
+        this.spinnerOverlayService = SpinnerOverlayService;
         this.sticky = StickyHeader;
         this.timeout = $timeout;
-        this.window = $window;
         this.toastr = toastr;
 
         this.timer = {};
@@ -29,15 +29,37 @@ export default class VifListController {
         }
         this.getVifList();
         this.checkForExistingVifs();
+
+        $rootScope.$on('$stateChangeStart', (event) => {
+            if(this.spinnerOverlayService.isVisible) {
+                event.preventDefault();
+            }
+        });
+    }
+
+    get hasAddPermission() {
+        return this.session.user.permission_vif_add === true;
+    }
+
+    get hasDeletePermission() {
+        return this.session.user.permission_vif_delete === true;
+    }
+
+    get hasEditPermission() {
+        return this.session.user.permission_vif_edit === true;
+    }
+
+    get hasViewPermission() {
+        return this.session.user.permission_vif_view === true;
     }
 
     transform(queryParams) {
-        var queryParameters = angular.copy(queryParams);
+        let queryParameters = angular.copy(queryParams);
         if (queryParameters.reverse) {
             queryParameters.ordering = '-' + queryParameters.ordering;
         }
         delete queryParameters.reverse;
-        var params = [];
+        let params = [];
         Object.keys(queryParameters).forEach( (name) => {
             params.push({"name": name, "value": queryParameters[name]});
         });
@@ -129,5 +151,19 @@ export default class VifListController {
 
     getSaveForLaterObject() {
         return JSON.parse(localStorage.getItem('saved-vifs'));
+    }
+
+    exportCsv(){
+        this.spinnerOverlayService.show("Exporting to CSV");
+        return this.service.getCsvExport();
+    }
+
+    onExportComplete() {
+        this.spinnerOverlayService.hide();
+    }
+
+    getExportFileName() {
+        let date = this.moment().format('Y-M-D');
+        return `vif-all-data-${date}.csv`;
     }
 }

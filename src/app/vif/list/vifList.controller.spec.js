@@ -3,26 +3,33 @@ import VifListController from './vifList.controller';
 describe('VIF List Controller',() => {
     let vm,
         $timeout,
-        $window,
         MockVifListService,
         MockSessionService,
+        MockSpinnerOverlayService,
         MockStickyHeader,
         $stateParams,
         queryParameters,
-        transformedQueryParameters;
+        transformedQueryParameters,
+        moment,
+        $rootScope;
 
-    beforeEach(inject((_$timeout_, _$window_) => {
-            $timeout = _$timeout_;
-            $window = _$window_;
+    beforeEach(angular.mock.module('tinyhands.VIF'))
+
+    beforeEach(inject((_$timeout_, _moment_, _$rootScope_) => {
+        $timeout = _$timeout_;
         $stateParams = {"search": "BHD"};
-
+        moment = _moment_;
+        $rootScope = _$rootScope_;
+        MockSessionService = { user: { } };
+        MockSpinnerOverlayService = jasmine.createSpyObj('SpinnerOverlayService', ['show', 'hide']);
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
         MockVifListService = jasmine.createSpyObj('VifListService', [
             'getVifList',
             'getMoreVifs',
             'deleteVif',
-            'vifExists'
+            'vifExists',
+            'getCsvExport'
         ]);
 
         let response = {'data':{
@@ -48,7 +55,7 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+        vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
     }));
 
     describe('function constructor', () => {
@@ -58,15 +65,87 @@ describe('VIF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new VifListController(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('should be called with the constructor', () => {
             spyOn(vm, 'checkForExistingVifs');
-            vm.constructor(MockVifListService, MockSessionService, MockStickyHeader, $stateParams, $timeout, $window, {}, {BaseUrl: "asdf"});
+            vm.constructor(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
 
             expect(vm.checkForExistingVifs).toHaveBeenCalled();
+        });
+    });
+
+    describe('hasAddPermission', () => {
+        describe('when user has vif add permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_vif_add = true;
+
+                expect(vm.hasAddPermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have vif add permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_vif_add = false;
+
+                expect(vm.hasAddPermission).toBe(false);
+            });
+        });
+    });
+
+    describe('hasDeletePermission', () => {
+        describe('when user has vif delete permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_vif_delete = true;
+
+                expect(vm.hasDeletePermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have vif delete permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_vif_delete = false;
+
+                expect(vm.hasDeletePermission).toBe(false);
+            });
+        });
+    });
+
+    describe('hasEditPermission', () => {
+        describe('when user has vif edit permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_vif_edit = true;
+
+                expect(vm.hasEditPermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have vif edit permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_vif_edit = false;
+
+                expect(vm.hasEditPermission).toBe(false);
+            });
+        });
+    });
+
+    describe('hasViewPermission', () => {
+        describe('when user has vif view permission', () => {
+            it('should return true', () => {
+                MockSessionService.user.permission_vif_view = true;
+
+                expect(vm.hasViewPermission).toBe(true);
+            });
+        });
+
+        describe('when user does not have vif view permission', () => {
+            it('should return false', () => {
+                MockSessionService.user.permission_vif_view = false;
+
+                expect(vm.hasViewPermission).toBe(false);
+            });
         });
     });
 
@@ -232,6 +311,36 @@ describe('VIF List Controller',() => {
             vm.removeVifFromSaveForLater('BHD123');
 
             expect(savedVifs).not.toEqual(JSON.parse(localStorage.getItem('saved-vifs')));
+        });
+    });
+
+    describe('exportCSV', () => {
+        it('should show spinner', () => {
+            vm.exportCsv();
+
+            expect(MockSpinnerOverlayService.show).toHaveBeenCalledWith('Exporting to CSV');
+        });
+
+        it('should get CSV from service', () => {
+            vm.exportCsv();
+
+            expect(MockVifListService.getCsvExport).toHaveBeenCalled();
+        });
+    });
+
+    describe('onExportComplete', () => {
+        it('should hide spinner', () => {
+            vm.onExportComplete();
+
+            expect(MockSpinnerOverlayService.hide).toHaveBeenCalled();
+        });
+    });
+
+    describe('getExportFileName', () => {
+        it('should return filename with date', () => {
+            let result = vm.getExportFileName();
+
+            expect(result).toBe(`vif-all-data-${moment().format('Y-M-D')}.csv`);
         });
     });
 });

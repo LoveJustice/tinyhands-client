@@ -1,6 +1,6 @@
 import CsvExportController from './csv-export.controller';
 
-describe('MDF Controller', () => {
+describe('CsvExportController', () => {
     let target,
         $scope,
         response,
@@ -28,6 +28,7 @@ describe('MDF Controller', () => {
             "onExportComplete": onExportComplete
         };
         mockFileDownloaderService = jasmine.createSpyObj('mockFileDownloaderService', ['downloadFileAs']);
+        mockFileDownloaderService.FILE_TYPE_CSV = 'text/csv';
         target = new CsvExportController($scope, mockFileDownloaderService);
     }));
 
@@ -45,7 +46,7 @@ describe('MDF Controller', () => {
                 target.exportCSV();
                 $rootScope.$apply();
 
-                expect(mockFileDownloaderService.downloadFileAs).toHaveBeenCalledWith([response.data], fileName, 'text/csv');
+                expect(mockFileDownloaderService.downloadFileAs).toHaveBeenCalledWith([response.data], fileName, mockFileDownloaderService.FILE_TYPE_CSV);
             });
 
             it('should call onExportComplete', () => {

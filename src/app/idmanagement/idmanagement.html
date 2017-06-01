@@ -1,0 +1,238 @@
+
+
+<div class="container">
+	<div ng-show="vm.showIdMgmt">
+		<h1 class="text-center">ID Management</h1>
+	    <div class="row">
+	        <div class="col-md-2">
+	            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getKnownPersons()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
+	        </div>
+	        <div class="col-md-3">
+	            <p style="margin-top: 5px;">Results per page</p>
+	        </div>
+	        <div class="pull-right">
+	            <form ng-submit="vm.addGroupSearch()">
+	                  <label>
+	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control">
+	                  </label>
+	                  <a class="btn btn-primary" ng-click="vm.getKnownPersons()">Search</a>
+	            </form>
+	        </div>
+	    </div>
+	
+	    <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" >
+	        <thead class="sticky-table-header">
+	            <tr>
+	                <th id="knownPersonNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="12%">
+	                	Name<i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
+	                </th>
+	                <th id="knownPersonGenderHeader" ng-click="vm.sortColumn = 'gender'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="8%">
+	                    Gender<i class="glyphicon" ng-class="vm.sortIcon('gender')"></i>
+	                </th>
+	                <th id="knownPersonAgeHeader" ng-click="vm.sortColumn = 'age'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="6%">
+	                    Age<i class="glyphicon" ng-class="vm.sortIcon('age')"></i>
+	                </th>
+	                <th id="knownPersonAddress1Header" ng-click="vm.sortColumn = 'address1'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="11%">
+	                    Address 1<i class="glyphicon" ng-class="vm.sortIcon('address1')"></i>
+	                </th>
+	                <th id="knownPersonAddress2Header" ng-click="vm.sortColumn = 'address2'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="11%">
+	                    Address 2<i class="glyphicon" ng-class="vm.sortIcon('address2')"></i>
+	                </th>
+	                <th id="knownPersonPhoneHeader" ng-click="vm.sortColumn = 'phone'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="10%">
+	                    Phone <i class="glyphicon" ng-class="vm.sortIcon('phone')"></i>
+	                </th>
+	                <th id="knownPersonFormKindHeader" class="text-center" width="8%">
+	                    Role
+	                </th>
+	                <th id="knownPersonAliasesHeader"  class="text-center" width="15%">
+	                    Aliases
+	                </th>
+	                <th id="knownPersonFormHeader" class="text-center" width="8%">
+	                    Form
+	                </th>
+	                <th id="knownPersonFormDateHeader" class="text-center" width="10%">
+	                    Form Date
+	                </th>
+	
+	            </tr>
+	        </thead>
+	        <tbody ng-init="vm.sortColumn = 'name'">
+	            <tr ng-repeat="knownPerson in vm.knownPersons | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="knownPerson.hover = true;displayPopup($event, knownPerson.form_photo)" ng-mouseleave="knownPerson.hover = false;hidePopup()">
+	                <td class="text-center">{{ knownPerson.full_name }}</td>
+	                <td class="text-center">{{ knownPerson.gender }}</td>
+	                <td class="text-center">{{ knownPerson.age }}</td>
+	                <td class="text-center">{{ knownPerson.address1.name }}</td>
+	                <td class="text-center">{{ knownPerson.address2.name }}</td>
+	                <td class="text-center">{{ knownPerson.phone_contact }}</td>
+	                <td class="text-center">{{ knownPerson.form_kind }}</td>
+	                <td class="text-center">{{ knownPerson.aliases }}</td>
+	                <td class="text-center"><a href="">{{ knownPerson.form_number }}</a></td>
+	                <td class="text-center">
+	                	<center>{{ knownPerson.form_date }}</center>
+	                	<button class="btn btn-sm btn-primary animated" ng-class="{fadeIn:knownPerson.hover,fadeOut:!knownPerson.hover}" ng-click="vm.aliasMgmt(knownPerson)">Alias Mgmt </button>
+	                </td>
+	            </tr>
+	            <tr ng-show="vm.knownPersons.length == 0">
+	                <td colspan="12" style="text-align:center;"><h2>Nothing Matched your search for: "{{ vm.searchValue }}"</h2></td>
+	            </tr>
+	        </tbody>
+	    </table>
+	
+	    <div class="row text-center">
+	        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreKnownPersons()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">Load more results</button>
+	    </div>
+	
+
+	</div>
+	<div ng-show="vm.showAddAlias || vm.showRemoveAlias">
+		<h1 class="text-center" ng-show="vm.showAddAlias">Add To Alias Group</h1>
+		<h1 class="text-center" ng-show="vm.showRemoveAlias && !vm.isViewing">Remove From Alias Group</h1>
+		<h1 class="text-center" ng-show="vm.showRemoveAlias && vm.isViewing">Alias Group Details</h1>
+		<br/>
+		<div style="display:inline-block;width:100%;">
+			<div style="display:inline-block;width:100%;">
+				<div  style="float:left; width:33%;height:201px;"><img src="{{vm.knownperson.form_photo}}"></div>
+				<div class="form-group" style="float:left; width:67%;">
+					<div class="form-group" style="float:left; width:100%;">
+						<div style="float:left; width:12%;"><I>Name</I></div>
+						<div style="float:left; width:38%;">{{vm.knownperson.full_name}}</div>
+						<div style="float:left; width:12%;"><I>Gender</I></div>
+						<div style="float:left; width:38%;">{{vm.knownperson.gender}}</div>
+					</div>
+					<div class="form-group" style="float:left; width:100%;">
+						<div style="float:left; width:12%;"><I>Age</I></div>
+						<div style="float:left; width:38%;">{{vm.knownperson.age}}</div>
+						<div style="float:left; width:12%;"><I>Phone</I></div>
+						<div style="float:left; width:38%;">{{vm.knownperson.phone_contact}}</div>
+					</div>
+					<div class="form-group" style="float:left; width:100%;">
+						<div style="float:left; width:12%;"><I>Address1</I></div>
+						<div style="float:left; width:38%;">{{vm.knownperson.address1.name}}</div>
+						<div style="float:left; width:12%;"><I>Address2</I></div>
+						<div style="float:left; width:38%;">{{vm.knownperson.address2.name}}</div>
+					</div>
+					<div class="form-group" style="float:left; width:100%;">
+						<div style="float:left; width:50%;"><B>Form</B></div>
+						<div style="float:right; width:50%;"><B>Form Date</B></div>
+					</div>
+					
+					<table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" >
+					<tbody>
+						<tr ng-repeat="form in vm.forms">
+							<td class="text-left" style="width:50%;"><a href="">{{ form.number }}</a></td>
+							<td class="text-left">{{ form.date }}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div ng-show="vm.showAddAlias">
+		<div>
+			<div class="radio" style="display:inline-block; float:left; width:20%">
+				&nbsp;&nbsp;&nbsp;<label><input type="radio" ng-model="vm.addSearchOption" value="name" checked>Name</label> &nbsp;
+				<label><input type="radio" ng-model="vm.addSearchOption" value="phone">Phone</label>
+			</div>
+			<div style="display:inline-block">
+				<form ng-submit="vm.addGroupSearch()">
+	              <label>
+	                  <input type="search" placeholder="Person name..." ng-model="vm.addSearchValue" class="form-control">
+	              </label>
+	              <a class="btn btn-primary" ng-click="vm.addGroupSearch()">Search</a>
+	        	</form>
+			</div>
+		</div>
+	
+	    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
+	    <thead class="sticky-table-header">
+	        <tr>
+	        	<th id="candidateHeader" class="text-center" width="8%"></th>
+	            <th id="candidateNameHeader" class="text-center" width="12%">Name</th>
+	            <th id="candidateGenderHeader" class="text-center" width="7%">Gender</th>
+	            <th id="candidateAgeHeader" class="text-center" width="5%">Age</th>
+	            <th id="candidateAddress1Header" class="text-center" width="10%">Address 1</th>
+	            <th id="candidateAddress2Header" class="text-center" width="10%">Address 2</th>
+	            <th id="candidatePhoneHeader" class="text-center" width="10%">Phone</th>
+	            <th id="candidateFormKindHeader" class="text-center" width="8%">Role</th>
+	            <th id="candidateFormHeader" class="text-center" width="8%">Form</th>
+	            <th id="candidateFormDateHeader" class="text-center" width="10%">Form Date</th>
+	        </tr>
+        </thead>
+        <tbody ng-init="vm.sortColumn = 'name'">
+            <tr ng-repeat="candidate in vm.addCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()" ng-show="{{candidate.id}} != {{vm.knownperson.id}}">
+            	<td class="text-center"><input type="radio" name="matchRadio" ng-click="vm.enableMatch(candidate.id)"></td>
+                <td class="text-left">{{ candidate.full_name }}</td>
+                <td class="text-center">{{ candidate.gender }}</td>
+                <td class="text-right">{{ candidate.age }}</td>
+                <td class="text-left">{{ candidate.address1.name }}</td>
+                <td class="text-left">{{ candidate.address2.name }}</td>
+                <td class="text-left">{{ candidate.phone_contact }}</td>
+                <td class="text-left">{{ candidate.form_kind }}</td>
+                <td class="text-left"><a href="">{{ candidate.form_number }}</a></td>
+                <td class="text-center">
+                	<center>{{ candidate.form_date }}</center>
+                	<div ng-hide="candidate.alias_group == null">
+                	<button class="btn btn-sm btn-primary animated" ng-class="{fadeIn:candidate.hover,fadeOut:!candidate.hover}" ng-click="vm.aliasGroupDetail(candidate)" >
+                	Alias Group</button>
+                	</div>
+                </td>
+            </tr>
+            <tr ng-show="vm.addCandidates.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>Nothing Matched your search for: "{{ vm.searchValue }}"</h2></td>
+            </tr>
+        </tbody>
+    	</table>
+	
+	
+		<div  class="pull-left">
+			<button class="btn btn-primary" type="button" ng-click="vm.cancelAdd()">No Match</button>
+		</div>
+		<div  class="pull-right" ng-show="vm.matchSelected">
+			<button class="btn btn-primary" type="button" ng-click="vm.addAliasGroup()">Match</button>
+		</div>
+	</div>
+	<div ng-show="vm.showRemoveAlias">
+		<div>
+		    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
+	        <thead class="sticky-table-header">
+	            <tr>
+	                <th id="candidateNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="12%">Name</th>
+	                <th id="candidateGenderHeader" ng-click="vm.sortColumn = 'gender'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="7%">Gender</th>
+	                <th id="candidateAgeHeader" ng-click="vm.sortColumn = 'age'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="5%">Age</th>
+	                <th id="candidateAddress1Header" ng-click="vm.sortColumn = 'address1'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="10%">Address 1</th>
+	                <th id="candidateAddress2Header" ng-click="vm.sortColumn = 'address2'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="10%">Address 2</th>
+	                <th id="candidatePhoneHeader" ng-click="vm.sortColumn = 'phone'; vm.reverse = ! vm.reverse; vm.getdelCandidates()" class="text-center" width="10%">Phone</th>
+	                <th id="candidateFormKindHeader" class="text-center" width="8%">Role</th>
+	                <th id="candidateFormHeader" class="text-center" width="8%">Form</th>
+	                <th id="candidateFormDateHeader" class="text-center" width="10%">Form Date</th>
+	                <th id="candidateHeader" class="text-center" ng-if="!vm.isViewing" width="10%"></th>
+	            </tr>
+	        </thead>
+	        <tbody ng-init="vm.sortColumn = 'name'">
+	            <tr ng-repeat="candidate in vm.delCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()">
+	                <td class="text-left">{{ candidate.full_name }}</td>
+	                <td class="text-center">{{ candidate.gender }}</td>
+	                <td class="text-right">{{ candidate.age }}</td>
+	                <td class="text-left">{{ candidate.address1.name }}</td>
+	                <td class="text-left">{{ candidate.address2.name }}</td>
+	                <td class="text-left">{{ candidate.phone_contact }}</td>
+	                <td class="text-left">{{ candidate.form_kind }}</td>
+	                <td class="text-left"><a href="">{{ candidate.form_number }}</a></td>
+	                <td class="text-center">{{ candidate.form_date }}</td>
+	                <td><button class="btn btn-sm btn-primary"  ng-show="!vm.isViewing" ng-click="vm.deleteFromGroup(candidate)">Remove</button></td>
+	            </tr>
+	        </tbody>
+		    </table>
+		</div>
+		
+		<div  class="pull-left">
+			<button class="btn btn-primary" type="button" ng-click="vm.viewDeleteDone()">Done</button>
+		</div>
+	</div>
+	<div ng-show="vm.loading" class="loader-container">
+		<div class="loader">Loading...</div>
+	</div>
+    <div id="popupDiv" ng-show="showPopup">
+    	<img id="popupImageId" src="">
+    </div>
+</div>

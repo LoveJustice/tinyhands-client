@@ -1,6 +1,9 @@
 export default class SpinnerOverlayService {
-    constructor() {
+    constructor($rootScope) {
         this.initState();
+
+        let onStateChangeStart = this.onStateChangeStart.bind(this);
+        $rootScope.$on('$stateChangeStart', onStateChangeStart);
     }
 
     show(message) {
@@ -15,6 +18,12 @@ export default class SpinnerOverlayService {
     initState() {
         this.isVisible = false;
         this.message = '';
+    }
+
+    onStateChangeStart(event) {
+        if(this.isVisible) {
+            event.preventDefault();
+        }
     }
 
 }

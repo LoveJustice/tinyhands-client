@@ -1,5 +1,5 @@
 export default class IrfListController {
-    constructor(IrfListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout,  toastr, constants, moment, $rootScope ) {
+    constructor(IrfListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout,  toastr, constants, moment) {
         'ngInject';
         this.service = IrfListService;
         this.session = SessionService;
@@ -31,12 +31,6 @@ export default class IrfListController {
         this.getIrfList();
 
         this.checkForExistingIrfs();
-
-        $rootScope.$on('$stateChangeStart', (event) => {
-            if(this.spinnerOverlayService.isVisible) {
-                event.preventDefault();
-            }
-        });
     }
 
     get hasAddPermission() {

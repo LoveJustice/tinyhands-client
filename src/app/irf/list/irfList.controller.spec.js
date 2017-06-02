@@ -10,13 +10,12 @@ describe('IRF List Controller',() => {
         $state,
         $stateParams,
         moment,
-        $rootScope,
         queryParameters,
         transformedQueryParameters;
 
-    beforeEach(angular.mock.module('tinyhands.IRF'))
+    beforeEach(angular.mock.module('tinyhands.IRF'));
 
-    beforeEach(inject((_$state_, _$timeout_, _moment_, _$rootScope_) => {
+    beforeEach(inject((_$state_, _$timeout_, _moment_) => {
         $state = _$state_;
         $timeout = _$timeout_;
         $stateParams = {"search": "BHD"};
@@ -56,8 +55,7 @@ describe('IRF List Controller',() => {
         });
 
         moment = _moment_;
-        $rootScope = _$rootScope_;
-        vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+        vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment);
     }));
 
     describe('function constructor', () => {
@@ -67,13 +65,13 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+            vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment);
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('expect checkForExistingIrfs to be called', () => {
             spyOn(vm, 'checkForExistingIrfs');
-            vm.constructor(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment, $rootScope);
+            vm.constructor(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment);
             expect(vm.checkForExistingIrfs).toHaveBeenCalled();
         });
     });

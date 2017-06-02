@@ -1,5 +1,5 @@
 export default class VifListController {
-    constructor(VifListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout, toastr, constants, moment, $rootScope) {
+    constructor(VifListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout, toastr, constants, moment) {
         'ngInject';
 
         this.constants = constants;
@@ -30,12 +30,6 @@ export default class VifListController {
         }
         this.getVifList();
         this.checkForExistingVifs();
-
-        $rootScope.$on('$stateChangeStart', (event) => {
-            if(this.spinnerOverlayService.isVisible) {
-                event.preventDefault();
-            }
-        });
     }
 
     get hasAddPermission() {

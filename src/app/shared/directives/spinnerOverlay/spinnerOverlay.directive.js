@@ -4,8 +4,6 @@ import controller from './spinnerOverlay.controller';
 
 export default function SpinnerOverlayDirective() {
     let directive = {
-        scope: {
-        },
         controller: controller,
         controllerAs: 'ctrl',
         restrict: 'E',

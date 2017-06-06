@@ -485,8 +485,6 @@ export default class BudgetController {
     getStaff() {
         return this.service.getStaff(this.borderStationId).then((response) => {
             this.form.staff = response.data.results;
-            console.log("Get staff");
-            console.log(this.form.staff);
             this.getStaffSalaries();
         });
     }
@@ -496,14 +494,12 @@ export default class BudgetController {
         let id = this.utils.validId(this.budgetId) ? this.budgetId : null;
         
         if (id === null) {
-            console.log("New");
             this.mapStaffSalaries(this.form.staffSalaries);
             this.setTotals();
         }
 
         else {
             return this.service.getStaffSalaries(id).then((response) => {
-                console.log("Old");
                 this.mapStaffSalaries(response.data);
                 this.setTotals();
             });
@@ -511,24 +507,17 @@ export default class BudgetController {
     }
 
     mapStaffSalaries(staffSalaries){
-        console.log("Mapping staff");
-        console.log(this.form.staff);
-        
         return this.form.staff.map((staff) => {
             if (staffSalaries.length > 0) {
                 if (staff.id){
-                    console.log(staff);
                     staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
-                }
-                else {
-                    console.log("Faker");
                 }
             } else {
                 staff.salaryInfo = { salary: 0 };
             }
 
             if(this.isCreating) {
-                staff.id = null;
+                staff.salaryInfo.id = null;
             }
         });
     }

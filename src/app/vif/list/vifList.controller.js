@@ -1,15 +1,15 @@
 export default class VifListController {
-    constructor(VifListService, SessionService, StickyHeader, $state, $stateParams, $timeout, $window, toastr, constants) {
+    constructor(VifListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout, toastr, constants, moment) {
         'ngInject';
 
         this.constants = constants;
+        this.moment = moment;
         this.service = VifListService;
         this.session = SessionService;
-        this.stateParams = $stateParams;
+        this.spinnerOverlayService = SpinnerOverlayService;
         this.sticky = StickyHeader;
         this.state = $state;
         this.timeout = $timeout;
-        this.window = $window;
         this.toastr = toastr;
 
         this.timer = {};
@@ -32,13 +32,29 @@ export default class VifListController {
         this.checkForExistingVifs();
     }
 
+    get hasAddPermission() {
+        return this.session.user.permission_vif_add === true;
+    }
+
+    get hasDeletePermission() {
+        return this.session.user.permission_vif_delete === true;
+    }
+
+    get hasEditPermission() {
+        return this.session.user.permission_vif_edit === true;
+    }
+
+    get hasViewPermission() {
+        return this.session.user.permission_vif_view === true;
+    }
+
     transform(queryParams) {
-        var queryParameters = angular.copy(queryParams);
+        let queryParameters = angular.copy(queryParams);
         if (queryParameters.reverse) {
             queryParameters.ordering = '-' + queryParameters.ordering;
         }
         delete queryParameters.reverse;
-        var params = [];
+        let params = [];
         Object.keys(queryParameters).forEach( (name) => {
             params.push({"name": name, "value": queryParameters[name]});
         });
@@ -131,5 +147,24 @@ export default class VifListController {
 
     getSaveForLaterObject() {
         return JSON.parse(localStorage.getItem('saved-vifs'));
+    }
+
+    exportCsv(){
+        this.spinnerOverlayService.show("Exporting to CSV");
+        return this.service.getCsvExport();
+    }
+
+    onExportComplete() {
+        this.spinnerOverlayService.hide();
+    }
+
+    onExportError() {
+        this.toastr.error('An error occurred while exporting');
+        this.spinnerOverlayService.hide();
+    }
+
+    getExportFileName() {
+        let date = this.moment().format('Y-M-D');
+        return `vif-all-data-${date}.csv`;
     }
 }

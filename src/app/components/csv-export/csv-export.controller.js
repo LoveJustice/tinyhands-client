@@ -1,29 +1,21 @@
-import constants from '../../constants';
-
 export default class CsvExportController {
-    constructor($scope, $window) {
+    constructor($scope, FileDownloader) {
         'ngInject';
 
-        this.url = this.typeToUrl($scope.type);
         this.buttonText = $scope.buttontext;
-        this.window = $window;
-    }
-
-    typeToUrl(type) {
-        let url;
-        switch (type) {
-            case 'irf':
-                url = 'api/irf/export/';
-                break;
-            case 'vif':
-                url = 'api/vif/export/';
-                break;
-            default:
-        }
-        return constants.BaseUrl + url;
+        this.getFileName = $scope.getFileName;
+        this.servicefunction = $scope.exportServiceFunc;
+        this.onExportComplete = $scope.onExportComplete;
+        this.onExportError = $scope.onExportError;
+        this.fileDownloader = FileDownloader;
     }
 
     exportCSV() {
-        this.window.open(this.url, '_blank');
+        this.servicefunction().then((resp) => {
+            this.fileDownloader.downloadFileAs([resp.data], this.getFileName(), this.fileDownloader.FILE_TYPE_CSV);
+            this.onExportComplete();
+        }, (err) => {
+            this.onExportError(err);
+        });
     }
 }

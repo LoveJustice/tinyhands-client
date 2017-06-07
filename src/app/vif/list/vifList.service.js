@@ -19,4 +19,8 @@ export default class VifListService {
     vifExists(vifNumber) {
         return this.service.post(`data-entry/vifs/vifExists/${vifNumber}`);
     }
+
+    getCsvExport() {
+        return this.service.get('api/vif/export/');
+    }
 }

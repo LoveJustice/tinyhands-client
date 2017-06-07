@@ -7,6 +7,7 @@ describe('VIF List Controller',() => {
         MockSessionService,
         MockSpinnerOverlayService,
         MockStickyHeader,
+        mockToastr,
         $state,
         $stateParams,
         queryParameters,
@@ -55,7 +56,9 @@ describe('VIF List Controller',() => {
             };
         });
 
-        vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment);
+        mockToastr = jasmine.createSpyObj('mockToastr', ['success', 'error']);
+
+        vm = new VifListController(MockVifListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, mockToastr, {BaseUrl: "asdf"}, moment);
     }));
 
     describe('function constructor', () => {
@@ -331,6 +334,20 @@ describe('VIF List Controller',() => {
     describe('onExportComplete', () => {
         it('should hide spinner', () => {
             vm.onExportComplete();
+
+            expect(MockSpinnerOverlayService.hide).toHaveBeenCalled();
+        });
+    });
+
+    describe('onExportError', () => {
+        it('should show toastr error message', () => {
+            vm.onExportError();
+
+            expect(mockToastr.error).toHaveBeenCalledWith('An error occurred while exporting');
+        });
+
+        it('should hide spinner', () => {
+            vm.onExportError();
 
             expect(MockSpinnerOverlayService.hide).toHaveBeenCalled();
         });

@@ -11,6 +11,7 @@
                        export-service-func="irfListCtrl.exportCsv()"
                        get-file-name="irfListCtrl.getExportFileName()"
                        on-export-complete="irfListCtrl.onExportComplete()"
+                       on-export-error="irfListCtrl.onExportError()"
                        ng-if="irfListCtrl.hasViewPermission">
             </csvexport>
             <a ng-if="irfListCtrl.hasAddPermission" class="btn btn-success" href="{{ irfListCtrl.constants.BaseUrl + '/data-entry/irfs/create/'}}">

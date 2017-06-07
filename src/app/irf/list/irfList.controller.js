@@ -159,6 +159,11 @@ export default class IrfListController {
         this.spinnerOverlayService.hide();
     }
 
+    onExportError() {
+        this.toastr.error('An error occurred while exporting');
+        this.spinnerOverlayService.hide();
+    }
+
     getExportFileName() {
         let date = this.moment().format('Y-M-D');
         return `irf-all-data-${date}.csv`;

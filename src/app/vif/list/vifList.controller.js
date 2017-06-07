@@ -158,6 +158,11 @@ export default class VifListController {
         this.spinnerOverlayService.hide();
     }
 
+    onExportError() {
+        this.toastr.error('An error occurred while exporting');
+        this.spinnerOverlayService.hide();
+    }
+
     getExportFileName() {
         let date = this.moment().format('Y-M-D');
         return `vif-all-data-${date}.csv`;

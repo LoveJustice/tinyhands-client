@@ -8,6 +8,7 @@ describe('CsvExportController', () => {
         getFileName,
         serviceFunc,
         onExportComplete,
+        onExportError,
         mockFileDownloaderService,
         $q,
         $rootScope;
@@ -20,12 +21,14 @@ describe('CsvExportController', () => {
         getFileName = jasmine.createSpy('getFileName').and.callFake(() => fileName);
         serviceFunc = jasmine.createSpy('serviceFunc').and.callFake(() => $q.resolve(response));
         onExportComplete = jasmine.createSpy('onExportComplete');
+        onExportError = jasmine.createSpy('onExportError');
 
         $scope = {
             "buttonText": "",
             "getFileName": getFileName,
             "exportServiceFunc": serviceFunc,
-            "onExportComplete": onExportComplete
+            "onExportComplete": onExportComplete,
+            "onExportError": onExportError
         };
         mockFileDownloaderService = jasmine.createSpyObj('mockFileDownloaderService', ['downloadFileAs']);
         mockFileDownloaderService.FILE_TYPE_CSV = 'text/csv';
@@ -54,6 +57,18 @@ describe('CsvExportController', () => {
                 $rootScope.$apply();
 
                 expect(onExportComplete).toHaveBeenCalled();
+            });
+        });
+
+        describe('when service function errors', () => {
+            it('should call onExportError', () => {
+                let error = {err: 'error'};
+                serviceFunc = serviceFunc.and.callFake(() => $q.reject(error));
+
+                target.exportCSV();
+                $rootScope.$apply();
+
+                expect(onExportError).toHaveBeenCalledWith(error);
             });
         });
     });

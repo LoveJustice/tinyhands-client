@@ -14,6 +14,7 @@ export default function CsvExportDirective() {
             exportServiceFunc: '&',
             getFileName: '&',
             onExportComplete: '&',
+            onExportError: '&',
         }
     };
 

@@ -1,5 +1,6 @@
 export default class SpinnerOverlayService {
     constructor($rootScope) {
+        'ngInject';
         this.initState();
 
         let onStateChangeStart = this.onStateChangeStart.bind(this);

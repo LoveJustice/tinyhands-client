@@ -15,6 +15,7 @@ describe('MDF Controller', () => {
             'data': {
                 "committee_members": [],
                 "staff_members": [],
+                "national_staff_members": [],
                 "pdf_url": ""
             }
         };

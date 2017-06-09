@@ -47,6 +47,22 @@
             </tr>
         </table>
 
+        <h2 class="text-center">National Staff Email Recipients</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-center" width="150px">Send Email</th>
+                    <th>Staff Name</th>
+                    <th>Staff Email</th>
+                </tr>
+            </thead>
+            <tr ng-repeat="staff in vm.nationalStaff" ng-class="{'notReceiving': !staff.receives_money_distribution_form, 'receiving': staff.receives_money_distribution_form}">
+                <td class="text-center"><input type="checkbox" ng-model="staff.receives_money_distribution_form"></td>
+                <td>{{ staff.first_name }} {{ staff.last_name }}</td>
+                <td>{{ staff.email}}</td>
+            </tr>
+        </table>
+
         <div class="row text-center">
             <a type="button" id="sendEmails" style="margin-top: 50px"
                class="btn btn-primary" value="Send to Selected Staff and Members"

@@ -187,7 +187,7 @@
                 <tr>
                     <th>Accounts</th>
                     <th>VDC</th>
-                    <th colspan="4">Budget</th>
+                    <th colspan="5">Budget</th>
                 </tr>
                 <tr>
                     <th>Manage</th>
@@ -196,6 +196,7 @@
                     <th>Add</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>MDF</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -235,6 +236,12 @@
                                ng-class="accountEditCtrl.account.permission_budget_delete ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountEditCtrl.account.permission_budget_delete = !accountEditCtrl.account.permission_budget_delete">{{
                             accountEditCtrl.account.permission_budget_delete ? "Yes" : "No" }}</label>
+                    </td>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_can_receive_mdf ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_can_receive_mdf= !accountEditCtrl.account.permission_can_receive_mdf">{{
+                            accountEditCtrl.account.permission_can_receive_mdf ? "Yes" : "No" }}</label>
                     </td>
                 </tr>
                 </tbody>

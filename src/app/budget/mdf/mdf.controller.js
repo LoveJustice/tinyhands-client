@@ -3,6 +3,7 @@ export default class MdfController {
         'ngInject';
         this.staff = {};
         this.committeeMembers = {};
+        this.nationalStaff = {};
 
         this.service = BudgetListService;
         this.stateParams = $stateParams;
@@ -17,6 +18,7 @@ export default class MdfController {
         this.service.getMdf(this.stateParams.id).then((promise) => {
             this.staff = promise.data.staff_members;
             this.committeeMembers = promise.data.committee_members;
+            this.nationalStaff = promise.data.national_staff_members;
             this.createIframe(promise.data.pdf_url);
         },
             () => {
@@ -42,9 +44,13 @@ export default class MdfController {
     }
 
     sendEmails() {
-        var people = { "staff_ids": [], "committee_ids": [] };
+        var people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
+        console.log(people);
         people = this.getIds(this.staff, people, "staff_ids");
         people = this.getIds(this.committeeMembers, people, "committee_ids");
+        people = this.getIds(this.nationalStaff, people, "national_staff_ids");
+        console.log("After getIds fn");
+        console.log(people);
         people.budget_id = this.stateParams.id;
 
         this.service.sendMdfEmails(people).then(() => {
@@ -67,6 +73,12 @@ export default class MdfController {
         });
         this.committeeMembers.forEach((object) => {
             if (object.receives_money_distribution_form) {
+                recipientSelected = true;
+            }
+        });
+        this.nationalStaff.forEach((object) => {
+            if (object.receives_money_distribution_form) {
+                console.log(object);
                 recipientSelected = true;
             }
         });

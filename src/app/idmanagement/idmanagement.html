@@ -11,7 +11,7 @@
 	            <p style="margin-top: 5px;">Results per page</p>
 	        </div>
 	        <div class="pull-right">
-	            <form ng-submit="vm.addGroupSearch()">
+	            <form>
 	                  <label>
 	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control">
 	                  </label>
@@ -23,7 +23,7 @@
 	    <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" >
 	        <thead class="sticky-table-header">
 	            <tr>
-	                <th id="knownPersonNameHeader" ng-click="vm.sortColumn = 'name'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="12%">
+	                <th id="knownPersonNameHeader" ng-click="vm.sortColumn = 'full_name'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="12%">
 	                	Name<i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
 	                </th>
 	                <th id="knownPersonGenderHeader" ng-click="vm.sortColumn = 'gender'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="8%">
@@ -32,13 +32,13 @@
 	                <th id="knownPersonAgeHeader" ng-click="vm.sortColumn = 'age'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="6%">
 	                    Age<i class="glyphicon" ng-class="vm.sortIcon('age')"></i>
 	                </th>
-	                <th id="knownPersonAddress1Header" ng-click="vm.sortColumn = 'address1'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="11%">
+	                <th id="knownPersonAddress1Header" ng-click="vm.sortColumn = 'address1.name'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="11%">
 	                    Address 1<i class="glyphicon" ng-class="vm.sortIcon('address1')"></i>
 	                </th>
-	                <th id="knownPersonAddress2Header" ng-click="vm.sortColumn = 'address2'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="11%">
+	                <th id="knownPersonAddress2Header" ng-click="vm.sortColumn = 'address2.name'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="11%">
 	                    Address 2<i class="glyphicon" ng-class="vm.sortIcon('address2')"></i>
 	                </th>
-	                <th id="knownPersonPhoneHeader" ng-click="vm.sortColumn = 'phone'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="10%">
+	                <th id="knownPersonPhoneHeader" ng-click="vm.sortColumn = 'phone_contact'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="10%">
 	                    Phone <i class="glyphicon" ng-class="vm.sortIcon('phone')"></i>
 	                </th>
 	                <th id="knownPersonFormKindHeader" class="text-center" width="8%">
@@ -80,8 +80,15 @@
 	
 	    <div class="row text-center">
 	        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreKnownPersons()" class="btn btn-primary" style="margin-bottom:25px; width:90%;">Load more results</button>
+	        <br/>
+	        <br/>
+	        <br/>
+	        <br/>
+	        <br/>
+	        <br/>
+	        <br/>
+	        <br/>
 	    </div>
-	
 
 	</div>
 	<div ng-show="vm.showAddAlias || vm.showRemoveAlias">

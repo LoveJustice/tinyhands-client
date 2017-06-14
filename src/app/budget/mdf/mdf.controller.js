@@ -14,11 +14,17 @@ export default class MdfController {
         this.retrieveMdf();
     }
 
+    /* National Staff have a property permission_can_receive_mdf which is different from receives_money_distribution_form. 
+    The former is what gets them put on this list of possible recipients, the latter is whether or not they actually receive
+    this months MDF for this station. */
     retrieveMdf() {
         this.service.getMdf(this.stateParams.id).then((promise) => {
             this.staff = promise.data.staff_members;
             this.committeeMembers = promise.data.committee_members;
             this.nationalStaff = promise.data.national_staff_members;
+            this.nationalStaff.forEach((staff) => {
+                staff.receives_money_distribution_form = true;
+            });
             this.createIframe(promise.data.pdf_url);
         },
             () => {
@@ -45,17 +51,14 @@ export default class MdfController {
 
     sendEmails() {
         var people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
-        console.log(people);
         people = this.getIds(this.staff, people, "staff_ids");
         people = this.getIds(this.committeeMembers, people, "committee_ids");
         people = this.getIds(this.nationalStaff, people, "national_staff_ids");
-        console.log("After getIds fn");
-        console.log(people);
         people.budget_id = this.stateParams.id;
 
         this.service.sendMdfEmails(people).then(() => {
             this.toastr.success(`Successfully emailed the MDF`);
-            this.state.go('budgetList'); // When the emails have been sent, load next page in the workflow (the dashboard)
+            this.state.go('budgetList'); // When the emails have been sent, load next page in the workflow (the budget list)
         },
             () => {
                 this.toastr.error(`Could not send emails`);
@@ -78,7 +81,6 @@ export default class MdfController {
         });
         this.nationalStaff.forEach((object) => {
             if (object.receives_money_distribution_form) {
-                console.log(object);
                 recipientSelected = true;
             }
         });

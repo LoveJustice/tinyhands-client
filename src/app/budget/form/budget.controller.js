@@ -421,7 +421,7 @@ export default class BudgetController {
             // Reset medical expense since it comes in with response.data.form
             this.form.medical_last_months_expense = 0;
 
-            this.getStaffForNewBudget();
+            this.getStaff();
             
             this.setTotals();
         });
@@ -481,52 +481,47 @@ export default class BudgetController {
             this.form.previousData = response.data;
         });
     }
-
-    getStaffForNewBudget() {
+    
+    getStaff() {
         return this.service.getStaff(this.borderStationId).then((response) => {
             this.form.staff = response.data.results;
-            this.form.staff.map((staff) => {
-                if (this.form.staffSalaries.length > 0) {
-                    staff.salaryInfo = $.grep(this.form.staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
-                } else {
-                    staff.salaryInfo = { salary: 0 };
-                }
-                if(this.isCreating) {
-                    staff.id = null;
-                }
-            });
+            this.getStaffSalaries();
+        });
+    }
+
+    
+    getStaffSalaries() {
+        let id = this.utils.validId(this.budgetId) ? this.budgetId : null;
+        
+        if (id === null) {
+            this.mapStaffSalaries(this.form.staffSalaries);
             this.setTotals();
-        });
-    }
-
-    getStaff(budgetId = null) {
-        return this.service.getStaff(this.borderStationId).then((response) => {
-            this.form.staff = response.data.results;
-            this.getStaffSalaries(budgetId);
-        });
-    }
-
-    getStaffSalaries(budgetId) {
-        let id = this.utils.validId(this.budgetId) ? this.budgetId : budgetId;
-        if (id === "") {
-            return;
         }
 
-        return this.service.getStaffSalaries(id).then((response) => {
-            this.form.staff.map((staff) => {
-                if (response.data.length > 0) {
-                    staff.salaryInfo = $.grep(response.data, (s) => { return s.staff_person === staff.id; })[0];
-                } else {
-                    staff.salaryInfo = { salary: 0 };
-                }
-
-                if(this.isCreating) {
-                    staff.id = null;
-                }
+        else {
+            return this.service.getStaffSalaries(id).then((response) => {
+                this.mapStaffSalaries(response.data);
+                this.setTotals();
             });
-            this.setTotals();
+        }
+    }
+
+    mapStaffSalaries(staffSalaries){
+        return this.form.staff.map((staff) => {
+            if (staffSalaries.length > 0) {
+                if (staff.id){
+                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
+                }
+            } else {
+                staff.salaryInfo = { salary: 0 };
+            }
+
+            if(this.isCreating) {
+                staff.salaryInfo.id = null;
+            }
         });
     }
+    
     // ENDREGION: GET Calls
 
 
@@ -591,7 +586,7 @@ export default class BudgetController {
     }
     // ENDREGION: PUT Calls
     // ENDREGION: Call to Service Functions
-
+    
     clearValue(value) {
         let returnValue;
         if (typeof value === 'boolean') {

@@ -6,9 +6,15 @@
         </div>
 
         <div class="pull-right"><br>
-            <csvexport type="vif" buttontext="Export All VIFs to CSV" ng-if="vifListCtrl.session.user.permission_vif_view == true"></csvexport>
+            <csvexport buttontext="Export All VIFs to CSV"
+                       export-service-func="vifListCtrl.exportCsv()"
+                       get-file-name="vifListCtrl.getExportFileName()"
+                       on-export-complete="vifListCtrl.onExportComplete()"
+                       on-export-error="vifListCtrl.onExportError()"
+                       ng-if="vifListCtrl.hasViewPermission">
+            </csvexport>
             &nbsp;
-            <a ng-if="vifListCtrl.session.user.permission_vif_add == true" class="btn btn-success pull-right" href="{{vifListCtrl.constants.BaseUrl + 'data-entry/vifs/create/'}}">
+            <a ng-if="vifListCtrl.hasAddPermission" class="btn btn-success pull-right" href="{{vifListCtrl.constants.BaseUrl + 'data-entry/vifs/create/'}}">
                 Input A New VIF
             </a>
         </div>
@@ -84,9 +90,9 @@
                 <td>{{ vif.date | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ vif.date_time_entered_into_system | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ vif.date_time_last_updated | date:"medium" : vifListCtrl.timeZoneDifference }}</td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_view == true"><a class="btn btn-sm btn-primary" ng-href="{{vif.view_url}}">View</a></td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_edit == true"><a class="btn btn-sm btn-primary" id="id_edit_vif_button" ng-href="{{vif.edit_url}}">Edit</a></td>
-                <td ng-if="vifListCtrl.session.user.permission_vif_delete == true"><a class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif(vif, $index)">
+                <td ng-if="vifListCtrl.hasViewPermission"><a class="btn btn-sm btn-primary" ng-href="{{vif.view_url}}">View</a></td>
+                <td ng-if="vifListCtrl.hasEditPermission"><a class="btn btn-sm btn-primary" id="id_edit_vif_button" ng-href="{{vif.edit_url}}">Edit</a></td>
+                <td ng-if="vifListCtrl.hasDeletePermission"><a class="btn btn-sm btn-danger" ng-click="vifListCtrl.deleteVif(vif, $index)">
                     {{ vif.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>
             <tr ng-show="vifListCtrl.vifs.length == 0">

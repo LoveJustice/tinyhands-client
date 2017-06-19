@@ -209,7 +209,7 @@ class IdManagementController {
         this.showRemoveAlias = true;
         
         this.removeModified = false;
-        this.getAliasGroup(knownperson.alias_group);	
+        this.getAliasGroup(knownperson.alias_group);
     }
     
     aliasMgmtDelete(knownperson) {
@@ -223,6 +223,7 @@ class IdManagementController {
         
         this.removeModified = false;
         this.getAliasGroup(knownperson.alias_group);
+        this.getForms(knownperson.id);
     }
     
     getAliasGroup(group_id) {

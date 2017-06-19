@@ -459,6 +459,7 @@ describe('IdManagementController', () => {
     describe('function aliasMgmtDelete', () => {
     	let knownperson = {full_name: 'foo', id: 123, alias_group : 987};
     	let aliasMembersResponse = {data : 'aliasMembers'};
+    	let formsResponse = {data : 'personForms'};
 
     	beforeEach(() => {
     		vm.idManagementService.getAliasMembers = () => {
@@ -468,11 +469,22 @@ describe('IdManagementController', () => {
                    }
                };
     		};
+    		vm.idManagementService.getKnownPersonForms = () => {
+                return {
+                    then: (f) => {
+                        f(formsResponse);
+                    }
+                };
+     		};
     		vm.aliasMgmtDelete(knownperson);
     	});
        
     	it("delCandidates should be aliasMembers", () => {
     		expect(vm.delCandidates).toEqual('aliasMembers');
+    	});
+    	
+       	it("forms should be personForms", () => {
+    		expect(vm.forms).toEqual('personForms');
     	});
    	
     	it("knownperson matches", () => {

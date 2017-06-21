@@ -1,6 +1,6 @@
 export default class FileDownloaderService {
     constructor(FileSaver, Blob) {
-        'ng-inject';
+        'ngInject';
 
         this.fileSaver = FileSaver;
         this.blob = Blob;

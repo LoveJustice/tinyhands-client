@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col-md-6" style="padding-right:0;">
+        <select ng-options="bs.id as bs.station_name for bs in $ctrl.borderStations track by bs.id"
+                ng-model="$ctrl.selectedBorderStation"
+                class="form-control">
+        </select>
+    </div>
+    <div class="col-md-6">
+        
+        <a class="btn btn-success" style="width:100%" ui-sref="budget({borderStationId: $ctrl.selectedBorderStation})">Create Budget</a>
+    </div>
+</div>

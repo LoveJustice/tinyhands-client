@@ -12,3 +12,4 @@ build/
 
 jsconfig.json
 npm-debug.log
+package-lock.json

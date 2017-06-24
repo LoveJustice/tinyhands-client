@@ -1,20 +1,21 @@
+import createBudgetButtonTemplate from './create-budget.html';
+
 class CreateBudgetController {
-  constructor($scope, BorderStationService) {
+  constructor(BorderStationService) {
     'ngInject';
-    this.$scope = $scope;
     this.service = BorderStationService;
   }
 
   $onInit() {
     this.service.getBorderStations().then((resp) => {
         this.borderStations = resp.data;
-        this.selectedBorderStation = 0;
+        this.selectedBorderStation = this.borderStations[0]; // initialize dropdown to first border station
     });
   }
 }
 
 const CreateButtonComponent = {
-  templateUrl: require('./create-budget.html'),
+  templateUrl: createBudgetButtonTemplate,
   controller: CreateBudgetController,
 };
 

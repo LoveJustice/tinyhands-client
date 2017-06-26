@@ -31,6 +31,7 @@ import NavbarDirective from './components/navbar/navbar.directive';
 import CsvExportDirective from './components/csv-export/csv-export.directive';
 import AutocompleteAddress1Directive from './components/auto-complete/address1/autocomplete-address1.directive';
 import AutocompleteAddress2Directive from './components/auto-complete/address2/autocomplete-address2.directive';
+import CreateButtonComponent from './components/create-budget/create-budget.component.js';
 
 angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ngTouch, uiBootstrap, uiRouter,
     sharedModule,
@@ -57,4 +58,5 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     .directive('csvexport', CsvExportDirective)
     .directive('navbar', NavbarDirective)
     .directive('autocompleteAddress1', AutocompleteAddress1Directive)
-    .directive('autocompleteAddress2', AutocompleteAddress2Directive);
+    .directive('autocompleteAddress2', AutocompleteAddress2Directive)
+    .component('createbudget', CreateButtonComponent);

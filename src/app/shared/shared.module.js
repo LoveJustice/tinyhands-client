@@ -9,7 +9,7 @@ import 'angular-ui-validate';
 import config from './shared.config';
 
 import BaseService from '../base.service';
-import FileDownloaderServie from './services/fileDownloader.service';
+import FileDownloaderService from './services/fileDownloader.service';
 import SessionService from './services/session.service';
 import SpinnerOverlayService from './directives/spinnerOverlay/spinnerOverlay.service';
 import StickyHeaderService from './services/stickyHeader.service';
@@ -33,7 +33,7 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'u
     .constant('moment', moment)
 
     .service('BaseService', BaseService)
-    .service('FileDownloader', FileDownloaderServie)
+    .service('FileDownloader', FileDownloaderService)
     .service('SessionService', SessionService)
     .service('SpinnerOverlayService', SpinnerOverlayService)
     .service('StickyHeader', StickyHeaderService)

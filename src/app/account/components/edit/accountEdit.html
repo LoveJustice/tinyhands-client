@@ -130,7 +130,7 @@
                 <thead>
                 <tr>
                     <th colspan="4">Border Stations</th>
-                    <th colspan="2">Alerts</th>
+                    <th colspan="3">Notifications</th>
                 </tr>
                 <tr>
                     <th>View</th>
@@ -139,6 +139,7 @@
                     <th>Delete</th>
                     <th>Investigation</th>
                     <th>Legal</th>
+                    <th>MDFs</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -179,6 +180,12 @@
                                ng-click="accountEditCtrl.account.permission_receive_investigation_alert = !accountEditCtrl.account.permission_receive_investigation_alert">{{
                             accountEditCtrl.account.permission_receive_investigation_alert ? "Yes" : "No" }}</label>
                     </td>
+                    <td>
+                        <label class="btn"
+                               ng-class="accountEditCtrl.account.permission_can_receive_mdf ? 'btn btn-success' : 'btn btn-danger'"
+                               ng-click="accountEditCtrl.account.permission_can_receive_mdf= !accountEditCtrl.account.permission_can_receive_mdf">{{
+                            accountEditCtrl.account.permission_can_receive_mdf ? "Yes" : "No" }}</label>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -187,7 +194,7 @@
                 <tr>
                     <th>Accounts</th>
                     <th>VDC</th>
-                    <th colspan="5">Budget</th>
+                    <th colspan="4">Budget</th>
                 </tr>
                 <tr>
                     <th>Manage</th>
@@ -196,7 +203,6 @@
                     <th>Add</th>
                     <th>Edit</th>
                     <th>Delete</th>
-                    <th>MDF</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -236,12 +242,6 @@
                                ng-class="accountEditCtrl.account.permission_budget_delete ? 'btn btn-success' : 'btn btn-danger'"
                                ng-click="accountEditCtrl.account.permission_budget_delete = !accountEditCtrl.account.permission_budget_delete">{{
                             accountEditCtrl.account.permission_budget_delete ? "Yes" : "No" }}</label>
-                    </td>
-                    <td>
-                        <label class="btn"
-                               ng-class="accountEditCtrl.account.permission_can_receive_mdf ? 'btn btn-success' : 'btn btn-danger'"
-                               ng-click="accountEditCtrl.account.permission_can_receive_mdf= !accountEditCtrl.account.permission_can_receive_mdf">{{
-                            accountEditCtrl.account.permission_can_receive_mdf ? "Yes" : "No" }}</label>
                     </td>
                 </tr>
                 </tbody>

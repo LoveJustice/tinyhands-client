@@ -7,7 +7,7 @@
             <th colspan="4">Victim Interview Forms</th>
             <th colspan="4">Border Stations</th>
             <th>Accounts</th>
-            <th colspan="2">Alerts</th>
+            <th colspan="3">Notifications</th>
             <th>VDC</th>
             <th colspan="4">Budget</th>
         </tr>
@@ -30,9 +30,10 @@
             <th>Delete</th>
             <!--Accounts-->
             <th>Manage</th>
-            <!--Alerts-->
+            <!--Notifications-->
             <th>Investigation</th>
             <th>Legal</th>
+            <th>MDFs</th>
             <!--VDC-->
             <th>Manage</th>
             <!--Budget-->
@@ -139,6 +140,12 @@
               <label ng-click="account.permission_receive_legal_alert = !account.permission_receive_legal_alert"
                      ng-class="accessControlCtrl.getStyling(account.permission_receive_legal_alert);">
                 <span class="glyphicon {{ account.permission_receive_legal_alert ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+              </label>
+            </td>
+            <td>
+              <label ng-click="account.permission_can_receive_mdf = !account.permission_can_receive_mdf"
+                     ng-class="accessControlCtrl.getStyling(account.permission_can_receive_mdf);">
+                <span class="glyphicon {{ account.permission_can_receive_mdf ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
               </label>
             </td>
             <td>

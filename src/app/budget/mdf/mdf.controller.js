@@ -1,9 +1,9 @@
 export default class MdfController {
     constructor(BudgetListService, $stateParams, $state, $sce, toastr) {
         'ngInject';
-        this.staff = {};
-        this.committeeMembers = {};
-        this.nationalStaff = {};
+        this.staff = [];
+        this.committeeMembers = [];
+        this.nationalStaff = [];
 
         this.service = BudgetListService;
         this.stateParams = $stateParams;

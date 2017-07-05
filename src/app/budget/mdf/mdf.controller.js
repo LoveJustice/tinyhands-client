@@ -22,9 +22,6 @@ export default class MdfController {
             this.staff = promise.data.staff_members;
             this.committeeMembers = promise.data.committee_members;
             this.nationalStaff = promise.data.national_staff_members;
-            this.nationalStaff.forEach((staff) => {
-                staff.receives_money_distribution_form = true;
-            });
             this.createIframe(promise.data.pdf_url);
         },
             () => {

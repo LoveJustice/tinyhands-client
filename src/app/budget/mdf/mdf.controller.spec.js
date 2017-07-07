@@ -15,6 +15,7 @@ describe('MDF Controller', () => {
             'data': {
                 "committee_members": [],
                 "staff_members": [],
+                "national_staff_members": [],
                 "pdf_url": ""
             }
         };
@@ -54,7 +55,7 @@ describe('MDF Controller', () => {
 
     describe('function getIds', () => {
         it('expect getIds to contain staff id because it is checked', () => {
-            let people = { "staff_ids": [], "committee_ids": [] };
+            let people = { "staff_ids": [], "committee_ids": [] , "national_staff_ids": []};
             let sourceObject = [{ "id": 169, "receives_money_distribution_form": true }];
 
             var val = vm.getIds(sourceObject, people, 'staff_ids');
@@ -62,15 +63,23 @@ describe('MDF Controller', () => {
         });
 
         it('expect getIds to contain committee_member id because it is checked', () => {
-            let people = { "staff_ids": [], "committee_ids": [] };
+            let people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
             let sourceObject = [{ "id": 169, "receives_money_distribution_form": true }];
 
             var val = vm.getIds(sourceObject, people, 'committee_ids');
             expect(val.committee_ids).toEqual([169]);
         });
 
+        it('expect getIds to contain national staff id because it is checked', () => {
+            let people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
+            let sourceObject = [{ "id": 169, "receives_money_distribution_form": true }];
+
+            var val = vm.getIds(sourceObject, people, 'national_staff_ids');
+            expect(val.national_staff_ids).toEqual([169]);
+        });
+
         it('expect getIds to contain two committee_member id because they are checked', () => {
-            let people = { "staff_ids": [], "committee_ids": [] };
+            let people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
             let sourceObject = [
                 { "id": 169, "receives_money_distribution_form": true },
                 { "id": 170, "receives_money_distribution_form": true }
@@ -81,7 +90,7 @@ describe('MDF Controller', () => {
         });
 
         it('expect getIds to not contain committee_member id because it is unchecked', () => {
-            let people = { "staff_ids": [], "committee_ids": [] };
+            let people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
             let sourceObject = [{ "id": 169, "receives_money_distribution_form": false }];
 
             var val = vm.getIds(sourceObject, people, 'committee_ids');
@@ -89,11 +98,19 @@ describe('MDF Controller', () => {
         });
 
         it('expect getIds to not contain staff member id because it is unchecked', () => {
-            let people = { "staff_ids": [], "committee_ids": [] };
+            let people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
             let sourceObject = [{ "id": 169, "receives_money_distribution_form": false }];
 
             var val = vm.getIds(sourceObject, people, 'staff_ids');
             expect(val.staff_ids).toEqual([]);
+        });
+
+        it('expect getIds to not contain national staff member id because it is unchecked', () => {
+            let people = { "staff_ids": [], "committee_ids": [], "national_staff_ids": [] };
+            let sourceObject = [{ "id": 169, "receives_money_distribution_form": false }];
+
+            var val = vm.getIds(sourceObject, people, 'national_staff_ids');
+            expect(val.national_staff_ids).toEqual([]);
         });
     });
 });

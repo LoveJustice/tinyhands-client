@@ -7,10 +7,15 @@ class DashboardController {
         this.showEvents = true;
         this.showTally = true;
         this.showAddress2Layer = true;
+        this.showBorderStationLocations = true;
     }
 
     toggleAddress2Layer() {
         this.$rootScope.$emit('toggleAddress2Layer', this.showAddress2Layer);
+    }
+
+    toggleBorderStationLocations() {
+        this.$rootScope.$emit('toggleBorderStationLocations', this.showBorderStationLocations);
     }
 
 }

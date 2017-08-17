@@ -550,20 +550,28 @@ export default class BudgetController {
         }
     }
 
+    updateOtherItem(item) {
+        this.service.updateOtherItem(this.budgetId, item).catch((error) => {
+            this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+        });
+    }
+
+    createOtherItem(item) {
+        this.service.createOtherItem(this.budgetId, item).catch((error) => {
+            this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+        });
+    }
+
     updateOrCreateOtherItems() {
         for (let section in this.form.other) {
             for (let i in this.form.other[section]) {
                 let item = this.form.other[section][i];
                 if (item.id) {
-                    this.service.updateOtherItem(this.budgetId, item).catch((error) => {
-                        this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
-                    });
+                    this.updateOtherItem(item);
                 } else {
                     item.budget_item_parent = this.budgetId;
                     item.form_section = Constants.FormSections[section];
-                    this.service.createOtherItem(this.budgetId, item).catch((error) => {
-                        this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
-                    });
+                    this.createOtherItem(item);
                 }
             }
         }

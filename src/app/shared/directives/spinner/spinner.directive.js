@@ -11,6 +11,6 @@ export default function SpinnerDirective() {
         controllerAs: 'ctrl',
         restrict: 'E',
         templateUrl: template,
-    }
+    };
     return directive;
 }

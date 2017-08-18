@@ -89,19 +89,10 @@ describe('MapController', () => {
     describe('function createMapListeners', () => {
 
         it("should call rootScope $on with first argument of 'toggleAddress2Layer'", () => {
-            let firstArg;
-            controller.rootScope.$on = (a) => { firstArg = a; };
+            spyOn(controller.rootScope, "$on");
             controller.createMapListeners();
-            expect(firstArg).toEqual('toggleAddress2Layer');
+            expect(controller.rootScope.$on).toHaveBeenCalled();
         });
-
-        it('should call toggleAddress2Layer with 1 and 2', () => {
-            controller.rootScope.$on = (_, f) => { f(1, 2); };
-            spyOn(controller, 'toggleAddress2Layer');
-            controller.createMapListeners();
-            expect(controller.toggleAddress2Layer).toHaveBeenCalledWith(1, 2);
-        });
-
     });
 
     describe('getBorderStations', () => {
@@ -132,7 +123,8 @@ describe('MapController', () => {
         it('should hide info window', () => {
             $rootScope.$apply();
             controller.showStationInfoWindow(null, { markerId: 2 });
-            expect(mockMap.hideInfoWindow).toHaveBeenCalledWith(controller.stationInfoWindowId, controller.locationInfoWindowId);
+            expect(mockMap.hideInfoWindow).toHaveBeenCalledWith(controller.locationInfoWindowId);
+            expect(mockMap.hideInfoWindow).toHaveBeenCalledWith(controller.stationInfoWindowId);
         });
 
         it('should set selected station', () => {
@@ -145,7 +137,7 @@ describe('MapController', () => {
         it('should show station info window', () => {
             $rootScope.$apply();
             controller.showStationInfoWindow(null, { markerId: 2 });
-            expect(mockMap.showStationInfoWindow).toHaveBeenCalledWith(controller.stationInfoWindowId, 2);
+            expect(mockMap.showInfoWindow).toHaveBeenCalledWith(controller.stationInfoWindowId, 2);
         });
     });
 
@@ -153,20 +145,21 @@ describe('MapController', () => {
         it('should hide info window', () => {
             $rootScope.$apply();
             controller.showLocationInfoWindow(null, { markerId: 2 });
-            expect(mockMap.hideInfoWindow).toHaveBeenCalledWith(controller.stationInfoWindowId, controller.locationInfoWindowId);
+            expect(mockMap.hideInfoWindow).toHaveBeenCalledWith(controller.locationInfoWindowId);
+            expect(mockMap.hideInfoWindow).toHaveBeenCalledWith(controller.stationInfoWindowId);
         });
 
         it('should set selected station', () => {
             $rootScope.$apply();
-            let station = { markerId: 2 };
-            controller.showLocationInfoWindow(null, station);
-            expect(controller.station).toBe(station);
+            let location = { markerId: 2 };
+            controller.showLocationInfoWindow(null, location);
+            expect(controller.location).toBe(location);
         });
 
         it('should show station info window', () => {
             $rootScope.$apply();
             controller.showLocationInfoWindow(null, { markerId: 2 });
-            expect(mockMap.showLocationInfoWindow).toHaveBeenCalledWith(controller.locationInfoWindowId, 2);
+            expect(mockMap.showInfoWindow).toHaveBeenCalledWith(controller.locationInfoWindowId, 2);
         });
     });
 });

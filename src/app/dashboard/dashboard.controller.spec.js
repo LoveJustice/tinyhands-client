@@ -21,15 +21,29 @@ describe('DashboardController', () => {
         it('showAddress2Layer shouw be true', () => {
             expect(vm.showAddress2Layer).toBe(true);
         });
+
+        it('showBorderStationLocations shouw be true', () => {
+            expect(vm.showBorderStationLocations).toBe(true);
+        });
     });
 
     describe('toggleAddress2Layer', () => {
-        it('not sure yet', () => {
+        it("emits the thing it's supposed to", () => {
             spyOn(vm.$rootScope, '$emit');
 
             vm.toggleAddress2Layer();
 
             expect(vm.$rootScope.$emit).toHaveBeenCalledWith('toggleAddress2Layer', vm.showAddress2Layer);
+        });
+    });
+
+    describe('toggleBorderStationLocations', () => {
+        it("emits the thing it's supposed to", () => {
+            spyOn(vm.$rootScope, '$emit');
+
+            vm.toggleBorderStationLocations();
+
+            expect(vm.$rootScope.$emit).toHaveBeenCalledWith('toggleBorderStationLocations', vm.showBorderStationLocations);
         });
     });
 

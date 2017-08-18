@@ -52,8 +52,8 @@ class MapController {
     }
 
     createMapListeners() {
-        this.rootScope.$on('toggleAddress2Layer', (e, showAddress2Layer) => { this.showAddress2Layer = showAddress2Layer; });
         this.rootScope.$on('toggleBorderStationLocations', (e, showBorderStationLocations) => { this.showBorderStationLocations = showBorderStationLocations; });
+        this.rootScope.$on('toggleAddress2Layer', (e, showAddress2Layer) => { this.showAddress2Layer = showAddress2Layer; });
     }
 
     getBorderStations() {

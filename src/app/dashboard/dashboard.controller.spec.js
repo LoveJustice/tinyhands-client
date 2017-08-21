@@ -22,8 +22,8 @@ describe('DashboardController', () => {
             expect(vm.showAddress2Layer).toBe(true);
         });
 
-        it('showBorderStationLocations shouw be true', () => {
-            expect(vm.showBorderStationLocations).toBe(true);
+        it('showBorderStationLocations should be false', () => {
+            expect(vm.showBorderStationLocations).toBe(false);
         });
     });
 

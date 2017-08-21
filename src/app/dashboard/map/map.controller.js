@@ -10,7 +10,7 @@ class MapController {
         this.borderStations = [];
         this._fusionLayerOptions = null;
         this.showAddress2Layer = true;
-        this.showBorderStationLocations = true;
+        this.showBorderStationLocations = false;
 
         this.createMapListeners();
         this.getBorderStations();

@@ -7,7 +7,7 @@ class DashboardController {
         this.showEvents = true;
         this.showTally = true;
         this.showAddress2Layer = true;
-        this.showBorderStationLocations = true;
+        this.showBorderStationLocations = false;
     }
 
     toggleAddress2Layer() {

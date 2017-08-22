@@ -1,14 +1,16 @@
 class MapController {
     constructor($rootScope, NgMap, BorderStationService) {
         'ngInject';
-
         this.borderStationService = BorderStationService;
         this.rootScope = $rootScope;
 
-        this.infoWindowId = 'marker-info-window';
+        this.stationInfoWindowId = 'marker-station-info-window';
+        this.locationInfoWindowId = 'marker-location-info-window';
+
         this.borderStations = [];
         this._fusionLayerOptions = null;
         this.showAddress2Layer = true;
+        this.showBorderStationLocations = false;
 
         this.createMapListeners();
         this.getBorderStations();
@@ -17,7 +19,8 @@ class MapController {
 
         //fix to get showInfoWindow to have the controller as this.
         //Due to using an on-click callback with ng-map. ng-click does not work.
-        this.showInfoWindow = this.showInfoWindow.bind(this);
+        this.showStationInfoWindow = this.showStationInfoWindow.bind(this);
+        this.showLocationInfoWindow = this.showLocationInfoWindow.bind(this);
     }
 
     get center() {
@@ -49,13 +52,32 @@ class MapController {
     }
 
     createMapListeners() {
-        this.rootScope.$on('toggleAddress2Layer', (e, s) => { this.toggleAddress2Layer(e, s); });
+        this.rootScope.$on('toggleBorderStationLocations', (e, showBorderStationLocations) => { this.showBorderStationLocations = showBorderStationLocations; });
+        this.rootScope.$on('toggleAddress2Layer', (e, showAddress2Layer) => { this.showAddress2Layer = showAddress2Layer; });
     }
 
     getBorderStations() {
         this.borderStationService.getBorderStations(true).then((response) => {
             this.borderStations = response.data.map(this.mapStationData);
+            this.locations = this.mapLocationData(response.data);
         });
+    }
+
+    mapLocationData(borderStations) {
+        let locations = [];
+        borderStations.forEach((borderStation) => {
+            borderStation.location_set.forEach((location) => {
+                locations.push({
+                    id: location.id,
+                    name: location.name,
+                    markerId: `station-${borderStation.id}-location-${location.id}`,
+                    station: borderStation,
+                    position: [location.latitude, location.longitude],
+                    dateEstablished: borderStation.date_established,
+                });
+            });
+        });
+        return locations;
     }
 
     mapStationData(borderStation) {
@@ -73,18 +95,21 @@ class MapController {
         };
     }
 
-    showInfoWindow(e, station) {
-        this.map.hideInfoWindow(this.infoWindowId);       
-        this.station = station;
-        this.map.showInfoWindow(this.infoWindowId, station.markerId);
+    hideInfoWindows() {
+        this.map.hideInfoWindow(this.locationInfoWindowId);
+        this.map.hideInfoWindow(this.stationInfoWindowId);
     }
 
-    toggleAddress2Layer(event, showAddress2Layer) {
-        if (showAddress2Layer) {
-            this.showAddress2Layer = true;
-        } else {
-            this.showAddress2Layer = false;
-        }
+    showStationInfoWindow(e, station) {
+        this.hideInfoWindows();
+        this.station = station;
+        this.map.showInfoWindow(this.stationInfoWindowId, station.markerId);
+    }
+
+    showLocationInfoWindow(e, location) {
+        this.hideInfoWindows();
+        this.location = location;
+        this.map.showInfoWindow(this.locationInfoWindowId, location.markerId);
     }
 }
 

@@ -4,7 +4,7 @@
 			style-id="{{ctrl.fusionLayerOptions.styleId}}" template-id="{{ctrl.fusionLayerOptions.templateId}}">
 		</fusion-tables-layer>
 
-		<info-window id="marker-info-window" >
+		<info-window id="marker-station-info-window" >
 			<div class="col-xs-12" ng-non-bindable="">
 				<div class="row">
 					<h3 class="text-center">{{ ctrl.station.stationName + '-' + ctrl.station.stationCode }}</h3>
@@ -28,8 +28,37 @@
 			</div>
 		</info-window>
 
-		<marker ng-repeat="station in ctrl.borderStations" id='{{station.markerId}}' position="{{station.position}}" on-click="ctrl.showInfoWindow(station)">
+		<info-window id="marker-location-info-window" >
+			<div class="col-xs-12" ng-non-bindable="">
+				<div class="row">
+					<h3 class="text-center">{{ ctrl.location.station.station_name + '-' + ctrl.location.station.station_code }}</h3>
+				</div>
 
-		</marker>
+				<div class="row text-center">
+					<button class="btn btn-default" ui-sref="border-station({id: ctrl.location.station.id})">Details</button>
+					<button class="btn btn-default" ui-sref="irfList({search: ctrl.location.station.station_code})">IRFs</button>
+					<button class="btn btn-default" ui-sref="vifList({search: ctrl.location.station.station_code})">VIFs</button>
+				</div>
+
+				<br/>
+
+				<div class="row panel panel-default panel-body">
+					<p>Location Name: {{ctrl.location.name}}</p>
+				</div>
+			</div>
+		</info-window>
+
+		<marker ng-repeat="station in ctrl.borderStations"
+				id='{{station.markerId}}'
+				position="{{station.position}}"
+				on-click="ctrl.showStationInfoWindow(station)"/>
+
+		<marker ng-repeat="location in ctrl.locations"
+				visible="{{ctrl.showBorderStationLocations}}"
+				id='{{location.markerId}}'
+				position="{{location.position}}"
+				icon="assets/images/location-map-marker.svg"
+				on-click="ctrl.showLocationInfoWindow(location)"/>
+
 	</ng-map>
 </div>

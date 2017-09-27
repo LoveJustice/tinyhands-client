@@ -5,7 +5,7 @@
     "test": "./node_modules/karma/bin/karma start",
     "codeshipTest": "./node_modules/karma/bin/karma start --single-run",
     "dev": "webpack-dev-server --env.dev --content-base dist/ --devtool eval --progress --colors --open",
-    "local" : "rimraf ./dist/* && webpack -p --env.local",
+    "local": "rimraf ./dist/* && webpack -p --env.local",
     "stage": "rimraf ./dist/* && webpack -p --env.staging",
     "prod": "rimraf ./dist/* && webpack -p --env.production",
     "serve-dist": "ws -p 3000 -d ./dist/"

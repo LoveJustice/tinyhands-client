@@ -8,6 +8,6 @@ export default function SpinnerOverlayDirective() {
         controllerAs: 'ctrl',
         restrict: 'E',
         templateUrl: template,
-    }
+    };
     return directive;
 }

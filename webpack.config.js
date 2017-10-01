@@ -11,10 +11,10 @@ function getOutputFileName(env) {
 
 function getServerApiUrl(env) {
     if(env.production) {
-        return '"https://tinyhandsdreamsuite.org/"';
+        return '"https://dreamsuite.org/"';
     }
     else if(env.staging) {
-        return '"https://staging.tinyhandsdreamsuite.org/"';
+        return '"https://staging.dreamsuite.org/"';
     }
     else {
         return '"http://localhost/"';

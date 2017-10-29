@@ -21,13 +21,15 @@ import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 import Spinner from './directives/spinner/spinner.directive';
 import SpinnerOverlay from './directives/spinnerOverlay/spinnerOverlay.directive';
 
+import MonthFilter from './filters/month.filter';
+import CapitalizeFilter from './filters/capitalize.filter';
+
 export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'ui.validate'])
-    .filter('capitalize', function () {
-        return function (input) {
-            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-        };
-    })
     .config(config)
+    
+    .filter('capitalize', CapitalizeFilter)
+    .filter('monthName', MonthFilter)
+
     .constant('RequireLogin', RequireLogin)
     .constant('toastr', toastr)
     .constant('moment', moment)

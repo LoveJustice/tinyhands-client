@@ -2,23 +2,6 @@ import exportMdfTemplate from './mdf-export.html';
 import mdfExportModalTemplate from './mdf-export-modal.html';
 import constants from '../../constants.js';
 
-class ExportMdfsController {
-    constructor($uibModal) {
-        'ngInject';
-        this.modal = $uibModal;
-    }
-    
-    openModal() {
-        this.modal.open({
-            animation: true,
-            templateUrl: mdfExportModalTemplate,
-            controller: ExportMdfsModalController,
-            controllerAs: "vm",
-            size: 'md'
-        });
-    }
-}
-
 class ExportMdfsModalController {
     constructor($uibModalInstance, $window, BaseService) {
         'ngInject';
@@ -59,9 +42,27 @@ class ExportMdfsModalController {
     }
 
     validate() {
-        if (this.numberOfMdfs)
+        if (this.numberOfMdfs) {
             return true;
+        }
         return false;
+    }
+}
+
+class ExportMdfsController {
+    constructor($uibModal) {
+        'ngInject';
+        this.modal = $uibModal;
+    }
+
+    openModal() {
+        this.modal.open({
+            animation: true,
+            templateUrl: mdfExportModalTemplate,
+            controller: ExportMdfsModalController,
+            controllerAs: "vm",
+            size: 'md'
+        });
     }
 }
 

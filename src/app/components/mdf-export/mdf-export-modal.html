@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="modal-title">Export MDFs</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+
+      
+      <div class="col-md-6">
+        <h3>From: {{vm.fromDate | date:' MMMM d yyyy' }}</h3>
+        <select ng-change="vm.getNumberOfMdfs()" 
+                ng-model="vm.selectedMonth"
+                ng-options="p.value as p.name for p in vm.months"
+                class="form-control">
+      </select>
+    </div>
+    
+    <div class="col-md-6">
+      <h3>Year</h3>
+        <input ng-model="vm.selectedYear" ng-change="vm.getNumberOfMdfs()" type="number" class="form-control" >
+      </div>
+    </div>
+
+    <div class="row text-center">
+        <h3>Number of MDFs for {{vm.selectedMonth | monthName}} {{vm.selectedYear}} : {{ vm.numberOfMdfs }}</h3>
+    </div>
+</div>
+
+<div class="modal-footer">
+  <button ng-click="vm.uibModalInstance.dismiss()" type="button" class="btn btn-danger">Cancel</button>
+  <button ng-click="vm.exportPhotos()" ng-disabled="!vm.validate()" type="button" class="btn btn-success">Export</button>
+</div>

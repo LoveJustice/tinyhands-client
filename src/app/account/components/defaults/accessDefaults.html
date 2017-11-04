@@ -9,6 +9,7 @@
             <th>&nbsp;</th>
             <th colspan="4">Interception Record Forms</th>
             <th colspan="4">Victim Interview Forms</th>
+            <th>Person</th>
             <th colspan="4">Border Stations</th>
             <th>Accounts</th>
             <th colspan="3">Notifications</th>
@@ -27,6 +28,8 @@
             <th>Add</th>
             <th>Edit</th>
             <th>Delete</th>
+            <!-- Trafficker Match -->
+            <th>Matching</th>
             <!--Border Stations-->
             <th>View</th>
             <th>Add</th>
@@ -104,6 +107,12 @@
                     ng-click="permissionsSet.permission_vif_delete = !permissionsSet.permission_vif_delete;"
                     ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_vif_delete)">
                     <span class="glyphicon {{ permissionsSet.permission_vif_delete ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
+                </label>
+            </td>
+            <td><label
+                    ng-click="permissionsSet.permission_person_match = !permissionsSet.permission_person_match;"
+                    ng-class="accessDefaultsCtrl.getStyling(permissionsSet.permission_person_match)">
+                    <span class="glyphicon {{ permissionsSet.permission_person_match ? 'glyphicon-ok' : 'glyphicon-remove' }}"></span>
                 </label>
             </td>
             <td><label

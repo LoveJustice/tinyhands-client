@@ -1,6 +1,6 @@
 <div class="navbar navbar-default navbar-fixed-top">
   <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-header-collapse">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-header-collapse" ng-click="mobileNavClosed = !mobileNavClosed" ng-init="mobileNavClosed = true">
       <span class="sr-only">Toggle navigation</span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -9,10 +9,8 @@
     <a class="navbar-brand" style="margin-top: -10px" href="#" ui-sref="dashboard"><img ng-src="assets/images/tiny-hands-logo.png" alt="Tiny Hands" /></a>
   </div>
 
-  <div class="collapse navbar-collapse navbar-header-collapse"
-       ng-if="authenticated">
-    <ul class="nav navbar-nav"
-        ng-mouseleave="stationsOpen = false; formsOpen = false">
+  <div ng-class="{'collapse': mobileNavClosed, 'navbar-collapse': mobileNavClosed, 'navbar-header-collapse': mobileNavClosed}" ng-if="authenticated">
+    <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
         <li><a href="#" ui-sref="dashboard">Dashboard</a></li>
 
         <!-- START: BORDERSTATIONS -->
@@ -51,9 +49,8 @@
         <li><a ng-show="navbarCtrl.session.user" ui-sref="events">Event Calendar</a></li>
 
     </ul>
-    <ul class="nav navbar-nav navbar-right"
-        ng-mouseleave="menuOpen = false">
-        <li>
+    <ul class="nav navbar-nav navbar-right" >
+        <li class="hidden-sm">
           <p class="navbar-text">Nepal Time:  {{ navbarCtrl.nepalTime }}</p>
         </li>
 

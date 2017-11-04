@@ -1,53 +1,15 @@
 import { SatisfiesLoginRequired, SatisfiesPermissionsRequired } from './TransitionOnBefore';
 
 
-// export const SatisfiesPermissionsRequired = ($q, toastr, SessionService, transition) => {
-//     let toState = transition.to();
-//     let returnValue = transition.from().name !== 'login' ? false : transition.router.stateService.target('dashboard'); // send them to dash if already on login page
-    
-//     if (angular.isDefined(toState.data) && angular.isDefined(toState.data.permissions_required)) {
-//         let permissions = toState.data.permissions_required;
-//         return SessionService.me().then((result) => {
-//             if (permissions.some(p => !result[p])) {
-//                 toastr.error(`You are not authorized to view that page!`);
-//                 return returnValue;
-//             }
-//         });
-//     }
-// };
-
-
-
-// export const SatisfiesLoginRequired = ($q, toastr, SessionService, transition) => {
-//     let toState = transition.to();
-
-//     if (angular.isDefined(toState.data) && angular.isDefined(toState.data.loginNotRequired) && !toState.loginNotRequired) {
-//         return true;
-//     }
-
-//     return SessionService.checkIfAuthenticated().then(
-//         () => {}, 
-//         () => {
-//             return transition.router.stateService.target('login', {returnState: toState.name, params: $.param(transition.params())});
-//         }
-//     );
-// };
-
-
 describe('SatisfiesLoginRequired', () => {
 
     let $q, toastr, mockSessionService, $rootScope, transition;
 
     beforeEach(inject((_$q_, _$rootScope_) => {
-        mockState = jasmine.createSpyObj('state', ['go']);
-        
-        mockSessionService = jasmine.createSpyObj('sessionService', ['checkIfAuthenticated']);
-        
-        transition = jasmine.createSpyObj('transition', ['to']);
-
-
-
+        $q = _$q_;
         $rootScope = _$rootScope_;
+        mockSessionService = jasmine.createSpyObj('sessionService', ['checkIfAuthenticated']);
+        transition = jasmine.createSpyObj('transition', ['to']);
     }));
 
     describe('when user is authenticated', () => {
@@ -57,54 +19,109 @@ describe('SatisfiesLoginRequired', () => {
                 return $q.resolve();
             });
 
+        });
+        
+        it('should return true when login is not required', () => {
             transition.to.and.callFake(() => {
-                return {name: "state", data: {loginNotRequired: true}}
+                return {name: "dashboard", data: {loginNotRequired: true}};
+            });
+
+            let result = SatisfiesLoginRequired(mockSessionService, transition);
+            expect(result).toBe(true);
+        });
+
+        it('should return true when login is required', () => {
+            transition.to.and.callFake(() => {
+                return {name: "dashboard"};
+            });
+            
+            let result = SatisfiesLoginRequired(mockSessionService, transition);
+            expect(result).toBeTruthy();
+        });
+    });
+
+    describe('when user is not authenticated', () => {
+        beforeEach(() => {
+            mockSessionService.checkIfAuthenticated.and.callFake(() => {
+                return $q.resolve();
+            });
+
+            transition.to.and.callFake(() => {
+                return {name: "dashboard", data: {loginNotRequired: true}};
             });
         });
 
-        it('should return true', (done) => {
-            let result = SatisfiesLoginRequired($q, toastr, mockSessionService, transition);
+        it('should return true when login is not required', () => {
+            transition.to.and.callFake(() => {
+                return {name: "dashboard", data: {loginNotRequired: true}};
+            });
 
+            let result = SatisfiesLoginRequired(mockSessionService, transition);
             expect(result).toBe(true);
-            // result.then(() => {
-            //     done();
-            // }, () => {
-            //     done.fail('User not authenticated');
-            // });
-            $rootScope.$apply();
         });
+
+
+        // it('should return login state', () => {
+        //     let result = SatisfiesLoginRequired(mockSessionService, transition);
+            
+        //     expect(result).toContain();
+
+        // });
     });
 });
 
-//     describe('when user is not authenticated', () => {
 
-//         beforeEach(() => {
-//             mockSessionService.checkIfAuthenticated.and.callFake(() => {
-//                 return $q.reject();
-//             });
-//         });
+describe('SatisfiesPermissionsRequired', () => {
+    
+        let $q, toastr, mockToastr, mockSessionService, $rootScope, transition;
+    
+        beforeEach(inject((_$q_, _$rootScope_) => {
+            $q = _$q_;
+            $rootScope = _$rootScope_;
+            mockSessionService = jasmine.createSpyObj('sessionService', ['me']);
+            mockToastr = jasmine.createSpyObj('toastr', ['error']);
+            transition = jasmine.createSpyObj('transition', ['to', 'from']);
+    
+        }));
+    
+        describe('when user is authenticated', () => {
+    
+            beforeEach(() => {
+                mockSessionService.me.and.callFake(() => {
+                    return $q.resolve({result: {thing: false}});
+                });
+                transition.from.and.callFake(() => {
+                    return {name: "dashboard"};
+                });
+            });
+            
+            it('should return undefined when permissions required isnt there', () => {
+                transition.to.and.callFake(() => {
+                    return {name: "dashboard"};
+                });
+    
+                let result = SatisfiesPermissionsRequired(mockToastr, mockSessionService, transition);
+                expect(result).toBe(undefined);
+            });
+    
+            // it('should return dashboard state if permissionsrequired fails and on login page', () => {
+            //     transition.to.and.callFake(() => {
+            //         return {name: "login",};
+            //     });
+                
+            //     let result = SatisfiesPermissionsRequired(mockToastr, mockSessionService, transition);
+            //     expect(result).toBeTruthy();
+            // });
 
-//         it('should reject promise', (done) => {
-//             let result = RequireLogin($q, mockState, mockSessionService);
+            it("When there are permissions required it should call toastr and display a warning", () => {
+                transition.to.and.callFake(() => {
+                    return {name: "dashboard", data: {permissions_required: ['thing']}};
+                });
 
-//             result.then(() => {
-//                 done.fail('User is authenticated');
-//             }, () => {
-//                 done();
-//             });
-//             $rootScope.$apply();
-//         });
+                let result = SatisfiesPermissionsRequired(mockToastr, mockSessionService, transition);
+                $rootScope.$apply();
 
-//         it('should go to login state', (done) => {
-//             let result = RequireLogin($q, mockState, mockSessionService);
-
-//             result.then(() => {
-//                 done.fail('User is authenticated');
-//             }, () => {
-//                 expect(mockState.go).toHaveBeenCalledWith('login');
-//                 done();
-//             });
-//             $rootScope.$apply();
-//         });
-//     });
-// });
+                expect(mockToastr.error).toHaveBeenCalled();
+            });
+    });
+});

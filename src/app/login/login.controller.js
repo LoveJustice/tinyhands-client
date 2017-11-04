@@ -1,7 +1,9 @@
 class LoginController {
-    constructor($state, toastr, SessionService) {
+    constructor($state, $stateParams, toastr, SessionService) {
         'ngInject';
 
+        this.returnStateName = $stateParams.returnState === undefined ? "dashboard" : $stateParams.returnState;
+        this.returnStateParams = this.getStateParamsFromUrl($stateParams.params);
         this.password = "";
         this.username = "";
         this.$state = $state;
@@ -9,13 +11,17 @@ class LoginController {
         this.session = SessionService;
         this.session.clearSession();
     }
-
+    
     attemptLogin() {
         this.session.attemptLogin(this.username, this.password).then(() => {
-            this.$state.go('dashboard');
+            this.$state.go(this.returnStateName, this.returnStateParams);
         }, (reason) => {
             this.toastr.error(reason);
         });
+    }
+
+    getStateParamsFromUrl(queryString) {
+        return JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
     }
 }
 

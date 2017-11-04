@@ -19,7 +19,7 @@ describe('LoginController', () => {
             return $q.resolve();
         });
 
-        vm = new LoginController(mockState, mockToastr, mockSessionService);
+        vm = new LoginController(mockState, {returnState: "hello", params: ""}, mockToastr, mockSessionService);
     }));
 
     describe('function constructor', () => {

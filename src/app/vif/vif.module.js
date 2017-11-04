@@ -1,4 +1,3 @@
-import uiRouter from 'angular-ui-router';
 import sharedModule from '../shared/shared.module';
 
 import VIFRoutes from './vif.route';
@@ -21,7 +20,7 @@ import VifBuilder from './form/vifBuilder.service';
 import VifListService from './list/vifList.service';
 import VifService from './form/vif.service';
 
-export default angular.module('tinyhands.VIF', [uiRouter, sharedModule])
+export default angular.module('tinyhands.VIF', [sharedModule])
     .config(VIFRoutes)
 
     .controller('VifController', VifController)

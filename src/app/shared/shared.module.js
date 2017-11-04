@@ -7,7 +7,6 @@ import toastr from 'toastr';
 import 'angular-ui-validate';
 import uiRouter from '@uirouter/angularjs';
 
-
 import config from './shared.config';
 
 import BaseService from '../base.service';
@@ -22,14 +21,16 @@ import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 import Spinner from './directives/spinner/spinner.directive';
 import SpinnerOverlay from './directives/spinnerOverlay/spinnerOverlay.directive';
 
+import MonthFilter from './filters/month.filter';
+import CapitalizeFilter from './filters/capitalize.filter';
+
 export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'ui.validate', uiRouter])
     .run(TransitionOnBefore)
     .config(config)
-    .filter('capitalize', function () {
-        return function (input) {
-            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-        };
-    })
+    
+    .filter('capitalize', CapitalizeFilter)
+    .filter('monthName', MonthFilter)
+
     .constant('toastr', toastr)
     .constant('moment', moment)
 

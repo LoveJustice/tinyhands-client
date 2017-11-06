@@ -21,6 +21,7 @@ import eventsModule from './events/events.module';
 import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';
 import idmanagementModule from './idmanagement/idmanagement.module';
+import traffickermatchModule from './traffickermatch/traffickermatch.module';
 
 import constants from './constants.js';
 import config from './index.config';
@@ -48,6 +49,7 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     photoExportModule,
     countriesModule,
     idmanagementModule,
+    traffickermatchModule,
 ])
 
     .constant('constants', constants)

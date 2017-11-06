@@ -1,0 +1,53 @@
+<div class="container">
+	<div>
+		<div>
+			<div class="radio" style="display:inline-block; float:left; width:20%">
+				&nbsp;&nbsp;&nbsp;<label><input type="radio" ng-model="vm.addSearchOption" value="name" checked>Name</label> &nbsp;
+				<label><input type="radio" ng-model="vm.addSearchOption" value="phone">Phone</label>
+			</div>
+			<div style="display:inline-block">
+				<form ng-submit="vm.matchSearch()">
+	              <label>
+	                  <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control">
+	              </label>
+	              <a class="btn btn-primary" ng-click="vm.matchSearch()">Search</a>
+	        	</form>
+			</div>
+		</div>
+	
+	    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
+	    <thead class="sticky-table-header">
+	        <tr>
+	            <th id="candidateNameHeader" class="text-center" width="20%">Name</th>
+	            <th id="candidateGenderHeader" class="text-center" width="11%">Gender</th>
+	            <th id="candidateAgeHeader" class="text-center" width="8%">Age</th>
+	            <th id="candidateAddress1Header" class="text-center" width="16%">Address 1</th>
+	            <th id="candidateAddress2Header" class="text-center" width="16%">Address 2</th>
+	            <th id="candidatePhoneHeader" class="text-center" width="16%">Phone</th>
+	            <th id="candidateFormHeader" class="text-center" width="13%">Form</th>
+	        </tr>
+        </thead>
+        <tbody ng-init="vm.sortColumn = 'name'">
+            <tr ng-repeat="candidate in vm.matchCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()" ng-show="{{candidate.id}} != {{vm.knownperson.id}}">
+                <td class="text-center">{{ candidate.full_name }}</td>
+                <td class="text-center">{{ candidate.gender }}</td>
+                <td class="text-center">{{ candidate.age }}</td>
+                <td class="text-center">{{ candidate.address1.name }}</td>
+                <td class="text-center">{{ candidate.address2.name }}</td>
+                <td class="text-center">{{ candidate.phone_contact }}</td>
+				<td class="text-center">{{ candidate.form_number }}</td>
+            </tr>
+            <tr ng-show="vm.matchCandidates.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>Nothing Matched your search for: "{{ vm.searchValue }}"</h2></td>
+            </tr>
+        </tbody>
+    	</table>
+	
+	</div>
+	<div ng-show="vm.loading" class="loader-container">
+		<div class="loader">Loading...</div>
+	</div>
+    <div id="popupDiv" ng-show="showPopup">
+    	<img id="popupImageId" src="">
+    </div>
+</div>

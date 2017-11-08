@@ -1,7 +1,7 @@
 import dashboardTemplate from './dashboard.html';
 import './dashboard.less';
 
-function dashboardRouteConfig($stateProvider, RequireLogin) {
+function dashboardRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('dashboard', {
@@ -9,9 +9,6 @@ function dashboardRouteConfig($stateProvider, RequireLogin) {
             templateUrl: dashboardTemplate,
             controller: 'DashboardController',
             controllerAs: 'dashboard',
-            resolve: {
-                requireLogin: RequireLogin
-            }
         });
 }
 

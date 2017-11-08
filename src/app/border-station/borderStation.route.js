@@ -1,6 +1,6 @@
 import borderStationTemplate from './borderStation.html';
 
-function borderStationRouteConfig($stateProvider, RequireLogin) {
+function borderStationRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('border-station', {
@@ -10,9 +10,6 @@ function borderStationRouteConfig($stateProvider, RequireLogin) {
             controllerAs: 'bsCtrl',
             data: {
                 permissions_required: ['permission_border_stations_view']
-            },
-            resolve: {
-                requireLogin: RequireLogin
             }
         });
 }

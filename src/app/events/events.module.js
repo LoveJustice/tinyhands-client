@@ -1,7 +1,6 @@
 import uiBootstrap from 'angular-ui-bootstrap';
 import 'fullcalendar';
 import 'angular-ui-calendar';
-import uiRouter from 'angular-ui-router';
 import sharedModule from '../shared/shared.module';
 
 import EventsRoutes from './events.route';
@@ -15,7 +14,7 @@ import ModalController from './list/modal.controller';
 import EventsService from './events.service';
 
 
-export default angular.module('tinyhands.Events', [uiBootstrap, 'ui.calendar', uiRouter, sharedModule])
+export default angular.module('tinyhands.Events', [uiBootstrap, 'ui.calendar', sharedModule])
     .config(EventsRoutes)
 
     .controller('EventCalendarController', EventCalendarController)

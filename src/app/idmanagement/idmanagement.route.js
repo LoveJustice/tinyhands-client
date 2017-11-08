@@ -1,6 +1,6 @@
 import idmanagementListTemplate from './idmanagement.html';
 
-function idmanagementRouteConfig($stateProvider, RequireLogin) {
+function idmanagementRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('idmanagement', {
@@ -11,9 +11,6 @@ function idmanagementRouteConfig($stateProvider, RequireLogin) {
             data: {
                 permissions_required: ['permission_address2_manage']
             },
-            resolve: {
-                requireLogin: RequireLogin
-            }
         });
 }
 

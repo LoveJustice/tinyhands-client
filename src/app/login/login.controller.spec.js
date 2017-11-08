@@ -19,7 +19,9 @@ describe('LoginController', () => {
             return $q.resolve();
         });
 
-        vm = new LoginController(mockState, mockToastr, mockSessionService);
+        let mockStateParams = {returnState: undefined, params: "search=asdf"};
+
+        vm = new LoginController(mockState, mockStateParams, mockToastr, mockSessionService);
     }));
 
     describe('function constructor', () => {
@@ -47,7 +49,7 @@ describe('LoginController', () => {
                 vm.attemptLogin();
                 $rootScope.$apply();
 
-                expect(mockState.go).toHaveBeenCalledWith('dashboard');
+                expect(mockState.go).toHaveBeenCalledWith('dashboard', {search: "asdf"});
             });
         });
 

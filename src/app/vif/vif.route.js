@@ -1,7 +1,7 @@
 import vifListTemplate from './list/vifList.html';
 import './list/vifList.less';
 
-function VIFRoutes($stateProvider, RequireLogin) {
+function VIFRoutes($stateProvider) {
   'ngInject';
   $stateProvider
     .state('vifList', {
@@ -9,9 +9,6 @@ function VIFRoutes($stateProvider, RequireLogin) {
       templateUrl: vifListTemplate,
       controller: 'VifListController',
       controllerAs: 'vifListCtrl',
-      resolve: {
-        requireLogin: RequireLogin
-      }
     });
 }
 

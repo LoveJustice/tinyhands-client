@@ -1,5 +1,4 @@
 import ngMap from 'ngmap';
-import uiRouter from 'angular-ui-router';
 import eventsModule from '../events/events.module';
 import sharedModule from '../shared/shared.module';
 
@@ -16,7 +15,7 @@ import DashboardEventsDirective from './events/dashboardEvents.directive';
 
 import TallyService from './tally/tally.service';
 
-export default angular.module('tinyhands.Dashboard', [ngMap, uiRouter, eventsModule, sharedModule])
+export default angular.module('tinyhands.Dashboard', [ngMap, eventsModule, sharedModule])
     .config(dashboardRouteConfig)
 
     .controller('DashboardController', DashboardController)

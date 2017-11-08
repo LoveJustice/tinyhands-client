@@ -68,7 +68,7 @@
             <li><a ui-sref="address2"
                    ng-show="navbarCtrl.session.user.permission_address2_manage">Edit Address 2</a></li>
             <li><a ui-sref="idmanagement"
-                   ng-show="navbarCtrl.session.user.permission_address2_manage">ID Management</a></li>
+                   ng-show="navbarCtrl.session.user.permission_person_match && navbarCtrl.session.user.permission_irf_edit && navbarCtrl.session.user.permission_vif_edit">ID Management</a></li>
             <li class="divider"></li>
             <li ng-click="navbarCtrl.logout()"><a href="#">Logout</a></li>
             </ul>

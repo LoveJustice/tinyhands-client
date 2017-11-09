@@ -6,6 +6,9 @@ function IRFRoutes($stateProvider) {
   $stateProvider
     .state('irfList', {
       url: '/irf?search',
+      params: {
+        search: { dynamic: true }
+      },
       templateUrl: irfListTemplate,
       controller: 'IrfListController',
       controllerAs: 'irfListCtrl',

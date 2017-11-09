@@ -7,6 +7,10 @@ function addressesRouteConfig($stateProvider) {
     $stateProvider
         .state('address1', {
             url: '/address1?deleteId?editId',
+            params: {
+                deleteId: { dynamic: true },
+                editId: { dynamic: true },
+            },
             templateUrl: address1ListTemplate,
             controller: 'Address1Controller',
             controllerAs: 'vm',
@@ -16,6 +20,10 @@ function addressesRouteConfig($stateProvider) {
         })
         .state('address2', {
             url: '/address2?deleteId?editId',
+            params: {
+                deleteId: { dynamic: true },
+                editId: { dynamic: true },
+            },
             templateUrl: address2ListTemplate,
             controller: 'Address2Controller',
             controllerAs: 'vm',

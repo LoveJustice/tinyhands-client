@@ -73,7 +73,7 @@ export default class IrfListController {
     searchIrfs() {
         this.timeout.cancel(this.timer);
         this.timer = this.timeout( () => {
-            this.state.go('irfList', {search: this.queryParameters.search}, {reload: false, notify: false});
+            this.state.go('.', {search: this.queryParameters.search});
             this.getIrfList();
         }, 500);
     }
@@ -94,9 +94,11 @@ export default class IrfListController {
     }
 
     getIrfList() {
+        this.spinnerOverlayService.show("Searching for IRFs...");        
         this.service.getIrfList(this.transform(this.queryParameters)).then( (promise) => {
             this.irfs = promise.data.results;
             this.nextPage = this.extractPage(promise.data.next);
+            this.spinnerOverlayService.hide();        
         });
     }
 

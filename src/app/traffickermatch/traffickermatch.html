@@ -1,0 +1,66 @@
+<div class="container" style="margin-top: -51px">
+	<div class="row">
+		<h1 class="text-center">Trafficker Name Match</h1>
+	</div>
+
+	<div class="row" style="padding: 20px 0 20px 0">
+		<div class="radio col-xs-2">
+			<div class="row">
+				<label class="col-xs-5">
+					<input type="radio" ng-model="vm.type" value="name" checked>Name </input>
+				</label>
+				<label class="col-xs-5 col-xs-offset-2">
+					<input type="radio" ng-model="vm.type" value="phone">Phone</input>
+				</label>
+			</div>
+		</div>
+		<div class="col-xs-10">
+			<form ng-submit="vm.matchSearch()">
+				<div class="row">
+					<div class="col-xs-11">
+						<input type="search" placeholder="Search value..." ng-model="vm.searchValue" class="form-control">
+					</div>
+					<div class="col-xs-1">
+						<button class="btn btn-primary" type="submit">Search</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-striped">
+			<thead class="sticky-table-header">
+				<tr>
+					<th width="20%">Name</th>
+					<th width="11%">Gender</th>
+					<th width="8%">Age</th>
+					<th width="16%">Address 1</th>
+					<th width="16%">Address 2</th>
+					<th width="16%">Phone</th>
+					<th width="13%">Form</th>
+					<th width="13%">Photo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="candidate in vm.matchCandidates | orderBy:'full_name'" ng-show="candidate.id !== vm.knownperson.id">
+					<td>{{ candidate.full_name }}</td>
+					<td>{{ candidate.gender }}</td>
+					<td>{{ candidate.age }}</td>
+					<td>{{ candidate.address1.name }}</td>
+					<td>{{ candidate.address2.name }}</td>
+					<td>{{ candidate.phone_contact }}</td>
+					<td>{{ candidate.form_number }}</td>
+					<td>
+						<button class="btn btn-primary" ng-click="vm.showPictureInModal(candidate.form_photo)" ng-if="candidate.form_photo">View</button>
+					</td>
+				</tr>
+				<tr ng-show="vm.matchCandidates.length == 0">
+					<td colspan="12" style="text-align:center;">
+						<h2>No {{vm.type}} Matched your search for: "{{ vm.searchValue }}"</h2>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

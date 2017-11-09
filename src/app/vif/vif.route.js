@@ -6,6 +6,9 @@ function VIFRoutes($stateProvider) {
   $stateProvider
     .state('vifList', {
       url: '/vif?search',
+      params: {
+        search: { dynamic: true }
+      },
       templateUrl: vifListTemplate,
       controller: 'VifListController',
       controllerAs: 'vifListCtrl',

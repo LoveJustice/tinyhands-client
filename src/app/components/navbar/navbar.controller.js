@@ -1,5 +1,5 @@
 export default class NavbarController {
-    constructor($scope, constants, BorderStationService, SessionService) {
+    constructor($scope, $state, constants, BorderStationService, SessionService) {
         'ngInject';
 
         this.borderStationService = BorderStationService;
@@ -8,7 +8,7 @@ export default class NavbarController {
 
         this.borderStations = [];
         this.nepalTime = window.moment.tz("Asia/Kathmandu").format("MMMM Do YYYY, h:mm:ssA");
-
+        this.state = $state;
 
         $scope.$on('GetNavBarBorderStations', () => {
             this.getBorderStations();

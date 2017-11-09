@@ -1,7 +1,7 @@
 import traffickermatchListTemplate from './traffickermatch.html';
 
 
-function traffickermatchRouteConfig($stateProvider, RequireLogin) {
+function traffickermatchRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('traffickermatch', {
@@ -10,11 +10,9 @@ function traffickermatchRouteConfig($stateProvider, RequireLogin) {
             controller: 'TraffickerMatchController',
             controllerAs: 'vm',
             data: {
-                permissions_required: ['permission_person_match']
+                permissions_required: ['permission_person_match'],
+                hideNavbar: true
             },
-            resolve: {
-                requireLogin: RequireLogin
-            }
         });
 }
 

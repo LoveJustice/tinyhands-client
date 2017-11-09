@@ -4,16 +4,9 @@ class TraffickerMatchService {
         this.service = BaseService;
     }
 
-    getFuzzyKnownPersons(val) {
-        return this.service.get(`api/idmgmt/fuzzy/?name=${val}&exclude=victims`);
-    }
-
-    getPhoneKnownPersons(val) {
-        return this.service.get(`api/idmgmt/phone/?phone=${val}&exclude=victims`);
-    }
-
-    getKnownPersonForms(val) {
-        return this.service.get(`api/idmgmt/forms/?person_id=${val}`);
+    getKnownPersons(val, type) {
+        let endpoint = type === "name" ? "fuzzy" : "phone";
+        return this.service.get(`api/idmgmt/${endpoint}/?${type}=${val}&exclude=victims`);
     }
 }
 

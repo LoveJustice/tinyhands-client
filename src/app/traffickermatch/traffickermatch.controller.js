@@ -1,57 +1,33 @@
 class TraffickerMatchController {
-    constructor(StickyHeader, $scope, $state, traffickerMatchService, $document) {
+    constructor(StickyHeader, traffickerMatchService, $uibModal, SpinnerOverlayService) {
         'ngInject';
 
-        this.state = $state;
         this.sticky = StickyHeader;
         this.traffickerMatchService = traffickerMatchService;
+        this.spinnerOverlayService = SpinnerOverlayService;
+        this.$uibModal = $uibModal;
 
-        this.addSearchOption = "name";
-        this.loading = false;
-
-        $scope.showPopup = false;
-        $scope.displayPopup = function (event, photo) {
-            if (photo !== null && $scope.showPopup === false) {
-                var img = $document[0].getElementById('popupImageId');
-                var div = $document[0].getElementById('popupDiv');
-                div.style.position = "absolute";
-                div.style.left = (event.currentTarget.offsetLeft + event.currentTarget.offsetParent.offsetLeft) + 'px';
-                div.style.top = (event.currentTarget.offsetTop + event.currentTarget.offsetParent.offsetTop + event.currentTarget.offsetHeight) + 'px';
-                img.src = photo;
-                $scope.showPopup = true;
-            }
-        };
-        $scope.hidePopup = function () {
-            $scope.showPopup = false;
-        };
-
+        this.type = "name";
         this.searchValue = "";
     }
 
-    matchSearch() {
-        this.loading = true;
-        if (this.addSearchOption === "name") {
-            this.traffickerMatchService.getFuzzyKnownPersons(this.searchValue)
-                .then((promise) => {
-                    this.matchCandidates = promise.data;
-                    this.loading = false;
-                });
-        } else {
-            this.traffickerMatchService.getPhoneKnownPersons(this.searchValue)
-                .then((promise) => {
-                    this.matchCandidates = promise.data;
-                    this.loading = false;
-                });
-        }
+    showPictureInModal(photoUrl) {
+        this.$uibModal.open({
+            animation: true,
+            template: `<div class="text-center"><img ng-src="${photoUrl}"/></div>`,
+            size: 'sm',
+        });
     }
 
-    getForms(person_id) {
-        this.traffickerMatchService.getKnownPersonForms(person_id)
+    matchSearch() {
+        this.spinnerOverlayService.show("Searching for matches");
+
+        this.traffickerMatchService.getKnownPersons(this.searchValue, this.type)
             .then((promise) => {
-                this.forms = promise.data;
+                this.matchCandidates = promise.data;
+                this.spinnerOverlayService.hide();
             });
     }
-
 }
 
 export default TraffickerMatchController;

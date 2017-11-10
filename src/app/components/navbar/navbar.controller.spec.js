@@ -9,7 +9,7 @@ describe('NavbarController', () => {
             $timeout,
             bss = new BorderStationService($http, $q);
         session = { logout: () => { }, user: {} };
-        vm = new NavbarController($scope, $timeout, bss, session);
+        vm = new NavbarController($scope, {}, $timeout, bss, session);
     }));
 
     describe('function constructor', () => {

@@ -1,6 +1,6 @@
 import countryTemplate from './countries.html';
 
-function countriesRouteConfig($stateProvider, RequireLogin) {
+function countriesRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('countries', {
@@ -11,9 +11,6 @@ function countriesRouteConfig($stateProvider, RequireLogin) {
             data: {
                 permissions_required: ['permission_address2_manage']
             },
-            resolve: {
-                requireLogin: RequireLogin
-            }
         });
 }
 

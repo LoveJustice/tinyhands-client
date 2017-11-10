@@ -108,7 +108,7 @@ class Address2Controller {
     }
 
     editAddress2(address) {
-        this.state.go('address2', {editId: address.id}, {notify: false});
+        this.state.go('.', {editId: address.id});
 
         var modalInstance = this.modal.open({
             animation: true,
@@ -126,17 +126,16 @@ class Address2Controller {
             this.address2Service.saveAddress(address)
                 .then(() => {
                     this.getAddresses();
-                    this.state.go('address2', {editId: null}, {notify: false});
+                    this.state.go('.', {editId: null});
                     this.toastr.success(`Address 2 Successfully Updated!`);
                 }, () => {
-                    this.state.go('address2', {editId: null}, {notify: false});
                     this.toastr.error(`Address 2 Did Not Save Successfully!`);
                 });
         });
     }
 
     deleteAddress2(address) {
-        this.state.go('address2', {deleteId: address.id}, {notify: false});
+        this.state.go('.', {deleteId: address.id});
 
         this.modal.open({
             animation: true,

@@ -11,7 +11,7 @@ import editTemplate from './components/edit/accountEdit.html';
 import './components/edit/accountEdit.less';
 import notFoundTemplate from './components/edit/accountNotFound.html';
 
-function accountRouteConfig($stateProvider, RequireLogin) {
+function accountRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('accounts', {
@@ -20,9 +20,6 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             controller: 'AccountController',
             controllerAs: 'accountCtrl',
             templateUrl: accountTemplate,
-            resolve: {
-                requireLogin: RequireLogin
-            }
         })
         .state('accounts.list', {
             url: '/list',
@@ -31,9 +28,6 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             templateUrl: accountListTemplate,
             data: {
                 index: 0,
-            },
-            resolve: {
-                requireLogin: RequireLogin
             }
         })
         .state('accounts.control', {
@@ -44,9 +38,6 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             data: {
                 index: 1,
             },
-            resolve: {
-                requireLogin: RequireLogin
-            }
         })
         .state('accounts.defaults', {
             url: '/defaults',
@@ -56,26 +47,17 @@ function accountRouteConfig($stateProvider, RequireLogin) {
             data: {
                 index: 2,
             },
-            resolve: {
-                requireLogin: RequireLogin
-            }
         })
         .state('account', {
             url: '/account/{id:[0-9]+|create}',
             controller: 'AccountEditController',
             controllerAs: 'accountEditCtrl',
             templateUrl: editTemplate,
-            resolve: {
-                requireLogin: RequireLogin
-            }
         })
 
         .state('accountNotFound', {
             url: '/account/notfound',
             templateUrl: notFoundTemplate,
-            resolve: {
-                requireLogin: RequireLogin
-            }
         })
 
         .state('account activate', {

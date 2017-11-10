@@ -72,7 +72,7 @@ export default class VifListController {
     searchVifs() {
         this.timeout.cancel(this.timer);
         this.timer = this.timeout( () => {
-            this.state.go('vifList', {search: this.queryParameters.search}, {reload: false, notify: false});
+            this.state.go('.', {search: this.queryParameters.search});
             this.getVifList();
         }, 500);
     }
@@ -93,7 +93,9 @@ export default class VifListController {
     }
 
     getVifList() {
+        this.spinnerOverlayService.show("Searching for VIFs...");        
         this.service.getVifList(this.transform(this.queryParameters)).then( (promise) => {
+            this.spinnerOverlayService.hide();        
             this.vifs = promise.data.results;
             this.nextPage = this.extractPage(promise.data.next);
         });

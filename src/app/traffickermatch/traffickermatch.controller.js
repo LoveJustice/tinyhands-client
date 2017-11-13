@@ -21,7 +21,7 @@ class TraffickerMatchController {
 
     matchSearch() {
         this.spinnerOverlayService.show("Searching for matches");
-
+        this.type = isNaN(this.searchValue.replace(/[\s-\(\)]+/g, "")) ? "name" : "phone";
         this.traffickerMatchService.getKnownPersons(this.searchValue, this.type)
             .then((promise) => {
                 this.matchCandidates = promise.data;

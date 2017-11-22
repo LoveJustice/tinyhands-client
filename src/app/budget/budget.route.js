@@ -12,6 +12,9 @@ function budgetRouteConfig($stateProvider) {
             templateUrl: budgetTemplate,
             controller: 'BudgetController',
             controllerAs: 'budgetCtrl',
+            params: {
+                id: null
+            }
         })
         .state('budgetList', {
             url: '/budget',

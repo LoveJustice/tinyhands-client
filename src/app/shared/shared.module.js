@@ -6,6 +6,7 @@ import ngFileSaver from 'angular-file-saver';
 import toastr from 'toastr';
 import 'angular-ui-validate';
 import uiRouter from '@uirouter/angularjs';
+import 'angularjs-dropdown-multiselect';
 
 import config from './shared.config';
 
@@ -24,7 +25,7 @@ import SpinnerOverlay from './directives/spinnerOverlay/spinnerOverlay.directive
 import MonthFilter from './filters/month.filter';
 import CapitalizeFilter from './filters/capitalize.filter';
 
-export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'ui.validate', uiRouter])
+export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'ui.validate', uiRouter, 'angularjs-dropdown-multiselect'])
     .run(TransitionOnBefore)
     .config(config)
     

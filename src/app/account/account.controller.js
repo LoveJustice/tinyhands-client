@@ -23,6 +23,7 @@ export default class AccountController {
     switchTab(index) {
         if (this.activeTabIndex !== index) {
             let state = this.tabs[index].state;
+            this.activeTabIndex = index;
             this.$state.go(state);
         }
     }

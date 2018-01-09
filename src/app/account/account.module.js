@@ -12,6 +12,8 @@ import UnsavedChangesModalController from './components/modal/unsavedChangesModa
 
 import AccountService from './account.service';
 import PermissionsSetsService from './permissionsSets.service';
+import PermissionsService from './permissions.service';
+import UserPermissionsService from './userPermissions.service';
 
 export default angular.module('tinyhands.Account', [sharedModule])
     .config(accountRouteConfig)
@@ -26,4 +28,6 @@ export default angular.module('tinyhands.Account', [sharedModule])
 
     .service('AccountService', AccountService)
     .service('PermissionsSetsService', PermissionsSetsService)
+    .service('PermissionsService', PermissionsService)
+    .service('UserPermissionsService', UserPermissionsService)
     .name;

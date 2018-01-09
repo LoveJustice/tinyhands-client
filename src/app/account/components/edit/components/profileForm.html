@@ -1,0 +1,35 @@
+       <div id="profile" class="col-xs-12 col-md-12 col-lg-4">
+            <div class="row ">
+                <div ng-class="{'has-error': accountEditCtrl.emailError}" class="col-md-12 form-group">
+                    <label ng-class="{'text-danger': accountEditCtrl.emailError}">Email</label>
+                    <input type="text" class="form-control" placeholder="Email" ng-model="accountEditCtrl.account.email"/>
+                    <span ng-class="{'text-danger': accountEditCtrl.emailError}">{{accountEditCtrl.emailError}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" placeholder="First Name"
+                           ng-model="accountEditCtrl.account.first_name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" placeholder="Last Name"
+                           ng-model="accountEditCtrl.account.last_name"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group" ng-class="{'has-error': accountEditCtrl.userDesignationError}">
+                    <label ng-class="{'text-danger': accountEditCtrl.userDesignationError}">User Designation</label>
+                    <select ng-model="accountEditCtrl.account.user_designation"
+                            ng-options="set.id as set.name for set in accountEditCtrl.permissionsSets"
+                            ng-change="accountEditCtrl.onUserDesignationChanged(accountEditCtrl.account.user_designation)"
+                            class="form-control">
+                        <option value="" selected>-- Please select --</option>
+                    </select>
+                    <span ng-class="{'text-danger': accountEditCtrl.userDesignationError}">{{accountEditCtrl.userDesignationError}}</span>
+                </div>
+            </div>
+        </div>

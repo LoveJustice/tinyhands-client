@@ -82,7 +82,7 @@ class PermDropDownGroup {
                 }
             }
         }
-        this.stationSettings = {smartButtonMaxItems:1, showCheckAll: false, groupByTextProvider: function(groupValue) { return groupValue; }, groupBy: 'country', scrollableHeight: '250px', scrollable: true, };
+        this.stationSettings = {smartButtonMaxItems:1, showCheckAll: false, groupByTextProvider(groupValue) { return groupValue; }, groupBy: 'country', scrollableHeight: '250px', scrollable: true, };
         this.stationCustomTexts = {buttonDefaultText: 'None'};
         this.stationEventListeners = {};
 

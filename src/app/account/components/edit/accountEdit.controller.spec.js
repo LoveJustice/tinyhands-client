@@ -72,25 +72,25 @@ describe('AccountEditController', () => {
         userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}, {id:2, permission_group:'VIF', action:'ADD', min_level: 'STATION'}]}};
         mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'setUserPermissions', 'getAllCountries', 'getBorderStations']);
         mockUserPermissionsService.getPermissions.and.callFake(() => {
-                return $q.resolve(userPermissionsGetPermissionsResponse)
+                return $q.resolve(userPermissionsGetPermissionsResponse);
         });
 
         getUserPermissionsResponse = { data: [{account:10022, country:null, station:null, permission:1}, {account:10022, country:1, station:null, permission:2}]};
         mockUserPermissionsService.getUserPermissions.and.callFake((id) => {
-                return $q.resolve(getUserPermissionsResponse)
+                return $q.resolve(getUserPermissionsResponse);
         });
         mockUserPermissionsService.setUserPermissions.and.callFake((id, data) => {
-                return $q.resolve(data)
+                return $q.resolve(data);
         });
 
         getCountriesResponse = { data: {results: [{id:1, name:'Nepal'}, {id:2, name:'South Africa'}]}};
         mockUserPermissionsService.getAllCountries.and.callFake(() => {
-                return $q.resolve(getCountriesResponse)
+                return $q.resolve(getCountriesResponse);
         });
 
         getBorderStationsResponse = { data: [{id:1, station_name:'Station1', operating_country:1}, {id:2, station_name:'Station2', operating_country:2}]};
         mockUserPermissionsService.getBorderStations.and.callFake(() => {
-                return $q.resolve(getBorderStationsResponse)
+                return $q.resolve(getBorderStationsResponse);
         });
 
         mockToastr = jasmine.createSpyObj('toastr', ['success']);

@@ -8,11 +8,17 @@ describe('AccountEditController', () => {
         mockState,
         mockStateParams,
         mockAccountService,
+        mockSessionService,
         mockPermissionsSetService,
+        mockUserPermissionsService,
         mockToastr,
         getAccountResponse,
         getPermissionsResponse,
-        getPermissionResponse;
+        getPermissionResponse,
+        userPermissions_getPermissionsResponse,
+        getUserPermissionsResponse,
+        getCountriesResponse,
+        getBorderStationsResponse;
 
     beforeEach(inject((_$q_, $rootScope) => {
         $q = _$q_;
@@ -42,6 +48,11 @@ describe('AccountEditController', () => {
             return $q.resolve(account);
         });
 
+        mockSessionService = Object();
+        var user = Object();
+        user.id = 10022;
+        mockSessionService.user = user;
+
         mockPermissionsSetService = jasmine.createSpyObj('PermissionsSetService', ['getPermission', 'getPermissions']);
         getPermissionsResponse = { data: { results: [{ id: 1, name: 'Foo' }] } };
         mockPermissionsSetService.getPermissions.and.callFake(() => {
@@ -58,17 +69,41 @@ describe('AccountEditController', () => {
             return $q.resolve(getPermissionResponse)
         });
 
+        userPermissions_getPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}, {id:2, permission_group:'VIF', action:'ADD', min_level: 'STATION'}]}};
+        mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'setUserPermissions', 'getAllCountries', 'getBorderStations']);
+        mockUserPermissionsService.getPermissions.and.callFake(() => {
+    			return $q.resolve(userPermissions_getPermissionsResponse)
+        });
+
+        getUserPermissionsResponse = { data: [{account:10022, country:null, station:null, permission:1}, {account:10022, country:1, station:null, permission:2}]};
+        mockUserPermissionsService.getUserPermissions.and.callFake((id) => {
+        		return $q.resolve(getUserPermissionsResponse)
+        });
+        mockUserPermissionsService.setUserPermissions.and.callFake((id, data) => {
+	    		return $q.resolve(data)
+        });
+
+        getCountriesResponse = { data: {results: [{id:1, name:'Nepal'}, {id:2, name:'South Africa'}]}};
+        mockUserPermissionsService.getAllCountries.and.callFake(() => {
+	    		return $q.resolve(getCountriesResponse)
+	    });
+
+        getBorderStationsResponse = { data: [{id:1, station_name:'Station1', operating_country:1}, {id:2, station_name:'Station2', operating_country:2}]};
+        mockUserPermissionsService.getBorderStations.and.callFake(() => {
+	    		return $q.resolve(getBorderStationsResponse)
+	    });
+
         mockToastr = jasmine.createSpyObj('toastr', ['success']);
 
         mockStateParams = { id: 2 };
 
-        controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockPermissionsSetService, mockToastr);
+        controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockSessionService, mockPermissionsSetService, mockUserPermissionsService, mockToastr);
     }));
 
     describe('when creating a new account', () => {
         beforeEach(() => {
             mockStateParams = { id: 'create' };
-            controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockPermissionsSetService, mockToastr);
+            controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockSessionService, mockPermissionsSetService, mockUserPermissionsService, mockToastr);
         });
 
         describe('title', () => {
@@ -141,17 +176,81 @@ describe('AccountEditController', () => {
     });
 
     describe('getPermissions', () => {
+    		it('should get permissions from UserLocationPermissionsService', () => {
+    			controller.getPermissions();
+
+    			expect(mockUserPermissionsService.getPermissions).toHaveBeenCalled();
+    		});
+
+    		it('should set permissions with response from UserLocationPermissionsService', () => {
+                controller.getPermissions();
+                rootScope.$apply();
+
+                expect(controller.permissions).toEqual(userPermissions_getPermissionsResponse.data.results);
+                expect(controller.havePermissions).toEqual(true);
+            });
+    });
+
+    describe('getUserPermissions', () => {
+		it('should get user permissions from UserLocationPermissionsService', () => {
+			controller.getUserPermissions(10022);
+
+			expect(mockUserPermissionsService.getUserPermissions).toHaveBeenCalled();
+		});
+
+		it('should set permissions with response from UserLocationPermissionsService', () => {
+            controller.getUserPermissions(10022);
+            rootScope.$apply();
+
+            expect(controller.existingUserPermissions).toEqual(getUserPermissionsResponse.data);
+            expect(controller.haveUserPermissions).toEqual(true);
+        });
+    });
+
+    describe('getPermissionsSets', () => {
         it('should get permissions from PermissionsSetService', () => {
-            controller.getPermissions();
+            controller.getPermissionsSets();
 
             expect(mockPermissionsSetService.getPermissions).toHaveBeenCalled();
         });
 
         it('should set permissions with response from PermissionsSetService', () => {
-            controller.getPermissions();
+            controller.getPermissionsSets();
             rootScope.$apply();
 
-            expect(controller.permissions).toEqual(getPermissionsResponse.data.results);
+            expect(controller.permissionsSets).toEqual(getPermissionsResponse.data.results);
+        });
+    });
+
+    describe('getCountries', () => {
+		it('should get countries from UserLocationPermissionsService', () => {
+			controller.getCountries();
+
+			expect(mockUserPermissionsService.getAllCountries).toHaveBeenCalled();
+		});
+
+		it('should set countries with response from UserLocationPermissionsService', () => {
+            controller.getCountries();
+            rootScope.$apply();
+
+            expect(controller.countries).toEqual(getCountriesResponse.data.results);
+            expect(controller.haveCountries).toEqual(true);
+        });
+    });
+
+    describe('getStations', () => {
+		it('should get stations from UserLocationPermissionsService', () => {
+			controller.getStations();
+
+			expect(mockUserPermissionsService.getBorderStations).toHaveBeenCalled();
+		});
+
+		it('should set permissions with response from UserLocationPermissionsService', () => {
+            controller.getStations();
+            rootScope.$apply();
+
+            expect(controller.stations).toEqual(getBorderStationsResponse.data);
+            expect(controller.haveStations).toEqual(true);
         });
     });
 

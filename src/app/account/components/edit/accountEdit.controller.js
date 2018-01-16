@@ -11,16 +11,16 @@ class PermDropDown {
 		this.settings = settings;
 		this.eventListener = eventListener;
 	}
-	
+
 	removeAllOptions() {
 		this.selectedOptions = [];
 		this.options = [];
 	}
-	
+
 	restoreAllOptions() {
 		this.options = this.allOptions.slice();
 	}
-	
+
 	removeGroupOptions(country) {
 		for (var idx=this.selectedOptions.length -1; idx >= 0; idx--) {
 			if (this.selectedOptions[idx].country === country) {
@@ -33,7 +33,7 @@ class PermDropDown {
 			}
 		}
 	}
-	
+
 	restoreGroupOptions(country) {
 		for (var idx=0; idx < this.allOptions.length; idx++) {
 			if (this.allOptions[idx].country === country) {
@@ -41,7 +41,7 @@ class PermDropDown {
 			}
 		}
 	}
-	
+
 	isSelected() {
 		return this.selectedOptions.length > 0;
 	}
@@ -53,12 +53,12 @@ class PermDropDownGroup {
 		this.permissionName = permission.action;
 		this.minLevel = permission.min_level;
 		this.accountId = accountId;
-		
+
 		var idx = 0;
 		var idx1 = 0;
 		var idx2 = 0;
 		var toDisable = false;
-		
+
 		this.stationValidOptions = [];
 		for (idx=0; idx < allStations.length; idx++) {
 			for (idx1=0; idx1 < allCountries.length; idx1++) {
@@ -86,7 +86,7 @@ class PermDropDownGroup {
         this.stationSettings = {smartButtonMaxItems:1, showCheckAll: false, groupByTextProvider: function(groupValue) { return groupValue; }, groupBy: 'country', scrollableHeight: '250px', scrollable: true, };
         this.stationCustomTexts = {buttonDefaultText: 'None'};
         this.stationEventListeners = {};
-        
+
         var selectedOptions = [];
         for (idx=0; idx < currentPermissions.length; idx++) {
         		if (currentPermissions[idx].station !== null) {
@@ -98,9 +98,9 @@ class PermDropDownGroup {
         			}
         		}
         }
-        
+
         this.stationDropDown = new PermDropDown(this.stationValidOptions, selectedOptions, this.stationSettings, this.stationCustomTexts, this.stationEventListeners);
-        
+
         this.countryValidOptions = [];
         for (idx=0; idx < allCountries.length; idx++) {
 	        	toDisable = true;
@@ -123,7 +123,7 @@ class PermDropDownGroup {
         		onDeselectAll: this.countryDeselectAll,
         		stationDropDown: this.stationDropDown,
         };
-        
+
         selectedOptions = [];
         for (idx=0; idx < currentPermissions.length; idx++) {
         		if (currentPermissions[idx].station === null && currentPermissions[idx].country !== null) {
@@ -136,7 +136,7 @@ class PermDropDownGroup {
         			}
         		}
         }
-        
+
         this.countryDropDown = new PermDropDown(this.countryValidOptions, selectedOptions, this.countrySettings, this.countryCustomTexts, this.countryEventListeners);
         
         toDisable = true;
@@ -157,7 +157,7 @@ class PermDropDownGroup {
         		countryDropDown: this.countryDropDown,
         		stationDropDown: this.stationDropDown,
         };
-        
+
         selectedOptions = [];
         for (idx=0; idx < currentPermissions.length; idx++) {
         		if (currentPermissions[idx].country === null && currentPermissions[idx].station === null) {
@@ -167,20 +167,20 @@ class PermDropDownGroup {
         			break;
         		}
         }
-        
+
         this.globalDropDown = new PermDropDown(this.globalValidOptions, selectedOptions, this.globalSettings, this.globalCustomTexts, this.globalEventListeners);
 	}
-	
+
 	globalSelect() {
 		this.countryDropDown.removeAllOptions();
 		this.stationDropDown.removeAllOptions();
 	}
-	
+
 	globalDeselect() {
 		this.countryDropDown.restoreAllOptions();
 		this.stationDropDown.restoreAllOptions();
 	}
-	
+
 	countrySelect(property) {
 		this.stationDropDown.removeGroupOptions(property.label);
 	}
@@ -193,7 +193,7 @@ class PermDropDownGroup {
 	countryDeselectAll() {
 		this.stationDropDown.restoreAllOptions();
 	}
-	
+
 	getSelectedPermissions() {
 		var selectedPermissions = [];
 		var idx=0;
@@ -204,7 +204,7 @@ class PermDropDownGroup {
 					station: null, 
 					permission: this.permissionId});
 		}
-		
+
 		for (idx=0; idx < this.countryDropDown.selectedOptions.length; idx++) {
 			selectedPermissions.push({
 					account: this.accountId, 
@@ -212,7 +212,7 @@ class PermDropDownGroup {
 					station: null, 
 					permission: this.permissionId});
 		}
-		
+
 		for (idx=0; idx < this.stationDropDown.selectedOptions.length; idx++) {
 			selectedPermissions.push({
 					account: this.accountId, 
@@ -225,12 +225,12 @@ class PermDropDownGroup {
 }
 
 export default class AccountEditController {
-    constructor($state, $stateParams, AccountService, PermissionsSetsService, PermissionsService, UserPermissionsService, toastr) {
+    constructor($state, $stateParams, AccountService, SessionService, PermissionsSetsService, UserPermissionsService, toastr) {
         'ngInject';
         this.$state = $state;
         this.AccountService = AccountService;
+        this.session = SessionService;
         this.PermissionsSetsService = PermissionsSetsService;
-        this.PermissionsService = PermissionsService;
         this.UserPermissionsService = UserPermissionsService;
         this.toastr = toastr;
         this.account = null;
@@ -255,21 +255,23 @@ export default class AccountEditController {
         this.permissionsSets = [];
         this.countries = [];
         this.stations = [];
-        this.managePermissions = [{account: 10022,  country: null, station: null, permission: 20}];
+        this.managePermissions = [];
         this.existingUserPermissions = [];
         this.permdd = [];
 
         this.saveButtonClicked = false;
 
         	this.havePermissions = false;
+        	this.haveManagementPermissions = false;
         	this.haveStations = false;
         	this.haveCountries = false;
-        	
-        this.getPermissions();
-        this.getPermissionsSets();
-        this.getStations();
-        this.getCountries();
-        
+
+        	if (this.isEditingAccount) {
+	        this.getPermissions();   
+	        this.getStations();
+	        this.getCountries();
+        	}
+        	this.getPermissionsSets();
     }
 
     get title() {
@@ -301,23 +303,40 @@ export default class AccountEditController {
             return 'btn-primary';
         }
     }
-    
+
     getPermissions() {
-    		this.PermissionsService.getPermissions().then((result) => {
+    		this.UserPermissionsService.getPermissions().then((result) => {
 			this.permissions = result.data.results;
-			this.havePermissions = true;
 			for (var idx=0; idx < this.permissions.length; idx++) {
 				var pg = this.permissions[idx].permission_group;
 				if (this.permissionGroups.indexOf(pg) < 0) {
 					this.permissionGroups.push(pg);
 				}
+				if (this.permissions[idx].permission_group === 'ACCOUNTS' && this.permissions[idx].action === 'MANAGE') {
+					this.getManagementPermissions(this.permissions[idx].id);
+				}
 			}
+			this.havePermissions = true;
 			this.checkAndGeneratePermissions();
 		});
     }
-    
+
+    getManagementPermissions(perm_id) {
+    		this.UserPermissionsService.getUserPermissions(this.session.user.id).then((result) => {
+			var tmp_perm = result.data;
+			this.managePermissions = [];
+			for (var idx=0; idx < tmp_perm.length; idx++) {
+				if (tmp_perm[idx].permission === perm_id) {
+					this.managePermissions.push(tmp_perm[idx]);
+				}
+			}
+			this.haveManagementPermissions = true;
+			this.checkAndGeneratePermissions();
+		});
+    }
+
     getUserPermissions(id) {
-    		this.UserPermissionsService.getPermissions(id).then((result) => {
+    		this.UserPermissionsService.getUserPermissions(id).then((result) => {
     			this.existingUserPermissions = result.data;
     			this.haveUserPermissions = true;
     			this.checkAndGeneratePermissions();
@@ -329,7 +348,7 @@ export default class AccountEditController {
             this.permissionsSets = result.data.results;
         });
     }
-    
+
     getCountries() {
     		this.UserPermissionsService.getAllCountries().then((result) => {
     			this.countries = result.data.results;
@@ -337,7 +356,7 @@ export default class AccountEditController {
     			this.checkAndGeneratePermissions();
     		});
     }
-    
+
     getStations() {
     		this.UserPermissionsService.getBorderStations().then((result) => {
     			this.stations = result.data;
@@ -345,15 +364,15 @@ export default class AccountEditController {
     			this.checkAndGeneratePermissions();
     		});
     }
-    
+
     checkAndGeneratePermissions() {
-    		if (this.active === 0 || ! (this.haveUserPermissions && this.havePermissions && this.haveCountries && this.haveStations)) {
+    		if (this.active === 0 || ! (this.haveUserPermissions && this.havePermissions && this.haveCountries && this.haveStations && 	this.haveManagementPermissions)) {
     			return;
     		}
-    		
+
     		var grp = this.permissionGroups[this.active];
     		this.permdd = [];
-    		
+
     		for (var idx=0; idx < this.permissions.length; idx++) {
     			if (this.permissions[idx].permission_group === grp) {
     				var user_perm = [];
@@ -362,7 +381,7 @@ export default class AccountEditController {
     						user_perm.push(this.existingUserPermissions[idx1]);
     					}
     				}
-    				
+
     				var p = new PermDropDownGroup(this.permissions[idx],
     						this.managePermissions,
     						this.countries,
@@ -373,19 +392,19 @@ export default class AccountEditController {
     			}
     		}
     }
-    
+
     captureGropPermssions() {
     		if (this.active === 0) {
     			return;
     		}
-    		
+
     		var idx=0;
-    		
+
     		var newGroupPerms = [];
     		for (idx=0; idx < this.permdd.length; idx++) {
     			newGroupPerms = newGroupPerms.concat(this.permdd[idx].getSelectedPermissions());
     		}
-    		
+
     		// remove the old permissions for the permissions
     		for (idx=this.existingUserPermissions.length - 1; idx >=0; idx--) {
     			for (var idx1=0; idx1 < this.permdd.length; idx1++) {
@@ -395,7 +414,7 @@ export default class AccountEditController {
     				}
     			}
     		}
-    		
+
     		this.existingUserPermissions = this.existingUserPermissions.concat(newGroupPerms);
     }
 
@@ -408,7 +427,7 @@ export default class AccountEditController {
             }
         });
     }
-    
+
     genUrl(grp) {
     		if (grp === 'PROFILE') {
     			return profileForm;
@@ -435,7 +454,7 @@ export default class AccountEditController {
     }
 
     updateOrCreate() {
-    		return;
+    		this.captureGropPermssions();
         if (!this.checkRequiredFieldsHaveValue()) {
             return;
         }
@@ -447,13 +466,25 @@ export default class AccountEditController {
             call = this.AccountService.create(this.account);
         }
         call.then(() => {
-            if (this.isEditingAccount) {
-                this.toastr.success("Account Updated");
-            } else {
-                this.toastr.success("Account Created");
-            }
-            this.saveButtonClicked = false;
-            this.$state.go('accounts.list');
+        		if (this.isEditingAccount) {
+        		var new_perms = {
+        				permissions: this.existingUserPermissions	
+        		};
+        		this.UserPermissionsService.setUserPermissions(this.account.id, new_perms).then((result1) => {
+	            this.toastr.success("Account Updated");
+	            this.saveButtonClicked = false;
+	            this.$state.go('accounts.list');
+        		}, (err1) => {
+                this.saveButtonClicked = false;
+                if (err1.data.email) {
+                    this.emailError = err1.data.email[0];
+                }
+        		});
+        		} else {
+        			this.toastr.success("Account Created");
+        			this.saveButtonClicked = false;
+    	            this.$state.go('accounts.list');
+        		}
         }, (err) => {
             this.saveButtonClicked = false;
             if (err.data.email) {

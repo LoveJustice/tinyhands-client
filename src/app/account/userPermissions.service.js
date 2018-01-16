@@ -4,18 +4,22 @@ export default class UserPermissionsService {
         this.service = BaseService;
     }
 
-    getPermissions(id) {
+    getPermissions() {
+        return this.service.get('api/permission/');
+    }
+
+    getUserPermissions(id) {
         return this.service.get(`api/user_permission/${id}/`);
     }
-    
-    setPermissions(id, data) {
+
+    setUserPermissions(id, data) {
     		return this.service.put(`api/user_permission/${id}/`, data);
     }
-    
+
     getAllCountries() {
     		return this.service.get('api/country/');
     }
-    
+
     getBorderStations(open = null) {
         let params = [];
         if(open !== null) {

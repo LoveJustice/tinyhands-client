@@ -1,4 +1,4 @@
-import UserPermissionsService from './userPermissions.service'
+import UserPermissionsService from './userPermissions.service';
 
 describe('UserPermissionsService', () => {
     let service,

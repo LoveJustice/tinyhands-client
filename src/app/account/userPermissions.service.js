@@ -13,11 +13,11 @@ export default class UserPermissionsService {
     }
 
     setUserPermissions(id, data) {
-    		return this.service.put(`api/user_permission/${id}/`, data);
+        return this.service.put(`api/user_permission/${id}/`, data);
     }
 
     getAllCountries() {
-    		return this.service.get('api/country/');
+        return this.service.get('api/country/');
     }
 
     getBorderStations(open = null) {

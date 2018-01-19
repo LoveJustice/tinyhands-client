@@ -31,7 +31,10 @@ function accountRouteConfig($stateProvider) {
             }
         })
         .state('accounts.control', {
-            url: '/control',
+            url: '/control?acState',
+            params: {
+                acState: { dynamic: true }
+            },
             controller: 'AccessControlController',
             controllerAs: 'accessControlCtrl',
             templateUrl: controlTemplate,

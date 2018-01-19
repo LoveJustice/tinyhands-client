@@ -1,6 +1,6 @@
 
 export default class AccessControlController {
-    constructor(UserPermissionsService, StickyHeader, $q, $state, $uibModal, $scope, toastr) {
+    constructor(UserPermissionsService, StickyHeader, $q, $state, $stateParams, $uibModal, $scope, toastr) {
         'ngInject';
 
         this.UserPermissionsService = UserPermissionsService;
@@ -11,14 +11,16 @@ export default class AccessControlController {
         this.$scope = $scope;
         this.toastr = toastr;
 
-        this.accounts = [];
-        this.permissions = [];
-        this.permissionGroups = [];
-        this.permissionDisplay = {};
-        this.countries = [];
-        this.stations = [];
         this.stickyOptions = this.sticky.stickyOptions;
+        this.accounts = [];
         
+        this.acState = {};
+        this.acState.permissions = [];
+        this.acState.permissionGroups = [];
+        this.acState.permissionDisplay = {};
+        this.acState.countries = [];
+        this.acState.stations = [];
+         
         this.countryOptions = [{id: -1, label: "Global"}, {id: -2, label:"", disabled : true}];
         this.countrySelectedOptions = [this.countryOptions[0]];
         this.countrySettings = {smartButtonMaxItems:1, selectionLimit: 1, showCheckAll: false, closeOnSelect: true, showUncheckAll: false, scrollableHeight: '250px', scrollable: true,};
@@ -39,42 +41,86 @@ export default class AccessControlController {
                 parent: this,
                 countrySelect: this.countrySelect,
         };
-
-        this.loading = true;
-        this.getCountries();
-        this.getStations();
-        this.getPermissions();
+        
+        if ($stateParams && $stateParams.acState) {
+            this.acState = JSON.parse($stateParams.acState);
+            this.buildCountryOptions();
+            
+            for (var idx=0; idx < this.countryOptions.length; idx++) {
+                if (this.countryOptions[idx].id === this.acState.selectedCountry) {
+                    this.countrySelectedOptions = [this.countryOptions[idx]];
+                }
+            }
+            if (this.acState.selectedCountry >=0) {
+                this.setStationOptionsForCountry(this.acState.selectedCountry);
+                
+                if (this.acState.selectedStation !== null) {
+                    for (var idx1=0; idx1 < this.stationOptions.length; idx1++) {
+                        if (this.stationOptions[idx1].id === this.acState.selectedStation) {
+                            this.stationSelectedOptions = [this.stationOptions[idx1]];
+                        }
+                    }
+                }
+            }
+            
+            if (this.acState.selectedStation !== null) {
+                this.getAccounts(null, this.acState.selectedStation);
+            } else if (this.acState.selectedCountry < 0) {
+                this.getAccounts(null, null);
+            } else {
+                this.getAccounts(this.acState.selectedCountry, null);
+            }
+        } else {
+            this.acState = {};
+            this.acState.permissions = [];
+            this.acState.permissionGroups = [];
+            this.acState.permissionDisplay = {};
+            this.acState.countries = [];
+            this.acState.stations = [];
+            this.acState.selectedCountry = -1;
+            this.acState.selectedStation = null;
+    
+            this.loading = true;
+            this.getCountries();
+            this.getStations();
+            this.getPermissions();
+        }
     }
     
     getCountries() {
         this.UserPermissionsService.getAllCountries().then((result) => {
-            this.countries = result.data.results;
+            this.acState.countries = result.data.results;
             
-            for (var idx=0; idx < this.countries.length; idx++) {
-                this.countryOptions.push({id: this.countries[idx].id, label: this.countries[idx].name});
-            }
+            this.buildCountryOptions();
         });
+    }
+    
+    buildCountryOptions() {
+        for (var idx=0; idx < this.acState.countries.length; idx++) {
+            this.countryOptions.push({id: this.acState.countries[idx].id, label: this.acState.countries[idx].name});
+        }
     }
     
     getStations() {
         this.UserPermissionsService.getBorderStations().then((result) => {
-            this.stations = result.data;
+            this.acState.stations = result.data;
         });
     }
 
     getAccounts(countryId, stationId) {
         this.loading = true;
+        this.$state.go('.', {acState: JSON.stringify(this.acState)});
         this.UserPermissionsService.getUserPermissionsList(countryId, stationId).then((response) => {
             var accts = response.data;
             this.accounts = [];
             for (var idx=0; idx < response.data.length; idx++) {
                 var newAcct = { id: accts[idx].account_id, name : accts[idx].name, permissions: {}};
-                for (var idx1=0; idx1 < this.permissions.length; idx1++) {
-                    newAcct.permissions[idx1] = 'X'
+                for (var idx1=0; idx1 < this.acState.permissions.length; idx1++) {
+                    newAcct.permissions[idx1] = 'X';
                 }
                 for (var idx2=0; idx2 < accts[idx].permissions.length; idx2++) {
                     var perm = accts[idx].permissions[idx2];
-                    newAcct.permissions[this.permissionDisplay[perm.id]] = perm.level;
+                    newAcct.permissions[this.acState.permissionDisplay[perm.id]] = perm.level;
                 }
                 this.accounts.push(newAcct);
             }
@@ -84,54 +130,63 @@ export default class AccessControlController {
 
     getPermissions() {
         this.UserPermissionsService.getPermissions().then((result) => {
-            this.permissions = result.data.results;
-            for (var idx=0; idx < this.permissions.length; idx++) {
-                this.permissionDisplay[this.permissions[idx].id] = idx;
-                var pg = this.permissions[idx].permission_group;
+            this.acState.permissions = result.data.results;
+            for (var idx=0; idx < this.acState.permissions.length; idx++) {
+                this.acState.permissionDisplay[this.acState.permissions[idx].id] = idx;
+                var pg = this.acState.permissions[idx].permission_group;
                 var found = false;
-                for (var pgIdx=0; pgIdx < this.permissionGroups.length; pgIdx++) {
-                    if (this.permissionGroups[pgIdx].name === pg) {
-                        this.permissionGroups[pgIdx].span += 1;
+                for (var pgIdx=0; pgIdx < this.acState.permissionGroups.length; pgIdx++) {
+                    if (this.acState.permissionGroups[pgIdx].name === pg) {
+                        this.acState.permissionGroups[pgIdx].span += 1;
                         found = true;
                     }
                 }
                 if (!found) {
 
-                    this.permissionGroups.push({ name : pg, span : 1});
+                    this.acState.permissionGroups.push({ name : pg, span : 1});
                 }
             }
             this.getAccounts(null, null);
         });
     }
     
+    setStationOptionsForCountry(country_id) {
+        for (var idx=0; idx < this.acState.stations.length; idx++) {
+            if (this.acState.stations[idx].operating_country === country_id) {
+                this.stationOptions.push({id: this.acState.stations[idx].id, label: this.acState.stations[idx].station_name});
+            }
+        } 
+    }
+    
     countrySelect() {        
         this.parent.stationSelectedOptions = [];
         this.parent.stationOptions = [];
+        this.parent.acState.selectedCountry = this.parent.countrySelectedOptions[0].id;
+        this.parent.acState.selectedStation = null;
         
-        if (this.parent.countrySelectedOptions[0]['id'] < 0) {
+        if (this.parent.countrySelectedOptions[0].id < 0) {
             this.parent.getAccounts(null,null);
         } else {
-            var country_id = this.parent.countrySelectedOptions[0]['id'];
+            var country_id = this.parent.countrySelectedOptions[0].id;
+            this.parent.setStationOptionsForCountry(country_id);
             this.parent.getAccounts(country_id, null);
-            for (var idx=0; idx < this.parent.stations.length; idx++) {
-                if (this.parent.stations[idx].operating_country === country_id) {
-                    this.parent.stationOptions.push({id: this.parent.stations[idx].id, label: this.parent.stations[idx].station_name});
-                }
-            }
-            
         }
     }
     
     countryDeselect() { 
         if (this.parent.countrySelectedOptions.length < 1) {
             this.parent.countrySelectedOptions.push(this.parent.countryOptions[0]);
+            this.parent.acState.selectedCountry = this.parent.countrySelectedOptions[0].id;
             this.onItemSelect();
+        } else {
+            this.parent.acState.selectedCountry = this.parent.countrySelectedOptions[0].id;
         }
     }
     
     stationSelect() {
         if (this.parent.stationSelectedOptions.length > 0) {
-            var station_id = this.parent.stationSelectedOptions[0]['id'];
+            var station_id = this.parent.stationSelectedOptions[0].id;
+            this.parent.acState.selectedStation = this.parent.stationSelectedOptions[0].id;
             this.parent.getAccounts(null, station_id);
         }
     }

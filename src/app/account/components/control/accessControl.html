@@ -30,11 +30,11 @@
         <thead class="sticky-table-header">
         <tr>
             <th>&nbsp;</th>
-            <th ng-repeat="grp in accessControlCtrl.permissionGroups" colspan={{grp.span}}>{{ grp.name }}</th>
+            <th ng-repeat="grp in accessControlCtrl.acState.permissionGroups" colspan={{grp.span}}>{{ grp.name }}</th>
         </tr>
         <tr>
             <th width="200px">User</th>
-            <th ng-repeat="permHdr in accessControlCtrl.permissions">{{ permHdr.action }}</th>
+            <th ng-repeat="permHdr in accessControlCtrl.acState.permissions">{{ permHdr.action }}</th>
         </tr>
         </thead>
         <tbody>

@@ -12,6 +12,7 @@ export default class AccessControlController {
         this.toastr = toastr;
 
         this.stickyOptions = this.sticky.stickyOptions;
+        this.stickyOptions.zIndex = 1;
         this.accounts = [];
         
         this.acState = {};

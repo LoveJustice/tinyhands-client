@@ -97,6 +97,8 @@ export default class AccessControlController {
     }
     
     buildCountryOptions() {
+        this.countryOptions = [{id: -1, label: "Global"}, {id: -2, label:"", disabled : true}];
+        this.countrySelectedOptions = [this.countryOptions[0]];
         for (var idx=0; idx < this.acState.countries.length; idx++) {
             this.countryOptions.push({id: this.acState.countries[idx].id, label: this.acState.countries[idx].name});
         }

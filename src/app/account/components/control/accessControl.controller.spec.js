@@ -10,16 +10,24 @@ describe('AccessControlController', () => {
         $q,
         mockUibModal,
         mockState,
+        mockStateParams,
         response,
         mockPermissionsService,
+        mockUserPermissionsService,
         mockAccountService,
         mockStickyHeader,
-        mockToastr;
+        mockToastr,
+        getCountriesResponse,
+        getBorderStationsResponse,
+        getUserPermissionsResponse,
+        userPermissionsGetPermissionsResponse,
+        getUserPermissionsGlobalResponse,
+        getUserPermissionsCountryResponse;
 
     beforeEach(angular.mock.module('tinyhands.Account'));
 
     beforeEach(inject((_$q_, $rootScope) => {
-        rootScope = $rootScope;
+        rootScope = $rootScope; 
         scope = jasmine.createSpyObj('mockScope', ['$on']);
         mockEvent = jasmine.createSpyObj('mockEvent', ['preventDefault']);
         stateName = 'FooState';
@@ -33,12 +41,8 @@ describe('AccessControlController', () => {
         });
 
         mockState = jasmine.createSpyObj('mockState', ['go']);
+        mockStateParams = {"acState": null};
 
-        mockAccountService = jasmine.createSpyObj('AccountService', ['getAccounts', 'update']);
-        let accountsResponse = { data: [{ id: 1, name: 'Foo' }] };
-        mockAccountService.getAccounts.and.callFake(() => {
-            return $q.resolve(accountsResponse);
-        });
 
         mockPermissionsService = jasmine.createSpyObj('PermissionsService', ['getPermissions', 'getPermission', 'create', 'update', 'destroy']);
 
@@ -50,319 +54,107 @@ describe('AccessControlController', () => {
         });
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['error']);
+        mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'getAllCountries', 'getBorderStations', 'getUserPermissionsList']);
+        
+        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}, {id:2, permission_group:'VIF', action:'ADD', min_level: 'STATION'}]}};
+        mockUserPermissionsService.getPermissions.and.callFake(() => {
+            return $q.resolve(userPermissionsGetPermissionsResponse);
+        });
+        
+        getUserPermissionsResponse = { data: [{account:10022, country:null, station:null, permission:1}, {account:10022, country:1, station:null, permission:2}]};
+        mockUserPermissionsService.getUserPermissions.and.callFake((id) => {
+                return $q.resolve(getUserPermissionsResponse);
+        });
+        
+        getUserPermissionsGlobalResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}]}]};
+        getUserPermissionsCountryResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}, {id:2, level:'C'}]}]};
+        mockUserPermissionsService.getUserPermissionsList.and.callFake((country_id, station_id) => {
+            if (country_id!==null) {
+                return $q.resolve(getUserPermissionsCountryResponse);
+            } else {
+                return $q.resolve(getUserPermissionsGlobalResponse);
+            }
+    });
+        
+        getCountriesResponse = { data: {results: [{id:1, name:'Nepal'}, {id:2, name:'South Africa'}]}};
+        mockUserPermissionsService.getAllCountries.and.callFake(() => {
+                return $q.resolve(getCountriesResponse);
+        });
 
-        controller = new AccessControlController(mockAccountService, mockPermissionsService, mockStickyHeader, $q, mockState, mockUibModal, scope, mockToastr);
+        getBorderStationsResponse = { data: [{id:1, station_name:'Station1', operating_country:1}, {id:2, station_name:'Station2', operating_country:2}]};
+        mockUserPermissionsService.getBorderStations.and.callFake(() => {
+                return $q.resolve(getBorderStationsResponse);
+        });
+
+        controller = new AccessControlController(mockUserPermissionsService, mockStickyHeader, $q, mockState, mockStateParams, mockUibModal, scope, mockToastr);
     }));
+    
 
-    describe('saveButtonText', () => {
-        describe('when saveButtonClicked', () => {
-            it('should return "Saving..."', () => {
-                controller.saveButtonClicked = true;
+    describe('getCountries', () => {
+        it('should get countries from UserLocationPermissionsService', () => {
+            controller.getCountries();
 
-                expect(controller.saveButtonText).toEqual('Saving...');
-            });
+            expect(mockUserPermissionsService.getAllCountries).toHaveBeenCalled();
         });
 
-        describe('when accounts has changes', () => {
-            it('should return "Save All"', () => {
-                rootScope.$apply();
-                controller.accounts.items[0].permission_vif_view = true;
-
-                expect(controller.saveButtonText).toEqual('Save All');
-            });
-        });
-
-        describe('when saveButtonClicked is false and accounts has no changes', () => {
-            it('should return "Saved"', () => {
-                expect(controller.saveButtonText).toEqual('Saved');
-            });
-        });
-    });
-
-    describe('saveButtonStyle', () => {
-        describe('when saveButtonClicked', () => {
-            it('should return "btn-success"', () => {
-                controller.saveButtonClicked = true;
-
-                expect(controller.saveButtonStyle).toEqual('btn-success');
-            });
-        });
-
-        describe('when saveButtonClicked is false', () => {
-            it('should return "btn-primary"', () => {
-                controller.saveButtonClicked = false;
-
-                expect(controller.saveButtonStyle).toEqual('btn-primary');
-            });
-        });
-    });
-
-    describe('createOnStateChangeListener', () => {
-        it('should set listener for $stateChangeStart', () => {
-            controller.createOnStateChangeListener();
-
-            expect(scope.$on).toHaveBeenCalledWith('$stateChangeStart', jasmine.any(Function));
-        });
-
-        describe('when $stateChangeStart event fired and this.permissions.hasChanges', () => {
-            it('should call event.preventDefault', () => {
-                rootScope.$apply();
-                controller.accounts.items[0].permission_vif_view = true;
-                controller.createOnStateChangeListener();
-                rootScope.$apply();
-
-                expect(mockEvent.preventDefault).toHaveBeenCalled();
-            });
-
-            it('should call controller.openUnsavedChangesModal with correct state', () => {
-                spyOn(controller, 'openUnsavedChangesModal');
-                rootScope.$apply();
-                controller.accounts.items[0].permission_vif_view = true;
-                controller.createOnStateChangeListener();
-                rootScope.$apply();
-
-                expect(controller.openUnsavedChangesModal).toHaveBeenCalledWith(stateName);
-            });
-        });
-    });
-
-    describe('getStyling', () => {
-        describe('when called with true', () => {
-            it('should return "btn btn-success btn-thin"', () => {
-                let result = controller.getStyling(true);
-                expect(result).toEqual('btn btn-success btn-thin');
-            });
-        });
-
-        describe('when called with false', () => {
-            it('should return "btn btn-danger btn-thin"', () => {
-                let result = controller.getStyling(false);
-                expect(result).toEqual('btn btn-danger btn-thin');
-            });
-        });
-    });
-
-    describe('changeUserRole', () => {
-
-        it('should get permissions by account user desigination', () => {
-            let response = {
-                data: {
-                    permission_vif_view: true,
-                    permission_vif_add: true,
-                    permission_vif_edit: true,
-                    permission_vif_delete: true,
-                }
-            };
-            mockPermissionsService.getPermission.and.callFake(() => {
-                return $q.resolve(response);
-            });
-            let account = { user_designation: "Superuser" };
-
-            controller.changeUserRole(account);
-
-            expect(mockPermissionsService.getPermission).toHaveBeenCalledWith(account.user_designation);
-        });
-
-        describe('when permissions returned from PermissionsService', () => {
-            it('should apply desigination to account', () => {
-                let response = {
-                    data: {
-                        permission_vif_view: true,
-                        permission_vif_add: true,
-                        permission_vif_edit: true,
-                        permission_vif_delete: true,
-                    }
-                };
-                mockPermissionsService.getPermission.and.callFake(() => {
-                    return $q.resolve(response);
-                });
-
-                let account = { user_designation: "Superuser" };
-                spyOn(controller, 'applyDesignationToAccount')
-
-                controller.changeUserRole(account);
-                rootScope.$apply();
-
-                expect(controller.applyDesignationToAccount).toHaveBeenCalledWith(account, response.data);
-            });
-        });
-    });
-
-    describe('applyDesignationToAccount', () => {
-        it('should set account permissions to match permissions set', () => {
-            let permissionsSet = {
-                permission_vif_view: true,
-                permission_vif_add: true,
-                permission_vif_edit: true,
-                permission_vif_delete: true,
-            };
-            let account = {};
-
-            controller.applyDesignationToAccount(account, permissionsSet);
-
-            expect(account.permission_vif_view).toEqual(true);
-            expect(account.permission_vif_add).toEqual(true);
-            expect(account.permission_vif_edit).toEqual(true);
-            expect(account.permission_vif_delete).toEqual(true);
-        });
-
-        it('should not set properties on accounts that do not begin with permission', () => {
-            let permissionsSet = {
-                foo: true
-            };
-            let account = {};
-
-            controller.applyDesignationToAccount(account, permissionsSet);
-
-            expect(account.foo).not.toBeDefined();
-        });
-    });
-
-    describe('discardChanges', () => {
-        it('should discard account changes', () => {
+        it('should set countries with response from UserLocationPermissionsService', () => {
+            controller.getCountries();
             rootScope.$apply();
-            spyOn(controller.accounts, 'discardChanges');
 
-            controller.discardChanges();
+            expect(controller.acState.countries).toEqual(getCountriesResponse.data.results);
+            
+            var countryOptions = [{id: -1, label: "Global"}, {id: -2, label:"", disabled : true}, {id: 1, label: "Nepal"}, {id: 2, label: "South Africa"}];
 
-            expect(controller.accounts.discardChanges).toHaveBeenCalled();
+            expect(controller.countryOptions).toEqual(countryOptions);
         });
+        
     });
+    
+    describe('getStations', () => {
+        it('should get stations from UserLocationPermissionsService', () => {
+            controller.getStations();
 
-    describe('saveAll', () => {
-        it('should set saveButtonClicked to true', () => {
+            expect(mockUserPermissionsService.getBorderStations).toHaveBeenCalled();
+        });
+
+        it('should set stations with response from UserLocationPermissionsService', () => {
+            controller.getStations();
             rootScope.$apply();
-            controller.accounts.items[0].user_designation = 'bar';
 
-            controller.saveAll();
+            expect(controller.acState.stations).toEqual(getBorderStationsResponse.data);
+        });
+    });
+    
+    describe('getPermissions', () => {
+        it('should get permissions from UserLocationPermissionsService', () => {
+            controller.getPermissions();
 
-            expect(controller.saveButtonClicked).toEqual(true);
+            expect(mockUserPermissionsService.getPermissions).toHaveBeenCalled();  
         });
 
-        it('should update each account in account.updatedItems', () => {
-            spyOn(controller, 'updateAccount')
+        it('should set permissions in acState with response from UserLocationPermissionsService', () => {
+            controller.getPermissions();
             rootScope.$apply();
-            controller.accounts.items[0].user_designation = 'bar';
 
-            controller.saveAll();
-
-            expect(controller.updateAccount).toHaveBeenCalledWith(controller.accounts.items[0]);
+            expect(controller.acState.permissions).toEqual(userPermissionsGetPermissionsResponse.data.results);
         });
+        
+        it('should set accounts with global permissions from UserLocationPermissionsService', () => {
+            controller.getPermissions();
+            rootScope.$apply();
 
-        describe('when all accounts updated', () => {
-            it('should set saveButtonClicked to false', () => {
-                rootScope.$apply();
-                controller.accounts.items[0].user_designation = 'bar';
-
-                controller.saveAll();
-                rootScope.$apply();
-
-                expect(controller.saveButtonClicked).toEqual(false);
-            });
-
-            it('should save changes to accounts', () => {
-                rootScope.$apply();
-                controller.accounts.items[0].user_designation = 'bar';
-                spyOn(controller.accounts, 'saveChanges');
-
-                controller.saveAll();
-                rootScope.$apply();
-
-                expect(controller.accounts.saveChanges).toHaveBeenCalled();
-            });
+            var globalAccts = [{ id: 10022, name: 'Sup Test', permissions: {0:'G', 1:'X' }}];
+            expect(controller.accounts).toEqual(globalAccts);
         });
+        
+        it('should set accounts with global permissions from UserLocationPermissionsService', () => {
+            controller.getPermissions();
+            rootScope.$apply();
+            controller.getAccounts(1,null);
+            rootScope.$apply();
 
-        describe('when an account update fails', () => {
-            it('should set saveButtonClicked to false', () => {
-                mockAccountService.update.and.callFake(() => {
-                    return $q.reject();
-                });
-                rootScope.$apply();
-                controller.accounts.items[0].user_designation = 'bar';
-
-                controller.saveAll();
-                rootScope.$apply();
-
-                expect(controller.saveButtonClicked).toEqual(false);
-            });
-
-            it('should show toastr error', () => {
-                mockAccountService.update.and.callFake(() => {
-                    return $q.reject();
-                });
-                rootScope.$apply();
-                controller.accounts.items[0].user_designation = 'bar';
-
-                controller.saveAll();
-                rootScope.$apply();
-
-                expect(mockToastr.error).toHaveBeenCalledWith("One or more Account Settings could not be saved");
-            });
-        });
-
-    });
-
-    describe('updateAccount', () => {
-        it('should call AccountService.update with account.id and account', () => {
-            let account = { id: 1, name: 'Bob' };
-
-            controller.updateAccount(account);
-
-            expect(mockAccountService.update).toHaveBeenCalledWith(account.id, account);
-        });
-    });
-
-    describe('openUnsavedChangesModal', () => {
-        it('should open modal with correct options', () => {
-            let modalOptions = {
-                templateUrl: 'account/components/modal/unsavedChangesModal.html',
-                controller: 'UnsavedChangesModalController',
-                controllerAs: 'UnsavedChangesModalCtrl'
-            };
-
-            controller.openUnsavedChangesModal();
-
-            expect(mockUibModal.open).toHaveBeenCalledWith(modalOptions);
-        });
-
-        describe('when user decides to discard changes', () => {
-            it('should discard changes', () => {
-                spyOn(controller, 'discardChanges');
-                rootScope.$apply();
-
-                controller.openUnsavedChangesModal();
-                rootScope.$apply();
-
-                expect(controller.discardChanges).toHaveBeenCalled();
-            });
-        });
-
-        describe('when user decides to save', () => {
-            it('should call controller.saveAll', () => {
-                mockUibModal.open.and.callFake(() => {
-                    return { result: $q.resolve(true) };
-                });
-                spyOn(controller, 'saveAll');
-                controller.saveAll.and.callFake(() => { return $q.resolve(true) });
-                rootScope.$apply();
-
-                controller.openUnsavedChangesModal();
-                rootScope.$apply();
-
-                expect(controller.saveAll).toHaveBeenCalled();
-            });
-        });
-
-        describe('when toState is not null', () => {
-            it('should go to state', () => {
-                let toState = "fooState";
-                rootScope.$apply();
-
-                controller.openUnsavedChangesModal(toState);
-                rootScope.$apply();
-
-                expect(mockState.go).toHaveBeenCalledWith(toState);
-            });
+            var globalAccts = [{ id: 10022, name: 'Sup Test', permissions: {0:'G', 1:'C' }}];
+            expect(controller.accounts).toEqual(globalAccts);
         });
     });
 });

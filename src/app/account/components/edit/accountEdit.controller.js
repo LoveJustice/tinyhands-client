@@ -223,12 +223,11 @@ class PermDropDownGroup {
 }
 
 export default class AccountEditController {
-    constructor($state, $stateParams, AccountService, SessionService, PermissionsSetsService, UserPermissionsService, toastr) {
+    constructor($state, $stateParams, AccountService, SessionService, UserPermissionsService, toastr) {
         'ngInject';
         this.$state = $state;
         this.AccountService = AccountService;
         this.session = SessionService;
-        this.PermissionsSetsService = PermissionsSetsService;
         this.UserPermissionsService = UserPermissionsService;
         this.toastr = toastr;
         this.account = null;
@@ -269,7 +268,6 @@ export default class AccountEditController {
             this.getStations();
             this.getCountries();
             }
-            this.getPermissionsSets();
     }
 
     get title() {
@@ -339,12 +337,6 @@ export default class AccountEditController {
                 this.haveUserPermissions = true;
                 this.checkAndGeneratePermissions();
             });
-    }
-
-    getPermissionsSets() {
-        this.PermissionsSetsService.getPermissions().then((result) => {
-            this.permissionsSets = result.data.results;
-        });
     }
 
     getCountries() {
@@ -434,23 +426,6 @@ export default class AccountEditController {
             }
     }
 
-    onUserDesignationChanged(permissionSetId) {
-        if (permissionSetId) {
-            this.PermissionsSetsService.getPermission(permissionSetId).then((permissionsSets) => {
-                this.applyDesignationToAccount(this.account, permissionsSets.data);
-            });
-        }
-    }
-
-    applyDesignationToAccount(account, designation) {
-        var designationKeys = Object.keys(designation);
-        designationKeys.forEach((attribute) => {
-            if (attribute.substring(0, 10) === "permission") {
-                account[attribute] = designation[attribute];
-            }
-        });
-    }
-
     updateOrCreate() {
             this.captureGropPermssions();
         if (!this.checkRequiredFieldsHaveValue()) {
@@ -498,15 +473,10 @@ export default class AccountEditController {
             this.emailError = 'An email is required.';
             areRequiredFieldsFilledIn = false;
         }
-        if (!this.account.user_designation) {
-            this.userDesignationError = 'A user designation is required.';
-            areRequiredFieldsFilledIn = false;
-        }
         return areRequiredFieldsFilledIn;
     }
 
     resetErrors() {
         this.emailError = '';
-        this.userDesignationError = '';
     }
 }

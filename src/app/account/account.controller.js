@@ -7,7 +7,6 @@ export default class AccountController {
         this.tabs = [
             { name: 'Accounts List', state: 'accounts.list' },
             { name: 'Access Control', state: 'accounts.control' },
-            { name: 'Access Defaults', state: 'accounts.defaults' }
         ];
 
         $scope.$on('$stateChangeSuccess', () => {

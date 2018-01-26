@@ -62,4 +62,14 @@ describe('UserPermissionsService', () => {
             expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
         });
     });
+    
+    describe('getUserPermissionsList', () => {
+        it('should call BaseService.get with correct url', () => {
+            let url = `api/user_permission_list/`;
+
+            service.getUserPermissionsList(null, null);
+
+            expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
+        });
+    });
 });

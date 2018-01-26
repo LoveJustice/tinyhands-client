@@ -20,16 +20,4 @@
                            ng-model="accountEditCtrl.account.last_name"/>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 form-group" ng-class="{'has-error': accountEditCtrl.userDesignationError}">
-                    <label ng-class="{'text-danger': accountEditCtrl.userDesignationError}">User Designation</label>
-                    <select ng-model="accountEditCtrl.account.user_designation"
-                            ng-options="set.id as set.name for set in accountEditCtrl.permissionsSets"
-                            ng-change="accountEditCtrl.onUserDesignationChanged(accountEditCtrl.account.user_designation)"
-                            class="form-control">
-                        <option value="" selected>-- Please select --</option>
-                    </select>
-                    <span ng-class="{'text-danger': accountEditCtrl.userDesignationError}">{{accountEditCtrl.userDesignationError}}</span>
-                </div>
-            </div>
         </div>

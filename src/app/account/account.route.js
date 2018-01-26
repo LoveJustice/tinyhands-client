@@ -5,8 +5,6 @@ import './components/list/accountList.less';
 import activateTemplate from './components/activate/activateAccount.html';
 import controlTemplate from './components/control/accessControl.html';
 import './components/control/accessControl.less';
-import defaultsTemplate from './components/defaults/accessDefaults.html';
-import './components/defaults/accessDefaults.less';
 import editTemplate from './components/edit/accountEdit.html';
 import './components/edit/accountEdit.less';
 import notFoundTemplate from './components/edit/accountNotFound.html';
@@ -40,15 +38,6 @@ function accountRouteConfig($stateProvider) {
             templateUrl: controlTemplate,
             data: {
                 index: 1,
-            },
-        })
-        .state('accounts.defaults', {
-            url: '/defaults',
-            controller: 'AccessDefaultsController',
-            controllerAs: 'accessDefaultsCtrl',
-            templateUrl: defaultsTemplate,
-            data: {
-                index: 2,
             },
         })
         .state('account', {

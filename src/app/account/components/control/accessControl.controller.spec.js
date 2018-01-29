@@ -68,8 +68,8 @@ describe('AccessControlController', () => {
         
         getUserPermissionsGlobalResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}]}]};
         getUserPermissionsCountryResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}, {id:2, level:'C'}]}]};
-        mockUserPermissionsService.getUserPermissionsList.and.callFake((country_id, station_id) => {
-            if (country_id!==null) {
+        mockUserPermissionsService.getUserPermissionsList.and.callFake((countryId, stationId) => {
+            if (countryId!==null) {
                 return $q.resolve(getUserPermissionsCountryResponse);
             } else {
                 return $q.resolve(getUserPermissionsGlobalResponse);

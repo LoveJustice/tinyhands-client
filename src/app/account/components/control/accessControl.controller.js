@@ -153,9 +153,9 @@ export default class AccessControlController {
         });
     }
     
-    setStationOptionsForCountry(country_id) {
+    setStationOptionsForCountry(countryId) {
         for (var idx=0; idx < this.acState.stations.length; idx++) {
-            if (this.acState.stations[idx].operating_country === country_id) {
+            if (this.acState.stations[idx].operating_country === countryId) {
                 this.stationOptions.push({id: this.acState.stations[idx].id, label: this.acState.stations[idx].station_name});
             }
         } 
@@ -170,9 +170,9 @@ export default class AccessControlController {
         if (this.parent.countrySelectedOptions[0].id < 0) {
             this.parent.getAccounts(null,null);
         } else {
-            var country_id = this.parent.countrySelectedOptions[0].id;
-            this.parent.setStationOptionsForCountry(country_id);
-            this.parent.getAccounts(country_id, null);
+            var countryId = this.parent.countrySelectedOptions[0].id;
+            this.parent.setStationOptionsForCountry(countryId);
+            this.parent.getAccounts(countryId, null);
         }
     }
     
@@ -188,9 +188,9 @@ export default class AccessControlController {
     
     stationSelect() {
         if (this.parent.stationSelectedOptions.length > 0) {
-            var station_id = this.parent.stationSelectedOptions[0].id;
+            var stationId = this.parent.stationSelectedOptions[0].id;
             this.parent.acState.selectedStation = this.parent.stationSelectedOptions[0].id;
-            this.parent.getAccounts(null, station_id);
+            this.parent.getAccounts(null, stationId);
         }
     }
     

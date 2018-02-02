@@ -7,7 +7,6 @@ export default class AccountController {
         this.tabs = [
             { name: 'Accounts List', state: 'accounts.list' },
             { name: 'Access Control', state: 'accounts.control' },
-            { name: 'Access Defaults', state: 'accounts.defaults' }
         ];
 
         $scope.$on('$stateChangeSuccess', () => {
@@ -23,6 +22,7 @@ export default class AccountController {
     switchTab(index) {
         if (this.activeTabIndex !== index) {
             let state = this.tabs[index].state;
+            this.activeTabIndex = index;
             this.$state.go(state);
         }
     }

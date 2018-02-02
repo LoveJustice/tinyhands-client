@@ -1,0 +1,56 @@
+<div class="row">
+	<table>
+		<colgroup>
+			<col span="1" style="width: 10%">
+			<col span="1" style="width: 18%">
+			<col span="1" style="width: 18%">
+			<col span="1" style="width: 18%">
+			<col span="1" style="width: 18%">
+			<col span="1" style="width: 18%">
+		</colgroup>
+		<thead>
+			<tr>
+				<th></th>
+				<th ng-repeat="permd in accountEditCtrl.permdd">{{ permd.permissionName }}</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><label>Global</label>
+				<td ng-repeat="permd in accountEditCtrl.permdd">
+					<div ng-dropdown-multiselect="" options="permd.globalDropDown.options"
+							selected-model="permd.globalDropDown.selectedOptions"
+                             extra-settings="permd.globalDropDown.settings"
+                             translation-texts="permd.globalDropDown.customText"
+                             events="permd.globalDropDown.eventListener"
+                             ng-class="permd.globalDropDown.isSelected() ? 'btn btn-success' : 'btn btn-danger'">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Country</label>
+				<td ng-repeat="permd in accountEditCtrl.permdd">
+					<div ng-dropdown-multiselect="" options="permd.countryDropDown.options"
+							selected-model="permd.countryDropDown.selectedOptions"
+                             extra-settings="permd.countryDropDown.settings"
+                             translation-texts="permd.countryDropDown.customText"
+                             events="permd.countryDropDown.eventListener"
+                             ng-class="permd.countryDropDown.isSelected() ? 'btn btn-success' : 'btn btn-danger'" ng-show="permd.minLevel != 'GLOBAL'">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td><label>Station</label>
+				<td ng-repeat="permd in accountEditCtrl.permdd">
+					<div ng-dropdown-multiselect="" options="permd.stationDropDown.options"
+							selected-model="permd.stationDropDown.selectedOptions"
+                             extra-settings="permd.stationDropDown.settings"
+                             translation-texts="permd.stationDropDown.customText"
+                             events="permd.stationDropDown.eventListener"
+                             ng-class="permd.stationDropDown.isSelected() ? 'btn btn-success' : 'btn btn-danger'" ng-show="permd.minLevel == 'STATION'">
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	<table>
+</div>

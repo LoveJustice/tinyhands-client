@@ -51,10 +51,10 @@ describe('AccountEditController', () => {
         var user = Object();
         user.id = 10022;
         mockSessionService.user = user;
-        mockSessionService.getUserPermissionList.and.callFake((a,b) =>{
+        mockSessionService.getUserPermissionList.and.callFake((a,b) => {
             return [{account:10, country: null, station: null, permission:23}];
         });
-        mockSessionService.checkPermission.and.callFake((a,b) =>{
+        mockSessionService.checkPermission.and.callFake((a,b) => {
             return true;
         });
 

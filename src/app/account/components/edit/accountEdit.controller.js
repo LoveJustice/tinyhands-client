@@ -327,8 +327,6 @@ export default class AccountEditController {
                 this.countries = result.data.results;
                  this.haveCountries = true;
                 this.checkAndGeneratePermissions();
-            }, (error) => {
-                var tmp = error.data;
             });
     }
 

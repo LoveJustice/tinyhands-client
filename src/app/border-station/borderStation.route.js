@@ -10,7 +10,7 @@ function borderStationRouteConfig($stateProvider) {
             controllerAs: 'bsCtrl',
             params: {
                 id: "",
-                country_id: null
+                countryId: null
             }
         });
 }

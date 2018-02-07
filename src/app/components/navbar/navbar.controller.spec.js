@@ -55,7 +55,7 @@ describe('NavbarController', () => {
 
         it('should set borderStations to 123', () => {
             let response = { data: 123 };
-            vm.borderStationService.getUserStations = () => { return { then: (f) => { f(response) } } };
+            vm.borderStationService.getUserStations = () => { return { then: (f) => { f(response); } } };
             vm.session.user.permission_border_stations_view = true;
             vm.getBorderStations();
             expect(vm.borderStations).toEqual(response.data);

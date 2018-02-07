@@ -58,8 +58,7 @@ export default class SessionService {
         });
     }
     
-    checkPermission(group, action, countryId, stationId) {
-        var found = false;
+    findPermissionId(group, action) {
         var permId = null;
         for (var idx=0; idx < this.permissions.length; idx++) {
             if (this.permissions[idx].permission_group === group && this.permissions[idx].action === action) {
@@ -67,6 +66,14 @@ export default class SessionService {
                 break;
             }
         }
+        
+        return permId;
+    }
+    
+    checkPermission(group, action, countryId, stationId) {
+        var found = false;
+        var permId = this.findPermissionId(group, action);
+        
         
         for (var idx1=0; idx1 < this.userPermissions.length; idx1++) {
             if (this.userPermissions[idx1].permission === permId) {
@@ -84,15 +91,8 @@ export default class SessionService {
     }
     
     getUserPermissionList(group, action) {
-        var permId = null;
+        var permId = this.findPermissionId(group, action);
         var perms = [];
-        
-        for (var idx=0; idx < this.permissions.length; idx++) {
-            if (this.permissions[idx].permission_group === group && this.permissions[idx].action === action) {
-                permId = this.permissions[idx].id;
-                break;
-            }
-        }
         
         for (var idx1=0; idx1 < this.userPermissions.length; idx1++) {
             if (this.userPermissions[idx1].permission === permId) {

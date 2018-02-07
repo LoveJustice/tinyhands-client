@@ -328,7 +328,7 @@ describe('BorderStationService', () => {
     });
     
     describe('function getCountry', () => {
-        let url = 'api/country/' + countryId + '/';;
+        let url = 'api/country/' + countryId + '/';
         it(`should call put with '${url}'`, () => {
             service.getCountry(countryId);
             expect(mockBaseService.get).toHaveBeenCalledWith(url);
@@ -336,7 +336,7 @@ describe('BorderStationService', () => {
     });
     
     describe('function getUserStations', () => {
-        let url = 'api/user_permission/stations/' + borderStationId + '/';;
+        let url = 'api/user_permission/stations/' + borderStationId + '/';
         it(`should call put with '${url}'`, () => {
             let action = 'VIEW';
             let group = 'STATIONS';

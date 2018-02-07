@@ -1,12 +1,14 @@
 import constants from './../constants.js';
 
 export default class DetailController {
-    constructor($scope, BorderStationService, moment) {
+    constructor($scope, BorderStationService, moment, UtilService, SessionService) {
         'ngInject';
 
         this.$scope = $scope;
         this.service = BorderStationService;
         this.moment = moment;
+        this.utils = UtilService;
+        this.session = SessionService;
 
         this.details = {};
         this.countryOptions = this.getAllCountries();
@@ -27,7 +29,8 @@ export default class DetailController {
             this.details = response.data;
             this.service.borderStationId = this.details.id;
             this.$scope.$emit(constants.Events.Create.BorderStation.Done);
-        }, () => {
+        }, (error) => {
+            this.service.errors = this.utils.handleErrors(error);
             this.$scope.$emit(constants.Events.Create.BorderStation.Error);
         });
     }
@@ -84,7 +87,17 @@ export default class DetailController {
 
     getAllCountries() {
       this.service.getAllCountries().then((response) => {
-        this.countryOptions = response.data.results;
+          if (this.service.borderStationId) {
+              this.countryOptions = response.data.results;
+          } else{
+              var tmpCountry = response.data.results;
+              this.countryOptions = [];
+              for (var idx=0; idx < tmpCountry.length; idx++) {
+                  if (this.session.checkPermission('STATIONS','ADD',tmpCountry[idx].id, null)) {
+                      this.countryOptions.push(tmpCountry[idx]);
+                  }
+              }
+          }
       });
     }
 

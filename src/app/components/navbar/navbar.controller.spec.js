@@ -8,7 +8,7 @@ describe('NavbarController', () => {
         let $scope = { $on: () => { } },
             $timeout,
             bss = new BorderStationService($http, $q);
-        session = { logout: () => { }, user: {} };
+        session = { logout: () => { }, user: {} , checkPermission: () => {return true;}};
         vm = new NavbarController($scope, {}, $timeout, bss, session);
     }));
 
@@ -46,16 +46,16 @@ describe('NavbarController', () => {
 
     describe('function getBorderStations', () => {
 
-        it('should call borderStationService getBorderStations', () => {
-            spyOn(vm.borderStationService, 'getBorderStations').and.callThrough();
+        it('should call borderStationService getUserStations', () => {
+            spyOn(vm.borderStationService, 'getUserStations').and.callThrough();
             vm.session.user.permission_border_stations_view = true;
             vm.getBorderStations();
-            expect(vm.borderStationService.getBorderStations).toHaveBeenCalled();
+            expect(vm.borderStationService.getUserStations).toHaveBeenCalled();
         });
 
         it('should set borderStations to 123', () => {
             let response = { data: 123 };
-            vm.borderStationService.getBorderStations = () => { return { then: (f) => { f(response) } } };
+            vm.borderStationService.getUserStations = () => { return { then: (f) => { f(response) } } };
             vm.session.user.permission_border_stations_view = true;
             vm.getBorderStations();
             expect(vm.borderStations).toEqual(response.data);

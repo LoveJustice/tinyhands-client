@@ -47,15 +47,24 @@ describe('AccountEditController', () => {
             return $q.resolve(account);
         });
 
-        mockSessionService = Object();
+        mockSessionService = jasmine.createSpyObj('SessionService',['getUserPermissionList', 'checkPermission']);
         var user = Object();
         user.id = 10022;
         mockSessionService.user = user;
+        mockSessionService.getUserPermissionList.and.callFake((a,b) =>{
+            return [{account:10, country: null, station: null, permission:23}];
+        });
+        mockSessionService.checkPermission.and.callFake((a,b) =>{
+            return true;
+        });
 
         userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}, {id:2, permission_group:'VIF', action:'ADD', min_level: 'STATION'}]}};
         mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'setUserPermissions', 'getAllCountries', 'getBorderStations']);
         mockUserPermissionsService.getPermissions.and.callFake(() => {
                 return $q.resolve(userPermissionsGetPermissionsResponse);
+        });
+        mockUserPermissionsService.getPermissions.and.callFake(() => {
+            return $q.resolve(userPermissionsGetPermissionsResponse);
         });
 
         getUserPermissionsResponse = { data: [{account:10022, country:null, station:null, permission:1}, {account:10022, country:1, station:null, permission:2}]};

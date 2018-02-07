@@ -252,14 +252,14 @@ export default class AccountEditController {
         this.permissionsSets = [];
         this.countries = [];
         this.stations = [];
-        this.managePermissions = [];
+        this.managePermissions = this.session.getUserPermissionList('ACCOUNTS', 'MANAGE');
         this.existingUserPermissions = [];
         this.permdd = [];
+        this.fill = [];
 
         this.saveButtonClicked = false;
 
             this.havePermissions = false;
-            this.haveManagementPermissions = false;
             this.haveStations = false;
             this.haveCountries = false;
 
@@ -308,25 +308,8 @@ export default class AccountEditController {
                 if (this.permissionGroups.indexOf(pg) < 0) {
                     this.permissionGroups.push(pg);
                 }
-                if (this.permissions[idx].permission_group === 'ACCOUNTS' && this.permissions[idx].action === 'MANAGE') {
-                    this.getManagementPermissions(this.permissions[idx].id);
-                }
             }
             this.havePermissions = true;
-            this.checkAndGeneratePermissions();
-        });
-    }
-
-    getManagementPermissions(permId) {
-            this.UserPermissionsService.getUserPermissions(this.session.user.id).then((result) => {
-            var tmpPerm = result.data;
-            this.managePermissions = [];
-            for (var idx=0; idx < tmpPerm.length; idx++) {
-                if (tmpPerm[idx].permission === permId) {
-                    this.managePermissions.push(tmpPerm[idx]);
-                }
-            }
-            this.haveManagementPermissions = true;
             this.checkAndGeneratePermissions();
         });
     }
@@ -344,6 +327,8 @@ export default class AccountEditController {
                 this.countries = result.data.results;
                  this.haveCountries = true;
                 this.checkAndGeneratePermissions();
+            }, (error) => {
+                var tmp = error.data;
             });
     }
 
@@ -356,7 +341,7 @@ export default class AccountEditController {
     }
 
     checkAndGeneratePermissions() {
-            if (this.active === 0 || ! (this.haveUserPermissions && this.havePermissions && this.haveCountries && this.haveStations &&     this.haveManagementPermissions)) {
+            if (this.active === 0 || ! (this.haveUserPermissions && this.havePermissions && this.haveCountries && this.haveStations)) {
                 return;
             }
 
@@ -380,6 +365,11 @@ export default class AccountEditController {
                             this.accountId);
                     this.permdd.push(p);
                 }
+            }
+            
+            this.fill = [];
+            for (var idx2=0; idx2 < 5 - this.permdd.length; idx2++) {
+                this.fill.push(idx2);
             }
     }
 
@@ -443,7 +433,7 @@ export default class AccountEditController {
                 var newPerms = {
                         permissions: this.existingUserPermissions    
                 };
-                this.UserPermissionsService.setUserPermissions(this.account.id, newPerms).then((result1) => {
+                this.UserPermissionsService.setUserPermissions(this.account.id, newPerms).then(() => {
                 this.toastr.success("Account Updated");
                 this.saveButtonClicked = false;
                 this.$state.go('accounts.list');

@@ -16,8 +16,8 @@ export default class NavbarController {
     }
 
     getBorderStations() {
-        if (this.session.user.permission_border_stations_view) {
-            this.borderStationService.getBorderStations().then((response) => {
+        if (this.session.checkPermission('STATIONS','VIEW',null, null)) {
+            this.borderStationService.getUserStations(this.session.user.id, 'STATIONS', 'VIEW').then((response) => {
                 this.borderStations = response.data;
             });
         }

@@ -59,7 +59,7 @@ export default class SessionService {
     }
     
     findPermissionId(group, action) {
-        let perm = this.permissions.find(perm => perm.permission_group === group && perm.action === action);
+        let perm = this.permissions.find((perm) => perm.permission_group === group && perm.action === action);
         if (typeof perm !== 'undefined') {
            return perm.id;
         }
@@ -85,7 +85,7 @@ export default class SessionService {
     
     checkPermission(group, action, countryId, stationId) {
         let perms = this.getUserPermissionList(group, action);
-        let thePerm = perms.find(perm => (
+        let thePerm = perms.find((perm) => (
                 this.isAnyLocationRequested(countryId, stationId) || 
                 this.isGlobal(perm) || 
                 this.matchesCountry(perm, countryId) || 
@@ -99,7 +99,7 @@ export default class SessionService {
     
     getUserPermissionList(group, action) {
         let permId = this.findPermissionId(group, action);
-        let perms = this.userPermissions.filter(perm => perm.permission === permId);
+        let perms = this.userPermissions.filter((perm) => perm.permission === permId);
         return perms;
     }
 

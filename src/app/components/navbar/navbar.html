@@ -30,7 +30,7 @@
                     </li>
                     <hr style="margin: 4px" />
                     <li ng-repeat="station in navbarCtrl.borderStations" ng-if="station.open">
-                        <a ui-sref="border-station({id: station.id, country_id: station.operating_country})">{{ station.station_name }}</a>
+                        <a ui-sref="border-station({id: station.id, countryId: station.operating_country})">{{ station.station_name }}</a>
                     </li>
                 </ul>
             </li>

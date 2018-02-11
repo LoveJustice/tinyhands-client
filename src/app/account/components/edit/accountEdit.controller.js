@@ -255,6 +255,7 @@ export default class AccountEditController {
         this.managePermissions = this.session.getUserPermissionList('ACCOUNTS', 'MANAGE');
         this.existingUserPermissions = [];
         this.permdd = [];
+        this.maxPermissionsPerGroup = 0;
         this.fill = [];
 
         this.saveButtonClicked = false;
@@ -303,10 +304,19 @@ export default class AccountEditController {
     getPermissions() {
             this.UserPermissionsService.getPermissions().then((result) => {
             this.permissions = result.data.results;
-            for (var idx=0; idx < this.permissions.length; idx++) {
+            let groupCount = {};
+            for (let idx=0; idx < this.permissions.length; idx++) {
                 var pg = this.permissions[idx].permission_group;
                 if (this.permissionGroups.indexOf(pg) < 0) {
                     this.permissionGroups.push(pg);
+                    groupCount[pg] = 1;
+                } else {
+                    groupCount[pg] += 1;
+                }
+            }
+            for (let key in groupCount) {
+                if (groupCount[key] > this.maxPermissionsPerGroup) {
+                    this.maxPermissionsPerGroup = groupCount[key];
                 }
             }
             this.havePermissions = true;
@@ -366,7 +376,7 @@ export default class AccountEditController {
             }
             
             this.fill = [];
-            for (var idx2=0; idx2 < 5 - this.permdd.length; idx2++) {
+            for (var idx2=0; idx2 < this.maxPermissionsPerGroup - this.permdd.length; idx2++) {
                 this.fill.push(idx2);
             }
     }

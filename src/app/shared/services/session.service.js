@@ -59,47 +59,47 @@ export default class SessionService {
     }
     
     findPermissionId(group, action) {
-        var permId = null;
-        for (var idx=0; idx < this.permissions.length; idx++) {
-            if (this.permissions[idx].permission_group === group && this.permissions[idx].action === action) {
-                permId = this.permissions[idx].id;
-                break;
-            }
+        let perm = this.permissions.find(perm => perm.permission_group === group && perm.action === action);
+        if (typeof perm !== 'undefined') {
+           return perm.id;
         }
         
-        return permId;
+        return null;
+    }
+    
+    isAnyLocationRequested(countryId, stationId) {
+        return countryId === null && stationId === null;
+    }
+    
+    isGlobal(perm) {
+        return perm.station === null && perm.country === null;
+    }
+    
+    matchesCountry(perm, countryId) {
+        return countryId !== null && perm.country === countryId && perm.station === null;
+    }
+    
+    matchesStation(perm, stationId) {
+        return stationId !== null && perm.station === stationId;
     }
     
     checkPermission(group, action, countryId, stationId) {
-        var found = false;
-        var permId = this.findPermissionId(group, action);
-        
-        
-        for (var idx1=0; idx1 < this.userPermissions.length; idx1++) {
-            if (this.userPermissions[idx1].permission === permId) {
-                if ((this.userPermissions[idx1].station === null && this.userPermissions[idx1].country === null) ||
-                        (countryId === null && stationId === null) ||
-                        (this.userPermissions[idx1].station === null && this.userPermissions[idx1].country === countryId) ||
-                        (stationId !== null && this.userPermissions[idx1].station === stationId)) {
-                    found = true;
-                    break;
-                }
-            }
+        let perms = this.getUserPermissionList(group, action);
+        let thePerm = perms.find(perm => (
+                this.isAnyLocationRequested(countryId, stationId) || 
+                this.isGlobal(perm) || 
+                this.matchesCountry(perm, countryId) || 
+                this.matchesStation(perm,stationId)));
+        if (typeof thePerm !== 'undefined') {
+            return true;
         }
         
-        return found;
+        return false;
     }
     
     getUserPermissionList(group, action) {
-        var permId = this.findPermissionId(group, action);
-        var perms = [];
-        
-        for (var idx1=0; idx1 < this.userPermissions.length; idx1++) {
-            if (this.userPermissions[idx1].permission === permId) {
-                perms.push(this.userPermissions[idx1]);
-            }
-        }
-        
+        let permId = this.findPermissionId(group, action);
+        let perms = this.userPermissions.filter(perm => perm.permission === permId);
         return perms;
     }
 

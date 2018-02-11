@@ -28,14 +28,11 @@ export default class UserPermissionsService {
     }
 
     getAllCountries() {
-        let params = [];
-        return this.service.get('api/country/', params);
+        return this.service.get('api/country/');
     }
     
     getUserStations(id) {
-        let params = [];
-        
-        return this.service.get(`api/user_permission/stations/${id}/`, params);
+        return this.service.get(`api/user_permission/stations/${id}/`);
     }
 
     getBorderStations(open = null) {

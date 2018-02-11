@@ -49,7 +49,7 @@ describe('UserPermissionsService', () => {
 
             service.getAllCountries();
 
-            expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
         });
     });
 

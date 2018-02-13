@@ -56,7 +56,10 @@ function accountRouteConfig($stateProvider) {
             url: '/account/activate/:activation_key',
             templateUrl: activateTemplate,
             controller: 'ActivateAccountController',
-            controllerAs: 'activateAcctCtrl'
+            controllerAs: 'activateAcctCtrl',
+            data: {
+                loginNotRequired: true
+            }
         });
 }
 

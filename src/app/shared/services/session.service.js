@@ -9,6 +9,8 @@ export default class SessionService {
         this.$q = $q;
 
         this.user = {};
+        this.userPermissions = [];
+        this.permissions = [];
     }
 
     attemptLogin(username, password) {
@@ -32,15 +34,79 @@ export default class SessionService {
     me() {
         return this.service.get('api/me/').then((result) => {
             this.user = result.data;
-            this.root.$broadcast('GetNavBarBorderStations');
+            
+            if (this.permissions.length < 1) {
+                this.getPermissions();
+            }
+            if (typeof this.user !== 'undefined') {
+                this.getUserPermissions();
+            }       
             return this.user;
         });
+    }
+    
+    getPermissions() {
+        return this.service.get(`api/permission/`).then((result) => {
+            this.permissions = result.data.results;
+        });
+    }
+    
+    getUserPermissions() {
+        return this.service.get(`api/user_permission/${this.user.id}/`).then((result) => {
+            this.userPermissions = result.data;
+            this.root.$broadcast('GetNavBarBorderStations');
+        });
+    }
+    
+    findPermissionId(group, action) {
+        let perm = this.permissions.find((perm) => perm.permission_group === group && perm.action === action);
+        if (typeof perm !== 'undefined') {
+           return perm.id;
+        }
+        
+        return null;
+    }
+    
+    isAnyLocationRequested(countryId, stationId) {
+        return countryId === null && stationId === null;
+    }
+    
+    isGlobal(perm) {
+        return perm.station === null && perm.country === null;
+    }
+    
+    matchesCountry(perm, countryId) {
+        return countryId !== null && perm.country === countryId && perm.station === null;
+    }
+    
+    matchesStation(perm, stationId) {
+        return stationId !== null && perm.station === stationId;
+    }
+    
+    checkPermission(group, action, countryId, stationId) {
+        let perms = this.getUserPermissionList(group, action);
+        let thePerm = perms.find((perm) => (
+                this.isAnyLocationRequested(countryId, stationId) || 
+                this.isGlobal(perm) || 
+                this.matchesCountry(perm, countryId) || 
+                this.matchesStation(perm,stationId)));
+        if (typeof thePerm !== 'undefined') {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    getUserPermissionList(group, action) {
+        let permId = this.findPermissionId(group, action);
+        let perms = this.userPermissions.filter((perm) => perm.permission === permId);
+        return perms;
     }
 
     checkIfAuthenticated() {
         let defer = this.$q.defer();
         if (typeof localStorage.token === 'undefined') {
-            defer.reject('Not Authenticated');
+            defer.reject('Not Authenticated'); 
             return defer.promise;
         } else {
             this.root.authenticated = true;

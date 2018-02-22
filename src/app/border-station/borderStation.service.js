@@ -149,4 +149,16 @@ export default class BorderStationService {
     getCountry(countryId) {
         return this.service.get(`api/country/${countryId}/`);
     }
+    
+    getUserStations(id, group, action) {
+        let params = [];
+        if (group !== null) {
+            params.push({name: 'permission_group', value: group});
+        }
+        if (action !== null) {
+            params.push({name: 'action', value: action});
+        }
+        
+        return this.service.get(`api/user_permission/stations/${id}/`, params);
+    }
 }

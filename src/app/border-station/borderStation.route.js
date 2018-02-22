@@ -8,8 +8,9 @@ function borderStationRouteConfig($stateProvider) {
             templateUrl: borderStationTemplate,
             controller: 'BorderStationController',
             controllerAs: 'bsCtrl',
-            data: {
-                permissions_required: ['permission_border_stations_view']
+            params: {
+                id: "",
+                countryId: null
             }
         });
 }

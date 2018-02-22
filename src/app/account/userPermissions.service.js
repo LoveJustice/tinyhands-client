@@ -30,6 +30,10 @@ export default class UserPermissionsService {
     getAllCountries() {
         return this.service.get('api/country/');
     }
+    
+    getUserStations(id) {
+        return this.service.get(`api/user_permission/stations/${id}/`);
+    }
 
     getBorderStations(open = null) {
         let params = [];

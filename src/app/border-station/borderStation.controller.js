@@ -20,18 +20,19 @@ export default class BorderStationController {
         this.updateStatusText = $stateParams.id ? constants.UpdateButtonText.Default : constants.UpdateButtonText.Create;
 
         SessionService.me().then((response) => {
-            this.authorize(response, this.$stateParams.id);
+            this.authorize(response, this.$stateParams.id, this.$stateParams.countryId);
         }).then(() => {
             this.createListeners();
         });
     }
 
-    authorize(user, id) {
-        if (user.permission_border_stations_add === false && id === "") {
+    authorize(user, id, countryId) {
+        if (this.session.checkPermission('STATIONS','ADD',null, null) === false && id === "") { 
+           
             this.$state.go("dashboard");
             this.toastr.error("You do not have permission to create a border station");
         }
-        if (id !== "" && user.permission_border_stations_edit === false) {
+        if (id !== "" && this.session.checkPermission('STATIONS','EDIT',parseInt(countryId, 10), parseInt(id, 10)) === false) {
             this.isViewing = true;
         }
     }

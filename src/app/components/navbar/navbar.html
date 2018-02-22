@@ -54,7 +54,7 @@
             <!-- END: FORMS -->
 
             <li>
-                <a ng-show="navbarCtrl.session.user.permission_budget_view" ui-sref="budgetList">Budget Sheets</a>
+                <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);" ui-sref="budgetList">Budget Sheets</a>
             </li>
 
             <li>

@@ -8,11 +8,16 @@ describe('AccountEditController', () => {
         mockState,
         mockStateParams,
         mockAccountService,
-        mockPermissionsSetService,
+        mockSessionService,
+        mockUserPermissionsService,
         mockToastr,
         getAccountResponse,
         getPermissionsResponse,
-        getPermissionResponse;
+        getPermissionResponse,
+        userPermissionsGetPermissionsResponse,
+        getUserPermissionsResponse,
+        getCountriesResponse,
+        getBorderStationsResponse;
 
     beforeEach(inject((_$q_, $rootScope) => {
         $q = _$q_;
@@ -42,33 +47,55 @@ describe('AccountEditController', () => {
             return $q.resolve(account);
         });
 
-        mockPermissionsSetService = jasmine.createSpyObj('PermissionsSetService', ['getPermission', 'getPermissions']);
-        getPermissionsResponse = { data: { results: [{ id: 1, name: 'Foo' }] } };
-        mockPermissionsSetService.getPermissions.and.callFake(() => {
-            return $q.resolve(getPermissionsResponse);
+        mockSessionService = jasmine.createSpyObj('SessionService',['getUserPermissionList', 'checkPermission']);
+        var user = Object();
+        user.id = 10022;
+        mockSessionService.user = user;
+        mockSessionService.getUserPermissionList.and.callFake((a,b) => {
+            return [{account:10, country: null, station: null, permission:23}];
+        });
+        mockSessionService.checkPermission.and.callFake((a,b) => {
+            return true;
         });
 
-        mockPermissionsSetService.getPermission.and.callFake((id) => {
-            getPermissionResponse = {
-                data: {
-                    id,
-                    name: 'Foo'
-                }
-            }
-            return $q.resolve(getPermissionResponse)
+        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}, {id:2, permission_group:'VIF', action:'ADD', min_level: 'STATION'}]}};
+        mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'setUserPermissions', 'getAllCountries', 'getBorderStations']);
+        mockUserPermissionsService.getPermissions.and.callFake(() => {
+                return $q.resolve(userPermissionsGetPermissionsResponse);
+        });
+        mockUserPermissionsService.getPermissions.and.callFake(() => {
+            return $q.resolve(userPermissionsGetPermissionsResponse);
+        });
+
+        getUserPermissionsResponse = { data: [{account:10022, country:null, station:null, permission:1}, {account:10022, country:1, station:null, permission:2}]};
+        mockUserPermissionsService.getUserPermissions.and.callFake((id) => {
+                return $q.resolve(getUserPermissionsResponse);
+        });
+        mockUserPermissionsService.setUserPermissions.and.callFake((id, data) => {
+                return $q.resolve(data);
+        });
+
+        getCountriesResponse = { data: {results: [{id:1, name:'Nepal'}, {id:2, name:'South Africa'}]}};
+        mockUserPermissionsService.getAllCountries.and.callFake(() => {
+                return $q.resolve(getCountriesResponse);
+        });
+
+        getBorderStationsResponse = { data: [{id:1, station_name:'Station1', operating_country:1}, {id:2, station_name:'Station2', operating_country:2}]};
+        mockUserPermissionsService.getBorderStations.and.callFake(() => {
+                return $q.resolve(getBorderStationsResponse);
         });
 
         mockToastr = jasmine.createSpyObj('toastr', ['success']);
 
         mockStateParams = { id: 2 };
 
-        controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockPermissionsSetService, mockToastr);
+        controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockSessionService, mockUserPermissionsService, mockToastr);
     }));
 
     describe('when creating a new account', () => {
         beforeEach(() => {
             mockStateParams = { id: 'create' };
-            controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockPermissionsSetService, mockToastr);
+            controller = new AccountEditController(mockState, mockStateParams, mockAccountService, mockSessionService, mockUserPermissionsService, mockToastr);
         });
 
         describe('title', () => {
@@ -141,17 +168,66 @@ describe('AccountEditController', () => {
     });
 
     describe('getPermissions', () => {
-        it('should get permissions from PermissionsSetService', () => {
-            controller.getPermissions();
+            it('should get permissions from UserLocationPermissionsService', () => {
+                controller.getPermissions();
 
-            expect(mockPermissionsSetService.getPermissions).toHaveBeenCalled();
+                expect(mockUserPermissionsService.getPermissions).toHaveBeenCalled();
+            });
+
+            it('should set permissions with response from UserLocationPermissionsService', () => {
+                controller.getPermissions();
+                rootScope.$apply();
+
+                expect(controller.permissions).toEqual(userPermissionsGetPermissionsResponse.data.results);
+                expect(controller.havePermissions).toEqual(true);
+            });
+    });
+
+    describe('getUserPermissions', () => {
+        it('should get user permissions from UserLocationPermissionsService', () => {
+            controller.getUserPermissions(10022);
+
+            expect(mockUserPermissionsService.getUserPermissions).toHaveBeenCalled();
         });
 
-        it('should set permissions with response from PermissionsSetService', () => {
-            controller.getPermissions();
+        it('should set permissions with response from UserLocationPermissionsService', () => {
+            controller.getUserPermissions(10022);
             rootScope.$apply();
 
-            expect(controller.permissions).toEqual(getPermissionsResponse.data.results);
+            expect(controller.existingUserPermissions).toEqual(getUserPermissionsResponse.data);
+            expect(controller.haveUserPermissions).toEqual(true);
+        });
+    });
+
+    describe('getCountries', () => {
+        it('should get countries from UserLocationPermissionsService', () => {
+            controller.getCountries();
+
+            expect(mockUserPermissionsService.getAllCountries).toHaveBeenCalled();
+        });
+
+        it('should set countries with response from UserLocationPermissionsService', () => {
+            controller.getCountries();
+            rootScope.$apply();
+
+            expect(controller.countries).toEqual(getCountriesResponse.data.results);
+            expect(controller.haveCountries).toEqual(true);
+        });
+    });
+
+    describe('getStations', () => {
+        it('should get stations from UserLocationPermissionsService', () => {
+            controller.getStations();
+
+            expect(mockUserPermissionsService.getBorderStations).toHaveBeenCalled();
+        });
+
+        it('should set permissions with response from UserLocationPermissionsService', () => {
+            controller.getStations();
+            rootScope.$apply();
+
+            expect(controller.stations).toEqual(getBorderStationsResponse.data);
+            expect(controller.haveStations).toEqual(true);
         });
     });
 
@@ -177,58 +253,6 @@ describe('AccountEditController', () => {
             rootScope.$apply();
 
             expect(mockState.go).toHaveBeenCalledWith('accountNotFound');
-        });
-    });
-
-    describe('onUserDesignationChanged', () => {
-        describe('when given falsey permissions set id', () => {
-            it('should not get permissions set from PermissionsSetService', () => {
-                controller.onUserDesignationChanged(null);
-
-                expect(mockPermissionsSetService.getPermission).not.toHaveBeenCalled();
-            });
-        });
-
-        it('should get permissions set with specified id from PermissionsSetService', () => {
-            let id = 2;
-            controller.onUserDesignationChanged(id);
-
-            expect(mockPermissionsSetService.getPermission).toHaveBeenCalledWith(id);
-        });
-
-        it('should apply permissions to account', () => {
-            spyOn(controller, 'applyDesignationToAccount');
-            let id = 2;
-
-            controller.onUserDesignationChanged(id)
-            rootScope.$apply();
-
-            expect(controller.applyDesignationToAccount).toHaveBeenCalledWith(controller.account, getPermissionResponse.data);
-        });
-    });
-
-    describe('applyDesignationToAccount', () => {
-        it('should set account permissions to match permissions set permissions', () => {
-            let permissionsSet = {
-                permission_vif_view: true,
-                permission_vif_add: true,
-                permission_vif_edit: true,
-                permission_vif_delete: true
-            };
-
-            let account = {
-                permission_vif_view: false,
-                permission_vif_add: false,
-                permission_vif_edit: false,
-                permission_vif_delete: false
-            }
-
-            controller.applyDesignationToAccount(account, permissionsSet);
-
-            expect(account.permission_vif_view).toEqual(true);
-            expect(account.permission_vif_add).toEqual(true);
-            expect(account.permission_vif_edit).toEqual(true);
-            expect(account.permission_vif_view).toEqual(true);
         });
     });
 
@@ -410,24 +434,6 @@ describe('AccountEditController', () => {
             });
         });
 
-        describe('when account has no user designation', () => {
-            it('should set error on user designation', () => {
-                controller.account = { id: 2, email: 'foo@bar.org' };
-
-                controller.checkRequiredFieldsHaveValue();
-
-                expect(controller.userDesignationError).toEqual('A user designation is required.');
-            });
-
-            it('should return false', () => {
-                controller.account = { id: 2, email: 'foo@bar.org' };
-
-                let result = controller.checkRequiredFieldsHaveValue();
-
-                expect(result).toEqual(false);
-            });
-        });
-
         describe('when all required fields filled in', () => {
             it('should return true', () => {
                 controller.account = { id: 2, email: 'foo@bar.org', user_designation: 3 };
@@ -435,14 +441,6 @@ describe('AccountEditController', () => {
                 let result = controller.checkRequiredFieldsHaveValue();
 
                 expect(result).toEqual(true);
-            });
-
-            it('should have no error on user designation', () => {
-                controller.account = { id: 2, email: 'foo@bar.org', user_designation: 3 };
-
-                controller.checkRequiredFieldsHaveValue();
-
-                expect(controller.userDesignationError).toEqual('');
             });
         });
 
@@ -463,14 +461,6 @@ describe('AccountEditController', () => {
             controller.resetErrors();
 
             expect(controller.emailError).toEqual('');
-        });
-
-        it('should set userDesignationError to empty string', () => {
-            controller.userDesignationError = "Error";
-
-            controller.resetErrors();
-
-            expect(controller.userDesignationError).toEqual('');
         });
     });
 });

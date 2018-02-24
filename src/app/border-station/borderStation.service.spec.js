@@ -6,6 +6,7 @@ describe('BorderStationService', () => {
 
     let data = 'abcdef',
         borderStationId = 0, // see borderStation.service.js
+        countryId = 0,
         bsId = 123,
         locationId = 123,
         staffId = 123;
@@ -318,4 +319,33 @@ describe('BorderStationService', () => {
         });
     });
 
+    describe('function getAllCountries', () => {
+        let url = 'api/country/';
+        it(`should call put with '${url}'`, () => {
+            service.getAllCountries();
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
+        });
+    });
+    
+    describe('function getCountry', () => {
+        let url = 'api/country/' + countryId + '/';
+        it(`should call put with '${url}'`, () => {
+            service.getCountry(countryId);
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
+        });
+    });
+    
+    describe('function getUserStations', () => {
+        let url = 'api/user_permission/stations/' + borderStationId + '/';
+        it(`should call put with '${url}'`, () => {
+            let action = 'VIEW';
+            let group = 'STATIONS';
+            let params = [];
+            params.push({name: 'permission_group', value: group});
+            params.push({name: 'action', value: action});
+            
+            service.getUserStations(borderStationId, group, action);
+            expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
+        });
+    });
 });

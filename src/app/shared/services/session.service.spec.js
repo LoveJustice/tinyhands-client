@@ -59,7 +59,7 @@ describe('SessionService', () => {
 
     describe('function me', () => {
 
-        let result = { data: 'foobar' };
+        let result = { data: {id: 'foobar'} };
 
         beforeEach(() => {
             mockBaseService.get.and.callFake(() => {
@@ -85,6 +85,59 @@ describe('SessionService', () => {
             spyOn(service.root, '$broadcast');
             service.me();
             expect(service.root.$broadcast).toHaveBeenCalledWith('GetNavBarBorderStations');
+        });
+
+    });
+    
+    describe('function getPermissions', () => {
+
+        let result = { data: { results: {id: 'foobar'}} };
+
+        beforeEach(() => {
+            mockBaseService.get.and.callFake(() => {
+                return {
+                    then: (f) => {
+                        f(result);
+                    }
+                };
+            });
+        });
+
+        it("should call get with 'api/permission/'", () => {
+            service.getPermissions();
+            expect(mockBaseService.get).toHaveBeenCalledWith('api/permission/');
+        });
+
+        it(`should set permissions to '${result.data.results}'`, () => {
+            service.getPermissions();
+            expect(service.permissions).toEqual(result.data.results); 
+        });
+
+    });
+    
+    describe('function getUserPermissions', () => {
+
+        let result = { data: {id: 'foobar'} };
+
+        beforeEach(() => {
+            mockBaseService.get.and.callFake(() => {
+                return {
+                    then: (f) => {
+                        f(result);
+                    }
+                };
+            });
+        });
+
+        it("should call BaseService.get with correct url", () => {
+            let url = 'api/user_permission/' + service.user.id + '/';
+            service.getUserPermissions();
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
+        });
+
+        it(`should set user to '${result.data}'`, () => {
+            service.getUserPermissions();
+            expect(service.userPermissions).toEqual(result.data);
         });
 
     });

@@ -20,9 +20,12 @@ describe('BorderStationController', () => {
         timeout = $timeout;
         borderss = new BorderStationService($http, $q);
 
-        mockSessionService = jasmine.createSpyObj('sessionService', ['me']);
+        mockSessionService = jasmine.createSpyObj('sessionService', ['me', 'checkPermission']);
         mockSessionService.me.and.callFake(() => {
             return $q.resolve({user: { permission_border_stations_add: true, permission_border_stations_edit: true}});
+        });
+        mockSessionService.checkPermission.and.callFake(() => {
+            return false;
         });
 
         mockToastr = jasmine.createSpyObj('toastr', ['error']);

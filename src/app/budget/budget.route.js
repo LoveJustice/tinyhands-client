@@ -21,9 +21,6 @@ function budgetRouteConfig($stateProvider) {
             templateUrl: budgetListTemplate,
             controller: 'BudgetListController',
             controllerAs: 'budgetListCtrl',
-            data: {
-                permissions_required: ['permission_budget_view']
-            },
         })
         .state('mdf', {
             url: '/budget/:id/mdf',

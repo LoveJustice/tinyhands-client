@@ -21,7 +21,10 @@ class LoginController {
     }
 
     getStateParamsFromUrl(queryString) {
-        return JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+        if (angular.isDefined(queryString)) {
+            return JSON.parse('{"' + decodeURI(queryString).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+        }
+        return {};
     }
 }
 

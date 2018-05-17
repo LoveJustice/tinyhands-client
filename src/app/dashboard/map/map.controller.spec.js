@@ -61,7 +61,7 @@ describe('MapController', () => {
 
     describe('apiUrl', () => {
         it(`should return correct map api url`,() => {
-            expect(controller.apiUrl).toBe("https://maps.google.com/maps/api/js?key=AIzaSyChNFPd_bOOnk59AkeKM862OqN80Lvp56g");
+            expect(controller.apiUrl).toBe("https://maps.google.com/maps/api/js?key=AIzaSyCi7iznUzIHppkD5Jr5iH2dUdnI8pCRM2E");
         });
     });
 

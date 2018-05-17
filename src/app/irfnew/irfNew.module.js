@@ -1,6 +1,6 @@
 import sharedModule from '../shared/shared.module';
 
-import IRFNewRoutes from './irfnew.route';
+import IRFNewRoutes from './irfNew.route';
 
 import IrfNewListController from './list/irfNewList.controller';
 import CreateIrfModalController from './list/createIrfModal.controller';

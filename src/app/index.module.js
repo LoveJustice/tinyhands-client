@@ -16,7 +16,7 @@ import dashboardModule from './dashboard/dashboard.module';
 import loginModule from './login/login.module';
 import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
-import IRFNewModule from './irfnew/irfnew.module';
+import IRFNewModule from './irfnew/irfNew.module';
 import eventsModule from './events/events.module';
 import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';

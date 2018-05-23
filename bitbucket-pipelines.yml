@@ -21,12 +21,9 @@ build-and-test: &build-and-test
             - "[[ $BITBUCKET_BRANCH == master ]] && BUILDSCRIPT=prod"
             - npm run $BUILDSCRIPT &> /tmp/client_build.out &
             - export CLIENT_BUILD=$!
-            - npm run testSingleRun &> /tmp/client_test.out &
-            - export CLIENT_TEST=$!
+            - npm run testSingleRun
             - wait $CLIENT_BUILD || (cat /tmp/client_build.out && exit 1)
             - cat /tmp/client_build.out
-            - wait $CLIENT_TEST || (cat /tmp/client_test.out && exit 1)
-            - cat /tmp/client_test.out
 
 deploy: &deploy
     - <<: *build-and-test

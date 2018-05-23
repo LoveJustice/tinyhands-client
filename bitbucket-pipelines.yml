@@ -16,9 +16,9 @@ build-and-test: &build-and-test
             - node-modules
         script:
             - npm install
-            - "[[ $BITBUCKET_BRANCH == develop ]] && BUILDSCRIPT=local"
+            - "[[ $BITBUCKET_BRANCH == develop ]] && BUILDSCRIPT=stage"
             - "[[ $BITBUCKET_BRANCH == uat ]] && BUILDSCRIPT=stage"
-            - "[[ $BITBUCKET_BRANCH == master ]] && BUILDSCRIPT=prod"
+            - "[[ $BITBUCKET_BRANCH == master ]] && BUILDSCRIPT=stage"
             - npm run $BUILDSCRIPT &> /tmp/client_build.out &
             - export CLIENT_BUILD=$!
             - npm run testSingleRun

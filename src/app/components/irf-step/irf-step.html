@@ -1,0 +1,9 @@
+<span>
+    <span class="margin-right-10" style="color: #00aa00" ng-bind="$ctrl.stepLabel" ng-if="$ctrl.stepLabel"></span>
+    <span ng-transclude></span>
+    <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
+        <img src="https://www.lovejustice.ngo/hs-fs/hubfs/LoveJustice_2017/images/home/flag.png?t=1527179986227&width=28&name=flag.png"
+            alt="flag-container">
+        <span ng-bind="$ctrl.redFlag"></span>
+    </span>
+</span>

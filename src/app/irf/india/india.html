@@ -1,0 +1,24 @@
+<div class="container-fluid padding-top-20">
+    <h1 class="padding-bottom-40 text-danger text-right">
+        Total Red Flags: 165
+    </h1>
+    <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.selectedStep = 0">Top Box</a>
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.selectedStep = 1">Group</a>
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.selectedStep = 2">Destination</a>
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.selectedStep = 3">Family</a>
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.selectedStep = 4">Signs</a>
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.selectedStep = 5">Interceptees</a>
+        <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.selectedStep = 6">Final Procedures</a>
+    </div>
+    <hr />
+    <div class="padding-bottom-40" ng-include="$ctrl.stepTemplates[$ctrl.selectedStep]"></div>
+    <div class="container-fluid">
+        <div class="col-xs-6">
+            <button class="btn btn-warning">Save for Later</button>
+        </div>
+        <div class="col-xs-6 text-right">
+            <button class="btn btn-success">Submit</button>
+        </div>
+    </div>
+</div>

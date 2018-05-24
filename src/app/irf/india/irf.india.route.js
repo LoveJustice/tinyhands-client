@@ -1,4 +1,4 @@
-function IRFIndiaRoutes($stateProvider) {
+function IrfIndiaRoutes($stateProvider) {
     'ngInject';
     $stateProvider
         .state('irfIndia', {
@@ -7,4 +7,4 @@ function IRFIndiaRoutes($stateProvider) {
         });
 }
 
-export default IRFIndiaRoutes;
+export default IrfIndiaRoutes;

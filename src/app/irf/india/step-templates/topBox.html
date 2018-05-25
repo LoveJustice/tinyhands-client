@@ -12,7 +12,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'2'"># of Victims: </form-step>
-                <input type="number" class="form-control" min="0">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(2)].response.value">
             </div>
         </div>
     </div>
@@ -20,7 +20,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'3'">Location: </form-step>
-                <select class="form-control">
+                <select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(3)].response.value">
 
                 </select>
             </div>
@@ -36,7 +36,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'4'">Date/Time: </form-step>
-                <input type="date" class="form-control">
+                <input type="datetime-local" class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(4)].response.value">
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
         <form class="form-inline">
             <div class="form-group">
                 <form-step step-label="'5'"># Traffickers: </form-step>
-                <input type="number" class="form-control" min="0">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(5)].response.value">
             </div>
 
     </div>
@@ -52,7 +52,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'6'">Staff Name: </form-step>
-                <input type="text" select class="form-control">
+                <input type="text" select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value">
                 <select class="form-control">
 
                 </select>

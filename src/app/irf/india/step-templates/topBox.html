@@ -3,7 +3,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'1'">Irf Number: </form-step>
-                <input type="text" class="form-control" id="example78Name2" placeholder="Irf Number">
+                <input type="text" class="form-control" id="example78Name2" placeholder="Irf Number" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(1)].response.value">
             </div>
         </div>
 
@@ -53,6 +53,9 @@
             <div class="form-group">
                 <form-step step-label="'6'">Staff Name: </form-step>
                 <input type="text" select class="form-control">
+                <select class="form-control">
+
+                </select>
 
 
 

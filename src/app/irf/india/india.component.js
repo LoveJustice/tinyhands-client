@@ -1,13 +1,15 @@
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
+import groupTemplate from './step-templates/group.html';
 
 export class IrfIndiaController {
     constructor() {
         'ngInject';
 
-        this.selectedStep = 0;
+        this.selectedStep = 1;
         this.stepTemplates = [
-            topBoxTemplate
+            topBoxTemplate,
+            groupTemplate
         ];
     }
 }

@@ -842,13 +842,13 @@ export default class IndiaService {
             })
         };
     }
-    getLocation() {
-        return
-        this.service.get('/api/border-station/' + stationID + '/location/');
+
+    getLocation(stationID) {
+        return this.service.get('/api/border-station/' + stationID + '/location/');
 
     }
-    getStaffNames() {
+
+    getStaffNames(stationID) {
         return this.service.get('/api/border-station/' + stationID + '/staff/');
     }
-
 }

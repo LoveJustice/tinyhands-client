@@ -37,7 +37,7 @@ export class IrfIndiaController {
     }
 
     getQuestionIndexById(id) {
-        return _.findIndex(this.responses, x => x.question_id == id);
+        return _.findIndex(this.responses, x => x.question_id === id);
     }
 
     setValuesForOtherInputs() {
@@ -47,8 +47,8 @@ export class IrfIndiaController {
         let otherWebsite = this.responses[this.getQuestionIndexById(OTHER_WEBSITE_ID)].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
-        this.responses[this.getQuestionIndexById(OTHER_WEBSITE_ID)].response.value = otherWebsite == false ? '' : otherWebsite;
-        this.responses[this.getQuestionIndexById(OTHER_RED_FLAG_ID)].response.value = otherRedFlag == false ? '' : otherRedFlag;
+        this.responses[this.getQuestionIndexById(OTHER_WEBSITE_ID)].response.value = otherWebsite === false ? '' : otherWebsite;
+        this.responses[this.getQuestionIndexById(OTHER_RED_FLAG_ID)].response.value = otherRedFlag === false ? '' : otherRedFlag;
     }
 }
 

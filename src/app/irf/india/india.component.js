@@ -27,14 +27,17 @@ export class IrfIndiaController {
     getQuestionIndexById(id) {
         return _.findIndex(this.responses, x => x.question_id == id);
     }
+
     formatDate(UfcDate) {
         return new Date(UfcDate);
     }
+
     getStaff() {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
         });
     }
+
     getLocation() {
         this.IndiaService.getLocation().then(response => {
             this.location = response.data;

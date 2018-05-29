@@ -60,16 +60,16 @@ export class IrfIndiaController {
     }
 
     setValuesForOtherInputs() {
-        const DATE_TIME_ID = 4;
-        this.questions[DATE_TIME_ID].response.value = this.formatDate(this.questions[DATE_TIME_ID].response.value);
-        const OTHER_RED_FLAG_ID = 31;
-        const OTHER_WEBSITE_ID = 244;
-        let otherRedFlag = this.questions[OTHER_RED_FLAG_ID].response.value;
-        let otherWebsite = this.questions[OTHER_WEBSITE_ID].response.value;
+        const DateTimeId = 4;
+        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
+        const OtherRedFlagId = 31;
+        const OtherWebsiteId = 244;
+        let otherRedFlag = this.questions[OtherRedFlagId].response.value;
+        let otherWebsite = this.questions[OtherWebsiteId].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
-        this.questions[OTHER_WEBSITE_ID].response.value = otherWebsite === false ? '' : otherWebsite;
-        this.questions[OTHER_RED_FLAG_ID].response.value = otherRedFlag === false ? '' : otherRedFlag;
+        this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
+        this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
     }
 }
 

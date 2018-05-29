@@ -20,6 +20,7 @@ export class IrfIndiaController {
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
+            this.responses[this.getQuestionIndexById(4)].response.value = this.formatDate(this.responses[this.getQuestionIndexById(4)].response.value);
         });
     }
 

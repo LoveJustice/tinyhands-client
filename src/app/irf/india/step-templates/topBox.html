@@ -21,11 +21,13 @@
             <div class="form-group">
                 <form-step step-label="'3'">Location: </form-step>
                 <select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(3)].response.value">
-
+                    <option ng-repeat="location in $ctrl.location">{{location.name}}</option>
                 </select>
             </div>
 
         </div>
+
+
     </div>
 
 </div>
@@ -36,7 +38,7 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'4'">Date/Time: </form-step>
-                <input type="datetime-local" class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(4)].response.value">
+                <input type="date" class="form-control" ng-model="$ctrl.formatDate($ctrl.responses[$ctrl.getQuestionIndexById(4)].response.value)">
             </div>
         </div>
     </div>
@@ -52,11 +54,9 @@
         <div class="form-inline">
             <div class="form-group">
                 <form-step step-label="'6'">Staff Name: </form-step>
-                <input type="text" select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value">
-                <select class="form-control">
-
+                <select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value">
+                    <option ng-repeat="staff in $ctrl.staff">{{staff.first_name + ' ' + staff.last_name}}</option>
                 </select>
-
 
 
             </div>

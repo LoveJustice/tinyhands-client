@@ -34,6 +34,7 @@ export class IrfIndiaController {
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
         });
     }
@@ -44,15 +45,15 @@ export class IrfIndiaController {
 
     setValuesForOtherInputs() {
         const DATE_TIME_ID = 4;
-        this.responses[this.getQuestionIndexById(DATE_TIME_ID)].response.value = this.formatDate(this.responses[this.getQuestionIndexById(DATE_TIME_ID)].response.value);
+        this.questions[DATE_TIME_ID].response.value = this.formatDate(this.questions[DATE_TIME_ID].response.value);
         const OTHER_RED_FLAG_ID = 31;
         const OTHER_WEBSITE_ID = 244;
-        let otherRedFlag = this.responses[this.getQuestionIndexById(OTHER_RED_FLAG_ID)].response.value;
-        let otherWebsite = this.responses[this.getQuestionIndexById(OTHER_WEBSITE_ID)].response.value;
+        let otherRedFlag = this.questions[OTHER_RED_FLAG_ID].response.value;
+        let otherWebsite = this.questions[OTHER_WEBSITE_ID].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
-        this.responses[this.getQuestionIndexById(OTHER_WEBSITE_ID)].response.value = otherWebsite === false ? '' : otherWebsite;
-        this.responses[this.getQuestionIndexById(OTHER_RED_FLAG_ID)].response.value = otherRedFlag === false ? '' : otherRedFlag;
+        this.questions[OTHER_WEBSITE_ID].response.value = otherWebsite === false ? '' : otherWebsite;
+        this.questions[OTHER_RED_FLAG_ID].response.value = otherRedFlag === false ? '' : otherRedFlag;
     }
 
     formatDate(UfcDate) {

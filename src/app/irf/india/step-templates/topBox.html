@@ -15,8 +15,8 @@
         <div class="form-inline">
             <form-step step-label="'3'">Location: </form-step>
             <select class="form-control" ng-model="$ctrl.questions[3].response.value">
-                <option ng-repeat="location in $ctrl.location">{{location.name}}</option>
-                <option ng-if="!$ctrl.questions[3].response.value.location" ng-value="$ctrl.questions[3].response.value">{{$ctrl.questions[3].response.value}}
+                <option ng-repeat="location in $ctrl.location" ng-value="location">{{location.name}}</option>
+                <option ng-if="!$ctrl.questions[3].response.value.id" ng-value="$ctrl.questions[3].response.value">{{$ctrl.questions[3].response.value}}
                 </option>
             </select>
         </div>
@@ -41,10 +41,10 @@
     <div class="col-md-4">
         <div class="form-inline">
             <form-step step-label="'6'">Staff Name: </form-step>
+            <pre>{{$ctrl.questions[6].response.value | json}}</pre>
             <select class="form-control" ng-model="$ctrl.questions[6].response.value">
-                <option ng-repeat="staff in $ctrl.staff">{{staff.first_name + ' ' + staff.last_name}}</option>
-                <option ng-if="!$ctrl.questions[6].response.value.first_name" ng-value="$ctrl.questions[6].response.value">{{$ctrl.questions[6].response.value}}
-                </option>
+                <option ng-repeat="staff in $ctrl.staff" ng-value="staff">{{staff.first_name + ' ' + staff.last_name}}</option>
+                <option ng-if="!$ctrl.questions[6].response.value.id" ng-value="$ctrl.questions[6].response.value">{{$ctrl.questions[6].response.value}}</option>
             </select>
         </div>
     </div>

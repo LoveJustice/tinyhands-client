@@ -1,1 +1,51 @@
-<form-step step-label="'123'" red-flag="'123'">I'm a top box</form-step>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-inline">
+            <form-step step-label="'1'">Irf Number: </form-step>
+            <input type="text" class="form-control" id="example78Name2" placeholder="Irf Number" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(1)].response.value">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-inline">
+            <form-step step-label="'2'"># of Victims: </form-step>
+            <input type="number" class="form-control" min="0" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(2)].response.value">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-inline">
+            <form-step step-label="'3'">Location: </form-step>
+            <select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(3)].response.value">
+                <option ng-repeat="location in $ctrl.location">{{location.name}}</option>
+                <option ng-if="!$ctrl.responses[$ctrl.getQuestionIndexById(3)].response.value.location" ng-value="$ctrl.responses[$ctrl.getQuestionIndexById(3)].response.value">{{$ctrl.responses[$ctrl.getQuestionIndexById(3)].response.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-inline">
+            <form-step step-label="'4'">Date/Time: </form-step>
+            <input type="date" class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(4)].response.value">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <form class="form-inline">
+            <div class="form-group">
+                <form-step step-label="'5'"># Traffickers: </form-step>
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(5)].response.value">
+            </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-inline">
+            <form-step step-label="'6'">Staff Name: </form-step>
+            <select class="form-control" ng-model="$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value">
+                <option ng-repeat="staff in $ctrl.staff">{{staff.first_name + ' ' + staff.last_name}}</option>
+                <option ng-if="!$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value.first_name" ng-value="$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value">{{$ctrl.responses[$ctrl.getQuestionIndexById(6)].response.value}}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>

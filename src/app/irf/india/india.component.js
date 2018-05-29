@@ -20,7 +20,8 @@ export class IrfIndiaController {
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
-            this.responses[this.getQuestionIndexById(4)].response.value = this.formatDate(this.responses[this.getQuestionIndexById(4)].response.value);
+            const DATE_TIME_ID = 4;
+            this.responses[this.getQuestionIndexById(DATE_TIME_ID)].response.value = this.formatDate(this.responses[this.getQuestionIndexById(DATE_TIME_ID)].response.value);
         });
     }
 

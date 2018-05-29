@@ -928,7 +928,3 @@ export default class IndiaService {
         };
     }
 }
-
-//this.service.get('/api/border-station/' + stationID + '/location/');
-
-//return this.service.get('/api/border-station/' + stationID + '/staff/');

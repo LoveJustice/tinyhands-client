@@ -8,42 +8,46 @@ describe('IrfIndiaController', () => {
         let IndiaService = {
             getIndiaIrf: () => ({
                 then: () => {}
-            })
+            }),
+            getLocation: () => ({
+                then: () => {}
+            }),
+            getStaff: () => ({
+                then: () => {}
+            }),
         };
         vm = new IrfIndiaController(IndiaService);
     });
 
     describe('function setValuesForOtherInputs', () => {
+        const OTHER_RED_FLAG_ID = 31;
+        const OTHER_WEBSITE_ID = 244;
         beforeEach(() => {
-            vm.responses = [{
-                question_id: 31,
-                response: {
-                    value: false
+            vm.questions = {
+                4: {
+                    question_id: 4,
+                    response: {
+                        value: ''
+                    }
+                },
+                31: {
+                    question_id: OTHER_RED_FLAG_ID,
+                    response: {
+                        value: false
+                    }
+                },
+                244: {
+                    question_id: OTHER_WEBSITE_ID,
+                    response: {
+                        value: false
+                    }
                 }
-            }, {
-                question_id: 244,
-                response: {
-                    value: false
-                }
-            }];
+            };
         });
 
-        it('should call getQuestionIndexById with 31 and set other flags', () => {
-            spyOn(vm, 'getQuestionIndexById').and.returnValue(0);
-
+        it('should set other flags', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.getQuestionIndexById).toHaveBeenCalledWith(31);
-            expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
-        });
-
-        it('should call getQuestionIndexById with 244 and set other flags', () => {
-            spyOn(vm, 'getQuestionIndexById').and.returnValue(0);
-
-            vm.setValuesForOtherInputs();
-
-            expect(vm.getQuestionIndexById).toHaveBeenCalledWith(244);
             expect(vm.otherRedFlag).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
         });
@@ -51,29 +55,29 @@ describe('IrfIndiaController', () => {
         it('when other red flag is false should set value to empty string', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.responses[0].response.value).toEqual('');
+            expect(vm.questions[OTHER_RED_FLAG_ID].response.value).toEqual('');
         });
 
         it('when other website flag is false should set value to empty string', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.responses[1].response.value).toEqual('');
+            expect(vm.questions[OTHER_WEBSITE_ID].response.value).toEqual('');
         });
 
         it('when other red flag is not false should set leave value as is', () => {
-            vm.responses[0].response.value = 'hello there I am a red flag';
+            vm.questions[OTHER_RED_FLAG_ID].response.value = 'hello there I am a red flag';
 
             vm.setValuesForOtherInputs();
 
-            expect(vm.responses[0].response.value).toEqual('hello there I am a red flag');
+            expect(vm.questions[OTHER_RED_FLAG_ID].response.value).toEqual('hello there I am a red flag');
         });
 
         it('when other website flag is not false should set leave value as is', () => {
-            vm.responses[1].response.value = 'I am an other website flag';
+            vm.questions[OTHER_WEBSITE_ID].response.value = 'I am an other website flag';
 
             vm.setValuesForOtherInputs();
 
-            expect(vm.responses[1].response.value).toEqual('I am an other website flag');
+            expect(vm.questions[OTHER_WEBSITE_ID].response.value).toEqual('I am an other website flag');
         });
     });
 });

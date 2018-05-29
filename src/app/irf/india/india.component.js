@@ -32,7 +32,7 @@ export class IrfIndiaController {
     }
 
     formatDate(UfcDate) {
-        return new Date(UfcDate);
+        return moment(UfcDate).toDate();
     }
 
     getIndiaIrf() {

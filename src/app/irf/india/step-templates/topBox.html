@@ -41,7 +41,6 @@
     <div class="col-md-4">
         <div class="form-inline">
             <form-step step-label="'6'">Staff Name: </form-step>
-            <pre>{{$ctrl.questions[6].response.value | json}}</pre>
             <select class="form-control" ng-model="$ctrl.questions[6].response.value">
                 <option ng-repeat="staff in $ctrl.staff" ng-value="staff">{{staff.first_name + ' ' + staff.last_name}}</option>
                 <option ng-if="!$ctrl.questions[6].response.value.id" ng-value="$ctrl.questions[6].response.value">{{$ctrl.questions[6].response.value}}</option>

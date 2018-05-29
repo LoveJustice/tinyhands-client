@@ -27,8 +27,12 @@ export class IrfIndiaController {
         ];
 
         this.getIndiaIrf();
-        this.getStaff();
         this.getLocation();
+        this.getStaff();
+    }
+
+    formatDate(UfcDate) {
+        return new Date(UfcDate);
     }
 
     getIndiaIrf() {
@@ -39,8 +43,20 @@ export class IrfIndiaController {
         });
     }
 
+    getLocation() {
+        this.IndiaService.getLocation().then(response => {
+            this.location = response.data;
+        });
+    }
+
     getQuestionIndexById(id) {
         return _.findIndex(this.responses, x => x.question_id === id);
+    }
+
+    getStaff() {
+        this.IndiaService.getStaff().then(response => {
+            this.staff = response.data;
+        });
     }
 
     setValuesForOtherInputs() {
@@ -54,22 +70,6 @@ export class IrfIndiaController {
         this.otherWebsite = !!otherWebsite;
         this.questions[OTHER_WEBSITE_ID].response.value = otherWebsite === false ? '' : otherWebsite;
         this.questions[OTHER_RED_FLAG_ID].response.value = otherRedFlag === false ? '' : otherRedFlag;
-    }
-
-    formatDate(UfcDate) {
-        return new Date(UfcDate);
-    }
-
-    getStaff() {
-        this.IndiaService.getStaff().then(response => {
-            this.staff = response.data;
-        });
-    }
-
-    getLocation() {
-        this.IndiaService.getLocation().then(response => {
-            this.location = response.data;
-        });
     }
 }
 

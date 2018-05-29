@@ -27,6 +27,8 @@ export class IrfIndiaController {
         ];
 
         this.getIndiaIrf();
+        this.getStaff();
+        this.getLocation();
     }
 
     getIndiaIrf() {
@@ -41,6 +43,8 @@ export class IrfIndiaController {
     }
 
     setValuesForOtherInputs() {
+        const DATE_TIME_ID = 4;
+        this.responses[this.getQuestionIndexById(DATE_TIME_ID)].response.value = this.formatDate(this.responses[this.getQuestionIndexById(DATE_TIME_ID)].response.value);
         const OTHER_RED_FLAG_ID = 31;
         const OTHER_WEBSITE_ID = 244;
         let otherRedFlag = this.responses[this.getQuestionIndexById(OTHER_RED_FLAG_ID)].response.value;
@@ -49,6 +53,22 @@ export class IrfIndiaController {
         this.otherWebsite = !!otherWebsite;
         this.responses[this.getQuestionIndexById(OTHER_WEBSITE_ID)].response.value = otherWebsite === false ? '' : otherWebsite;
         this.responses[this.getQuestionIndexById(OTHER_RED_FLAG_ID)].response.value = otherRedFlag === false ? '' : otherRedFlag;
+    }
+
+    formatDate(UfcDate) {
+        return new Date(UfcDate);
+    }
+
+    getStaff() {
+        this.IndiaService.getStaff().then(response => {
+            this.staff = response.data;
+        });
+    }
+
+    getLocation() {
+        this.IndiaService.getLocation().then(response => {
+            this.location = response.data;
+        });
     }
 }
 

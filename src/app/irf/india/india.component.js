@@ -1,6 +1,11 @@
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
+import destinationTemplate from './step-templates/destination.html';
+import familyTemplate from './step-templates/family.html';
+import signsTemplate from './step-templates/signs.html';
+import intercepteesTemplate from './step-templates/interceptees.html';
+import finalProceduresTemplate from './step-templates/finalProcedures.html';
 
 
 export class IrfIndiaController {
@@ -13,7 +18,12 @@ export class IrfIndiaController {
         this.selectedStep = 1;
         this.stepTemplates = [
             topBoxTemplate,
-            groupTemplate
+            groupTemplate,
+            destinationTemplate,
+            familyTemplate,
+            signsTemplate,
+            intercepteesTemplate,
+            finalProceduresTemplate
         ];
 
         this.getIndiaIrf();

@@ -1,3 +1,4 @@
+import constants from '../../constants';
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
@@ -16,7 +17,7 @@ export class IrfIndiaController {
 
         this.otherWebsite = false;
         this.otherRedFlag = false;
-        this.selectedStep = 0;
+        this.selectedStep = 5;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -38,10 +39,15 @@ export class IrfIndiaController {
 
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
+            this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
         });
+    }
+
+    getIntercepteeImage(url) {
+        return new URL(url, constants.BaseUrl).href;
     }
 
     getLocation() {
@@ -50,8 +56,8 @@ export class IrfIndiaController {
         });
     }
 
-    getQuestionIndexById(id) {
-        return _.findIndex(this.responses, x => x.question_id === id);
+    getResponseOfQuestionById(responses, questionId) {
+        return _.find(responses, x => x.question_id === questionId).response;
     }
 
     getStaff() {

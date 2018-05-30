@@ -13,9 +13,13 @@ export class IrfIndiaController {
         'ngInject';
         this.IndiaService = IndiaService;
 
+        this.contactValue = '';
+        this.otherContactString = '';
+        this.otherSign = false;
         this.otherWebsite = false;
         this.otherRedFlag = false;
-        this.selectedStep = 0;
+        this.selectedStep = 4;
+
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -40,6 +44,7 @@ export class IrfIndiaController {
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
+
         });
     }
 
@@ -59,20 +64,37 @@ export class IrfIndiaController {
         });
     }
 
+    setContact() {
+        let Contacts = ['hotel owner', 'rickshaw driver', 'taxi driver', 'bus driver', 'church member', 'other ngo', 'police', 'subcomittee member', ''];
+        const OtherContactId = 92;
+        this.contactValue = this.questions[OtherContactId].response.value;
+        if (!Contacts.includes(this.contactValue)) {
+            this.otherContactString = this.contactValue;
+            this.contactValue = 'other';
+        }
+    }
+
     setValuesForOtherInputs() {
         const DateTimeId = 4;
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         const OtherRedFlagId = 31;
         const OtherWebsiteId = 244;
+        const OtherSignId = 134;
         let otherRedFlag = this.questions[OtherRedFlagId].response.value;
         let otherWebsite = this.questions[OtherWebsiteId].response.value;
+        let otherSign = this.questions[OtherSignId].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
+        this.otherSign = !!otherSign;
         this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
         this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
-    }
-}
+        this.questions[OtherSignId].response.value = otherSign === false ? '' : otherSign;
+        this.setContact();
 
+
+    }
+
+}
 export default {
     templateUrl,
     controller: IrfIndiaController

@@ -6,6 +6,7 @@ import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
 import intercepteesTemplate from './step-templates/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
+import './india.less';
 
 
 export class IrfIndiaController {

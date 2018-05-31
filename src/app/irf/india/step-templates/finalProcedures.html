@@ -1,55 +1,78 @@
 <div class="form-horizontal">
     <div class="container-fluid">
         <div class=row>
-            <h4>Type of Intercept</h4>
-            <form-step step-label="141">
-                <input id="traffick-suspect" name="trafficking-radio-suspect" value="Trafficking suspected" ng-model="$ctr;.questions[141].response.value"
-                    type="radio">
-                <label for="trafficking-suspect">Trafficking suspected</label>
-            </form-step>
-            <form-step step-label="141">
-                <input class="text-center" id="traffick-likely" name="trafficking-radio-suspect" value="High risk of being trafficked, but no evidence of trafficking"
-                    ng-model="$ctr;.questions[141].response.value" type="radio">
-                <label for="trafficking-likely">High risk of being trafficked, but no evidence of trafficking</label>
-            </form-step>
-            <form-step class="col-xs-3 control-label" step-label="147">How sure are you that it was a trafficking case? </form-step>
-            <select class="form-control" ng-model="" </div>
+            <div class="col-md-6 col-md-offset-3">
+                <h3>Type of Intercept</h3>
+                <form-step step-label="141">
+                    <input id="traffick-suspect" name="trafficking-radio-suspect" value="Trafficking suspected" ng-model="$ctr;.questions[141].response.value"
+                        type="radio">
+                    <label for="trafficking-suspect">Trafficking suspected</label>
+                </form-step>
+                <form-step step-label="141">
+                    <input class="text-center" id="traffick-likely" name="trafficking-radio-suspect" value="High risk of being trafficked, but no evidence of trafficking"
+                        ng-model="$ctr;.questions[141].response.value" type="radio">
+                    <label for="trafficking-likely">High risk of being trafficked, but no evidence of trafficking</label>
+                </form-step>
+                <form-step class="col-xs-3 control-label" step-label="147">How sure are you that it was a trafficking case? </form-step>
+                <select class="form-control" ng-model=""></select>
+            </div>
         </div>
-    </div>
-    <hr/>
 
-    <div class="row center-vertical">
-        <div class="col-md-6 col-md-offset-3">
-            <h4>Procedures</h4>
-            <form-step step-label="256">
-                <input id="project" type="checkbox" ng-model="$ctrl.questions[256].response.value">
-                <label for="project">Call Project Manager to confirm intercept</label>
-            </form-step>
-            <form-step step-label="249">
-                <input id="subcommittee" type="checkbox" ng-model="$ctrl.questions[249].response.value">
-                <label for="subcommittee">Call Subcommittee Chairperson / Vice-Chairperson /Secretary</label>
-            </form-step>
-            <form-step step-label="143">
-                <label for="total-flag">Reported Total Red Flag Points</label>
-                <input id="total-flag" type="text" ng-model="$ctrl.questions[143].response.value">
-            </form-step>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>How did you prevent the victim from going?</h3>
+
+                <form-step step-label="148">
+                    <input id="not-forced" type="checkbox" ng-model="$ctrl.questions[148].response.value">
+                    <label for="not-forced">They were convinced (not forced) by our staff</label>
+                </form-step>
+
+                <form-step step-label="149">
+                    <input id="call" type="checkbox" ng-model="$ctrl.questions[149].response.value">
+                    <label for="call">They were convinced by their family after call</label>
+                </form-step>
+                <form-step step-label="150">
+                    <input id="police" type="checkbox" ng-model="$ctrl.questions[150].response.value">
+                    <label for="police">THey were convinced or forced by the police</label>
+                </form-step>
+
+                <hr/>
+            </div>
         </div>
-    </div>
-    <div class="row center-vertical">
-        <div class="col-md-6 col-md-offset-3 panel panel-default">
-            <label for="certify">I certify that I have folled procedures and filled out this form correctly, completely, and accurately</label>
-            <div class=" col-md-6 col-md-offset-2">
-                <form-step step-label="151">
-                    <input id="scanned" type="checkbox" ng-model="$ctrl.questions[249].response.value">
-                    <label for="scanned">Scanned form has signature</label>
+
+        <div class="container-fluid">
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3>Procedures</h3>
+                    <form-step step-label="256">
+                        <input id="project" type="checkbox" ng-model="$ctrl.questions[256].response.value">
+                        <label for="project">Call Project Manager to confirm intercept</label>
+                    </form-step>
+                    <form-step step-label="249">
+                        <input id="subcommittee" type="checkbox" ng-model="$ctrl.questions[249].response.value">
+                        <label for="subcommittee">Call Subcommittee Chairperson / Vice-Chairperson /Secretary</label>
+                    </form-step>
+                    <form-step step-label="143">
+                        <label for="total-flag">Reported Total Red Flag Points</label>
+                        <input id="total-flag" type="text" ng-model="$ctrl.questions[143].response.value">
+                    </form-step>
+                </div>
+            </div>
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3 panel panel-default">
+                    <label for="certify">I certify that I have folled procedures and filled out this form correctly, completely, and accurately</label>
+                    <div class=" col-md-6 col-md-offset-2">
+                        <form-step step-label="151">
+                            <input id="scanned" type="checkbox" ng-model="$ctrl.questions[249].response.value">
+                            <label for="scanned">Scanned form has signature</label>
+                        </form-step>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-md-offset-3">
+                <form-step step-label="152">
+                    <label for="attached">Attached scanned copy of form (pdf or image)</label>
+                    <input id="attached" type="button" value="Choose File" ng-model="$ctrl.questions[152].response.value">
                 </form-step>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-md-offset-3">
-        <form-step step-label="152">
-            <label for="attached">Attached scanned copy of form (pdf or image)</label>
-            <input id="attached" type="button" value="Choose File" ng-model="$ctrl.questions[152].response.value">
-        </form-step>
-    </div>
-</div>

@@ -43,7 +43,6 @@ export class IrfIndiaController {
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
-
         });
     }
 

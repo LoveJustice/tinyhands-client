@@ -88,7 +88,7 @@ describe('IrfIndiaController', () => {
             expect(vm.questions[OtherSignId].response.value).toEqual('');
         });
 
-        it('when other red flag is not false should set leave value as is', () => {
+        it('when other red flag is true should leave value as is', () => {
             vm.questions[OtherRedFlagId].response.value = 'hello there I am a red flag';
 
             vm.setValuesForOtherInputs();
@@ -96,7 +96,7 @@ describe('IrfIndiaController', () => {
             expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
         });
 
-        it('when other sign flag is not false should set leave value as is', () => {
+        it('when other sign flag is true should leave value as is', () => {
             vm.questions[OtherSignId].response.value = 'I am another sign flag';
 
             vm.setValuesForOtherInputs();
@@ -104,7 +104,7 @@ describe('IrfIndiaController', () => {
             expect(vm.questions[OtherSignId].response.value).toEqual('I am another sign flag');
         });
 
-        it('when other website flag is not false should set leave value as is', () => {
+        it('when other website flag is true should leave value as is', () => {
             vm.questions[OtherWebsiteId].response.value = 'I am another website flag';
 
             vm.setValuesForOtherInputs();
@@ -125,14 +125,14 @@ describe('IrfIndiaController', () => {
             };
         });
 
-        it('when contactValue matches an item in Contacts or is null string leave it as contactValue', () => {
+        it('when contactValue matches an item in Contacts leave it as is, leave otherContactString as is', () => {
             vm.setContactRadio();
 
             expect(vm.contactValue).toEqual('');
             expect(vm.otherContactString).toEqual('');
         });
 
-        it('when contactValue does not match one of contacts, change contactValue to other and otherContactString to string value', () => {
+        it('when contactValue does not match one of Contacts, change contactValue to other and otherContactString to string value', () => {
             vm.questions[OtherContactId].response.value = 'I am another contact';
 
             vm.setContactRadio();

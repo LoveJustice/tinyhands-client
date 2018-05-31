@@ -2,26 +2,28 @@ import {
     IrfIndiaController
 } from "./india.component";
 
+const FamilyId = 82;
+const OtherRedFlagId = 31;
+const OtherWebsiteId = 244;
+
 describe('IrfIndiaController', () => {
     let vm;
     beforeEach(() => {
         let IndiaService = {
             getIndiaIrf: () => ({
-                then: () => {}
+                then: () => { }
             }),
             getLocation: () => ({
-                then: () => {}
+                then: () => { }
             }),
             getStaff: () => ({
-                then: () => {}
+                then: () => { }
             }),
         };
         vm = new IrfIndiaController(IndiaService);
     });
 
     describe('function setValuesForOtherInputs', () => {
-        const OTHER_RED_FLAG_ID = 31;
-        const OTHER_WEBSITE_ID = 244;
         beforeEach(() => {
             vm.questions = {
                 4: {
@@ -31,13 +33,19 @@ describe('IrfIndiaController', () => {
                     }
                 },
                 31: {
-                    question_id: OTHER_RED_FLAG_ID,
+                    question_id: OtherRedFlagId,
                     response: {
                         value: false
                     }
                 },
+                82: {
+                    question_id: FamilyId,
+                    response: {
+                        value: 'Stuff'
+                    }
+                },
                 244: {
-                    question_id: OTHER_WEBSITE_ID,
+                    question_id: OtherWebsiteId,
                     response: {
                         value: false
                     }
@@ -50,34 +58,65 @@ describe('IrfIndiaController', () => {
 
             expect(vm.otherRedFlag).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
+
         });
 
         it('when other red flag is false should set value to empty string', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_RED_FLAG_ID].response.value).toEqual('');
+            expect(vm.questions[OtherRedFlagId].response.value).toEqual('');
         });
 
         it('when other website flag is false should set value to empty string', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_WEBSITE_ID].response.value).toEqual('');
+            expect(vm.questions[OtherWebsiteId].response.value).toEqual('');
         });
 
         it('when other red flag is not false should set leave value as is', () => {
-            vm.questions[OTHER_RED_FLAG_ID].response.value = 'hello there I am a red flag';
+            vm.questions[OtherRedFlagId].response.value = 'hello there I am a red flag';
 
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_RED_FLAG_ID].response.value).toEqual('hello there I am a red flag');
+            expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
         });
 
         it('when other website flag is not false should set leave value as is', () => {
-            vm.questions[OTHER_WEBSITE_ID].response.value = 'I am an other website flag';
+            vm.questions[OtherWebsiteId].response.value = 'I am an other website flag';
 
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_WEBSITE_ID].response.value).toEqual('I am an other website flag');
+            expect(vm.questions[OtherWebsiteId].response.value).toEqual('I am an other website flag');
+        });
+
+    });
+
+    describe('function setFamilyRadio', () => {
+        beforeEach(() => {
+            vm.questions = {
+                82: {
+                    question_id: FamilyId,
+                    response: {
+                        value: 'Stuff'
+                    }
+                }
+            };
+        });
+
+        it('when other family is not in family array should set other family string to other family value and family value to \'Other\'', () => {
+            vm.setFamilyRadio();
+
+            expect(vm.otherFamilyString).toEqual('Stuff');
+            expect(vm.familyValue).toEqual('Other');
+        });
+
+        it('when family value is in family array should set the family value to family value', () => {
+            vm.questions[FamilyId].response.value = '';
+
+            vm.setFamilyRadio();
+
+            expect(vm.questions[FamilyId].response.value).toEqual('');
         });
     });
 });
+

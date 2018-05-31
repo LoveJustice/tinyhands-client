@@ -17,6 +17,7 @@ export class IrfIndiaController {
         this.otherFamilyString = '';
         this.otherWebsite = false;
         this.otherRedFlag = false;
+        this.otherFamily = '';
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
@@ -63,24 +64,28 @@ export class IrfIndiaController {
     }
     setFamilyRadio() {
         const FamilyArray = ['Own father', 'Own brother', 'Own grandparent', 'Own sister', 'Own mother', 'Own aunt/uncle', '']
-        const OtherFamilyId = 82;
-        this.familyValue = this.questions[OtherFamilyId].response.value;
-        if (!FamilyArray.includes(this.familyValue)) {
+        const FamilyId = 82;
+        this.familyValue = this.questions[FamilyId].response.value;
+        if (!_.includes(FamilyArray, this.familyValue)) {
             this.otherFamilyString = this.familyValue;
             this.familyValue = 'Other';
         }
     }
     setValuesForOtherInputs() {
         const DateTimeId = 4;
-        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
+        const FamilyId = 82;
         const OtherRedFlagId = 31;
         const OtherWebsiteId = 244;
+        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         let otherRedFlag = this.questions[OtherRedFlagId].response.value;
         let otherWebsite = this.questions[OtherWebsiteId].response.value;
+        let otherFamily = this.questions[FamilyId].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
+        this.otherFamily = !!otherFamily;
         this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
         this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
+        this.questions[FamilyId].response.value = otherFamily === false ? '' : otherFamily;
         this.setFamilyRadio();
     }
 }

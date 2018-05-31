@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-6 col-md-offset-3">
+            <h4>Procedures</h4>
+            <form-step step-label="256">
+                <input id="project" type="checkbox" ng-model="$ctrl.questions[256].response.value">
+                <label for="project">Call Project Manager to confirm intercept</label>
+            </form-step>
+            <form-step step-label="249">
+                <input id="subcommittee" type="checkbox" ng-model="$ctrl.questions[249].response.value">
+                <label for="subcommittee">Call Subcommittee Chairperson / Vice-Chairperson /Secretary</label>
+            </form-step>
+            <form-step step-label="143">
+                <label for="total-flag">Reported Total Red Flag Points</label>
+                <input id="total-flag" type="text" ng-model="$ctrl.questions[143].response.value">
+            </form-step>
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <div class="col-md-6 col-md-offset-3 panel panel-default">
+            <label for="certify">I certify that I have folled procedures and filled out this form correctly, completely, and accurately</label>
+            <div class=" col-md-6 col-md-offset-2">
+                <form-step step-label="151">
+                    <input id="scanned" type="checkbox" ng-model="$ctrl.questions[249].response.value">
+                    <label for="scanned">Scanned form has signature</label>
+                </form-step>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        <form-step step-label="152">
+            <label for="attached">Attached scanned copy of form (pdf or image)</label>
+            <input id="attached" type="button" value="Choose File" ng-model="$ctrl.questions[152].response.value">
+        </form-step>
+    </div>
+</div>

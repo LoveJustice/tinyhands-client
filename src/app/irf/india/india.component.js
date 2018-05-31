@@ -13,6 +13,8 @@ export class IrfIndiaController {
         'ngInject';
         this.IndiaService = IndiaService;
 
+        this.familyValue = '';
+        this.otherFamilyString = '';
         this.otherWebsite = false;
         this.otherRedFlag = false;
         this.selectedStep = 0;
@@ -29,6 +31,7 @@ export class IrfIndiaController {
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
+
     }
 
     formatDate(UfcDate) {
@@ -58,7 +61,15 @@ export class IrfIndiaController {
             this.staff = response.data;
         });
     }
-
+    setFamilyRadio() {
+        const FamilyArray = ['Own father', 'Own brother', 'Own grandparent', 'Own sister', 'Own mother', 'Own aunt/uncle', '']
+        const OtherFamilyId = 82;
+        this.familyValue = this.questions[OtherFamilyId].response.value;
+        if (!FamilyArray.includes(this.familyValue)) {
+            this.otherFamilyString = this.familyValue;
+            this.familyValue = 'Other';
+        }
+    }
     setValuesForOtherInputs() {
         const DateTimeId = 4;
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
@@ -70,6 +81,7 @@ export class IrfIndiaController {
         this.otherWebsite = !!otherWebsite;
         this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
         this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
+        this.setFamilyRadio();
     }
 }
 

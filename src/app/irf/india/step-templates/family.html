@@ -60,10 +60,6 @@
     </div>
     <hr/>
 </div>
-
-
-
-
 </div>
 <div class="row center-vertical">
     <div class="col-md-4">
@@ -75,34 +71,34 @@
         <div class="row">
             <div class="col-md-6">
                 <form-step>
-                    <input id="brother" type="radio">
+                    <input id="brother" type="radio" name="optionRadio" value="Own brother" ng-model="$ctrl.familyValue">
                     <label for="brother">Own brother</label>
                 </form-step>
                 <form-step>
-                    <input id="father" type="radio">
+                    <input id="father" type="radio" value="Own father" name="optionRadio" ng-model="$ctrl.familyValue">
                     <label for="father">Own father</label>
                 </form-step>
                 <form-step>
-                    <input id="grandparent" type="radio">
+                    <input id="grandparent" type="radio" value="Own grandparent" name="optionRadio" ng-model="$ctrl.familyValue">
                     <label for="grandparent">Own grandparent</label>
                 </form-step>
                 <form-step>
-                    <input id="other-fam" type="radio" ng-model="$ctrl.otherFam">
+                    <input id="otherfam" type="radio" name="optionRadio" value="Other" ng-model="$ctrl.familyValue">
                     <label for="other-fam">Other</label>
-                    <input type="text" ng-model="$ctrl.questions[].response.value">
+                    <input type="text" id="otherId" value="" ng-model="$ctrl.otherFamilyString">
                 </form-step>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 ">
                 <form-step>
-                    <input id="sister" type="radio">
+                    <input id="sister" type="radio" value="Own sister" name="optionRadio" ng-model="$ctrl.familyValue">
                     <label for="sister">Own sister</label>
                 </form-step>
                 <form-step>
-                    <input id="mother" type="radio">
+                    <input id="mother" type="radio" value="Own mother" name="optionRadio" ng-model="$ctrl.familyValue">
                     <label for="mother">Own mother</label>
                 </form-step>
                 <form-step>
-                    <input id="aunt-uncle" type="radio">
+                    <input id="aunt-uncle" type="radio" value="Own aunt/uncle" name="optionRadio" ng-model="$ctrl.familyValue">
                     <label for="aunt-uncle">Own aunt/uncle</label>
                 </form-step>
             </div>

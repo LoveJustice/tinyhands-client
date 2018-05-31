@@ -38,7 +38,6 @@ export class IrfIndiaController {
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
     }
-
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
@@ -46,17 +45,14 @@ export class IrfIndiaController {
             this.setValuesForOtherInputs();
         });
     }
-
     getLocation() {
         this.IndiaService.getLocation().then(response => {
             this.location = response.data;
         });
     }
-
     getQuestionIndexById(id) {
         return _.findIndex(this.responses, x => x.question_id === id);
     }
-
     getStaff() {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;

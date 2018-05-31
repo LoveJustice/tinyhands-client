@@ -9,7 +9,7 @@
         </div>
         <div class="modal-body form-horizontal">
             <div class="text-center padding-bottom-20" ng-if="IntercepteeModalController.questions[7].response.value">
-                <img ng-src="{{IntercepteeModalController.getIntercepteeImage(IntercepteeModalController.questions[7].response.value)}}"
+                <img class="img-rounded" ng-src="{{IntercepteeModalController.getIntercepteeImage(IntercepteeModalController.questions[7].response.value)}}"
                     alt="Interceptee Image">
             </div>
             <div class="row">
@@ -78,7 +78,7 @@
         <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="IntercepteeModalController.close()" ng-disabled="intercepteeForm.$invalid">Save</button>
+                    <button class="btn btn-success float-left" ng-click="IntercepteeModalController.save()" ng-disabled="intercepteeForm.$invalid">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
                     <button class="btn btn-danger" ng-click="IntercepteeModalController.delete()" ng-if="!IntercepteeModalController.isAdd">Delete</button>

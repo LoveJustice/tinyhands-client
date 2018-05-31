@@ -69,7 +69,29 @@ export class IrfIndiaController {
         });
     }
 
-    openIntercepteeModal(responses = {}, isAdd = false) {
+    openIntercepteeModal(responses = [], isAdd = false) {
+        if (isAdd) {
+            responses.push({
+                question_id: 7,
+                response: {}
+            });
+            responses.push({
+                question_id: 8,
+                response: {}
+            });
+            responses.push({
+                question_id: 9,
+                response: {
+                    gender: {},
+                    name: {},
+                    age: {},
+                    address1: {},
+                    address2: {},
+                    phone: {},
+                    nationality: {},
+                }
+            });
+        }
         this.$uibModal.open({
             bindToController: true,
             controller: IntercepteeModalController,
@@ -81,8 +103,11 @@ export class IrfIndiaController {
             size: 'lg',
             templateUrl: intercepteeModalTemplate,
         }).result.then(() => {
-            console.log(`here`);
-            console.log(responses);
+            if (isAdd) {
+                this.cards.push({
+                    responses
+                });
+            }
         });
     }
 

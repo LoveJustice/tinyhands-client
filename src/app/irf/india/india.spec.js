@@ -1,6 +1,13 @@
 import {
     IrfIndiaController
-} from "./india.component";
+}
+from "./india.component";
+
+const DateTimeId = 4;
+const OtherContactId = 92;
+const OtherRedFlagId = 31;
+const OtherSignId = 134;
+const OtherWebsiteId = 244;
 
 describe('IrfIndiaController', () => {
     let vm;
@@ -20,24 +27,34 @@ describe('IrfIndiaController', () => {
     });
 
     describe('function setValuesForOtherInputs', () => {
-        const OTHER_RED_FLAG_ID = 31;
-        const OTHER_WEBSITE_ID = 244;
         beforeEach(() => {
             vm.questions = {
                 4: {
-                    question_id: 4,
+                    question_id: DateTimeId,
                     response: {
                         value: ''
                     }
                 },
                 31: {
-                    question_id: OTHER_RED_FLAG_ID,
+                    question_id: OtherRedFlagId,
+                    response: {
+                        value: false
+                    }
+                },
+                92: {
+                    question_id: OtherSignId,
+                    response: {
+                        value: false
+                    }
+                },
+                134: {
+                    question_id: OtherSignId,
                     response: {
                         value: false
                     }
                 },
                 244: {
-                    question_id: OTHER_WEBSITE_ID,
+                    question_id: OtherWebsiteId,
                     response: {
                         value: false
                     }
@@ -50,34 +67,78 @@ describe('IrfIndiaController', () => {
 
             expect(vm.otherRedFlag).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
+            expect(vm.otherSign).toEqual(false);
         });
 
         it('when other red flag is false should set value to empty string', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_RED_FLAG_ID].response.value).toEqual('');
+            expect(vm.questions[OtherRedFlagId].response.value).toEqual('');
         });
 
         it('when other website flag is false should set value to empty string', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_WEBSITE_ID].response.value).toEqual('');
+            expect(vm.questions[OtherWebsiteId].response.value).toEqual('');
+        });
+
+        it('when other sign flag is false should set value to empty string', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.questions[OtherSignId].response.value).toEqual('');
         });
 
         it('when other red flag is not false should set leave value as is', () => {
-            vm.questions[OTHER_RED_FLAG_ID].response.value = 'hello there I am a red flag';
+            vm.questions[OtherRedFlagId].response.value = 'hello there I am a red flag';
 
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_RED_FLAG_ID].response.value).toEqual('hello there I am a red flag');
+            expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
+        });
+
+        it('when other sign flag is not false should set leave value as is', () => {
+            vm.questions[OtherSignId].response.value = 'I am another sign flag';
+
+            vm.setValuesForOtherInputs();
+
+            expect(vm.questions[OtherSignId].response.value).toEqual('I am another sign flag');
         });
 
         it('when other website flag is not false should set leave value as is', () => {
-            vm.questions[OTHER_WEBSITE_ID].response.value = 'I am an other website flag';
+            vm.questions[OtherWebsiteId].response.value = 'I am another website flag';
 
             vm.setValuesForOtherInputs();
 
-            expect(vm.questions[OTHER_WEBSITE_ID].response.value).toEqual('I am an other website flag');
+            expect(vm.questions[OtherWebsiteId].response.value).toEqual('I am another website flag');
+        });
+    });
+
+    describe('function setContactRadio', () => {
+        beforeEach(() => {
+            vm.questions = {
+                92: {
+                    question_id: OtherContactId,
+                    response: {
+                        value: ''
+                    }
+                }
+            };
+        });
+
+        it('when contactValue matches an item in Contacts or is null string leave it as contactValue', () => {
+            vm.setContactRadio();
+
+            expect(vm.contactValue).toEqual('');
+            expect(vm.otherContactString).toEqual('');
+        });
+
+        it('when contactValue does not match one of contacts, change contactValue to other and otherContactString to string value', () => {
+            vm.questions[OtherContactId].response.value = 'I am another contact';
+
+            vm.setContactRadio();
+
+            expect(vm.otherContactString).toEqual('I am another contact');
+            expect(vm.contactValue).toEqual('Other');
         });
     });
 });

@@ -13,9 +13,13 @@ export class IrfIndiaController {
         'ngInject';
         this.IndiaService = IndiaService;
 
+        this.contactValue = '';
+        this.otherContactString = '';
+        this.otherSign = false;
         this.otherWebsite = false;
         this.otherRedFlag = false;
         this.selectedStep = 0;
+
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -59,20 +63,35 @@ export class IrfIndiaController {
         });
     }
 
+    setContactRadio() {
+        const Contacts = ['Hotel owner', 'Rickshaw driver', 'Taxi driver', 'Bus driver', 'Church member', 'Other NGO', 'Police', 'Subcomittee member', ''];
+        const OtherContactId = 92;
+        this.contactValue = this.questions[OtherContactId].response.value;
+        if (!_.includes(Contacts, this.contactValue)) {
+            this.otherContactString = this.contactValue;
+            this.contactValue = 'Other';
+        }
+    }
+
     setValuesForOtherInputs() {
         const DateTimeId = 4;
-        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         const OtherRedFlagId = 31;
+        const OtherSignId = 134;
         const OtherWebsiteId = 244;
+        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         let otherRedFlag = this.questions[OtherRedFlagId].response.value;
         let otherWebsite = this.questions[OtherWebsiteId].response.value;
+        let otherSign = this.questions[OtherSignId].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
+        this.otherSign = !!otherSign;
         this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
         this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
+        this.questions[OtherSignId].response.value = otherSign === false ? '' : otherSign;
+        this.setContactRadio();
     }
-}
 
+}
 export default {
     templateUrl,
     controller: IrfIndiaController

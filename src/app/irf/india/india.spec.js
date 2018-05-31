@@ -126,9 +126,11 @@ describe('IrfIndiaController', () => {
         });
 
         it('when contactValue matches an item in Contacts leave it as is, leave otherContactString as is', () => {
+            vm.questions[OtherContactId].response.value = 'Police';
+
             vm.setContactRadio();
 
-            expect(vm.contactValue).toEqual('');
+            expect(vm.contactValue).toEqual('Police');
             expect(vm.otherContactString).toEqual('');
         });
 

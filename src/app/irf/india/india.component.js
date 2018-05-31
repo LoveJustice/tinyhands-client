@@ -13,6 +13,11 @@ export class IrfIndiaController {
         'ngInject';
         this.IndiaService = IndiaService;
 
+        this.contacts = [
+            ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
+            ['Bus driver', 'Church member', 'Other NGO'],
+            ['Police', 'Subcomittee member']
+        ];
         this.contactValue = '';
         this.otherContactString = '';
         this.otherSign = false;
@@ -63,10 +68,10 @@ export class IrfIndiaController {
     }
 
     setContactRadio() {
-        const Contacts = ['Hotel owner', 'Rickshaw driver', 'Taxi driver', 'Bus driver', 'Church member', 'Other NGO', 'Police', 'Subcomittee member', ''];
+        let flattenedContacts = _.flattenDeep(this.contacts);
         const OtherContactId = 92;
         this.contactValue = this.questions[OtherContactId].response.value;
-        if (!_.includes(Contacts, this.contactValue)) {
+        if (!_.includes(flattenedContacts, this.contactValue) && this.contactValue !== "") {
             this.otherContactString = this.contactValue;
             this.contactValue = 'Other';
         }

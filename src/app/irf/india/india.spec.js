@@ -132,6 +132,13 @@ describe('IrfIndiaController', () => {
             expect(vm.otherContactString).toEqual('');
         });
 
+        it('when contactValue is null leave it as it is, leave otherContactString as is', () => {
+            vm.setContactRadio();
+
+            expect(vm.otherContactString).toEqual('');
+            expect(vm.contactValue).toEqual('');
+        });
+
         it('when contactValue does not match one of Contacts, change contactValue to other and otherContactString to string value', () => {
             vm.questions[OtherContactId].response.value = 'I am another contact';
 

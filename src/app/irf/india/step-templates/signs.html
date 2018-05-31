@@ -15,44 +15,12 @@
             </div>
             <div class="row col-md-12">
                 <div class="row center-vertical">
-                    <div class="col-md-3">
-                        <form-step step-label="92">
-                            <input id="hotel-owner" name="contact-type" value="Hotel owner" ng-model="$ctrl.contactValue" type="radio">
-                            <label for="hotel-owner">Hotel owner</label>
+                    <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
+                        <form-step step-label="92" ng-repeat="contact in contacts">
+                            <input id="{{contact}}" name="contact-type" value="{{contact}}" ng-model="$ctrl.contactValue" type="radio">
+                            <label for="{{contact}}">{{contact}}</label>
                         </form-step>
-                        <form-step step-label="92">
-                            <input id="rickshaw" name="contact-type" type="radio" value="Rickshaw driver" ng-model="$ctrl.contactValue">
-                            <label for="rickshaw">Rickshaw driver</label>
-                        </form-step>
-                        <form-step step-label="92">
-                            <input id="taxi" name="contact-type" type="radio" value="Taxi driver" ng-model="$ctrl.contactValue">
-                            <label for="taxi">Taxi driver</label>
-                        </form-step>
-                    </div>
-                    <div class="col-md-3">
-                        <form-step step-label="92">
-                            <input id="bus" name="contact-type" type="radio" value="Bus driver" ng-model="$ctrl.contactValue">
-                            <label for="bus">Bus driver</label>
-                        </form-step>
-                        <form-step step-label="92">
-                            <input id="church" name="contact-type" type="radio" value="Church member" ng-model="$ctrl.contactValue">
-                            <label for="church">Church member</label>
-                        </form-step>
-                        <form-step step-label="92">
-                            <input id="ngo" name="contact-type" type="radio" value="Other NGO" ng-model="$ctrl.contactValue">
-                            <label for="ngo">Other NGO</label>
-                        </form-step>
-                    </div>
-                    <div class="col-md-6">
-                        <form-step step-label="92">
-                            <input id="police" name="contact-type" type="radio" value="Police" ng-model="$ctrl.contactValue">
-                            <label for="police">Police</label>
-                        </form-step>
-                        <form-step step-label="92">
-                            <input id="subcomittee" name="contact-type" type="radio" value="Subcomittee member" ng-model="$ctrl.contactValue">
-                            <label for="suncomittee">Subcomittee member</label>
-                        </form-step>
-                        <form-step step-label="92">
+                        <form-step ng-if="$last" step-label="92">
                             <input id="other-contact" name="contact-type" type="radio" value="Other" ng-model="$ctrl.contactValue">
                             <label for="other-contact">Other</label>
                             <input class="margin-left-10" type="text" ng-Model="$ctrl.otherContactString">

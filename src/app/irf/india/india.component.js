@@ -77,21 +77,22 @@ export class IrfIndiaController {
         }
     }
 
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        let value = !!valueSet;
+        this.questions[valueId].response.value = valueSet === false ? '' : valueSet;
+        return value;
+    }
+
     setValuesForOtherInputs() {
         const DateTimeId = 4;
         const OtherRedFlagId = 31;
         const OtherSignId = 134;
         const OtherWebsiteId = 244;
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        let otherRedFlag = this.questions[OtherRedFlagId].response.value;
-        let otherWebsite = this.questions[OtherWebsiteId].response.value;
-        let otherSign = this.questions[OtherSignId].response.value;
-        this.otherRedFlag = !!otherRedFlag;
-        this.otherWebsite = !!otherWebsite;
-        this.otherSign = !!otherSign;
-        this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
-        this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
-        this.questions[OtherSignId].response.value = otherSign === false ? '' : otherSign;
+        this.otherRedFlag = this.setOtherQuestionValues(OtherRedFlagId);
+        this.otherSign = this.setOtherQuestionValues(OtherSignId);
+        this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
         this.setContactRadio();
     }
 }

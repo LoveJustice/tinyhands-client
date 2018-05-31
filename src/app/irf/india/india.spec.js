@@ -58,7 +58,6 @@ describe('IrfIndiaController', () => {
 
             expect(vm.otherRedFlag).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
-
         });
 
         it('when other red flag is false should set value to empty string', () => {

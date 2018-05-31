@@ -5,14 +5,17 @@ import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
 import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
-import intercepteesTemplate from './step-templates/interceptees.html';
+import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './india.less';
+import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
+import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
 
 export class IrfIndiaController {
-    constructor(IndiaService) {
+    constructor($uibModal, IndiaService) {
         'ngInject';
+        this.$uibModal = $uibModal;
         this.IndiaService = IndiaService;
 
         this.otherWebsite = false;
@@ -63,6 +66,23 @@ export class IrfIndiaController {
     getStaff() {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
+        });
+    }
+
+    openIntercepteeModal(responses = {}, isAdd = false) {
+        this.$uibModal.open({
+            bindToController: true,
+            controller: IntercepteeModalController,
+            controllerAs: 'IntercepteeModalController',
+            resolve: {
+                isAdd: () => isAdd,
+                questions: () => _.keyBy(responses, x => x.question_id)
+            },
+            size: 'lg',
+            templateUrl: intercepteeModalTemplate,
+        }).result.then(() => {
+            console.log(`here`);
+            console.log(responses);
         });
     }
 

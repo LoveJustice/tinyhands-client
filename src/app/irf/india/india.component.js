@@ -19,7 +19,6 @@ export class IrfIndiaController {
         this.otherWebsite = false;
         this.otherRedFlag = false;
         this.selectedStep = 0;
-
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -44,6 +43,7 @@ export class IrfIndiaController {
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
+
         });
     }
 
@@ -90,7 +90,6 @@ export class IrfIndiaController {
         this.questions[OtherSignId].response.value = otherSign === false ? '' : otherSign;
         this.setContactRadio();
     }
-
 }
 export default {
     templateUrl,

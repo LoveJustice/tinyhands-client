@@ -3,7 +3,7 @@ clone:
 
 definitions:
     caches:
-        node-modules: $BITBUCKET_CLONE_DIR/client/node_modules
+        node-modules: $BITBUCKET_CLONE_DIR/node_modules
 
 image: bsell/yarn-npm-dotnet-cypress-bower:8-2.0.4
 

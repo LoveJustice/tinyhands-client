@@ -13,6 +13,7 @@ export class IrfIndiaController {
         'ngInject';
         this.IndiaService = IndiaService;
 
+        this.familyArray = [['Own brother', 'Own father', 'Own grandparent'], ['Own sister', 'Own mother', 'Own aunt/uncle']];
         this.familyValue = '';
         this.otherFamilyString = '';
         this.otherWebsite = false;
@@ -38,6 +39,7 @@ export class IrfIndiaController {
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
     }
+
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
@@ -45,28 +47,33 @@ export class IrfIndiaController {
             this.setValuesForOtherInputs();
         });
     }
+
     getLocation() {
         this.IndiaService.getLocation().then(response => {
             this.location = response.data;
         });
     }
+
     getQuestionIndexById(id) {
         return _.findIndex(this.responses, x => x.question_id === id);
     }
+
     getStaff() {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
         });
     }
+
     setFamilyRadio() {
-        const FamilyArray = ['Own father', 'Own brother', 'Own grandparent', 'Own sister', 'Own mother', 'Own aunt/uncle', '']
+        let flattenFamily = _.flattenDeep(this.familyArray);
         const FamilyId = 82;
         this.familyValue = this.questions[FamilyId].response.value;
-        if (!_.includes(FamilyArray, this.familyValue)) {
+        if (!_.includes(flattenFamily, this.familyValue) && this.familyValue !== '') {
             this.otherFamilyString = this.familyValue;
             this.familyValue = 'Other';
         }
     }
+
     setValuesForOtherInputs() {
         const DateTimeId = 4;
         const FamilyId = 82;

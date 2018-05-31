@@ -116,6 +116,13 @@ describe('IrfIndiaController', () => {
 
             expect(vm.questions[FamilyId].response.value).toEqual('');
         });
+        it('when family value is an empty string, leave family string as the same value and family value as the same value', () => {
+            vm.questions[FamilyId].response.value = '';
+
+            vm.setFamilyRadio();
+
+            expect(vm.questions[FamilyId].response.value).toEqual('');
+        });
     });
 });
 

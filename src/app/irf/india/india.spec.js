@@ -3,7 +3,8 @@ import {
 }
 from "./india.component";
 
-const DateTimeId = 4;
+const DateId = 4;
+const FamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
@@ -29,8 +30,8 @@ describe('IrfIndiaController', () => {
     describe('function setValuesForOtherInputs', () => {
         beforeEach(() => {
             vm.questions = {
-                [DateTimeId]: {
-                    question_id: DateTimeId,
+                [DateId]: {
+                    question_id: [DateId],
                     response: {
                         value: ''
                     }
@@ -43,6 +44,18 @@ describe('IrfIndiaController', () => {
                 },
                 [OtherContactId]: {
                     question_id: OtherContactId,
+                    response: {
+                        value: false
+                    }
+                },
+                [FamilyId]: {
+                    question_id: FamilyId,
+                    response: {
+                        value: 'Stuff'
+                    }
+                },
+                [OtherWebsiteId]: {
+                    question_id: OtherWebsiteId,
                     response: {
                         value: false
                     }
@@ -137,6 +150,42 @@ describe('IrfIndiaController', () => {
 
             expect(vm.otherContactString).toEqual('I am another contact');
             expect(vm.contactValue).toEqual('Other');
+        });
+
+    });
+
+    describe('function setFamilyRadio', () => {
+        beforeEach(() => {
+            vm.questions = {
+                [FamilyId]: {
+                    question_id: FamilyId,
+                    response: {
+                        value: 'Stuff'
+                    }
+                }
+            };
+        });
+
+        it('when other family is not in family array should set other family string to other family value and family value to \'Other\'', () => {
+            vm.setFamilyRadio();
+
+            expect(vm.otherFamilyString).toEqual('Stuff');
+            expect(vm.familyValue).toEqual('Other');
+        });
+
+        it('when family value is in family array should set the family value to family value', () => {
+            vm.questions[FamilyId].response.value = '';
+
+            vm.setFamilyRadio();
+
+            expect(vm.questions[FamilyId].response.value).toEqual('');
+        });
+        it('when family value is an empty string, leave family string as the same value and family value as the same value', () => {
+            vm.questions[FamilyId].response.value = '';
+
+            vm.setFamilyRadio();
+
+            expect(vm.questions[FamilyId].response.value).toEqual('');
         });
     });
 });

@@ -97,7 +97,7 @@ describe('IrfIndiaController', () => {
             };
         });
 
-        it('when  response value is false should return false and set response value to empty string', () => {
+        it('when response value is false should return false and set response value to empty string', () => {
             let temp = vm.setOtherQuestionValues(OtherRedFlagId);
 
             expect(temp).toEqual(false);

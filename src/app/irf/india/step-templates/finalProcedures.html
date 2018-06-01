@@ -6,7 +6,7 @@
                 <form-step step-label="141">
                     <input id="traffick-suspect" name="trafficking-radio-suspect" value="Trafficking suspected" ng-model="$ctr;.questions[141].response.value"
                         type="radio">
-                    <label for="trafficking-suspect">Trafficking suspected</label>
+                    <label for="traffick-suspect">Trafficking suspected</label>
                 </form-step>
                 <form-step step-label="141">
                     <input class="text-center" id="traffick-likely" name="trafficking-radio-suspect" value="High risk of being trafficked, but no evidence of trafficking"
@@ -25,7 +25,6 @@
                         <option value="4 - Very sure">4 - Very sure</option>
                         <option value="5 - Absolutely sure">5 - Absolutely sure</option>
                     </select>
-
                 </div>
             </div>
         </div>
@@ -42,7 +41,7 @@
                 </form-step>
                 <form-step step-label="150 ">
                     <input id="police " type="checkbox" ng-model="$ctrl.questions[150].response.value ">
-                    <label for="police ">THey were convinced or forced by the police</label>
+                    <label for="police ">They were convinced or forced by the police</label>
                 </form-step>
                 <hr/>
             </div>
@@ -82,10 +81,12 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="col-md-6 form-group">
                         <form-step step-label="152">
-                            <label for="attached">Attached scanned copy of form (pdf or image)</label>
+                            <label>Attached scanned copy of form (pdf or image)</label>
+                        </form-step>
                     </div>
-                    <input id="attached" type="file" select="" value="Choose File" ng-model="$ctrl.questions[152].response.value">
-                    </form-step>
+                    <input type="file" value="Choose File" ng-model="$ctrl.questions[152].response.value">
                 </div>
             </div>
         </div>
+    </div>
+</div>

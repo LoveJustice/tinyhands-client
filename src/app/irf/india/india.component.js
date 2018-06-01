@@ -80,7 +80,7 @@ export class IrfIndiaController {
     setOtherQuestionValues(valueId) {
         let valueSet = this.questions[valueId].response.value;
         let value = !!valueSet;
-        this.questions[valueId].response.value = valueSet === false ? '' : valueSet;
+        this.questions[valueId].response.value = valueSet || '';
         return value;
     }
 

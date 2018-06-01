@@ -29,31 +29,31 @@ describe('IrfIndiaController', () => {
     describe('function setValuesForOtherInputs', () => {
         beforeEach(() => {
             vm.questions = {
-                4: {
+                [DateTimeId]: {
                     question_id: DateTimeId,
                     response: {
                         value: ''
                     }
                 },
-                31: {
+                [OtherRedFlagId]: {
                     question_id: OtherRedFlagId,
                     response: {
                         value: false
                     }
                 },
-                92: {
+                [OtherContactId]: {
                     question_id: OtherContactId,
                     response: {
                         value: false
                     }
                 },
-                134: {
+                [OtherSignId]: {
                     question_id: OtherSignId,
                     response: {
                         value: false
                     }
                 },
-                244: {
+                [OtherWebsiteId]: {
                     question_id: OtherWebsiteId,
                     response: {
                         value: false
@@ -75,7 +75,7 @@ describe('IrfIndiaController', () => {
         beforeEach(() => {
             vm.questions = {
 
-                31: {
+                [OtherRedFlagId]: {
                     question_id: OtherRedFlagId,
                     response: {
                         value: false

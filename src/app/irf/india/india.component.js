@@ -14,7 +14,6 @@ const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
 
-
 export class IrfIndiaController {
     constructor(IndiaService) {
         'ngInject';

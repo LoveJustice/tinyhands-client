@@ -70,10 +70,10 @@
                         <input id="{{family}}" type="radio" name="optionRadio" value="{{family}}" ng-model="$ctrl.familyValue">
                         <label for="{{family}}">{{family}}</label>
                     </form-step>
-                    <form-step ng-if="$index===0">
+                    <form-step ng-if="$first">
                         <input id="otherfam" type="radio" name="optionRadio" value="Other" ng-model="$ctrl.familyValue">
                         <label for="other-fam">Other</label>
-                        <input type="text" id="otherId" value="" ng-model="$ctrl.otherFamilyString">
+                        <input ng-model="$ctrl.otherFamilyString">
                     </form-step>
                 </div>
             </div>

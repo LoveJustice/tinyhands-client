@@ -7,6 +7,10 @@ import signsTemplate from './step-templates/signs.html';
 import intercepteesTemplate from './step-templates/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
 
+const DateTimeId = 4;
+const FamilyId = 82;
+const OtherRedFlagId = 31;
+const OtherWebsiteId = 244;
 
 export class IrfIndiaController {
     constructor(IndiaService) {
@@ -15,11 +19,11 @@ export class IrfIndiaController {
 
         this.familyArray = [['Own brother', 'Own father', 'Own grandparent'], ['Own sister', 'Own mother', 'Own aunt/uncle']];
         this.familyValue = '';
-        this.otherFamilyString = '';
-        this.otherWebsite = false;
-        this.otherRedFlag = false;
         this.otherFamily = '';
-        this.selectedStep = 0;
+        this.otherFamilyString = '';
+        this.otherRedFlag = false;
+        this.otherWebsite = false;
+        this.selectedStep = 3;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -33,7 +37,6 @@ export class IrfIndiaController {
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
-
     }
 
     formatDate(UfcDate) {
@@ -66,7 +69,6 @@ export class IrfIndiaController {
 
     setFamilyRadio() {
         let flattenFamily = _.flattenDeep(this.familyArray);
-        const FamilyId = 82;
         this.familyValue = this.questions[FamilyId].response.value;
         if (!_.includes(flattenFamily, this.familyValue) && this.familyValue !== '') {
             this.otherFamilyString = this.familyValue;
@@ -75,10 +77,6 @@ export class IrfIndiaController {
     }
 
     setValuesForOtherInputs() {
-        const DateTimeId = 4;
-        const FamilyId = 82;
-        const OtherRedFlagId = 31;
-        const OtherWebsiteId = 244;
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         let otherRedFlag = this.questions[OtherRedFlagId].response.value;
         let otherWebsite = this.questions[OtherWebsiteId].response.value;

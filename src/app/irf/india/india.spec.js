@@ -2,6 +2,7 @@ import {
     IrfIndiaController
 } from "./india.component";
 
+const DateId = 4;
 const FamilyId = 82;
 const OtherRedFlagId = 31;
 const OtherWebsiteId = 244;
@@ -26,25 +27,25 @@ describe('IrfIndiaController', () => {
     describe('function setValuesForOtherInputs', () => {
         beforeEach(() => {
             vm.questions = {
-                4: {
-                    question_id: 4,
+                [DateId]: {
+                    question_id: [DateId],
                     response: {
                         value: ''
                     }
                 },
-                31: {
+                [OtherRedFlagId]: {
                     question_id: OtherRedFlagId,
                     response: {
                         value: false
                     }
                 },
-                82: {
+                [FamilyId]: {
                     question_id: FamilyId,
                     response: {
                         value: 'Stuff'
                     }
                 },
-                244: {
+                [OtherWebsiteId]: {
                     question_id: OtherWebsiteId,
                     response: {
                         value: false
@@ -93,7 +94,7 @@ describe('IrfIndiaController', () => {
     describe('function setFamilyRadio', () => {
         beforeEach(() => {
             vm.questions = {
-                82: {
+                [FamilyId]: {
                     question_id: FamilyId,
                     response: {
                         value: 'Stuff'

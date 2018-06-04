@@ -36,12 +36,6 @@ describe('IrfIndiaController', () => {
                         value: ''
                     }
                 },
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
                 [OtherContactId]: {
                     question_id: OtherContactId,
                     response: {
@@ -54,8 +48,8 @@ describe('IrfIndiaController', () => {
                         value: ''
                     }
                 },
-                [OtherWebsiteId]: {
-                    question_id: OtherWebsiteId,
+                [OtherRedFlagId]: {
+                    question_id: OtherRedFlagId,
                     response: {
                         value: false
                     }

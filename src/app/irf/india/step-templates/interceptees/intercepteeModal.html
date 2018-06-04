@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div id="irf-india-interceptee-modal" class="modal-content">
     <form name="intercepteeForm">
         <div class="modal-header">
             <button type="button" class="close" ng-click="IntercepteeModalController.dismiss()">
@@ -8,8 +8,17 @@
             <h3 class="modal-title">{{IntercepteeModalController.questions[9].response.name.value || 'Interceptee'}}</h3>
         </div>
         <div class="modal-body form-horizontal">
-            <div class="text-center padding-bottom-20" ng-if="IntercepteeModalController.questions[7].response.value">
-                <img class="img-rounded" ng-src="{{IntercepteeModalController.getIntercepteeImage(IntercepteeModalController.questions[7].response.value)}}"
+            <div class="text-center padding-bottom-20">
+                <div class="upload-image clickable" ngf-select ng-change="IntercepteeModalController.fileUpload($file)" ng-model="IntercepteeModalController.file"
+                    name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100" ngf-resize="{width: 200, height: 200}"
+                    ng-if="!IntercepteeModalController.file && !IntercepteeModalController.questions[7].response.value">Upload Image
+                </div>
+                <img class="img-rounded clickable" ngf-thumbnail="IntercepteeModalController.file" ngf-select ng-model="IntercepteeModalController.file"
+                    ng-change="IntercepteeModalController.fileUpload($file)" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100"
+                    ngf-resize="{width: 200, height: 200}" ng-if="IntercepteeModalController.file">
+                <img class="img-rounded clickable" ngf-select ng-model="IntercepteeModalController.file" ng-change="IntercepteeModalController.fileUpload($file)"
+                    ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100" ngf-resize="{width: 200, height: 200}"
+                    ng-if="IntercepteeModalController.questions[7].response.value" ng-src="{{IntercepteeModalController.getIntercepteeImage(IntercepteeModalController.questions[7].response.value)}}"
                     alt="Interceptee Image">
             </div>
             <div class="row">

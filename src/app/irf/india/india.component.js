@@ -9,7 +9,8 @@ import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './india.less';
 
 const DateTimeId = 4;
-const FamilyId = 82;
+const OtherFamilyId = 82;
+const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
@@ -24,18 +25,14 @@ export class IrfIndiaController {
             ['Bus driver', 'Church member', 'Other NGO'],
             ['Police', 'Subcomittee member']
         ];
-        this.contactValue = '';
-        this.otherContactString = '';
-        this.otherSign = false;
-        this.otherWebsite = false;
-        this.familyArray = [
+        this.family = [
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
-        this.familyValue = '';
-        this.otherFamily = '';
+        this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
+        this.otherSign = false;
         this.otherWebsite = false;
         this.redFlagTotal = 0;
         this.selectedStep = 0;
@@ -82,22 +79,12 @@ export class IrfIndiaController {
         });
     }
 
-    setContactRadio() {
-        let flattenedContacts = _.flattenDeep(this.contacts);
-        const OtherContactId = 92;
-        this.contactValue = this.questions[OtherContactId].response.value;
-        if (!_.includes(flattenedContacts, this.contactValue) && this.contactValue !== '') {
-            this.otherContactString = this.contactValue;
-            this.contactValue = 'Other';
-        }
-    }
-
-    setFamilyRadio() {
-        let flattenFamily = _.flattenDeep(this.familyArray);
-        this.familyValue = this.questions[FamilyId].response.value;
-        if (!_.includes(flattenFamily, this.familyValue) && this.familyValue !== '') {
-            this.otherFamilyString = this.familyValue;
-            this.familyValue = 'Other';
+    setRadio(items, valueId) {
+        let flattenedItems = _.flattenDeep(items);
+        let value = this.questions[valueId].response.value;
+        if (!_.includes(flattenedItems, value) && value !== '') {
+            this.questions[valueId].response.value = 'Other';
+            return value;
         }
     }
 
@@ -112,9 +99,8 @@ export class IrfIndiaController {
         this.otherRedFlag = this.setOtherQuestionValues(OtherRedFlagId);
         this.otherSign = this.setOtherQuestionValues(OtherSignId);
         this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
-        this.otherFamily = this.setOtherQuestionValues(FamilyId);
-        this.setContactRadio();
-        this.setFamilyRadio();
+        this.otherContactString = this.setRadio(this.contacts, OtherContactId);
+        this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 }
 export default {

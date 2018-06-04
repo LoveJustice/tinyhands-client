@@ -9,8 +9,10 @@ import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './india.less';
 
 const DateTimeId = 4;
-const FamilyId = 82;
+const OtherFamilyId = 82;
+const OtherContactId = 92;
 const OtherRedFlagId = 31;
+const OtherSignId = 134;
 const OtherWebsiteId = 244;
 
 export class IrfIndiaController {
@@ -18,11 +20,19 @@ export class IrfIndiaController {
         'ngInject';
         this.IndiaService = IndiaService;
 
-        this.familyArray = [['Own brother', 'Own father', 'Own grandparent'], ['Own sister', 'Own mother', 'Own aunt/uncle']];
-        this.familyValue = '';
-        this.otherFamily = '';
+        this.contacts = [
+            ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
+            ['Bus driver', 'Church member', 'Other NGO'],
+            ['Police', 'Subcomittee member']
+        ];
+        this.family = [
+            ['Own brother', 'Own father', 'Own grandparent'],
+            ['Own sister', 'Own mother', 'Own aunt/uncle']
+        ];
+        this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
+        this.otherSign = false;
         this.otherWebsite = false;
         this.selectedStep = 0;
         this.stepTemplates = [
@@ -68,30 +78,30 @@ export class IrfIndiaController {
         });
     }
 
-    setFamilyRadio() {
-        let flattenFamily = _.flattenDeep(this.familyArray);
-        this.familyValue = this.questions[FamilyId].response.value;
-        if (!_.includes(flattenFamily, this.familyValue) && this.familyValue !== '') {
-            this.otherFamilyString = this.familyValue;
-            this.familyValue = 'Other';
+    setRadio(items, valueId) {
+        let flattenedItems = _.flattenDeep(items);
+        let value = this.questions[valueId].response.value;
+        if (!_.includes(flattenedItems, value) && value !== '') {
+            this.questions[valueId].response.value = 'Other';
+            return value;
         }
+    }
+
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        this.questions[valueId].response.value = valueSet || '';
+        return !!valueSet;
     }
 
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        let otherRedFlag = this.questions[OtherRedFlagId].response.value;
-        let otherWebsite = this.questions[OtherWebsiteId].response.value;
-        let otherFamily = this.questions[FamilyId].response.value;
-        this.otherRedFlag = !!otherRedFlag;
-        this.otherWebsite = !!otherWebsite;
-        this.otherFamily = !!otherFamily;
-        this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
-        this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
-        this.questions[FamilyId].response.value = otherFamily === false ? '' : otherFamily;
-        this.setFamilyRadio();
+        this.otherRedFlag = this.setOtherQuestionValues(OtherRedFlagId);
+        this.otherSign = this.setOtherQuestionValues(OtherSignId);
+        this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
+        this.otherContactString = this.setRadio(this.contacts, OtherContactId);
+        this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 }
-
 export default {
     templateUrl,
     controller: IrfIndiaController

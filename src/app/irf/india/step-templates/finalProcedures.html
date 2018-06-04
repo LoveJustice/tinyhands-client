@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="row center-vertical">
-            <div class="col-md-6 col-md-offset-3 ">
+            <div class="col-md-6 col-md-offset-3">
                 <h3>How did you prevent the victim from going?</h3>
                 <form-step step-label="148">
                     <input id="not-forced" type="checkbox" ng-model="$ctrl.questions[148].response.value">
@@ -65,16 +65,14 @@
                 </div>
             </div>
             <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-3 panel panel-default">
-                    <div class=row>
-                        <div class="padding-left-10">I certify that I have followed procedures and filled out this form correctly, completely, and accurately.</div>
+                <div class="col-md-6 col-md-offset-3 panel panel-default text-center padding-10 margin-vertical-20">
+                    <div class="row">
+                        I certify that I have followed procedures and filled out this form correctly, completely, and accurately.
                     </div>
-                    <div class=" col-md-6 col-md-offset-2">
-                        <form-step step-label="151">
-                            <input id="scanned" type="checkbox" ng-model="$ctrl.questions[151].response.value">
-                            <label for="scanned">Scanned form has signature</label>
-                        </form-step>
-                    </div>
+                    <form-step step-label="151">
+                        <input id="scanned" type="checkbox" ng-model="$ctrl.questions[151].response.value">
+                        <label for="scanned">Scanned form has signature</label>
+                    </form-step>
                 </div>
             </div>
             <div class="row center-vertical">

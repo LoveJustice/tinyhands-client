@@ -10,18 +10,25 @@ const OtherWebsiteId = 244;
 describe('IrfIndiaController', () => {
     let vm;
     beforeEach(() => {
+        let $uibModal = {
+            open: () => ({
+                result: {
+                    then: f => f()
+                }
+            })
+        };
         let IndiaService = {
             getIndiaIrf: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getLocation: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getStaff: () => ({
-                then: () => { }
+                then: () => {}
             }),
         };
-        vm = new IrfIndiaController(IndiaService);
+        vm = new IrfIndiaController($uibModal, IndiaService);
     });
 
     describe('function setValuesForOtherInputs', () => {
@@ -126,4 +133,3 @@ describe('IrfIndiaController', () => {
         });
     });
 });
-

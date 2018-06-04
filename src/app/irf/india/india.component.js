@@ -85,7 +85,7 @@ export class IrfIndiaController {
         let flattenedContacts = _.flattenDeep(this.contacts);
         const OtherContactId = 92;
         this.contactValue = this.questions[OtherContactId].response.value;
-        if (!_.includes(flattenedContacts, this.contactValue) && this.contactValue !== "") {
+        if (!_.includes(flattenedContacts, this.contactValue) && this.contactValue !== '') {
             this.otherContactString = this.contactValue;
             this.contactValue = 'Other';
         }

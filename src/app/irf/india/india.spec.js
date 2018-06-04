@@ -4,7 +4,7 @@ import {
 from "./india.component";
 
 const DateId = 4;
-const FamilyId = 82;
+const OtherFamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
@@ -48,10 +48,10 @@ describe('IrfIndiaController', () => {
                         value: false
                     }
                 },
-                [FamilyId]: {
-                    question_id: FamilyId,
+                [OtherFamilyId]: {
+                    question_id: OtherFamilyId,
                     response: {
-                        value: 'Stuff'
+                        value: ''
                     }
                 },
                 [OtherWebsiteId]: {
@@ -115,10 +115,10 @@ describe('IrfIndiaController', () => {
 
     });
 
-    describe('function setContactRadio', () => {
+    describe('function setRadio', () => {
         beforeEach(() => {
             vm.questions = {
-                92: {
+                [OtherContactId]: {
                     question_id: OtherContactId,
                     response: {
                         value: ''
@@ -127,65 +127,29 @@ describe('IrfIndiaController', () => {
             };
         });
 
-        it('when contactValue matches an item in Contacts leave it as is, leave otherContactString as is', () => {
+        it('when response value matches an item in values, return nothing', () => {
             vm.questions[OtherContactId].response.value = 'Police';
 
-            vm.setContactRadio();
+            let temp = vm.setRadio(vm.contacts, OtherContactId);
 
-            expect(vm.contactValue).toEqual('Police');
-            expect(vm.otherContactString).toEqual('');
+            expect(temp).toBeUndefined();
+            expect(vm.questions[OtherContactId].response.value).toEqual('Police');
         });
 
-        it('when contactValue is null leave it as it is, leave otherContactString as is', () => {
-            vm.setContactRadio();
+        it('when response value is null leave it as it is, return nothing', () => {
+            let temp = vm.setRadio(vm.contacts, OtherContactId);
 
-            expect(vm.otherContactString).toEqual('');
-            expect(vm.contactValue).toEqual('');
+            expect(temp).toBeUndefined();
+            expect(vm.questions[OtherContactId].response.value).toEqual('');
         });
 
-        it('when contactValue does not match one of Contacts, change contactValue to other and otherContactString to string value', () => {
+        it('when response value does not match one of items, change response value to Other return response value', () => {
             vm.questions[OtherContactId].response.value = 'I am another contact';
 
-            vm.setContactRadio();
+            let temp = vm.setRadio(vm.contacts, OtherContactId);
 
-            expect(vm.otherContactString).toEqual('I am another contact');
-            expect(vm.contactValue).toEqual('Other');
-        });
-
-    });
-
-    describe('function setFamilyRadio', () => {
-        beforeEach(() => {
-            vm.questions = {
-                [FamilyId]: {
-                    question_id: FamilyId,
-                    response: {
-                        value: 'Stuff'
-                    }
-                }
-            };
-        });
-
-        it('when other family is not in family array should set other family string to other family value and family value to \'Other\'', () => {
-            vm.setFamilyRadio();
-
-            expect(vm.otherFamilyString).toEqual('Stuff');
-            expect(vm.familyValue).toEqual('Other');
-        });
-
-        it('when family value is in family array should set the family value to family value', () => {
-            vm.questions[FamilyId].response.value = '';
-
-            vm.setFamilyRadio();
-
-            expect(vm.questions[FamilyId].response.value).toEqual('');
-        });
-        it('when family value is an empty string, leave family string as the same value and family value as the same value', () => {
-            vm.questions[FamilyId].response.value = '';
-
-            vm.setFamilyRadio();
-
-            expect(vm.questions[FamilyId].response.value).toEqual('');
+            expect(temp).toEqual('I am another contact');
+            expect(vm.questions[OtherContactId].response.value).toEqual('Other');
         });
     });
 });

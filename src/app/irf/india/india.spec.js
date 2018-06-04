@@ -146,4 +146,23 @@ describe('IrfIndiaController', () => {
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');
         });
     });
+
+    describe('function updateRedFlags', () => {
+
+        it('when value is true, adds flagValue to redFlagTotal', () => {
+            vm.redFlagTotal = 20;
+
+            vm.updateRedFlags(50, true);
+
+            expect(vm.redFlagTotal).toEqual(70);
+        });
+
+        it('when value is false, subtracts flagValue from redFlagTotal', () => {
+            vm.redFlagTotal = 300;
+
+            vm.updateRedFlags(100, false);
+
+            expect(vm.redFlagTotal).toEqual(200);
+        });
+    });
 });

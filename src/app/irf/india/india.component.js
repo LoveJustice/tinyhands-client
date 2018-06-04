@@ -11,6 +11,10 @@ import './india.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
+const DateTimeId = 4;
+const FamilyId = 82;
+const OtherRedFlagId = 31;
+const OtherWebsiteId = 244;
 
 export class IrfIndiaController {
     constructor($uibModal, IndiaService) {
@@ -18,9 +22,16 @@ export class IrfIndiaController {
         this.$uibModal = $uibModal;
         this.IndiaService = IndiaService;
 
-        this.otherWebsite = false;
+        this.familyArray = [
+            ['Own brother', 'Own father', 'Own grandparent'],
+            ['Own sister', 'Own mother', 'Own aunt/uncle']
+        ];
+        this.familyValue = '';
+        this.otherFamily = '';
+        this.otherFamilyString = '';
         this.otherRedFlag = false;
-        this.selectedStep = 5;
+        this.otherWebsite = false;
+        this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -111,17 +122,27 @@ export class IrfIndiaController {
         });
     }
 
+    setFamilyRadio() {
+        let flattenFamily = _.flattenDeep(this.familyArray);
+        this.familyValue = this.questions[FamilyId].response.value;
+        if (!_.includes(flattenFamily, this.familyValue) && this.familyValue !== '') {
+            this.otherFamilyString = this.familyValue;
+            this.familyValue = 'Other';
+        }
+    }
+
     setValuesForOtherInputs() {
-        const DateTimeId = 4;
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        const OtherRedFlagId = 31;
-        const OtherWebsiteId = 244;
         let otherRedFlag = this.questions[OtherRedFlagId].response.value;
         let otherWebsite = this.questions[OtherWebsiteId].response.value;
+        let otherFamily = this.questions[FamilyId].response.value;
         this.otherRedFlag = !!otherRedFlag;
         this.otherWebsite = !!otherWebsite;
+        this.otherFamily = !!otherFamily;
         this.questions[OtherWebsiteId].response.value = otherWebsite === false ? '' : otherWebsite;
         this.questions[OtherRedFlagId].response.value = otherRedFlag === false ? '' : otherRedFlag;
+        this.questions[FamilyId].response.value = otherFamily === false ? '' : otherFamily;
+        this.setFamilyRadio();
     }
 }
 

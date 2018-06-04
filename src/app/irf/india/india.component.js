@@ -14,6 +14,7 @@ const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const RedFlagTotalId = 144;
 
 export class IrfIndiaController {
     constructor(IndiaService) {
@@ -59,6 +60,7 @@ export class IrfIndiaController {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.redFlagTotal = this.questions[RedFlagTotalId].response.value;
             this.setValuesForOtherInputs();
         });
     }
@@ -101,6 +103,14 @@ export class IrfIndiaController {
         this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
+    }
+
+    updateRedFlags(flagValue, value) {
+        if (value === true) {
+            this.redFlagTotal += flagValue;
+        } else {
+            this.redFlagTotal -= flagValue;
+        }
     }
 }
 export default {

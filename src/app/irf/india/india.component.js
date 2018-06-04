@@ -37,6 +37,7 @@ export class IrfIndiaController {
         this.otherFamilyString = '';
         this.otherRedFlag = false;
         this.otherWebsite = false;
+        this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,

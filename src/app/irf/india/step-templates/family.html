@@ -68,7 +68,7 @@
                 <div class="col-md-6" ng-repeat="families in $ctrl.family">
                     <form-step ng-repeat="family in families">
                         <input id="{{family}}" type="radio" name="optionRadio" value="{{family}}" ng-model="$ctrl.questions[82].response.value">
-                        <label for=" {{family}}">{{family}}</label>
+                        <label for="{{family}}">{{family}}</label>
                     </form-step>
                     <form-step ng-if="$first">
                         <input id="other-fam" type="radio" name="optionRadio" value="Other" ng-model="$ctrl.questions[82].response.value">

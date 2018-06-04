@@ -9,7 +9,7 @@
         <div class="row center-vertical">
             <div class="col-md-2">
                 <form-step step-label="91">
-                    <input id="contact" type="radio" name="contact-or-staff" value="Contact" ng-model="$ctrl.contactValue">
+                    <input id="contact" name="contact-or-staff" value="Contact" type="radio" ng-model="$ctrl.questions[91].response.value">
                     <label for="contact">Contact</label>
                 </form-step>
             </div>
@@ -55,7 +55,7 @@
         <div class="row center-vertical">
             <div class="col-md-2">
                 <form-step step-label="91">
-                    <input id="staff" name="contact-or-staff" value="staff" type="radio" ng-model="$ctrl.questions[91].response.value">
+                    <input id="staff" name="contact-or-staff" value="Staff" type="radio" ng-model="$ctrl.questions[91].response.value">
                     <label for="staff">Staff</label>
                 </form-step>
             </div>

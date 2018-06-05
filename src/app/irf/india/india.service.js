@@ -359,7 +359,7 @@ export default class IndiaService {
                             "question_id": 91,
                             "storage_id": 4,
                             "response": {
-                                "value": "staff"
+                                "value": "Staff"
                             }
                         },
                         {

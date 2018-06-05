@@ -1,4 +1,3 @@
-import constants from '../../constants';
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
@@ -17,9 +16,10 @@ const OtherRedFlagId = 31;
 const OtherWebsiteId = 244;
 
 export class IrfIndiaController {
-    constructor($uibModal, IndiaService) {
+    constructor($uibModal, constants, IndiaService) {
         'ngInject';
         this.$uibModal = $uibModal;
+        this.constants = constants;
         this.IndiaService = IndiaService;
 
         this.familyArray = [
@@ -61,7 +61,7 @@ export class IrfIndiaController {
     }
 
     getIntercepteeImage(url) {
-        return new URL(url, constants.BaseUrl).href;
+        return new URL(url, this.constants.BaseUrl).href;
     }
 
     getLocation() {

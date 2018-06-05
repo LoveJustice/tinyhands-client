@@ -1,9 +1,8 @@
-import constants from '../../../../constants';
-
 export default class IntercepteeModalController {
-    constructor($uibModalInstance, isAdd, questions) {
+    constructor($uibModalInstance, constants, isAdd, questions) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
+        this.constants = constants;
 
         this.isAdd = isAdd;
         this.originalQuestions = questions;
@@ -23,7 +22,7 @@ export default class IntercepteeModalController {
     }
 
     getIntercepteeImage(url) {
-        return new URL(url, constants.BaseUrl).href;
+        return new URL(url, this.constants.BaseUrl).href;
     }
 
     save() {

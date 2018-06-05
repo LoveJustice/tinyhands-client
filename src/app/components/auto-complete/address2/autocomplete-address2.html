@@ -1,17 +1,13 @@
 <div class="form-group">
-    <label for="addressName">{{ acAddress2Ctrl.label }}</label>
+  <label for="addressName">{{ acAddress2Ctrl.label }}</label>
 
-    <i ng-show="loadingAddress2" class="glyphicon glyphicon-refresh"></i>
+  <i ng-show="acAddress2Ctrl.loadingAddress2" class="glyphicon glyphicon-refresh"></i>
 
-    <input class="form-control" type="text" ng-model="ngModel" placeholder="Address 2"
-           uib-typeahead="address2 as address2.name for address2 in acAddress2Ctrl.getFuzzyAddress2s($viewValue)"
-           uib-typeahead-loading="loadingAddress2"
-           uib-typeahead-no-results="noResults"
-           typeahead-wait-ms="300"
-           typeahead-min-length="3"
-           />
+  <input class="form-control" type="text" ng-model="ngModel" placeholder="Address 2" uib-typeahead="address2 as address2.name for address2 in acAddress2Ctrl.getFuzzyAddress2s($viewValue)"
+    uib-typeahead-loading="acAddress2Ctrl.loadingAddress2" uib-typeahead-no-results="noResults" typeahead-wait-ms="300" typeahead-min-length="3"
+  />
 
-    <div ng-show="noResults">
-      <i class="glyphicon glyphicon-remove"></i> No Results Found
-    </div>
+  <div ng-show="noResults">
+    <i class="glyphicon glyphicon-remove"></i> No Results Found
+  </div>
 </div>

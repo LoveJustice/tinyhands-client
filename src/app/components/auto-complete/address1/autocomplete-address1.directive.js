@@ -25,9 +25,11 @@ class AutocompleteAddress1Controller {
     }
 
     getFuzzyAddress1s(val) {
+        this.loadingAddress1 = true;
         return this.address1Service.getFuzzyAddress1s(val)
             .then((promise) => {
+                this.loadingAddress1 = false;
                 return promise.data;
-            });
+            }, () => this.loadingAddress1 = false);
     }
 }

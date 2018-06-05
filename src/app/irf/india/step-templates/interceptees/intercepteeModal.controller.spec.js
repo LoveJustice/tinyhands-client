@@ -20,13 +20,13 @@ describe('IntercepteeModalController', () => {
                 response: {}
             }, {
                 response: {
-                    gender: {},
-                    name: {},
-                    age: {},
                     address1: {},
                     address2: {},
-                    phone: {},
+                    age: {},
+                    gender: {},
+                    name: {},
                     nationality: {},
+                    phone: {},
                 }
             }];
             vm.questions = [null, null, null, null, null, null, null, {
@@ -35,13 +35,13 @@ describe('IntercepteeModalController', () => {
                 response: {}
             }, {
                 response: {
-                    gender: {},
-                    name: {},
-                    age: {},
                     address1: {},
                     address2: {},
-                    phone: {},
+                    age: {},
+                    gender: {},
+                    name: {},
                     nationality: {},
+                    phone: {},
                 }
             }];
         });

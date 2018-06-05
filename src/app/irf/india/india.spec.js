@@ -31,7 +31,7 @@ describe('IrfIndiaController', () => {
                 then: () => {}
             }),
         };
-        vm = new IrfIndiaController($uibModal, IndiaService);
+        vm = new IrfIndiaController($uibModal, {}, IndiaService);
     });
 
     describe('function openIntercepteeModal', () => {

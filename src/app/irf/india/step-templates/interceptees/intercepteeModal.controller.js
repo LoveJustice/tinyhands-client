@@ -1,3 +1,7 @@
+const ImageQuestion = 7;
+const TypeQuestion = 8;
+const DemographicQuestion = 9;
+
 export default class IntercepteeModalController {
     constructor($uibModalInstance, constants, isAdd, questions) {
         'ngInject';
@@ -18,7 +22,7 @@ export default class IntercepteeModalController {
     }
 
     fileUpload($file) {
-        this.questions[7].response.value = '';
+        this.questions[ImageQuestion].response.value = '';
     }
 
     getIntercepteeImage(url) {
@@ -26,17 +30,17 @@ export default class IntercepteeModalController {
     }
 
     save() {
-        this.originalQuestions[7].response.value = this.questions[7].response.value;
-        this.originalQuestions[8].response.value = this.questions[8].response.value;
-        this.originalQuestions[9].response.gender.value = this.questions[9].response.gender.value;
-        this.originalQuestions[9].response.name.value = this.questions[9].response.name.value;
-        this.originalQuestions[9].response.age.value = this.questions[9].response.age.value;
-        this.originalQuestions[9].response.address1.name = this.questions[9].response.address1.name;
-        this.originalQuestions[9].response.address2.name = this.questions[9].response.address2.name;
-        this.originalQuestions[9].response.phone.value = this.questions[9].response.phone.value;
-        this.originalQuestions[9].response.nationality.value = this.questions[9].response.nationality.value;
+        this.originalQuestions[ImageQuestion].response.value = this.questions[ImageQuestion].response.value;
+        this.originalQuestions[TypeQuestion].response.value = this.questions[TypeQuestion].response.value;
+        this.originalQuestions[DemographicQuestion].response.gender.value = this.questions[DemographicQuestion].response.gender.value;
+        this.originalQuestions[DemographicQuestion].response.name.value = this.questions[DemographicQuestion].response.name.value;
+        this.originalQuestions[DemographicQuestion].response.age.value = this.questions[DemographicQuestion].response.age.value;
+        this.originalQuestions[DemographicQuestion].response.address1.name = this.questions[DemographicQuestion].response.address1.name;
+        this.originalQuestions[DemographicQuestion].response.address2.name = this.questions[DemographicQuestion].response.address2.name;
+        this.originalQuestions[DemographicQuestion].response.phone.value = this.questions[DemographicQuestion].response.phone.value;
+        this.originalQuestions[DemographicQuestion].response.nationality.value = this.questions[DemographicQuestion].response.nationality.value;
         if (this.file) {
-            this.originalQuestions[7].response.value = this.file;
+            this.originalQuestions[ImageQuestion].response.value = this.file;
         }
         this.close();
     }

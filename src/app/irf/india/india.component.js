@@ -11,15 +11,22 @@ import IntercepteeModalController from './step-templates/interceptees/intercepte
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
 const DateTimeId = 4;
+const InvalidIrfError = 0;
+const IrfNumberId = 1;
+const NoIntercepteesError = 1;
+const NoRedFlagsWarning = 0;
+const NoSignatureWarning = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const SignedId = 151;
 
 export class IrfIndiaController {
-    constructor($uibModal, constants, IndiaService) {
+    constructor($scope, $uibModal, constants, IndiaService) {
         'ngInject';
+        this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.IndiaService = IndiaService;
@@ -33,11 +40,13 @@ export class IrfIndiaController {
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
+        this.ignoreWarnings = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
         this.otherSign = false;
         this.otherWebsite = false;
+        this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
@@ -48,8 +57,10 @@ export class IrfIndiaController {
             intercepteesTemplate,
             finalProceduresTemplate
         ];
+        this.messagesEnabled = false;
 
         this.getIndiaIrf();
+        this.getErrorMessage();
         this.getLocation();
         this.getStaff();
     }
@@ -59,9 +70,19 @@ export class IrfIndiaController {
     }
 
     getErrorMessage() {
+        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.setErrorMessage();
+            }
+        });
+        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.setWarningMessage();
+            }
+        });
         this.IndiaService.getErrorMessages().then(response => {
-            this.errorMessage = errors.data;
-            this.warningMessage = warnings.data;
+            this.errorMessage = response.data[0].errors;
+            this.warningMessage = response.data[0].warnings;
         });
     }
 
@@ -136,21 +157,25 @@ export class IrfIndiaController {
         });
     }
 
-    setErrorMessage(errorId) {
-        /*
-             if () {
-                 //Checks if there are answers for question 1
-                 //Checks if there is an answer for interceptee question
-             }
-             if(){
-                 //checks question 151 for answer
-                 //checks for red flags
-             }
-             if () {
-                 //Checks to see if the checkbox is checked
-             }
-             */
+    save() {
+        this.messagesEnabled = true;
+        this.setErrorMessage();
+        this.setWarningMessage();
     }
+
+    setErrorMessage() {
+        let activeErrors = [];
+        if (this.messagesEnabled) {
+            if (this.questions[IrfNumberId].response.value === '') {
+                activeErrors.push(this.errorMessage[InvalidIrfError]);
+            }
+            if (_.size(this.cards) === 0) {
+                activeErrors.push(this.errorMessage[NoIntercepteesError]);
+            }
+        }
+        return activeErrors;
+    }
+
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -174,7 +199,26 @@ export class IrfIndiaController {
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
-};
+
+    setWarningMessage() {
+        let activeWarnings = [];
+        if (!this.ignoreWarnings && this.messagesEnabled) {
+            if (!this.questions[SignedId].response.value) { //checks question 151 for answer
+                activeWarnings.push(this.warningMessage[NoSignatureWarning]);
+            }
+            if (this.redFlagTotal === 0) { //checks for red flags
+                activeWarnings.push(this.warningMessage[NoRedFlagsWarning]);
+            }
+        }
+        return activeWarnings;
+    }
+
+    submit() {
+        this.messagesEnabled = true;
+        this.setErrorMessage();
+        this.setWarningMessage();
+    }
+}
 
 export default {
     templateUrl,

@@ -70,7 +70,7 @@
                         I certify that I have followed procedures and filled out this form correctly, completely, and accurately.
                     </div>
                     <form-step step-label="151">
-                        <input id="scanned" type="checkbox" ng-model="$ctrl.questions[151].response.value">
+                        <input id="scanned" type="checkbox" ng-change="$ctrl.setWarningMessage()" ng-model="$ctrl.questions[151].response.value">
                         <label for="scanned">Scanned form has signature</label>
                     </form-step>
                 </div>

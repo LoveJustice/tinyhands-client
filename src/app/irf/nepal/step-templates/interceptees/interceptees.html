@@ -8,9 +8,9 @@
                 <img class="img-rounded margin-bottom-20" ng-if="$ctrl.getResponseOfQuestionById(card.responses, 7).value && !$ctrl.getResponseOfQuestionById(card.responses, 7).value.type"
                     ng-src="{{$ctrl.getIntercepteeImage($ctrl.getResponseOfQuestionById(card.responses, 7).value)}}" alt="Interceptee Picture"
                 />
-                <form-step step-label="8">{{$ctrl.getResponseOfQuestionById(card.responses, 8).value}}</form-step>
-                <form-step step-label="9">{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
-                <form-step step-label="9">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 8).value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</form-step>
             </div>
         </div>
     </div>

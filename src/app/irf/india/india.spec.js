@@ -13,6 +13,9 @@ const OtherWebsiteId = 244;
 describe('IrfIndiaController', () => {
     let vm;
     beforeEach(() => {
+        let $scope = {
+            $on() {},
+        };
         let IndiaService = {
             getIndiaIrf: () => ({
                 then: () => {}
@@ -24,7 +27,7 @@ describe('IrfIndiaController', () => {
                 then: () => {}
             }),
         };
-        vm = new IrfIndiaController(IndiaService);
+        vm = new IrfIndiaController($scope, IndiaService);
     });
 
     describe('function setValuesForOtherInputs', () => {
@@ -148,21 +151,51 @@ describe('IrfIndiaController', () => {
     });
 
     describe('function updateRedFlags', () => {
-
-        it('when value is true, adds flagValue to redFlagTotal', () => {
+        it('when value is true, add flagValue to redFlagTotal', () => {
             vm.redFlagTotal = 20;
 
-            vm.updateRedFlags(50, true);
+            vm.updateRedFlags(50, true, true);
 
             expect(vm.redFlagTotal).toEqual(70);
         });
 
-        it('when value is false, subtracts flagValue from redFlagTotal', () => {
+        it('when value is false and initializing is false, subtract flagValue from redFlagTotal', () => {
             vm.redFlagTotal = 300;
 
-            vm.updateRedFlags(100, false);
+            vm.updateRedFlags(100, false, false);
 
             expect(vm.redFlagTotal).toEqual(200);
+        });
+
+        it('when value is false and initializing is true, do nothing', () => {
+            vm.redFlagTotal = 300;
+
+            vm.updateRedFlags(100, false, true);
+
+            expect(vm.redFlagTotal).toEqual(300);
+        });
+
+        it('when value is undefined, do nothing', () => {
+            vm.redFlagTotal = 300;
+
+            vm.updateRedFlags(100, undefined, false);
+
+            expect(vm.redFlagTotal).toEqual(300);
+        });
+    });
+
+    describe('function flagListener', () => {
+        it('should call updateRedFlags with data from $on', () => {
+            vm.$scope.$on = (a, b) => b({}, {
+                flagNum: 21,
+                flagValue: true,
+                flagInitializing: true
+            });
+            spyOn(vm, 'updateRedFlags');
+
+            vm.flagListener(true);
+
+            expect(vm.updateRedFlags).toHaveBeenCalledWith(21, true, true);
         });
     });
 });

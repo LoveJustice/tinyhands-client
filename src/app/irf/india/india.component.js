@@ -14,11 +14,11 @@ const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
-const RedFlagTotalId = 144;
 
 export class IrfIndiaController {
-    constructor(IndiaService) {
+    constructor($scope, IndiaService) {
         'ngInject';
+        this.$scope = $scope;
         this.IndiaService = IndiaService;
 
         this.contacts = [
@@ -47,9 +47,16 @@ export class IrfIndiaController {
             finalProceduresTemplate
         ];
 
+        this.flagListener();
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
+    }
+
+    flagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.updateRedFlags(flagData.flagNum, flagData.flagValue, flagData.flagInitializing);
+        });
     }
 
     formatDate(UfcDate) {
@@ -60,7 +67,6 @@ export class IrfIndiaController {
         this.IndiaService.getIndiaIrf().then(response => {
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
-            this.redFlagTotal = this.questions[RedFlagTotalId].response.value;
             this.setValuesForOtherInputs();
         });
     }
@@ -105,14 +111,15 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 
-    updateRedFlags(flagValue, value) {
+    updateRedFlags(flagValue, value, initializing) {
         if (value === true) {
             this.redFlagTotal += flagValue;
-        } else {
+        } else if (value !== undefined && !initializing) {
             this.redFlagTotal -= flagValue;
         }
     }
 }
+
 export default {
     templateUrl,
     controller: IrfIndiaController

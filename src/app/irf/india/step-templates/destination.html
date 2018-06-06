@@ -8,19 +8,19 @@
             </form-step>
             <div class="margin-top-20 margin-bottom-10"></div>
             <div>
-                <form-step step-label="246" red-flag="25">
-                    <input id="doesnt-know-going" type="checkbox" ng-change="$ctrl.updateRedFlags(25,$ctrl.questions[246].response.value)" ng-model="$ctrl.questions[246].response.value">
+                <form-step step-label="246" red-flag="25" response-value="$ctrl.questions[246].response.value">
+                    <input id="doesnt-know-going" type="checkbox" ng-model="$ctrl.questions[246].response.value">
                     <label for="doesnt-know-going">Doesn't know where they are going</label>
                 </form-step>
             </div>
             <div>
-                <form-step step-label="255" red-flag="40">
+                <form-step step-label="255" red-flag="40" response-value="$ctrl.questions[255].response.value">
                     <input id="enticed-to-leave" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[255].response.value)" ng-model="$ctrl.questions[255].response.value">
                     <label for="enticed-to-leave">Someone enticed them to leave</label>
                 </form-step>
             </div>
             <div>
-                <form-step step-label="247" red-flag="40">
+                <form-step step-label="247" red-flag="40" response-value="$ctrl.questions[247].response.value">
                     <input id="paid-travel" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[247].response.value)" ng-model="$ctrl.questions[247].response.value">
                     <label for="paid-travel">Someone (not a relative) paid their travel expenses</label>
                 </form-step>
@@ -33,13 +33,12 @@
                         <input id="job" type="checkbox" ng-model="$ctrl.questions[36].response.value">
                         <label for="job">Job</label>
                     </form-step>
-                    <form-step step-label="'&nbsp;&nbsp;42'" red-flag="55">
-                        <input id="going-gulf-work" type="checkbox" ng-change="$ctrl.updateRedFlags(55,$ctrl.questions[42].response.value)" ng-model="$ctrl.questions[42].response.value">
+                    <form-step step-label="'&nbsp;&nbsp;42'" red-flag="55" response-value="$ctrl.questions[42].response.value">
+                        <input id="going-gulf-work" type="checkbox" ng-model="$ctrl.questions[42].response.value">
                         <label for="going-gulf-work">Going to Gulf for work through India</label>
                     </form-step>
-                    <form-step step-label="248" red-flag="50">
-                        <input id="do-not-know-job-details" type="checkbox" ng-change="$ctrl.updateRedFlags(50,$ctrl.questions[248].response.value)"
-                            ng-model="$ctrl.questions[248].response.value">
+                    <form-step step-label="248" red-flag="50" response-value="$ctrl.questions[248].response.value">
+                        <input id="do-not-know-job-details" type="checkbox" ng-model="$ctrl.questions[248].response.value">
                         <label for="do-not-know-job-details">Don't know the details of what they will be doing</label>
                     </form-step>
                 </div>
@@ -49,28 +48,28 @@
                             Check Documents
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="51" red-flag="15">
-                                <input id="no-address" type="checkbox" ng-change="$ctrl.updateRedFlags(15,$ctrl.questions[51].response.value)" ng-model="$ctrl.questions[51].response.value">
+                            <form-step step-label="51" red-flag="15" response-value="$ctrl.questions[51].response.value">
+                                <input id="no-address" type="checkbox" ng-model="$ctrl.questions[51].response.value">
                                 <label for="no-address">No address at destination</label>
                             </form-step>
-                            <form-step step-label="52" red-flag="20">
-                                <input id="no-phone" type="checkbox" ng-change="$ctrl.updateRedFlags(20,$ctrl.questions[52].response.value)" ng-model="$ctrl.questions[52].response.value">
+                            <form-step step-label="52" red-flag="20" response-value="$ctrl.questions[52].response.value">
+                                <input id="no-phone" type="checkbox" ng-model="$ctrl.questions[52].response.value">
                                 <label for="no-phone">No company phone number</label>
                             </form-step>
-                            <form-step step-label="53" red-flag="10">
-                                <input id="no-letter" type="checkbox" ng-change="$ctrl.updateRedFlags(10,$ctrl.questions[53].response.value)" ng-model="$ctrl.questions[53].response.value">
+                            <form-step step-label="53" red-flag="10" response-value="$ctrl.questions[53].response.value">
+                                <input id="no-letter" type="checkbox" ng-model="$ctrl.questions[53].response.value">
                                 <label for="no-letter">No appointment letter</label>
                             </form-step>
-                            <form-step step-label="54" red-flag="35">
-                                <input id="valid-gulf" type="checkbox" ng-change="$ctrl.updateRedFlags(35,$ctrl.questions[54].response.value)" ng-model="$ctrl.questions[54].response.value">
+                            <form-step step-label="54" red-flag="35" response-value="$ctrl.questions[54].response.value">
+                                <input id="valid-gulf" type="checkbox" ng-model="$ctrl.questions[54].response.value">
                                 <label for="valid-gulf">Has a valid gulf country visa in passport</label>
                             </form-step>
-                            <form-step step-label="55" red-flag="40">
-                                <input id="passport-broker" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[55].response.value)" ng-model="$ctrl.questions[55].response.value">
+                            <form-step step-label="55" red-flag="40" response-value="$ctrl.questions[55].response.value">
+                                <input id="passport-broker" type="checkbox" ng-model="$ctrl.questions[55].response.value">
                                 <label for="passport-broker">Passport is with a broker</label>
                             </form-step>
-                            <form-step step-label="56" red-flag="40">
-                                <input id="job-too-good" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[56].response.value)" ng-model="$ctrl.questions[56].response.value">
+                            <form-step step-label="56" red-flag="40" response-value="$ctrl.questions[56].response.value">
+                                <input id="job-too-good" type="checkbox" ng-model="$ctrl.questions[56].response.value">
                                 <label for="job-too-good">Job is too good to be true</label>
                             </form-step>
                         </div>
@@ -81,12 +80,12 @@
                             Call job place
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="57" red-flag="55">
-                                <input id="not-real-job" type="checkbox" ng-change="$ctrl.updateRedFlags(55,$ctrl.questions[57].response.value)" ng-model="$ctrl.questions[57].response.value">
+                            <form-step step-label="57" red-flag="55" response-value="$ctrl.questions[57].response.value">
+                                <input id="not-real-job" type="checkbox" ng-model="$ctrl.questions[57].response.value">
                                 <label for="not-real-job">Not a real job</label>
                             </form-step>
-                            <form-step step-label="58" red-flag="10">
-                                <input id="not-confirm-job" type="checkbox" ng-change="$ctrl.updateRedFlags(10,$ctrl.questions[58].response.value)" ng-model="$ctrl.questions[58].response.value">
+                            <form-step step-label="58" red-flag="10" response-value="$ctrl.questions[58].response.value">
+                                <input id="not-confirm-job" type="checkbox" ng-model="$ctrl.questions[58].response.value">
                                 <label for="not-confirm-job">Could not confirm job</label>
                             </form-step>
                         </div>
@@ -109,8 +108,8 @@
                             Check bags
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="59" red-flag="20">
-                                <input id="no-bags" type="checkbox" ng-change="$ctrl.updateRedFlags(20,$ctrl.questions[59].response.value)" ng-model="$ctrl.questions[59].response.value">
+                            <form-step step-label="59" red-flag="20" response-value="$ctrl.questions[59].response.value">
+                                <input id="no-bags" type="checkbox" ng-model="$ctrl.questions[59].response.value">
                                 <label for="no-bags">No bags though claim to be going for a long time</label>
                             </form-step>
                         </div>
@@ -133,9 +132,8 @@
                             Check to see if bags are empty
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="60" red-flag="35">
-                                <input id="shopping-stuff-in-bags" type="checkbox" ng-change="$ctrl.updateRedFlags(35,$ctrl.questions[60].response.value)"
-                                    ng-model="$ctrl.questions[60].response.value">
+                            <form-step step-label="60" red-flag="35" response-value="$ctrl.questions[60].response.value">
+                                <input id="shopping-stuff-in-bags" type="checkbox" ng-model="$ctrl.questions[60].response.value">
                                 <label for="shopping-stuff-in-bags">Shopping - Stuff for overnight stay in bags</label>
                             </form-step>
                         </div>
@@ -158,17 +156,16 @@
                             Check documents
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="61" red-flag="15">
-                                <input id="no-documentation" type="checkbox" ng-change="$ctrl.updateRedFlags(15,$ctrl.questions[61].response.value)" ng-model="$ctrl.questions[61].response.value">
+                            <form-step step-label="61" red-flag="15" response-value="$ctrl.questions[61].response.value">
+                                <input id="no-documentation" type="checkbox" ng-model="$ctrl.questions[61].response.value">
                                 <label for="no-documentaiton">No documentation of enrollment</label>
                             </form-step>
-                            <form-step step-label="62" red-flag="40">
-                                <input id="not-know-school-name" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[62].response.value)"
-                                    ng-model="$ctrl.questions[62].response.value">
+                            <form-step step-label="62" red-flag="40" response-value="$ctrl.questions[62].response.value">
+                                <input id="not-know-school-name" type="checkbox" ng-model="$ctrl.questions[62].response.value">
                                 <label for="not-know-school-name">Does not know school's name and location</label>
                             </form-step>
-                            <form-step step-label="63" red-flag="30">
-                                <input id="no-school-phone" type="checkbox" ng-change="$ctrl.updateRedFlags(30,$ctrl.questions[63].response.value)" ng-model="$ctrl.questions[63].response.value">
+                            <form-step step-label="63" red-flag="30" response-value="$ctrl.questions[63].response.value">
+                                <input id="no-school-phone" type="checkbox" ng-model="$ctrl.questions[63].response.value">
                                 <label for="no-school-phone">No phone number for school</label>
                             </form-step>
                         </div>
@@ -179,8 +176,8 @@
                             Call school
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="64" red-flag="60">
-                                <input id="not-enrolled" type="checkbox" ng-change="$ctrl.updateRedFlags(60,$ctrl.questions[64].response.value)" ng-model="$ctrl.questions[64].response.value">
+                            <form-step step-label="64" red-flag="60" response-value="$ctrl.questions[64].response.value">
+                                <input id="not-enrolled" type="checkbox" ng-model="$ctrl.questions[64].response.value">
                                 <label for="not-enrolled">Not enrolled in school</label>
                             </form-step>
                         </div>
@@ -203,18 +200,16 @@
                             Check where they are from and how old
                         </div>
                         <div class="col-md-8">
-                            <form-step step-label="'&nbsp;&nbsp;70'" red-flag="45">
-                                <input id="run-from-nepal-under-18" type="checkbox" ng-change="$ctrl.updateRedFlags(45,$ctrl.questions[70].response.value)"
-                                    ng-model="$ctrl.questions[70].response.value">
+                            <form-step step-label="'&nbsp;&nbsp;70'" red-flag="45" response-value="$ctrl.questions[70].response.value">
+                                <input id="run-from-nepal-under-18" type="checkbox" ng-model="$ctrl.questions[70].response.value">
                                 <label for="run-from-nepal-under-18">Running away from Nepal/B'desh (under 18)</label>
                             </form-step>
-                            <form-step step-label="'&nbsp;&nbsp;69'" red-flag="20">
-                                <input id="run-from-nepal-over-18" type="checkbox" ng-change="$ctrl.updateRedFlags(20,$ctrl.questions[69].response.value)"
-                                    ng-model="$ctrl.questions[69].response.value">
+                            <form-step step-label="'&nbsp;&nbsp;69'" red-flag="20" response-value="$ctrl.questions[69].response.value">
+                                <input id="run-from-nepal-over-18" type="checkbox" ng-model="$ctrl.questions[69].response.value">
                                 <label for="run-from-nepal-over-18">Running away from Nepal/B'desh (18 or older)</label>
                             </form-step>
-                            <form-step step-label="254" red-flag="25">
-                                <input id="running-from-india" type="checkbox" ng-change="$ctrl.updateRedFlags(25,$ctrl.questions[254].response.value)" ng-model="$ctrl.questions[254].response.value">
+                            <form-step step-label="254" red-flag="25" response-value="$ctrl.questions[254].response.value">
+                                <input id="running-from-india" type="checkbox" ng-model="$ctrl.questions[254].response.value">
                                 <label for="running-from-india">Running away from India (under 18)</label>
                             </form-step>
                         </div>

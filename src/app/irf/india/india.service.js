@@ -926,12 +926,12 @@ export default class IndiaService {
             then: f => f({
                 data: [{
                     "errors": [
-                        "Irf number: Invalid form number: invalid Border Station code.",
-                        "Interceptees: At least one interceptee must be listed."
+                        "Must have a valid border station code in order to submit this form",
+                        "At least one interceptee must be recorded in order to submit this form."
                     ],
                     "warnings": [
-                        "Red flags: No red flags are checked",
-                        "Has signature: Form should be signed, though not required"
+                        "No red flags are checked. Are you sure you want to submit this form?",
+                        "Paper form should be signed, though this is not required. Are you sure you want to submit this form?"
                     ]
                 }]
             })

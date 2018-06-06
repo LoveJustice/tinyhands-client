@@ -15,13 +15,13 @@
             </div>
             <div>
                 <form-step step-label="255" red-flag="40" response-value="$ctrl.questions[255].response.value">
-                    <input id="enticed-to-leave" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[255].response.value)" ng-model="$ctrl.questions[255].response.value">
+                    <input id="enticed-to-leave" type="checkbox" ng-model="$ctrl.questions[255].response.value">
                     <label for="enticed-to-leave">Someone enticed them to leave</label>
                 </form-step>
             </div>
             <div>
                 <form-step step-label="247" red-flag="40" response-value="$ctrl.questions[247].response.value">
-                    <input id="paid-travel" type="checkbox" ng-change="$ctrl.updateRedFlags(40,$ctrl.questions[247].response.value)" ng-model="$ctrl.questions[247].response.value">
+                    <input id="paid-travel" type="checkbox" ng-model="$ctrl.questions[247].response.value">
                     <label for="paid-travel">Someone (not a relative) paid their travel expenses</label>
                 </form-step>
             </div>

@@ -15,7 +15,7 @@
             </div>
             <div>
                 <form-step step-label="243" red-flag="40" response-value="$ctrl.questions[243].response.value">
-                    <input id="facebook" type="checkbox" g-model="$ctrl.questions[243].response.value">
+                    <input id="facebook" type="checkbox" ng-model="$ctrl.questions[243].response.value">
                     <label for="facebook">Facebook</label>
                 </form-step>
             </div>
@@ -98,8 +98,7 @@
                                 <label for="married-in-past-two-weeks">Married in the past 2 weeks</label>
                             </form-step>
                             <form-step step-label="25" red-flag="10" response-value="$ctrl.questions[25].response.value">
-                                <input id="married-in-past-two-to-eight-weeks" type="checkbox" ng-change="$ctrl.updateRedFlags(10,$ctrl.questions[25].response.value)"
-                                    ng-model="$ctrl.questions[25].response.value">
+                                <input id="married-in-past-two-to-eight-weeks" type="checkbox" ng-model="$ctrl.questions[25].response.value">
                                 <label for="married-in-past-two-to-eight-weeks">Married within the past 2-8 weeks</label>
                             </form-step>
                         </div>

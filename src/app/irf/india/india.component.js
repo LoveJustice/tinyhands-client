@@ -58,6 +58,13 @@ export class IrfIndiaController {
         return moment(UfcDate).toDate();
     }
 
+    getErrorMessage() {
+        this.IndiaService.getErrorMessages().then(response => {
+            this.errorMessage = errors.data;
+            this.warningMessage = warnings.data;
+        });
+    }
+
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.cards = response.data.cards[0].instances;
@@ -129,6 +136,21 @@ export class IrfIndiaController {
         });
     }
 
+    setErrorMessage(errorId) {
+        /*
+             if () {
+                 //Checks if there are answers for question 1
+                 //Checks if there is an answer for interceptee question
+             }
+             if(){
+                 //checks question 151 for answer
+                 //checks for red flags
+             }
+             if () {
+                 //Checks to see if the checkbox is checked
+             }
+             */
+    }
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -152,7 +174,8 @@ export class IrfIndiaController {
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
-}
+};
+
 export default {
     templateUrl,
     controller: IrfIndiaController

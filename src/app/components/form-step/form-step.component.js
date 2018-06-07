@@ -20,9 +20,7 @@ export class FormStepController {
     }
 
     setFlagSend(newValue, oldValue) {
-        if (oldValue && newValue) {
-            this.emitFlag(this.redFlag);
-        } else if (!oldValue && newValue) {
+        if ((oldValue && newValue) || (!oldValue && newValue)) {
             this.emitFlag(this.redFlag);
         } else if (oldValue && !newValue) {
             this.emitFlag(-this.redFlag);

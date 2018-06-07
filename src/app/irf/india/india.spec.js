@@ -16,6 +16,13 @@ describe('IrfIndiaController', () => {
         let $scope = {
             $on() {},
         };
+        let $uibModal = {
+            open: () => ({
+                result: {
+                    then: f => f()
+                }
+            })
+        };
         let IndiaService = {
             getIndiaIrf: () => ({
                 then: () => {}
@@ -27,7 +34,57 @@ describe('IrfIndiaController', () => {
                 then: () => {}
             }),
         };
-        vm = new IrfIndiaController($scope, IndiaService);
+        vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService);
+    });
+
+    describe('function openIntercepteeModal', () => {
+        beforeEach(() => {
+            vm.cards = [];
+        });
+
+        it('should call $uibModal open with appropriate options', () => {
+            spyOn(vm.$uibModal, 'open').and.callThrough();
+
+            vm.openIntercepteeModal([], true);
+
+            expect(vm.$uibModal.open).toHaveBeenCalledWith({
+                bindToController: true,
+                controller: jasmine.any(Function),
+                controllerAs: 'IntercepteeModalController',
+                resolve: {
+                    isAdd: jasmine.any(Function),
+                    questions: jasmine.any(Function)
+                },
+                size: 'lg',
+                templateUrl: jasmine.any(String)
+            });
+        });
+
+        it('when isAdd is true should add responses to list of cards in then', () => {
+            vm.openIntercepteeModal([], true);
+
+            expect(vm.cards.length).toEqual(1);
+            expect(vm.cards[0]).toEqual({
+                responses: [{
+                    question_id: 7,
+                    response: {}
+                }, {
+                    question_id: 8,
+                    response: {}
+                }, {
+                    question_id: 9,
+                    response: {
+                        gender: {},
+                        name: {},
+                        age: {},
+                        address1: {},
+                        address2: {},
+                        phone: {},
+                        nationality: {},
+                    }
+                }]
+            });
+        });
     });
 
     describe('function setValuesForOtherInputs', () => {

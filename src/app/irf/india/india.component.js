@@ -4,9 +4,11 @@ import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
 import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
-import intercepteesTemplate from './step-templates/interceptees.html';
+import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './india.less';
+import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
+import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
 const DateTimeId = 4;
 const OtherFamilyId = 82;
@@ -16,9 +18,11 @@ const OtherSignId = 134;
 const OtherWebsiteId = 244;
 
 export class IrfIndiaController {
-    constructor($scope, IndiaService) {
+    constructor($scope, $uibModal, constants, IndiaService) {
         'ngInject';
         this.$scope = $scope;
+        this.$uibModal = $uibModal;
+        this.constants = constants;
         this.IndiaService = IndiaService;
 
         this.contacts = [
@@ -65,10 +69,15 @@ export class IrfIndiaController {
 
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
+            this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
         });
+    }
+
+    getIntercepteeImage(url) {
+        return new URL(url, this.constants.BaseUrl).href;
     }
 
     getLocation() {
@@ -77,13 +86,55 @@ export class IrfIndiaController {
         });
     }
 
-    getQuestionIndexById(id) {
-        return _.findIndex(this.responses, x => x.question_id === id);
+    getResponseOfQuestionById(responses, questionId) {
+        return _.find(responses, x => x.question_id === questionId).response;
     }
 
     getStaff() {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
+        });
+    }
+
+    openIntercepteeModal(responses = [], isAdd = false) {
+        if (isAdd) {
+            responses.push({
+                question_id: 7,
+                response: {}
+            });
+            responses.push({
+                question_id: 8,
+                response: {}
+            });
+            responses.push({
+                question_id: 9,
+                response: {
+                    gender: {},
+                    name: {},
+                    age: {},
+                    address1: {},
+                    address2: {},
+                    phone: {},
+                    nationality: {},
+                }
+            });
+        }
+        this.$uibModal.open({
+            bindToController: true,
+            controller: IntercepteeModalController,
+            controllerAs: 'IntercepteeModalController',
+            resolve: {
+                isAdd: () => isAdd,
+                questions: () => _.keyBy(responses, x => x.question_id)
+            },
+            size: 'lg',
+            templateUrl: intercepteeModalTemplate,
+        }).result.then(() => {
+            if (isAdd) {
+                this.cards.push({
+                    responses
+                });
+            }
         });
     }
 

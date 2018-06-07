@@ -5,15 +5,15 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function getOutputFileName(env) {
-    var  addHash = env.production || env.staging;
+    var addHash = env.production || env.staging;
     return `js/[name]${addHash ? '.[chunkhash]' : ''}.js`;
 }
 
 function getServerApiUrl(env) {
-    if(env.production) {
+    if (env.production) {
         return '"https://dreamsuite.org/"';
     }
-    else if(env.staging) {
+    else if (env.staging) {
         return '"https://staging.dreamsuite.org/"';
     }
     else {
@@ -21,10 +21,10 @@ function getServerApiUrl(env) {
     }
 }
 
-var srcPath = path.resolve(__dirname, "src/" );
+var srcPath = path.resolve(__dirname, "src/");
 var appPath = path.resolve(srcPath, "app/");
 
-module.exports = function(env) {
+module.exports = function (env) {
     return {
         context: srcPath,
         entry: {
@@ -32,21 +32,21 @@ module.exports = function(env) {
         },
         module: {
             rules: [
-                {test: /\.js$/, include: srcPath, enforce: 'pre', loader: 'jshint-loader'},
-                {test: /\.js$/, include: srcPath, loader: 'babel-loader'},
+                { test: /\.js$/, include: srcPath, enforce: 'pre', loader: 'jshint-loader' },
+                { test: /\.js$/, include: srcPath, loader: 'babel-loader' },
                 {
                     test: /\.html$/,
                     include: appPath,
                     use: [
-                        {loader: 'ngtemplate-loader?relativeTo=/src/app/'},
-                        {loader: 'html-loader'}
+                        { loader: 'ngtemplate-loader?relativeTo=/src/app/' },
+                        { loader: 'html-loader' }
                     ]
                 },
                 {
                     test: /\.less$/,
                     use: [
                         'style-loader',
-                        {loader: 'css-loader', options: {importLoaders: 1}},
+                        { loader: 'css-loader', options: { importLoaders: 1 } },
                         'less-loader'
                     ]
                 },
@@ -86,8 +86,8 @@ module.exports = function(env) {
             }),
             new NgAnnotatePlugin(),
             new CopyWebpackPlugin([
-                {from: 'assets/images/', to: 'assets/images/'},
-                {from: 'favicon.ico'}
+                { from: 'assets/images/', to: 'assets/images/' },
+                { from: 'favicon.ico' }
             ]),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',

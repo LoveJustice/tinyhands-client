@@ -136,12 +136,6 @@ export class IrfIndiaController {
         });
     }
 
-    setupFlagListener() {
-        this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
-        });
-    }
-
     setOtherQuestionValues(valueId) {
         let valueSet = this.questions[valueId].response.value;
         this.questions[valueId].response.value = valueSet || '';
@@ -157,6 +151,12 @@ export class IrfIndiaController {
         }
     }
 
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
+        });
+    }
+
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         this.otherRedFlag = this.setOtherQuestionValues(OtherRedFlagId);
@@ -165,7 +165,6 @@ export class IrfIndiaController {
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
-
 }
 
 export default {

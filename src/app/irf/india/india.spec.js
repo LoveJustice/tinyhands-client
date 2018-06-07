@@ -97,19 +97,6 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function setupFlagListener', () => {
-        it('should call incrementRedFlags with data from $on', () => {
-            vm.$scope.$on = (a, b) => b({}, {
-                numberOfFlagsToAdd: 21,
-            });
-            spyOn(vm, 'incrementRedFlags');
-
-            vm.setupFlagListener();
-
-            expect(vm.incrementRedFlags).toHaveBeenCalledWith(21);
-        });
-    });
-
     describe('function setOtherQuestionValues', () => {
         beforeEach(() => {
             vm.questions = {
@@ -176,6 +163,19 @@ describe('IrfIndiaController', () => {
 
             expect(temp).toEqual('I am another contact');
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');
+        });
+    });
+
+    describe('function setupFlagListener', () => {
+        it('should call incrementRedFlags with data from $on', () => {
+            vm.$scope.$on = (a, b) => b({}, {
+                numberOfFlagsToAdd: 21,
+            });
+            spyOn(vm, 'incrementRedFlags');
+
+            vm.setupFlagListener();
+
+            expect(vm.incrementRedFlags).toHaveBeenCalledWith(21);
         });
     });
 

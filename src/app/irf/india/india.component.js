@@ -194,10 +194,10 @@ export class IrfIndiaController {
     setWarningMessage() {
         let activeWarnings = [];
         if (!this.ignoreWarnings && this.messagesEnabled) {
-            if (!this.questions[SignedId].response.value) { //checks question 151 for answer
+            if (!this.questions[SignedId].response.value) {
                 activeWarnings.push(this.warningMessage[NoSignatureWarning]);
             }
-            if (this.redFlagTotal === 0) { //checks for red flags
+            if (this.redFlagTotal === 0) {
                 activeWarnings.push(this.warningMessage[NoRedFlagsWarning]);
             }
         }

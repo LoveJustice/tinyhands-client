@@ -926,7 +926,7 @@ export default class IndiaService {
             then: f => f({
                 data: [{
                     "errors": [
-                        "Must have a valid border station code in order to submit this form.",
+                        "Must have a Irf number in order to submit this form.",
                         "At least one interceptee must be recorded in order to submit this form."
                     ],
                     "warnings": [

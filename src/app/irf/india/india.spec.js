@@ -10,6 +10,7 @@ const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const SignedId = 151;
 
 describe('IrfIndiaController', () => {
     let vm;
@@ -93,6 +94,7 @@ describe('IrfIndiaController', () => {
 
     describe('function setErrorMessage', () => {
         beforeEach(() => {
+            vm.messagesEnabled = true;
             vm.questions = {
 
                 [IrfNumberId]: {
@@ -116,8 +118,7 @@ describe('IrfIndiaController', () => {
             expect(empty).toEqual([]);
         });
 
-        it('when messagesEnabled is true, if response value of Irf number is null, should add invalid border station error message to the 0 index of returned array', () => {
-            vm.messagesEnabled = true;
+        it('when messagesEnabled is true, if response value of Irf number is null, should push invalid border station error message to returned array', () => {
             vm.questions[IrfNumberId].response.value = '';
 
             let errors = vm.setErrorMessage();
@@ -126,7 +127,6 @@ describe('IrfIndiaController', () => {
         });
 
         it('when messagesEnabled is true, and size of cards array is 0, push interceptee error message on returned array', () => {
-            vm.messagesEnabled = true;
             vm.cards = [];
 
             let errors = vm.setErrorMessage();
@@ -135,7 +135,6 @@ describe('IrfIndiaController', () => {
         });
 
         it('when messagesEnabled is true, response value of Irf Number is null, and size of cards array is 0, push invalid border station and interceptee error message on returned array', () => {
-            vm.messagesEnabled = true;
             vm.questions[IrfNumberId].response.value = '';
             vm.cards = [];
 
@@ -263,6 +262,68 @@ describe('IrfIndiaController', () => {
 
             expect(temp).toEqual('I am another contact');
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');
+        });
+    });
+
+    describe('function setWarningMessage', () => {
+        beforeEach(() => {
+            vm.messagesEnabled = true;
+            vm.ignoreWarnings = false;
+            vm.questions = {
+
+                [SignedId]: {
+                    question_id: SignedId,
+                    response: {
+                        value: "MBZ950"
+                    }
+                },
+            };
+            vm.warningMessage = [
+                "No red flags are checked. Are you sure you want to submit this form?",
+                "Paper form should be signed, though this is not required. Are you sure you want to submit this form?"
+            ];
+        });
+
+        it('When messagesEnabled is false, return an empty array of warnings', () => {
+            vm.messagesEnabled = false;
+
+            let empty = vm.setWarningMessage();
+
+            expect(empty).toEqual([]);
+        });
+
+        it('When ignoreWarnings is true, return an empty array of warnings', () => {
+            vm.ignoreWarnings = true;
+
+            let empty = vm.setWarningMessage();
+
+            expect(empty).toEqual([]);
+        });
+
+        it('when messagesEnabled is true and ignoreWarnings is false, if redFlag total is 0, should push red flag warning on returned array ', () => {
+            vm.redFlagTotal = 0;
+
+            let errors = vm.setWarningMessage();
+
+            expect(errors[0]).toEqual("No red flags are checked. Are you sure you want to submit this form?");
+        });
+
+        it('when messagesEnabled is true, ignoreWarnings is false, and signed is false, push not signed warning on returned array', () => {
+            vm.questions[SignedId].response.value = false;
+
+            let errors = vm.setWarningMessage();
+
+            expect(errors[0]).toEqual("Paper form should be signed, though this is not required. Are you sure you want to submit this form?");
+        });
+
+        it('when messagesEnabled is true, ignoreWarnings is false, RedFlagTotal is 0, and signature is false, push invalid border station and interceptee error message on returned array', () => {
+            vm.questions[SignedId].response.value = false;
+            vm.redFlagTotal = 0;
+
+            let errors = vm.setWarningMessage();
+
+            expect(errors[0]).toEqual("Paper form should be signed, though this is not required. Are you sure you want to submit this form?");
+            expect(errors[1]).toEqual("No red flags are checked. Are you sure you want to submit this form?");
         });
     });
 });

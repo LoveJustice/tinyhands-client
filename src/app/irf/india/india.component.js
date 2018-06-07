@@ -134,7 +134,7 @@ export class IrfIndiaController {
 
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.updateRedFlags(flagData.flagNum);
+            this.updateRedFlagCount(flagData.flagAmount);
         });
     }
 
@@ -162,8 +162,8 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 
-    updateRedFlags(flagAdd) {
-        this.redFlagTotal += flagAdd;
+    updateRedFlagCount(flagAmount) {
+        this.redFlagTotal += flagAmount;
     }
 }
 

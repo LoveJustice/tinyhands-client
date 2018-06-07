@@ -35,7 +35,7 @@ describe('FormStepController', () => {
             vm.emitFlag(35);
 
             expect(vm.$scope.$emit).toHaveBeenCalledWith('flagTotalCheck', {
-                flagNum: 35,
+                flagAmount: 35,
             });
         });
     });

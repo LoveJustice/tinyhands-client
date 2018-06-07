@@ -90,13 +90,13 @@ describe('IrfIndiaController', () => {
     describe('function setupFlagListener', () => {
         it('should call updateRedFlags with data from $on', () => {
             vm.$scope.$on = (a, b) => b({}, {
-                flagNum: 21,
+                flagAmount: 21,
             });
-            spyOn(vm, 'updateRedFlags');
+            spyOn(vm, 'updateRedFlagCount');
 
             vm.setupFlagListener();
 
-            expect(vm.updateRedFlags).toHaveBeenCalledWith(21);
+            expect(vm.updateRedFlagCount).toHaveBeenCalledWith(21);
         });
     });
 
@@ -220,11 +220,11 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function updateRedFlags', () => {
+    describe('function updateRedFlagCount', () => {
         it('should add what is passed in', () => {
             vm.redFlagTotal = 0;
 
-            vm.updateRedFlags(42);
+            vm.updateRedFlagCount(42);
 
             expect(vm.redFlagTotal).toEqual(42);
         });

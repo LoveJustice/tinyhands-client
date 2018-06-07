@@ -15,7 +15,7 @@ export class FormStepController {
 
     emitFlag(amountToAdd) {
         this.$scope.$emit('flagTotalCheck', {
-            flagNum: amountToAdd
+            flagAmount: amountToAdd
         });
     }
 

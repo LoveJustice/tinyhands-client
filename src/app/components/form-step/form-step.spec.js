@@ -16,7 +16,7 @@ describe('FormStepController', () => {
         vm.redFlag = 35;
     });
 
-    describe('$onInit', () => {
+    describe('function $onInit', () => {
 
         it('when class is initialized, should call emitFlag with true as initializing parameter', () => {
             vm.$scope.$watch = (a, b) => b(true, true);
@@ -37,7 +37,7 @@ describe('FormStepController', () => {
         });
     });
 
-    describe('emitFlag()', () => {
+    describe('function emitFlag()', () => {
         it('should call $emit with flagTotalCheck and object', () => {
             spyOn(vm.$scope, '$emit');
 

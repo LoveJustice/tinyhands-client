@@ -57,12 +57,6 @@ export class IrfIndiaController {
         this.getStaff();
     }
 
-    setupFlagListener() {
-        this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.updateRedFlags(flagData.flagNum, flagData.flagValue, flagData.flagInitializing);
-        });
-    }
-
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
     }
@@ -138,6 +132,18 @@ export class IrfIndiaController {
         });
     }
 
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.updateRedFlags(flagData.flagNum, flagData.flagValue, flagData.flagInitializing);
+        });
+    }
+
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        this.questions[valueId].response.value = valueSet || '';
+        return !!valueSet;
+    }
+
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -145,12 +151,6 @@ export class IrfIndiaController {
             this.questions[valueId].response.value = 'Other';
             return value;
         }
-    }
-
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
     }
 
     setValuesForOtherInputs() {

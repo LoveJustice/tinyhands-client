@@ -87,54 +87,18 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function setValuesForOtherInputs', () => {
-        beforeEach(() => {
-            vm.questions = {
-                [DateId]: {
-                    question_id: [DateId],
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherContactId]: {
-                    question_id: OtherContactId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherFamilyId]: {
-                    question_id: OtherFamilyId,
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherSignId]: {
-                    question_id: OtherSignId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherWebsiteId]: {
-                    question_id: OtherWebsiteId,
-                    response: {
-                        value: false
-                    }
-                },
-            };
-        });
+    describe('function setupFlagListener', () => {
+        it('should call updateRedFlags with data from $on', () => {
+            vm.$scope.$on = (a, b) => b({}, {
+                flagNum: 21,
+                flagValue: true,
+                flagInitializing: true
+            });
+            spyOn(vm, 'updateRedFlags');
 
-        it('should set other flags', () => {
-            vm.setValuesForOtherInputs();
+            vm.setupFlagListener(true);
 
-            expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
-            expect(vm.otherSign).toEqual(false);
+            expect(vm.updateRedFlags).toHaveBeenCalledWith(21, true, true);
         });
     });
 
@@ -207,6 +171,57 @@ describe('IrfIndiaController', () => {
         });
     });
 
+    describe('function setValuesForOtherInputs', () => {
+        beforeEach(() => {
+            vm.questions = {
+                [DateId]: {
+                    question_id: [DateId],
+                    response: {
+                        value: ''
+                    }
+                },
+                [OtherContactId]: {
+                    question_id: OtherContactId,
+                    response: {
+                        value: false
+                    }
+                },
+                [OtherFamilyId]: {
+                    question_id: OtherFamilyId,
+                    response: {
+                        value: ''
+                    }
+                },
+                [OtherRedFlagId]: {
+                    question_id: OtherRedFlagId,
+                    response: {
+                        value: false
+                    }
+                },
+                [OtherSignId]: {
+                    question_id: OtherSignId,
+                    response: {
+                        value: false
+                    }
+                },
+                [OtherWebsiteId]: {
+                    question_id: OtherWebsiteId,
+                    response: {
+                        value: false
+                    }
+                },
+            };
+        });
+
+        it('should set other flags', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.otherRedFlag).toEqual(false);
+            expect(vm.otherWebsite).toEqual(false);
+            expect(vm.otherSign).toEqual(false);
+        });
+    });
+
     describe('function updateRedFlags', () => {
         it('when value is true, add flagValue to redFlagTotal', () => {
             vm.redFlagTotal = 20;
@@ -238,21 +253,6 @@ describe('IrfIndiaController', () => {
             vm.updateRedFlags(100, undefined, false);
 
             expect(vm.redFlagTotal).toEqual(300);
-        });
-    });
-
-    describe('function flagListener', () => {
-        it('should call updateRedFlags with data from $on', () => {
-            vm.$scope.$on = (a, b) => b({}, {
-                flagNum: 21,
-                flagValue: true,
-                flagInitializing: true
-            });
-            spyOn(vm, 'updateRedFlags');
-
-            vm.flagListener(true);
-
-            expect(vm.updateRedFlags).toHaveBeenCalledWith(21, true, true);
         });
     });
 });

@@ -91,14 +91,12 @@ describe('IrfIndiaController', () => {
         it('should call updateRedFlags with data from $on', () => {
             vm.$scope.$on = (a, b) => b({}, {
                 flagNum: 21,
-                flagValue: true,
-                flagInitializing: true
             });
             spyOn(vm, 'updateRedFlags');
 
-            vm.setupFlagListener(true);
+            vm.setupFlagListener();
 
-            expect(vm.updateRedFlags).toHaveBeenCalledWith(21, true, true);
+            expect(vm.updateRedFlags).toHaveBeenCalledWith(21);
         });
     });
 
@@ -223,36 +221,12 @@ describe('IrfIndiaController', () => {
     });
 
     describe('function updateRedFlags', () => {
-        it('when value is true, add flagValue to redFlagTotal', () => {
-            vm.redFlagTotal = 20;
+        it('should add what is passed in', () => {
+            vm.redFlagTotal = 0;
 
-            vm.updateRedFlags(50, true, true);
+            vm.updateRedFlags(42);
 
-            expect(vm.redFlagTotal).toEqual(70);
-        });
-
-        it('when value is false and initializing is false, subtract flagValue from redFlagTotal', () => {
-            vm.redFlagTotal = 300;
-
-            vm.updateRedFlags(100, false, false);
-
-            expect(vm.redFlagTotal).toEqual(200);
-        });
-
-        it('when value is false and initializing is true, do nothing', () => {
-            vm.redFlagTotal = 300;
-
-            vm.updateRedFlags(100, false, true);
-
-            expect(vm.redFlagTotal).toEqual(300);
-        });
-
-        it('when value is undefined, do nothing', () => {
-            vm.redFlagTotal = 300;
-
-            vm.updateRedFlags(100, undefined, false);
-
-            expect(vm.redFlagTotal).toEqual(300);
+            expect(vm.redFlagTotal).toEqual(42);
         });
     });
 });

@@ -134,7 +134,7 @@ export class IrfIndiaController {
 
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.updateRedFlags(flagData.flagNum, flagData.flagValue, flagData.flagInitializing);
+            this.updateRedFlags(flagData.flagNum);
         });
     }
 
@@ -162,12 +162,8 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 
-    updateRedFlags(flagValue, value, initializing) {
-        if (value === true) {
-            this.redFlagTotal += flagValue;
-        } else if (value !== undefined && !initializing) {
-            this.redFlagTotal -= flagValue;
-        }
+    updateRedFlags(flagAdd) {
+        this.redFlagTotal += flagAdd;
     }
 }
 

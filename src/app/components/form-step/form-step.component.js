@@ -9,20 +9,24 @@ export class FormStepController {
 
     $onInit() {
         this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
-            if (oldValue === newValue) {
-                this.emitFlag(true);
-            } else {
-                this.emitFlag(false);
-            }
+            this.setFlagSend(newValue, oldValue);
         });
     }
 
-    emitFlag(initializing) {
+    emitFlag(amountToAdd) {
         this.$scope.$emit('flagTotalCheck', {
-            flagNum: this.redFlag,
-            flagValue: this.responseValue,
-            flagInitializing: initializing
+            flagNum: amountToAdd
         });
+    }
+
+    setFlagSend(newValue, oldValue) {
+        if (oldValue && newValue) {
+            this.emitFlag(this.redFlag);
+        } else if (!oldValue && newValue) {
+            this.emitFlag(this.redFlag);
+        } else if (oldValue && !newValue) {
+            this.emitFlag(-this.redFlag);
+        }
     }
 }
 

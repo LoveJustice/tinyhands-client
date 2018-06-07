@@ -17,23 +17,14 @@ describe('FormStepController', () => {
     });
 
     describe('function $onInit', () => {
-
-        it('when class is initialized, should call emitFlag with true as initializing parameter', () => {
-            vm.$scope.$watch = (a, b) => b(true, true);
-            spyOn(vm, 'emitFlag');
-
-            vm.$onInit();
-
-            expect(vm.emitFlag).toHaveBeenCalledWith(true);
-        });
-
-        it('when responseValue changes, should call emitFlag with false as initializing parameter', () => {
+        it('should call setFlagSend with newValue and oldValue', () => {
             vm.$scope.$watch = (a, b) => b(true, false);
-            spyOn(vm, 'emitFlag');
+
+            spyOn(vm, 'setFlagSend');
 
             vm.$onInit();
 
-            expect(vm.emitFlag).toHaveBeenCalledWith(false);
+            expect(vm.setFlagSend).toHaveBeenCalledWith(true, false);
         });
     });
 
@@ -41,13 +32,46 @@ describe('FormStepController', () => {
         it('should call $emit with flagTotalCheck and object', () => {
             spyOn(vm.$scope, '$emit');
 
-            vm.emitFlag(true);
+            vm.emitFlag(35);
 
             expect(vm.$scope.$emit).toHaveBeenCalledWith('flagTotalCheck', {
                 flagNum: 35,
-                flagValue: false,
-                flagInitializing: true
             });
+        });
+    });
+
+    describe('function setFlagSend', () => {
+
+        it('when newValue and oldValue are true, call emit flag with red flag', () => {
+            spyOn(vm, 'emitFlag');
+            vm.redFlag = 2800;
+            vm.setFlagSend(true, true);
+
+            expect(vm.emitFlag).toHaveBeenCalledWith(2800);
+        });
+
+        it('when newValue and oldValue are false, do nothing', () => {
+            spyOn(vm, 'emitFlag');
+            vm.redFlag = 2800;
+            vm.setFlagSend(false, false);
+
+            expect(vm.emitFlag).toHaveBeenCalledTimes(0);
+        });
+
+        it('when newValue is true and oldValue is false, call emit flag with red flag', () => {
+            spyOn(vm, 'emitFlag');
+            vm.redFlag = 500000;
+            vm.setFlagSend(true, false);
+
+            expect(vm.emitFlag).toHaveBeenCalledWith(500000);
+        });
+
+        it('when newValue is false and oldValue is true, call emit flag with red flag', () => {
+            spyOn(vm, 'emitFlag');
+            vm.redFlag = 420;
+            vm.setFlagSend(false, true);
+
+            expect(vm.emitFlag).toHaveBeenCalledWith(-420);
         });
     });
 });

@@ -63,6 +63,7 @@ export class IrfIndiaController {
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
+        this.watchMessages();
     }
 
     formatDate(UfcDate) {
@@ -70,16 +71,6 @@ export class IrfIndiaController {
     }
 
     getErrorData() {
-        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.setErrorMessage();
-            }
-        });
-        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.setWarningMessage();
-            }
-        });
         this.IndiaService.getErrorMessages().then(response => {
             this.errorMessage = response.data[0].errors;
             this.warningMessage = response.data[0].warnings;
@@ -176,6 +167,12 @@ export class IrfIndiaController {
         return activeErrors;
     }
 
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        this.questions[valueId].response.value = valueSet || '';
+        return !!valueSet;
+    }
+
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -183,12 +180,6 @@ export class IrfIndiaController {
             this.questions[valueId].response.value = 'Other';
             return value;
         }
-    }
-
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
     }
 
     setValuesForOtherInputs() {
@@ -217,6 +208,19 @@ export class IrfIndiaController {
         this.messagesEnabled = true;
         this.setErrorMessage();
         this.setWarningMessage();
+    }
+
+    watchMessages() {
+        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.setErrorMessage();
+            }
+        });
+        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.setWarningMessage();
+            }
+        });
     }
 }
 

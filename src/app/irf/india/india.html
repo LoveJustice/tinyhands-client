@@ -21,8 +21,8 @@
         </div>
         <div class="col-xs-6 text-right">
 
-            <input id="ignore" type="checkbox" ng-model="$ctrl.ignoreWarnings">
-            <label for="ignore">Ignore warnings</label>
+            <input id="ignore" type="checkbox" ng-if="$ctrl.messagesEnabled" ng-model="$ctrl.ignoreWarnings">
+            <label for="ignore" ng-if="$ctrl.messagesEnabled">Ignore warnings</label>
             <button class="btn btn-success" ng-click="$ctrl.submit()">Submit</button>
         </div>
     </div>

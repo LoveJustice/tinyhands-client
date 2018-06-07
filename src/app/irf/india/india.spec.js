@@ -4,6 +4,7 @@ import {
 from "./india.component";
 
 const DateId = 4;
+const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
@@ -87,6 +88,61 @@ describe('IrfIndiaController', () => {
                     }
                 }]
             });
+        });
+    });
+
+    describe('function setErrorMessage', () => {
+        beforeEach(() => {
+            vm.questions = {
+
+                [IrfNumberId]: {
+                    question_id: IrfNumberId,
+                    response: {
+                        value: "MBZ950"
+                    }
+                },
+            };
+            vm.errorMessage = [
+                "Must have a valid border station code in order to submit this form.",
+                "At least one interceptee must be recorded in order to submit this form."
+            ];
+        });
+
+        it('When messagesEnabled is false, return an empty array of errors', () => {
+            vm.messagesEnabled = false;
+
+            let empty = vm.setErrorMessage();
+
+            expect(empty).toEqual([]);
+        });
+
+        it('when messagesEnabled is true, if response value of Irf number is null, should add invalid border station error message to the 0 index of returned array', () => {
+            vm.messagesEnabled = true;
+            vm.questions[IrfNumberId].response.value = '';
+
+            let errors = vm.setErrorMessage();
+
+            expect(errors[0]).toEqual("Must have a valid border station code in order to submit this form.");
+        });
+
+        it('when messagesEnabled is true, and size of cards array is 0, push interceptee error message on returned array', () => {
+            vm.messagesEnabled = true;
+            vm.cards = [];
+
+            let errors = vm.setErrorMessage();
+
+            expect(errors[0]).toEqual("At least one interceptee must be recorded in order to submit this form.");
+        });
+
+        it('when messagesEnabled is true, response value of Irf Number is null, and size of cards array is 0, push invalid border station and interceptee error message on returned array', () => {
+            vm.messagesEnabled = true;
+            vm.questions[IrfNumberId].response.value = '';
+            vm.cards = [];
+
+            let errors = vm.setErrorMessage();
+
+            expect(errors[0]).toEqual("Must have a valid border station code in order to submit this form.");
+            expect(errors[1]).toEqual("At least one interceptee must be recorded in order to submit this form.");
         });
     });
 

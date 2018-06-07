@@ -18,6 +18,8 @@ import StickyHeaderService from './services/stickyHeader.service';
 import UtilService from './services/util.service';
 import TransitionOnBefore from './TransitionOnBefore';
 
+import FormStepComponent from '../components/form-step/form-step.component';
+
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 import Spinner from './directives/spinner/spinner.directive';
 import SpinnerOverlay from './directives/spinnerOverlay/spinnerOverlay.directive';
@@ -28,7 +30,7 @@ import CapitalizeFilter from './filters/capitalize.filter';
 export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'ui.validate', uiRouter, 'angularjs-dropdown-multiselect'])
     .run(TransitionOnBefore)
     .config(config)
-    
+
     .filter('capitalize', CapitalizeFilter)
     .filter('monthName', MonthFilter)
 
@@ -41,6 +43,8 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'u
     .service('SpinnerOverlayService', SpinnerOverlayService)
     .service('StickyHeader', StickyHeaderService)
     .service('UtilService', UtilService)
+
+    .component('formStep', FormStepComponent)
 
     .directive('confirmButton', ConfirmButton)
     .directive('spinner', Spinner)

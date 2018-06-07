@@ -92,6 +92,20 @@ describe('IrfIndiaController', () => {
         });
     });
 
+    describe('function save', () => {
+        it('should set messagesEnabled to true and call setErrorMessage and setWarningMessage', () => {
+            vm.messagesEnabled = false;
+            spyOn(vm, 'setErrorMessage');
+            spyOn(vm, 'setWarningMessage');
+
+            vm.save();
+
+            expect(vm.messagesEnabled).toEqual(true);
+            expect(vm.setErrorMessage).toHaveBeenCalled();
+            expect(vm.setWarningMessage).toHaveBeenCalled();
+        });
+    });
+
     describe('function setErrorMessage', () => {
         beforeEach(() => {
             vm.messagesEnabled = true;
@@ -100,13 +114,13 @@ describe('IrfIndiaController', () => {
                 [IrfNumberId]: {
                     question_id: IrfNumberId,
                     response: {
-                        value: "MBZ950"
+                        value: 'MBZ950'
                     }
                 },
             };
             vm.errorMessage = [
-                "Must have a valid border station code in order to submit this form.",
-                "At least one interceptee must be recorded in order to submit this form."
+                'Must have a valid border station code in order to submit this form.',
+                'At least one interceptee must be recorded in order to submit this form.'
             ];
         });
 
@@ -131,7 +145,7 @@ describe('IrfIndiaController', () => {
 
             let errors = vm.setErrorMessage();
 
-            expect(errors[0]).toEqual("At least one interceptee must be recorded in order to submit this form.");
+            expect(errors[0]).toEqual('At least one interceptee must be recorded in order to submit this form.');
         });
 
         it('when messagesEnabled is true, response value of Irf Number is null, and size of cards array is 0, push invalid border station and interceptee error message on returned array', () => {
@@ -140,8 +154,8 @@ describe('IrfIndiaController', () => {
 
             let errors = vm.setErrorMessage();
 
-            expect(errors[0]).toEqual("Must have a valid border station code in order to submit this form.");
-            expect(errors[1]).toEqual("At least one interceptee must be recorded in order to submit this form.");
+            expect(errors[0]).toEqual('Must have a valid border station code in order to submit this form.');
+            expect(errors[1]).toEqual('At least one interceptee must be recorded in order to submit this form.');
         });
     });
 
@@ -274,13 +288,13 @@ describe('IrfIndiaController', () => {
                 [SignedId]: {
                     question_id: SignedId,
                     response: {
-                        value: "MBZ950"
+                        value: 'MBZ950'
                     }
                 },
             };
             vm.warningMessage = [
-                "No red flags are checked. Are you sure you want to submit this form?",
-                "Paper form should be signed, though this is not required. Are you sure you want to submit this form?"
+                'No red flags are checked. Are you sure you want to submit this form?',
+                'Paper form should be signed, though this is not required. Are you sure you want to submit this form?'
             ];
         });
 
@@ -305,7 +319,7 @@ describe('IrfIndiaController', () => {
 
             let errors = vm.setWarningMessage();
 
-            expect(errors[0]).toEqual("No red flags are checked. Are you sure you want to submit this form?");
+            expect(errors[0]).toEqual('No red flags are checked. Are you sure you want to submit this form?');
         });
 
         it('when messagesEnabled is true, ignoreWarnings is false, and signed is false, push not signed warning on returned array', () => {
@@ -313,7 +327,7 @@ describe('IrfIndiaController', () => {
 
             let errors = vm.setWarningMessage();
 
-            expect(errors[0]).toEqual("Paper form should be signed, though this is not required. Are you sure you want to submit this form?");
+            expect(errors[0]).toEqual('Paper form should be signed, though this is not required. Are you sure you want to submit this form?');
         });
 
         it('when messagesEnabled is true, ignoreWarnings is false, RedFlagTotal is 0, and signature is false, push invalid border station and interceptee error message on returned array', () => {
@@ -322,8 +336,41 @@ describe('IrfIndiaController', () => {
 
             let errors = vm.setWarningMessage();
 
-            expect(errors[0]).toEqual("Paper form should be signed, though this is not required. Are you sure you want to submit this form?");
-            expect(errors[1]).toEqual("No red flags are checked. Are you sure you want to submit this form?");
+            expect(errors[0]).toEqual('Paper form should be signed, though this is not required. Are you sure you want to submit this form?');
+            expect(errors[1]).toEqual('No red flags are checked. Are you sure you want to submit this form?');
+        });
+    });
+
+    describe('function submit', () => {
+        it('should set messagesEnabled to true and call setErrorMessage and setWarningMessage', () => {
+            vm.messagesEnabled = false;
+            spyOn(vm, 'setErrorMessage');
+            spyOn(vm, 'setWarningMessage');
+
+            vm.submit();
+
+            expect(vm.setErrorMessage).toHaveBeenCalled();
+            expect(vm.setWarningMessage).toHaveBeenCalled();
+            expect(vm.messagesEnabled).toEqual(true);
+        });
+    });
+
+    describe('function watchMessages', () => {
+        it('should set watches on to call this.setErrorMEssage when cards changes', () => {
+            vm.$scope.$watch = (a, b) => b([], ["hello"]);
+            spyOn(vm, 'setErrorMessage');
+
+            vm.watchMessages();
+
+            expect(vm.setErrorMessage).toHaveBeenCalled();
+        });
+        it('should set watches on to call this.setWarningMessage when redFlagTotal', () => {
+            vm.$scope.$watch = (a, b) => b(0, 500);
+            spyOn(vm, 'setErrorMessage');
+
+            vm.watchMessages();
+
+            expect(vm.setErrorMessage).toHaveBeenCalled();
         });
     });
 });

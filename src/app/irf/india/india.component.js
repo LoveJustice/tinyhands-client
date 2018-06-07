@@ -90,6 +90,10 @@ export class IrfIndiaController {
         });
     }
 
+    incrementRedFlags(numberOfFlagsToAdd) {
+        this.redFlagTotal += numberOfFlagsToAdd;
+    }
+
     openIntercepteeModal(responses = [], isAdd = false) {
         if (isAdd) {
             responses.push({
@@ -134,7 +138,7 @@ export class IrfIndiaController {
 
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.updateRedFlagCount(flagData.flagAmount);
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
 
@@ -162,9 +166,6 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 
-    updateRedFlagCount(flagAmount) {
-        this.redFlagTotal += flagAmount;
-    }
 }
 
 export default {

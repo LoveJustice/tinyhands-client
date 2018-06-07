@@ -37,6 +37,16 @@ describe('IrfIndiaController', () => {
         vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService);
     });
 
+    describe('function incrementRedFlags', () => {
+        it('should add what is passed in', () => {
+            vm.redFlagTotal = 0;
+
+            vm.incrementRedFlags(42);
+
+            expect(vm.redFlagTotal).toEqual(42);
+        });
+    });
+
     describe('function openIntercepteeModal', () => {
         beforeEach(() => {
             vm.cards = [];
@@ -88,15 +98,15 @@ describe('IrfIndiaController', () => {
     });
 
     describe('function setupFlagListener', () => {
-        it('should call updateRedFlags with data from $on', () => {
+        it('should call incrementRedFlags with data from $on', () => {
             vm.$scope.$on = (a, b) => b({}, {
-                flagAmount: 21,
+                numberOfFlagsToAdd: 21,
             });
-            spyOn(vm, 'updateRedFlagCount');
+            spyOn(vm, 'incrementRedFlags');
 
             vm.setupFlagListener();
 
-            expect(vm.updateRedFlagCount).toHaveBeenCalledWith(21);
+            expect(vm.incrementRedFlags).toHaveBeenCalledWith(21);
         });
     });
 
@@ -217,16 +227,6 @@ describe('IrfIndiaController', () => {
             expect(vm.otherRedFlag).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
             expect(vm.otherSign).toEqual(false);
-        });
-    });
-
-    describe('function updateRedFlagCount', () => {
-        it('should add what is passed in', () => {
-            vm.redFlagTotal = 0;
-
-            vm.updateRedFlagCount(42);
-
-            expect(vm.redFlagTotal).toEqual(42);
         });
     });
 });

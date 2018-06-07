@@ -18,8 +18,9 @@ const OtherSignId = 134;
 const OtherWebsiteId = 244;
 
 export class IrfIndiaController {
-    constructor($uibModal, constants, IndiaService) {
+    constructor($scope, $uibModal, constants, IndiaService) {
         'ngInject';
+        this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.IndiaService = IndiaService;
@@ -38,6 +39,7 @@ export class IrfIndiaController {
         this.otherRedFlag = false;
         this.otherSign = false;
         this.otherWebsite = false;
+        this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
@@ -49,6 +51,7 @@ export class IrfIndiaController {
             finalProceduresTemplate
         ];
 
+        this.setupFlagListener();
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
@@ -85,6 +88,10 @@ export class IrfIndiaController {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
         });
+    }
+
+    incrementRedFlags(numberOfFlagsToAdd) {
+        this.redFlagTotal += numberOfFlagsToAdd;
     }
 
     openIntercepteeModal(responses = [], isAdd = false) {
@@ -129,6 +136,12 @@ export class IrfIndiaController {
         });
     }
 
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        this.questions[valueId].response.value = valueSet || '';
+        return !!valueSet;
+    }
+
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -138,10 +151,10 @@ export class IrfIndiaController {
         }
     }
 
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
+        });
     }
 
     setValuesForOtherInputs() {
@@ -153,6 +166,7 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 }
+
 export default {
     templateUrl,
     controller: IrfIndiaController

@@ -51,13 +51,13 @@ export class IrfIndiaController {
             finalProceduresTemplate
         ];
 
-        this.flagListener();
+        this.setupFlagListener();
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
     }
 
-    flagListener() {
+    setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
             this.updateRedFlags(flagData.flagNum, flagData.flagValue, flagData.flagInitializing);
         });

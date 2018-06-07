@@ -63,6 +63,7 @@ export class IrfIndiaController {
         this.getIndiaIrf();
         this.getLocation();
         this.getStaff();
+        this.setupFlagListener();
         this.watchMessages();
     }
 
@@ -104,6 +105,10 @@ export class IrfIndiaController {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
         });
+    }
+
+    incrementRedFlags(numberOfFlagsToAdd) {
+        this.redFlagTotal += numberOfFlagsToAdd;
     }
 
     openIntercepteeModal(responses = [], isAdd = false) {
@@ -180,6 +185,12 @@ export class IrfIndiaController {
             this.questions[valueId].response.value = 'Other';
             return value;
         }
+    }
+
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
+        });
     }
 
     setValuesForOtherInputs() {

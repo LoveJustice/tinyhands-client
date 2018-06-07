@@ -16,7 +16,8 @@ describe('IrfIndiaController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
-            $watch() {}
+            $watch() {},
+            $on() {}
         };
         let $uibModal = {
             open: () => ({
@@ -40,6 +41,16 @@ describe('IrfIndiaController', () => {
             })
         };
         vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService);
+    });
+
+    describe('function incrementRedFlags', () => {
+        it('should add what is passed in', () => {
+            vm.redFlagTotal = 0;
+
+            vm.incrementRedFlags(42);
+
+            expect(vm.redFlagTotal).toEqual(42);
+        });
     });
 
     describe('function openIntercepteeModal', () => {
@@ -159,57 +170,6 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function setValuesForOtherInputs', () => {
-        beforeEach(() => {
-            vm.questions = {
-                [DateId]: {
-                    question_id: [DateId],
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherContactId]: {
-                    question_id: OtherContactId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherFamilyId]: {
-                    question_id: OtherFamilyId,
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherSignId]: {
-                    question_id: OtherSignId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherWebsiteId]: {
-                    question_id: OtherWebsiteId,
-                    response: {
-                        value: false
-                    }
-                },
-            };
-        });
-
-        it('should set other flags', () => {
-            vm.setValuesForOtherInputs();
-
-            expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
-            expect(vm.otherSign).toEqual(false);
-        });
-    });
-
     describe('function setOtherQuestionValues', () => {
         beforeEach(() => {
             vm.questions = {
@@ -276,6 +236,70 @@ describe('IrfIndiaController', () => {
 
             expect(temp).toEqual('I am another contact');
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');
+        });
+    });
+
+    describe('function setupFlagListener', () => {
+        it('should call incrementRedFlags with data from $on', () => {
+            vm.$scope.$on = (a, b) => b({}, {
+                numberOfFlagsToAdd: 21,
+            });
+            spyOn(vm, 'incrementRedFlags');
+
+            vm.setupFlagListener();
+
+            expect(vm.incrementRedFlags).toHaveBeenCalledWith(21);
+        });
+    });
+
+    describe('function setValuesForOtherInputs', () => {
+        beforeEach(() => {
+            vm.questions = {
+                [DateId]: {
+                    question_id: [DateId],
+                    response: {
+                        value: ''
+                    }
+                },
+                [OtherContactId]: {
+                    question_id: OtherContactId,
+                    response: {
+                        value: false
+                    }
+                },
+                [OtherFamilyId]: {
+                    question_id: OtherFamilyId,
+                    response: {
+                        value: ''
+                    }
+                },
+                [OtherRedFlagId]: {
+                    question_id: OtherRedFlagId,
+                    response: {
+                        value: false
+                    }
+                },
+                [OtherSignId]: {
+                    question_id: OtherSignId,
+                    response: {
+                        value: false
+                    }
+                },
+                [OtherWebsiteId]: {
+                    question_id: OtherWebsiteId,
+                    response: {
+                        value: false
+                    }
+                },
+            };
+        });
+
+        it('should set other flags', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.otherRedFlag).toEqual(false);
+            expect(vm.otherWebsite).toEqual(false);
+            expect(vm.otherSign).toEqual(false);
         });
     });
 

@@ -28,7 +28,7 @@ class MapController {
     }
 
     get apiUrl() {
-        return "https://maps.google.com/maps/api/js?key=AIzaSyChNFPd_bOOnk59AkeKM862OqN80Lvp56g";
+        return "https://maps.google.com/maps/api/js?key=AIzaSyCi7iznUzIHppkD5Jr5iH2dUdnI8pCRM2E";
     }
 
     get fusionLayerOptions() {

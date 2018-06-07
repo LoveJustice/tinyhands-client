@@ -13,6 +13,9 @@ const OtherWebsiteId = 244;
 describe('IrfIndiaController', () => {
     let vm;
     beforeEach(() => {
+        let $scope = {
+            $watch() {}
+        };
         let $uibModal = {
             open: () => ({
                 result: {
@@ -21,6 +24,9 @@ describe('IrfIndiaController', () => {
             })
         };
         let IndiaService = {
+            getErrorMessages: () => ({
+                then: () => {}
+            }),
             getIndiaIrf: () => ({
                 then: () => {}
             }),
@@ -29,9 +35,9 @@ describe('IrfIndiaController', () => {
             }),
             getStaff: () => ({
                 then: () => {}
-            }),
+            })
         };
-        vm = new IrfIndiaController($uibModal, {}, IndiaService);
+        vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService);
     });
 
     describe('function openIntercepteeModal', () => {

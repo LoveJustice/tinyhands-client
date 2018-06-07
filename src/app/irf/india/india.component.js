@@ -59,8 +59,8 @@ export class IrfIndiaController {
         ];
         this.messagesEnabled = false;
 
+        this.getErrorData();
         this.getIndiaIrf();
-        this.getErrorMessage();
         this.getLocation();
         this.getStaff();
     }
@@ -69,7 +69,7 @@ export class IrfIndiaController {
         return moment(UfcDate).toDate();
     }
 
-    getErrorMessage() {
+    getErrorData() {
         this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
             if (newValue !== oldValue) {
                 this.setErrorMessage();

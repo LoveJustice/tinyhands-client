@@ -41,6 +41,7 @@ export class IrfIndiaController {
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
         this.ignoreWarnings = false;
+        this.messagesEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
@@ -57,7 +58,6 @@ export class IrfIndiaController {
             intercepteesTemplate,
             finalProceduresTemplate
         ];
-        this.messagesEnabled = false;
 
         this.getErrorData();
         this.getIndiaIrf();

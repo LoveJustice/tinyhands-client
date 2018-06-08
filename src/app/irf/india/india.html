@@ -17,10 +17,10 @@
     <div id="irf-india-content" class="padding-bottom-40">
         <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template" ng-hide="$ctrl.selectedStep != $index"></div>
     </div>
-    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.setWarningMessage()">
+    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
         <strong>Warning! {{warnings}}</strong>
     </div>
-    <div class="alert alert-danger" ng-repeat="errors in $ctrl.setErrorMessage()">
+    <div class="alert alert-danger" ng-repeat="errors in $ctrl.getErrorMessages()">
         <strong>Error! {{errors}}</strong>
     </div>
     <div class="container-fluid padding-bottom-20">
@@ -28,8 +28,8 @@
             <button class="btn btn-warning" ng-click="$ctrl.save()">Save for Later</button>
         </div>
         <div class="col-xs-6 text-right">
-            <input id="ignore" type="checkbox" ng-if="$ctrl.messagesEnabled" ng-model="$ctrl.ignoreWarnings">
-            <label for="ignore" ng-if="$ctrl.messagesEnabled">Ignore warnings</label>
+            <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox()" ng-model="$ctrl.ignoreWarnings">
+            <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox()">Ignore warnings</label>
             <button class="btn btn-success" ng-click="$ctrl.submit()">Submit</button>
         </div>
     </div>

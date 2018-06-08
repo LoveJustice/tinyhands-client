@@ -78,6 +78,19 @@ export class IrfIndiaController {
         });
     }
 
+    getErrorMessages() {
+        let activeErrors = [];
+        if (this.messagesEnabled) {
+            if (this.questions[IrfNumberId].response.value === '') {
+                activeErrors.push(this.errorMessage[InvalidIrfError]);
+            }
+            if (_.size(this.cards) === 0) {
+                activeErrors.push(this.errorMessage[NoIntercepteesError]);
+            }
+        }
+        return activeErrors;
+    }
+
     getIndiaIrf() {
         this.IndiaService.getIndiaIrf().then(response => {
             this.cards = response.data.cards[0].instances;
@@ -105,6 +118,19 @@ export class IrfIndiaController {
         this.IndiaService.getStaff().then(response => {
             this.staff = response.data;
         });
+    }
+
+    getWarningMessages() {
+        let activeWarnings = [];
+        if (!this.ignoreWarnings && this.messagesEnabled) {
+            if (!this.questions[SignedId].response.value) {
+                activeWarnings.push(this.warningMessage[NoSignatureWarning]);
+            }
+            if (this.redFlagTotal === 0) {
+                activeWarnings.push(this.warningMessage[NoRedFlagsWarning]);
+            }
+        }
+        return activeWarnings;
     }
 
     incrementRedFlags(numberOfFlagsToAdd) {
@@ -155,21 +181,8 @@ export class IrfIndiaController {
 
     save() {
         this.messagesEnabled = true;
-        this.setErrorMessage();
-        this.setWarningMessage();
-    }
-
-    setErrorMessage() {
-        let activeErrors = [];
-        if (this.messagesEnabled) {
-            if (this.questions[IrfNumberId].response.value === '') {
-                activeErrors.push(this.errorMessage[InvalidIrfError]);
-            }
-            if (_.size(this.cards) === 0) {
-                activeErrors.push(this.errorMessage[NoIntercepteesError]);
-            }
-        }
-        return activeErrors;
+        this.getErrorMessages();
+        this.getWarningMessages();
     }
 
     setOtherQuestionValues(valueId) {
@@ -202,34 +215,25 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 
-    setWarningMessage() {
-        let activeWarnings = [];
-        if (!this.ignoreWarnings && this.messagesEnabled) {
-            if (!this.questions[SignedId].response.value) {
-                activeWarnings.push(this.warningMessage[NoSignatureWarning]);
-            }
-            if (this.redFlagTotal === 0) {
-                activeWarnings.push(this.warningMessage[NoRedFlagsWarning]);
-            }
-        }
-        return activeWarnings;
+    showIgnoreWarningsCheckbox() {
+        return (this.messagesEnabled && this.getWarningMessages().length > 0) || this.ignoreWarnings;
     }
 
     submit() {
         this.messagesEnabled = true;
-        this.setErrorMessage();
-        this.setWarningMessage();
+        this.getErrorMessages();
+        this.getWarningMessages();
     }
 
     watchMessages() {
         this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
             if (newValue !== oldValue) {
-                this.setErrorMessage();
+                this.getErrorMessages();
             }
         });
         this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
             if (newValue !== oldValue) {
-                this.setWarningMessage();
+                this.getWarningMessages();
             }
         });
     }

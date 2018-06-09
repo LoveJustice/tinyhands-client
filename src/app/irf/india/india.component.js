@@ -1,3 +1,4 @@
+import constants from './constants.js';
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
@@ -10,12 +11,9 @@ import './india.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
+
 const DateTimeId = 4;
-const InvalidIrfError = 0;
 const IrfNumberId = 1;
-const NoIntercepteesError = 1;
-const NoRedFlagsWarning = 0;
-const NoSignatureWarning = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
@@ -28,7 +26,7 @@ export class IrfIndiaController {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
-        this.constants = constants;
+        this.constants=constants;
         this.IndiaService = IndiaService;
 
         this.contacts = [
@@ -73,8 +71,11 @@ export class IrfIndiaController {
 
     getErrorData() {
         this.IndiaService.getErrorMessages().then(response => {
-            this.errorMessage = response.data[0].errors;
-            this.warningMessage = response.data[0].warnings;
+            this.errorMessageIrfNumber = constants.Notifications.Display.Errors.IrfNumber;
+            this.errorMessageInterceptee = constants.Notifications.Display.Errors.Interceptee;
+            this.warningMessageRedFlags = constants.Notifications.Display.Warnings.RedFlags;
+            this.warningMessageNoSignature = constants.Notifications.Display.Warnings.NoSignature;
+
         });
     }
 
@@ -82,10 +83,10 @@ export class IrfIndiaController {
         let activeErrors = [];
         if (this.messagesEnabled) {
             if (this.questions[IrfNumberId].response.value === '') {
-                activeErrors.push(this.errorMessage[InvalidIrfError]);
+                activeErrors.push(this.errorMessageIrfNumber);
             }
             if (_.size(this.cards) === 0) {
-                activeErrors.push(this.errorMessage[NoIntercepteesError]);
+                activeErrors.push(this.errorMessageInterceptee);
             }
         }
         return activeErrors;
@@ -124,10 +125,10 @@ export class IrfIndiaController {
         let activeWarnings = [];
         if (!this.ignoreWarnings && this.messagesEnabled) {
             if (!this.questions[SignedId].response.value) {
-                activeWarnings.push(this.warningMessage[NoSignatureWarning]);
+                activeWarnings.push(this.warningMessageNoSignature);
             }
             if (this.redFlagTotal === 0) {
-                activeWarnings.push(this.warningMessage[NoRedFlagsWarning]);
+                activeWarnings.push(this.warningMessageRedFlags);
             }
         }
         return activeWarnings;

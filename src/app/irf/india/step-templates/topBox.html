@@ -3,7 +3,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Irf Number: </form-step>
             <div class="col-xs-9">
-                <input type="text" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
+                <input type="text" class="form-control" ng-change="$ctrl.getErrorMessages()" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
             </div>
         </div>
         <div class="col-md-4 form-group">

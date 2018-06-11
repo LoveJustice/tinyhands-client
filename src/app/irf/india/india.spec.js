@@ -65,7 +65,7 @@ describe('IrfIndiaController', () => {
             vm.errorMessageInterceptee = 'At least one interceptee must be recorded in order to submit this form.';
         });
 
-        it('When messagesEnabled is false, return an empty array of errors', () => {
+        it('when messagesEnabled is false, return an empty array of errors', () => {
             vm.messagesEnabled = false;
 
             let empty = vm.getErrorMessages();
@@ -116,7 +116,7 @@ describe('IrfIndiaController', () => {
             vm.warningMessageNoSignature = 'Paper form should be signed, though this is not required. Are you sure you want to submit this form?';
         });
 
-        it('When messagesEnabled is false, return an empty array of warnings', () => {
+        it('when messagesEnabled is false, return an empty array of warnings', () => {
             vm.messagesEnabled = false;
 
             let empty = vm.getWarningMessages();
@@ -124,7 +124,7 @@ describe('IrfIndiaController', () => {
             expect(empty).toEqual([]);
         });
 
-        it('When ignoreWarnings is true, return an empty array of warnings', () => {
+        it('when ignoreWarnings is true, return an empty array of warnings', () => {
             vm.ignoreWarnings = true;
 
             let empty = vm.getWarningMessages();

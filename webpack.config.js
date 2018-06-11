@@ -17,7 +17,7 @@ function getServerApiUrl(env) {
         return '"https://staging.dreamsuite.org/"';
     }
     else {
-        return '"http://localhost/"';
+        return '"https://staging.dreamsuite.org/"';
     }
 }
 

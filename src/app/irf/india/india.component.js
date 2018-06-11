@@ -11,7 +11,6 @@ import './india.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
-
 const DateTimeId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;

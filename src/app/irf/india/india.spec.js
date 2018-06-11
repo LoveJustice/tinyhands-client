@@ -129,10 +129,12 @@ describe('IrfIndiaController', () => {
                     }
                 },
             };
-            vm.errorMessage = [
-                'Must have a valid border station code in order to submit this form.',
-                'At least one interceptee must be recorded in order to submit this form.'
-            ];
+            vm.errorMessageIrfNumber = [
+                'Must have a valid border station code in order to submit this form.'
+            ],
+                vm.errorMessageInterceptee = [
+                    'At least one interceptee must be recorded in order to submit this form.'
+                ];
         });
 
         it('When messagesEnabled is false, return an empty array of errors', () => {
@@ -316,10 +318,12 @@ describe('IrfIndiaController', () => {
                     }
                 },
             };
-            vm.warningMessage = [
-                'No red flags are checked. Are you sure you want to submit this form?',
-                'Paper form should be signed, though this is not required. Are you sure you want to submit this form?'
-            ];
+            vm.warningMessageRedFlags = [
+                'No red flags are checked. Are you sure you want to submit this form?'
+            ],
+                vm.warningMessageNoSignature = [
+                    'Paper form should be signed, though this is not required. Are you sure you want to submit this form?'
+                ];
         });
 
         it('When messagesEnabled is false, return an empty array of warnings', () => {

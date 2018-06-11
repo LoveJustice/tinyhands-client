@@ -26,7 +26,7 @@ export class IrfIndiaController {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
-        this.constants=constants;
+        this.constants = constants;
         this.IndiaService = IndiaService;
 
         this.contacts = [
@@ -70,13 +70,12 @@ export class IrfIndiaController {
     }
 
     getErrorData() {
-        this.IndiaService.getErrorMessages().then(response => {
-            this.errorMessageIrfNumber = constants.Notifications.Display.Errors.IrfNumber;
-            this.errorMessageInterceptee = constants.Notifications.Display.Errors.Interceptee;
-            this.warningMessageRedFlags = constants.Notifications.Display.Warnings.RedFlags;
-            this.warningMessageNoSignature = constants.Notifications.Display.Warnings.NoSignature;
 
-        });
+        this.errorMessageIrfNumber = constants.Notifications.Display.Errors.IrfNumber;
+        this.errorMessageInterceptee = constants.Notifications.Display.Errors.Interceptee;
+        this.warningMessageRedFlags = constants.Notifications.Display.Warnings.RedFlags;
+        this.warningMessageNoSignature = constants.Notifications.Display.Warnings.NoSignature;
+
     }
 
     getErrorMessages() {

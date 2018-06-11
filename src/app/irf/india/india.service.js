@@ -920,21 +920,4 @@ export default class IndiaService {
             })
         };
     }
-
-    getErrorMessages() {
-        return {
-            then: f => f({
-                data: [{
-                    "errors": [
-                        "Must have an Irf number in order to submit this form.",
-                        "At least one interceptee must be recorded in order to submit this form."
-                    ],
-                    "warnings": [
-                        "No red flags are checked. Are you sure you want to submit this form?",
-                        "Paper form should be signed, though this is not required. Are you sure you want to submit this form?"
-                    ]
-                }]
-            })
-        };
-    }
 }

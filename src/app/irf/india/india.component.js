@@ -1,4 +1,4 @@
-import constants from './constants.js';
+import MessageConstants from './constants.js';
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
@@ -70,12 +70,10 @@ export class IrfIndiaController {
     }
 
     getErrorData() {
-
-        this.errorMessageIrfNumber = constants.Notifications.Display.Errors.IrfNumber;
-        this.errorMessageInterceptee = constants.Notifications.Display.Errors.Interceptee;
-        this.warningMessageRedFlags = constants.Notifications.Display.Warnings.RedFlags;
-        this.warningMessageNoSignature = constants.Notifications.Display.Warnings.NoSignature;
-
+        this.errorMessageIrfNumber = MessageConstants.Errors.IrfNumber;
+        this.errorMessageInterceptee = MessageConstants.Errors.Interceptee;
+        this.warningMessageRedFlags = MessageConstants.Warnings.RedFlags;
+        this.warningMessageNoSignature = MessageConstants.Warnings.NoSignature;
     }
 
     getErrorMessages() {

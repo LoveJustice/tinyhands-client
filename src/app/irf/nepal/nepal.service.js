@@ -160,6 +160,13 @@ export default class NepalService {
                         }
                     },
                     {
+                        "question_id": 32,
+                        "storage_id": 1,
+                        "response": {
+                            "value": false
+                        }
+                    },
+                    {
                         "question_id": 36,
                         "storage_id": 4,
                         "response": {
@@ -183,6 +190,13 @@ export default class NepalService {
                     {
                         "question_id": 39,
                         "storage_id": 4,
+                        "response": {
+                            "value": false
+                        }
+                    },
+                    {
+                        "question_id": 40,
+                        "storage_id": 1,
                         "response": {
                             "value": false
                         }
@@ -288,6 +302,34 @@ export default class NepalService {
                     {
                         "question_id": 64,
                         "storage_id": 4,
+                        "response": {
+                            "value": false
+                        }
+                    },
+                    {
+                        "question_id": 65,
+                        "storage_id": 1,
+                        "response": {
+                            "value": false
+                        }
+                    },
+                    {
+                        "question_id": 66,
+                        "storage_id": 1,
+                        "response": {
+                            "value": false
+                        }
+                    },
+                    {
+                        "question_id": 67,
+                        "storage_id": 1,
+                        "response": {
+                            "value": false
+                        }
+                    },
+                    {
+                        "question_id": 68,
+                        "storage_id": 1,
                         "response": {
                             "value": false
                         }

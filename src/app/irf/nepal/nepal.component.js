@@ -1,4 +1,4 @@
-import templateUrl from './india.html';
+import templateUrl from './nepal.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
@@ -6,7 +6,7 @@ import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
 import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
-import './india.less';
+import './nepal.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
@@ -17,13 +17,12 @@ const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
 
-export class IrfIndiaController {
-    constructor($scope, $uibModal, constants, IndiaService) {
+export class IrfNepalController {
+    constructor($uibModal, constants, NepalService) {
         'ngInject';
-        this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.IndiaService = IndiaService;
+        this.NepalService = NepalService;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -39,7 +38,6 @@ export class IrfIndiaController {
         this.otherRedFlag = false;
         this.otherSign = false;
         this.otherWebsite = false;
-        this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
@@ -51,8 +49,7 @@ export class IrfIndiaController {
             finalProceduresTemplate
         ];
 
-        this.setupFlagListener();
-        this.getIndiaIrf();
+        this.getNepalIrf();
         this.getLocation();
         this.getStaff();
     }
@@ -61,8 +58,8 @@ export class IrfIndiaController {
         return moment(UfcDate).toDate();
     }
 
-    getIndiaIrf() {
-        this.IndiaService.getIndiaIrf().then(response => {
+    getNepalIrf() {
+        this.NepalService.getNepalIrf().then(response => {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -75,7 +72,7 @@ export class IrfIndiaController {
     }
 
     getLocation() {
-        this.IndiaService.getLocation().then(response => {
+        this.NepalService.getLocation().then(response => {
             this.location = response.data;
         });
     }
@@ -85,13 +82,9 @@ export class IrfIndiaController {
     }
 
     getStaff() {
-        this.IndiaService.getStaff().then(response => {
+        this.NepalService.getStaff().then(response => {
             this.staff = response.data;
         });
-    }
-
-    incrementRedFlags(numberOfFlagsToAdd) {
-        this.redFlagTotal += numberOfFlagsToAdd;
     }
 
     openIntercepteeModal(responses = [], isAdd = false) {
@@ -136,12 +129,6 @@ export class IrfIndiaController {
         });
     }
 
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
-    }
-
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -151,10 +138,10 @@ export class IrfIndiaController {
         }
     }
 
-    setupFlagListener() {
-        this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
-        });
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        this.questions[valueId].response.value = valueSet || '';
+        return !!valueSet;
     }
 
     setValuesForOtherInputs() {
@@ -166,8 +153,7 @@ export class IrfIndiaController {
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
 }
-
 export default {
     templateUrl,
-    controller: IrfIndiaController
+    controller: IrfNepalController
 };

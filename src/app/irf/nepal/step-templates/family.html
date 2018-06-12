@@ -1,6 +1,29 @@
 <div class="container-fluid">
     <div class="row center-vertical">
         <div class="col-md-4">
+            <div class="padding-bottom-20">Where are you from?
+                <br>(Ask her to describe in detail)</div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <form-step red-flag="35">
+                        <input id="details" type="checkbox" ng-model="$ctrl.questions[71].response.value">
+                        <label for="details">Doesn't know details about village</label>
+                    </form-step>
+                </div>
+                <div class="col-md-6">
+                    <form-step red-flag="15">
+                        <input id="village-info" type="checkbox" ng-model="$ctrl.questions[72].response.value">
+                        <label for="village-info">Reluctant to give info about village</label>
+                    </form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-4">
             <div class="padding-bottom-20">Who is your family?</div>
         </div>
         <div class="col-md-8">

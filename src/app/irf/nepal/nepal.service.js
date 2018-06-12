@@ -310,14 +310,14 @@ export default class NepalService {
                         "question_id": 71,
                         "storage_id": 1,
                         "response": {
-                            "value": "False"
+                            "value": false
                         }
                     },
                     {
                         "question_id": 72,
                         "storage_id": 1,
                         "response": {
-                            "value": "False"
+                            "value": false
                         }
                     },
                     {

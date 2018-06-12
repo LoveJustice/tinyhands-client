@@ -1,24 +1,19 @@
 <div class="container-fluid">
     <div class="row center-vertical">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="margin-top-20 margin-bottom-10">Where are you going, and for what?</div>
-            <div class="row center-vertical">
-                <div class="col-md-9">
-                    <form-step red-flag="45">
-                        <input id="crossing" type="checkbox" ng-model="$ctrl.questions[32].response.value">
-                        <label for="crossing">Was crossing the border but didn't know they were going to India </label>
-                    </form-step>
-                </div>
-            </div>
+            <form-step red-flag="45">
+                <input id="crossing" type="checkbox" ng-model="$ctrl.questions[32].response.value">
+                <label for="crossing">Was crossing the border but didn't know going to India </label>
         </div>
-        <div class="col-md-9 container">
+        <div class="col-md-8 container">
             <div class="row center-vertical">
                 <div class="col-md-4">
                     <form-step>
                         <input id="job" type="checkbox" ng-model="$ctrl.questions[36].response.value">
                         <label for="job">Job</label>
                     </form-step>
-                    <form-step red-flag="55">
+                    <form-step red-flag="80">
                         <input id="going-gulf-work" type="checkbox" ng-model="$ctrl.questions[42].response.value">
                         <label for="going-gulf-work">Going to Gulf for work through India</label>
                     </form-step>

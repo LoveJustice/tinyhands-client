@@ -782,9 +782,9 @@ export default class NepalService {
                                     "response": {
                                         "value": false
                                     }
-                                },
+                                }
                             ]
-                        }, ]
+                        }]
                     }]
                 }
             })

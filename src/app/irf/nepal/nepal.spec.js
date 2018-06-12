@@ -9,6 +9,7 @@ const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const StaffConvincedId = 149;
 
 describe('IrfNepalController', () => {
     let vm;
@@ -123,6 +124,12 @@ describe('IrfNepalController', () => {
                         value: false
                     }
                 },
+                [StaffConvincedId]: {
+                    question_id: StaffConvincedId,
+                    response: {
+                        value: false
+                    }
+                },
             };
         });
 
@@ -132,6 +139,7 @@ describe('IrfNepalController', () => {
             expect(vm.otherRedFlag).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
             expect(vm.otherSign).toEqual(false);
+            expect(vm.staffConvinced).toEqual(false);
         });
     });
 

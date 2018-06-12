@@ -16,6 +16,7 @@ const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const StaffConvincedId = 149;
 
 export class IrfNepalController {
     constructor($uibModal, constants, NepalService) {
@@ -39,6 +40,7 @@ export class IrfNepalController {
         this.otherSign = false;
         this.otherWebsite = false;
         this.selectedStep = 0;
+        this.staffConvinced = false;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -151,6 +153,7 @@ export class IrfNepalController {
         this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
+        this.staffConvinced = this.setOtherQuestionValues(StaffConvincedId);
     }
 }
 export default {

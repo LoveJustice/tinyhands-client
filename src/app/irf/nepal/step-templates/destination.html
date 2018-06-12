@@ -1,45 +1,21 @@
 <div class="container-fluid">
     <div class="row center-vertical">
-        <div class="col-md-3">
-            <div class="padding-bottom-20">Where are you going, and for what?</div>
-            <form-step>
-                <label for="where-going">Destination</label>
-                <input id="where-going" type="text" ng-model="$ctrl.questions[245].response.value">
-            </form-step>
-            <div class="margin-top-20 margin-bottom-10"></div>
-            <div>
-                <form-step red-flag="25">
-                    <input id="doesnt-know-going" type="checkbox" ng-model="$ctrl.questions[246].response.value">
-                    <label for="doesnt-know-going">Doesn't know where they are going</label>
-                </form-step>
-            </div>
-            <div>
-                <form-step red-flag="40">
-                    <input id="enticed-to-leave" type="checkbox" ng-model="$ctrl.questions[255].response.value">
-                    <label for="enticed-to-leave">Someone enticed them to leave</label>
-                </form-step>
-            </div>
-            <div>
-                <form-step red-flag="40">
-                    <input id="paid-travel" type="checkbox" ng-model="$ctrl.questions[247].response.value">
-                    <label for="paid-travel">Someone (not a relative) paid their travel expenses</label>
-                </form-step>
-            </div>
+        <div class="col-md-4">
+            <div class="margin-top-20 margin-bottom-10">Where are you going, and for what?</div>
+            <form-step red-flag="45">
+                <input id="crossing" type="checkbox" ng-model="$ctrl.questions[32].response.value">
+                <label for="crossing">Was crossing the border but didn't know she was going to India </label>
         </div>
-        <div class="col-md-9 container">
+        <div class="col-md-8 container">
             <div class="row center-vertical">
                 <div class="col-md-4">
                     <form-step>
                         <input id="job" type="checkbox" ng-model="$ctrl.questions[36].response.value">
                         <label for="job">Job</label>
                     </form-step>
-                    <form-step red-flag="55">
+                    <form-step red-flag="80">
                         <input id="going-gulf-work" type="checkbox" ng-model="$ctrl.questions[42].response.value">
                         <label for="going-gulf-work">Going to Gulf for work through India</label>
-                    </form-step>
-                    <form-step red-flag="50">
-                        <input id="do-not-know-job-details" type="checkbox" ng-model="$ctrl.questions[248].response.value">
-                        <label for="do-not-know-job-details">Don't know the details of what they will be doing</label>
                     </form-step>
                 </div>
                 <div class="row col-md-8">
@@ -64,7 +40,7 @@
                                 <input id="valid-gulf" type="checkbox" ng-model="$ctrl.questions[54].response.value">
                                 <label for="valid-gulf">Has a valid gulf country visa in passport</label>
                             </form-step>
-                            <form-step red-flag="40">
+                            <form-step red-flag="80">
                                 <input id="passport-broker" type="checkbox" ng-model="$ctrl.questions[55].response.value">
                                 <label for="passport-broker">Passport is with a broker</label>
                             </form-step>
@@ -176,9 +152,59 @@
                             Call school
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="60">
+                            <form-step red-flag="50">
                                 <input id="not-enrolled" type="checkbox" ng-model="$ctrl.questions[64].response.value">
                                 <label for="not-enrolled">Not enrolled in school</label>
+                            </form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step>
+                        <input id="treatment" type="checkbox" ng-model="$ctrl.questions[40].response.value">
+                        <label for="Treatment">
+                            Treatment
+                        </label>
+                    </form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask which hospital, doctor
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="10">
+                                <input id="reluctant-treatment" type="checkbox" ng-model="$ctrl.questions[65].response.value">
+                                <label for="reluctant-treatment">Does not have to give info about treatment</label>
+                            </form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">Check Documents</div>
+                        <div class="col-md-6">
+                            <form-step red-flag="20">
+                                <input id="no-documents" type="checkbox" ng-model="$ctrl.questions[66].response.value">
+                                <label for="no-documents">Does not have medical documents</label>
+                            </form-step>
+                            <form-step red-flag="50">
+                                <input id="fake-documents" type="checkbox" ng-model="$ctrl.questions[67].response.value">
+                                <label for="fake-documents">Fake medical documents</label>
+                            </form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Call Doctor
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="25">
+                                <input id="no-appointment" type="checkbox" ng-model="$ctrl.questions[68].response.value">
+                                <label for="no-appointment">No medical appointment</label>
                             </form-step>
                         </div>
                     </div>
@@ -200,17 +226,13 @@
                             Check where they are from and how old
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="45">
-                                <input id="run-from-nepal-under-18" type="checkbox" ng-model="$ctrl.questions[70].response.value">
-                                <label for="run-from-nepal-under-18">Running away from Nepal/B'desh (under 18)</label>
-                            </form-step>
                             <form-step red-flag="20">
-                                <input id="run-from-nepal-over-18" type="checkbox" ng-model="$ctrl.questions[69].response.value">
-                                <label for="run-from-nepal-over-18">Running away from Nepal/B'desh (18 or older)</label>
+                                <input id="over" type="checkbox" ng-model="$ctrl.questions[69].response.value">
+                                <label for="over">Running away from home (18 years or older)</label>
                             </form-step>
-                            <form-step red-flag="25">
-                                <input id="running-from-india" type="checkbox" ng-model="$ctrl.questions[254].response.value">
-                                <label for="running-from-india">Running away from India (under 18)</label>
+                            <form-step red-flag="50">
+                                <input id="under" type="checkbox" ng-model="$ctrl.questions[70].response.value">
+                                <label for="under">Running away from home (under 18 years old)</label>
                             </form-step>
                         </div>
                     </div>

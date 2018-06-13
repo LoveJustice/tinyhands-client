@@ -16,7 +16,7 @@ export class StaffSelectController {
 
     getStaff() {
         this.StaffService.getStaff().then(response => {
-            this.staff = response.data;
+            this.staff = response.data.results;
         });
     }
 }

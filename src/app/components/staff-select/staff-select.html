@@ -1,0 +1,9 @@
+<chips ng-model="$ctrl.StaffSelected">
+    <chip-tmpl>
+        <div class="default-chip">
+            {{chip}}
+            <span class="glyphicon glyphicon-remove" remove-chip></span>
+        </div>
+    </chip-tmpl>
+    <input ng-model-control chip-control ng-model="$ctrlmodel" uib-typeahead="staff.first_name + ' ' + staff.last_name for staff in $ctrl.staff | filter:$viewValue"></input>
+</chips>

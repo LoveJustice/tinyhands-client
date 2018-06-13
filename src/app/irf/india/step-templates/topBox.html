@@ -41,10 +41,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Staff Name: </form-step>
             <div class="col-xs-9">
-                <select class="form-control" ng-model="$ctrl.questions[6].response.value">
-                    <option ng-repeat="staff in $ctrl.staff" ng-value="staff">{{staff.first_name + ' ' + staff.last_name}}</option>
-                    <option ng-if="!$ctrl.questions[6].response.value.id" ng-value="$ctrl.questions[6].response.value">{{$ctrl.questions[6].response.value}}</option>
-                </select>
+                <staff-select selected-staff="$ctrl.questions[6].response.value"></staff-select>
             </div>
         </div>
     </div>

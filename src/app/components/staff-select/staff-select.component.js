@@ -6,12 +6,12 @@ export class StaffSelectController {
         'ngInject';
         this.StaffService = StaffService;
 
-        this.StaffSelected = [];
+        this.staffSelected = [];
         this.getStaff();
     }
 
     $onInit() {
-        this.StaffSelected.push(this.selectedStaff);
+        this.staffSelected.push(this.storedStaff);
     }
 
     getStaff() {
@@ -23,7 +23,7 @@ export class StaffSelectController {
 
 export default {
     bindings: {
-        selectedStaff: '<?'
+        storedStaff: '<?'
     },
     controller: StaffSelectController,
     templateUrl: StaffSelectTemplateUrl,

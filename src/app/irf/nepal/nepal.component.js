@@ -57,11 +57,11 @@ export class IrfNepalController {
         ];
 
         this.getErrorData();
-        this.getNepalIrf();
         this.getLocation();
+        this.getNepalIrf();
         this.getStaff();
-        this.setupFlaglistner();
-        this.watchMessage();
+        this.setupFlagListener();
+        this.watchMessages();
     }
 
     formatDate(UfcDate) {

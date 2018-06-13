@@ -234,7 +234,6 @@ export class IrfNepalController {
             }
         });
     }
-
 }
 export default {
     templateUrl,

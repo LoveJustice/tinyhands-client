@@ -1,3 +1,4 @@
+import MessageConstants from './constants.js';
 import templateUrl from './nepal.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
@@ -11,15 +12,18 @@ import IntercepteeModalController from './step-templates/interceptees/intercepte
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
 const DateTimeId = 4;
+const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const SignedId = 151;
 
 export class IrfNepalController {
-    constructor($uibModal, constants, NepalService) {
+    constructor($scope, $uibModal, constants, NepalService) {
         'ngInject';
+        this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.NepalService = NepalService;
@@ -33,11 +37,14 @@ export class IrfNepalController {
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
+        this.ignoreWarnings = false;
+        this.messageEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
         this.otherSign = false;
         this.otherWebsite = false;
+        this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
@@ -49,22 +56,36 @@ export class IrfNepalController {
             finalProceduresTemplate
         ];
 
+        this.getErrorData();
         this.getNepalIrf();
         this.getLocation();
         this.getStaff();
+        this.setupFlaglistner();
+        this.watchMessage();
     }
 
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
     }
 
-    getNepalIrf() {
-        this.NepalService.getNepalIrf().then(response => {
-            this.cards = response.data.cards[0].instances;
-            this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, x => x.question_id);
-            this.setValuesForOtherInputs();
-        });
+    getErrorData() {
+        this.errorMessageIrfNumber = MessageConstants.Errors.IrfNumber;
+        this.errorMessageInterceptee = MessageConstants.Errors.Interceptee;
+        this.warningMessageRedFlags = MessageConstants.Warnings.RedFlags;
+        this.warningMessageNoSignature = MessageConstants.Warnings.NoSignature;
+    }
+
+    getErrorMessages() {
+        let activeErrors = [];
+        if (this.messagesEnabled) {
+            if (this.questions[IrfNumberId].response.value === '') {
+                activeErrors.push(this.errorMessageIrfNumber);
+            }
+            if (_.size(this.cards) === 0) {
+                activeErrors.push(this.errorMessageInterceptee);
+            }
+        }
+        return activeErrors;
     }
 
     getIntercepteeImage(url) {
@@ -77,6 +98,15 @@ export class IrfNepalController {
         });
     }
 
+    getNepalIrf() {
+        this.NepalService.getNepalIrf().then(response => {
+            this.cards = response.data.cards[0].instances;
+            this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.setValuesForOtherInputs();
+        });
+    }
+
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
     }
@@ -85,6 +115,23 @@ export class IrfNepalController {
         this.NepalService.getStaff().then(response => {
             this.staff = response.data;
         });
+    }
+
+    getWarningMessages() {
+        let activeWarnings = [];
+        if (!this.ignoreWarnings && this.messagesEnabled) {
+            if (!this.questions[SignedId].response.value) {
+                activeWarnings.push(this.warningMessageNoSignature);
+            }
+            if (this.redFlagTotal === 0) {
+                activeWarnings.push(this.warningMessageRedFlags);
+            }
+        }
+        return activeWarnings;
+    }
+
+    incrementRedFlags(numberOfFlagsToAdd) {
+        this.redFlagTotal += numberOfFlagsToAdd;
     }
 
     openIntercepteeModal(responses = [], isAdd = false) {
@@ -129,6 +176,18 @@ export class IrfNepalController {
         });
     }
 
+    save() {
+        this.messagesEnabled = true;
+        this.getErrorMessages();
+        this.getWarningMessages();
+    }
+
+    setOtherQuestionValues(valueId) {
+        let valueSet = this.questions[valueId].response.value;
+        this.questions[valueId].response.value = valueSet || '';
+        return !!valueSet;
+    }
+
     setRadio(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -138,10 +197,10 @@ export class IrfNepalController {
         }
     }
 
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
+        });
     }
 
     setValuesForOtherInputs() {
@@ -152,6 +211,30 @@ export class IrfNepalController {
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
     }
+
+    showIgnoreWarningsCheckbox() {
+        return (this.messagesEnabled && this.getWarningMessages().length > 0) || this.ignoreWarnings;
+    }
+
+    submit() {
+        this.messagesEnabled = true;
+        this.getErrorMessages();
+        this.getWarningMessages();
+    }
+
+    watchMessages() {
+        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.getErrorMessages();
+            }
+        });
+        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.getWarningMessages();
+            }
+        });
+    }
+
 }
 export default {
     templateUrl,

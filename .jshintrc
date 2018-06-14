@@ -11,18 +11,19 @@
   "jasmine": true,
   "laxbreak": true,
   "globals": {
-    "_": false,
     "$": false,
-    "require": false,
     "API_URL": false,
+    "_": false,
     "__dirname": false,
     "angular": false,
     "inject": false,
-    "module": false,
-    "navigator": false,
     "localStorage": false,
+    "module": false,
+    "moment": false,
+    "navigator": false,
+    "require": false,
     "sessionStorage": false,
-    "window": false,
-    "moment": false
+    "URL": false,
+    "window": false
   }
 }

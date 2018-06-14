@@ -63,5 +63,11 @@ describe('StaffSelectController', () => {
 
             expect(isContained).toBeFalsy();
         });
+
+        it('when value is undefined, return false', () => {
+            let isContained = vm.filterStaff(staff, undefined);
+
+            expect(isContained).toBeFalsy();
+        });
     });
 });

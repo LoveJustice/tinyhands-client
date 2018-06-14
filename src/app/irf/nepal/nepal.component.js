@@ -19,6 +19,7 @@ const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
 const SignedId = 151;
+const StaffConvincedId = 149;
 
 export class IrfNepalController {
     constructor($scope, $uibModal, constants, NepalService) {
@@ -46,6 +47,7 @@ export class IrfNepalController {
         this.otherWebsite = false;
         this.redFlagTotal = 0;
         this.selectedStep = 0;
+        this.staffConvinced = false;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,
@@ -210,6 +212,7 @@ export class IrfNepalController {
         this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
+        this.staffConvinced = this.setOtherQuestionValues(StaffConvincedId);
     }
 
     showIgnoreWarningsCheckbox() {

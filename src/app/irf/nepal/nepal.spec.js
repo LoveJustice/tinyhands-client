@@ -1,7 +1,7 @@
 import {
     IrfNepalController
 }
-    from "./nepal.component";
+from "./nepal.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
@@ -11,13 +11,14 @@ const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
 const SignedId = 151;
+const StaffConvincedId = 149;
 
 describe('IrfNepalController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
-            $watch() { },
-            $on() { }
+            $watch() {},
+            $on() {}
         };
         let $uibModal = {
             open: () => ({
@@ -28,13 +29,13 @@ describe('IrfNepalController', () => {
         };
         let NepalService = {
             getNepalIrf: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getLocation: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getStaff: () => ({
-                then: () => { }
+                then: () => {}
             }),
         };
         vm = new IrfNepalController($scope, $uibModal, {}, NepalService);
@@ -344,6 +345,12 @@ describe('IrfNepalController', () => {
                         value: false
                     }
                 },
+                [StaffConvincedId]: {
+                    question_id: StaffConvincedId,
+                    response: {
+                        value: false
+                    }
+                },
             };
         });
 
@@ -351,8 +358,9 @@ describe('IrfNepalController', () => {
             vm.setValuesForOtherInputs();
 
             expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
             expect(vm.otherSign).toEqual(false);
+            expect(vm.otherWebsite).toEqual(false);
+            expect(vm.staffConvinced).toEqual(false);
         });
     });
 

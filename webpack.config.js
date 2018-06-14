@@ -12,12 +12,10 @@ function getOutputFileName(env) {
 function getServerApiUrl(env) {
     if (env.production) {
         return '"https://dreamsuite.org/"';
-    }
-    else if (env.staging) {
+    } else if (env.staging) {
         return '"https://staging.dreamsuite.org/"';
-    }
-    else {
-        return '"http://localhost/"';
+    } else {
+        return '"https://staging.dreamsuite.org/"';
     }
 }
 
@@ -31,22 +29,38 @@ module.exports = function (env) {
             app: './app/index.module.js'
         },
         module: {
-            rules: [
-                { test: /\.js$/, include: srcPath, enforce: 'pre', loader: 'jshint-loader' },
-                { test: /\.js$/, include: srcPath, loader: 'babel-loader' },
+            rules: [{
+                    test: /\.js$/,
+                    include: srcPath,
+                    enforce: 'pre',
+                    loader: 'jshint-loader'
+                },
+                {
+                    test: /\.js$/,
+                    include: srcPath,
+                    loader: 'babel-loader'
+                },
                 {
                     test: /\.html$/,
                     include: appPath,
-                    use: [
-                        { loader: 'ngtemplate-loader?relativeTo=/src/app/' },
-                        { loader: 'html-loader' }
+                    use: [{
+                            loader: 'ngtemplate-loader?relativeTo=/src/app/'
+                        },
+                        {
+                            loader: 'html-loader'
+                        }
                     ]
                 },
                 {
                     test: /\.less$/,
                     use: [
                         'style-loader',
-                        { loader: 'css-loader', options: { importLoaders: 1 } },
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                importLoaders: 1
+                            }
+                        },
                         'less-loader'
                     ]
                 },
@@ -85,9 +99,13 @@ module.exports = function (env) {
                 API_URL: getServerApiUrl(env)
             }),
             new NgAnnotatePlugin(),
-            new CopyWebpackPlugin([
-                { from: 'assets/images/', to: 'assets/images/' },
-                { from: 'favicon.ico' }
+            new CopyWebpackPlugin([{
+                    from: 'assets/images/',
+                    to: 'assets/images/'
+                },
+                {
+                    from: 'favicon.ico'
+                }
             ]),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',

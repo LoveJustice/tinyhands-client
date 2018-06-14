@@ -10,12 +10,12 @@ export class StaffSelectController {
     }
 
     filterStaff(staff, value) {
-        if (staff) {
-            const searchValue = ('' + value).toLowerCase();
-            const matchFirstName = ('' + staff.first_name).toLowerCase().includes(searchValue);
-            const matchLastName = ('' + staff.last_name).toLowerCase().includes(searchValue);
-            const matchFirstAndLastName = (staff.first_name + ' ' + staff.last_name).toLowerCase().includes(searchValue);
-            return matchFirstName || matchLastName || matchFirstAndLastName;
+        if (staff && value) {
+            const SearchValue = ('' + value).toLowerCase();
+            const MatchFirstName = _.includes(('' + staff.first_name).toLowerCase(), SearchValue);
+            const MatchLastName = _.includes(('' + staff.last_name).toLowerCase(), SearchValue);
+            const MatchFirstAndLastName = _.includes((staff.first_name + ' ' + staff.last_name).toLowerCase(), SearchValue);
+            return MatchFirstName || MatchLastName || MatchFirstAndLastName;
         }
         return false;
     }

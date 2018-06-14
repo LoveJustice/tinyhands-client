@@ -456,7 +456,10 @@ export default class NepalService {
                             "question_id": 106,
                             "storage_id": 4,
                             "response": {
-                                "value": "Staff Member"
+                                "value": [{
+                                    id: 2,
+                                    name: "Staff Member"
+                                }]
                             }
                         },
                         {

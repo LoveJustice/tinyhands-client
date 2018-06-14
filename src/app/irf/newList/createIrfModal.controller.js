@@ -16,7 +16,7 @@ export default class CreateIrfModalController {
         
         for (var idx=0; idx < stations.length; idx++) {
         	this.scope.stationDropDown.options.push({"id":stations[idx].id, "label":stations[idx].station_name,
-        		"country":stations[idx].country_name});
+        		"country":stations[idx].country_name, "country_id":stations[idx].country_id});
         }
     }
 

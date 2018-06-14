@@ -2,6 +2,7 @@ import angular from 'angular';
 import ngAnimate from 'angular-animate';
 import ngCookies from 'angular-cookies';
 import ngCsv from 'ng-csv';
+import ngFileUpload from 'ng-file-upload';
 import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiBootstrap from 'angular-ui-bootstrap';
@@ -16,7 +17,6 @@ import dashboardModule from './dashboard/dashboard.module';
 import loginModule from './login/login.module';
 import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
-import IRFNewModule from './irfnew/irfNew.module';
 import eventsModule from './events/events.module';
 import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';
@@ -35,7 +35,7 @@ import AutocompleteAddress2Directive from './components/auto-complete/address2/a
 import CreateButtonComponent from './components/create-budget/create-budget.component.js';
 import MdfExportComponent from './components/mdf-export/mdf-export.component';
 
-angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ngTouch, uiBootstrap,
+angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap,
     sharedModule,
     accountModule,
     addressesModule,
@@ -44,7 +44,6 @@ angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ng
     dashboardModule,
     eventsModule,
     IRFModule,
-    IRFNewModule,
     loginModule,
     VIFModule,
     photoExportModule,

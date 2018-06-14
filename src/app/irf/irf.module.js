@@ -1,13 +1,22 @@
 import sharedModule from '../shared/shared.module';
+import IrfIndiaModule from './india/irf.india.module';
 
-import IRFRoutes from './irf.route';
+import IrfRoutes from './irf.route';
 
 import IrfListController from './list/irfList.controller';
 
 import IrfListService from './list/irfList.service';
 
-export default angular.module('tinyhands.IRF', [sharedModule])
-    .config(IRFRoutes)
+import IrfNewListController from './newList/irfNewList.controller';
+import CreateIrfModalController from './newList/createIrfModal.controller';
+
+import IrfNewListService from './newList/irfNewList.service';
+
+export default angular.module('tinyhands.IRF', [IrfIndiaModule, sharedModule])
+    .config(IrfRoutes)
     .controller('IrfListController', IrfListController)
     .service('IrfListService', IrfListService)
+    .controller('IrfNewListController', IrfNewListController)
+    .controller('CreateIrfModalController', CreateIrfModalController)
+    .service('IrfNewListService', IrfNewListService)
     .name;

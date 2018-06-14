@@ -54,15 +54,21 @@ export default class IrfNewListController {
         	onItemSelect: this.statusChange,
         	ctrl: this
         };
-        
-        this.getUserCountries();
 
         // If there was a search value provided in the url, set it
         if($stateParams) {
            this.queryParameters.search = $stateParams.search;
            this.queryParameters.status = $stateParams.status;
-           this.queryParameters.country_ids = $stateParams.country_ids;
+           if ($stateParams.country_ids) {
+        	   this.queryParameters.country_ids = $stateParams.country_ids;
+           }
+           
+           if (this.queryParameters.status === 'in-progress') {
+        	   this.status.selectedOptions = [this.status.options[1]];
+           }
         }
+
+        this.getUserCountries();
         this.getIrfList();
         
         this.getUserStationsForAdd();
@@ -80,7 +86,7 @@ export default class IrfNewListController {
         delete queryParameters.reverse;
         var params = [];
         Object.keys(queryParameters).forEach( (name) => {
-        	if (queryParameters[name] != null && queryParameters[name] != '') {
+        	if (queryParameters[name] !== null && queryParameters[name] !== '') {
         		params.push({"name": name, "value": queryParameters[name]});
         	}
         });
@@ -108,8 +114,8 @@ export default class IrfNewListController {
                 }
             }
         });
-        modalInstance.result.then((country) => {
-            alert(country.label);
+        modalInstance.result.then((station) => {
+            this.state.go('irf' + station.country.replace(/\s/g,''), {stationId: station.id, countryId: station.country_id, isViewing:false});
         });
     }
 
@@ -165,6 +171,19 @@ export default class IrfNewListController {
     			this.countryDropDown.options.push({id: this.countries[idx].id, label: this.countries[idx].name});
     		}
     		this.getUserStationsForAdd();
+    		
+    		if (this.queryParameters.country_ids.length > 0) {
+    			let country_array = this.queryParameters.country_ids.split(',');
+    			for (let idx=0; idx < country_array.length; idx++) {
+    				let country_id = Number(country_array[idx]);
+    				for (let idx1=0; idx1 < this.countries.length; idx1++) {
+    					if (this.countries[idx1].id === country_id) {
+    						this.countryDropDown.selectedOptions.push(this.countryDropDown.options[idx1]);
+    					}
+    				}
+    				
+    			}
+    		}
     	});
     }
     
@@ -175,6 +194,7 @@ export default class IrfNewListController {
     			for (let idx2=0; idx2 < this.countries.length; idx2++) {
     				if (this.stationsForAdd[idx].operating_country === this.countries[idx2].id) {
     					this.stationsForAdd[idx].country_name = this.countries[idx2].name;
+    					this.stationsForAdd[idx].country_id = this.countries[idx2].id;
     				}
     			}
     		}
@@ -197,6 +217,16 @@ export default class IrfNewListController {
             this.irfs = this.irfs.concat(promise.data.results);
             this.nextPage = this.extractPage(promise.data.next);
         });
+    }
+    
+    viewIrf(irf) {
+    	var irf_state = "irf" + irf.station.operating_country.name.replace(/\s/g,'');
+    	this.state.go(irf_state, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:true});
+    }
+    
+    editIrf(irf) {
+    	var irf_state = "irf" + irf.station.operating_country.name.replace(/\s/g,'');
+    	this.state.go(irf_state, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:false});
     }
 
     deleteIrf(irf, index) {

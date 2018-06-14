@@ -6,12 +6,18 @@ export class StaffSelectController {
         'ngInject';
         this.StaffService = StaffService;
 
-        this.staffSelected = [];
         this.getStaff();
     }
 
-    $onInit() {
-        this.staffSelected.push(this.storedStaff);
+    filterStaff(staff, value) {
+        if (staff) {
+            const searchValue = ('' + value).toLowerCase();
+            const matchFirstName = ('' + staff.first_name).toLowerCase().includes(searchValue);
+            const matchLastName = ('' + staff.last_name).toLowerCase().includes(searchValue);
+            const matchFirstAndLastName = (staff.first_name + ' ' + staff.last_name).toLowerCase().includes(searchValue);
+            return matchFirstName || matchLastName || matchFirstAndLastName;
+        }
+        return false;
     }
 
     getStaff() {
@@ -23,7 +29,7 @@ export class StaffSelectController {
 
 export default {
     bindings: {
-        storedStaff: '<?'
+        selectedStaff: '='
     },
     controller: StaffSelectController,
     templateUrl: StaffSelectTemplateUrl,

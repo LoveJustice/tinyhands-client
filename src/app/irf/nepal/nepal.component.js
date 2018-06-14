@@ -50,8 +50,6 @@ export class IrfNepalController {
         ];
 
         this.getNepalIrf();
-        this.getLocation();
-        this.getStaff();
     }
 
     formatDate(UfcDate) {
@@ -71,20 +69,8 @@ export class IrfNepalController {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    getLocation() {
-        this.NepalService.getLocation().then(response => {
-            this.location = response.data;
-        });
-    }
-
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
-    }
-
-    getStaff() {
-        this.NepalService.getStaff().then(response => {
-            this.staff = response.data;
-        });
     }
 
     openIntercepteeModal(responses = [], isAdd = false) {

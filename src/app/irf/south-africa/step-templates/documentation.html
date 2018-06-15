@@ -1,1 +1,140 @@
-Documentation tab here :D
+<div class="container-fluid">
+    <div class="row center-vertical">
+        <div class="col-md-2">
+            Passport
+        </div>
+        <div class="col-md-10">
+            <div class="row center-vertical">
+                <div class="col-md-8 col-md-offset-1">
+                    <form-step red-flag="40" response-value="$ctrl.questions[171].response.value">
+                        <input id="passport-imposter" type="checkbox" ng-model="$ctrl.questions[171].response.value">
+                        <label for="passport-imposter">Imposter</label>
+                    </form-step>
+                    <form-step red-flag="40" response-value="$ctrl.questions[172].response.value">
+                        <input id="passport-fake" type="checkbox" ng-model="$ctrl.questions[172].response.value">
+                        <label for="passport-fake">Fake</label>
+                    </form-step>
+                    <form-step red-flag="40" response-value="$ctrl.questions[173].response.value">
+                        <input id="passport-illegal" type="checkbox" ng-model="$ctrl.questions[173].response.value">
+                        <label for="passport-illegal">Illegally obtained</label>
+                    </form-step>
+                    <form-step red-flag="25" response-value="$ctrl.questions[174].response.value">
+                        <input id="passport-expired" type="checkbox" ng-model="$ctrl.questions[174].response.value">
+                        <label for="passport-expired">Expired</label>
+                    </form-step>
+                    <form-step red-flag="30" response-value="$ctrl.questions[55].response.value">
+                        <input id="passport-broker" type="checkbox" ng-model="$ctrl.questions[55].response.value">
+                        <label for="passport-broker">Is with a broker</label>
+                    </form-step>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <div class="col-md-2">
+            Visa
+        </div>
+        <div class="col-md-10">
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-1">
+                    <form-step red-flag="30" response-value="$ctrl.questions[176].response.value">
+                        <input id="visa-none" type="checkbox" ng-model="$ctrl.questions[176].response.value">
+                        <label for="visa-none">None</label>
+                    </form-step>
+                    <form-step red-flag="40" response-value="$ctrl.questions[177].response.value">
+                        <input id="visa-fake" type="checkbox" ng-model="$ctrl.questions[177].response.value">
+                        <label for="visa-fake">Fake</label>
+                    </form-step>
+                    <form-step red-flag="20" response-value="$ctrl.questions[178].response.value">
+                        <input id="visa-misuse" type="checkbox" ng-model="$ctrl.questions[178].response.value">
+                        <label for="visa-misuse">Misuse- for purposes other than issued</label>
+                    </form-step>
+                </div>
+                <div class="col-md-5">
+                    <div class=margin-bottom-10>Does not match:</div>
+                    <form-step red-flag="35" response-value="$ctrl.questions[179].response.value">
+                        <input id="travel-nature" type="checkbox" ng-model="$ctrl.questions[179].response.value">
+                        <label for="travel-nature">Nature of travel</label>
+                    </form-step>
+                    <form-step red-flag="30" response-value="$ctrl.questions[180].response.value">
+                        <input id="travel-duration" type="checkbox" ng-model="$ctrl.questions[180].response.value">
+                        <label for="travel-duration">Duration of travel</label>
+                    </form-step>
+                    <form-step red-flag="30" response-value="$ctrl.questions[181].response.value">
+                        <input id="travel-destination" type="checkbox" ng-model="$ctrl.questions[181].response.value">
+                        <label for="travel-destination">Destination of travel</label>
+                    </form-step>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <div class="col-md-2">
+            Supporting Documents
+        </div>
+        <div class="col-md-10">
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-1">
+                    <form-step red-flag="40" response-value="$ctrl.questions[182].response.value">
+                        <input id="documents-none" type="checkbox" ng-model="$ctrl.questions[182].response.value">
+                        <label for="documents-none">None</label>
+                    </form-step>
+                    <form-step red-flag="40" response-value="$ctrl.questions[183].response.value">
+                        <input id="documents-fake" type="checkbox" ng-model="$ctrl.questions[183].response.value">
+                        <label for="documents-fake">Fake</label>
+                    </form-step>
+                    <form-step red-flag="40" response-value="$ctrl.questions[184].response.value">
+                        <input id="documents-insufficient" type="checkbox" ng-model="$ctrl.questions[184].response.value">
+                        <label for="documents-insufficient">Insufficient</label>
+                    </form-step>
+                    <form-step red-flag="25" response-value="$ctrl.questions[185].response.value">
+                        <input id="documents-innaccurate" type="checkbox" ng-model="$ctrl.questions[185].response.value">
+                        <label for="documents-innaccurate">Innaccurate</label>
+                    </form-step>
+                    <form-step red-flag="30" response-value="$ctrl.questions[186].response.value">
+                        <input id="documents-one-way" type="checkbox" ng-model="$ctrl.questions[186].response.value">
+                        <label for="documents-one-way">One way ticket</label>
+                    </form-step>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <div class="col-md-2">
+            Destination
+        </div>
+        <div class="col-md-10">
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-1">
+                    <form-step red-flag="20" response-value="$ctrl.questions[187].response.value">
+                        <input id="middle-east" type="checkbox" ng-model="$ctrl.questions[187].response.value">
+                        <label for="middle-east">Middle East</label>
+                    </form-step>
+                    <form-step red-flag="20" response-value="$ctrl.questions[188].response.value">
+                        <input id="ireland" type="checkbox" ng-model="$ctrl.questions[188].response.value">
+                        <label for="ireland">Ireland</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[189].response.value">
+                        <input id="manchester" type="checkbox" ng-model="$ctrl.questions[189].response.value">
+                        <label for="manchester">Manchester</label>
+                    </form-step>
+                    <form-step red-flag="20" response-value="$ctrl.questions[190].response.value">
+                        <input id="swaziland" type="checkbox" ng-model="$ctrl.questions[190].response.value">
+                        <label for="swaziland">Swaziland</label>
+                    </form-step>
+                    <form-step red-flag="20" response-value="$ctrl.questions[191].response.value">
+                        <input id="mozambique" type="checkbox" ng-model="$ctrl.questions[191].response.value">
+                        <label for="mozambique">Mozambique</label>
+                    </form-step>
+                    <form-step red-flag="20" response-value="$ctrl.questions[192].response.value">
+                        <input id="nigeria" type="checkbox" ng-model="$ctrl.questions[92].response.value">
+                        <label for="nigeria">Nigeria</label>
+                    </form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

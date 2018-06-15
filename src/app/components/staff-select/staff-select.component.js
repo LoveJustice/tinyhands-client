@@ -1,5 +1,4 @@
 import StaffSelectTemplateUrl from './staff-select.html';
-import './staff-select.less';
 
 export class StaffSelectController {
     constructor(StaffService) {

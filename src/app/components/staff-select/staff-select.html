@@ -5,5 +5,5 @@
             <span class="glyphicon glyphicon-remove" remove-chip></span>
         </div>
     </chip-tmpl>
-    <input ng-model-control ng-model="searchStaff" uib-typeahead="staff as staff.first_name + ' ' + staff.last_name for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaff"></input>
+    <input ng-model-control ng-model="searchStaff" uib-typeahead="staff as staff.first_name + ' ' + staff.last_name for staff in $ctrl.staff | filter:$viewValue:$ctrl.checkExistingStaffForValue"></input>
 </chips>

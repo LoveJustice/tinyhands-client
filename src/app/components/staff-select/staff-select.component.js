@@ -8,13 +8,13 @@ export class StaffSelectController {
         this.getStaff();
     }
 
-    filterStaff(staff, value) {
+    checkExistingStaffForValue(staff, value) {
         if (staff && value) {
-            const SearchValue = ('' + value).toLowerCase();
-            const MatchFirstName = _.includes(('' + staff.first_name).toLowerCase(), SearchValue);
-            const MatchLastName = _.includes(('' + staff.last_name).toLowerCase(), SearchValue);
-            const MatchFirstAndLastName = _.includes((staff.first_name + ' ' + staff.last_name).toLowerCase(), SearchValue);
-            return MatchFirstName || MatchLastName || MatchFirstAndLastName;
+            let searchValue = value.toLowerCase();
+            let matchFirstName = _.includes(('' + staff.first_name).toLowerCase(), searchValue);
+            let matchLastName = _.includes(('' + staff.last_name).toLowerCase(), searchValue);
+            let matchFirstAndLastName = _.includes((staff.first_name + ' ' + staff.last_name).toLowerCase(), searchValue);
+            return matchFirstName || matchLastName || matchFirstAndLastName;
         }
         return false;
     }

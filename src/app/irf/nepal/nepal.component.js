@@ -59,9 +59,7 @@ export class IrfNepalController {
         ];
 
         this.getErrorData();
-        this.getLocation();
         this.getNepalIrf();
-        this.getStaff();
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -94,12 +92,6 @@ export class IrfNepalController {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    getLocation() {
-        this.NepalService.getLocation().then(response => {
-            this.location = response.data;
-        });
-    }
-
     getNepalIrf() {
         this.NepalService.getNepalIrf().then(response => {
             this.cards = response.data.cards[0].instances;
@@ -111,12 +103,6 @@ export class IrfNepalController {
 
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
-    }
-
-    getStaff() {
-        this.NepalService.getStaff().then(response => {
-            this.staff = response.data;
-        });
     }
 
     getWarningMessages() {

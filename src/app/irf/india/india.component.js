@@ -58,8 +58,6 @@ export class IrfIndiaController {
 
         this.getErrorData();
         this.getIndiaIrf();
-        this.getLocation();
-        this.getStaff();
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -101,20 +99,8 @@ export class IrfIndiaController {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    getLocation() {
-        this.IndiaService.getLocation().then(response => {
-            this.location = response.data;
-        });
-    }
-
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
-    }
-
-    getStaff() {
-        this.IndiaService.getStaff().then(response => {
-            this.staff = response.data;
-        });
     }
 
     getWarningMessages() {

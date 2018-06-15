@@ -6,6 +6,7 @@ import ngFileUpload from 'ng-file-upload';
 import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiBootstrap from 'angular-ui-bootstrap';
+import 'angular-chips/dist/angular-chips.min.js';
 import 'toastr/toastr.less';
 
 import sharedModule from './shared/shared.module';
@@ -35,7 +36,7 @@ import AutocompleteAddress2Directive from './components/auto-complete/address2/a
 import CreateButtonComponent from './components/create-budget/create-budget.component.js';
 import MdfExportComponent from './components/mdf-export/mdf-export.component';
 
-angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap,
+angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap,
         sharedModule,
         accountModule,
         addressesModule,

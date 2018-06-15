@@ -8,7 +8,7 @@ export class StaffSelectController {
         this.getStaff();
     }
 
-    checkExistingStaffForValue(staff, value) {
+    filterStaffByFirstAndLastName(staff, value) {
         if (staff && value) {
             let searchValue = value.toLowerCase();
             let matchFirstName = _.includes(('' + staff.first_name).toLowerCase(), searchValue);

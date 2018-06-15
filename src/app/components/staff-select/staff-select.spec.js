@@ -14,7 +14,7 @@ describe('StaffSelectController', () => {
         vm = new StaffSelectController(StaffService);
     });
 
-    describe('function filterStaff', () => {
+    describe('function filterStaffByFirstAndLastName', () => {
         let staff;
         beforeEach(() => {
             staff = {
@@ -26,7 +26,7 @@ describe('StaffSelectController', () => {
         it('when searchValue is in staff.first_name should return true', () => {
             let value = 'alon';
 
-            let isContained = vm.filterStaff(staff, value);
+            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
 
             expect(isContained).toBeTruthy();
         });
@@ -34,7 +34,7 @@ describe('StaffSelectController', () => {
         it('when searchValue is in staff.last_name, return true', () => {
             let value = 'stinston';
 
-            let isContained = vm.filterStaff(staff, value);
+            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
 
             expect(isContained).toBeTruthy();
         });
@@ -42,7 +42,7 @@ describe('StaffSelectController', () => {
         it('when searchValue is in staff.first_name and staff.last_name, return true', () => {
             let value = 'jo';
 
-            let isContained = vm.filterStaff(staff, value);
+            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
 
             expect(isContained).toBeTruthy();
         });
@@ -50,7 +50,7 @@ describe('StaffSelectController', () => {
         it('when searchValue not in staff.first_name or staff.last_name, return false', () => {
             let value = 'bob';
 
-            let isContained = vm.filterStaff(staff, value);
+            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
 
             expect(isContained).toBeFalsy();
         });
@@ -59,13 +59,13 @@ describe('StaffSelectController', () => {
             staff = undefined;
             let value = 'bob';
 
-            let isContained = vm.filterStaff(staff, value);
+            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
 
             expect(isContained).toBeFalsy();
         });
 
         it('when value is undefined, return false', () => {
-            let isContained = vm.filterStaff(staff, undefined);
+            let isContained = vm.filterStaffByFirstAndLastName(staff, undefined);
 
             expect(isContained).toBeFalsy();
         });

@@ -1,13 +1,15 @@
 import MessageConstants from './constants.js';
-import templateUrl from './nepal.html';
+import templateUrl from './southAfrica.html';
 import topBoxTemplate from './step-templates/topBox.html';
-import groupTemplate from './step-templates/group.html';
-import destinationTemplate from './step-templates/destination.html';
-import familyTemplate from './step-templates/family.html';
-import signsTemplate from './step-templates/signs.html';
+import visualTemplate from './step-templates/visual.html';
+import documentationTemplate from './step-templates/documentation.html';
+import interviewTemplate from './step-templates/interview.html';
+import hostTemplate from './step-templates/host.html';
+import childrenTemplate from './step-templates/children.html';
+import sourceTemplate from './step-templates/source.html';
 import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
-import './nepal.less';
+import './southAfrica.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
@@ -19,15 +21,14 @@ const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
 const SignedId = 151;
-const StaffConvincedId = 149;
 
-export class IrfNepalController {
-    constructor($scope, $uibModal, constants, NepalService) {
+export class IrfSouthAfricaController {
+    constructor($scope, $uibModal, constants, SouthAfricaService) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.NepalService = NepalService;
+        this.SouthAfricaService = SouthAfricaService;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -39,7 +40,7 @@ export class IrfNepalController {
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
         this.ignoreWarnings = false;
-        this.messageEnabled = false;
+        this.messagesEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
@@ -47,19 +48,22 @@ export class IrfNepalController {
         this.otherWebsite = false;
         this.redFlagTotal = 0;
         this.selectedStep = 0;
-        this.staffConvinced = false;
         this.stepTemplates = [
             topBoxTemplate,
-            groupTemplate,
-            destinationTemplate,
-            familyTemplate,
-            signsTemplate,
+            visualTemplate,
+            documentationTemplate,
+            interviewTemplate,
+            hostTemplate,
+            childrenTemplate,
+            sourceTemplate,
             intercepteesTemplate,
             finalProceduresTemplate
         ];
 
         this.getErrorData();
-        this.getNepalIrf();
+        this.getSouthAfricaIrf();
+        this.getLocation();
+        this.getStaff();
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -88,12 +92,8 @@ export class IrfNepalController {
         return activeErrors;
     }
 
-    getIntercepteeImage(url) {
-        return new URL(url, this.constants.BaseUrl).href;
-    }
-
-    getNepalIrf() {
-        this.NepalService.getNepalIrf().then(response => {
+    getSouthAfricaIrf() {
+        this.SouthAfricaService.getSouthAfricaIrf().then(response => {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -101,8 +101,24 @@ export class IrfNepalController {
         });
     }
 
+    getIntercepteeImage(url) {
+        return new URL(url, this.constants.BaseUrl).href;
+    }
+
+    getLocation() {
+        this.SouthAfricaService.getLocation().then(response => {
+            this.location = response.data;
+        });
+    }
+
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
+    }
+
+    getStaff() {
+        this.SouthAfricaService.getStaff().then(response => {
+            this.staff = response.data;
+        });
     }
 
     getWarningMessages() {
@@ -198,7 +214,6 @@ export class IrfNepalController {
         this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
-        this.staffConvinced = this.setOtherQuestionValues(StaffConvincedId);
     }
 
     showIgnoreWarningsCheckbox() {
@@ -224,7 +239,8 @@ export class IrfNepalController {
         });
     }
 }
+
 export default {
     templateUrl,
-    controller: IrfNepalController
+    controller: IrfSouthAfricaController
 };

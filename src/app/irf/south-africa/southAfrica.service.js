@@ -1,10 +1,10 @@
-export default class NepalService {
+export default class SouthAfricaService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
     }
 
-    getNepalIrf() {
+    getSouthAfricaIrf() {
         return {
             then: f => f({
                 data: {
@@ -30,10 +30,7 @@ export default class NepalService {
                             "question_id": 3,
                             "storage_id": 4,
                             "response": {
-                                "value": {
-                                    id: 52,
-                                    name: "Barmeli Chowak"
-                                }
+                                "value": "train station"
                             }
                         },
                         {
@@ -54,10 +51,7 @@ export default class NepalService {
                             "question_id": 6,
                             "storage_id": 4,
                             "response": {
-                                "value": [{
-                                    id: 1,
-                                    name: "John Staff"
-                                }]
+                                "value": "John Staff"
                             }
                         },
                         {
@@ -86,13 +80,6 @@ export default class NepalService {
                             "storage_id": 4,
                             "response": {
                                 "value": false
-                            }
-                        },
-                        {
-                            "question_id": 17,
-                            "storage_id": 1,
-                            "response": {
-                                "value": true
                             }
                         },
                         {
@@ -400,10 +387,7 @@ export default class NepalService {
                             "question_id": 106,
                             "storage_id": 4,
                             "response": {
-                                "value": [{
-                                    id: 2,
-                                    name: "Staff Member"
-                                }]
+                                "value": "Staff Member"
                             }
                         },
                         {
@@ -744,58 +728,195 @@ export default class NepalService {
                         }
                     ],
                     "cards": [{
-                        "category_id": 6,
+                        "category_id": 13,
                         "instances": [{
-                            "responses": [{
-                                    "question_id": 7,
-                                    "response": {
-                                        "value": "/media/interceptee_photos/jellyfish.jpg"
+                                "storage_id": 2,
+                                "responses": [{
+                                        "question_id": 7,
+                                        "storage_id": 2,
+                                        "response": {
+                                            "value": "/media/interceptee_photos/jellyfish.jpg"
+                                        }
+                                    },
+                                    {
+                                        "question_id": 8,
+                                        "storage_id": 2,
+                                        "response": {
+                                            "value": "Victim"
+                                        }
+                                    },
+                                    {
+                                        "question_id": 9,
+                                        "storage_id": 2,
+                                        "response": {
+                                            "storage_id": 5631,
+                                            "name": {
+                                                "value": "Jane Doe"
+                                            },
+                                            "address1": {
+                                                "id": 301,
+                                                "name": "Kathmandu"
+                                            },
+                                            "address2": {
+                                                "id": 7475,
+                                                "name": "Gonggabu"
+                                            },
+                                            "phone": {
+                                                "value": "9815555555"
+                                            },
+                                            "gender": {
+                                                "value": "Female"
+                                            },
+                                            "age": {
+                                                "value": 18
+                                            },
+                                            "birthdate": {
+                                                "value": "1998-07-01"
+                                            },
+                                            "passport": {
+                                                "value": "1998-07-01"
+                                            },
+                                            "nationality": {
+                                                "value": "SouthAfrican"
+                                            }
+                                        }
                                     }
-                                },
-                                {
-                                    "question_id": 8,
-                                    "response": {
-                                        "value": "Victim"
+                                ]
+                            },
+                            {
+                                "storage_id": 4,
+                                "responses": [{
+                                        "question_id": 7,
+                                        "storage_id": 4,
+                                        "response": {
+                                            "value": "/media/interceptee_photos/leopard.jpg"
+                                        }
+                                    },
+                                    {
+                                        "question_id": 8,
+                                        "storage_id": 4,
+                                        "response": {
+                                            "value": "Trafficker"
+                                        }
+                                    },
+                                    {
+                                        "question_id": 9,
+                                        "storage_id": 4,
+                                        "response": {
+                                            "storage_id": 5634,
+                                            "name": {
+                                                "value": "Joe Howard"
+                                            },
+                                            "address1": {
+                                                "id": 301,
+                                                "name": "Kathmandu"
+                                            },
+                                            "address2": {
+                                                "id": 7865,
+                                                "name": "Kabhresthali"
+                                            },
+                                            "phone": {
+                                                "value": "9891111111"
+                                            },
+                                            "gender": {
+                                                "value": "Male"
+                                            },
+                                            "age": {
+                                                "value": 25
+                                            },
+                                            "birthdate": {
+                                                "value": "1991-07-01"
+                                            },
+                                            "passport": {
+                                                "value": "1991-07-01"
+                                            },
+                                            "nationality": {
+                                                "value": "Napali"
+                                            }
+                                        }
                                     }
-                                },
-                                {
-                                    "question_id": 9,
-                                    "response": {
-                                        "name": {
-                                            "value": "Jane Doe"
-                                        },
-                                        "address1": {
-                                            "id": 301,
-                                            "name": "Kathmandu"
-                                        },
-                                        "address2": {
-                                            "id": 7475,
-                                            "name": "Gonggabu"
-                                        },
-                                        "phone": {
-                                            "value": "9815555555"
-                                        },
-                                        "gender": {
-                                            "value": "Female"
-                                        },
-                                        "age": {
-                                            "value": 18
-                                        },
-                                        "birthdate": {
-                                            "value": "1998-07-01"
-                                        },
-                                    }
-                                },
-                                {
-                                    "question_id": 11,
-                                    "response": {
-                                        "value": false
-                                    }
-                                }
-                            ]
-                        }]
-                    }]
+                                ]
+                            }
+                        ]
+                    }],
                 }
+            })
+        };
+    }
+
+    getStaff() {
+        return {
+            then: f => f({
+                data: [{
+                        "id": 24,
+                        "email": "",
+                        "first_name": "Frank",
+                        "last_name": "Hardy",
+                        "phone": "9993214563",
+                        "position": "Safety / Paralegal Coordinator",
+                        "receives_money_distribution_form": false,
+                        "border_station": 2
+                    },
+                    {
+                        "id": 25,
+                        "email": "nancy_drew@yahoo.com",
+                        "first_name": "Nancy",
+                        "last_name": "Drew",
+                        "phone": "99984613240",
+                        "position": "Station Manager / Data Coordinator",
+                        "receives_money_distribution_form": false,
+                        "border_station": 2
+                    },
+                    {
+                        "id": 26,
+                        "email": "",
+                        "first_name": "Sherlock",
+                        "last_name": "Holmes",
+                        "phone": "9996228266",
+                        "position": "Admin / Accounting Coordinator",
+                        "receives_money_distribution_form": false,
+                        "border_station": 2
+                    },
+                    {
+                        "id": 29,
+                        "email": "",
+                        "first_name": "Hercule",
+                        "last_name": "Poirot",
+                        "phone": "9991031633",
+                        "position": "Legal Advisor",
+                        "receives_money_distribution_form": false,
+                        "border_station": 2
+                    }
+                ]
+            })
+        };
+    }
+
+    getLocation() {
+        return {
+            then: f => f({
+                data: [{
+                        "id": 52,
+                        "name": "Railyard",
+                        "latitude": 27.6826184,
+                        "longitude": 83.865645,
+                        "border_station": 1
+                    },
+                    {
+                        "id": 51,
+                        "name": "Main Street Bus Stop",
+                        "latitude": 27.6008535,
+                        "longitude": 83.5569871,
+                        "border_station": 1
+                    },
+                    {
+                        "id": 50,
+                        "name": "Westmont Border",
+                        "latitude": 27.5801442,
+                        "longitude": 83.6428701,
+                        "border_station": 1
+                    }
+                ]
             })
         };
     }

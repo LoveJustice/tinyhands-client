@@ -1,7 +1,7 @@
 import {
-    IrfNepalController
+    IrfSouthAfricaController
 }
-from "./nepal.component";
+from "./southAfrica.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
@@ -11,9 +11,8 @@ const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
 const SignedId = 151;
-const StaffConvincedId = 149;
 
-describe('IrfNepalController', () => {
+describe('IrfSouthAfricaController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
@@ -27,8 +26,8 @@ describe('IrfNepalController', () => {
                 }
             })
         };
-        let NepalService = {
-            getNepalIrf: () => ({
+        let SouthAfricaService = {
+            getSouthAfricaIrf: () => ({
                 then: () => {}
             }),
             getLocation: () => ({
@@ -36,9 +35,19 @@ describe('IrfNepalController', () => {
             }),
             getStaff: () => ({
                 then: () => {}
-            }),
+            })
         };
-        vm = new IrfNepalController($scope, $uibModal, {}, NepalService);
+        vm = new IrfSouthAfricaController($scope, $uibModal, {}, SouthAfricaService);
+    });
+
+    describe('function incrementRedFlags', () => {
+        it('should add what is passed in', () => {
+            vm.redFlagTotal = 0;
+
+            vm.incrementRedFlags(42);
+
+            expect(vm.redFlagTotal).toEqual(42);
+        });
     });
 
     describe('function getErrorMessages', () => {
@@ -150,16 +159,6 @@ describe('IrfNepalController', () => {
         });
     });
 
-    describe('function incrementRedFlags', () => {
-        it('should add what is passed in', () => {
-            vm.redFlagTotal = 0;
-
-            vm.incrementRedFlags(42);
-
-            expect(vm.redFlagTotal).toEqual(42);
-        });
-    });
-
     describe('function openIntercepteeModal', () => {
         beforeEach(() => {
             vm.cards = [];
@@ -227,7 +226,6 @@ describe('IrfNepalController', () => {
     describe('function setOtherQuestionValues', () => {
         beforeEach(() => {
             vm.questions = {
-
                 [OtherRedFlagId]: {
                     question_id: OtherRedFlagId,
                     response: {
@@ -252,7 +250,6 @@ describe('IrfNepalController', () => {
             expect(temp).toEqual(true);
             expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
         });
-
     });
 
     describe('function setRadio', () => {
@@ -345,12 +342,6 @@ describe('IrfNepalController', () => {
                         value: false
                     }
                 },
-                [StaffConvincedId]: {
-                    question_id: StaffConvincedId,
-                    response: {
-                        value: false
-                    }
-                },
             };
         });
 
@@ -358,9 +349,8 @@ describe('IrfNepalController', () => {
             vm.setValuesForOtherInputs();
 
             expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherSign).toEqual(false);
             expect(vm.otherWebsite).toEqual(false);
-            expect(vm.staffConvinced).toEqual(false);
+            expect(vm.otherSign).toEqual(false);
         });
     });
 

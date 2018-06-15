@@ -1,4 +1,4 @@
-<div id="irf-nepal-interceptee-modal" class="modal-content">
+<div id="irf-south-africa-interceptee-modal" class="modal-content">
     <form name="intercepteeForm">
         <div class="modal-header">
             <button type="button" class="close" ng-click="IntercepteeModalController.dismiss()">
@@ -72,9 +72,11 @@
                         <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.phone.value">
                     </div>
                 </div>
-                <div class="col-md-5 col-md-offset-1 padding-left-45">
-                    <input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[11].response.value">
-                    <label for="custody">Taken into police custody</label>
+                <div class="col-md-6 form-group">
+                    <label class="col-md-3 control-label">Nationality</label>
+                    <div class="col-md-9">
+                        <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.nationality.value">
+                    </div>
                 </div>
             </div>
         </div>

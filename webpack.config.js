@@ -15,7 +15,7 @@ function getServerApiUrl(env) {
     } else if (env.staging) {
         return '"https://staging.dreamsuite.org/"';
     } else {
-        return '"http://localhost/"';
+        return '"https://staging.dreamsuite.org/"';
     }
 }
 
@@ -30,60 +30,60 @@ module.exports = function (env) {
         },
         module: {
             rules: [{
-                    test: /\.js$/,
-                    include: srcPath,
-                    enforce: 'pre',
-                    loader: 'jshint-loader'
+                test: /\.js$/,
+                include: srcPath,
+                enforce: 'pre',
+                loader: 'jshint-loader'
+            },
+            {
+                test: /\.js$/,
+                include: srcPath,
+                loader: 'babel-loader'
+            },
+            {
+                test: /\.html$/,
+                include: appPath,
+                use: [{
+                    loader: 'ngtemplate-loader?relativeTo=/src/app/'
                 },
                 {
-                    test: /\.js$/,
-                    include: srcPath,
-                    loader: 'babel-loader'
-                },
-                {
-                    test: /\.html$/,
-                    include: appPath,
-                    use: [{
-                            loader: 'ngtemplate-loader?relativeTo=/src/app/'
-                        },
-                        {
-                            loader: 'html-loader'
-                        }
-                    ]
-                },
-                {
-                    test: /\.less$/,
-                    use: [
-                        'style-loader',
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                importLoaders: 1
-                            }
-                        },
-                        'less-loader'
-                    ]
-                },
-                {
-                    test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-                    loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
-                },
-                {
-                    test: /\.woff2(\?v=\d+\.\d+\.\d+)?/,
-                    loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
-                },
-                {
-                    test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-                    loader: 'url-loader?limit=100000&minetype=application/octet-stream&publicPath=assets/&outputPath=/assets/'
-                },
-                {
-                    test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-                    loader: 'file-loader?publicPath=assets/&outputPath=/assets/'
-                },
-                {
-                    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-                    loader: 'url-loader?limit=100000&minetype=image/svg+xml&publicPath=assets/&outputPath=/assets/'
+                    loader: 'html-loader'
                 }
+                ]
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    'less-loader'
+                ]
+            },
+            {
+                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
+            },
+            {
+                test: /\.woff2(\?v=\d+\.\d+\.\d+)?/,
+                loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=100000&minetype=application/octet-stream&publicPath=assets/&outputPath=/assets/'
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'file-loader?publicPath=assets/&outputPath=/assets/'
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: 'url-loader?limit=100000&minetype=image/svg+xml&publicPath=assets/&outputPath=/assets/'
+            }
             ]
         },
         plugins: [
@@ -100,12 +100,12 @@ module.exports = function (env) {
             }),
             new NgAnnotatePlugin(),
             new CopyWebpackPlugin([{
-                    from: 'assets/images/',
-                    to: 'assets/images/'
-                },
-                {
-                    from: 'favicon.ico'
-                }
+                from: 'assets/images/',
+                to: 'assets/images/'
+            },
+            {
+                from: 'favicon.ico'
+            }
             ]),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',

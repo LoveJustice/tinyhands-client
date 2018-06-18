@@ -47,7 +47,7 @@ export class IrfSouthAfricaController {
         this.otherSign = false;
         this.otherWebsite = false;
         this.redFlagTotal = 0;
-        this.selectedStep = 8;
+        this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
             visualTemplate,

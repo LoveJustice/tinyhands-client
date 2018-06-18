@@ -776,6 +776,9 @@ export default class SouthAfricaService {
                                         },
                                         "passport": {
                                             "value": "12345678"
+                                        },
+                                        "nationality": {
+                                            "value": "Himalayan"
                                         }
                                     }
                                 },

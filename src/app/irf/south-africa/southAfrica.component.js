@@ -62,8 +62,6 @@ export class IrfSouthAfricaController {
 
         this.getErrorData();
         this.getSouthAfricaIrf();
-        this.getLocation();
-        this.getStaff();
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -105,20 +103,8 @@ export class IrfSouthAfricaController {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    getLocation() {
-        this.SouthAfricaService.getLocation().then(response => {
-            this.location = response.data;
-        });
-    }
-
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
-    }
-
-    getStaff() {
-        this.SouthAfricaService.getStaff().then(response => {
-            this.staff = response.data;
-        });
     }
 
     getWarningMessages() {

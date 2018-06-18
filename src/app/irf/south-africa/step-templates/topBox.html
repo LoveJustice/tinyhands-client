@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label"># of Victims: </form-step>
+            <form-step class="col-xs-3 control-label"># of PVOTs: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
             </div>
@@ -15,11 +15,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Location: </form-step>
             <div class="col-xs-9">
-                <select class="form-control" ng-model="$ctrl.questions[3].response.value">
-                    <option ng-repeat="location in $ctrl.location" ng-value="location">{{location.name}}</option>
-                    <option ng-if="!$ctrl.questions[3].response.value.id" ng-value="$ctrl.questions[3].response.value">{{$ctrl.questions[3].response.value}}
-                    </option>
-                </select>
+                <location-select selected-location="$ctrl.questions[3].response.value"></location-select>
             </div>
         </div>
     </div>
@@ -33,7 +29,7 @@
             </div>
         </div>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label"># Traffickers: </form-step>
+            <form-step class="col-xs-3 control-label"># of Suspects: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[5].response.value">
             </div>
@@ -41,9 +37,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Staff Name: </form-step>
             <div class="col-xs-9">
-                <select class="form-control" ng-model="$ctrl.questions[6].response.value">
-                    <option ng-repeat="staff in $ctrl.staff" ng-value="staff">{{staff.first_name + ' ' + staff.last_name}}</option>
-                    <option ng-if="!$ctrl.questions[6].response.value.id" ng-value="$ctrl.questions[6].response.value">{{$ctrl.questions[6].response.value}}</option>
+                <staff-select selected-staff="$ctrl.questions[6].response.value"></staff-select>
                 </select>
             </div>
         </div>

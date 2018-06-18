@@ -596,7 +596,7 @@ export default class SouthAfricaService {
                         "question_id": 147,
                         "storage_id": 4,
                         "response": {
-                            "value": "3 - Somewhat sure"
+                            "value": "3"
                         }
                     },
                     {

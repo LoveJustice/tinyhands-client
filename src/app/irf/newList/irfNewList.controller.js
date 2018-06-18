@@ -65,6 +65,8 @@ export default class IrfNewListController {
            
            if (this.queryParameters.status === 'in-progress') {
         	   this.status.selectedOptions = [this.status.options[1]];
+           } else {
+        	   this.queryParameters.status = 'approved';
            }
         }
 

@@ -162,7 +162,7 @@ export default class SouthAfricaService {
                         "question_id": 36,
                         "storage_id": 4,
                         "response": {
-                            "value": true
+                            "value": false
                         }
                     },
                     {
@@ -232,7 +232,7 @@ export default class SouthAfricaService {
                         "question_id": 56,
                         "storage_id": 4,
                         "response": {
-                            "value": true
+                            "value": false
                         }
                     },
                     {

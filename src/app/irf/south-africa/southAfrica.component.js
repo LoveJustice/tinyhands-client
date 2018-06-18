@@ -31,9 +31,8 @@ export class IrfSouthAfricaController {
         this.SouthAfricaService = SouthAfricaService;
 
         this.contacts = [
-            ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
-            ['Bus driver', 'Church member', 'Other NGO'],
-            ['Police', 'Subcomittee member']
+            ['Immigration', 'Police'],
+            ['Airline Official']
         ];
         this.family = [
             ['Own brother', 'Own father', 'Own grandparent'],
@@ -47,7 +46,7 @@ export class IrfSouthAfricaController {
         this.otherSign = false;
         this.otherWebsite = false;
         this.redFlagTotal = 0;
-        this.selectedStep = 0;
+        this.selectedStep = 6;
         this.stepTemplates = [
             topBoxTemplate,
             visualTemplate,

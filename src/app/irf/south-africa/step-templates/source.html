@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="row">
+        How was the PVOT identified?
+        <hr/>
+    </div>
+    <div class="row center-vertical">
+        <div class="col-md-2">
+            <form-step>
+                <input id="contact" name="contact-or-staff" value="Contact" type="radio" ng-model="$ctrl.questions[91].response.value">
+                <label for="contact">Contact</label>
+            </form-step>
+        </div>
+        <div class="row col-md-10">
+            <div class="row center vertical">
+                <div class=col-md-2>
+                    Name of Contact:
+                </div>
+                <div class="col-md-4">
+                    <form-step>
+                        <input class="form-control" ng-model="$ctrl.questions[261].response.value">
+                    </form-step>
+                </div>
+            </div>
+            <div class="row center-vertical padding-top-10">
+                <div class="col-md-3">
+                    Type of Contact:
+                </div>
+                <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
+                    <form-step ng-repeat="contact in contacts">
+                        <input id="{{contact}}" name="contact-type" value="{{contact}}" ng-model="$ctrl.questions[92].response.value" type="radio">
+                        <label for="{{contact}}">{{contact}}</label>
+                    </form-step>
+                    <form-step ng-if="$last">
+                        <input id="other-contact" name="contact-type" type="radio" value="Other" ng-model="$ctrl.questions[92].response.value">
+                        <label for="other-contact">Other</label>
+                        <input class="margin-left-10" ng-Model="$ctrl.otherContactString">
+                    </form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-2">
+            <form-step>
+                <input id="staff" name="contact-or-staff" value="TH Staff" type="radio" ng-model="$ctrl.questions[91].response.value">
+                <label for="staff">TH Staff</label>
+            </form-step>
+        </div>
+        <div class="col-md-10">
+            <div class="row center vertical">
+                <div class=col-md-2>
+                    Name of Staff
+                </div>
+                <div class="col-md-4">
+                    <staff-select selected-staff="$ctrl.questions[106].response.value"></staff-select>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,1 +1,73 @@
-Children tesp
+<div class="container-fluid">
+    <div class="row center-vertical">
+        <div class="col-md-4 col-md-offset-4">
+            <form-step red-flag="10" response-value="$ctrl.questions[73].response.value">
+                <input id="reluctant-give-info" type="checkbox" ng-model="$ctrl.questions[73].response.value">
+                <label for="reluctant-give-info">Reluctant to give family info</label>
+            </form-step>
+            <form-step red-flag="35" response-value="$ctrl.questions[74].response.value">
+                <input id="refuse-give-info" type="checkbox" ng-model="$ctrl.questions[74].response.value">
+                <label for="refuse-give-info">Refuses to give family info</label>
+            </form-step>
+            <form-step red-flag="40" response-value="$ctrl.questions[242].response.value">
+                <input id="no-certificates" type="checkbox" ng-model="$ctrl.questions[242].response.value">
+                <label for="no-certificates">No affidavit/birth certificates</label>
+            </form-step>
+            <form-step red-flag="50" response-value="$ctrl.questions[77].response.value">
+                <input id="no-family" type="checkbox" ng-model="$ctrl.questions[77].response.value">
+                <label for="no-family">No family contact established</label>
+            </form-step>
+            <form-step red-flag="50" response-value="$ctrl.questions[240].response.value">
+                <input id="child-fearful" type="checkbox" ng-model="$ctrl.questions[240].response.value">
+                <label for="child-fearful">Child fearful of handler</label>
+            </form-step>
+        </div>
+        <div class="col-md-4">
+            <form-step red-flag="10" response-value="$ctrl.questions[241].response.value">
+                <input id="not-escorted" type="checkbox" ng-model="$ctrl.questions[241].response.value">
+                <label for="not-escorted">Not being escorted by direct relative</label>
+            </form-step>
+            <form-step red-flag="60" response-value="$ctrl.questions[79].response.value">
+                <input id="family-unwilling" type="checkbox" ng-model="$ctrl.questions[79].response.value">
+                <label for="family-unwilling">Family unwilling to let them go</label>
+            </form-step>
+            <form-step red-flag="40" response-value="$ctrl.questions[257].response.value">
+                <input id="stories-inconsistent" type="checkbox" ng-model="$ctrl.questions[257].response.value">
+                <label for="stories-inconsistent">Child and handler's stories are inconsistent</label>
+            </form-step>
+            <form-step red-flag="50" response-value="$ctrl.questions[258].response.value">
+                <input id="handler-claims-relative" type="checkbox" ng-model="$ctrl.questions[258].response.value">
+                <label for="handler-claims-relative">Handler falsely claims to be a relative</label>
+            </form-step>
+            <form-step red-flag="30" response-value="$ctrl.questions[259].response.value">
+                <input id="handler-criminal" type="checkbox" ng-model="$ctrl.questions[259].response.value">
+                <label for="handler-criminal">Handler involved in criminal activity</label>
+            </form-step>
+        </div>
+    </div>
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-4">
+            <form-step>Which family member did you talk to?</form-step>
+        </div>
+        <div class="col-md-4" ng-repeat="families in $ctrl.family">
+            <form-step ng-repeat="family in families">
+                <input id="{{family}}" type="radio" name="optionRadio" value="{{family}}" ng-model="$ctrl.questions[82].response.value">
+                <label for="{{family}}">{{family}}</label>
+            </form-step>
+            <form-step ng-if="$first">
+                <input id="other-fam" type="radio" name="optionRadio" value="Other" ng-model="$ctrl.questions[82].response.value">
+                <label for="other-fam">Other</label>
+                <input ng-model="$ctrl.otherFamilyString">
+            </form-step>
+        </div>
+    </div>
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-4">
+            Full name of relative contacted
+        </div>
+        <div class="col-md-3">
+            <input type="text" ng-model="questions[260]" class="margin-top-20 form-control">
+        </div>
+    </div>

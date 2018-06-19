@@ -1,1 +1,109 @@
-Visual tab
+<div class="container-fluid">
+    <div class="row center-vertical">
+        <div class="col-md-3">
+            Nationality and Gender
+        </div>
+        <div class=col-md-9>
+            <div class="row center-vertical">
+                <div class="col-md-6">
+                    <form-step red-flag="5" response-value="$ctrl.questions[95].response.value">
+                        <input id="asian-female" type="checkbox" ng-model="$ctrl.questions[95].response.value">
+                        <label for="asian-female">Asian Female</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[96].response.value">
+                        <input id="pakistani-male" type="checkbox" ng-model="$ctrl.questions[96].response.value">
+                        <label for="pakistani-male">Pakistani Male</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[153].response.value">
+                        <input id="bangladeshi-male" type="checkbox" ng-model="$ctrl.questions[153].response.value">
+                        <label for="bangladeshi-male">Bangladeshi Male</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[154].response.value">
+                        <input id="nepali-male" type="checkbox" ng-model="$ctrl.questions[154].response.value">
+                        <label for="nepali-male">Nepali Male</label>
+                    </form-step>
+                    <form-step>
+                        <input id="other" type="checkbox" ng-model="$ctrl.questions[160].response.value">
+                        <label for="other">Other</label>
+                    </form-step>
+                </div>
+                <div class="col-md-6">
+                    <form-step red-flag="5" response-value="$ctrl.questions[155].response.value">
+                        <input id="african-female" type="checkbox" ng-model="$ctrl.questions[155].response.value">
+                        <label for="african-female">African Female</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[156].response.value">
+                        <input id="ethipoian" type="checkbox" ng-model="$ctrl.questions[156].response.value">
+                        <label for="ethipoian">Ethipoian Female/Male</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[157].response.value">
+                        <input id="european-female" type="checkbox" ng-model="$ctrl.questions[157].response.value">
+                        <label for="european-female">Eastern Europe Female</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[158].response.value">
+                        <input id="african-child" type="checkbox" ng-model="$ctrl.questions[158].response.value">
+                        <label for="african-child">Any African child</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[159].response.value">
+                        <input id="malawian" type="checkbox" ng-model="$ctrl.questions[159].response.value">
+                        <label for="malawian">Malawian Female</label>
+                    </form-step>
+                </div>
+            </div>
+            <hr/>
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <div class="col-md-3">
+            Appearance/Demeanor
+        </div>
+        <div class=col-md-9>
+            <div class="row center-vertical">
+                <div class="col-md-6">
+                    <form-step red-flag="10" response-value="$ctrl.questions[161].response.value">
+                        <input id="drug" type="checkbox" ng-model="$ctrl.questions[161].response.value">
+                        <label for="drug">Signs of Drug withdrawal</label>
+                    </form-step>
+                    <form-step red-flag="10" response-value="$ctrl.questions[162].response.value">
+                        <input id="abuse" type="checkbox" ng-model="$ctrl.questions[162].response.value">
+                        <label for="abuse">Signs of Abuse</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[163].response.value">
+                        <input id="disorientated" type="checkbox" ng-model="$ctrl.questions[163].response.value">
+                        <label for="disorientated">Disorientated/Uncertain</label>
+                    </form-step>
+                    <form-step red-flag="5" response-value="$ctrl.questions[164].response.value">
+                        <input id="impoverished" type="checkbox" ng-model="$ctrl.questions[164].response.value">
+                        <label for="impoverished">Impoverished</label>
+                    </form-step>
+                    <form-step red-flag="15" response-value="$ctrl.questions[165].response.value">
+                        <input id="little-luggage" type="checkbox" ng-model="$ctrl.questions[165].response.value">
+                        <label for="little-luggage">Long journey but little luggage</label>
+                    </form-step>
+                </div>
+                <div class="col-md-6">
+                    <form-step red-flag="5" response-value="$ctrl.questions[166].response.value">
+                        <input id="revealing" type="checkbox" ng-model="$ctrl.questions[166].response.value">
+                        <label for="revealing">Revealing clothing</label>
+                    </form-step>
+                    <form-step red-flag="10" response-value="$ctrl.questions[167].response.value">
+                        <input id="avoiding" type="checkbox" ng-model="$ctrl.questions[167].response.value">
+                        <label for="avoiding">Avoiding officials/ hesitant to talk</label>
+                    </form-step>
+                    <form-step red-flag="15" response-value="$ctrl.questions[168].response.value">
+                        <input id="lady-boy" type="checkbox" ng-model="$ctrl.questions[168].response.value">
+                        <label for="lady-boy">Lady boy</label>
+                    </form-step>
+                    <form-step red-flag="15" response-value="$ctrl.questions[169].response.value">
+                        <input id="group" type="checkbox" ng-model="$ctrl.questions[169].response.value">
+                        <label for="group">Group that does not know each other</label>
+                    </form-step>
+                    <form-step red-flag="10" response-value="$ctrl.questions[170].response.value">
+                        <input id="chaperone" type="checkbox" ng-model="$ctrl.questions[170].response.value">
+                        <label for="chaperone">With a chaperone</label>
+                    </form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

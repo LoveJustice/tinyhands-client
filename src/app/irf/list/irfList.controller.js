@@ -1,6 +1,9 @@
+import NewIrfModalController from './newIrfModal/newIrfModal.controller.js';
+import newIrfModalTemplate from './newIrfModal/newIrfModal.html';
 export default class IrfListController {
-    constructor(IrfListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout, toastr, constants, moment) {
+    constructor($uibModal, IrfListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout, toastr, constants, moment) {
         'ngInject';
+        this.$uibModal = $uibModal;
         this.service = IrfListService;
         this.session = SessionService;
         this.stateParams = $stateParams;
@@ -49,13 +52,13 @@ export default class IrfListController {
         return this.session.user.permission_irf_view === true;
     }
 
-    openIntercepteeModal() {
+    openNewIrfModal() {
         this.$uibModal.open({
             bindToController: true,
-            controller: newIrfModalController,
-            controllerAs: 'IntercepteeModalController',
-            size: 'lg',
-            templateUrl: intercepteeModalTemplate,
+            controller: NewIrfModalController,
+            controllerAs: 'NewIrfModalController',
+            size: 'md',
+            templateUrl: newIrfModalTemplate
         });
     }
 

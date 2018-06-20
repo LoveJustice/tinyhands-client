@@ -1,8 +1,9 @@
 import IrfListController from './irfList.controller';
 
-describe('IRF List Controller',() => {
+describe('IRF List Controller', () => {
     let vm,
         $timeout,
+        $uibModel,
         MockIrfListService,
         MockSessionService,
         MockSpinnerOverlayService,
@@ -19,8 +20,12 @@ describe('IRF List Controller',() => {
     beforeEach(inject((_$state_, _$timeout_, _moment_) => {
         $state = _$state_;
         $timeout = _$timeout_;
-        $stateParams = {"search": "BHD"};
-        MockSessionService = { user: { } };
+        $stateParams = {
+            "search": "BHD"
+        };
+        MockSessionService = {
+            user: {}
+        };
         MockSpinnerOverlayService = jasmine.createSpyObj('SpinnerOverlayService', ['show', 'hide']);
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
 
@@ -32,14 +37,16 @@ describe('IRF List Controller',() => {
             'getCsvExport'
         ]);
 
-        let response = {'data':{
-                        "count": 0,
-                        "results": [],
-                        "next": "",
-                        "previous": ""}
+        let response = {
+            'data': {
+                "count": 0,
+                "results": [],
+                "next": "",
+                "previous": ""
+            }
         };
 
-        MockIrfListService.getIrfList.and.callFake( () => {
+        MockIrfListService.getIrfList.and.callFake(() => {
             return {
                 then: (f) => {
                     f(response);
@@ -47,17 +54,21 @@ describe('IRF List Controller',() => {
             };
         });
 
-        MockIrfListService.irfExists.and.callFake( () => {
+        MockIrfListService.irfExists.and.callFake(() => {
             return {
                 then: (f) => {
-                    f({data: "BHD123"});
+                    f({
+                        data: "BHD123"
+                    });
                 }
             };
         });
 
         mockToastr = jasmine.createSpyObj('mockToastr', ['success', 'error']);
         moment = _moment_;
-        vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, mockToastr, {BaseUrl: "asdf"}, moment);
+        vm = new IrfListController($uibModel, MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, mockToastr, {
+            BaseUrl: "asdf"
+        }, moment);
     }));
 
     describe('function constructor', () => {
@@ -67,13 +78,17 @@ describe('IRF List Controller',() => {
 
         it('expect the search parameter to be set', () => {
             $stateParams = {};
-            vm = new IrfListController(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment);
+            vm = new IrfListController($uibModel, MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {
+                BaseUrl: "asdf"
+            }, moment);
             expect(vm.queryParameters.search).not.toBe(null);
         });
 
         it('expect checkForExistingIrfs to be called', () => {
             spyOn(vm, 'checkForExistingIrfs');
-            vm.constructor(MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {BaseUrl: "asdf"}, moment);
+            vm.constructor($uibModel, MockIrfListService, MockSessionService, MockSpinnerOverlayService, MockStickyHeader, $state, $stateParams, $timeout, {}, {
+                BaseUrl: "asdf"
+            }, moment);
             expect(vm.checkForExistingIrfs).toHaveBeenCalled();
         });
     });
@@ -159,10 +174,18 @@ describe('IRF List Controller',() => {
                 "search": 'BHD'
             };
 
-            transformedQueryParameters = [
-                {"name": "page_size", "value": 50},
-                {"name": "ordering", "value": "-irf_num"},
-                {"name": "search", "value": "BHD"}
+            transformedQueryParameters = [{
+                    "name": "page_size",
+                    "value": 50
+                },
+                {
+                    "name": "ordering",
+                    "value": "-irf_num"
+                },
+                {
+                    "name": "search",
+                    "value": "BHD"
+                }
             ];
         }));
 
@@ -174,20 +197,20 @@ describe('IRF List Controller',() => {
         it('expect the reverse field to not be included', () => {
             queryParameters.reverse = false;
             var val = vm.transform(queryParameters);
-            val.forEach( (obj) => {
+            val.forEach((obj) => {
                 expect(obj.name).not.toEqual('reverse');
             });
         });
 
         it('expect the ordering field to have a "-" before the name', () => {
             var val = vm.transform(queryParameters);
-            expect(val[1].value.slice(0,1)).toBe('-');
+            expect(val[1].value.slice(0, 1)).toBe('-');
         });
 
         it('expect the ordering field to not have a "-" before the name', () => {
             queryParameters.reverse = false;
             var val = vm.transform(queryParameters);
-            expect(val[1].value.slice(0,1)).not.toEqual('-');
+            expect(val[1].value.slice(0, 1)).not.toEqual('-');
         });
     });
 
@@ -266,8 +289,12 @@ describe('IRF List Controller',() => {
         let savedIrfs;
         beforeEach(() => {
             savedIrfs = {
-                BHD123: {asdf: "asdf"},
-                BHD1234: {asdf: "asdf"}
+                BHD123: {
+                    asdf: "asdf"
+                },
+                BHD1234: {
+                    asdf: "asdf"
+                }
             };
             localStorage.setItem('saved-irfs', JSON.stringify(savedIrfs));
         });
@@ -300,8 +327,12 @@ describe('IRF List Controller',() => {
         let savedIrfs;
         beforeEach(() => {
             savedIrfs = {
-                BHD123: {asdf: "asdf"},
-                BHD1234: {asdf: "asdf"}
+                BHD123: {
+                    asdf: "asdf"
+                },
+                BHD1234: {
+                    asdf: "asdf"
+                }
             };
             localStorage.setItem('saved-irfs', JSON.stringify(savedIrfs));
         });

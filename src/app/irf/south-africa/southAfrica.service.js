@@ -162,7 +162,7 @@ export default class SouthAfricaService {
                             "question_id": 36,
                             "storage_id": 4,
                             "response": {
-                                "value": false
+                                "value": true
                             }
                         },
                         {
@@ -232,7 +232,7 @@ export default class SouthAfricaService {
                             "question_id": 56,
                             "storage_id": 4,
                             "response": {
-                                "value": false
+                                "value": true
                             }
                         },
                         {
@@ -737,117 +737,63 @@ export default class SouthAfricaService {
                         }
                     ],
                     "cards": [{
-                        "category_id": 13,
+                        "category_id": 6,
                         "instances": [{
-                                "storage_id": 2,
-                                "responses": [{
-                                        "question_id": 7,
-                                        "storage_id": 2,
-                                        "response": {
-                                            "value": "/media/interceptee_photos/jellyfish.jpg"
-                                        }
-                                    },
-                                    {
-                                        "question_id": 8,
-                                        "storage_id": 2,
-                                        "response": {
-                                            "value": "Victim"
-                                        }
-                                    },
-                                    {
-                                        "question_id": 9,
-                                        "storage_id": 2,
-                                        "response": {
-                                            "storage_id": 5631,
-                                            "name": {
-                                                "value": "Jane Doe"
-                                            },
-                                            "address1": {
-                                                "id": 301,
-                                                "name": "Kathmandu"
-                                            },
-                                            "address2": {
-                                                "id": 7475,
-                                                "name": "Gonggabu"
-                                            },
-                                            "phone": {
-                                                "value": "9815555555"
-                                            },
-                                            "gender": {
-                                                "value": "Female"
-                                            },
-                                            "age": {
-                                                "value": 18
-                                            },
-                                            "birthdate": {
-                                                "value": "1998-07-01"
-                                            },
-                                            "passport": {
-                                                "value": "1998-07-01"
-                                            },
-                                            "nationality": {
-                                                "value": "SouthAfrican"
-                                            }
+                            "responses": [{
+                                    "question_id": 7,
+                                    "response": {
+                                        "value": "/media/interceptee_photos/jellyfish.jpg"
+                                    }
+                                },
+                                {
+                                    "question_id": 8,
+                                    "response": {
+                                        "value": "Victim"
+                                    }
+                                },
+                                {
+                                    "question_id": 9,
+                                    "response": {
+                                        "name": {
+                                            "value": "Jane Doe"
+                                        },
+                                        "address1": {
+                                            "id": 301,
+                                            "name": "Kathmandu"
+                                        },
+                                        "address2": {
+                                            "id": 7475,
+                                            "name": "Gonggabu"
+                                        },
+                                        "phone": {
+                                            "value": "9815555555"
+                                        },
+                                        "gender": {
+                                            "value": "Female"
+                                        },
+                                        "age": {
+                                            "value": 18
+                                        },
+                                        "birthdate": {
+                                            "value": "1998-07-01"
+                                        },
+                                        "passport": {
+                                            "value": "12345678"
+                                        },
+                                        "nationality": {
+                                            "value": "Himalayan"
                                         }
                                     }
-                                ]
-                            },
-                            {
-                                "storage_id": 4,
-                                "responses": [{
-                                        "question_id": 7,
-                                        "storage_id": 4,
-                                        "response": {
-                                            "value": "/media/interceptee_photos/leopard.jpg"
-                                        }
+                                },
+                                {
+                                    "question_id": 11,
+                                    "response": {
+                                        "value": false
                                     },
-                                    {
-                                        "question_id": 8,
-                                        "storage_id": 4,
-                                        "response": {
-                                            "value": "Trafficker"
-                                        }
-                                    },
-                                    {
-                                        "question_id": 9,
-                                        "storage_id": 4,
-                                        "response": {
-                                            "storage_id": 5634,
-                                            "name": {
-                                                "value": "Joe Howard"
-                                            },
-                                            "address1": {
-                                                "id": 301,
-                                                "name": "Kathmandu"
-                                            },
-                                            "address2": {
-                                                "id": 7865,
-                                                "name": "Kabhresthali"
-                                            },
-                                            "phone": {
-                                                "value": "9891111111"
-                                            },
-                                            "gender": {
-                                                "value": "Male"
-                                            },
-                                            "age": {
-                                                "value": 25
-                                            },
-                                            "birthdate": {
-                                                "value": "1991-07-01"
-                                            },
-                                            "passport": {
-                                                "value": "1991-07-01"
-                                            },
-                                            "nationality": {
-                                                "value": "Napali"
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }],
+                                }
+                            ]
+                        }]
+                    }]
                 }
             })
         };

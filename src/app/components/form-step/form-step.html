@@ -5,4 +5,16 @@
         <img ng-src="assets/images/flag.png" alt="flag-container">
         <span ng-bind="$ctrl.redFlag"></span>
     </span>
+    <div ng-switch="$ctrl.type">
+        <span ng-switch-when="radio"></span>
+        <span ng-switch-when="checkbox">
+            <input type="checkbox"> {{$ctrl.label}}
+        </span>
+        <span ng-switch-when="text">{{$ctrl.type}}</span>
+        <span ng-switch-when="textarea">{{$ctrl.type}}</span>
+        <span ng-switch-when="number">
+            <input type="number" min="0">
+        </span>
+
+    </div>
 </div>

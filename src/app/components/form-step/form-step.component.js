@@ -11,6 +11,7 @@ export class FormStepController {
         this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
             this.setFlagSend(newValue, oldValue);
         });
+
     }
 
     emitFlag(amountToAdd) {
@@ -32,7 +33,10 @@ export default {
     bindings: {
         redFlag: '<?',
         responseValue: '<?',
-        stepLabel: '<'
+        stepLabel: '<',
+        label: '<?',
+        type: '<?',
+        otherValue: '<?'
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,

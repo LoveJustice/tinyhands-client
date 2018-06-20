@@ -1,13 +1,15 @@
 import MessageConstants from './constants.js';
-import templateUrl from './india.html';
+import templateUrl from './southAfrica.html';
 import topBoxTemplate from './step-templates/topBox.html';
-import groupTemplate from './step-templates/group.html';
-import destinationTemplate from './step-templates/destination.html';
-import familyTemplate from './step-templates/family.html';
-import signsTemplate from './step-templates/signs.html';
+import visualTemplate from './step-templates/visual.html';
+import documentationTemplate from './step-templates/documentation.html';
+import interviewTemplate from './step-templates/interview.html';
+import hostTemplate from './step-templates/host.html';
+import childrenTemplate from './step-templates/children.html';
+import sourceTemplate from './step-templates/source.html';
 import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
-import './india.less';
+import './southAfrica.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
@@ -20,13 +22,13 @@ const OtherSignId = 134;
 const OtherWebsiteId = 244;
 const SignedId = 151;
 
-export class IrfIndiaController {
-    constructor($scope, $uibModal, constants, IndiaService) {
+export class IrfSouthAfricaController {
+    constructor($scope, $uibModal, constants, SouthAfricaService) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.IndiaService = IndiaService;
+        this.SouthAfricaService = SouthAfricaService;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -48,16 +50,18 @@ export class IrfIndiaController {
         this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
-            groupTemplate,
-            destinationTemplate,
-            familyTemplate,
-            signsTemplate,
+            visualTemplate,
+            documentationTemplate,
+            interviewTemplate,
+            hostTemplate,
+            childrenTemplate,
+            sourceTemplate,
             intercepteesTemplate,
             finalProceduresTemplate
         ];
 
         this.getErrorData();
-        this.getIndiaIrf();
+        this.getSouthAfricaIrf();
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -86,8 +90,8 @@ export class IrfIndiaController {
         return activeErrors;
     }
 
-    getIndiaIrf() {
-        this.IndiaService.getIndiaIrf().then(response => {
+    getSouthAfricaIrf() {
+        this.SouthAfricaService.getSouthAfricaIrf().then(response => {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -224,5 +228,5 @@ export class IrfIndiaController {
 
 export default {
     templateUrl,
-    controller: IrfIndiaController
+    controller: IrfSouthAfricaController
 };

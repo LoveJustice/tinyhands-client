@@ -1,10 +1,10 @@
-export default class NepalService {
+export default class SouthAfricaService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
     }
 
-    getNepalIrf() {
+    getSouthAfricaIrf() {
         return {
             then: f => f({
                 data: {
@@ -86,13 +86,6 @@ export default class NepalService {
                             "storage_id": 4,
                             "response": {
                                 "value": false
-                            }
-                        },
-                        {
-                            "question_id": 17,
-                            "storage_id": 1,
-                            "response": {
-                                "value": true
                             }
                         },
                         {
@@ -400,10 +393,7 @@ export default class NepalService {
                             "question_id": 106,
                             "storage_id": 4,
                             "response": {
-                                "value": [{
-                                    id: 2,
-                                    name: "Staff Member"
-                                }]
+                                "value": "Staff Member"
                             }
                         },
                         {
@@ -784,13 +774,19 @@ export default class NepalService {
                                         "birthdate": {
                                             "value": "1998-07-01"
                                         },
+                                        "passport": {
+                                            "value": "12345678"
+                                        },
+                                        "nationality": {
+                                            "value": "Himalayan"
+                                        }
                                     }
                                 },
                                 {
                                     "question_id": 11,
                                     "response": {
                                         "value": false
-                                    }
+                                    },
                                 }
                             ]
                         }]

@@ -1,7 +1,7 @@
 import {
-    IrfIndiaController
+    IrfSouthAfricaController
 }
-    from "./india.component";
+from "./southAfrica.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
@@ -12,12 +12,12 @@ const OtherSignId = 134;
 const OtherWebsiteId = 244;
 const SignedId = 151;
 
-describe('IrfIndiaController', () => {
+describe('IrfSouthAfricaController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
-            $watch() { },
-            $on() { }
+            $watch() {},
+            $on() {}
         };
         let $uibModal = {
             open: () => ({
@@ -26,18 +26,18 @@ describe('IrfIndiaController', () => {
                 }
             })
         };
-        let IndiaService = {
-            getIndiaIrf: () => ({
-                then: () => { }
+        let SouthAfricaService = {
+            getSouthAfricaIrf: () => ({
+                then: () => {}
             }),
             getLocation: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getStaff: () => ({
-                then: () => { }
+                then: () => {}
             })
         };
-        vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService);
+        vm = new IrfSouthAfricaController($scope, $uibModal, {}, SouthAfricaService);
     });
 
     describe('function incrementRedFlags', () => {

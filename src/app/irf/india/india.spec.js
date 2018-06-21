@@ -223,7 +223,7 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function setOtherQuestionValues', () => {
+    /* describe('function setOtherQuestionValues', () => {
         beforeEach(() => {
             vm.questions = {
                 [OtherRedFlagId]: {
@@ -250,9 +250,9 @@ describe('IrfIndiaController', () => {
             expect(temp).toEqual(true);
             expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
         });
-    });
+    }); */
 
-    describe('function setRadio', () => {
+    describe('function setRadioOther', () => {
         beforeEach(() => {
             vm.questions = {
                 [OtherContactId]: {
@@ -267,14 +267,14 @@ describe('IrfIndiaController', () => {
         it('when response value matches an item in values, return nothing', () => {
             vm.questions[OtherContactId].response.value = 'Police';
 
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toBeUndefined();
             expect(vm.questions[OtherContactId].response.value).toEqual('Police');
         });
 
         it('when response value is null leave it as it is, return nothing', () => {
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toBeUndefined();
             expect(vm.questions[OtherContactId].response.value).toEqual('');
@@ -283,7 +283,7 @@ describe('IrfIndiaController', () => {
         it('when response value does not match one of items, change response value to Other return response value', () => {
             vm.questions[OtherContactId].response.value = 'I am another contact';
 
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toEqual('I am another contact');
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');

@@ -1,7 +1,7 @@
 import {
     IrfIndiaController
 }
-    from "./india.component";
+from "./india.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
@@ -16,8 +16,8 @@ describe('IrfIndiaController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
-            $watch() { },
-            $on() { }
+            $watch() {},
+            $on() {}
         };
         let $uibModal = {
             open: () => ({
@@ -28,13 +28,13 @@ describe('IrfIndiaController', () => {
         };
         let IndiaService = {
             getIndiaIrf: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getLocation: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getStaff: () => ({
-                then: () => { }
+                then: () => {}
             })
         };
         vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService);
@@ -303,56 +303,56 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function setValuesForOtherInputs', () => {
-        beforeEach(() => {
-            vm.questions = {
-                [DateId]: {
-                    question_id: [DateId],
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherContactId]: {
-                    question_id: OtherContactId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherFamilyId]: {
-                    question_id: OtherFamilyId,
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherSignId]: {
-                    question_id: OtherSignId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherWebsiteId]: {
-                    question_id: OtherWebsiteId,
-                    response: {
-                        value: false
-                    }
-                },
-            };
-        });
+    // describe('function setValuesForOtherInputs', () => {
+    //     beforeEach(() => {
+    //         vm.questions = {
+    //             [DateId]: {
+    //                 question_id: [DateId],
+    //                 response: {
+    //                     value: ''
+    //                 }
+    //             },
+    //             [OtherContactId]: {
+    //                 question_id: OtherContactId,
+    //                 response: {
+    //                     value: false
+    //                 }
+    //             },
+    //             [OtherFamilyId]: {
+    //                 question_id: OtherFamilyId,
+    //                 response: {
+    //                     value: ''
+    //                 }
+    //             },
+    //             [OtherRedFlagId]: {
+    //                 question_id: OtherRedFlagId,
+    //                 response: {
+    //                     value: false
+    //                 }
+    //             },
+    //             [OtherSignId]: {
+    //                 question_id: OtherSignId,
+    //                 response: {
+    //                     value: false
+    //                 }
+    //             },
+    //             [OtherWebsiteId]: {
+    //                 question_id: OtherWebsiteId,
+    //                 response: {
+    //                     value: false
+    //                 }
+    //             },
+    //         };
+    //     });
 
-        it('should set other flags', () => {
-            vm.setValuesForOtherInputs();
+    //     it('should set other flags', () => {
+    //         vm.setValuesForOtherInputs();
 
-            expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
-            expect(vm.otherSign).toEqual(false);
-        });
-    });
+    //         expect(vm.otherRedFlag).toEqual(false);
+    //         expect(vm.otherWebsite).toEqual(false);
+    //         expect(vm.otherSign).toEqual(false);
+    //     });
+    // });
 
     describe('function submit', () => {
         it('should set messagesEnabled to true and call getErrorMessages and getWarningMessages', () => {

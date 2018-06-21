@@ -20,12 +20,11 @@
             <label>{{$ctrl.label}}</label>
             <input type="number" min="0" ng-model="$ctrl.responseValue">
         </span>
-        <!--  <span ng-switcvh-when="otherCheckbox ">
-            <input type="checkbox " ng-model="$ctrl.otherIsTrue ">
+        <span ng-switch-when="otherCheckbox">
+            <input type="checkbox" ng-model="$ctrl.otherIsTrue">
             <label>{{$ctrl.label}}</label>
-            <input type="text " ng-model="$ctrl.responseValue ">
-        </span> -->
-
+            <input type="text" ng-model="$ctrl.responseValue">
+        </span>
         <span class="margin-right-10" style="color: #00aa00" ng-bind="$ctrl.stepLabel" ng-if="$ctrl.stepLabel"></span>
         <span ng-transclude></span>
         <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">

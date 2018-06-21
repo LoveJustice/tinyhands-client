@@ -5,7 +5,7 @@ export default class NewIrfModalController {
         this.$uibModalInstance = $uibModalInstance;
 
         this.countries = ['India', 'Nepal', 'South Africa'];
-        this.selectedCountry = "India";
+        this.selectedCountry = this.countries[0];
     }
 
     close() {

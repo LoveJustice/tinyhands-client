@@ -17,14 +17,19 @@ describe('NewIrfModalController', () => {
     });
 
     describe('function createNewIrf', () => {
-        it('should call $state.go with selected country and then call close', () => {
+        it('should call $state.go with selected country', () => {
             spyOn(vm.$state, 'go');
-            spyOn(vm, 'close');
-            vm.selectedCountry = "Bryan topia";
+            vm.selectedCountry = 'Bryan topia';
 
             vm.createNewIrf();
 
-            expect(vm.$state.go).toHaveBeenCalledWith("irfBryantopia");
+            expect(vm.$state.go).toHaveBeenCalledWith('irfBryantopia');
+        });
+        it('should call close', () => {
+            spyOn(vm, 'close');
+
+            vm.createNewIrf();
+
             expect(vm.close).toHaveBeenCalled();
         });
     });

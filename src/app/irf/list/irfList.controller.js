@@ -17,13 +17,13 @@ export default class IrfListController {
 
         this.timer = {};
         this.irfs = [];
-        this.nextPage = "";
-        this.timeZoneDifference = "+0545";
+        this.nextPage = '';
+        this.timeZoneDifference = '+0545';
         this.queryParameters = {
-            "page_size": 25,
-            "reverse": true,
-            "ordering": 'date_time_of_interception',
-            "search": ''
+            'page_size': 25,
+            'reverse': true,
+            'ordering': 'date_time_of_interception',
+            'search': ''
         };
         this.stickyOptions = this.sticky.stickyOptions;
 
@@ -70,8 +70,8 @@ export default class IrfListController {
         var params = [];
         Object.keys(queryParameters).forEach((name) => {
             params.push({
-                "name": name,
-                "value": queryParameters[name]
+                'name': name,
+                'value': queryParameters[name]
             });
         });
         return params;
@@ -111,8 +111,8 @@ export default class IrfListController {
     }
 
     getIrfList() {
-        this.spinnerOverlayService.show("Searching for IRFs...");
-        this.service.getIrfList(this.transform(this.queryParameters)).then((promise) => {
+        this.spinnerOverlayService.show('Searching for IRFs...');
+        this.service.getIrfList(this.transform(this.queryParameters)).then(promise => {
             this.irfs = promise.data.results;
             this.nextPage = this.extractPage(promise.data.next);
             this.spinnerOverlayService.hide();
@@ -122,7 +122,7 @@ export default class IrfListController {
     showMoreIrfs() {
         let params = angular.copy(this.queryParameters);
         params.page = this.nextPage;
-        this.service.getMoreIrfs(this.transform(params)).then((promise) => {
+        this.service.getMoreIrfs(this.transform(params)).then(promise => {
             this.irfs = this.irfs.concat(promise.data.results);
             this.nextPage = this.extractPage(promise.data.next);
         });
@@ -132,11 +132,11 @@ export default class IrfListController {
         if (irf.confirmedDelete) {
             this.service.deleteIrf(irf.id).then(
                 () => {
-                    this.toastr.success("Successfully Deleted IRF!");
+                    this.toastr.success('Successfully Deleted IRF!');
                     this.irfs.splice(index, 1);
                 },
                 () => {
-                    this.toastr.error("Unable to Delete IRF!");
+                    this.toastr.error('Unable to Delete IRF!');
                 }
             );
         } else {
@@ -152,7 +152,7 @@ export default class IrfListController {
 
         savedForLaterIrfs = Object.keys(savedForLaterIrfs);
         savedForLaterIrfs.forEach((irfNumber) => {
-            this.service.irfExists(irfNumber).then((promise) => {
+            this.service.irfExists(irfNumber).then(promise => {
                 if (promise.data === irfNumber) {
                     this.removeIrfFromSaveForLater(irfNumber);
                 }
@@ -171,7 +171,7 @@ export default class IrfListController {
     }
 
     exportCsv() {
-        this.spinnerOverlayService.show("Exporting to CSV");
+        this.spinnerOverlayService.show('Exporting to CSV');
         return this.service.getCsvExport();
     }
 

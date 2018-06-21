@@ -45,7 +45,7 @@ export class IrfIndiaController {
         this.otherSign = false;
         this.otherWebsite = false;
         this.redFlagTotal = 0;
-        this.selectedStep = 1;
+        this.selectedStep = 0;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,

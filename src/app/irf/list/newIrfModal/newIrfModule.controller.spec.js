@@ -25,6 +25,7 @@ describe('NewIrfModalController', () => {
 
             expect(vm.$state.go).toHaveBeenCalledWith('irfBryantopia');
         });
+
         it('should call close', () => {
             spyOn(vm, 'close');
 

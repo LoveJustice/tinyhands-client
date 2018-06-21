@@ -745,7 +745,7 @@ export default class SouthAfricaService {
                                 {
                                     "question_id": 8,
                                     "response": {
-                                        "value": "Victim"
+                                        "value": "PVOT"
                                     }
                                 },
                                 {

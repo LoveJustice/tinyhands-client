@@ -46,7 +46,7 @@ export class IrfNepalController {
         this.otherSign = false;
         this.otherWebsite = false;
         this.redFlagTotal = 0;
-        this.selectedStep = 0;
+        this.selectedStep = 1;
         this.staffConvinced = false;
         this.stepTemplates = [
             topBoxTemplate,
@@ -170,13 +170,7 @@ export class IrfNepalController {
         this.getWarningMessages();
     }
 
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
-    }
-
-    setRadio(items, valueId) {
+    setRadioOther(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
         if (!_.includes(flattenedItems, value) && value !== '') {
@@ -193,12 +187,8 @@ export class IrfNepalController {
 
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        this.otherRedFlag = this.setOtherQuestionValues(OtherRedFlagId);
-        this.otherSign = this.setOtherQuestionValues(OtherSignId);
-        this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
-        this.otherContactString = this.setRadio(this.contacts, OtherContactId);
-        this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
-        this.staffConvinced = this.setOtherQuestionValues(StaffConvincedId);
+        this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
+        this.otherFamilyString = this.setRadioOther(this.family, OtherFamilyId);
     }
 
     showIgnoreWarningsCheckbox() {

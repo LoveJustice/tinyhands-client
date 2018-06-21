@@ -162,8 +162,6 @@ export class IrfIndiaController {
         this.getWarningMessages();
     }
 
-
-
     setRadioOther(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
@@ -181,8 +179,8 @@ export class IrfIndiaController {
 
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        this.otherContactString = this.setRadio(this.contacts, OtherContactId);
-        this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
+        this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
+        this.otherFamilyString = this.setRadioOther(this.family, OtherFamilyId);
     }
 
     showIgnoreWarningsCheckbox() {

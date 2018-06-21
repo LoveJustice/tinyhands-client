@@ -1,7 +1,7 @@
 import {
     IrfNepalController
 }
-from "./nepal.component";
+    from "./nepal.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
@@ -17,8 +17,8 @@ describe('IrfNepalController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
-            $watch() {},
-            $on() {}
+            $watch() { },
+            $on() { }
         };
         let $uibModal = {
             open: () => ({
@@ -29,13 +29,13 @@ describe('IrfNepalController', () => {
         };
         let NepalService = {
             getNepalIrf: () => ({
-                then: () => {}
+                then: () => { }
             }),
             getLocation: () => ({
-                then: () => {}
+                then: () => { }
             }),
             getStaff: () => ({
-                then: () => {}
+                then: () => { }
             }),
         };
         vm = new IrfNepalController($scope, $uibModal, {}, NepalService);
@@ -224,7 +224,7 @@ describe('IrfNepalController', () => {
         });
     });
 
-    describe('function setOtherQuestionValues', () => {
+    /* describe('function setOtherQuestionValues', () => {
         beforeEach(() => {
             vm.questions = {
 
@@ -253,9 +253,9 @@ describe('IrfNepalController', () => {
             expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
         });
 
-    });
+    }); */
 
-    describe('function setRadio', () => {
+    describe('function setRadioOther', () => {
         beforeEach(() => {
             vm.questions = {
                 [OtherContactId]: {
@@ -270,14 +270,14 @@ describe('IrfNepalController', () => {
         it('when response value matches an item in values, return nothing', () => {
             vm.questions[OtherContactId].response.value = 'Police';
 
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toBeUndefined();
             expect(vm.questions[OtherContactId].response.value).toEqual('Police');
         });
 
         it('when response value is null leave it as it is, return nothing', () => {
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toBeUndefined();
             expect(vm.questions[OtherContactId].response.value).toEqual('');
@@ -286,7 +286,7 @@ describe('IrfNepalController', () => {
         it('when response value does not match one of items, change response value to Other return response value', () => {
             vm.questions[OtherContactId].response.value = 'I am another contact';
 
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toEqual('I am another contact');
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');
@@ -306,64 +306,64 @@ describe('IrfNepalController', () => {
         });
     });
 
-    describe('function setValuesForOtherInputs', () => {
-        beforeEach(() => {
-            vm.questions = {
-                [DateId]: {
-                    question_id: [DateId],
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherContactId]: {
-                    question_id: OtherContactId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherFamilyId]: {
-                    question_id: OtherFamilyId,
-                    response: {
-                        value: ''
-                    }
-                },
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherSignId]: {
-                    question_id: OtherSignId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherWebsiteId]: {
-                    question_id: OtherWebsiteId,
-                    response: {
-                        value: false
-                    }
-                },
-                [StaffConvincedId]: {
-                    question_id: StaffConvincedId,
-                    response: {
-                        value: false
-                    }
-                },
-            };
-        });
-
-        it('should set other flags', () => {
-            vm.setValuesForOtherInputs();
-
-            expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherSign).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
-            expect(vm.staffConvinced).toEqual(false);
-        });
-    });
-
+    /*  describe('function setValuesForOtherInputs', () => {
+         beforeEach(() => {
+             vm.questions = {
+                 [DateId]: {
+                     question_id: [DateId],
+                     response: {
+                         value: ''
+                     }
+                 },
+                 [OtherContactId]: {
+                     question_id: OtherContactId,
+                     response: {
+                         value: false
+                     }
+                 },
+                 [OtherFamilyId]: {
+                     question_id: OtherFamilyId,
+                     response: {
+                         value: ''
+                     }
+                 },
+                 [OtherRedFlagId]: {
+                     question_id: OtherRedFlagId,
+                     response: {
+                         value: false
+                     }
+                 },
+                 [OtherSignId]: {
+                     question_id: OtherSignId,
+                     response: {
+                         value: false
+                     }
+                 },
+                 [OtherWebsiteId]: {
+                     question_id: OtherWebsiteId,
+                     response: {
+                         value: false
+                     }
+                 },
+                 [StaffConvincedId]: {
+                     question_id: StaffConvincedId,
+                     response: {
+                         value: false
+                     }
+                 },
+             };
+         });
+ 
+         it('should set other flags', () => {
+             vm.setValuesForOtherInputs();
+ 
+             expect(vm.otherRedFlag).toEqual(false);
+             expect(vm.otherSign).toEqual(false);
+             expect(vm.otherWebsite).toEqual(false);
+             expect(vm.staffConvinced).toEqual(false);
+         });
+     });
+  */
     describe('function submit', () => {
         it('should set messagesEnabled to true and call getErrorMessages and getWarningMessages', () => {
             vm.messagesEnabled = false;

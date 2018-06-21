@@ -52,14 +52,9 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6" ng-repeat="families in $ctrl.family">
-                    <form-step ng-repeat="family in families">
-                        <input id="{{family}}" type="radio" name="optionRadio" value="{{family}}" ng-model="$ctrl.questions[82].response.value">
-                        <label for="{{family}}">{{family}}</label>
+                    <form-step type="'radio'" radio-name="'familyRadio'" ng-repeat="family in families" label="family" response-value="$ctrl.questions[82].response.value">
                     </form-step>
-                    <form-step ng-if="$first">
-                        <input id="other-fam" type="radio" name="optionRadio" value="Other" ng-model="$ctrl.questions[82].response.value">
-                        <label for="other-fam">Other</label>
-                        <input ng-model="$ctrl.otherFamilyString">
+                    <form-step ng-if="$first" type="'otherRadio'" radio-name="'familyRadio'" other-value="$ctrl.otherFamilyString" response-value="$ctrl.questions[82].response.value">
                     </form-step>
                 </div>
             </div>

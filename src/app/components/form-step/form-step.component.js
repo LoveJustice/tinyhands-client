@@ -5,8 +5,6 @@ export class FormStepController {
     constructor($scope) {
         'ngInject';
         this.$scope = $scope;
-
-        this.otherIsTrue = false;
     }
 
     $onInit() {
@@ -14,7 +12,7 @@ export class FormStepController {
             this.setFlagSend(newValue, oldValue);
         });
         if (this.type === 'otherCheckbox') {
-            this.otherIsTrue = this.setOtherQuestionValues();
+            this.otherValue = this.setOtherQuestionValues();
         }
     }
 
@@ -42,12 +40,14 @@ export class FormStepController {
 
 export default {
     bindings: {
+        label: '<?',
+        otherValue: '<?',
+        radioName: '<?',
         redFlag: '<?',
         responseValue: '<?',
         stepLabel: '<',
-        label: '<?',
         type: '<?',
-        otherValue: '<?'
+
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,

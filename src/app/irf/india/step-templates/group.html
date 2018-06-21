@@ -157,10 +157,7 @@
             </form-step>
         </div>
         <div class="col-md-4">
-            <form-step red-flag="' '">
-                <input id="other-red-flag" type="checkbox" ng-model="$ctrl.otherRedFlag">
-                <label for="other-red-flag">Other red flag</label>
-                <input type="text" ng-model="$ctrl.questions[31].response.value">
+            <form-step red-flag="' '" type="'otherCheckbox'" label="'Other red flags'" response-value="$ctrl.questions[31].response.value">
             </form-step>
         </div>
     </div>

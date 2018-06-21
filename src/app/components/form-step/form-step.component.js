@@ -5,13 +5,17 @@ export class FormStepController {
     constructor($scope) {
         'ngInject';
         this.$scope = $scope;
+
+        this.otherIsTrue = false;
     }
 
     $onInit() {
         this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
             this.setFlagSend(newValue, oldValue);
         });
-
+        if (this.type === 'otherCheckbox') {
+            this.otherIsTrue = this.setOtherQuestionValues();
+        }
     }
 
     emitFlag(amountToAdd) {
@@ -20,12 +24,19 @@ export class FormStepController {
         });
     }
 
+
     setFlagSend(newValue, oldValue) {
         if ((oldValue && newValue) || (!oldValue && newValue)) {
             this.emitFlag(this.redFlag);
         } else if (oldValue && !newValue) {
             this.emitFlag(-this.redFlag);
         }
+    }
+
+    setOtherQuestionValues() {
+        let valueSet = this.responseValue;
+        this.responseValue = valueSet || '';
+        return !!valueSet;
     }
 }
 

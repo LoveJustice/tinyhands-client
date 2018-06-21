@@ -2,15 +2,11 @@
     <div class="row center-vertical">
         <div class="col-md-3">
             <div class="padding-bottom-20">Who is in the group?</div>
-            <form-step red-flag="40" response-value="$ctrl.questions[10].response.value">
-                <input id="drugged-or-drowsy" type="checkbox" ng-model="$ctrl.questions[10].response.value">
-                <label for="drugged-or-drowsy">Person appears drugged or drowsy</label>
+            <form-step red-flag="40" type="'checkbox'" label="'Person appears drugged or drowsy'" response-value="$ctrl.questions[10].response.value">
             </form-step>
             <div class="margin-top-20 margin-bottom-10">Is or was travelling with someone they recently met through:</div>
             <div>
-                <form-step red-flag="50" response-value="$ctrl.questions[242].response.value">
-                    <input id="missed-call" type="checkbox" ng-model="$ctrl.questions[242].response.value">
-                    <label for="missed-call">Missed Call</label>
+                <form-step red-flag="50" type="'checkbox'" label="'Missed Call'" response-value="$ctrl.questions[242].response.value">
                 </form-step>
             </div>
             <div>
@@ -20,19 +16,14 @@
                 </form-step>
             </div>
             <div>
-                <form-step red-flag="40" response-value="$ctrl.otherWebsite">
-                    <input id="other-website" type="checkbox" ng-model="$ctrl.otherWebsite">
-                    <label for="other-website">Other website:</label>
-                    <input type="text" ng-model="$ctrl.questions[244].response.value">
+                <form-step red-flag="40" type="'otherCheckbox'" label="'Other Website: '" response-value="$ctrl.otherWebsite">
                 </form-step>
             </div>
         </div>
         <div class="col-md-9 container">
             <div class="row center-vertical">
                 <div class="col-md-4">
-                    <form-step>
-                        <input id="alone" type="checkbox" ng-model="$ctrl.questions[12].response.value">
-                        <label for="alone">Alone</label>
+                    <form-step type="'checkbox'" label="'Alone'" response-value="$ctrl.questions[12].response.value">
                     </form-step>
                 </div>
                 <div class="row col-md-8">
@@ -41,17 +32,11 @@
                             Are you meeting someone?
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="20" response-value="$ctrl.questions[21].response.value">
-                                <input id="across-border" type="checkbox" ng-model="$ctrl.questions[21].response.value">
-                                <label for="across-border">Is meeting someone just across border</label>
+                            <form-step red-flag="20" type="'checkbox'" label="'Is meeting someone just across border'" response-value="$ctrl.questions[21].response.value">
                             </form-step>
-                            <form-step red-flag="20" response-value="$ctrl.questions[22].response.value">
-                                <input id="last-month" type="checkbox" ng-model="$ctrl.questions[22].response.value">
-                                <label for="last-month">Meeting someone they've seen in last month</label>
+                            <form-step red-flag="20" type="'checkbox'" label="'Meeting someone they\'ve seen in last month'" response-value="$ctrl.questions[22].response.value">
                             </form-step>
-                            <form-step red-flag="40" response-value="$ctrl.questions[251].response.value">
-                                <input id="havent-met" type="checkbox" ng-model="$ctrl.questions[251].response.value">
-                                <label for="havent-met">Meeting someone they haven't met before</label>
+                            <form-step red-flag="40" type="'checkbox'" label="'Meeting someone they haven\'t met before'" response-value="$ctrl.questions[251].response.value">
                             </form-step>
                         </div>
                     </div>
@@ -61,9 +46,7 @@
                             Were you travelling with someone earlier?
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="40" response-value="$ctrl.questions[23].response.value">
-                                <input id="travelling-with-someone" type="checkbox" ng-model="$ctrl.questions[23].response.value">
-                                <label for="travelling-with-someone">Was travelling with someone not with them now</label>
+                            <form-step red-flag="40" type="'checkbox'" label="'Was travelling with someone not with them now'" response-value="$ctrl.questions[23].response.value">
                             </form-step>
                         </div>
                     </div>
@@ -72,19 +55,11 @@
             <hr/>
             <div class="row center-vertical">
                 <div class="col-md-4">
-                    <form-step>
-                        <input id="significant-other" type="checkbox" ng-model="$ctrl.questions[13].response.value">
-                        <label for="significant-other">
-                            Husband / Wife or Boyfriend / Girlfriend
-                        </label>
+                    <form-step type="'checkbox'" label="'Husband / Wife or Boyfriend / Girlfriend'" response-value="$ctrl.questions[13].response.value">
                     </form-step>
-                    <form-step red-flag="45" response-value="$ctrl.questions[252].response.value">
-                        <input id="nepali-bengali" type="checkbox" ng-model="$ctrl.questions[252].response.value">
-                        <label for="nepali-bengali">Wife/girl is Nepali / Bengali and under 18</label>
+                    <form-step red-flag="45" type="'checkbox'" label="'Wife/girl is Nepali / Bengali and under 18'" response-value="$ctrl.questions[252].response.value">
                     </form-step>
-                    <form-step red-flag="25" response-value="$ctrl.questions[253].response.value">
-                        <input id="indian" type="checkbox" ng-model="$ctrl.questions[253].response.value">
-                        <label for="indian">Wife/girl is Indian and under 18</label>
+                    <form-step red-flag="25" type="'checkbox'" label="'Wife/girl is Indian and under 18'" response-value="$ctrl.questions[253].response.value">
                     </form-step>
                 </div>
                 <div class="row col-md-8">
@@ -93,13 +68,9 @@
                             Ask when they were married
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="15" response-value="$ctrl.questions[24].response.value">
-                                <input id="married-in-past-two-weeks" type="checkbox" ng-model="$ctrl.questions[24].response.value">
-                                <label for="married-in-past-two-weeks">Married in the past 2 weeks</label>
+                            <form-step red-flag="15" type="'checkbox'" label="'Married in the past 2 weeks'" response-value="$ctrl.questions[24].response.value">
                             </form-step>
-                            <form-step red-flag="10" response-value="$ctrl.questions[25].response.value">
-                                <input id="married-in-past-two-to-eight-weeks" type="checkbox" ng-model="$ctrl.questions[25].response.value">
-                                <label for="married-in-past-two-to-eight-weeks">Married within the past 2-8 weeks</label>
+                            <form-step red-flag="10" type="'checkbox'" label="'Married within the past 2-8 weeks'" response-value="$ctrl.questions[25].response.value">
                             </form-step>
                         </div>
                     </div>
@@ -109,13 +80,9 @@
                             Ask when they met
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="20" response-value="$ctrl.questions[26].response.value">
-                                <input id="less-than-two-weeks-elope" type="checkbox" ng-model="$ctrl.questions[26].response.value">
-                                <label for="less-than-two-weeks-elope">Less than 2 weeks before eloping</label>
+                            <form-step red-flag="20" type="'checkbox'" label="'Less than 2 weeks before eloping'" response-value="$ctrl.questions[26].response.value">
                             </form-step>
-                            <form-step red-flag="15" response-value="$ctrl.questions[27].response.value">
-                                <input id="two-to-twelve-weeks-elope" type="checkbox" ng-model="$ctrl.questions[27].response.value">
-                                <label for="two-to-twelve-weeks-elope">2-12 weeks before eloping</label>
+                            <form-step red-flag="15" type="'checkbox'" label="'2-12 weeks before eloping'" response-value="$ctrl.questions[27].response.value">
                             </form-step>
                         </div>
                     </div>
@@ -124,11 +91,7 @@
             <hr/>
             <div class="row center-vertical">
                 <div class="col-md-4">
-                    <form-step>
-                        <input id="relative" type="checkbox" ng-model="$ctrl.questions[14].response.value">
-                        <label for="relative">
-                            Own brother, sister/relative
-                        </label>
+                    <form-step type="'checkbox'" label="'Own brother, sister/relative'" response-value="$ctrl.questions[14].response.value">
                     </form-step>
                 </div>
                 <div class="row col-md-8">
@@ -137,9 +100,7 @@
                             Check citizenship cards
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="50" response-value="$ctrl.questions[28].response.value">
-                                <input id="family-or-caste-not-the-same" type="checkbox" ng-model="$ctrl.questions[28].response.value">
-                                <label for="family-or-caste-not-the-same">Family name or caste not the same as alleged relative</label>
+                            <form-step red-flag="50" type="'checkbox'" label="'Family name or caste not the same as alleged relative'" response-value="$ctrl.questions[28].response.value">
                             </form-step>
                         </div>
                     </div>
@@ -151,9 +112,7 @@
     <div class="row">
         <div class="col-md-5">If there is more than one person in the group separate them at this point.</div>
         <div class="col-md-3">
-            <form-step red-flag="35" response-value="$ctrl.questions[30].response.value">
-                <input id="caught-in-lie" type="checkbox" ng-model="$ctrl.questions[30].response.value">
-                <label for="caught-in-lie">Caught in a lie or contradiction</label>
+            <form-step red-flag="35" type="'checkbox'" label="'Caught in a lie or contradiction'" response-value="$ctrl.questions[30].response.value">
             </form-step>
         </div>
         <div class="col-md-4">

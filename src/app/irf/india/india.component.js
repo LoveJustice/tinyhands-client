@@ -162,13 +162,9 @@ export class IrfIndiaController {
         this.getWarningMessages();
     }
 
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
-    }
 
-    setRadio(items, valueId) {
+
+    setRadioOther(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
         if (!_.includes(flattenedItems, value) && value !== '') {

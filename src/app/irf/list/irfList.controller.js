@@ -27,7 +27,6 @@ export default class IrfListController {
         };
         this.stickyOptions = this.sticky.stickyOptions;
 
-        // If there was a search value provided in the url, set it
         if ($stateParams) {
             this.queryParameters.search = $stateParams.search;
         }

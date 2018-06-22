@@ -8,21 +8,13 @@
         <h4 class="modal-title">Create IRF</h3>
     </div>
     <div class="modal-body form-horizontal">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 margin-50">
-                Country
-                <select class="form-control" ng-model="NewIrfModalController.selectedCountry">
-                    <option ng-repeat="option in NewIrfModalController.countries" ng-value="option">{{option}}</option>
-                </select>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="row">
-                <div class="col-xs-4 col-xs-offset-8">
-                    <button class="btn btn-default" ng-click="NewIrfModalController.dismiss()">Close</button>
-                    <button class="btn btn-primary" ng-click="NewIrfModalController.createNewIrf()">Create</button>
-                </div>
-            </div>
-        </div>
+        <label>Country</label>
+        <select class="form-control" ng-model="NewIrfModalController.selectedCountry">
+            <option ng-repeat="option in NewIrfModalController.countries" ng-value="option">{{option}}</option>
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="NewIrfModalController.createNewIrf()">Create</button>
+        <button class="btn btn-danger" ng-click="NewIrfModalController.dismiss()">Close</button>
     </div>
 </form>

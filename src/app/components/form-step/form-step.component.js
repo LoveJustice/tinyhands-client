@@ -11,9 +11,7 @@ export class FormStepController {
         this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
             this.setFlagSend(newValue, oldValue);
         });
-        if (this.type === 'otherCheckbox') {
-            this.otherValue = this.setOtherQuestionValues();
-        }
+        this.setOtherQuestionValues();
     }
 
     emitFlag(amountToAdd) {
@@ -21,7 +19,6 @@ export class FormStepController {
             numberOfFlagsToAdd: amountToAdd
         });
     }
-
 
     setFlagSend(newValue, oldValue) {
         if ((oldValue && newValue) || (!oldValue && newValue)) {
@@ -32,9 +29,11 @@ export class FormStepController {
     }
 
     setOtherQuestionValues() {
-        let valueSet = this.responseValue;
-        this.responseValue = valueSet || '';
-        return !!valueSet;
+        if (this.type === 'otherCheckbox') {
+            let valueSet = this.responseValue;
+            this.responseValue = valueSet || '';
+            this.otherValue = !!valueSet;
+        }
     }
 }
 

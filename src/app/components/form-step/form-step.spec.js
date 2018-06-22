@@ -28,6 +28,8 @@ describe('FormStepController', () => {
         });
     });
 
+
+
     describe('function emitFlag()', () => {
         it('should call $emit with flagTotalCheck and object', () => {
             spyOn(vm.$scope, '$emit');
@@ -72,6 +74,39 @@ describe('FormStepController', () => {
             vm.setFlagSend(false, true);
 
             expect(vm.emitFlag).toHaveBeenCalledWith(-420);
+        });
+    });
+
+    describe('function setOtherQuestionValues', () => {
+        beforeEach(() => {
+            vm.type = 'otherCheckbox';
+        });
+
+        it('when value is not otherCheckbox do nothing', () => {
+            vm.type = 'blah';
+            vm.responseValue = 'feet';
+            vm.otherValue = false;
+
+            vm.setOtherQuestionValues();
+
+            expect(vm.responseValue).toEqual('feet');
+            expect(vm.otherValue).toBeFalsy();
+        });
+
+        it('when response value is false should return false and set response value to empty string', () => {
+            vm.setOtherQuestionValues();
+
+            expect(vm.otherValue).toEqual(false);
+            expect(vm.responseValue).toEqual('');
+        });
+
+        it('when response value is a string, should return true, leave response value as a string', () => {
+            vm.responseValue = 'hello there I am a red flag';
+
+            vm.setOtherQuestionValues();
+
+            expect(vm.otherValue).toEqual(true);
+            expect(vm.responseValue).toEqual('hello there I am a red flag');
         });
     });
 });

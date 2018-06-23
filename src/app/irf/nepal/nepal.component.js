@@ -46,7 +46,7 @@ export class IrfNepalController {
         this.otherSign = false;
         this.otherWebsite = false;
         this.redFlagTotal = 0;
-        this.selectedStep = 1;
+        this.selectedStep = 0;
         this.staffConvinced = false;
         this.stepTemplates = [
             topBoxTemplate,

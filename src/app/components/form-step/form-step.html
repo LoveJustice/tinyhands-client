@@ -1,12 +1,15 @@
 <div>
     <div ng-switch="$ctrl.type">
         <span ng-switch-when="radio">
-            <input type="radio" value="{{$ctrl.label}}" name="$ctrl.radioName" ng-model="$ctrl.responseValue">
-            <label>{{$ctrl.label}}</label>
+            <input id="{{$ctrl.radioName + '-' + $ctrl.label}}" type="radio" ng-value="$ctrl.label" name="{{$ctrl.radioName}}" ng-model="$ctrl.responseValue"
+            />
+            <label for="{{$ctrl.radioName + '-' + $ctrl.label}}" ng-click="$ctrl.clickRadio($event)">
+                {{$ctrl.label}}
+            </label>
         </span>
         <span ng-switch-when="otherRadio">
-            <input type="radio" value="Other" name="$ctrl.radioName" ng-model="$ctrl.responseValue">
-            <label>Other</label>
+            <input id="{{$ctrl.radioName + '-' + $ctrl.label}}" type="radio" value="Other" name="{{$ctrl.radioName}}" ng-model="$ctrl.responseValue">
+            <label for="{{$ctrl.radioName + '-' + $ctrl.label}}">Other</label>
             <input ng-model="$ctrl.otherValue">
         </span>
         <span ng-switch-when="checkbox">
@@ -18,12 +21,12 @@
             <input type="text" ng-model="$ctrl.responseValue">
         </span>
         <span ng-switch-when="textarea">
-            <input type="textarea" ng-model="$ctrl.responseValue">
             <label>{{$ctrl.label}}</label>
+            <textarea class="form-control" rows="3" ng-model="$ctrl.responseValue"></textarea>
         </span>
         <span ng-switch-when="number">
             <label>{{$ctrl.label}}</label>
-            <input type="number" min="0" ng-model="$ctrl.responseValue">
+            <input type="number" min="0" ng-model="$ctrl.responseValue" class="padding-top-10">
         </span>
         <span ng-switch-when="otherCheckbox">
             <input type="checkbox" ng-model="$ctrl.otherValue">

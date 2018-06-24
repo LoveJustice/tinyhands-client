@@ -1,3 +1,4 @@
+import MessageConstants from './constants.js';
 import templateUrl from './india.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
@@ -11,11 +12,13 @@ import IntercepteeModalController from './step-templates/interceptees/intercepte
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
 const DateTimeId = 4;
+const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const OtherRedFlagId = 31;
 const OtherSignId = 134;
 const OtherWebsiteId = 244;
+const SignedId = 151;
 
 export class IrfIndiaController {
     constructor($scope, $uibModal, constants, IndiaService) {
@@ -34,6 +37,8 @@ export class IrfIndiaController {
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
+        this.ignoreWarnings = false;
+        this.messagesEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
         this.otherRedFlag = false;
@@ -51,14 +56,34 @@ export class IrfIndiaController {
             finalProceduresTemplate
         ];
 
-        this.setupFlagListener();
+        this.getErrorData();
         this.getIndiaIrf();
-        this.getLocation();
-        this.getStaff();
+        this.setupFlagListener();
+        this.watchMessages();
     }
 
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
+    }
+
+    getErrorData() {
+        this.errorMessageIrfNumber = MessageConstants.Errors.IrfNumber;
+        this.errorMessageInterceptee = MessageConstants.Errors.Interceptee;
+        this.warningMessageRedFlags = MessageConstants.Warnings.RedFlags;
+        this.warningMessageNoSignature = MessageConstants.Warnings.NoSignature;
+    }
+
+    getErrorMessages() {
+        let activeErrors = [];
+        if (this.messagesEnabled) {
+            if (this.questions[IrfNumberId].response.value === '') {
+                activeErrors.push(this.errorMessageIrfNumber);
+            }
+            if (_.size(this.cards) === 0) {
+                activeErrors.push(this.errorMessageInterceptee);
+            }
+        }
+        return activeErrors;
     }
 
     getIndiaIrf() {
@@ -74,20 +99,21 @@ export class IrfIndiaController {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    getLocation() {
-        this.IndiaService.getLocation().then(response => {
-            this.location = response.data;
-        });
-    }
-
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, x => x.question_id === questionId).response;
     }
 
-    getStaff() {
-        this.IndiaService.getStaff().then(response => {
-            this.staff = response.data;
-        });
+    getWarningMessages() {
+        let activeWarnings = [];
+        if (!this.ignoreWarnings && this.messagesEnabled) {
+            if (!this.questions[SignedId].response.value) {
+                activeWarnings.push(this.warningMessageNoSignature);
+            }
+            if (this.redFlagTotal === 0) {
+                activeWarnings.push(this.warningMessageRedFlags);
+            }
+        }
+        return activeWarnings;
     }
 
     incrementRedFlags(numberOfFlagsToAdd) {
@@ -136,6 +162,12 @@ export class IrfIndiaController {
         });
     }
 
+    save() {
+        this.messagesEnabled = true;
+        this.getErrorMessages();
+        this.getWarningMessages();
+    }
+
     setOtherQuestionValues(valueId) {
         let valueSet = this.questions[valueId].response.value;
         this.questions[valueId].response.value = valueSet || '';
@@ -164,6 +196,29 @@ export class IrfIndiaController {
         this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
         this.otherContactString = this.setRadio(this.contacts, OtherContactId);
         this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
+    }
+
+    showIgnoreWarningsCheckbox() {
+        return (this.messagesEnabled && this.getWarningMessages().length > 0) || this.ignoreWarnings;
+    }
+
+    submit() {
+        this.messagesEnabled = true;
+        this.getErrorMessages();
+        this.getWarningMessages();
+    }
+
+    watchMessages() {
+        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.getErrorMessages();
+            }
+        });
+        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.getWarningMessages();
+            }
+        });
     }
 }
 

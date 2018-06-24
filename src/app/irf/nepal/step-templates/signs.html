@@ -64,10 +64,7 @@
                     <div class="col-md-6 form-group">
                         <form-step class="col-xs-4 control-label">Staff who noticed</form-step>
                         <div class="col-xs-6">
-                            <select class="form-control" ng-model="$ctrl.questions[106].response.value">
-                                <option ng-repeat="staff in $ctrl.staff" ng-value="staff">{{staff.first_name + ' ' + staff.last_name}}</option>
-                                <option ng-if="!$ctrl.questions[106].response.value.id" ng-value="$ctrl.questions[106].response.value">{{$ctrl.questions[106].response.value}}</option>
-                            </select>
+                            <staff-select selected-staff="$ctrl.questions[106].response.value"></staff-select>
                         </div>
                     </div>
                     <div class="text">What was the sign that made you stop them for questioning? (check all that apply below) </div>
@@ -121,7 +118,7 @@
                         <hr/>
                         <form-step>
                             <input id="foreign-looking" type="checkbox" ng-model="$ctrl.questions[119].response.value">
-                            <label for="foreign-looking">Foreign looking</label>
+                            <label for="foreign-looking">Indian looking</label>
                         </form-step>
                         <form-step>
                             <input id="typical-village" type="checkbox" ng-model="$ctrl.questions[120].response.value">

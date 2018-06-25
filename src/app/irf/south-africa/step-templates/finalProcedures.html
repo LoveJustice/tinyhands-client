@@ -6,8 +6,7 @@
                     <div class="col-md-12 form-group">
                         <div class="col-md-6">
                             <form-step>
-                                How sure are you that it was a trafficking case?
-                            </form-step>
+                                How sure are you that it was a trafficking case?</form-step>
                         </div>
                         <div class="col-md-6">
                             <form-step>
@@ -35,15 +34,11 @@
                         </div>
                     </div>
                     <div class="col-md-1">
-                        <form-step>
-                            <input id="interception-yes" name="did-you-intercept" value="yes" ng-model="$ctrl.questions[263].response.value" type="radio">
-                            <label for="interception-yes">Yes</label>
+                        <form-step type="'radio'" label="'Yes'" radio-name="'did-you-intercept'" response-value="$ctrl.questions[263].response.value">
                         </form-step>
                     </div>
                     <div class="col-md-5">
-                        <form-step>
-                            <input id="interception-no" name="did-you-intercept" value="no" ng-model="$ctrl.questions[263].response.value" type="radio">
-                            <label for="interception-no">No</label>
+                        <form-step type="'radio'" label="'No'" radio-name="'did-you-intercept'" response-value="$ctrl.questions[263].response.value">
                         </form-step>
                     </div>
                 </div>
@@ -53,9 +48,7 @@
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-2">
                 <div class="row">
-                    <form-step>
-                        <label for="case-notes">Case Notes</label>
-                        <textarea class="form-control" id="case-notes" rows="4" ng-model="$ctrl.questions[146].response.value"></textarea>
+                    <form-step type="'textarea'" label="'Case Notes'" response-value="$ctrl.questions[146].response.value">
                     </form-step>
                 </div>
             </div>

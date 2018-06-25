@@ -7,15 +7,11 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6">
-                    <form-step red-flag="35" response-value="$ctrl.questions[71].response.value">
-                        <input id="details" type="checkbox" ng-model="$ctrl.questions[71].response.value">
-                        <label for="details">Doesn't know details about village</label>
+                    <form-step red-flag="35" type="'checkbox'" label="'Doesn\'t know details about village'" response-value="$ctrl.questions[71].response.value">
                     </form-step>
                 </div>
                 <div class="col-md-6">
-                    <form-step red-flag="15" response-value="$ctrl.questions[72].response.value">
-                        <input id="village-info" type="checkbox" ng-model="$ctrl.questions[72].response.value">
-                        <label for="village-info">Reluctant to give info about village</label>
+                    <form-step red-flag="15" type="'checkbox'" label="'Reluctant to give info about village'" response-value="$ctrl.questions[72].response.value">
                     </form-step>
                 </div>
             </div>
@@ -29,15 +25,11 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6">
-                    <form-step red-flag="10" response-value="$ctrl.questions[73].response.value">
-                        <input id="reluctant" type="checkbox" ng-model="$ctrl.questions[73].response.value">
-                        <label for="reluctant">Reluctant to give family info</label>
+                    <form-step red-flag="10" type="'checkbox'" label="'Reluctant to give family info'" response-value="$ctrl.questions[73].response.value">
                     </form-step>
                 </div>
                 <div class="col-md-6">
-                    <form-step red-flag="35" response-value="$ctrl.questions[74].response.value">
-                        <input id="family-info" type="checkbox" ng-model="$ctrl.questions[74].response.value">
-                        <label for="family-info">Will not give family info</label>
+                    <form-step red-flag="35" type="'checkbox'" label="'Will not givr family info'" response-value="$ctrl.questions[74].response.value">
                     </form-step>
                 </div>
             </div>
@@ -47,17 +39,11 @@
                     <div class="padding-bottom-20">Under 18 years old</div>
                 </div>
                 <div class="col-md-6">
-                    <form-step red-flag="50" response-value="$ctrl.questions[77].response.value">
-                        <input id="family-contact" type="checkbox" ng-model="$ctrl.questions[77].response.value">
-                        <label for="family-contact">No family contact established</label>
+                    <form-step red-flag="50" type="'checkbox'" label="'No family contact established'" response-value="$ctrl.questions[77].response.value">
                     </form-step>
-                    <form-step red-flag="45" response-value="$ctrl.questions[78].response.value">
-                        <input id="family-going" type="checkbox" ng-model="$ctrl.questions[78].response.value">
-                        <label for="family-going">Family doesn't know she is going to India</label>
+                    <form-step red-flag="45" type="'checkbox'" label="'Family doesn\'t know she is going to India'" response-value="$ctrl.questions[78].response.value">
                     </form-step>
-                    <form-step red-flag="60" response-value="$ctrl.questions[79].response.value">
-                        <input id="family-unwilling" type="checkbox" ng-model="$ctrl.questions[79].response.value">
-                        <label for="family-unwilling">Family unwilling to let her go</label>
+                    <form-step red-flag="60" type="'checkbox'" label="'Family unwilling to let her go'" response-value="$ctrl.questions[79].response.value">
                     </form-step>
                 </div>
             </div>
@@ -67,13 +53,9 @@
                     <div class="padding-bottom-20">18 years or older</div>
                 </div>
                 <div class="col-md-6">
-                    <form-step red-flag="15" response-value="$ctrl.questions[80].response.value">
-                        <input id="family-member" type="checkbox" ng-model="$ctrl.questions[80].response.value">
-                        <label for="family-member">Family members do not know she is going to India</label>
+                    <form-step red-flag="15" type="'checkbox'" label="'Family members do not know she is going to India'" response-value="$ctrl.questions[80].response.value">
                     </form-step>
-                    <form-step red-flag="20" response-value="$ctrl.questions[81].response.value">
-                        <input id="family-let" type="checkbox" ng-model="$ctrl.questions[81].response.value">
-                        <label for="family-let">Family members are unwilling to let her go</label>
+                    <form-step red-flag="20" type="'checkbox'" label="'Family members unwilling to let her go'" response-value="$ctrl.questions[81].response.value">
                     </form-step>
                 </div>
             </div>
@@ -89,14 +71,9 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6" ng-repeat="families in $ctrl.family">
-                    <form-step ng-repeat="family in families">
-                        <input id="{{family}}" type="radio" name="optionRadio" value="{{family}}" ng-model="$ctrl.questions[82].response.value">
-                        <label for="{{family}}">{{family}}</label>
+                    <form-step type="'radio'" radio-name="'familyRadio'" ng-repeat="family in families" label="family" response-value="$ctrl.questions[82].response.value">
                     </form-step>
-                    <form-step ng-if="$first">
-                        <input id="other-fam" type="radio" name="optionRadio" value="Other" ng-model="$ctrl.questions[82].response.value">
-                        <label for="other-fam">Other</label>
-                        <input ng-model="$ctrl.otherFamilyString">
+                    <form-step ng-if="$first" type="'otherRadio'" radio-name="'familyRadio'" other-value="$ctrl.otherFamilyString" response-value="$ctrl.questions[82].response.value">
                     </form-step>
                 </div>
             </div>

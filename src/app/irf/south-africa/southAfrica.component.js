@@ -28,9 +28,8 @@ export class IrfSouthAfricaController {
         this.SouthAfricaService = SouthAfricaService;
 
         this.contacts = [
-            ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
-            ['Bus driver', 'Church member', 'Other NGO'],
-            ['Police', 'Subcomittee member']
+            ['Immigration', 'Police'],
+            ['Airline Official']
         ];
         this.family = [
             ['Own brother', 'Own father', 'Own grandparent'],

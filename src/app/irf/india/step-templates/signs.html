@@ -8,22 +8,15 @@
         </div>
         <div class="row center-vertical">
             <div class="col-md-2">
-                <form-step>
-                    <input id="contact" name="contact-or-staff" value="Contact" ng-model="$ctrl.questions[91].response.value">
-                    <label for="contact">Contact</label>
+                <form-step type="'radio'" label="'Contact'" response-value="$ctrl.questions[91].response.value" radio-name="'contactOrStaff'">
                 </form-step>
             </div>
             <div class="row col-md-10">
                 <div class="row center-vertical">
                     <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
-                        <form-step ng-repeat="contact in contacts">
-                            <input id="{{contact}}" name="contact-type" value="{{contact}}" ng-model="$ctrl.questions[92].response.value" type="radio">
-                            <label for="{{contact}}">{{contact}}</label>
+                        <form-step type="'radio'" radio-name="'contactType'" ng-repeat="contact in contacts" label="contact" response-value="$ctrl.questions[92].response.value">
                         </form-step>
-                        <form-step ng-if="$last">
-                            <input id="other-contact" name="contact-type" type="radio" value="Other" ng-model="$ctrl.questions[92].response.value">
-                            <label for="other-contact">Other</label>
-                            <input class="margin-left-10" ng-Model="$ctrl.otherContactString">
+                        <form-step ng-if="$last" type="'otherRadio'" radio-name="'contactType'" other-value="$ctrl.otherContactString" response-value="$ctrl.questions[92].response.value">
                         </form-step>
                     </div>
                 </div>
@@ -31,21 +24,15 @@
                 <div class="padding-bottom-20">Did you pay the contact for this information?</div>
                 <div class="row center-vertical">
                     <div class="col-md-2">
-                        <form-step>
-                            <input id="pay-no" name="did-you-pay" value="no" ng-model="$ctrl.questions[102].response.value" type="radio">
-                            <label for="pay-no">No</label>
+                        <form-step type="'radio'" label="'No'" response-value="$ctrl.questions[102].response.value" radio-name="'didYouPay'">
                         </form-step>
                     </div>
                     <div class="col-md-2">
-                        <form-step>
-                            <input id="pay-yes" name="did-you-pay" value="yes" ng-model="$ctrl.questions[102].response.value" type="radio">
-                            <label for="pay-yes">Yes</label>
+                        <form-step type="'radio'" label="'Yes'" response-value="$ctrl.questions[102].response.value" radio-name="'didYouPay'">
                         </form-step>
                     </div>
-                    <div class="col-md-4">
-                        <form-step>
-                            <label for="pay-how-much">How much?</label>
-                            <input class="margin-left-10" id="pay-how-much" type="text" ng-model="$ctrl.questions[104].response.value">
+                    <div class="col-md-4 margin-left-10">
+                        <form-step label="'How much?'" type="'text'" response-value="$ctrl.questions[104].response.value">
                         </form-step>
                     </div>
                 </div>
@@ -54,9 +41,7 @@
         <hr/>
         <div class="row center-vertical">
             <div class="col-md-2">
-                <form-step>
-                    <input id="staff" name="contact-or-staff" value="Staff" type="radio" ng-model="$ctrl.questions[91].response.value">
-                    <label for="staff">Staff</label>
+                <form-step type="'radio'" label="'Staff'" response-value="$ctrl.questions[91].response.value" radio-name="'contactOrStaff'">
                 </form-step>
             </div>
             <div class="row col-md-10">

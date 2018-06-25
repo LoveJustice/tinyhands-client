@@ -393,7 +393,10 @@ export default class SouthAfricaService {
                             "question_id": 106,
                             "storage_id": 4,
                             "response": {
-                                "value": "Staff Member"
+                                "value": [{
+                                    id: 2,
+                                    name: "Staff Member"
+                                }]
                             }
                         },
                         {
@@ -745,7 +748,7 @@ export default class SouthAfricaService {
                                 {
                                     "question_id": 8,
                                     "response": {
-                                        "value": "Victim"
+                                        "value": "PVOT"
                                     }
                                 },
                                 {

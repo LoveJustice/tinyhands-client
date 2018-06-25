@@ -14,6 +14,15 @@ export class FormStepController {
         this.setOtherQuestionValues();
     }
 
+    clickRadio($event) {
+        $event.preventDefault();
+        if (this.responseValue === this.label) {
+            this.responseValue = '';
+        } else {
+            this.responseValue = this.label;
+        }
+    }
+
     emitFlag(amountToAdd) {
         this.$scope.$emit('flagTotalCheck', {
             numberOfFlagsToAdd: amountToAdd
@@ -43,10 +52,9 @@ export default {
         otherValue: '<?',
         radioName: '<?',
         redFlag: '<?',
-        responseValue: '<?',
+        responseValue: '=?',
         stepLabel: '<',
         type: '<?',
-
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,

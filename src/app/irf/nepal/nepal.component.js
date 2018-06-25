@@ -15,11 +15,7 @@ const DateTimeId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
-const OtherRedFlagId = 31;
-const OtherSignId = 134;
-const OtherWebsiteId = 244;
 const SignedId = 151;
-const StaffConvincedId = 149;
 
 export class IrfNepalController {
     constructor($scope, $uibModal, constants, NepalService) {
@@ -42,12 +38,8 @@ export class IrfNepalController {
         this.messageEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
-        this.otherRedFlag = false;
-        this.otherSign = false;
-        this.otherWebsite = false;
         this.redFlagTotal = 0;
         this.selectedStep = 0;
-        this.staffConvinced = false;
         this.stepTemplates = [
             topBoxTemplate,
             groupTemplate,

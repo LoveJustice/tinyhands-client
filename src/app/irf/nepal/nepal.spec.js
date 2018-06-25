@@ -1,24 +1,20 @@
 import {
     IrfNepalController
 }
-    from "./nepal.component";
+from "./nepal.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
-const OtherRedFlagId = 31;
-const OtherSignId = 134;
-const OtherWebsiteId = 244;
 const SignedId = 151;
-const StaffConvincedId = 149;
 
 describe('IrfNepalController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
-            $watch() { },
-            $on() { }
+            $watch() {},
+            $on() {}
         };
         let $uibModal = {
             open: () => ({
@@ -29,13 +25,13 @@ describe('IrfNepalController', () => {
         };
         let NepalService = {
             getNepalIrf: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getLocation: () => ({
-                then: () => { }
+                then: () => {}
             }),
             getStaff: () => ({
-                then: () => { }
+                then: () => {}
             }),
         };
         vm = new IrfNepalController($scope, $uibModal, {}, NepalService);
@@ -224,37 +220,6 @@ describe('IrfNepalController', () => {
         });
     });
 
-    /* describe('function setOtherQuestionValues', () => {
-        beforeEach(() => {
-            vm.questions = {
-
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-            };
-        });
-
-        it('when response value is false should return false and set response value to empty string', () => {
-            let temp = vm.setOtherQuestionValues(OtherRedFlagId);
-
-            expect(temp).toEqual(false);
-            expect(vm.questions[OtherRedFlagId].response.value).toEqual('');
-        });
-
-        it('when response value is a string, should return true, leave response value as a string', () => {
-            vm.questions[OtherRedFlagId].response.value = 'hello there I am a red flag';
-
-            let temp = vm.setOtherQuestionValues(OtherRedFlagId);
-
-            expect(temp).toEqual(true);
-            expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
-        });
-
-    }); */
-
     describe('function setRadioOther', () => {
         beforeEach(() => {
             vm.questions = {
@@ -306,64 +271,50 @@ describe('IrfNepalController', () => {
         });
     });
 
-    /*  describe('function setValuesForOtherInputs', () => {
-         beforeEach(() => {
-             vm.questions = {
-                 [DateId]: {
-                     question_id: [DateId],
-                     response: {
-                         value: ''
-                     }
-                 },
-                 [OtherContactId]: {
-                     question_id: OtherContactId,
-                     response: {
-                         value: false
-                     }
-                 },
-                 [OtherFamilyId]: {
-                     question_id: OtherFamilyId,
-                     response: {
-                         value: ''
-                     }
-                 },
-                 [OtherRedFlagId]: {
-                     question_id: OtherRedFlagId,
-                     response: {
-                         value: false
-                     }
-                 },
-                 [OtherSignId]: {
-                     question_id: OtherSignId,
-                     response: {
-                         value: false
-                     }
-                 },
-                 [OtherWebsiteId]: {
-                     question_id: OtherWebsiteId,
-                     response: {
-                         value: false
-                     }
-                 },
-                 [StaffConvincedId]: {
-                     question_id: StaffConvincedId,
-                     response: {
-                         value: false
-                     }
-                 },
-             };
-         });
- 
-         it('should set other flags', () => {
-             vm.setValuesForOtherInputs();
- 
-             expect(vm.otherRedFlag).toEqual(false);
-             expect(vm.otherSign).toEqual(false);
-             expect(vm.otherWebsite).toEqual(false);
-             expect(vm.staffConvinced).toEqual(false);
-         });
-     });
-  */
+    describe('function setValuesForOtherInputs', () => {
+        beforeEach(() => {
+            vm.questions = {
+                [DateId]: {
+                    question_id: [DateId],
+                    response: {
+                        value: '2017-04-23T19:45:00+05:45'
+                    }
+                },
+                [OtherContactId]: {
+                    question_id: OtherContactId,
+                    response: {
+                        value: 'boots'
+                    }
+                },
+                [OtherFamilyId]: {
+                    question_id: OtherFamilyId,
+                    response: {
+                        value: 'great uncle'
+                    }
+                }
+            };
+        });
+
+        it('should set value for date', () => {
+            vm.setValuesForOtherInputs();
+
+            let expectedDate = new Date('April 23, 2017 10:00:00 GMT-0400');
+            expect(vm.questions[DateId].response.value).toEqual(expectedDate);
+        });
+
+        it('should set value for otherContactString', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.otherContactString).toEqual('boots');
+        });
+
+        it('should set value for otherFamilyString', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.otherFamilyString).toEqual('great uncle');
+        });
+    });
+
     describe('function submit', () => {
         it('should set messagesEnabled to true and call getErrorMessages and getWarningMessages', () => {
             vm.messagesEnabled = false;

@@ -7,9 +7,7 @@
     </div>
     <div class="row center-vertical">
         <div class="col-md-2 col-md-offset-2">
-            <form-step>
-                <input id="contact" name="contact-or-staff" value="Contact" type="radio" ng-model="$ctrl.questions[91].response.value">
-                <label for="contact">Contact</label>
+            <form-step type="'radio'" label="'Contact'" response-value="$ctrl.questions[91].response.value" radio-name="'contactOrThStaff'">
             </form-step>
         </div>
         <div class="col-md-8">
@@ -48,9 +46,7 @@
     </div>
     <div class="row center-vertical">
         <div class="col-md-2 col-md-offset-2">
-            <form-step>
-                <input id="staff" name="contact-or-staff" value="TH Staff" type="radio" ng-model="$ctrl.questions[91].response.value">
-                <label for="staff">TH Staff</label>
+            <form-step type="'radio'" label="'TH Staff'" response-value="$ctrl.questions[91].response.value" radio-name="'contactOrThStaff'">
             </form-step>
         </div>
         <div class="col-md-8">

@@ -1,15 +1,15 @@
 import {
     FormStepController
 }
-from "./form-step.component";
+    from "./form-step.component";
 
 describe('FormStepController', () => {
     let vm;
 
     beforeEach(() => {
         let $scope = {
-            $emit() {},
-            $watch() {}
+            $emit() { },
+            $watch() { }
         };
         vm = new FormStepController($scope);
         vm.responseValue = false;
@@ -17,7 +17,8 @@ describe('FormStepController', () => {
     });
 
     describe('function $onInit', () => {
-        it('should call setFlagSend with newValue and oldValue', () => {
+        it('should call setFlagSend with newValue and oldValue if redFlag is a number', () => {
+            vm.redFlag = 2000;
             vm.$scope.$watch = (a, b) => b(true, false);
 
             spyOn(vm, 'setFlagSend');
@@ -26,9 +27,49 @@ describe('FormStepController', () => {
 
             expect(vm.setFlagSend).toHaveBeenCalledWith(true, false);
         });
+        it('should call setOtherQuestionValues', () => {
+            spyOn(vm, 'setOtherQuestionValues');
+
+            vm.$onInit();
+
+            expect(vm.setOtherQuestionValues).toHaveBeenCalled();
+        });
+        it('should not call setFlagSend if redFlag is not a number', () => {
+            vm.redFlag = undefined;
+            vm.$scope.$watch = (a, b) => b(true, false);
+            spyOn(vm, 'setFlagSend');
+
+            vm.$onInit();
+
+            expect(vm.setFlagSend).toHaveBeenCalledTimes(0);
+        });
     });
 
+    describe('clickRadio', () => {
+        let tempEvent
+        beforeEach(() => {
+            tempEvent = new Event('yas');
+        });
 
+        it('when responseValue equals label, set responseValue to empyty string', () => {
+            vm.responseValue = 'Goldfish';
+            vm.label = 'Goldfish';
+
+            vm.clickRadio(tempEvent);
+
+            expect(vm.responseValue).toEqual('');
+
+        });
+
+        it('when responseValue does not equal this.label, set responseValue to label', () => {
+            vm.responseValue = 'Doritos';
+            vm.label = 'Coke';
+
+            vm.clickRadio(tempEvent);
+
+            expect(vm.responseValue).toEqual('Coke')
+        });
+    });
 
     describe('function emitFlag()', () => {
         it('should call $emit with flagTotalCheck and object', () => {

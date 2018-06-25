@@ -5,12 +5,15 @@ export class FormStepController {
     constructor($scope) {
         'ngInject';
         this.$scope = $scope;
+
     }
 
     $onInit() {
-        this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
-            this.setFlagSend(newValue, oldValue);
-        });
+        if (!isNaN(parseInt(this.redFlag))) {
+            this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
+                this.setFlagSend(newValue, oldValue);
+            });
+        }
         this.setOtherQuestionValues();
     }
 

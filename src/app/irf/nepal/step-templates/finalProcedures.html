@@ -3,13 +3,11 @@
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
                 <h3>Procedures</h3>
-                <form-step response-value="$ctrl.questions[142].response.value" type="'textarea'" label="'You should intercept in cases where you have a good reason to believe a person is being trafficked or is at a high risk of
-                being trafficked. What was the primary reason you believed this case qualified?'">
-                </form-step>
+                <form-step response-value="$ctrl.questions[142].response.value" type="textarea" label="You should intercept in cases where you have a good reason to believe a person is being trafficked or is at a high risk of
+                being trafficked. What was the primary reason you believed this case qualified?"></form-step>
                 <div class="row center-vertical">
                     <div class="col-md-12 margin-top-20">
-                        <form-step type="'number'" label="'Reported Total Red Flag Points'" response-value="$ctrl.questions[143].response.value">
-                        </form-step>
+                        <form-step type="number" label="Reported Total Red Flag Points" response-value="$ctrl.questions[143].response.value"></form-step>
                     </div>
                 </div>
                 <hr/>
@@ -21,18 +19,13 @@
             <div class="col-md-9 col-md-offset-3">
                 <h3>Type of Intercept</h3>
                 <div class="col-md-4">
-                    <form-step type="'radio'" label="'Sex trafficking'" radio-name="'trafficking-type'" response-value="$ctrl.questions[141].response.value">
-                    </form-step>
-                    <form-step type="'radio'" label="'India Labor Trafficking'" radio-name="'trafficking-type'" response-value="$ctrl.questions[141].response.value">
-                    </form-step>
-                    <form-step type="'radio'" label="'Nepal internal trafficking'" radio-name="'trafficking-type'" response-value="$ctrl.questions[141].response.value">
-                    </form-step>
+                    <form-step type="radio" label="Sex trafficking" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
+                    <form-step type="radio" label="India Labor Trafficking" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
+                    <form-step type="radio" label="Nepal internal trafficking" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
                 </div>
                 <div class="col-md-6">
-                    <form-step type="'radio'" label="'Gulf (or country other than India)'" radio-name="'trafficking-type'" response-value="$ctrl.questions[141].response.value">
-                    </form-step>
-                    <form-step type="'radio'" label="'Runaway (no direct evidence of trafficking)'" radio-name="'trafficking-type'" response-value="$ctrl.questions[141].response.value">
-                    </form-step>
+                    <form-step type="radio" label="Gulf (or country other than India)" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
+                    <form-step type="radio" label="Runaway (no direct evidence of trafficking)" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
                 </div>
                 <div class="col-md-12 form-group">
                     <form-step>
@@ -54,16 +47,14 @@
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
                 <h3>How did you prevent the victim from going?</h3>
-                <form-step label="'Her parents used their authority and prevented victim from going'" type="'checkbox'" response-value="$ctrl.questions[148].response.value">
-                </form-step>
+                <form-step label="Her parents used their authority and prevented victim from going" type="checkbox" response-value="$ctrl.questions[148].response.value"></form-step>
                 <form-step ng-disabled="!$ctrl.staffConvinced">
                     <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced">
                     <label for="call">THN staff convinced victim not to go</label>
                     <p>If so, what convinced the victim?</p>
                     <textarea class="form-control" rows="2" ng-disabled="!$ctrl.staffConvinced" ng-model="$ctrl.questions[149].response.value"></textarea>
                 </form-step>
-                <form-step label="'The police forced the victim to stop'" type="'checkbox'" response-value="$ctrl.questions[150].response.value">
-                </form-step>
+                <form-step label="The police forced the victim to stop" type="checkbox" response-value="$ctrl.questions[150].response.value"></form-step>
                 <hr/>
             </div>
         </div>

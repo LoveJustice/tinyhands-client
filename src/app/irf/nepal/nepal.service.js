@@ -620,7 +620,7 @@ export default class NepalService {
                         "question_id": 149,
                         "storage_id": 4,
                         "response": {
-                            "value": " "
+                            "value": ''
                         }
                     },
                     {

@@ -10,12 +10,11 @@
                 </form-step>
             </div>
             <div>
-                <form-step red-flag="40" type="'checkbox'" label="'Someone enticed them to leave'" response-value="$ctrl.questions[255].response.value">
+                <form-step red-flag="20" type="'checkbox'" label="'Someone enticed them to leave'" response-value="$ctrl.questions[255].response.value">
                 </form-step>
             </div>
             <div>
-                <form-step red-flag="40" type="'checkbox'" label="'Someone (not a relative) paid their travel expenses'" response-value="$ctrl.questions[247].response.value">
-                </form-step>
+                <form-step red-flag="20" type="'checkbox'" label="'Someone (not a relative) paid their travel expenses'" response-value="$ctrl.questions[247].response.value">
             </div>
         </div>
         <div class="col-md-9 container">
@@ -74,8 +73,13 @@
                             Check bags
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="20" type="'checkbox'" label="'No bag though claim to be going for a long time'" response-value="$ctrl.questions[59].response.value">
-                            </form-step>
+                            <<<<<<< HEAD <form-step red-flag="10" type="'checkbox'" label="'No bag though claim to be going for a long time'" response-value="$ctrl.questions[59].response.value">
+                                =======
+                                <form-step red-flag="10" response-value="$ctrl.questions[59].response.value">
+                                    <input id="no-bags" type="checkbox" ng-model="$ctrl.questions[59].response.value">
+                                    <label for="no-bags">No bags though claim to be going for a long time</label>
+                                    >>>>>>> develop
+                                </form-step>
                         </div>
                     </div>
                 </div>

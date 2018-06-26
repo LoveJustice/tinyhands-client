@@ -138,7 +138,7 @@ export class IrfSouthAfricaController {
                 response: {
                     gender: {},
                     name: {},
-                    age: {},
+                    birthdate: {},
                     address1: {},
                     address2: {},
                     phone: {},

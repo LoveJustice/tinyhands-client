@@ -11,7 +11,7 @@ export default class IntercepteeModalController {
         this.isAdd = isAdd;
         this.originalQuestions = questions;
         this.questions = angular.copy(questions);
-        this.questions[DemographicQuestion].response.age.value = this.formatDate(this.questions[DemographicQuestion].response.age.value);
+        this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(this.questions[DemographicQuestion].response.birthdate.value || '');
     }
 
     close() {
@@ -39,7 +39,7 @@ export default class IntercepteeModalController {
         this.originalQuestions[TypeQuestion].response.value = this.questions[TypeQuestion].response.value;
         this.originalQuestions[DemographicQuestion].response.gender.value = this.questions[DemographicQuestion].response.gender.value;
         this.originalQuestions[DemographicQuestion].response.name.value = this.questions[DemographicQuestion].response.name.value;
-        this.originalQuestions[DemographicQuestion].response.age.value = this.questions[DemographicQuestion].response.age.value;
+        this.originalQuestions[DemographicQuestion].response.birthdate.value = this.questions[DemographicQuestion].response.birthdate.value;
         this.originalQuestions[DemographicQuestion].response.address1.name = this.questions[DemographicQuestion].response.address1.name;
         this.originalQuestions[DemographicQuestion].response.address2.name = this.questions[DemographicQuestion].response.address2.name;
         this.originalQuestions[DemographicQuestion].response.phone.value = this.questions[DemographicQuestion].response.phone.value;

@@ -771,9 +771,6 @@ export default class SouthAfricaService {
                                         "gender": {
                                             "value": "Female"
                                         },
-                                        "age": {
-                                            "value": 18
-                                        },
                                         "birthdate": {
                                             "value": "1998-07-01"
                                         },

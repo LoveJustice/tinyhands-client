@@ -11,6 +11,7 @@ export default class IntercepteeModalController {
         this.isAdd = isAdd;
         this.originalQuestions = questions;
         this.questions = angular.copy(questions);
+        this.questions[DemographicQuestion].response.age.value = this.formatDate(this.questions[DemographicQuestion].response.age.value);
     }
 
     close() {
@@ -23,6 +24,10 @@ export default class IntercepteeModalController {
 
     fileUpload($file) {
         this.questions[ImageQuestion].response.value = '';
+    }
+
+    formatDate(UfcDate) {
+        return moment(UfcDate).toDate();
     }
 
     getIntercepteeImage(url) {

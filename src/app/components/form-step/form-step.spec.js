@@ -60,7 +60,6 @@ describe('FormStepController', () => {
             vm.clickRadio(tempEvent);
 
             expect(vm.responseValue).toEqual('');
-
         });
 
         it('when responseValue does not equal this.label, should set responseValue to label', () => {

@@ -18,7 +18,7 @@
         </span>
         <span ng-switch-when="text">
             <label>{{$ctrl.label}}</label>
-            <input class="form-control" type="text" ng-model="$ctrl.responseValue">
+            <input type="text" ng-model="$ctrl.responseValue">
         </span>
         <span ng-switch-when="textarea">
             <label>{{$ctrl.label}}</label>
@@ -26,7 +26,7 @@
         </span>
         <span ng-switch-when="number">
             <label>{{$ctrl.label}}</label>
-            <input type="number" min="0" ng-model="$ctrl.responseValue" class="padding-top-10">
+            <input type="number" min="0" ng-model="$ctrl.responseValue">
         </span>
         <span ng-switch-when="otherCheckbox">
             <input type="checkbox" ng-model="$ctrl.otherValue">

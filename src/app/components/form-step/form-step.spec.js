@@ -27,6 +27,7 @@ describe('FormStepController', () => {
 
             expect(vm.setFlagSend).toHaveBeenCalledWith(true, false);
         });
+
         it('should call setOtherQuestionValues', () => {
             spyOn(vm, 'setOtherQuestionValues');
 
@@ -34,6 +35,7 @@ describe('FormStepController', () => {
 
             expect(vm.setOtherQuestionValues).toHaveBeenCalled();
         });
+
         it('should not call setFlagSend if redFlag is not a number', () => {
             vm.redFlag = undefined;
             vm.$scope.$watch = (a, b) => b(true, false);
@@ -51,7 +53,7 @@ describe('FormStepController', () => {
             tempEvent = new Event('yas');
         });
 
-        it('when responseValue equals label, set responseValue to empyty string', () => {
+        it('when responseValue equals label, should set responseValue to empyty string', () => {
             vm.responseValue = 'Goldfish';
             vm.label = 'Goldfish';
 
@@ -61,7 +63,7 @@ describe('FormStepController', () => {
 
         });
 
-        it('when responseValue does not equal this.label, set responseValue to label', () => {
+        it('when responseValue does not equal this.label, should set responseValue to label', () => {
             vm.responseValue = 'Doritos';
             vm.label = 'Coke';
 

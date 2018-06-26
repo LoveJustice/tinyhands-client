@@ -5,7 +5,6 @@ export class FormStepController {
     constructor($scope) {
         'ngInject';
         this.$scope = $scope;
-
     }
 
     $onInit() {

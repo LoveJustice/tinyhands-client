@@ -7,8 +7,7 @@
     </div>
     <div class="row center-vertical">
         <div class="col-md-2 col-md-offset-2">
-            <form-step type="'radio'" label="'Contact'" response-value="$ctrl.questions[91].response.value" radio-name="'contactOrThStaff'">
-            </form-step>
+            <form-step type="radio" label="Contact" response-value="$ctrl.questions[91].response.value" radio-name="contactOrThStaff"></form-step>
         </div>
         <div class="col-md-8">
             <div class="row center-vertical">
@@ -16,8 +15,7 @@
                     Name of Contact:
                 </div>
                 <div class="col-md-4">
-                    <form-step type="'text'" response-value="$ctrl.questions[261].response.value" class="padding-bottom-20">
-                    </form-step>
+                    <form-step type="text" response-value="$ctrl.questions[261].response.value" class="padding-bottom-20"></form-step>
                 </div>
             </div>
             <div class="row center-vertical padding-top-10">
@@ -25,10 +23,8 @@
                     Type of Contact:
                 </div>
                 <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
-                    <form-step type="'radio'" radio-name="'contactType'" ng-repeat="contact in contacts" label="contact" response-value="$ctrl.questions[92].response.value">
-                    </form-step>
-                    <form-step ng-if="$last" type="'otherRadio'" radio-name="'contactType'" other-value="$ctrl.otherContactString" response-value="$ctrl.questions[92].response.value">
-                    </form-step>
+                    <form-step type="radio" radio-name="contactType" ng-repeat="contact in contacts" label="{{contact}}" response-value="$ctrl.questions[92].response.value"></form-step>
+                    <form-step ng-if="$last" type="otherRadio" radio-name="contactType" other-value="$ctrl.otherContactString" response-value="$ctrl.questions[92].response.value"></form-step>
                 </div>
             </div>
         </div>
@@ -40,8 +36,7 @@
     </div>
     <div class="row center-vertical">
         <div class="col-md-2 col-md-offset-2">
-            <form-step type="'radio'" label="'TH Staff'" response-value="$ctrl.questions[91].response.value" radio-name="'contactOrThStaff'">
-            </form-step>
+            <form-step type="radio" label="TH Staff" response-value="$ctrl.questions[91].response.value" radio-name="contactOrThStaff"></form-step>
         </div>
         <div class="col-md-8">
             <div class="row center-vertical margin-bottom-20">
@@ -55,7 +50,7 @@
             </div>
             <div class="row center-vertical">
                 <div class="col-md-6">
-                    <form-step type="'text'" response-value="$ctrl.questions[262].response.value"></form-step>
+                    <form-step type="text" response-value="$ctrl.questions[262].response.value"></form-step>
                 </div>
             </div>
         </div>

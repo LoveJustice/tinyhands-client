@@ -50,13 +50,13 @@ export class FormStepController {
 
 export default {
     bindings: {
-        label: '<?',
+        label: '@',
         otherValue: '<?',
-        radioName: '<?',
+        radioName: '@',
         redFlag: '<?',
         responseValue: '=?',
         stepLabel: '<',
-        type: '<?',
+        type: '@',
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,

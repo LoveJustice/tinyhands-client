@@ -68,7 +68,7 @@ describe('FormStepController', () => {
 
             vm.clickRadio(tempEvent);
 
-            expect(vm.responseValue).toEqual('Coke')
+            expect(vm.responseValue).toEqual('Coke');
         });
     });
 

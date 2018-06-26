@@ -1,8 +1,7 @@
 <div>
     <div ng-switch="$ctrl.type">
         <span ng-switch-when="radio">
-            <input id="{{$ctrl.radioName + '-' + $ctrl.label}}" type="radio" ng-value="$ctrl.label" name="{{$ctrl.radioName}}" ng-model="$ctrl.responseValue"
-            />
+            <input id="{{$ctrl.radioName + '-' + $ctrl.label}}" type="radio" ng-value="$ctrl.label" name="{{$ctrl.radioName}}" ng-model="$ctrl.responseValue">
             <label for="{{$ctrl.radioName + '-' + $ctrl.label}}" ng-click="$ctrl.clickRadio($event)">
                 {{$ctrl.label}}
             </label>

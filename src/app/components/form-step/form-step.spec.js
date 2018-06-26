@@ -86,7 +86,7 @@ describe('FormStepController', () => {
 
     describe('function setFlagSend', () => {
 
-        it('when newValue and oldValue are true, call emit flag with red flag', () => {
+        it('when newValue and oldValue are true, should call emit flag with red flag', () => {
             spyOn(vm, 'emitFlag');
             vm.redFlag = 2800;
             vm.setFlagSend(true, true);
@@ -94,7 +94,7 @@ describe('FormStepController', () => {
             expect(vm.emitFlag).toHaveBeenCalledWith(2800);
         });
 
-        it('when newValue and oldValue are false, do nothing', () => {
+        it('when newValue and oldValue are false, should do nothing', () => {
             spyOn(vm, 'emitFlag');
             vm.redFlag = 2800;
             vm.setFlagSend(false, false);
@@ -102,7 +102,7 @@ describe('FormStepController', () => {
             expect(vm.emitFlag).toHaveBeenCalledTimes(0);
         });
 
-        it('when newValue is true and oldValue is false, call emit flag with red flag', () => {
+        it('when newValue is true and oldValue is false, should call emit flag with red flag', () => {
             spyOn(vm, 'emitFlag');
             vm.redFlag = 500000;
             vm.setFlagSend(true, false);
@@ -110,7 +110,7 @@ describe('FormStepController', () => {
             expect(vm.emitFlag).toHaveBeenCalledWith(500000);
         });
 
-        it('when newValue is false and oldValue is true, call emit flag with red flag', () => {
+        it('when newValue is false and oldValue is true, should call emit flag with red flag', () => {
             spyOn(vm, 'emitFlag');
             vm.redFlag = 420;
             vm.setFlagSend(false, true);
@@ -124,7 +124,7 @@ describe('FormStepController', () => {
             vm.type = 'otherCheckbox';
         });
 
-        it('when value is not otherCheckbox do nothing', () => {
+        it('when value is not otherCheckbox should do nothing', () => {
             vm.type = 'blah';
             vm.responseValue = 'feet';
             vm.otherValue = false;

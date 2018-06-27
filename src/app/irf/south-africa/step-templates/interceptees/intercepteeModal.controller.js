@@ -11,7 +11,7 @@ export default class IntercepteeModalController {
         this.isAdd = isAdd;
         this.originalQuestions = questions;
         this.questions = angular.copy(questions);
-        this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(this.questions[DemographicQuestion].response.birthdate.value || '');
+        this.initializeDate();
     }
 
     close() {
@@ -32,6 +32,10 @@ export default class IntercepteeModalController {
 
     getIntercepteeImage(url) {
         return new URL(url, this.constants.BaseUrl).href;
+    }
+
+    initializeDate() {
+        this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(this.questions[DemographicQuestion].response.birthdate.value || '');
     }
 
     save() {

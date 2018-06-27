@@ -6,26 +6,11 @@
         <div class="col-md-9">
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="30" response-value="$ctrl.questions[30].response.value">
-                        <input id="caught-lie" type="checkbox" ng-model="$ctrl.questions[30].response.value">
-                        <label for="caught-lie">Caught in a lie/contradiction</label>
-                    </form-step>
-                    <form-step red-flag="40" response-value="$ctrl.questions[225].response.value">
-                        <input id="claims-not-know" type="checkbox" ng-model="$ctrl.questions[225].response.value">
-                        <label for="claims-not-know">Claims not to know them</label>
-                    </form-step>
-                    <form-step red-flag="20" response-value="$ctrl.questions[226].response.value">
-                        <input id="behalf-someone-else" type="checkbox" ng-model="$ctrl.questions[226].response.value">
-                        <label for="behalf-someone-else">Inviting them on behalf of someone else</label>
-                    </form-step>
-                    <form-step red-flag="20" response-value="$ctrl.questions[227].response.value">
-                        <input id="illogical-story" type="checkbox" ng-model="$ctrl.questions[227].response.value">
-                        <label for="illogical-story">Illogical story</label>
-                    </form-step>
-                    <form-step red-flag="50" response-value="$ctrl.questions[228].response.value">
-                        <input id="offered-bribe" type="checkbox" ng-model="$ctrl.questions[228].response.value">
-                        <label for="offered-bribe">Offered a bribe</label>
-                    </form-step>
+                    <form-step red-flag="30" type="checkbox" label="Caught in a lie/contradiction" response-value="$ctrl.questions[30].response.value"></form-step>
+                    <form-step red-flag="40" type="checkbox" label="Claims not to know them" response-value="$ctrl.questions[225].response.value"></form-step>
+                    <form-step red-flag="20" type="checkbox" label="Inviting them on behalf of someone else" response-value="$ctrl.questions[226].response.value"></form-step>
+                    <form-step red-flag="20" type="checkbox" label="Illogical story" response-value="$ctrl.questions[227].response.value"></form-step>
+                    <form-step red-flag="50" type="checkbox" label="Offered a bribe" response-value="$ctrl.questions[228].response.value"></form-step>
                 </div>
             </div>
             <hr/>
@@ -38,22 +23,10 @@
         <div class="col-md-9">
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="20" response-value="$ctrl.questions[229].response.value">
-                        <input id="paid-flight" type="checkbox" ng-model="$ctrl.questions[229].response.value">
-                        <label for="paid-flight">Has paid for flight</label>
-                    </form-step>
-                    <form-step red-flag="15" response-value="$ctrl.questions[230].response.value">
-                        <input id="paid-cash" type="checkbox" ng-model="$ctrl.questions[230].response.value">
-                        <label for="paid-cash">Flight was paid for in cash</label>
-                    </form-step>
-                    <form-step red-flag="10" response-value="$ctrl.questions[231].response.value">
-                        <input id="all-expenses" type="checkbox" ng-model="$ctrl.questions[231].response.value">
-                        <label for="all-expenses">Offering to pay all expenses without explanation</label>
-                    </form-step>
-                    <form-step red-flag="30" response-value="$ctrl.questions[232].response.value">
-                        <input id="payback-terms" type="checkbox" ng-model="$ctrl.questions[232].response.value">
-                        <label for="payback-terms">Not determined payback terms</label>
-                    </form-step>
+                    <form-step red-flag="20" type="checkbox" label="Has paid for flight" response-value="$ctrl.questions[229].response.value"></form-step>
+                    <form-step red-flag="15" type="checkbox" label="Flight was paid in cash" response-value="$ctrl.questions[230].response.value"></form-step>
+                    <form-step red-flag="10" type="checkbox" label="Offering to pay all expenses without explanation" response-value="$ctrl.questions[231].response.value"></form-step>
+                    <form-step red-flag="30" type="checkbox" label="Not determined payback terms" response-value="$ctrl.questions[232].response.value"></form-step>
                 </div>
             </div>
             <hr/>
@@ -66,26 +39,11 @@
         <div class="col-md-9">
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="40" response-value="$ctrl.questions[233].response.value">
-                        <input id="not-legal" type="checkbox" ng-model="$ctrl.questions[233].response.value">
-                        <label for="not-legal">Not in the country legally</label>
-                    </form-step>
-                    <form-step red-flag="70" response-value="$ctrl.questions[234].response.value">
-                        <input id="known-trafficker" type="checkbox" ng-model="$ctrl.questions[234].response.value">
-                        <label for="known-trafficker">Is a known trafficker</label>
-                    </form-step>
-                    <form-step red-flag="50" response-value="$ctrl.questions[235].response.value">
-                        <input id="associated-trafficker" type="checkbox" ng-model="$ctrl.questions[235].response.value">
-                        <label for="associated-trafficker">Associated to known trafficker</label>
-                    </form-step>
-                    <form-step red-flag="50" response-value="$ctrl.questions[236].response.value">
-                        <input id="illegal-activity" type="checkbox" ng-model="$ctrl.questions[236].response.value">
-                        <label for="illegal-activity">Involed in illegal activity</label>
-                    </form-step>
-                    <form-step red-flag="40" response-value="$ctrl.questions[237].response.value">
-                        <input id="false-details" type="checkbox" ng-model="$ctrl.questions[237].response.value">
-                        <label for="false-details">Provided false details</label>
-                    </form-step>
+                    <form-step red-flag="40" type="checkbox" label="Not in the country legally" response-value="$ctrl.questions[233].response.value"></form-step>
+                    <form-step red-flag="70" type="checkbox" label="Is a known trafficker" response-value="$ctrl.questions[234].response.value"></form-step>
+                    <form-step red-flag="50" type="checkbox" label="Associated to known trafficker" response-value="$ctrl.questions[235].response.value"></form-step>
+                    <form-step red-flag="50" type="checkbox" label="Involved in illegal activity" response-value="$ctrl.questions[236].response.value"></form-step>
+                    <form-step red-flag="40" type="checkbox" label="Provided false details" response-value="$ctrl.questions[237].response.value"></form-step>
                 </div>
             </div>
             <hr/>
@@ -98,11 +56,7 @@
         <div class="col-md-9">
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="' '">
-                        <input id="other-red-flag" type="checkbox" ng-model="$ctrl.otherRedFlag">
-                        <label for="other-red-flag">Other red flag</label>
-                        <input type="text" ng-model="$ctrl.questions[31].response.value">
-                    </form-step>
+                    <form-step red-flag=" " type="otherCheckbox" label="Other red flag" response-value="$ctrl.questions[31].response.value"></form-step>
                 </div>
             </div>
         </div>

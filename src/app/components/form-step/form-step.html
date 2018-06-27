@@ -1,8 +1,42 @@
 <div>
-    <span class="margin-right-10" style="color: #00aa00" ng-bind="$ctrl.stepLabel" ng-if="$ctrl.stepLabel"></span>
-    <span ng-transclude></span>
-    <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
-        <img ng-src="assets/images/flag.png" alt="flag-container">
-        <span ng-bind="$ctrl.redFlag"></span>
-    </span>
+    <div ng-switch="$ctrl.type">
+        <span ng-switch-when="radio">
+            <input id="{{$ctrl.radioName + '-' + $ctrl.label}}" type="radio" ng-value="$ctrl.label" name="{{$ctrl.radioName}}" ng-model="$ctrl.responseValue">
+            <label for="{{$ctrl.radioName + '-' + $ctrl.label}}" ng-click="$ctrl.clickRadio($event)">
+                {{$ctrl.label}}
+            </label>
+        </span>
+        <span ng-switch-when="otherRadio">
+            <input id="{{$ctrl.radioName + '-' + $ctrl.label}}" type="radio" value="Other" name="{{$ctrl.radioName}}" ng-model="$ctrl.responseValue">
+            <label for="{{$ctrl.radioName + '-' + $ctrl.label}}">Other</label>
+            <input ng-model="$ctrl.otherValue">
+        </span>
+        <span ng-switch-when="checkbox">
+            <input type="checkbox" ng-model="$ctrl.responseValue">
+            <label>{{$ctrl.label}}</label>
+        </span>
+        <span ng-switch-when="text">
+            <label>{{$ctrl.label}}</label>
+            <input type="text" ng-model="$ctrl.responseValue">
+        </span>
+        <span ng-switch-when="textarea">
+            <label>{{$ctrl.label}}</label>
+            <textarea class="form-control" rows="3" ng-model="$ctrl.responseValue"></textarea>
+        </span>
+        <span ng-switch-when="number">
+            <label>{{$ctrl.label}}</label>
+            <input type="number" min="0" ng-model="$ctrl.responseValue">
+        </span>
+        <span ng-switch-when="otherCheckbox">
+            <input type="checkbox" ng-model="$ctrl.otherValue">
+            <label>{{$ctrl.label}}</label>
+            <input type="text" ng-model="$ctrl.responseValue">
+        </span>
+        <span class="margin-right-10" style="color: #00aa00" ng-bind="$ctrl.stepLabel" ng-if="$ctrl.stepLabel"></span>
+        <span ng-transclude></span>
+        <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
+            <img ng-src="assets/images/flag.png" alt="flag-container">
+            <span ng-bind="$ctrl.redFlag"></span>
+        </span>
+    </div>
 </div>

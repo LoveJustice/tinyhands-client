@@ -3,16 +3,8 @@
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
                 <h3>Type of Intercept</h3>
-                <form-step>
-                    <input id="traffick-suspect" name="trafficking-radio-suspect" value="Trafficking suspected" ng-model="$ctrl.questions[141].response.value"
-                        type="radio">
-                    <label for="traffick-suspect">Trafficking suspected</label>
-                </form-step>
-                <form-step>
-                    <input class="text-center" id="traffick-likely" name="trafficking-radio-suspect" value="High risk of being trafficked, but no evidence of trafficking"
-                        ng-model="$ctrl.questions[141].response.value" type="radio">
-                    <label for="trafficking-likely">High risk of being trafficked, but no evidence of trafficking</label>
-                </form-step>
+                <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="Trafficking suspected"></form-step>
+                <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="High risk of being trafficked, but no evidence of trafficking"></form-step>
                 <div class="col-md-12 form-group">
                     <form-step>
                         <label for="how-sure">How sure are you that it was a trafficking case? </label>
@@ -33,18 +25,9 @@
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
                 <h3>How did you prevent the victim from going?</h3>
-                <form-step>
-                    <input id="not-forced" type="checkbox" ng-model="$ctrl.questions[148].response.value">
-                    <label for="not-forced">They were convinced (not forced) by our staff</label>
-                </form-step>
-                <form-step>
-                    <input id="call" type="checkbox" ng-model="$ctrl.questions[149].response.value">
-                    <label for="call">They were convinced by their family after call</label>
-                </form-step>
-                <form-step>
-                    <input id="police" type="checkbox" ng-model="$ctrl.questions[150].response.value">
-                    <label for="police">They were convinced or forced by the police</label>
-                </form-step>
+                <form-step label="They were convinced (not forced) by our staff" type="checkbox" response-value="$ctrl.questions[148].response.value"></form-step>
+                <form-step type="checkbox" label="They were convinced by their family after call" response-value="$ctrl.questions[149].response.value"></form-step>
+                <form-step type="checkbox" label="They were convinced or forced by the police" response-value="$ctrl.questions[150].response.value"></form-step>
                 <hr/>
             </div>
         </div>
@@ -52,18 +35,9 @@
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-3">
                     <h3>Procedures</h3>
-                    <form-step>
-                        <input id="project" type="checkbox" ng-model="$ctrl.questions[256].response.value">
-                        <label for="project">Call Project Manager to confirm intercept</label>
-                    </form-step>
-                    <form-step>
-                        <input id="subcommittee" type="checkbox" ng-model="$ctrl.questions[249].response.value">
-                        <label for="subcommittee">Call Subcommittee Chairperson / Vice-Chairperson / Secretary</label>
-                    </form-step>
-                    <form-step>
-                        <label for="total-flag">Reported Total Red Flag Points</label>
-                        <input id="total-flag" type="number" min="0" ng-model="$ctrl.questions[143].response.value">
-                    </form-step>
+                    <form-step type="checkbox" label="Call Project Manager to confirm intercept" response-value="$ctrl.questions[256].response.value"></form-step>
+                    <form-step type="checkbox" label="Call Subcommittee Chairperson / Vice-Chairperson / Secretary" response-value="$ctrl.questions[249].response.value"></form-step>
+                    <form-step type="number" label="Reported Total Red Flag Points" response-value="$ctrl.questions[143].response.value"></form-step>
                 </div>
             </div>
             <div class="row center-vertical">

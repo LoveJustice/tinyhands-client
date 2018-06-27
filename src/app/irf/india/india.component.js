@@ -15,9 +15,6 @@ const DateTimeId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
-const OtherRedFlagId = 31;
-const OtherSignId = 134;
-const OtherWebsiteId = 244;
 const SignedId = 151;
 
 export class IrfIndiaController {
@@ -41,9 +38,6 @@ export class IrfIndiaController {
         this.messagesEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
-        this.otherRedFlag = false;
-        this.otherSign = false;
-        this.otherWebsite = false;
         this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
@@ -168,13 +162,7 @@ export class IrfIndiaController {
         this.getWarningMessages();
     }
 
-    setOtherQuestionValues(valueId) {
-        let valueSet = this.questions[valueId].response.value;
-        this.questions[valueId].response.value = valueSet || '';
-        return !!valueSet;
-    }
-
-    setRadio(items, valueId) {
+    setRadioOther(items, valueId) {
         let flattenedItems = _.flattenDeep(items);
         let value = this.questions[valueId].response.value;
         if (!_.includes(flattenedItems, value) && value !== '') {
@@ -191,11 +179,8 @@ export class IrfIndiaController {
 
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        this.otherRedFlag = this.setOtherQuestionValues(OtherRedFlagId);
-        this.otherSign = this.setOtherQuestionValues(OtherSignId);
-        this.otherWebsite = this.setOtherQuestionValues(OtherWebsiteId);
-        this.otherContactString = this.setRadio(this.contacts, OtherContactId);
-        this.otherFamilyString = this.setRadio(this.family, OtherFamilyId);
+        this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
+        this.otherFamilyString = this.setRadioOther(this.family, OtherFamilyId);
     }
 
     showIgnoreWarningsCheckbox() {

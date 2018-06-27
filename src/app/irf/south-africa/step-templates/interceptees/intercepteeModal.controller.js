@@ -35,7 +35,9 @@ export default class IntercepteeModalController {
     }
 
     initializeDate() {
-        this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(this.questions[DemographicQuestion].response.birthdate.value || '');
+        let birthdate = this.questions[DemographicQuestion].response.birthdate.value;
+        let dateValue = angular.isDefined(birthdate) ? birthdate : '';
+        this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(dateValue);
     }
 
     save() {

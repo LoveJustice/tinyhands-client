@@ -11,7 +11,7 @@ export default class IntercepteeModalController {
         this.isAdd = isAdd;
         this.originalQuestions = questions;
         this.questions = angular.copy(questions);
-        this.initializeDate();
+        this.initializeDateOfBirth();
     }
 
     close() {
@@ -34,7 +34,7 @@ export default class IntercepteeModalController {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    initializeDate() {
+    initializeDateOfBirth() {
         let birthdate = this.questions[DemographicQuestion].response.birthdate.value;
         let dateValue = angular.isDefined(birthdate) ? birthdate : '';
         this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(dateValue);

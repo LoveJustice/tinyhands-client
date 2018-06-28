@@ -11,13 +11,13 @@ export default class SouthAfricaService {
                     data: {
                         station_id: 32,
                         country_id: 4,
-                        status: "approved",
+                        status: 'approved',
                         storage_id: 4,
                         responses: [{
                                 question_id: 1,
                                 storage_id: 4,
                                 response: {
-                                    value: "MBZ950"
+                                    value: 'MBZ950'
                                 }
                             },
                             {
@@ -33,7 +33,7 @@ export default class SouthAfricaService {
                                 response: {
                                     value: {
                                         id: 52,
-                                        name: "Barmeli Chowak"
+                                        name: 'Barmeli Chowak'
                                     }
                                 }
                             },
@@ -41,7 +41,7 @@ export default class SouthAfricaService {
                                 question_id: 4,
                                 storage_id: 4,
                                 response: {
-                                    value: "2017-04-23T19:45:00+05:45"
+                                    value: '2017-04-23T19:45:00+05:45'
                                 }
                             },
                             {
@@ -57,7 +57,7 @@ export default class SouthAfricaService {
                                 response: {
                                     value: [{
                                         id: 1,
-                                        name: "John Staff"
+                                        name: 'John Staff'
                                     }]
                                 }
                             },
@@ -156,7 +156,7 @@ export default class SouthAfricaService {
                                 question_id: 31,
                                 storage_id: 4,
                                 response: {
-                                    value: "Other Text"
+                                    value: 'Other Text'
                                 }
                             },
                             {
@@ -359,21 +359,21 @@ export default class SouthAfricaService {
                                 question_id: 82,
                                 storage_id: 4,
                                 response: {
-                                    value: "Own brother"
+                                    value: 'Own brother'
                                 }
                             },
                             {
                                 question_id: 91,
                                 storage_id: 4,
                                 response: {
-                                    value: "Staff"
+                                    value: 'Staff'
                                 }
                             },
                             {
                                 question_id: 92,
                                 storage_id: 4,
                                 response: {
-                                    value: ""
+                                    value: ''
                                 }
                             },
                             {
@@ -387,7 +387,7 @@ export default class SouthAfricaService {
                                 question_id: 104,
                                 storage_id: 4,
                                 response: {
-                                    value: ""
+                                    value: ''
                                 }
                             },
                             {
@@ -396,7 +396,7 @@ export default class SouthAfricaService {
                                 response: {
                                     value: [{
                                         id: 2,
-                                        name: "Staff Member"
+                                        name: 'Staff Member'
                                     }]
                                 }
                             },
@@ -565,14 +565,14 @@ export default class SouthAfricaService {
                                 question_id: 134,
                                 storage_id: 4,
                                 response: {
-                                    value: "Other text"
+                                    value: 'Other text'
                                 }
                             },
                             {
                                 question_id: 141,
                                 storage_id: 4,
                                 response: {
-                                    value: "Sex Trafficking"
+                                    value: 'Sex Trafficking'
                                 }
                             },
                             {
@@ -593,14 +593,14 @@ export default class SouthAfricaService {
                                 question_id: 146,
                                 storage_id: 4,
                                 response: {
-                                    value: ""
+                                    value: ''
                                 }
                             },
                             {
                                 question_id: 147,
                                 storage_id: 4,
                                 response: {
-                                    value: "4 - Very sure"
+                                    value: '4 - Very sure'
                                 }
                             },
                             {
@@ -635,7 +635,7 @@ export default class SouthAfricaService {
                                 question_id: 152,
                                 storage_id: 4,
                                 response: {
-                                    value: "/media/scanned_irf_forms/sample_360dpi.pdf"
+                                    value: '/media/scanned_irf_forms/sample_360dpi.pdf'
                                 }
                             },
                             {
@@ -663,7 +663,7 @@ export default class SouthAfricaService {
                                 question_id: 245,
                                 storage_id: 4,
                                 response: {
-                                    value: ""
+                                    value: ''
                                 }
                             },
                             {
@@ -743,43 +743,43 @@ export default class SouthAfricaService {
                                 responses: [{
                                         question_id: 7,
                                         response: {
-                                            value: "/media/interceptee_photos/jellyfish.jpg"
+                                            value: '/media/interceptee_photos/jellyfish.jpg'
                                         }
                                     },
                                     {
                                         question_id: 8,
                                         response: {
-                                            value: "PVOT"
+                                            value: 'PVOT'
                                         }
                                     },
                                     {
                                         question_id: 9,
                                         response: {
                                             name: {
-                                                value: "Jane Doe"
+                                                value: 'Jane Doe'
                                             },
                                             address1: {
                                                 id: 301,
-                                                name: "Kathmandu"
+                                                name: 'Kathmandu'
                                             },
                                             address2: {
                                                 id: 7475,
-                                                name: "Gonggabu"
+                                                name: 'Gonggabu'
                                             },
                                             phone: {
-                                                value: "9815555555"
+                                                value: '9815555555'
                                             },
                                             gender: {
-                                                value: "Female"
+                                                value: 'Female'
                                             },
                                             birthdate: {
-                                                value: "1998-07-01"
+                                                value: '1998-07-01'
                                             },
                                             passport: {
-                                                value: "12345678"
+                                                value: '12345678'
                                             },
                                             nationality: {
-                                                value: "Himalayan"
+                                                value: 'Himalayan'
                                             }
                                         }
                                     },

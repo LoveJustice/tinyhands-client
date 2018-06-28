@@ -1,6 +1,6 @@
 export default class SouthAfricaService {
     constructor(BaseService) {
-        "ngInject";
+        'ngInject';
         this.service = BaseService;
     }
 
@@ -13,8 +13,7 @@ export default class SouthAfricaService {
                         country_id: 4,
                         status: "approved",
                         storage_id: 4,
-                        responses: [
-                            {
+                        responses: [{
                                 question_id: 1,
                                 storage_id: 4,
                                 response: {
@@ -56,12 +55,10 @@ export default class SouthAfricaService {
                                 question_id: 6,
                                 storage_id: 4,
                                 response: {
-                                    value: [
-                                        {
-                                            id: 1,
-                                            name: "John Staff"
-                                        }
-                                    ]
+                                    value: [{
+                                        id: 1,
+                                        name: "John Staff"
+                                    }]
                                 }
                             },
                             {
@@ -397,12 +394,10 @@ export default class SouthAfricaService {
                                 question_id: 106,
                                 storage_id: 4,
                                 response: {
-                                    value: [
-                                        {
-                                            id: 2,
-                                            name: "Staff Member"
-                                        }
-                                    ]
+                                    value: [{
+                                        id: 2,
+                                        name: "Staff Member"
+                                    }]
                                 }
                             },
                             {
@@ -640,8 +635,7 @@ export default class SouthAfricaService {
                                 question_id: 152,
                                 storage_id: 4,
                                 response: {
-                                    value:
-                                        "/media/scanned_irf_forms/sample_360dpi.pdf"
+                                    value: "/media/scanned_irf_forms/sample_360dpi.pdf"
                                 }
                             },
                             {
@@ -743,67 +737,61 @@ export default class SouthAfricaService {
                                 }
                             }
                         ],
-                        cards: [
-                            {
-                                category_id: 6,
-                                instances: [
+                        cards: [{
+                            category_id: 6,
+                            instances: [{
+                                responses: [{
+                                        question_id: 7,
+                                        response: {
+                                            value: "/media/interceptee_photos/jellyfish.jpg"
+                                        }
+                                    },
                                     {
-                                        responses: [
-                                            {
-                                                question_id: 7,
-                                                response: {
-                                                    value:
-                                                        "/media/interceptee_photos/jellyfish.jpg"
-                                                }
+                                        question_id: 8,
+                                        response: {
+                                            value: "PVOT"
+                                        }
+                                    },
+                                    {
+                                        question_id: 9,
+                                        response: {
+                                            name: {
+                                                value: "Jane Doe"
                                             },
-                                            {
-                                                question_id: 8,
-                                                response: {
-                                                    value: "PVOT"
-                                                }
+                                            address1: {
+                                                id: 301,
+                                                name: "Kathmandu"
                                             },
-                                            {
-                                                question_id: 9,
-                                                response: {
-                                                    name: {
-                                                        value: "Jane Doe"
-                                                    },
-                                                    address1: {
-                                                        id: 301,
-                                                        name: "Kathmandu"
-                                                    },
-                                                    address2: {
-                                                        id: 7475,
-                                                        name: "Gonggabu"
-                                                    },
-                                                    phone: {
-                                                        value: "9815555555"
-                                                    },
-                                                    gender: {
-                                                        value: "Female"
-                                                    },
-                                                    birthdate: {
-                                                        value: "1998-07-01"
-                                                    },
-                                                    passport: {
-                                                        value: "12345678"
-                                                    },
-                                                    nationality: {
-                                                        value: "Himalayan"
-                                                    }
-                                                }
+                                            address2: {
+                                                id: 7475,
+                                                name: "Gonggabu"
                                             },
-                                            {
-                                                question_id: 11,
-                                                response: {
-                                                    value: false
-                                                }
+                                            phone: {
+                                                value: "9815555555"
+                                            },
+                                            gender: {
+                                                value: "Female"
+                                            },
+                                            birthdate: {
+                                                value: "1998-07-01"
+                                            },
+                                            passport: {
+                                                value: "12345678"
+                                            },
+                                            nationality: {
+                                                value: "Himalayan"
                                             }
-                                        ]
+                                        }
+                                    },
+                                    {
+                                        question_id: 11,
+                                        response: {
+                                            value: false
+                                        }
                                     }
                                 ]
-                            }
-                        ]
+                            }]
+                        }]
                     }
                 })
         };

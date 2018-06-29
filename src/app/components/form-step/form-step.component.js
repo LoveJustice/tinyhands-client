@@ -50,6 +50,7 @@ export class FormStepController {
 
 export default {
     bindings: {
+        inputClass: '@',
         label: '@',
         otherValue: '<?',
         radioName: '@',

@@ -1,49 +1,43 @@
 <div class="form-horizontal">
     <div class="row">
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label" step-label="'1'">Irf Number: </form-step>
+            <form-step class="col-xs-3 control-label">Irf Number: </form-step>
             <div class="col-xs-9">
-                <input type="text" class="form-control" id="example78Name2" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
+                <input type="text" class="form-control" ng-change="$ctrl.getErrorMessages()" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
             </div>
         </div>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label" step-label="'2'"># of Victims: </form-step>
+            <form-step class="col-xs-3 control-label"># of Victims: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
             </div>
         </div>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label" step-label="'3'">Location: </form-step>
+            <form-step class="col-xs-3 control-label">Location: </form-step>
             <div class="col-xs-9">
-                <select class="form-control" ng-model="$ctrl.questions[3].response.value">
-                    <option ng-repeat="location in $ctrl.location" ng-value="location">{{location.name}}</option>
-                    <option ng-if="!$ctrl.questions[3].response.value.id" ng-value="$ctrl.questions[3].response.value">{{$ctrl.questions[3].response.value}}
-                    </option>
-                </select>
+                <location-select selected-location="$ctrl.questions[3].response.value"></location-select>
             </div>
         </div>
     </div>
-    <hr>
+    <hr/>
     <div class="row">
+        <br>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label" step-label="'4'">Date/Time: </form-step>
+            <form-step class="col-xs-3 control-label">Date/Time: </form-step>
             <div class="col-xs-9">
                 <input type="date" class="form-control" ng-model="$ctrl.questions[4].response.value">
             </div>
         </div>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label" step-label="'5'"># Traffickers: </form-step>
+            <form-step class="col-xs-3 control-label"># Traffickers: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[5].response.value">
             </div>
         </div>
         <div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label" step-label="'6'">Staff Name: </form-step>
+            <form-step class="col-xs-3 control-label">Staff Name: </form-step>
             <div class="col-xs-9">
-                <select class="form-control" ng-model="$ctrl.questions[6].response.value">
-                    <option ng-repeat="staff in $ctrl.staff" ng-value="staff">{{staff.first_name + ' ' + staff.last_name}}</option>
-                    <option ng-if="!$ctrl.questions[6].response.value.id" ng-value="$ctrl.questions[6].response.value">{{$ctrl.questions[6].response.value}}</option>
-                </select>
+                <staff-select selected-staff="$ctrl.questions[6].response.value"></staff-select>
             </div>
         </div>
     </div>

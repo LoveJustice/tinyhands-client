@@ -21,7 +21,7 @@ export default class IntercepteeModalController {
         this.$uibModalInstance.dismiss();
     }
 
-    fileUpload($file) {
+    fileUpload() {
         this.questions[ImageQuestion].response.value = '';
     }
 

@@ -1,0 +1,45 @@
+<div class="form-horizontal">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Irf Number: </form-step>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" ng-change="$ctrl.getErrorMessages()" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label"># of PVOTs: </form-step>
+            <div class="col-xs-9">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Location: </form-step>
+            <div class="col-xs-9">
+                <location-select selected-location="$ctrl.questions[3].response.value"></location-select>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <br>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Date/Time: </form-step>
+            <div class="col-xs-9">
+                <input type="date" class="form-control" ng-model="$ctrl.questions[4].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label"># of Suspects: </form-step>
+            <div class="col-xs-9">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[5].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Staff Name: </form-step>
+            <div class="col-xs-9">
+                <staff-select selected-staff="$ctrl.questions[6].response.value"></staff-select>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

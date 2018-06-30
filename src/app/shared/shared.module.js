@@ -12,13 +12,17 @@ import config from './shared.config';
 
 import BaseService from '../base.service';
 import FileDownloaderService from './services/fileDownloader.service';
+import LocationService from '../components/location-select/location.service';
 import SessionService from './services/session.service';
 import SpinnerOverlayService from './directives/spinnerOverlay/spinnerOverlay.service';
+import StaffService from '../components/staff-select/staff.service';
 import StickyHeaderService from './services/stickyHeader.service';
 import UtilService from './services/util.service';
 import TransitionOnBefore from './TransitionOnBefore';
 
 import FormStepComponent from '../components/form-step/form-step.component';
+import LocationSelectComponent from '../components/location-select/location-select.component';
+import StaffSelectComponent from '../components/staff-select/staff-select.component';
 
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 import Spinner from './directives/spinner/spinner.directive';
@@ -39,12 +43,16 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'u
 
     .service('BaseService', BaseService)
     .service('FileDownloader', FileDownloaderService)
+    .service('LocationService', LocationService)
     .service('SessionService', SessionService)
     .service('SpinnerOverlayService', SpinnerOverlayService)
+    .service('StaffService', StaffService)
     .service('StickyHeader', StickyHeaderService)
     .service('UtilService', UtilService)
 
     .component('formStep', FormStepComponent)
+    .component('locationSelect', LocationSelectComponent)
+    .component('staffSelect', StaffSelectComponent)
 
     .directive('confirmButton', ConfirmButton)
     .directive('spinner', Spinner)

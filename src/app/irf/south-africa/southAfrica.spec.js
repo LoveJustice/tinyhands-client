@@ -7,9 +7,6 @@ const DateId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
-const OtherRedFlagId = 31;
-const OtherSignId = 134;
-const OtherWebsiteId = 244;
 const SignedId = 151;
 
 describe('IrfSouthAfricaController', () => {
@@ -198,7 +195,7 @@ describe('IrfSouthAfricaController', () => {
                     response: {
                         gender: {},
                         name: {},
-                        age: {},
+                        birthdate: {},
                         address1: {},
                         address2: {},
                         phone: {},
@@ -223,35 +220,6 @@ describe('IrfSouthAfricaController', () => {
         });
     });
 
-    describe('function setOtherQuestionValues', () => {
-        beforeEach(() => {
-            vm.questions = {
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-            };
-        });
-
-        it('when response value is false should return false and set response value to empty string', () => {
-            let temp = vm.setOtherQuestionValues(OtherRedFlagId);
-
-            expect(temp).toEqual(false);
-            expect(vm.questions[OtherRedFlagId].response.value).toEqual('');
-        });
-
-        it('when response value is a string, should return true, leave response value as a string', () => {
-            vm.questions[OtherRedFlagId].response.value = 'hello there I am a red flag';
-
-            let temp = vm.setOtherQuestionValues(OtherRedFlagId);
-
-            expect(temp).toEqual(true);
-            expect(vm.questions[OtherRedFlagId].response.value).toEqual('hello there I am a red flag');
-        });
-    });
-
     describe('function setRadio', () => {
         beforeEach(() => {
             vm.questions = {
@@ -267,14 +235,14 @@ describe('IrfSouthAfricaController', () => {
         it('when response value matches an item in values, return nothing', () => {
             vm.questions[OtherContactId].response.value = 'Police';
 
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toBeUndefined();
             expect(vm.questions[OtherContactId].response.value).toEqual('Police');
         });
 
         it('when response value is null leave it as it is, return nothing', () => {
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toBeUndefined();
             expect(vm.questions[OtherContactId].response.value).toEqual('');
@@ -283,7 +251,7 @@ describe('IrfSouthAfricaController', () => {
         it('when response value does not match one of items, change response value to Other return response value', () => {
             vm.questions[OtherContactId].response.value = 'I am another contact';
 
-            let temp = vm.setRadio(vm.contacts, OtherContactId);
+            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
 
             expect(temp).toEqual('I am another contact');
             expect(vm.questions[OtherContactId].response.value).toEqual('Other');
@@ -309,48 +277,41 @@ describe('IrfSouthAfricaController', () => {
                 [DateId]: {
                     question_id: [DateId],
                     response: {
-                        value: ''
+                        value: '2017-04-23T19:45:00+05:45'
                     }
                 },
                 [OtherContactId]: {
                     question_id: OtherContactId,
                     response: {
-                        value: false
+                        value: 'boots'
                     }
                 },
                 [OtherFamilyId]: {
                     question_id: OtherFamilyId,
                     response: {
-                        value: ''
+                        value: 'great uncle'
                     }
-                },
-                [OtherRedFlagId]: {
-                    question_id: OtherRedFlagId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherSignId]: {
-                    question_id: OtherSignId,
-                    response: {
-                        value: false
-                    }
-                },
-                [OtherWebsiteId]: {
-                    question_id: OtherWebsiteId,
-                    response: {
-                        value: false
-                    }
-                },
+                }
             };
         });
 
-        it('should set other flags', () => {
+        it('should set value for date', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.otherRedFlag).toEqual(false);
-            expect(vm.otherWebsite).toEqual(false);
-            expect(vm.otherSign).toEqual(false);
+            let expectedDate = new Date('April 23, 2017 10:00:00 GMT-0400');
+            expect(vm.questions[DateId].response.value).toEqual(expectedDate);
+        });
+
+        it('should set value for otherContactString', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.otherContactString).toEqual('boots');
+        });
+
+        it('should set value for otherFamilyString', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.otherFamilyString).toEqual('great uncle');
         });
     });
 

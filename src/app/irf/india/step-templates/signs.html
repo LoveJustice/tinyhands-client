@@ -1,0 +1,202 @@
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-center">Either fill out the first or second section (not both), depending on whether the victim was first noticed by
+                staff, or came from a contact. </div>
+            <div class="padding-top-20">How did you make the interception?</div>
+            <hr/>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-2">
+                <form-step>
+                    <input id="contact" name="contact-or-staff" value="Contact" type="radio" ng-model="$ctrl.questions[91].response.value">
+                    <label for="contact">Contact</label>
+                </form-step>
+            </div>
+            <div class="row col-md-10">
+                <div class="row center-vertical">
+                    <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
+                        <form-step ng-repeat="contact in contacts">
+                            <input id="{{contact}}" name="contact-type" value="{{contact}}" ng-model="$ctrl.questions[92].response.value" type="radio">
+                            <label for="{{contact}}">{{contact}}</label>
+                        </form-step>
+                        <form-step ng-if="$last">
+                            <input id="other-contact" name="contact-type" type="radio" value="Other" ng-model="$ctrl.questions[92].response.value">
+                            <label for="other-contact">Other</label>
+                            <input class="margin-left-10" ng-Model="$ctrl.otherContactString">
+                        </form-step>
+                    </div>
+                </div>
+                <hr/>
+                <div class="padding-bottom-20">Did you pay the contact for this information?</div>
+                <div class="row center-vertical">
+                    <div class="col-md-2">
+                        <form-step>
+                            <input id="pay-no" name="did-you-pay" value="no" ng-model="$ctrl.questions[102].response.value" type="radio">
+                            <label for="pay-no">No</label>
+                        </form-step>
+                    </div>
+                    <div class="col-md-2">
+                        <form-step>
+                            <input id="pay-yes" name="did-you-pay" value="yes" ng-model="$ctrl.questions[102].response.value" type="radio">
+                            <label for="pay-yes">Yes</label>
+                        </form-step>
+                    </div>
+                    <div class="col-md-4">
+                        <form-step>
+                            <label for="pay-how-much">How much?</label>
+                            <input class="margin-left-10" id="pay-how-much" type="text" ng-model="$ctrl.questions[104].response.value">
+                        </form-step>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row center-vertical">
+            <div class="col-md-2">
+                <form-step>
+                    <input id="staff" name="contact-or-staff" value="Staff" type="radio" ng-model="$ctrl.questions[91].response.value">
+                    <label for="staff">Staff</label>
+                </form-step>
+            </div>
+            <div class="row col-md-10">
+                <div class="row center-vertical">
+                    <div class="col-md-6 form-group">
+                        <form-step class="col-xs-4 control-label">Staff who noticed</form-step>
+                        <div class="col-xs-6">
+                            <staff-select selected-staff="$ctrl.questions[106].response.value"></staff-select>
+                        </div>
+                    </div>
+                    <div class="text">What was the sign that made you stop them for questioning? (check all that apply below) </div>
+                </div>
+                <hr/>
+                <div class="row center-vertical">
+                    <div class="col-md-2">
+                        <div class="text-center">Manner </div>
+                        <hr/>
+                        <form-step>
+                            <input id="hesitant" type="checkbox" ng-model="$ctrl.questions[111].response.value">
+                            <label for="hesitant">Hesitant</label>
+                        </form-step>
+                        <form-step>
+                            <input id="nervous" type="checkbox" ng-model="$ctrl.questions[112].response.value">
+                            <label for="nervous">Nervous or afraid</label>
+                        </form-step>
+                        <form-step>
+                            <input id="hurry" type="checkbox" ng-model="$ctrl.questions[113].response.value">
+                            <label for="hurry">Hurrying</label>
+                        </form-step>
+                        <form-step>
+                            <input id="drugged" type="checkbox" ng-model="$ctrl.questions[114].response.value">
+                            <label for="drugged">Drugged or drowsy</label>
+                        </form-step>
+                        <br>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="text-center">Attire </div>
+                        <hr/>
+                        <form-step>
+                            <input id="new-clothes" type="checkbox" ng-model="$ctrl.questions[115].response.value">
+                            <label for="new-clothes">New clothes</label>
+                        </form-step>
+                        <form-step>
+                            <input id="dirty-clothes" type="checkbox" ng-model="$ctrl.questions[116].response.value">
+                            <label for="dirty-clothes">Dirty clothes</label>
+                        </form-step>
+                        <form-step>
+                            <input id="full-bags" type="checkbox" ng-model="$ctrl.questions[117].response.value">
+                            <label for="full-bags">Carrying full bags</label>
+                        </form-step>
+                        <form-step>
+                            <input id="village-dress" type="checkbox" ng-model="$ctrl.questions[118].response.value">
+                            <label for="village-dress">Village dress</label>
+                        </form-step>
+                        <br>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="text-center">Appearance </div>
+                        <hr/>
+                        <form-step>
+                            <input id="foreign-looking" type="checkbox" ng-model="$ctrl.questions[119].response.value">
+                            <label for="foreign-looking">Foreign looking</label>
+                        </form-step>
+                        <form-step>
+                            <input id="typical-village" type="checkbox" ng-model="$ctrl.questions[120].response.value">
+                            <label for="typical-village">Typical village look</label>
+                        </form-step>
+                        <form-step>
+                            <input id="like-agent" type="checkbox" ng-model="$ctrl.questions[121].response.value">
+                            <label for="like-agent">Looked like agent</label>
+                        </form-step>
+                        <form-step>
+                            <input id="caste-different" type="checkbox" ng-model="$ctrl.questions[122].response.value">
+                            <label for="caste-different">Caste difference</label>
+                        </form-step>
+                        <form-step>
+                            <input id="young-looking" type="checkbox" ng-model="$ctrl.questions[123].response.value">
+                            <label for="young-looking">Young looking</label>
+                        </form-step>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-center">Action </div>
+                        <hr/>
+                        <div class="col-md-6">
+                            <form-step>
+                                <input id="waiting-sitting" type="checkbox" ng-model="$ctrl.questions[124].response.value">
+                                <label for="waiting-sitting">Waiting / sitting</label>
+                            </form-step>
+                            <form-step>
+                                <input id="on-train" type="checkbox" ng-model="$ctrl.questions[125].response.value">
+                                <label for="on-train">On a train</label>
+                            </form-step>
+                            <form-step>
+                                <input id="roaming-around" type="checkbox" ng-model="$ctrl.questions[126].response.value">
+                                <label for="roaming-around">Roaming around</label>
+                            </form-step>
+                            <form-step>
+                                <input id="exiting-vehicle" type="checkbox" ng-model="$ctrl.questions[127].response.value">
+                                <label for="exiting-vehicle">Exiting vehicle</label>
+                            </form-step>
+                            <form-step>
+                                <input id="heading-to-vehicle" type="checkbox" ng-model="$ctrl.questions[128].response.value">
+                                <label for="heading-to-vehicle">Heading to vehicle</label>
+                            </form-step>
+                        </div>
+                        <div class="col-md-6">
+                            <form-step>
+                                <input id="in-vehicle" type="checkbox" ng-model="$ctrl.questions[129].response.value">
+                                <label for="in-vehicle">In a vehicle</label>
+                            </form-step>
+                            <form-step>
+                                <input id="in-rickshaw" type="checkbox" ng-model="$ctrl.questions[130].response.value">
+                                <label for="in-rickshaw">In a rickshaw</label>
+                            </form-step>
+                            <form-step>
+                                <input id="in-cart" type="checkbox" ng-model="$ctrl.questions[131].response.value">
+                                <label for="in-cart">In a cart</label>
+                            </form-step>
+                            <form-step>
+                                <input id="carry-baby" type="checkbox" ng-model="$ctrl.questions[132].response.value">
+                                <label for="carry-baby">Carrying a baby</label>
+                            </form-step>
+                            <form-step>
+                                <input id="on-phone" type="checkbox" ng-model="$ctrl.questions[133].response.value">
+                                <label for="on-phone">On the phone</label>
+                            </form-step>
+                        </div>
+                    </div>
+                </div>
+                <div class="row center-vertical">
+                    <div class="col-md-6">
+                        <div class="padding-top-30"></div>
+                        <form-step>
+                            <input id="other-sign" type="checkbox" ng-model="$ctrl.otherSign">
+                            <label for="other-sign">Other Sign</label>
+                            <input class="margin-left-10" type="text" ng-model="$ctrl.questions[134].response.value">
+                        </form-step>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

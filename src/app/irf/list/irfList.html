@@ -1,45 +1,45 @@
-<div class="container" id="irfList"><br/>
+<div class="container" id="irfList">
+    <br/>
 
     <div class="row">
         <div class="col-xs-5">
             <h1>All IRFs</h1>
         </div>
 
-        <div class="pull-right"><br>
-            <photoexport ng-if="irfListCtrl.hasViewPermission"></photoexport>
-            <csvexport buttontext="Export All IRFs to CSV"
-                       export-service-func="irfListCtrl.exportCsv()"
-                       get-file-name="irfListCtrl.getExportFileName()"
-                       on-export-complete="irfListCtrl.onExportComplete()"
-                       on-export-error="irfListCtrl.onExportError()"
-                       ng-if="irfListCtrl.hasViewPermission">
-            </csvexport>
-            <a ng-if="irfListCtrl.hasAddPermission" class="btn btn-success" href="{{ irfListCtrl.constants.BaseUrl + '/data-entry/irfs/create/'}}">
-                Input A New IRF
-            </a>
+        <div class="text-right col-xs-7 margin-bottom-20">
+            <div class="padding-bottom-5">
+                <photoexport ng-if="irfListCtrl.hasViewPermission"></photoexport>
+                <csvexport buttontext="Export All IRFs to CSV" export-service-func="irfListCtrl.exportCsv()" get-file-name="irfListCtrl.getExportFileName()"
+                    on-export-complete="irfListCtrl.onExportComplete()" on-export-error="irfListCtrl.onExportError()" ng-if="irfListCtrl.hasViewPermission">
+                </csvexport>
+            </div>
+            <div>
+                <button class="btn btn-success" ng-click="irfListCtrl.openNewIrfModal()">Create IRF</button>
+            </div>
         </div>
     </div>
 
     <div class="row">
         <!-- Results per page dropdown -->
         <div class="col-sm-2 col-xs-3">
-            <select ng-options="value for value in [25, 50, 75, 100, 500]"
-                    ng-model="irfListCtrl.queryParameters.page_size"
-                    ng-change="irfListCtrl.getIrfList()"
-                    class="form-control">
+            <select ng-options="value for value in [25, 50, 75, 100, 500]" ng-model="irfListCtrl.queryParameters.page_size" ng-change="irfListCtrl.getIrfList()"
+                class="form-control">
             </select>
         </div>
         <div class="col-sm-3 col-xs-1">
-            <p>Results <span class="hidden-xs">per page</span></p>
+            <p>Results
+                <span class="hidden-xs">per page</span>
+            </p>
         </div>
         <!-- End dropdown -->
 
         <!-- Search -->
         <div class="col-md-3 search-bar pull-right">
             <form>
-                  <label class="pull-right">
-                      <input ng-change="irfListCtrl.searchIrfs()" ng-model="irfListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
-                  </label>
+                <label class="pull-right">
+                    <input ng-change="irfListCtrl.searchIrfs()" ng-model="irfListCtrl.queryParameters.search" placeholder="Search" class="form-control"
+                        autofocus>
+                </label>
             </form>
         </div>
         <!-- End search -->
@@ -90,13 +90,21 @@
                 <td>{{ irf.date_time_of_interception | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ irf.date_time_entered_into_system | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ irf.date_time_last_updated | date:"medium" : irfListCtrl.timeZoneDifference }}</td>
-                <td ng-if="irfListCtrl.hasViewPermission"><a class="btn btn-sm btn-primary" ng-href="{{irf.view_url}}">View</a></td>
-                <td ng-if="irfListCtrl.hasEditPermission"><a class="btn btn-sm btn-primary" id="id_edit_irf_button" ng-href="{{irf.edit_url}}">Edit</a></td>
-                <td ng-if="irfListCtrl.hasDeletePermission"><a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteIrf(irf, $index)">
-                    {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+                <td ng-if="irfListCtrl.hasViewPermission">
+                    <a class="btn btn-sm btn-primary" ng-href="{{irf.view_url}}">View</a>
+                </td>
+                <td ng-if="irfListCtrl.hasEditPermission">
+                    <a class="btn btn-sm btn-primary" id="id_edit_irf_button" ng-href="{{irf.edit_url}}">Edit</a>
+                </td>
+                <td ng-if="irfListCtrl.hasDeletePermission">
+                    <a class="btn btn-sm btn-danger" ng-click="irfListCtrl.deleteIrf(irf, $index)">
+                        {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a>
+                </td>
             </tr>
             <tr ng-show="irfListCtrl.irfs.length == 0">
-                <td colspan="12" style="text-align:center;"><h2>No IRFs Matched your search for: "{{ irfListCtrl.queryParameters.search }}"</h2></td>
+                <td colspan="12" style="text-align:center;">
+                    <h2>No IRFs Matched your search for: "{{ irfListCtrl.queryParameters.search }}"</h2>
+                </td>
             </tr>
         </tbody>
     </table>

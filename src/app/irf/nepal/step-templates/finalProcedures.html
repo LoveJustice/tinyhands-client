@@ -1,0 +1,117 @@
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>Procedures</h3>
+                <form-step>
+                    <label for="reason-trafficking">You should intercept in cases where you have a good reason to believe a person is being trafficked or
+                        is at a high risk of being trafficked. What was the primary reason you believed this case qualified?</label>
+                    <textarea class="form-control" id="reason-trafficking" rows="4" ng-model="$ctrl.questions[142].response.value"></textarea>
+                </form-step>
+                <form-step>
+                    <label for="total-flag" class="padding-top-20">Reported Total Red Flag Points</label>
+                    <input id="total-flag" type="number" min="0" ng-model="$ctrl.questions[143].response.value">
+                </form-step>
+                <hr/>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row center-vertical">
+            <div class="col-md-9 col-md-offset-3">
+                <h3>Type of Intercept</h3>
+                <div class="col-md-4">
+                    <form-step>
+                        <input id="sex-traffick" name="trafficking-type" value="Sex Trafficking" ng-model="$ctrl.questions[141].response.value" type="radio">
+                        <label for="traffick-suspect">Sex Trafficking</label>
+                    </form-step>
+                    <form-step>
+                        <input id="labor-traffick" name="trafficking-type" value="India Labor Trafficking" ng-model="$ctrl.questions[141].response.value"
+                            type="radio">
+                        <label for="labor-traffick">India Labor Trafficking</label>
+                    </form-step>
+                    <form-step>
+                        <input id="internal-traffick" name="trafficking-type" value="Nepal internal trafficking" ng-model="$ctrl.questions[141].response.value"
+                            type="radio">
+                        <label for="internal-traffick">Nepal internal trafficking</label>
+                    </form-step>
+                </div>
+                <div class="col-md-6">
+                    <form-step>
+                        <input id="gulf-traffick" name="trafficking-type" value="Gulf (or country other than India) trafficking" ng-model="$ctrl.questions[141].response.value"
+                            type="radio">
+                        <label for="gulf-traffick">Gulf (or country other than India) trafficking</label>
+                    </form-step>
+                    <form-step>
+                        <input id="gulf-traffick" name="trafficking-type" value="Runaway (no direct evidence of trafficking)" ng-model="$ctrl.questions[141].response.value"
+                            type="radio">
+                        <label for="gulf-traffick">Runaway (no direct evidence of trafficking)</label>
+                    </form-step>
+                </div>
+                <div class="col-md-12 form-group">
+                    <form-step>
+                        <label for="how-sure" class="padding-top-10">How sure are you that it was a trafficking case? </label>
+                    </form-step>
+                    <form-step>
+                        Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)
+                        <select id="how-sure" ng-model="$ctrl.questions[147].response.value">
+                            <option value="1 - Not at all sure">1 - Not at all sure</option>
+                            <option value="2 - Unsure but suspects it">2 - Unsure but suspects it</option>
+                            <option value="3 - Somewhat sure">3 - Somewhat sure</option>
+                            <option value="4 - Very sure">4 - Very sure</option>
+                            <option value="5 - Absolutely sure">5 - Absolutely sure</option>
+                        </select>
+                    </form-step>
+                </div>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>How did you prevent the victim from going?</h3>
+                <form-step>
+                    <input id="parents-prevented" type="checkbox" ng-model="$ctrl.questions[148].response.value">
+                    <label for="parents-prevented">Her parents used their authority and prevented victim from going</label>
+                </form-step>
+                <form-step>
+                    <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced">
+                    <label for="call">THN staff convinced victim not to go</label>
+                    <p>If so, what convinced the victim?</p>
+                    <textarea class="form-control" rows="2" ng-disabled="!$ctrl.staffConvinced" ng-model="$ctrl.questions[149].response.value"></textarea>
+                </form-step>
+                <form-step>
+                    <input id="police" type="checkbox" ng-model="$ctrl.questions[150].response.value">
+                    <label class="margin-top-10" for="police">The police forced the victim to stop</label>
+                </form-step>
+                <hr/>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3>Final</h3>
+                </div>
+            </div>
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3 panel panel-default text-center padding-10">
+                    <div class="row">
+                        I certify that I have followed procedures and filled out this form correctly, completely, and accurately.
+                    </div>
+                    <form-step>
+                        <input id="scanned" type="checkbox" ng-change="$ctrl.getWarningMessages()" ng-model="$ctrl.questions[151].response.value">
+                        <label for="scanned">Scanned form has signature</label>
+                    </form-step>
+                </div>
+            </div>
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-6 form-group">
+                        <form-step>
+                            <label>Attached scanned copy of form (pdf or image)</label>
+                        </form-step>
+                    </div>
+                    <input type="file" value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

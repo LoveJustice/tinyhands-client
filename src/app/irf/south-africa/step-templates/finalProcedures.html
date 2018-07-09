@@ -4,20 +4,19 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <form-step>
-                                How sure are you that it was a trafficking case?
-                            </form-step>
+                                How sure are you that it was a trafficking case?</form-step>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <form-step>
                                 <label for="how-sure">Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)</label>
                                 <select id="how-sure" ng-model="$ctrl.questions[147].response.value">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="1 - Not at all sure">1 - Not at all sure</option>
+                                    <option value="2 - Unsure but suspects it">2 - Unsure but suspects it</option>
+                                    <option value="3 - Somewhat sure">3 - Somewhat sure</option>
+                                    <option value="4 - Very sure">4 - Very sure</option>
+                                    <option value="5 - Absolutely sure">5 - Absolutely sure</option>
                                 </select>
                             </form-step>
                         </div>
@@ -29,22 +28,16 @@
         <div class="row center-vertical">
             <div class="col-md-12 form-group">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="col-md-12">
                             <p>Interception mode?</p>
                         </div>
                     </div>
                     <div class="col-md-1">
-                        <form-step>
-                            <input id="interception-yes" name="did-you-intercept" value="yes" ng-model="$ctrl.questions[263].response.value" type="radio">
-                            <label for="interception-yes">Yes</label>
-                        </form-step>
+                        <form-step type="radio" label="Yes" radio-name="did-you-intercept" response-value="$ctrl.questions[263].response.value"></form-step>
                     </div>
                     <div class="col-md-5">
-                        <form-step>
-                            <input id="interception-no" name="did-you-intercept" value="no" ng-model="$ctrl.questions[263].response.value" type="radio">
-                            <label for="interception-no">No</label>
-                        </form-step>
+                        <form-step type="radio" label="No" radio-name="did-you-intercept" response-value="$ctrl.questions[263].response.value"></form-step>
                     </div>
                 </div>
                 <hr/>
@@ -53,10 +46,7 @@
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-2">
                 <div class="row">
-                    <form-step>
-                        <label for="case-notes">Case Notes</label>
-                        <textarea class="form-control" id="case-notes" rows="4" ng-model="$ctrl.questions[146].response.value"></textarea>
-                    </form-step>
+                    <form-step type="textarea" label="Case Notes" response-value="$ctrl.questions[146].response.value"></form-step>
                 </div>
             </div>
         </div>
@@ -69,7 +59,7 @@
                         <div class="col-md-4">
                             <input type="text" class="form-control" ng-model="$ctrl.questions[264].response.value">
                         </div>
-                        <form-step class="center-vertical control-label">(Immigration Official) </form-step>
+                        <form-step class="center-vertical control-label">(Immigration Official)</form-step>
                     </div>
                 </div>
             </div>

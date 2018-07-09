@@ -8,9 +8,21 @@ export class FormStepController {
     }
 
     $onInit() {
-        this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
-            this.setFlagSend(newValue, oldValue);
-        });
+        if (!isNaN(parseInt(this.redFlag))) {
+            this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
+                this.setFlagSend(newValue, oldValue);
+            });
+        }
+        this.setOtherQuestionValues();
+    }
+
+    clickRadio($event) {
+        $event.preventDefault();
+        if (this.responseValue === this.label) {
+            this.responseValue = '';
+        } else {
+            this.responseValue = this.label;
+        }
     }
 
     emitFlag(amountToAdd) {
@@ -26,13 +38,26 @@ export class FormStepController {
             this.emitFlag(-this.redFlag);
         }
     }
+
+    setOtherQuestionValues() {
+        if (this.type === 'otherCheckbox') {
+            let valueSet = this.responseValue;
+            this.responseValue = valueSet || '';
+            this.otherValue = !!valueSet;
+        }
+    }
 }
 
 export default {
     bindings: {
+        inputClass: '@',
+        label: '@',
+        otherValue: '<?',
+        radioName: '@',
         redFlag: '<?',
-        responseValue: '<?',
-        stepLabel: '<'
+        responseValue: '=?',
+        stepLabel: '<',
+        type: '@',
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,

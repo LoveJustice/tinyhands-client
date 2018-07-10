@@ -1,0 +1,107 @@
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="text-center">
+                <em>Either fill out the first or second section (not both), depending on whether the victim was first noticed by
+                staff, or came from a contact.</em>
+            </div>
+            <div class="padding-top-30">
+                <h3>How did you make the interception?</h3>
+            </div>
+        </div>
+        <div class="row center-vertical padding-vertical-20">
+            <div class="col-md-2 col-md-offset-1">
+                <form-step class="sub-heading" type="radio" radio-name="contact-or-staff" response-value="$ctrl.questions[91].response.value" label="Contact"></form-step>
+            </div>
+            <div class="row col-md-9">
+                <div class="row center-vertical">
+                    <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
+                        <form-step type="radio" radio-name="contactType" ng-repeat="contact in contacts" label="{{contact}}" response-value="$ctrl.questions[92].response.value"></form-step>
+                        <form-step ng-if="$last" type="otherRadio" radio-name="contactType" other-value="$ctrl.otherContactString" response-value="$ctrl.questions[92].response.value"></form-step>
+                    </div>
+                </div>
+                <hr/>
+                <div class="padding-bottom-20">Did you pay the contact for this information?</div>
+                <div class="row center-vertical">
+                    <div class="col-md-2">
+                        <form-step type="radio" label="No" response-value="$ctrl.questions[102].response.value" radio-name="didYouPay"></form-step>
+                    </div>
+                    <div class="col-md-2">
+                        <form-step type="radio" label="Yes" response-value="$ctrl.questions[102].response.value" radio-name="didYouPay"></form-step>
+                    </div>
+                    <div class="col-md-4">
+                        <form-step label="How Much?" type="text" response-value="$ctrl.questions[104].response.value"></form-step>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="thick"/>
+        <div class="row center-vertical padding-vertical-20">
+            <div class="col-md-2 col-md-offset-1">
+                <form-step class="sub-heading" type="radio" radio-name="contact-or-staff" response-value="$ctrl.questions[91].response.value"
+                    label="Staff"></form-step>
+            </div>
+            <div class="row col-md-9">
+                <div class="row center-vertical">
+                    <div class="col-md-6 form-group">
+                        <form-step class="col-xs-4 control-label">Staff who noticed</form-step>
+                        <div class="col-xs-6">
+                            <staff-select selected-staff="$ctrl.questions[106].response.value"></staff-select>
+                        </div>
+                    </div>
+                    <div class="text">What was the sign that made you stop them for questioning? (check all that apply below)</div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="col-md-4">
+                            <div class="text-center">Manner </div>
+                            <hr/>
+                            <form-step type="checkbox" response-value="$ctrl.questions[111].response.value" label="Hesitant"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[112].response.value" label="Nervous or afraid"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[113].response.value" label="Hurrying"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[114].response.value" label="Drugged / Drowsy"></form-step>
+                            <br>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">Attire </div>
+                            <hr/>
+                            <form-step type="checkbox" response-value="$ctrl.questions[115].response.value" label="New Clothes"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[116].response.value" label="Dirty clothes"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[117].response.value" label="Carrying full bags"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[118].response.value" label="Village dress"></form-step>
+                            <br>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">Appearance </div>
+                            <hr/>
+                            <form-step type="checkbox" response-value="$ctrl.questions[119].response.value" label="Indian looking"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[120].response.value" label="Typical village look"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[121].response.value" label="Looked like agent"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[122].response.value" label="Racial difference"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[123].response.value" label="Young looking"></form-step>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="text-center">Action </div>
+                        <hr/>
+                        <div class="col-md-6">
+                            <form-step type="checkbox" response-value="$ctrl.questions[124].response.value" label="Waiting / sitting"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[135].response.value" label="Walking to border"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[126].response.value" label="Roaming around"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[127].response.value" label="Exiting vehicle"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[128].response.value" label="Heading to vehicle"></form-step>
+                        </div>
+                        <div class="col-md-6">
+                            <form-step type="checkbox" response-value="$ctrl.questions[129].response.value" label="In a vehicle"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[130].response.value" label="In a rickshaw"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[131].response.value" label="In a cart"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[132].response.value" label="Carrying a baby"></form-step>
+                            <form-step type="checkbox" response-value="$ctrl.questions[133].response.value" label="On the phone"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

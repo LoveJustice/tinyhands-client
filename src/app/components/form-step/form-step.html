@@ -14,8 +14,8 @@
             <input ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass">
         </span>
         <span ng-switch-when="checkbox">
-            <input type="checkbox" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass">
-            <label>{{$ctrl.label}}</label>
+            <input id="{{$ctrl.checkboxName + '-' + $ctrl.label}}" type="checkbox" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass">
+            <label for="{{$ctrl.checkboxName + '-' + $ctrl.label}}">{{$ctrl.label}}</label>
         </span>
         <span ng-switch-when="text">
             <label>{{$ctrl.label}}</label>

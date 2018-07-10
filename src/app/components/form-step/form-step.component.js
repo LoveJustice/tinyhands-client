@@ -54,6 +54,7 @@ export default {
         label: '@',
         otherValue: '<?',
         radioName: '@',
+        checkboxName: '@',
         redFlag: '<?',
         responseValue: '=?',
         stepLabel: '<',

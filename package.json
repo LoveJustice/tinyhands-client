@@ -5,6 +5,7 @@
     "test": "./node_modules/karma/bin/karma start",
     "testSingleRun": "./node_modules/karma/bin/karma start --single-run",
     "dev": "webpack-dev-server --env.dev --content-base dist/ --devtool eval --progress --colors --open",
+    "dev2": "webpack-dev-server --env.staging --content-base dist/ --devtool eval --progress --colors --open",
     "local": "rimraf ./dist/* && webpack -p --env.local",
     "stage": "rimraf ./dist/* && webpack -p --env.staging",
     "prod": "rimraf ./dist/* && webpack -p --env.production",

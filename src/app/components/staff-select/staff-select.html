@@ -1,9 +1,14 @@
 <chips ng-model="$ctrl.selectedStaff">
+    {{$ctrl.selectedStaff}}
     <chip-tmpl>
         <div class="default-chip">
-            {{chip.name || chip.first_name + ' ' + chip.last_name}}
+            {{chip}}
             <span class="glyphicon glyphicon-remove" remove-chip></span>
         </div>
     </chip-tmpl>
-    <input ng-model-control ng-model="searchStaff" uib-typeahead="staff as staff.first_name + ' ' + staff.last_name for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByFirstAndLastName"></input>
+    {{$ctrl.checkEvent}}
+    <input type="text" ng-model="$ctrl.searchStaff" 
+            ng-keydown="$ctrl.checkForSelect($event)"
+            typeahead-on-select"$ctrl.handleSelect($item, $model, $label, $event)"
+            uib-typeahead="staff as staff.first_name + ' ' + staff.last_name for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByFirstAndLastName"></input>
 </chips>

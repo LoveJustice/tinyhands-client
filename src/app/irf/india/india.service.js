@@ -54,10 +54,7 @@ export default class IndiaService {
                             "question_id": 6,
                             "storage_id": 4,
                             "response": {
-                                "value": [{
-                                    id: 1,
-                                    name: "John Staff"
-                                }]
+                                "value": ["John Staff"]
                             }
                         },
                         {

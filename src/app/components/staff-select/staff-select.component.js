@@ -24,6 +24,24 @@ export class StaffSelectController {
             this.staff = response.data.results;
         });
     }
+
+    checkForSelect($event) {
+        console.log($event);
+        if($event.which === 13 || $event.which === 9) {
+            $event.preventDefault();
+            this.saveValue(this.searchStaff)
+        }
+    }
+
+    saveValue(value) {
+        this.selectedStaff.push(value);
+        console.log(this.selectedStaff);
+    }
+
+    handleSelect($item, $model, $label, $event) {
+        console.log($item);
+    }
+
 }
 
 export default {

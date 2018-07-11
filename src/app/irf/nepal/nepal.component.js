@@ -22,7 +22,7 @@ const SignedId = 151;
 const StaffConvincedId = 149;
 
 export class IrfNepalController {
-    constructor($scope, $uibModal, constants, NepalService) {
+    constructor($scope, $uibModal, constants, NepalService, $stateParams) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;

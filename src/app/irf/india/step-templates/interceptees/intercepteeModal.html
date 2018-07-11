@@ -15,11 +15,11 @@
                 </div>
                 <img class="img-rounded clickable" ngf-thumbnail="IntercepteeModalController.file" ngf-select ng-model="IntercepteeModalController.file"
                     ng-change="IntercepteeModalController.fileUpload($file)" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100"
-                    ngf-resize="{width: 200, height: 200}" ng-if="IntercepteeModalController.file">
+                    ngf-resize="{width: 200, height: 200}" ng-if="IntercepteeModalController.file"/>             
                 <img class="img-rounded clickable" ngf-select ng-model="IntercepteeModalController.file" ng-change="IntercepteeModalController.fileUpload($file)"
                     ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100" ngf-resize="{width: 200, height: 200}"
                     ng-if="IntercepteeModalController.questions[7].response.value" ng-src="{{IntercepteeModalController.getIntercepteeImage(IntercepteeModalController.questions[7].response.value)}}"
-                    alt="Interceptee Image">
+                    alt="Interceptee Image"/>
             </div>
             <div class="row">
                 <div class="col-md-6 form-group">
@@ -58,11 +58,11 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     <label class="col-md-3 margin-top-25">Address 1</label>
-                    <autocomplete-address1 class="col-md-9 padding-horizontal-30" ng-model="IntercepteeModalController.questions[9].response.address1.name"></autocomplete-address1>
+                    <autocomplete-address1 class="col-md-9 padding-horizontal-30" ng-model="IntercepteeModalController.questions[9].response.address1"></autocomplete-address1>
                 </div>
                 <div class="col-md-6 form-group">
                     <label class="col-md-3 margin-top-25">Address 2</label>
-                    <autocomplete-address2 class="col-md-9 padding-horizontal-30" ng-model="IntercepteeModalController.questions[9].response.address2.name"></autocomplete-address2>
+                    <autocomplete-address2 class="col-md-9 padding-horizontal-30" ng-model="IntercepteeModalController.questions[9].response.address2"></autocomplete-address2>
                 </div>
             </div>
             <div class="row">

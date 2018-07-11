@@ -21,12 +21,13 @@ const OtherWebsiteId = 244;
 const SignedId = 151;
 
 export class IrfIndiaController {
-    constructor($scope, $uibModal, constants, IndiaService) {
+    constructor($scope, $uibModal, constants, IndiaService, $stateParams) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.IndiaService = IndiaService;
+        this.stateParams = $stateParams;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -55,9 +56,11 @@ export class IrfIndiaController {
             intercepteesTemplate,
             finalProceduresTemplate
         ];
+        this.errorMessages = [];
+        this.warningMessages = [];
 
         this.getErrorData();
-        this.getIndiaIrf();
+        this.getIndiaIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -83,11 +86,13 @@ export class IrfIndiaController {
                 activeErrors.push(this.errorMessageInterceptee);
             }
         }
+        activeErrors = activeErrors.concat(this.errorMessages);
         return activeErrors;
     }
 
-    getIndiaIrf() {
-        this.IndiaService.getIndiaIrf().then(response => {
+    getIndiaIrf(countryId, stationId, id) {
+        this.IndiaService.getIndiaIrf(countryId, stationId, id).then(response => {
+        	this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -113,6 +118,7 @@ export class IrfIndiaController {
                 activeWarnings.push(this.warningMessageRedFlags);
             }
         }
+        activeWarnings = activeWarnings.concat(this.warningMessages);
         return activeWarnings;
     }
 
@@ -136,8 +142,14 @@ export class IrfIndiaController {
                     gender: {},
                     name: {},
                     age: {},
-                    address1: {},
-                    address2: {},
+                    address1: {
+                    	id: null,
+                    	name: ""
+                    },
+                    address2: {
+                    	id: null,
+                    	name: ""
+                    },
                     phone: {},
                     nationality: {},
                 }
@@ -203,6 +215,22 @@ export class IrfIndiaController {
     }
 
     submit() {
+    	 this.IndiaService.submitIndiaIrf(this.stateParams.countryId, this.stateParams.id, this.response).then((response) => {
+    		 this.response = response.data;
+             this.cards = response.data.cards[0].instances;
+             this.responses = response.data.responses;
+             this.questions = _.keyBy(this.responses, x => x.question_id);
+             this.setValuesForOtherInputs();
+             if (this.stateParams.id === null) {
+            	 this.stateParams.id = response.data.id;
+             }
+             this.errorMessages = [];
+             this.warningMessages = [];
+         }, (error) => {
+        	 this.errorMessages = error.data.errors;
+             this.warningMessages = error.data.warnings;
+            });
+    	
         this.messagesEnabled = true;
         this.getErrorMessages();
         this.getWarningMessages();

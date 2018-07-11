@@ -23,7 +23,7 @@ const OtherWebsiteId = 244;
 const SignedId = 151;
 
 export class IrfSouthAfricaController {
-    constructor($scope, $uibModal, constants, SouthAfricaService) {
+    constructor($scope, $uibModal, constants, SouthAfricaService, $stateParams) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;

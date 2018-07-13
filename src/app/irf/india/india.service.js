@@ -30,10 +30,7 @@ export default class IndiaService {
                             "question_id": 3,
                             "storage_id": 4,
                             "response": {
-                                "value": {
-                                    id: 52,
-                                    name: "Barmeli Chowak"
-                                }
+                                "value": "Barmeli Chowak"
                             }
                         },
                         {

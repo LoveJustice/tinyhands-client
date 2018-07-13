@@ -4,44 +4,39 @@ export class StaffSelectController {
     constructor(StaffService) {
         'ngInject';
         this.StaffService = StaffService;
-
         this.getStaff();
+        this.searchStaff = '';
+        this._selectedStaffList = [];
     }
+
+    get selectedStaffList() {
+        return this._selectedStaffList;
+    }
+
+    set selectedStaffList(value) {
+        this._selectedStaffList = value;
+        this.selectedStaff = this._selectedStaffList.join(';');
+    }
+
+    $onInit() {
+        this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
+    }
+
 
     filterStaffByFirstAndLastName(staff, value) {
         if (staff && value) {
             let searchValue = value.toLowerCase();
-            let matchFirstName = _.includes(('' + staff.first_name).toLowerCase(), searchValue);
-            let matchLastName = _.includes(('' + staff.last_name).toLowerCase(), searchValue);
-            let matchFirstAndLastName = _.includes((staff.first_name + ' ' + staff.last_name).toLowerCase(), searchValue);
-            return matchFirstName || matchLastName || matchFirstAndLastName;
+            let matchFirstAndLastName = _.includes(staff.toLowerCase(), searchValue);
+            return matchFirstAndLastName;
         }
         return false;
     }
 
     getStaff() {
         this.StaffService.getStaff().then(response => {
-            this.staff = response.data.results;
+            this.staff = response.data.results.map(x => `${x.first_name} ${x.last_name}`);
         });
     }
-
-    checkForSelect($event) {
-        console.log($event);
-        if($event.which === 13 || $event.which === 9) {
-            $event.preventDefault();
-            this.saveValue(this.searchStaff)
-        }
-    }
-
-    saveValue(value) {
-        this.selectedStaff.push(value);
-        console.log(this.selectedStaff);
-    }
-
-    handleSelect($item, $model, $label, $event) {
-        console.log($item);
-    }
-
 }
 
 export default {

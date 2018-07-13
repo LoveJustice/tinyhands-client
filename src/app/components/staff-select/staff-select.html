@@ -1,5 +1,4 @@
-<chips ng-model="$ctrl.selectedStaff">
-    {{$ctrl.selectedStaff}}
+<chips ng-model="$ctrl.selectedStaffList">
     <chip-tmpl>
         <div class="default-chip">
             {{chip}}
@@ -7,8 +6,6 @@
         </div>
     </chip-tmpl>
     {{$ctrl.checkEvent}}
-    <input type="text" ng-model="$ctrl.searchStaff" 
-            ng-keydown="$ctrl.checkForSelect($event)"
-            typeahead-on-select"$ctrl.handleSelect($item, $model, $label, $event)"
-            uib-typeahead="staff as staff.first_name + ' ' + staff.last_name for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByFirstAndLastName"></input>
+    <input ng-model-control chip-control type="text" ng-model="$ctrl.searchStaff"
+            uib-typeahead="staff for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByFirstAndLastName"></input>
 </chips>

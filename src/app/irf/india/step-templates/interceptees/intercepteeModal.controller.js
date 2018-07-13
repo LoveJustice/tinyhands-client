@@ -3,7 +3,7 @@ const TypeQuestion = 8;
 const DemographicQuestion = 9;
 
 export default class IntercepteeModalController {
-    constructor($uibModalInstance, constants, isAdd, questions) {
+    constructor($uibModalInstance, constants, isAdd, questions, isViewing) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
         this.constants = constants;
@@ -11,6 +11,7 @@ export default class IntercepteeModalController {
         this.isAdd = isAdd;
         this.originalQuestions = questions;
         this.questions = angular.copy(questions);
+        this.isViewing = isViewing;
         
         var t = Object.prototype.toString.call(this.questions[ImageQuestion].response.value);
         if (t === '[object Blob]') {

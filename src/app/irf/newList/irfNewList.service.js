@@ -20,8 +20,8 @@ export default class IrfNewListService {
         return this.service.get('api/irfNew/', queryParameters);
     }
 
-    deleteIrf(id){
-        return this.service.delete(`api/irf/${id}/`);
+    deleteIrf(countryId, id){
+        return this.service.delete(`api/irfNew/${countryId}/${id}/`);
     }
 
     irfExists(irfNumber) {

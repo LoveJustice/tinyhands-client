@@ -1,4 +1,4 @@
-<div class="form-horizontal">
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
     <div class="container-fluid">
         <div class="row">
             <div class="text-center">Either fill out the first or second section (not both), depending on whether the victim was first noticed by
@@ -32,13 +32,13 @@
                 <div class="row center-vertical">
                     <div class="col-md-2">
                         <form-step>
-                            <input id="pay-no" name="did-you-pay" value="no" ng-model="$ctrl.questions[102].response.value" type="radio">
+                            <input id="pay-no" name="did-you-pay" value="No" ng-model="$ctrl.questions[102].response.value" type="radio">
                             <label for="pay-no">No</label>
                         </form-step>
                     </div>
                     <div class="col-md-2">
                         <form-step>
-                            <input id="pay-yes" name="did-you-pay" value="yes" ng-model="$ctrl.questions[102].response.value" type="radio">
+                            <input id="pay-yes" name="did-you-pay" value="Yes" ng-model="$ctrl.questions[102].response.value" type="radio">
                             <label for="pay-yes">Yes</label>
                         </form-step>
                     </div>
@@ -199,4 +199,4 @@
             </div>
         </div>
     </div>
-</div>
+</fieldset>

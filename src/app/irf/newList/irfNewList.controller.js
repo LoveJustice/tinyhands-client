@@ -233,7 +233,7 @@ export default class IrfNewListController {
 
     deleteIrf(irf, index) {
         if (irf.confirmedDelete) {
-            this.service.deleteIrf(irf.id).then(
+            this.service.deleteIrf(irf.station.operating_country.id, irf.id).then(
                 () => {
                     this.toastr.success("Successfully Deleted IRF!");
                     this.irfs.splice(index, 1);

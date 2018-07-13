@@ -499,13 +499,13 @@ export default class IndiaService {
                         {
                             "question_id": 143,
                             "response": {
-                                "value": 160
+                                "value": null
                             }
                         },
                         {
                             "question_id": 144,
                             "response": {
-                                "value": 165
+                                "value": null
                             }
                         },
                         {

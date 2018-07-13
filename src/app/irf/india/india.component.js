@@ -21,13 +21,15 @@ const OtherWebsiteId = 244;
 const SignedId = 151;
 
 export class IrfIndiaController {
-    constructor($scope, $uibModal, constants, IndiaService, $stateParams) {
+    constructor($scope, $uibModal, constants, IndiaService, $stateParams, $state) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.IndiaService = IndiaService;
         this.stateParams = $stateParams;
+        this.state = $state;
+        this.isViewing = this.stateParams.isViewing === 'true';
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -80,10 +82,10 @@ export class IrfIndiaController {
         let activeErrors = [];
         if (this.messagesEnabled) {
             if (this.questions[IrfNumberId].response.value === '') {
-                activeErrors.push(this.errorMessageIrfNumber);
+                //activeErrors.push(this.errorMessageIrfNumber);
             }
             if (_.size(this.cards) === 0) {
-                activeErrors.push(this.errorMessageInterceptee);
+                //activeErrors.push(this.errorMessageInterceptee);
             }
         }
         activeErrors = activeErrors.concat(this.errorMessages);
@@ -112,10 +114,10 @@ export class IrfIndiaController {
         let activeWarnings = [];
         if (!this.ignoreWarnings && this.messagesEnabled) {
             if (!this.questions[SignedId].response.value) {
-                activeWarnings.push(this.warningMessageNoSignature);
+                //activeWarnings.push(this.warningMessageNoSignature);
             }
             if (this.redFlagTotal === 0) {
-                activeWarnings.push(this.warningMessageRedFlags);
+                //activeWarnings.push(this.warningMessageRedFlags);
             }
         }
         activeWarnings = activeWarnings.concat(this.warningMessages);
@@ -161,7 +163,8 @@ export class IrfIndiaController {
             controllerAs: 'IntercepteeModalController',
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, x => x.question_id)
+                questions: () => _.keyBy(responses, x => x.question_id),
+                isViewing: () => this.isViewing
             },
             size: 'lg',
             templateUrl: intercepteeModalTemplate,
@@ -175,9 +178,24 @@ export class IrfIndiaController {
     }
 
     save() {
-        this.messagesEnabled = true;
-        this.getErrorMessages();
-        this.getWarningMessages();
+    	this.response.status = 'in-progress';
+    	this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+    	this.IndiaService.submitIndiaIrf(this.stateParams.countryId, this.stateParams.id, this.response).then((response) => {
+   		 this.response = response.data;
+            this.cards = response.data.cards[0].instances;
+            this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.setValuesForOtherInputs();
+            if (this.stateParams.id === null) {
+           	 this.stateParams.id = response.data.id;
+            }
+            this.state.go('irfNewList');
+        }, (error) => {
+       	 this.errorMessages = error.data.errors;
+            this.warningMessages = error.data.warnings;
+           });
     }
 
     setOtherQuestionValues(valueId) {
@@ -215,7 +233,16 @@ export class IrfIndiaController {
     }
 
     submit() {
-    	 this.IndiaService.submitIndiaIrf(this.stateParams.countryId, this.stateParams.id, this.response).then((response) => {
+    	this.saved_status = this.response.status;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+    	this.response.status = 'approved';
+    	if (this.ignoreWarnings) {
+    		this.response.ignore_warnings = 'True';
+    	} else {
+    		this.response.ignore_warnings = 'False';
+    	}
+    	this.IndiaService.submitIndiaIrf(this.stateParams.countryId, this.stateParams.id, this.response).then((response) => {
     		 this.response = response.data;
              this.cards = response.data.cards[0].instances;
              this.responses = response.data.responses;
@@ -224,16 +251,16 @@ export class IrfIndiaController {
              if (this.stateParams.id === null) {
             	 this.stateParams.id = response.data.id;
              }
-             this.errorMessages = [];
-             this.warningMessages = [];
+             this.state.go('irfNewList');
          }, (error) => {
         	 this.errorMessages = error.data.errors;
              this.warningMessages = error.data.warnings;
+             this.response.status = this.saved_status;
             });
     	
         this.messagesEnabled = true;
-        this.getErrorMessages();
-        this.getWarningMessages();
+        //this.getErrorMessages();
+        //this.getWarningMessages();
     }
 
     watchMessages() {

@@ -5,7 +5,6 @@
             <span class="glyphicon glyphicon-remove" remove-chip></span>
         </div>
     </chip-tmpl>
-    {{$ctrl.checkEvent}}
     <input ng-model-control chip-control type="text" ng-model="$ctrl.searchStaff"
-            uib-typeahead="staff for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByFirstAndLastName"></input>
+            uib-typeahead="staff for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByName"></input>
 </chips>

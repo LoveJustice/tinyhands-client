@@ -22,12 +22,10 @@ export class StaffSelectController {
         this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
     }
 
-
-    filterStaffByFirstAndLastName(staff, value) {
-        if (staff && value) {
+    filterStaffByName(staffName, value) {
+        if (staffName && value) {
             let searchValue = value.toLowerCase();
-            let matchFirstAndLastName = _.includes(staff.toLowerCase(), searchValue);
-            return matchFirstAndLastName;
+            return _.includes(staffName.toLowerCase(), searchValue);
         }
         return false;
     }

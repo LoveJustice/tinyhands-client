@@ -244,7 +244,8 @@ export default class BudgetController {
                 amount += staff.salaryInfo.salary;
             }
         }
-
+        console.log("salaries Total");
+        console.log(this.form.staff);
         amount += this.getOtherCost(this.form.other.Salaries);
 
         this.form.totals.borderMonitoringStation.salaries = amount;
@@ -375,6 +376,7 @@ export default class BudgetController {
 
     // REGION: GET Calls
     getAllData() {
+        console.log("Getting all data");
         this.getStaff();
         this.getOtherData();
         this.getBorderStation();
@@ -483,42 +485,42 @@ export default class BudgetController {
     }
     
     getStaff() {
-        return this.service.getStaff(this.borderStationId).then((response) => {
-            this.form.staff = response.data.results;
-            this.getStaffSalaries();
+        // On create: get staff and map those onto old staff salaries
+        if (this.isCreating){
+            return this.service.getStaff(this.borderStationId).then((response) => {
+                this.form.staff = response.data.results;
+                this.mapNewStaffSalaries(this.form.staffSalaries);
+            });
+        }
+        // On edit: get staff salaries connected to sheet and extract staff from there
+        else {
+            return this.service.getStaffSalaries(this.budgetId).then((response) => {
+                this.form.staffSalaries = response.data;
+                this.extractStaffFromSalaries(this.form.staffSalaries);
+            });
+        }
+        this.setTotals();
+    }
+
+    extractStaffFromSalaries(staffSalaries){
+        this.form.staff = [];
+        staffSalaries.forEach((staffSalary) => {
+            let staff = staffSalary.staff_person;
+            staff.salaryInfo = staffSalary;
+            this.form.staff.push(staff);
         });
     }
 
-    
-    getStaffSalaries() {
-        let id = this.utils.validId(this.budgetId) ? this.budgetId : null;
-        
-        if (id === null) {
-            this.mapStaffSalaries(this.form.staffSalaries);
-            this.setTotals();
-        }
-
-        else {
-            return this.service.getStaffSalaries(id).then((response) => {
-                this.mapStaffSalaries(response.data);
-                this.setTotals();
-            });
-        }
-    }
-
-    mapStaffSalaries(staffSalaries){
+    mapNewStaffSalaries(staffSalaries){
         return this.form.staff.map((staff) => {
             if (staffSalaries.length > 0) {
                 if (staff.id){
-                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
+                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person.id === staff.id; })[0];
                 }
             } else {
                 staff.salaryInfo = { salary: 0 };
             }
-
-            if(this.isCreating) {
-                staff.salaryInfo.id = null;
-            }
+            staff.salaryInfo.id = null;
         });
     }
     
@@ -579,13 +581,13 @@ export default class BudgetController {
 
     updateOrCreateSalaries() {
         this.form.staff.forEach((staff) => {
+            staff.salaryInfo.staff_person = staff.id;
+            staff.salaryInfo.budget_calc_sheet = this.budgetId;
             if (staff.salaryInfo && staff.salaryInfo.id) {
                 this.service.updateSalary(this.budgetId, staff.salaryInfo).catch((error) => {
                     this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });
             } else if (staff.salaryInfo && !staff.salaryInfo.id) {
-                staff.salaryInfo.staff_person = staff.id;
-                staff.salaryInfo.budget_calc_sheet = this.budgetId;
                 this.service.createSalary(staff.salaryInfo).catch((error) => {
                     this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
                 });

@@ -40,6 +40,8 @@ export default class BudgetService {
      * @returns Promise that provides the status and data of the request.
      */
     createSalary(salaryData) {
+        console.log("Creating Salary");
+        console.log(salaryData);
         return this.service.post('api/budget/staff_salary/', salaryData);
     }
 
@@ -153,6 +155,7 @@ export default class BudgetService {
      * @returns Promise that provides the status and data of the request.
      */
     updateSalary(budgetId, salaryData) {
+        console.log(salaryData);
         return this.service.put(`api/budget/${budgetId}/staff_salary/${salaryData.id}/`, salaryData);
     }
 }

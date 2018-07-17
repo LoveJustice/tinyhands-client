@@ -9,7 +9,23 @@ describe('IntercepteeModalController', () => {
             dismiss() {}
         };
 
-        vm = new IntercepteeModalController($uibModalInstance);
+        let originalQuestions = [null, null, null, null, null, null, null, {
+            response: {}
+        }, {
+            response: {}
+        }, {
+            response: {
+                address1: {},
+                address2: {},
+                age: {},
+                gender: {},
+                name: {},
+                nationality: {},
+                phone: {},
+            }
+        }];
+        
+        vm = new IntercepteeModalController($uibModalInstance, null, false, originalQuestions, false);
     });
 
     describe('function save', () => {

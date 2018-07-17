@@ -40,6 +40,7 @@ export class IrfIndiaController {
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
+        this.response = {status:'in-progress'}
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.otherContactString = '';
@@ -196,6 +197,7 @@ export class IrfIndiaController {
        	 this.errorMessages = error.data.errors;
             this.warningMessages = error.data.warnings;
            });
+    	 this.messagesEnabled = false;
     }
 
     setOtherQuestionValues(valueId) {

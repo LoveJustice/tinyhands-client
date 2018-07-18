@@ -12,6 +12,7 @@ export default class DetailController {
 
         this.details = {};
         this.countryOptions = this.getAllCountries();
+        this. getAllTimeZones();
 
         if (this.service.borderStationId) {
             this.getDetails();
@@ -106,5 +107,11 @@ export default class DetailController {
         let country = response.data;
         this.operating_country = {id: country.id, name: country.name};
       });
+    }
+    
+    getAllTimeZones() {
+    	this.service.getAllTimeZones().then((response) => {
+    		this.timeZoneOptions = response.data
+    	});
     }
 }

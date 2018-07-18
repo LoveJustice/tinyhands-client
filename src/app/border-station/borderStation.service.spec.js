@@ -348,4 +348,13 @@ describe('BorderStationService', () => {
             expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
         });
     });
+    
+    describe('function getAllTimeZones', () => {
+        let url = 'api/timezones/';
+        it(`should call put with '${url}'`, () => {
+            
+            service.getAllTimeZones();
+            expect(mockBaseService.get).toHaveBeenCalledWith(url);
+        });
+    });
 });

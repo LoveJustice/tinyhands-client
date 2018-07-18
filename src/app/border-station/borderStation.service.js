@@ -163,6 +163,6 @@ export default class BorderStationService {
     }
     
     getAllTimeZones() {
-    	return this.service.get('api/timezones/')
+       return this.service.get('api/timezones/');
     }
 }

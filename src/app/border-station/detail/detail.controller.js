@@ -110,8 +110,8 @@ export default class DetailController {
     }
     
     getAllTimeZones() {
-    	this.service.getAllTimeZones().then((response) => {
-    		this.timeZoneOptions = response.data
-    	});
+        this.service.getAllTimeZones().then((response) => {
+            this.timeZoneOptions = response.data;
+        });
     }
 }

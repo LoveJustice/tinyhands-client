@@ -30,10 +30,7 @@ export default class IndiaService {
                             "question_id": 3,
                             "storage_id": 4,
                             "response": {
-                                "value": {
-                                    id: 52,
-                                    name: "Barmeli Chowak"
-                                }
+                                "value": "Barmeli Chowak"
                             }
                         },
                         {
@@ -54,10 +51,7 @@ export default class IndiaService {
                             "question_id": 6,
                             "storage_id": 4,
                             "response": {
-                                "value": [{
-                                    id: 1,
-                                    name: "John Staff"
-                                }]
+                                "value": "John Staff; Foo Bar;"
                             }
                         },
                         {
@@ -393,10 +387,7 @@ export default class IndiaService {
                             "question_id": 106,
                             "storage_id": 4,
                             "response": {
-                                "value": [{
-                                    id: 2,
-                                    name: "Staff Member"
-                                }]
+                                "value": "Staff Member"
                             }
                         },
                         {

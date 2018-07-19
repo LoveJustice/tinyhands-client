@@ -17,40 +17,22 @@ describe('StaffSelectController', () => {
     describe('function filterStaffByFirstAndLastName', () => {
         let staff;
         beforeEach(() => {
-            staff = {
-                'first_name': 'Johnalonny',
-                'last_name': 'Jordanstinston'
-            };
+            staff = 'Johnalonny Jordanstinston';
         });
 
-        it('when searchValue is in staff.first_name should return true', () => {
+        it('when searchValue is in staff name should return true', () => {
             let value = 'alon';
 
-            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
+            let isContained = vm.filterStaffByName(staff, value);
 
             expect(isContained).toBeTruthy();
         });
 
-        it('when searchValue is in staff.last_name, return true', () => {
-            let value = 'stinston';
 
-            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
-
-            expect(isContained).toBeTruthy();
-        });
-
-        it('when searchValue is in staff.first_name and staff.last_name, return true', () => {
-            let value = 'jo';
-
-            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
-
-            expect(isContained).toBeTruthy();
-        });
-
-        it('when searchValue not in staff.first_name or staff.last_name, return false', () => {
+        it('when searchValue is not in staff name should return false', () => {
             let value = 'bob';
 
-            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
+            let isContained = vm.filterStaffByName(staff, value);
 
             expect(isContained).toBeFalsy();
         });
@@ -59,15 +41,42 @@ describe('StaffSelectController', () => {
             staff = undefined;
             let value = 'bob';
 
-            let isContained = vm.filterStaffByFirstAndLastName(staff, value);
+            let isContained = vm.filterStaffByName(staff, value);
 
             expect(isContained).toBeFalsy();
         });
 
         it('when value is undefined, return false', () => {
-            let isContained = vm.filterStaffByFirstAndLastName(staff, undefined);
+            let isContained = vm.filterStaffByName(staff, undefined);
 
             expect(isContained).toBeFalsy();
+        });
+    });
+
+    describe('$onInit', () => {
+        it('should set selectedStaffList by splitting selectedStaff by semicolon', () => {
+            let bob = 'Bob Foo';
+            let joe = 'Joe Bar';
+            let selectedStaff = bob + ';' + joe;
+            vm.selectedStaff = selectedStaff;
+
+            vm.$onInit();
+
+            expect(vm.selectedStaffList).toContain(bob);
+            expect(vm.selectedStaffList).toContain(joe);
+        });
+    });
+
+    describe('when selectedStaffList changed', () => {
+
+        it('should update selectedStaff', () => {
+            let bob = 'Bob Foo';
+            let joe = 'Joe Bar';
+        
+            vm.selectedStaffList = [bob, joe];
+
+            expect(vm.selectedStaff).toEqual(bob + ';' + joe);
+
         });
     });
 });

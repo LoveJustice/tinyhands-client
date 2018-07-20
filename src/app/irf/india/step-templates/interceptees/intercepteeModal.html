@@ -42,13 +42,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-3 control-label">Full Name</label>
                     <div class="col-md-9">
                         <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.name.value" required>
                     </div>
                 </div>
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-3 control-label">Age</label>
                     <div class="col-md-9">
                         <input type="number" min="0" class="form-control" ng-model="IntercepteeModalController.questions[9].response.age.value">
@@ -66,17 +66,23 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-3 control-label">Phone #</label>
                     <div class="col-md-9">
                         <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.phone.value">
                     </div>
                 </div>
-                <div class="col-md-6 form-group">
+                <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-3 control-label">Nationality</label>
                     <div class="col-md-9">
                         <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.nationality.value">
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1 padding-left-45 margin-top-15">
+                    <input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[11].response.value">
+                    <label for="custody">Taken into police custody</label>
                 </div>
             </div>
         </div>

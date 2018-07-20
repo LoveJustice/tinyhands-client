@@ -1,4 +1,5 @@
 /*global FormData */
+/* global jQuery */
 export default class IndiaService {
     constructor(BaseService) {
         'ngInject';
@@ -35,8 +36,7 @@ export default class IndiaService {
                         {
                             "question_id": 3,
                             "response": {
-                                "value": {
-                                }
+                                "value": ""
                             }
                         },
                         {
@@ -54,7 +54,7 @@ export default class IndiaService {
                         {
                             "question_id": 6,
                             "response": {
-                                "value": []
+                                "value": ""
                             }
                         },
                         {
@@ -343,7 +343,7 @@ export default class IndiaService {
                         {
                             "question_id": 106,
                             "response": {
-                                "value": []
+                                "value": ""
                             }
                         },
                         {
@@ -663,11 +663,11 @@ export default class IndiaService {
     			let t = Object.prototype.toString.call(responses[idx].response.value);
     			if (t === '[object Blob]') {
     				formData.append('scanned[' + cnt + ']', responses[idx].response.value, responses[idx].response.value.$ngfName);
-    				responses[idx].response.value = {'name': responses[idx].response.value.$ngfName}
+    				responses[idx].response.value = {'name': responses[idx].response.value.$ngfName};
     				cnt += 1;
     			} else if (t === '[object File]') {
     				formData.append('scanned[' + cnt + ']', responses[idx].response.value, responses[idx].response.value.name);
-    				responses[idx].response.value = {'name': responses[idx].response.value.name}
+    				responses[idx].response.value = {'name': responses[idx].response.value.name};
     				cnt += 1;
     			}
     		}

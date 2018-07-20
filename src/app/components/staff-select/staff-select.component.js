@@ -4,24 +4,35 @@ export class StaffSelectController {
     constructor(StaffService) {
         'ngInject';
         this.StaffService = StaffService;
-
         this.getStaff();
+        this.searchStaff = '';
+        this._selectedStaffList = [];
     }
 
-    filterStaffByFirstAndLastName(staff, value) {
-        if (staff && value) {
+    get selectedStaffList() {
+        return this._selectedStaffList;
+    }
+
+    set selectedStaffList(value) {
+        this._selectedStaffList = value;
+        this.selectedStaff = this._selectedStaffList.join(';');
+    }
+
+    $onInit() {
+        this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
+    }
+
+    filterStaffByName(staffName, value) {
+        if (staffName && value) {
             let searchValue = value.toLowerCase();
-            let matchFirstName = _.includes(('' + staff.first_name).toLowerCase(), searchValue);
-            let matchLastName = _.includes(('' + staff.last_name).toLowerCase(), searchValue);
-            let matchFirstAndLastName = _.includes((staff.first_name + ' ' + staff.last_name).toLowerCase(), searchValue);
-            return matchFirstName || matchLastName || matchFirstAndLastName;
+            return _.includes(staffName.toLowerCase(), searchValue);
         }
         return false;
     }
 
     getStaff() {
         this.StaffService.getStaff().then(response => {
-            this.staff = response.data.results;
+            this.staff = response.data.results.map(x => `${x.first_name} ${x.last_name}`);
         });
     }
 }

@@ -10,7 +10,7 @@ export class LocationSelectController {
 
     getLocations() {
         this.LocationService.getLocation().then(response => {
-            this.locations = response.data.results;
+            this.locations = response.data.results.map(x => x.name);
         });
     }
 }

@@ -27,6 +27,7 @@ export class IrfIndiaController {
         this.stateParams = $stateParams;
         this.state = $state;
         this.isViewing = this.stateParams.isViewing === 'true';
+        this.stationId = this.stateParams.stationId;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -122,7 +123,8 @@ export class IrfIndiaController {
         this.redFlagTotal += numberOfFlagsToAdd;
     }
 
-    openIntercepteeModal(responses = [], isAdd = false) {
+    openIntercepteeModal(responses = [], isAdd = false, idx=null) {
+    	this.modalActions = [];
         if (isAdd) {
             responses.push({
                 question_id: 7,
@@ -158,7 +160,8 @@ export class IrfIndiaController {
             resolve: {
                 isAdd: () => isAdd,
                 questions: () => _.keyBy(responses, x => x.question_id),
-                isViewing: () => this.isViewing
+                isViewing: () => this.isViewing,
+                modalActions: () => this.modalActions
             },
             size: 'lg',
             templateUrl: intercepteeModalTemplate,
@@ -167,6 +170,8 @@ export class IrfIndiaController {
                 this.cards.push({
                     responses
                 });
+            } else if (this.modalActions.indexOf('removeCard') > -1 && idx !== null) {
+            	this.cards.splice(idx, 1);
             }
         });
     }

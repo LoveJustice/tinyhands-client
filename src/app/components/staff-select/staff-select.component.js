@@ -19,7 +19,20 @@ export class StaffSelectController {
     }
 
     $onInit() {
+    	this.priorSelectedStaff = this.selectedStaff;
         this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
+        this.priorStationId = '';
+    }
+    
+    $doCheck() {
+    	if (this.selectedStaff !== this.priorSelectedStaff) {
+    		this.priorSelectedStaff = this.selectedStaff;
+    		this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
+    	}
+    	if (this.priorStationId !== this.stationId) {
+    		this.priorStationId = this.stationId;
+    		this.getStaff();
+    	}
     }
 
     filterStaffByName(staffName, value) {
@@ -31,15 +44,18 @@ export class StaffSelectController {
     }
 
     getStaff() {
-        this.StaffService.getStaff().then(response => {
-            this.staff = response.data.results.map(x => `${x.first_name} ${x.last_name}`);
-        });
+    	if (typeof this.stationId !== 'undefined') {
+	        this.StaffService.getStaff(this.stationId).then(response => {
+	            this.staff = response.data.results.map(x => `${x.first_name} ${x.last_name}`);
+	        });
+    	}
     }
 }
 
 export default {
     bindings: {
-        selectedStaff: '='
+        selectedStaff: '=',
+        stationId: '='
     },
     controller: StaffSelectController,
     templateUrl: StaffSelectTemplateUrl,

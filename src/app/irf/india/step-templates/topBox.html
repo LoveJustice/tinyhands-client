@@ -15,7 +15,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Location: </form-step>
             <div class="col-xs-9">
-                <location-select selected-location="$ctrl.questions[3].response.value"></location-select>
+                <location-select selected-location="$ctrl.questions[3].response.value" station-id="$ctrl.stationId"></location-select>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Staff Name: </form-step>
             <div class="col-xs-9">
-                <staff-select selected-staff="$ctrl.questions[6].response.value"></staff-select>
+                <staff-select selected-staff="$ctrl.questions[6].response.value" station-id="$ctrl.stationId"></staff-select>
             </div>
         </div>
     </div>

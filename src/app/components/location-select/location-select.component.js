@@ -4,20 +4,30 @@ export class LocationSelectController {
     constructor(LocationService) {
         'ngInject';
         this.LocationService = LocationService;
-
+        this.priorStationId = this.stationId;
         this.getLocations();
+    }
+    
+    $doCheck() {
+    	if (this.priorStationId !== this.stationId) {
+    		this.priorStationId = this.stationId;
+    		this.getLocations();
+    	}
     }
 
     getLocations() {
-        this.LocationService.getLocation().then(response => {
-            this.locations = response.data.results.map(x => x.name);
-        });
+    	if (typeof this.stationId !== 'undefined') {
+	        this.LocationService.getLocation(this.stationId).then(response => {
+	            this.locations = response.data.results.map(x => x.name);
+	        });
+    	}
     }
 }
 
 export default {
     bindings: {
-        selectedLocation: '='
+        selectedLocation: '=',
+        stationId: '='
     },
     controller: LocationSelectController,
     templateUrl: LocationSelectTemplateUrl,

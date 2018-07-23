@@ -38,7 +38,7 @@ export class IrfIndiaController {
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
-        this.response = {status:'in-progress'}
+        this.response = {status:'in-progress'};
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.otherContactString = '';
@@ -179,6 +179,7 @@ export class IrfIndiaController {
 
     save() {
     	this.response.status = 'in-progress';
+    	this.questions[144].response.value = this.redFlagTotal;
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
@@ -213,6 +214,14 @@ export class IrfIndiaController {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
+    
+    isString(val) {
+    	return typeof val === 'string';
+    }
+    getScannedFormUrl(url_segment) {
+    	var newUrl = new URL(url_segment, this.constants.BaseUrl).href;
+        return newUrl;
+    }
 
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
@@ -226,6 +235,7 @@ export class IrfIndiaController {
 
     submit() {
     	this.saved_status = this.response.status;
+    	this.questions[144].response.value = this.redFlagTotal;
     	this.errorMessages = [];
         this.warningMessages = [];
     	this.response.status = 'approved';

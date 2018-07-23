@@ -9,6 +9,11 @@ import uiBootstrap from 'angular-ui-bootstrap';
 import 'angular-chips/dist/angular-chips.min.js';
 import 'toastr/toastr.less';
 
+import 'moment/moment.js';
+import 'angularjs-bootstrap-datetimepicker/src/js/datetimepicker.js';
+import 'angularjs-bootstrap-datetimepicker/src/js/datetimepicker.templates.js';
+import 'angular-date-time-input/src/dateTimeInput.js';
+
 import sharedModule from './shared/shared.module';
 import accountModule from './account/account.module';
 import budgetModule from './budget/budget.module';
@@ -36,7 +41,7 @@ import AutocompleteAddress2Directive from './components/auto-complete/address2/a
 import CreateButtonComponent from './components/create-budget/create-budget.component.js';
 import MdfExportComponent from './components/mdf-export/mdf-export.component';
 
-angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap,
+angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap, 'ui.dateTimeInput', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 
         sharedModule,
         accountModule,
         addressesModule,

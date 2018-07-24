@@ -42,7 +42,7 @@ export default class IndiaService {
                         {
                             "question_id": 4,
                             "response": {
-                                "value": ""
+                                "value": new Date()
                             }
                         },
                         {

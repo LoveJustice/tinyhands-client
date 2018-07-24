@@ -161,4 +161,8 @@ export default class BorderStationService {
         
         return this.service.get(`api/user_permission/stations/${id}/`, params);
     }
+    
+    getAllTimeZones() {
+       return this.service.get('api/timezones/');
+    }
 }

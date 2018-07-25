@@ -105,20 +105,6 @@ describe('IrfIndiaController', () => {
         });
     });
 
-    describe('function save', () => {
-        it('should set messagesEnabled to true', () => {
-            //vm.messagesEnabled = false;
-            //spyOn(vm, 'getErrorMessages');
-            //spyOn(vm, 'getWarningMessages');
-
-            vm.save();
-
-            //expect(vm.messagesEnabled).toEqual(true);
-            //expect(vm.getErrorMessages).toHaveBeenCalled();
-            //expect(vm.getWarningMessages).toHaveBeenCalled();
-        });
-    });
-
     describe('function setRadioOther', () => {
         beforeEach(() => {
             vm.questions = {
@@ -211,20 +197,6 @@ describe('IrfIndiaController', () => {
             vm.setValuesForOtherInputs();
 
             expect(vm.otherFamilyString).toEqual('great uncle');
-        });
-    });
-
-    describe('function submit', () => {
-        it('should set messagesEnabled to true and call getErrorMessages and getWarningMessages', () => {
-            vm.messagesEnabled = false;
-            spyOn(vm, 'getErrorMessages');
-            spyOn(vm, 'getWarningMessages');
-
-            vm.submit();
-
-            //expect(vm.getErrorMessages).toHaveBeenCalled();
-            //expect(vm.getWarningMessages).toHaveBeenCalled();
-            expect(vm.messagesEnabled).toEqual(true);
         });
     });
 

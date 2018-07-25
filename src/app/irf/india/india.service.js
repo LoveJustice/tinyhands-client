@@ -674,6 +674,20 @@ export default class IndiaService {
     	}
     }
     
+    removeTimeZoneAdjustment(irf) {
+    	let dateTimeQuestions = [4];
+    	for (let idx=0; idx < irf.responses.length; idx++) {
+    		let t1 = dateTimeQuestions.indexOf(irf.responses[idx].question_id);
+    		if (t1 > -1) {
+    			let dt = irf.responses[idx].response.value;
+	    		if (dt instanceof  Date) {
+	    			let tzo = dt.getTimezoneOffset();
+	    			dt.setMinutes(dt.getMinutes() - tzo);
+	    		}
+    		}
+    	}
+    }
+    
     submitIndiaIrf(countryId, id, irf) {
     	if (id === null) {
     		return this.postIndiaIrf(irf);
@@ -687,6 +701,7 @@ export default class IndiaService {
     	//let myIrf = angular.copy(irf);
     	let formData = new FormData();
     	this.appendImages(formData, myIrf.cards[0].instances);
+    	this.removeTimeZoneAdjustment(myIrf);
     	this.appendScannedForm(formData, myIrf.responses);
     	formData.append("main", JSON.stringify(myIrf));
     	return this.service.put(`api/irfNew/${countryId}/${id}`, formData, {'Content-Type': undefined});
@@ -696,6 +711,7 @@ export default class IndiaService {
     	let myIrf = jQuery.extend(true, {}, irf);
     	let formData = new FormData();
     	this.appendImages(formData, myIrf.cards[0].instances);
+    	this.removeTimeZoneAdjustment(myIrf);
     	this.appendScannedForm(formData, myIrf.responses);  	
     	formData.append("main", JSON.stringify(myIrf));
     	return this.service.post(`api/irfNew/`, formData, {'Content-Type': undefined});

@@ -40,8 +40,6 @@ export default class BudgetService {
      * @returns Promise that provides the status and data of the request.
      */
     createSalary(salaryData) {
-        console.log("Creating Salary");
-        console.log(salaryData);
         return this.service.post('api/budget/staff_salary/', salaryData);
     }
 

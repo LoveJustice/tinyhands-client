@@ -244,8 +244,6 @@ export default class BudgetController {
                 amount += staff.salaryInfo.salary;
             }
         }
-        console.log("salaries Total");
-        console.log(this.form.staff);
         amount += this.getOtherCost(this.form.other.Salaries);
 
         this.form.totals.borderMonitoringStation.salaries = amount;
@@ -376,7 +374,6 @@ export default class BudgetController {
 
     // REGION: GET Calls
     getAllData() {
-        console.log("Getting all data");
         this.getStaff();
         this.getOtherData();
         this.getBorderStation();
@@ -485,14 +482,14 @@ export default class BudgetController {
     }
     
     getStaff() {
-        // On create: get staff and map those onto old staff salaries
+        // On create: get current staff and map those onto old staff salaries
         if (this.isCreating){
             return this.service.getStaff(this.borderStationId).then((response) => {
                 this.form.staff = response.data.results;
                 this.mapNewStaffSalaries(this.form.staffSalaries);
             });
         }
-        // On edit: get staff salaries connected to sheet and extract staff from there
+        // On edit: get staff salaries connected to old sheet and extract staff from there
         else {
             return this.service.getStaffSalaries(this.budgetId).then((response) => {
                 this.form.staffSalaries = response.data;
@@ -505,7 +502,10 @@ export default class BudgetController {
     extractStaffFromSalaries(staffSalaries){
         this.form.staff = [];
         staffSalaries.forEach((staffSalary) => {
-            let staff = staffSalary.staff_person;
+            let staff = {}
+            staff.first_name = staffSalary.staff_first_name;
+            staff.last_name = staffSalary.staff_last_name;
+            staff.id = staffSalary.staff_person;
             staff.salaryInfo = staffSalary;
             this.form.staff.push(staff);
         });
@@ -515,7 +515,14 @@ export default class BudgetController {
         return this.form.staff.map((staff) => {
             if (staffSalaries.length > 0) {
                 if (staff.id){
-                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person.id === staff.id; })[0];
+                    staff.salaryInfo = $.grep(staffSalaries, (s) => { return s.staff_person === staff.id; })[0];
+                    if (staff.salaryInfo == null){
+                        staff.salaryInfo = 
+                            {
+                                salary: 0,
+                                staff_person: staff.id
+                            }
+                    }
                 }
             } else {
                 staff.salaryInfo = { salary: 0 };
@@ -581,7 +588,6 @@ export default class BudgetController {
 
     updateOrCreateSalaries() {
         this.form.staff.forEach((staff) => {
-            staff.salaryInfo.staff_person = staff.id;
             staff.salaryInfo.budget_calc_sheet = this.budgetId;
             if (staff.salaryInfo && staff.salaryInfo.id) {
                 this.service.updateSalary(this.budgetId, staff.salaryInfo).catch((error) => {

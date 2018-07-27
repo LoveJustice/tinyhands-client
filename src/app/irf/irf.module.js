@@ -14,6 +14,8 @@ import CreateIrfModalController from './newList/createIrfModal.controller';
 
 import IrfNewListService from './newList/irfNewList.service';
 
+/* global angular */
+
 export default angular.module('tinyhands.IRF', [IrfIndiaModule, IrfNepalModule, IrfSouthAfricaModule, sharedModule])
     .config(IrfRoutes)
     .controller('IrfListController', IrfListController)

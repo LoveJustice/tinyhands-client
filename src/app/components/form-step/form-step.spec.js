@@ -48,7 +48,7 @@ describe('FormStepController', () => {
     });
 
     describe('clickRadio', () => {
-        let tempEvent
+        let tempEvent;
         beforeEach(() => {
             tempEvent = new Event('yas');
         });

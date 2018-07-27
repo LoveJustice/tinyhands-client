@@ -17,8 +17,8 @@ export class LocationSelectController {
 
     getLocations() {
     	if (typeof this.stationId !== 'undefined') {
-	        this.LocationService.getLocation(this.stationId).then(response => {
-	            this.locations = response.data.results.map(x => x.name);
+	        this.LocationService.getLocation(this.stationId).then((response) => {
+	            this.locations = response.data.results.map((x) => x.name);
 	        });
     	}
     }

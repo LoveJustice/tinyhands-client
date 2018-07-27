@@ -1,5 +1,7 @@
 import createIrfModalTemplate from './createIrfModal.html';
 
+/* global angular */
+
 export default class IrfNewListController {
     constructor(IrfNewListService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $uibModal, $timeout,  toastr, constants, moment) {
         'ngInject';
@@ -111,7 +113,7 @@ export default class IrfNewListController {
             controller: 'CreateIrfModalController as vm',
             size: 'md',
             resolve: {
-                stations: function () {
+                stations() {
                     return stationsForAdd;
                 }
             }

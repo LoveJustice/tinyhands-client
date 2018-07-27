@@ -10,6 +10,8 @@ import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './india.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
+/* global _ */
+/* global moment */
 
 const DateTimeId = 4;
 const IrfNumberId = 1;
@@ -89,11 +91,11 @@ export class IrfIndiaController {
     }
 
     getIndiaIrf(countryId, stationId, id) {
-        this.IndiaService.getIndiaIrf(countryId, stationId, id).then(response => {
+        this.IndiaService.getIndiaIrf(countryId, stationId, id).then((response) => {
         	this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.questions = _.keyBy(this.responses, (x) => x.question_id);
             this.setValuesForOtherInputs();
         });
     }
@@ -103,7 +105,7 @@ export class IrfIndiaController {
     }
 
     getResponseOfQuestionById(responses, questionId) {
-        return _.find(responses, x => x.question_id === questionId).response;
+        return _.find(responses, (x) => x.question_id === questionId).response;
     }
 
     getWarningMessages() {
@@ -160,7 +162,7 @@ export class IrfIndiaController {
             controllerAs: 'IntercepteeModalController',
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, x => x.question_id),
+                questions: () => _.keyBy(responses, (x) => x.question_id),
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions
             },

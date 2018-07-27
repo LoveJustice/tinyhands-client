@@ -6,7 +6,7 @@ export default class SouthAfricaService {
 
     getSouthAfricaIrf() {
         return {
-            then: f =>
+            then: (f) =>
                 f({
                     data: {
                         station_id: 32,

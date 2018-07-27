@@ -6,7 +6,7 @@ export default class NepalService {
 
     getNepalIrf() {
         return {
-            then: f => f({
+            then: (f) => f({
                 data: {
                     "station_id": 32,
                     "country_id": 4,

@@ -19,7 +19,7 @@ describe('IrfIndiaController', () => {
         let $uibModal = {
             open: () => ({
                 result: {
-                    then: f => f()
+                    then: (f) => f()
                 }
             })
         };

@@ -16,7 +16,7 @@ export default class IndiaService {
     
     getBlankIndiaIrf(countryId, stationId) {
     	return {
-            then: f => f({
+            then: (f) => f({
                 data: {
                     "station_id": stationId,
                     "country_id": countryId,

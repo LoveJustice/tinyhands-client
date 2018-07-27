@@ -1,4 +1,5 @@
 import StaffSelectTemplateUrl from './staff-select.html';
+/* global _ */
 
 export class StaffSelectController {
     constructor(StaffService) {
@@ -20,7 +21,7 @@ export class StaffSelectController {
 
     $onInit() {
     	this.priorSelectedStaff = this.selectedStaff;
-        this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
+        this.selectedStaffList = this.selectedStaff.split(';').filter((x) => x.length > 0).map((x) => x.trim());
         this.priorStationId = '';
     }
     
@@ -45,8 +46,8 @@ export class StaffSelectController {
 
     getStaff() {
     	if (typeof this.stationId !== 'undefined') {
-	        this.StaffService.getStaff(this.stationId).then(response => {
-	            this.staff = response.data.results.map(x => `${x.first_name} ${x.last_name}`);
+	        this.StaffService.getStaff(this.stationId).then((response) => {
+	            this.staff = response.data.results.map((x) => `${x.first_name} ${x.last_name}`);
 	        });
     	}
     }

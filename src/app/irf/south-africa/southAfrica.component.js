@@ -12,6 +12,8 @@ import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './southAfrica.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
+/* global moment */
+/* global _ */
 
 const DateTimeId = 4;
 const IrfNumberId = 1;
@@ -84,10 +86,10 @@ export class IrfSouthAfricaController {
     }
 
     getSouthAfricaIrf() {
-        this.SouthAfricaService.getSouthAfricaIrf().then(response => {
+        this.SouthAfricaService.getSouthAfricaIrf().then((response) => {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.questions = _.keyBy(this.responses, (x) => x.question_id);
             this.setValuesForOtherInputs();
         });
     }
@@ -97,7 +99,7 @@ export class IrfSouthAfricaController {
     }
 
     getResponseOfQuestionById(responses, questionId) {
-        return _.find(responses, x => x.question_id === questionId).response;
+        return _.find(responses, (x) => x.question_id === questionId).response;
     }
 
     getWarningMessages() {
@@ -146,7 +148,7 @@ export class IrfSouthAfricaController {
             controllerAs: 'IntercepteeModalController',
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, x => x.question_id)
+                questions: () => _.keyBy(responses, (x) => x.question_id)
             },
             size: 'lg',
             templateUrl: intercepteeModalTemplate,

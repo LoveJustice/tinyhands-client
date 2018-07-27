@@ -1,5 +1,8 @@
 import IrfNewListController from './irfNewList.controller';
 
+/* global angular */
+/* global inject */
+
 describe('IRF List Controller',() => {
     let vm,
         $timeout,

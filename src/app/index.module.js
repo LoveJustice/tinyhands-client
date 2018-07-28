@@ -2,10 +2,17 @@ import angular from 'angular';
 import ngAnimate from 'angular-animate';
 import ngCookies from 'angular-cookies';
 import ngCsv from 'ng-csv';
+import ngFileUpload from 'ng-file-upload';
 import ngSanitize from 'angular-sanitize';
 import ngTouch from 'angular-touch';
 import uiBootstrap from 'angular-ui-bootstrap';
+import 'angular-chips/dist/angular-chips.min.js';
 import 'toastr/toastr.less';
+
+import 'moment/moment.js';
+import 'angularjs-bootstrap-datetimepicker/src/js/datetimepicker.js';
+import 'angularjs-bootstrap-datetimepicker/src/js/datetimepicker.templates.js';
+import 'angular-date-time-input/src/dateTimeInput.js';
 
 import sharedModule from './shared/shared.module';
 import accountModule from './account/account.module';
@@ -34,22 +41,22 @@ import AutocompleteAddress2Directive from './components/auto-complete/address2/a
 import CreateButtonComponent from './components/create-budget/create-budget.component.js';
 import MdfExportComponent from './components/mdf-export/mdf-export.component';
 
-angular.module('tinyhandsFrontend', [ngAnimate, ngCookies, ngCsv, ngSanitize, ngTouch, uiBootstrap,
-    sharedModule,
-    accountModule,
-    addressesModule,
-    borderStationModule,
-    budgetModule,
-    dashboardModule,
-    eventsModule,
-    IRFModule,
-    loginModule,
-    VIFModule,
-    photoExportModule,
-    countriesModule,
-    idmanagementModule,
-    traffickermatchModule,
-])
+angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap, 'ui.dateTimeInput', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 
+        sharedModule,
+        accountModule,
+        addressesModule,
+        borderStationModule,
+        budgetModule,
+        dashboardModule,
+        eventsModule,
+        IRFModule,
+        loginModule,
+        VIFModule,
+        photoExportModule,
+        countriesModule,
+        idmanagementModule,
+        traffickermatchModule,
+    ])
 
     .constant('constants', constants)
 

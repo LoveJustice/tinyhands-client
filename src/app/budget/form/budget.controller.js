@@ -375,6 +375,7 @@ export default class BudgetController {
     // REGION: GET Calls
     getAllData() {
         this.getStaff();
+        this.setTotals();
         this.getOtherData();
         this.getBorderStation();
     }
@@ -496,13 +497,12 @@ export default class BudgetController {
                 this.extractStaffFromSalaries(this.form.staffSalaries);
             });
         }
-        this.setTotals();
     }
 
     extractStaffFromSalaries(staffSalaries){
         this.form.staff = [];
         staffSalaries.forEach((staffSalary) => {
-            let staff = {}
+            let staff = {};
             staff.first_name = staffSalary.staff_first_name;
             staff.last_name = staffSalary.staff_last_name;
             staff.id = staffSalary.staff_person;
@@ -521,7 +521,7 @@ export default class BudgetController {
                             {
                                 salary: 0,
                                 staff_person: staff.id
-                            }
+                            };
                     }
                 }
             } else {

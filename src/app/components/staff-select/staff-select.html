@@ -1,0 +1,10 @@
+<chips ng-model="$ctrl.selectedStaffList">
+    <chip-tmpl>
+        <div class="default-chip">
+            {{chip}}
+            <span class="glyphicon glyphicon-remove" remove-chip></span>
+        </div>
+    </chip-tmpl>
+    <input ng-model-control chip-control type="text" ng-model="$ctrl.searchStaff"
+            uib-typeahead="staff for staff in $ctrl.staff | filter:$viewValue:$ctrl.filterStaffByName"></input>
+</chips>

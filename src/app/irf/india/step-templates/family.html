@@ -1,0 +1,54 @@
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
+    <div class="row center-vertical">
+        <div class="col-md-4">
+            <div class="padding-bottom-20">Who is your family?</div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6 padding-top-20">
+                    <form-step red-flag="10" type="checkbox" response-value="$ctrl.questions[73].response.value" label="Reluctant to give family info"></form-step>
+                </div>
+                <div class="col-md-6 padding-top-20">
+                    <form-step red-flag="35" type="checkbox" response-value="$ctrl.questions[74].response.value" label="Will not give family info"></form-step>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-6">
+                    <div class="padding-bottom-20">Under 18 years old</div>
+                </div>
+                <div class="col-md-6">
+                    <form-step red-flag="50" type="checkbox" response-value="$ctrl.questions[77].response.value" label="No family contact established"></form-step>
+                    <form-step red-flag="45" type="checkbox" response-value="$ctrl.questions[78].response.value" label="Family does not know where they are going"></form-step>
+                    <form-step red-flag="60" type="checkbox" response-value="$ctrl.questions[79].response.value" label="Family unwilling to let them go"></form-step>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-6">
+                    <div class="padding-bottom-20">18 years or older</div>
+                </div>
+                <div class="col-md-6">
+                    <form-step red-flag="15" type="checkbox" label="Family members do not know where they are going" response-value="$ctrl.questions[80].response.value"></form-step>
+                    <form-step red-flag="20" type="checkbox" label="Family members are unwilling to let them go" response-value="$ctrl.questions[81].response.value"></form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-4">
+            <div class="margin-top-40 margin-bottom-10">
+                <form-step>Which family member did you talk to?</form-step>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6" ng-repeat="families in $ctrl.family">
+                    <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" response-value="$ctrl.questions[82].response.value"></form-step>
+                    <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherFamilyString" response-value="$ctrl.questions[82].response.value"></form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

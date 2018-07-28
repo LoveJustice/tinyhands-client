@@ -11,9 +11,12 @@
     "serve-dist": "ws -p 3000 -d ./dist/"
   },
   "dependencies": {
+    "@uirouter/angularjs": "1.0.10",
     "angular": "1.6.3",
     "angular-animate": "1.6.3",
+    "angular-chips": "^1.0.11",
     "angular-cookies": "1.6.3",
+    "angular-date-time-input": "^1.2.1",
     "angular-file-saver": "1.1.3",
     "angular-float-thead": "0.1.2",
     "angular-sanitize": "1.6.3",
@@ -21,8 +24,10 @@
     "angular-ui-bootstrap": "2.5.0",
     "angular-ui-calendar": "1.0.2",
     "angular-ui-validate": "1.2.2",
+    "angularjs-bootstrap-datetimepicker": "^1.1.4",
+    "angularjs-dropdown-multiselect": "2.0.0-beta.10",
     "animate.css": "3.5.2",
-    "bootstrap": "3.3.7",
+    "bootstrap": "^3.3.7",
     "floatthead": "2.0.3",
     "font-awesome": "4.7.0",
     "fullcalendar": "3.2.0",
@@ -31,11 +36,11 @@
     "moment": "2.17.1",
     "moment-timezone": "0.5.11",
     "ng-csv": "0.3.6",
+    "ng-file-upload": "^12.2.13",
     "ng-infinite-scroll": "1.3.0",
     "ngmap": "1.18.4",
-    "@uirouter/angularjs": "1.0.10",
-    "toastr": "2.1.2",
-    "angularjs-dropdown-multiselect": "2.0.0-beta.10"
+    "ngx-bootstrap": "^3.0.1",
+    "toastr": "2.1.2"
   },
   "devDependencies": {
     "angular-mocks": "1.6.3",

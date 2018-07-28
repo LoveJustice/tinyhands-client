@@ -1,18 +1,34 @@
 import irfListTemplate from './list/irfList.html';
 import './list/irfList.less';
+import irfNewListTemplate from './newList/irfNewList.html';
+import './newList/irfNewList.less';
 
-function IRFRoutes($stateProvider) {
+function IrfRoutes($stateProvider) {
     'ngInject';
-  $stateProvider
-    .state('irfList', {
-      url: '/irf?search',
+    $stateProvider
+        .state('irfList', {
+            url: '/irf?search',
+            params: {
+                search: {
+                    dynamic: true
+                }
+            },
+            templateUrl: irfListTemplate,
+            controller: 'IrfListController',
+            controllerAs: 'irfListCtrl',
+        });
+    $stateProvider
+    .state('irfNewList', {
+      url: '/irfNew?search&status&country_ids',
       params: {
-        search: { dynamic: true }
+        search: { dynamic: true },
+        status: { dynamic: true },
+        country_ids: { dynamic: true }
       },
-      templateUrl: irfListTemplate,
-      controller: 'IrfListController',
-      controllerAs: 'irfListCtrl',
+      templateUrl: irfNewListTemplate,
+      controller: 'IrfNewListController',
+      controllerAs: 'irfNewListCtrl',
     });
 }
 
-export default IRFRoutes;
+export default IrfRoutes;

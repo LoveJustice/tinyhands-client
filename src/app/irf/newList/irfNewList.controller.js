@@ -119,7 +119,13 @@ export default class IrfNewListController {
             }
         });
         modalInstance.result.then((station) => {
-            this.state.go('irf' + station.country.replace(/\s/g,''), {stationId: station.id, countryId: station.country_id, isViewing:false});
+        	this.service.getFormForStation(station.id).then((response) => {
+        		if (response.data.length > 0) {
+        			this.state.go(response.data[0].form_name, {stationId: station.id, countryId: station.country_id, isViewing:false});
+        		} else {
+        			this.toastr.error("Unable to find form for station " + station.label);
+        		}
+        	});
         });
     }
 
@@ -224,18 +230,28 @@ export default class IrfNewListController {
     }
     
     viewIrf(irf) {
-    	var irf_state = "irf" + irf.station.operating_country.name.replace(/\s/g,'');
-    	this.state.go(irf_state, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:true});
+    	this.service.getFormForStation(irf.station.id).then((response) => {
+    		if (response.data.length > 0) {
+    			this.state.go(response.data[0].form_name, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:true});
+    		} else {
+    			this.toastr.error("Unable to find form for station " + station.label);
+    		}
+    	});
     }
     
     editIrf(irf) {
-    	var irf_state = "irf" + irf.station.operating_country.name.replace(/\s/g,'');
-    	this.state.go(irf_state, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:false});
+    	this.service.getFormForStation(irf.station.id).then((response) => {
+    		if (response.data.length > 0) {
+    			this.state.go(response.data[0].form_name, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:false});
+    		} else {
+    			this.toastr.error("Unable to find form for station " + station.label);
+    		}
+    	});
     }
 
     deleteIrf(irf, index) {
         if (irf.confirmedDelete) {
-            this.service.deleteIrf(irf.station.operating_country.id, irf.id).then(
+            this.service.deleteIrf(irf.station.id, irf.id).then(
                 () => {
                     this.toastr.success("Successfully Deleted IRF!");
                     this.irfs.splice(index, 1);

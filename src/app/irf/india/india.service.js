@@ -8,7 +8,7 @@ export default class IndiaService {
     
     getIndiaIrf(countryId, stationId, id) {
     	if (id !== null) {
-    		return this.service.get(`api/irfNew/${countryId}/${id}`);
+    		return this.service.get(`api/irfNew/${stationId}/${id}`);
     	} else {
     		return this.getBlankIndiaIrf(countryId, stationId);
     	}

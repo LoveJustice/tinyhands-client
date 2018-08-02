@@ -56,7 +56,9 @@ export default class FormController {
     update() {
     	let formList = [];
     	for (let key in this.formSelected) {
-    		formList.push(this.formSelected[key]);
+    		if ({}.hasOwnProperty.call(this.formSelected, key)) {
+    			formList.push(this.formSelected[key]);
+    		}
     	}
     	this.service.updateCurrentForms(formList).then((response) => {
     		

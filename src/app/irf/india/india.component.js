@@ -185,7 +185,7 @@ export class IrfIndiaController {
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
-    	this.IndiaService.submitIndiaIrf(this.stateParams.countryId, this.stateParams.id, this.response).then((response) => {
+    	this.IndiaService.submitIndiaIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
    		 this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
@@ -246,7 +246,7 @@ export class IrfIndiaController {
     	} else {
     		this.response.ignore_warnings = 'False';
     	}
-    	this.IndiaService.submitIndiaIrf(this.stateParams.countryId, this.stateParams.id, this.response).then((response) => {
+    	this.IndiaService.submitIndiaIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
     		 this.response = response.data;
              this.cards = response.data.cards[0].instances;
              this.responses = response.data.responses;

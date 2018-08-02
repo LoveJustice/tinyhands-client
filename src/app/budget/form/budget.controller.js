@@ -375,8 +375,8 @@ export default class BudgetController {
     // REGION: GET Calls
     getAllData() {
         this.getStaff();
-        this.setTotals();
         this.getOtherData();
+        this.setTotals();
         this.getBorderStation();
     }
 

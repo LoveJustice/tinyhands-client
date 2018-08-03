@@ -16,6 +16,7 @@
 			<border-station-detail></border-station-detail>
 			<border-station-person></border-station-person>
 			<border-station-location></border-station-location>
+			<border-station-form ng-if="bsCtrl.session.checkPermission('STATIONS','SET_FORMS',null, null)"></border-station-form>
 
 			<!-- REGION: Block for error messages -->
 			<div class="text-danger well" ng-if="bsCtrl.errors.length > 0">

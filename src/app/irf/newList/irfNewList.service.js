@@ -20,8 +20,8 @@ export default class IrfNewListService {
         return this.service.get('api/irfNew/', queryParameters);
     }
 
-    deleteIrf(countryId, id){
-        return this.service.delete(`api/irfNew/${countryId}/${id}/`);
+    deleteIrf(stationId, id){
+        return this.service.delete(`api/irfNew/${stationId}/${id}/`);
     }
 
     irfExists(irfNumber) {
@@ -30,5 +30,10 @@ export default class IrfNewListService {
 
     getCsvExport() {
         return this.service.get('api/irf/export/');
+    }
+    
+    getFormForStation(stationId) {
+    	return this.service.get('/api/forms/?type_name=IRF&station_id=' + stationId);
+    	
     }
 }

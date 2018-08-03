@@ -8,7 +8,7 @@ export default class IndiaService {
     
     getIndiaIrf(countryId, stationId, id) {
     	if (id !== null) {
-    		return this.service.get(`api/irfNew/${countryId}/${id}`);
+    		return this.service.get(`api/irfNew/${stationId}/${id}`);
     	} else {
     		return this.getBlankIndiaIrf(countryId, stationId);
     	}
@@ -688,15 +688,15 @@ export default class IndiaService {
     	}
     }
     
-    submitIndiaIrf(countryId, id, irf) {
+    submitIndiaIrf(stationId, id, irf) {
     	if (id === null) {
     		return this.postIndiaIrf(irf);
     	} else {
-    		return this.putIndiaIrf(countryId, id, irf);
+    		return this.putIndiaIrf(stationId, id, irf);
     	}
     }
     
-    putIndiaIrf(countryId, id, irf) {
+    putIndiaIrf(stationId, id, irf) {
     	let myIrf = jQuery.extend(true, {}, irf);
     	//let myIrf = angular.copy(irf);
     	let formData = new FormData();
@@ -704,7 +704,7 @@ export default class IndiaService {
     	this.removeTimeZoneAdjustment(myIrf);
     	this.appendScannedForm(formData, myIrf.responses);
     	formData.append("main", JSON.stringify(myIrf));
-    	return this.service.put(`api/irfNew/${countryId}/${id}`, formData, {'Content-Type': undefined});
+    	return this.service.put(`api/irfNew/${stationId}/${id}`, formData, {'Content-Type': undefined});
     }
     
     postIndiaIrf(irf) {

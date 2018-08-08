@@ -4,7 +4,7 @@ export default class StaffService {
         this.service = BaseService;
     }
 
-    getStaff(stationId = 1) {
+    getStaff(stationId) {
         return this.service.get(`api/staff/?border_station=${stationId}`);
     }
 }

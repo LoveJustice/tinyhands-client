@@ -11,6 +11,9 @@ import './nepal.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
+/* global _ */
+/* global moment */
+
 const DateTimeId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
@@ -18,7 +21,7 @@ const OtherContactId = 92;
 const SignedId = 151;
 
 export class IrfNepalController {
-    constructor($scope, $uibModal, constants, NepalService) {
+    constructor($scope, $uibModal, constants, NepalService, $stateParams) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
@@ -85,16 +88,16 @@ export class IrfNepalController {
     }
 
     getNepalIrf() {
-        this.NepalService.getNepalIrf().then(response => {
+        this.NepalService.getNepalIrf().then((response) => {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.questions = _.keyBy(this.responses, (x) => x.question_id);
             this.setValuesForOtherInputs();
         });
     }
 
     getResponseOfQuestionById(responses, questionId) {
-        return _.find(responses, x => x.question_id === questionId).response;
+        return _.find(responses, (x) => x.question_id === questionId).response;
     }
 
     getWarningMessages() {
@@ -143,7 +146,7 @@ export class IrfNepalController {
             controllerAs: 'IntercepteeModalController',
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, x => x.question_id)
+                questions: () => _.keyBy(responses, (x) => x.question_id)
             },
             size: 'lg',
             templateUrl: intercepteeModalTemplate,

@@ -1,3 +1,5 @@
+/* global angular */
+/* global moment */
 const ImageQuestion = 7;
 const TypeQuestion = 8;
 const DemographicQuestion = 9;

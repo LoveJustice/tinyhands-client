@@ -55,5 +55,13 @@
                 <option value="">Select a country</option>
         </select>
       </div>
+      <div class="col-sm-6 form-group">
+        <label for="timezone">Time Zone</label>
+        <select name='timezone' class="form-control" id="time_zone"
+                ng-options="o as o for o in detailCtrl.timeZoneOptions"
+                ng-model="detailCtrl.details.time_zone">
+                <option value="">Select a time zone</option>
+        </select>
+      </div>
   </div>
 </div>

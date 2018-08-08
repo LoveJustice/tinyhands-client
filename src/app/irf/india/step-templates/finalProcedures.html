@@ -1,4 +1,4 @@
-<div class="form-horizontal">
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
     <div class="container-fluid">
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
@@ -58,9 +58,12 @@
                             <label>Attached scanned copy of form (pdf or image)</label>
                         </form-step>
                     </div>
-                    <input type="file" value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                    <input type="file" ngf-select value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                    <div ng-if="$ctrl.isString($ctrl.questions[152].response.value)">
+                		<a href="{{$ctrl.getScannedFormUrl($ctrl.questions[152].response.value)}}">{{$ctrl.questions[152].response.value.split("/")[3]}}</a>
+                	</div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</fieldset>

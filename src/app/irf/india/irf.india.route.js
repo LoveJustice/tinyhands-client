@@ -2,8 +2,11 @@ function IrfIndiaRoutes($stateProvider) {
     'ngInject';
     $stateProvider
         .state('irfIndia', {
-            url: '/irf/india',
+            url: '/irf/india:?id&stationId&countryId&isViewing',
             component: 'irfIndiaComponent',
+            params: {
+                id: null
+            }
         });
 }
 

@@ -6,7 +6,7 @@ export default class NepalService {
 
     getNepalIrf() {
         return {
-            then: f => f({
+            then: (f) => f({
                 data: {
                     "station_id": 32,
                     "country_id": 4,
@@ -30,10 +30,7 @@ export default class NepalService {
                         "question_id": 3,
                         "storage_id": 4,
                         "response": {
-                            "value": {
-                                id: 52,
-                                name: "Barmeli Chowak"
-                            }
+                            "value": "Barmeli Chowak"
                         }
                     },
                     {
@@ -54,10 +51,7 @@ export default class NepalService {
                         "question_id": 6,
                         "storage_id": 4,
                         "response": {
-                            "value": [{
-                                id: 1,
-                                name: "John Staff"
-                            }]
+                            "value": "John Staff;Bill Staff III"
                         }
                     },
                     {
@@ -400,10 +394,7 @@ export default class NepalService {
                         "question_id": 106,
                         "storage_id": 4,
                         "response": {
-                            "value": [{
-                                id: 2,
-                                name: "Staff Member"
-                            }]
+                            "value": "Staff Member"
                         }
                     },
                     {

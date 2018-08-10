@@ -20,12 +20,12 @@ const OtherContactId = 92;
 const SignedId = 151;
 
 export class IrfIndiaController {
-    constructor($scope, $uibModal, constants, IndiaService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.IndiaService = IndiaService;
+        this.service = IrfService;
         this.stateParams = $stateParams;
         this.state = $state;
         this.isViewing = this.stateParams.isViewing === 'true';
@@ -91,7 +91,7 @@ export class IrfIndiaController {
     }
 
     getIndiaIrf(countryId, stationId, id) {
-        this.IndiaService.getIndiaIrf(countryId, stationId, id).then((response) => {
+        this.service.getIrf(countryId, stationId, id).then((response) => {
         	this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
@@ -185,7 +185,7 @@ export class IrfIndiaController {
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
-    	this.IndiaService.submitIndiaIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
    		 this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
@@ -246,7 +246,7 @@ export class IrfIndiaController {
     	} else {
     		this.response.ignore_warnings = 'False';
     	}
-    	this.IndiaService.submitIndiaIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
     		 this.response = response.data;
              this.cards = response.data.cards[0].instances;
              this.responses = response.data.responses;

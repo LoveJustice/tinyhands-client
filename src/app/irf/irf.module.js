@@ -5,6 +5,7 @@ import IrfNepalModule from './nepal/irf.nepal.module';
 import IrfSouthAfricaModule from './south-africa/irf.southAfrica.module';
 
 import IrfRoutes from './irf.route';
+import IrfService from './irf.service';
 
 import IrfListController from './list/irfList.controller';
 
@@ -24,4 +25,5 @@ export default angular.module('tinyhands.IRF', [IrfIndiaModule, IrfNepalModule, 
     .controller('IrfNewListController', IrfNewListController)
     .controller('CreateIrfModalController', CreateIrfModalController)
     .service('IrfNewListService', IrfNewListService)
+    .service('IrfService', IrfService)
     .name;

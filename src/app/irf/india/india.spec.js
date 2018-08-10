@@ -23,8 +23,8 @@ describe('IrfIndiaController', () => {
                 }
             })
         };
-        let IndiaService = {
-            getIndiaIrf: () => ({
+        let IrfService = {
+            getIrf: () => ({
                 then: () => {}
             }),
             getLocation: () => ({
@@ -33,13 +33,13 @@ describe('IrfIndiaController', () => {
             getStaff: () => ({
                 then: () => { }
             }),
-            submitIndiaIrf: (countryId, id, response) => ({
+            submitIrf: (countryId, id, response) => ({
                 then: () => { }
             })
         };
         let $stateParams = {id:null,stationId:1,countryId:4,isViewing:false};
         let $state = {go: () => {}};
-        vm = new IrfIndiaController($scope, $uibModal, {}, IndiaService, $stateParams, $state);
+        vm = new IrfIndiaController($scope, $uibModal, {}, IrfService, $stateParams, $state);
     });
 
     describe('function incrementRedFlags', () => {

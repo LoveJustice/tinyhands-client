@@ -18,13 +18,13 @@ const OtherContactId = 92;
 const SignedId = 151;
 
 export class IrfBangladeshController {
-    constructor($scope, $uibModal, constants, BangladeshService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
 
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.BangladeshService = BangladeshService;
+        this.service = IrfService;
         this.stateParams = $stateParams;
         this.state = $state;
         this.isViewing = this.stateParams.isViewing === 'true';
@@ -56,7 +56,6 @@ export class IrfBangladeshController {
         ];
 
         this.getErrorData();
-        console.log(this.stateParams);
         this.getBangladeshIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
         this.watchMessages();
@@ -87,12 +86,14 @@ export class IrfBangladeshController {
     }
 
     getBangladeshIrf(countryId, stationId, id) {
-        this.BangladeshService.getBangladeshIrf(countryId, stationId, id).then((response) => {
+        this.service.getIrf(countryId, stationId, id).then((response) => {
             this.response = response.data;
-            console.log(this.response);
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            if (this.questions[4].response.value === null) {
+            	this.questions[4].response.value = new Date();
+            }
             this.setValuesForOtherInputs();
         });
     }
@@ -122,7 +123,7 @@ export class IrfBangladeshController {
         this.redFlagTotal += numberOfFlagsToAdd;
     }
 
-    openIntercepteeModal(responses = [], isAdd = false) {
+    openIntercepteeModal(responses = [], isAdd = false, idx=null) {
         if (isAdd) {
             responses.push({
                 question_id: 7,
@@ -138,8 +139,14 @@ export class IrfBangladeshController {
                     gender: {},
                     name: {},
                     age: {},
-                    address1: {},
-                    address2: {},
+                    address1: {
+                    	id: null,
+                    	name: ""
+                    },
+                    address2: {
+                    	id: null,
+                    	name: ""
+                    },
                     phone: {},
                     nationality: {},
                 }
@@ -151,7 +158,9 @@ export class IrfBangladeshController {
             controllerAs: 'IntercepteeModalController',
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, x => x.question_id)
+                questions: () => _.keyBy(responses, x => x.question_id),
+                isViewing: () => this.isViewing,
+                modalActions: () => this.modalActions
             },
             size: 'lg',
             templateUrl: intercepteeModalTemplate,
@@ -160,6 +169,8 @@ export class IrfBangladeshController {
                 this.cards.push({
                     responses
                 });
+            } else if (this.modalActions.indexOf('removeCard') > -1 && idx !== null) {
+            	this.cards.splice(idx, 1);
             }
         });
     }
@@ -170,7 +181,7 @@ export class IrfBangladeshController {
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
-    	this.BangladeshService.submitBangladeshIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
    		 this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
@@ -231,7 +242,7 @@ export class IrfBangladeshController {
     	} else {
     		this.response.ignore_warnings = 'False';
     	}
-    	this.BangladeshService.submitBangladeshIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
     		 this.response = response.data;
              this.cards = response.data.cards[0].instances;
              this.responses = response.data.responses;

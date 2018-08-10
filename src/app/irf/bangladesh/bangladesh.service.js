@@ -4,14 +4,20 @@ export default class BangladeshService {
         this.service = BaseService;
     }
 
-    getBangladeshIrf() {
+    getBangladeshIrf(countryId, stationId, id) {
+    	if (id !== null) {
+    		return this.service.get(`api/irfNew/${stationId}/${id}`);
+    	} else {
+    		return this.getBlankBangladeshIrf(countryId, stationId);
+    	}
+    }
+    getBlankBangladeshIrf(countryId, stationId) {
         return {
-            then: f => f({
+            then: (f) => f({
                 data: {
-                    "station_id": 32,
-                    "country_id": 4,
-                    "status": "approved",
-                    "storage_id": 4,
+                    "station_id": stationId,
+                    "country_id": countryId,
+                    "status": "in-progress",
                     "responses": [{
                             "question_id": 1,
                             "storage_id": 4,
@@ -863,5 +869,84 @@ export default class BangladeshService {
                 }
             })
         };
+    }
+
+    appendImages(formData, card_instances) {
+    	let cnt=0;
+    	for (let idx=0; idx < card_instances.length; idx++) {
+    		for (let r_idx=0; r_idx < card_instances[idx].responses.length; r_idx++) {
+    			let t = Object.prototype.toString.call(card_instances[idx].responses[r_idx].response.value);
+    			if (t === '[object Blob]') {
+    				formData.append('images[' + cnt + ']', card_instances[idx].responses[r_idx].response.value, card_instances[idx].responses[r_idx].response.value.$ngfName);
+    				card_instances[idx].responses[r_idx].response.value = {'name': card_instances[idx].responses[r_idx].response.value.$ngfName};
+    				cnt += 1;
+    			} else if (t === '[object File]') {
+    				formData.append('images[' + cnt + ']', card_instances[idx].responses[r_idx].response.value, card_instances[idx].responses[r_idx].response.value.name);
+    				card_instances[idx].responses[r_idx].response.value = {'name': card_instances[idx].responses[r_idx].response.value.name};
+    				cnt += 1;
+    			}
+    		}
+    	}
+    }
+    
+    appendScannedForm(formData, responses) {
+    	let cnt = 0;
+    	for (let idx=0; idx < responses.length; idx++) {
+    		if (responses[idx].question_id === 152) {
+    			let t = Object.prototype.toString.call(responses[idx].response.value);
+    			if (t === '[object Blob]') {
+    				formData.append('scanned[' + cnt + ']', responses[idx].response.value, responses[idx].response.value.$ngfName);
+    				responses[idx].response.value = {'name': responses[idx].response.value.$ngfName};
+    				cnt += 1;
+    			} else if (t === '[object File]') {
+    				formData.append('scanned[' + cnt + ']', responses[idx].response.value, responses[idx].response.value.name);
+    				responses[idx].response.value = {'name': responses[idx].response.value.name};
+    				cnt += 1;
+    			}
+    		}
+    	}
+    }
+    
+    removeTimeZoneAdjustment(irf) {
+    	let dateTimeQuestions = [4];
+    	for (let idx=0; idx < irf.responses.length; idx++) {
+    		let t1 = dateTimeQuestions.indexOf(irf.responses[idx].question_id);
+    		if (t1 > -1) {
+    			let dt = irf.responses[idx].response.value;
+	    		if (dt instanceof  Date) {
+	    			let tzo = dt.getTimezoneOffset();
+	    			dt.setMinutes(dt.getMinutes() - tzo);
+	    		}
+    		}
+    	}
+    }
+    
+    submitBangladeshIrf(stationId, id, irf) {
+    	if (id === null) {
+    		return this.postBangladeshIrf(irf);
+    	} else {
+    		return this.putBangladeshIrf(stationId, id, irf);
+    	}
+    }
+    
+    putBangladeshIrf(stationId, id, irf) {
+    	let myIrf = jQuery.extend(true, {}, irf);
+    	//let myIrf = angular.copy(irf);
+    	let formData = new FormData();
+    	this.appendImages(formData, myIrf.cards[0].instances);
+    	this.removeTimeZoneAdjustment(myIrf);
+    	this.appendScannedForm(formData, myIrf.responses);
+    	formData.append("main", JSON.stringify(myIrf));
+    	return this.service.put(`api/irfNew/${stationId}/${id}`, formData, {'Content-Type': undefined});
+    }
+    
+    postBangladeshIrf(irf) {
+    	let myIrf = jQuery.extend(true, {}, irf);
+    	let formData = new FormData();
+    	this.appendImages(formData, myIrf.cards[0].instances);
+    	this.removeTimeZoneAdjustment(myIrf);
+    	this.appendScannedForm(formData, myIrf.responses);  	
+    	formData.append("main", JSON.stringify(myIrf));
+    	return this.service.post(`api/irfNew/`, formData, {'Content-Type': undefined});
     }
 }

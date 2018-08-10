@@ -18,12 +18,17 @@ const OtherContactId = 92;
 const SignedId = 151;
 
 export class IrfBangladeshController {
-    constructor($scope, $uibModal, constants, BangladeshService) {
+    constructor($scope, $uibModal, constants, BangladeshService, $stateParams, $state) {
         'ngInject';
+
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.BangladeshService = BangladeshService;
+        this.stateParams = $stateParams;
+        this.state = $state;
+        this.isViewing = this.stateParams.isViewing === 'true';
+        this.stationId = this.stateParams.stationId;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -51,7 +56,8 @@ export class IrfBangladeshController {
         ];
 
         this.getErrorData();
-        this.getBangladeshIrf();
+        console.log(this.stateParams);
+        this.getBangladeshIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -71,20 +77,22 @@ export class IrfBangladeshController {
         let activeErrors = [];
         if (this.messagesEnabled) {
             if (this.questions[IrfNumberId].response.value === '') {
-                activeErrors.push(this.errorMessageIrfNumber);
+                //activeErrors.push(this.errorMessageIrfNumber);
             }
             if (_.size(this.cards) === 0) {
-                activeErrors.push(this.errorMessageInterceptee);
+                //activeErrors.push(this.errorMessageInterceptee);
             }
         }
         return activeErrors;
     }
 
-    getBangladeshIrf() {
-        this.BangladeshService.getBangladeshIrf().then(response => {
+    getBangladeshIrf(countryId, stationId, id) {
+        this.BangladeshService.getBangladeshIrf(countryId, stationId, id).then((response) => {
+            this.response = response.data;
+            console.log(this.response);
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.questions = _.keyBy(this.responses, (x) => x.question_id);
             this.setValuesForOtherInputs();
         });
     }
@@ -157,9 +165,26 @@ export class IrfBangladeshController {
     }
 
     save() {
-        this.messagesEnabled = true;
-        this.getErrorMessages();
-        this.getWarningMessages();
+        this.response.status = 'in-progress';
+    	this.questions[144].response.value = this.redFlagTotal;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+    	this.BangladeshService.submitBangladeshIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+   		 this.response = response.data;
+            this.cards = response.data.cards[0].instances;
+            this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.setValuesForOtherInputs();
+            if (this.stateParams.id === null) {
+           	 this.stateParams.id = response.data.id;
+            }
+            this.state.go('irfNewList');
+        }, (error) => {
+       	 this.errorMessages = error.data.errors;
+            this.warningMessages = error.data.warnings;
+           });
+    	 this.messagesEnabled = false;
     }
 
     setRadioOther(items, valueId) {
@@ -177,6 +202,14 @@ export class IrfBangladeshController {
         });
     }
 
+    isString(val) {
+    	return typeof val === 'string';
+    }
+    getScannedFormUrl(url_segment) {
+    	var newUrl = new URL(url_segment, this.constants.BaseUrl).href;
+        return newUrl;
+    }
+
     setValuesForOtherInputs() {
         this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
         this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
@@ -188,9 +221,35 @@ export class IrfBangladeshController {
     }
 
     submit() {
+    	this.saved_status = this.response.status;
+    	this.questions[144].response.value = this.redFlagTotal;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+    	this.response.status = 'approved';
+    	if (this.ignoreWarnings) {
+    		this.response.ignore_warnings = 'True';
+    	} else {
+    		this.response.ignore_warnings = 'False';
+    	}
+    	this.BangladeshService.submitBangladeshIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    		 this.response = response.data;
+             this.cards = response.data.cards[0].instances;
+             this.responses = response.data.responses;
+             this.questions = _.keyBy(this.responses, x => x.question_id);
+             this.setValuesForOtherInputs();
+             if (this.stateParams.id === null) {
+            	 this.stateParams.id = response.data.id;
+             }
+             this.state.go('irfNewList');
+         }, (error) => {
+        	 this.errorMessages = error.data.errors;
+             this.warningMessages = error.data.warnings;
+             this.response.status = this.saved_status;
+            });
+    	
         this.messagesEnabled = true;
-        this.getErrorMessages();
-        this.getWarningMessages();
+        //this.getErrorMessages();
+        //this.getWarningMessages();
     }
 
     watchMessages() {

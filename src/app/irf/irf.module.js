@@ -3,7 +3,6 @@ import IrfBangladeshModule from './bangladesh/irf.bangladesh.module';
 import IrfIndiaModule from './india/irf.india.module';
 import IrfNepalModule from './nepal/irf.nepal.module';
 import IrfSouthAfricaModule from './south-africa/irf.southAfrica.module';
-import IrfBangladeshModule from './bangladesh/irf.bangladesh.module';
 
 import IrfRoutes from './irf.route';
 

@@ -17,12 +17,15 @@ describe('IntercepteeModalController', () => {
             response: {
                 address1: {},
                 address2: {},
-                age: {},
+                birthdate: {},
                 gender: {},
                 name: {},
                 nationality: {},
                 phone: {},
+                passport: {},
             }
+        }, null, {
+            response: {}
         }];
         
         vm = new IntercepteeModalController($uibModalInstance, null, false, originalQuestions, false);
@@ -38,12 +41,15 @@ describe('IntercepteeModalController', () => {
                 response: {
                     address1: {},
                     address2: {},
-                    age: {},
+                    birthdate: {},
                     gender: {},
                     name: {},
                     nationality: {},
                     phone: {},
+                    passport: {},
                 }
+            }, null, {
+                response: {}
             }];
             vm.questions = [null, null, null, null, null, null, null, {
                 response: {}
@@ -53,12 +59,15 @@ describe('IntercepteeModalController', () => {
                 response: {
                     address1: {},
                     address2: {},
-                    age: {},
+                    birthdate: {},
                     gender: {},
                     name: {},
                     nationality: {},
                     phone: {},
+                    passport: {},
                 }
+            }, null, {
+                response: {}
             }];
         });
 
@@ -94,12 +103,12 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.name.value).toEqual('Bob Vance');
         });
 
-        it('should set original question 9 age to question 9 age', () => {
-            vm.questions[9].response.age.value = 12;
+        it('should set original question 9 birthdate to question 9 birthdate', () => {
+            vm.questions[9].response.birthdate.value = '2018-08-14';
 
             vm.save();
 
-            expect(vm.originalQuestions[9].response.age.value).toEqual(12);
+            expect(vm.originalQuestions[9].response.birthdate.value).toEqual('2018-08-14');
         });
 
         it('should set original question 9 address1 to question 9 address1', () => {

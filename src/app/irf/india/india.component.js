@@ -13,6 +13,8 @@ import intercepteeModalTemplate from './step-templates/interceptees/intercepteeM
 /* global _ */
 /* global moment */
 
+const IrfOtherData = require('../irfOtherData.js');
+
 const DateTimeId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
@@ -78,16 +80,14 @@ export class IrfIndiaController {
 
     getErrorMessages() {
         let activeErrors = [];
-        if (this.messagesEnabled) {
-            if (this.questions[IrfNumberId].response.value === '') {
-                //activeErrors.push(this.errorMessageIrfNumber);
-            }
-            if (_.size(this.cards) === 0) {
-                //activeErrors.push(this.errorMessageInterceptee);
-            }
-        }
         activeErrors = activeErrors.concat(this.errorMessages);
         return activeErrors;
+    }
+    
+    getWarningMessages() {
+        let activeWarnings = [];
+        activeWarnings = activeWarnings.concat(this.warningMessages);
+        return activeWarnings;
     }
 
     getIndiaIrf(countryId, stationId, id) {
@@ -97,6 +97,9 @@ export class IrfIndiaController {
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, (x) => x.question_id);
             this.setValuesForOtherInputs();
+            if (id === null) {
+            	this.response.status = 'in-progress';
+            }
         });
     }
 
@@ -106,20 +109,6 @@ export class IrfIndiaController {
 
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, (x) => x.question_id === questionId).response;
-    }
-
-    getWarningMessages() {
-        let activeWarnings = [];
-        if (!this.ignoreWarnings && this.messagesEnabled) {
-            if (!this.questions[SignedId].response.value) {
-                //activeWarnings.push(this.warningMessageNoSignature);
-            }
-            if (this.redFlagTotal === 0) {
-                //activeWarnings.push(this.warningMessageRedFlags);
-            }
-        }
-        activeWarnings = activeWarnings.concat(this.warningMessages);
-        return activeWarnings;
     }
 
     incrementRedFlags(numberOfFlagsToAdd) {
@@ -181,6 +170,7 @@ export class IrfIndiaController {
 
     save() {
     	this.response.status = 'in-progress';
+    	this.getValuesForOtherInputs();
     	this.questions[144].response.value = this.redFlagTotal;
     	this.errorMessages = [];
         this.warningMessages = [];
@@ -202,15 +192,6 @@ export class IrfIndiaController {
     	 this.messagesEnabled = false;
     }
 
-    setRadioOther(items, valueId) {
-        let flattenedItems = _.flattenDeep(items);
-        let value = this.questions[valueId].response.value;
-        if (!_.includes(flattenedItems, value) && value !== '') {
-            this.questions[valueId].response.value = 'Other';
-            return value;
-        }
-    }
-
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
@@ -226,9 +207,14 @@ export class IrfIndiaController {
     }
 
     setValuesForOtherInputs() {
-        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
-        this.otherFamilyString = this.setRadioOther(this.family, OtherFamilyId);
+    	this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
+    	this.otherData = new IrfOtherData(this.questions);
+        this.otherData.setRadioButton(this.contacts, OtherContactId);
+        this.otherData.setRadioButton(this.family, OtherFamilyId);
+    }
+    
+    getValuesForOtherInputs() {
+    	this.otherData.updateResponses();
     }
 
     showIgnoreWarningsCheckbox() {
@@ -237,6 +223,7 @@ export class IrfIndiaController {
 
     submit() {
     	this.saved_status = this.response.status;
+    	this.getValuesForOtherInputs();
     	this.questions[144].response.value = this.redFlagTotal;
     	this.errorMessages = [];
         this.warningMessages = [];

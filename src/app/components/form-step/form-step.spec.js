@@ -47,7 +47,7 @@ describe('FormStepController', () => {
         });
     });
 
-    describe('clickRadio', () => {
+    describe('clickRadioLabel', () => {
         let tempEvent;
         beforeEach(() => {
             tempEvent = new Event('yas');
@@ -57,7 +57,7 @@ describe('FormStepController', () => {
             vm.responseValue = 'Goldfish';
             vm.label = 'Goldfish';
 
-            vm.clickRadio(tempEvent);
+            vm.clickRadioLabel(tempEvent);
 
             expect(vm.responseValue).toEqual('');
         });
@@ -66,7 +66,7 @@ describe('FormStepController', () => {
             vm.responseValue = 'Doritos';
             vm.label = 'Coke';
 
-            vm.clickRadio(tempEvent);
+            vm.clickRadioLabel(tempEvent);
 
             expect(vm.responseValue).toEqual('Coke');
         });

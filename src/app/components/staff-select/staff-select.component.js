@@ -20,6 +20,9 @@ export class StaffSelectController {
     }
 
     $onInit() {
+    	if (this.selectedStaff === undefined) {
+    		this.selectedStaff = '';
+    	}
     	this.priorSelectedStaff = this.selectedStaff;
         this.selectedStaffList = this.selectedStaff.split(';').filter((x) => x.length > 0).map((x) => x.trim());
         this.priorStationId = '';

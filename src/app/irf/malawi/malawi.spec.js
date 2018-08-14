@@ -94,12 +94,16 @@ describe('IrfMalawiController', () => {
                     response: {
                         gender: {},
                         name: {},
-                        age: {},
+                        birthdate: {},
                         address1: {id:null, name:''},
                         address2: {id:null, name:''},
                         phone: {},
                         nationality: {},
+                        passport: {},
                     }
+                },{
+                    question_id: 11,
+                    response: {}
                 }]
             });
         });
@@ -115,31 +119,6 @@ describe('IrfMalawiController', () => {
                     }
                 }
             };
-        });
-
-        it('when response value matches an item in values, return nothing', () => {
-            vm.questions[OtherContactId].response.value = 'Police';
-
-            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
-
-            expect(temp).toBeUndefined();
-            expect(vm.questions[OtherContactId].response.value).toEqual('Police');
-        });
-
-        it('when response value is null leave it as it is, return nothing', () => {
-            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
-
-            expect(temp).toBeUndefined();
-            expect(vm.questions[OtherContactId].response.value).toEqual('');
-        });
-
-        it('when response value does not match one of items, change response value to Other return response value', () => {
-            vm.questions[OtherContactId].response.value = 'I am another contact';
-
-            let temp = vm.setRadioOther(vm.contacts, OtherContactId);
-
-            expect(temp).toEqual('I am another contact');
-            expect(vm.questions[OtherContactId].response.value).toEqual('Other');
         });
     });
 
@@ -187,35 +166,16 @@ describe('IrfMalawiController', () => {
             expect(vm.questions[DateId].response.value).toEqual(expectedDate);
         });
 
-        it('should set value for otherContactString', () => {
+        it('should set value for value for contact in otherData', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.otherContactString).toEqual('boots');
+            expect(vm.otherData.questions[OtherContactId].otherValue).toEqual('boots');
         });
 
-        it('should set value for otherFamilyString', () => {
+        it('should set value for other family in otherData', () => {
             vm.setValuesForOtherInputs();
 
-            expect(vm.otherFamilyString).toEqual('great uncle');
-        });
-    });
-
-    describe('function watchMessages', () => {
-        it('should set watches on to call this.getErrorMessages when cards changes', () => {
-            vm.$scope.$watch = (a, b) => b([], ["hello"]);
-            spyOn(vm, 'getErrorMessages');
-
-            vm.watchMessages();
-
-            expect(vm.getErrorMessages).toHaveBeenCalled();
-        });
-        it('should set watches on to call this.getWarningMessages when redFlagTotal', () => {
-            vm.$scope.$watch = (a, b) => b(0, 500);
-            spyOn(vm, 'getErrorMessages');
-
-            vm.watchMessages();
-
-            expect(vm.getErrorMessages).toHaveBeenCalled();
+            expect(vm.otherData.questions[OtherFamilyId].otherValue).toEqual('great uncle');
         });
     });
 });

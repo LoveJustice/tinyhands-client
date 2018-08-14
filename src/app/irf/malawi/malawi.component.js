@@ -10,14 +10,20 @@ import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import './malawi.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
+
 /* global _ */
 /* global moment */
 
+const IrfOtherData = require('../irfOtherData.js');
+
 const DateTimeId = 4;
-const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
+const OtherWebsite = 244;
+const OtherRedFlags = 31;
 const SignedId = 151;
+
+
 
 export class IrfMalawiController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
@@ -42,7 +48,6 @@ export class IrfMalawiController {
         this.response = {status:'in-progress'};
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
-        this.radioButtonOtherData = {};
         this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
@@ -76,16 +81,14 @@ export class IrfMalawiController {
 
     getErrorMessages() {
         let activeErrors = [];
-        if (this.messagesEnabled) {
-            if (this.questions[IrfNumberId].response.value === '') {
-                //activeErrors.push(this.errorMessageIrfNumber);
-            }
-            if (_.size(this.cards) === 0) {
-                //activeErrors.push(this.errorMessageInterceptee);
-            }
-        }
         activeErrors = activeErrors.concat(this.errorMessages);
         return activeErrors;
+    }
+    
+    getWarningMessages() {
+        let activeWarnings = [];
+        activeWarnings = activeWarnings.concat(this.warningMessages);
+        return activeWarnings;
     }
 
     getMalawiIrf(countryId, stationId, id) {
@@ -98,6 +101,9 @@ export class IrfMalawiController {
             	this.questions[4].response.value = new Date();
             }
             this.setValuesForOtherInputs();
+            if (id === null) {
+            	this.response.status = 'in-progress';
+            }
         });
     }
 
@@ -107,20 +113,6 @@ export class IrfMalawiController {
 
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, (x) => x.question_id === questionId).response;
-    }
-
-    getWarningMessages() {
-        let activeWarnings = [];
-        if (!this.ignoreWarnings && this.messagesEnabled) {
-            if (!this.questions[SignedId].response.value) {
-                //activeWarnings.push(this.warningMessageNoSignature);
-            }
-            if (this.redFlagTotal === 0) {
-                //activeWarnings.push(this.warningMessageRedFlags);
-            }
-        }
-        activeWarnings = activeWarnings.concat(this.warningMessages);
-        return activeWarnings;
     }
 
     incrementRedFlags(numberOfFlagsToAdd) {
@@ -209,30 +201,6 @@ export class IrfMalawiController {
     	 this.messagesEnabled = false;
     }
 
-    setRadioOther(items, valueId) {
-    	if  (!(valueId in this.radioButtonOtherData)) {
-    		this.radioButtonOtherData[valueId] = {};
-    	}
-        let flattenedItems = _.flattenDeep(items);
-        let value = this.questions[valueId].response.value;
-        if (!_.includes(flattenedItems, value) && value !== '') {
-        	this.radioButtonOtherData[valueId].value = 'Other';
-        	this.radioButtonOtherData[valueId].otherValue = value;
-        } else {
-        	this.radioButtonOtherData[valueId].value = value;
-        	this.radioButtonOtherData[valueId].otherValue = '';
-        }
-    }
-    
-    getRadioOther(valueId) {
-    	let value = this.radioButtonOtherData[valueId].value;
-    	if (value === 'Other') {
-    		this.questions[valueId].response.value = this.radioButtonOtherData[valueId].otherValue;
-    	} else {
-    		this.questions[valueId].response.value =  value;
-    	}
-    }
-
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
@@ -248,18 +216,14 @@ export class IrfMalawiController {
     }
 
     setValuesForOtherInputs() {
-        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        //this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
-        //this.otherFamilyString = this.setRadioOther(this.family, OtherFamilyId);
-        this.setRadioOther(this.contacts, OtherContactId);
-        this.setRadioOther(this.family, OtherFamilyId);
+    	this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
+    	this.otherData = new IrfOtherData(this.questions);
+        this.otherData.setRadioButton(this.contacts, OtherContactId);
+        this.otherData.setRadioButton(this.family, OtherFamilyId);
     }
     
     getValuesForOtherInputs() {
-    	//this.questions[OtherContactId].response.value = this.getRadioOther(OtherContactId, this.otherContactString);
-    	//this.questions[OtherFamilyId].response.value = this.getRadioOther(OtherFamilyId, this.otherFamilyString);
-    	this.getRadioOther(OtherContactId);
-    	this.getRadioOther(OtherFamilyId);
+    	this.otherData.updateResponses();
     }
 
     showIgnoreWarningsCheckbox() {
@@ -295,8 +259,6 @@ export class IrfMalawiController {
             });
     	
         this.messagesEnabled = true;
-        //this.getErrorMessages();
-        //this.getWarningMessages();
     }
 
     watchMessages() {

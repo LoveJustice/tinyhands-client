@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
     <div class="row center-vertical">
         <div class="col-md-4">
             <div class="padding-bottom-20">Where are you from?
@@ -62,10 +62,10 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-6" ng-repeat="families in $ctrl.family">
-                    <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" response-value="$ctrl.questions[82].response.value"></form-step>
-                    <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherFamilyString" response-value="$ctrl.questions[82].response.value"></form-step>
+                    <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
+                    <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</fieldset>

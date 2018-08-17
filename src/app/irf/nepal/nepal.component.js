@@ -101,6 +101,9 @@ export class IrfNepalController {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            if (this.questions[4].response.value === null) {
+            	this.questions[4].response.value = new Date();
+            }
             this.setValuesForOtherInputs();
             if (id === null) {
             	this.response.status = 'in-progress';

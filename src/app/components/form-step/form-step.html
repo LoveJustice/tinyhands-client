@@ -23,12 +23,12 @@
             <input ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-change="$ctrl.changeRadioOther()">
         </span>
         <span ng-switch-when="checkbox">
-            <input type="checkbox" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass">
+            <input type="checkbox" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass" id="{{$ctrl.label}}">
             <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
                 <img ng-src="assets/images/cropped_flag.png" alt="flag-container">
                 <span ng-bind="$ctrl.redFlag"></span>
             </span>
-            <label>{{$ctrl.label}}</label>
+            <label for="{{$ctrl.label}}">{{$ctrl.label}}</label>
         </span>
         <span ng-switch-when="text">
             <label>{{$ctrl.label}}</label>
@@ -43,12 +43,12 @@
             <input type="number" min="0" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass">
         </span>
         <span ng-switch-when="otherCheckbox">
-            <input type="checkbox" ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-checked="$ctrl.responseValue != ''">
+            <input type="checkbox" ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-checked="$ctrl.responseValue != ''" id="{{$ctrl.label}}">
             <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
                 <img ng-src="assets/images/cropped_flag.png" alt="flag-container">
                 <span ng-bind="$ctrl.redFlag"></span>
             </span>
-            <label>{{$ctrl.label}}</label>
+            <label for="{{$ctrl.label}}">{{$ctrl.label}}</label>
             <input type="text" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass">
         </span>
         <span class="margin-right-10" style="color: #00aa00" ng-bind="$ctrl.stepLabel" ng-if="$ctrl.stepLabel"></span>

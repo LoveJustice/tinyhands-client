@@ -9,7 +9,23 @@ describe('IntercepteeModalController', () => {
             dismiss() {}
         };
 
-        vm = new IntercepteeModalController($uibModalInstance);
+        let originalQuestions = [null, null, null, null, null, null, null, {
+            response: {}
+        }, {
+            response: {}
+        }, {
+            response: {
+                address1: {},
+                address2: {},
+                age: {},
+                gender: {},
+                name: {},
+                nationality: {},
+                phone: {},
+            }
+        }];
+        
+        vm = new IntercepteeModalController($uibModalInstance, null, false, originalQuestions, false);
     });
 
     describe('function save', () => {
@@ -28,9 +44,7 @@ describe('IntercepteeModalController', () => {
                     nationality: {},
                     phone: {},
                 }
-            }, {
-                response: {}
-            }, {
+            }, null, {
                 response: {}
             }];
             vm.questions = [null, null, null, null, null, null, null, {
@@ -47,9 +61,7 @@ describe('IntercepteeModalController', () => {
                     nationality: {},
                     phone: {},
                 }
-            }, {
-                response: {}
-            }, {
+            }, null, {
                 response: {}
             }];
         });
@@ -116,14 +128,6 @@ describe('IntercepteeModalController', () => {
             vm.save();
 
             expect(vm.originalQuestions[9].response.phone.value).toEqual('1234567990');
-        });
-
-        it('should set original question 11 to question 11', () => {
-            vm.questions[11].response.value = true;
-
-            vm.save();
-
-            expect(vm.originalQuestions[11].response.value).toEqual(true);
         });
 
         it('when file is defined should set original question 7 to file', () => {

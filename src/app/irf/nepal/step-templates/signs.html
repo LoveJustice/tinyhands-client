@@ -1,4 +1,4 @@
-<div class="form-horizontal">
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
     <div class="container-fluid">
         <div class="row">
             <div class="text-center">Either fill out the first or second section (not both), depending on whether the victim was first noticed by
@@ -13,8 +13,10 @@
             <div class="row col-md-10">
                 <div class="row center-vertical">
                     <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
-                        <form-step type="radio" radio-name="contactType" ng-repeat="contact in contacts" label="{{contact}}" response-value="$ctrl.questions[92].response.value"></form-step>
-                        <form-step ng-if="$last" type="otherRadio" radio-name="contactType" other-value="$ctrl.otherContactString" response-value="$ctrl.questions[92].response.value"></form-step>
+                        <form-step type="radio" radio-name="contactType" ng-repeat="contact in contacts" label="{{contact}}" other-value="$ctrl.otherData.questions[92].otherValue"
+                        	response-value="$ctrl.otherData.questions[92].value"></form-step>
+                        <form-step ng-if="$last" type="otherRadio" radio-name="contactType" label="Other" other-value="$ctrl.otherData.questions[92].otherValue"
+                        	response-value="$ctrl.otherData.questions[92].value"></form-step>
                     </div>
                 </div>
                 <hr/>
@@ -104,4 +106,4 @@
             </div>
         </div>
     </div>
-</div>
+</fieldset>

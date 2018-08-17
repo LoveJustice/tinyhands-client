@@ -1,4 +1,4 @@
-<div class="form-horizontal">
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
     <div class="container-fluid">
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
@@ -49,7 +49,7 @@
                 <h3>How did you prevent the victim from going?</h3>
                 <form-step label="Her parents used their authority and prevented victim from going" type="checkbox" response-value="$ctrl.questions[148].response.value"></form-step>
                 <form-step ng-disabled="!$ctrl.staffConvinced">
-                    <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced">
+                    <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced" ng-click="$ctrl.staffConvincedClick()">
                     <label for="call">THN staff convinced victim not to go</label>
                     <p>If so, what convinced the victim?</p>
                     <textarea class="form-control" rows="2" ng-disabled="!$ctrl.staffConvinced" ng-model="$ctrl.questions[149].response.value"></textarea>
@@ -75,16 +75,19 @@
                     </form-step>
                 </div>
             </div>
-            <div class="row center-vertical">
+             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="col-md-6 form-group">
                         <form-step>
                             <label>Attached scanned copy of form (pdf or image)</label>
                         </form-step>
                     </div>
-                    <input type="file" value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                    <input type="file" ngf-select value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                    <div ng-if="$ctrl.isString($ctrl.questions[152].response.value)">
+                		<a href="{{$ctrl.getScannedFormUrl($ctrl.questions[152].response.value)}}">{{$ctrl.questions[152].response.value.split("/")[3]}}</a>
+                	</div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</fieldset>

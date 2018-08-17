@@ -26,8 +26,8 @@
                     <label class="col-md-3 control-label">Type</label>
                     <div class="col-md-9">
                         <select class="form-control" ng-model="IntercepteeModalController.questions[8].response.value" required>
-                            <option value="Trafficker">Trafficker</option>
-                            <option value="Victim">Victim</option>
+                            <option value="Suspect">Suspect</option>
+                            <option value="PVOT">PVOT</option>
                         </select>
                     </div>
                 </div>
@@ -81,10 +81,10 @@
         <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="IntercepteeModalController.save()" ng-disabled="intercepteeForm.$invalid">Save</button>
+                    <button class="btn btn-success float-left" ng-click="IntercepteeModalController.save()" ng-disabled="intercepteeForm.$invalid" ng-if="!IntercepteeModalController.isViewing">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
-                    <button class="btn btn-danger" ng-click="IntercepteeModalController.delete()" ng-if="!IntercepteeModalController.isAdd">Delete</button>
+                    <button class="btn btn-danger" ng-click="IntercepteeModalController.delete()" ng-if="!IntercepteeModalController.isAdd && !IntercepteeModalController.isViewing">Delete</button>
                 </div>
                 <div class="col-xs-4">
                     <button class="btn btn-default" ng-click="IntercepteeModalController.dismiss()">Close</button>

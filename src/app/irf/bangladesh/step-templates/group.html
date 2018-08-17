@@ -1,0 +1,94 @@
+<fieldset class="container-fluid"  ng-disabled="$ctrl.isViewing">
+    <div class="row center-vertical">
+        <div class="col-md-3">
+            <div class="padding-bottom-20">
+                <h3>Who is in the group?</h3>
+            </div>
+        </div>
+        <div class="col-md-9 container">
+            <div class="row center-vertical">
+                <div class="col-md-3">
+                    <form-step class="sub-heading" type="checkbox" response-value="$ctrl.questions[12].response.value" 
+                        label="Alone"></form-step>
+                </div>
+                <div class="row col-md-9">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Are you meeting or waiting for someone?
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="40" type="checkbox" response-value="$ctrl.questions[33].response.value"
+                                label="Waiting for someone who fits description of trafficker"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="medium"/>
+            <div class="row center-vertical">
+                <div class="col-md-3">
+                    <form-step class="sub-heading" type="checkbox" response-value="$ctrl.questions[13].response.value"
+                        label="Husband / Wife"></form-step>
+                    <form-step red-flag="35" type="checkbox" response-value="$ctrl.questions[252].response.value"
+                        label="Wife is under 18"></form-step>
+                </div>
+                <div class="row col-md-9">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask when she was married
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="15" type="checkbox" response-value="$ctrl.questions[24].response.value"
+                                label="Married in the past 2 weeks"></form-step>
+                            <form-step red-flag="10" type="checkbox" response-value="$ctrl.questions[25].response.value" 
+                                label="Married within the past 2-8 weeks"></form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask when they met
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="20" type="checkbox" response-value="$ctrl.questions[26].response.value"
+                                label="Less than 2 weeks before eloping"></form-step>
+                            <form-step red-flag="15" type="checkbox" response-value="$ctrl.questions[27].response.value"
+                                label="2-12 weeks before eloping"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="medium"/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step class="sub-heading" type="checkbox" response-value="$ctrl.questions[14].response.value"
+                        label="Own brother, sister/relative"></form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Check citizenship
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="50" type="checkbox" response-value="$ctrl.questions[28].response.value"
+                                label="Family name not the same as alleged relative"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="thick"/>
+    <div class="row center-vertical">
+        <div class="col-md-5 col-md-offset-2"><em>If there is more than one person in the group separate them at this point.</em></div>
+    </div>
+    <div class="row center-vertical padding-top-20">
+        <div class="col-md-3 col-md-offset-3">
+            <form-step red-flag="50" type="checkbox" response-value="$ctrl.questions[30].response.value"
+                label="Caught in a lie or contradiction"></form-step>
+        </div>
+        <div class="col-md-4">
+            <form-step red-flag="40" type="checkbox" response-value="$ctrl.questions[10].response.value"
+                label="Girl appears drugged or drowsy"></form-step>
+        </div>
+    </div>
+</div>

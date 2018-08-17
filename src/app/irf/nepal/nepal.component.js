@@ -14,19 +14,26 @@ import intercepteeModalTemplate from './step-templates/interceptees/intercepteeM
 /* global _ */
 /* global moment */
 
+const IrfOtherData = require('../irfOtherData.js');
+
 const DateTimeId = 4;
 const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
+const StaffConvicedId=149;
 const SignedId = 151;
 
 export class IrfNepalController {
-    constructor($scope, $uibModal, constants, NepalService, $stateParams) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.NepalService = NepalService;
+        this.service = IrfService;
+        this.stateParams = $stateParams;
+        this.state = $state;
+        this.isViewing = this.stateParams.isViewing === 'true';
+        this.stationId = this.stateParams.stationId;
 
         this.contacts = [
             ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
@@ -37,10 +44,9 @@ export class IrfNepalController {
             ['Own brother', 'Own father', 'Own grandparent'],
             ['Own sister', 'Own mother', 'Own aunt/uncle']
         ];
+        this.response = {status:'in-progress'};
         this.ignoreWarnings = false;
         this.messageEnabled = false;
-        this.otherContactString = '';
-        this.otherFamilyString = '';
         this.redFlagTotal = 0;
         this.selectedStep = 0;
         this.stepTemplates = [
@@ -52,9 +58,12 @@ export class IrfNepalController {
             intercepteesTemplate,
             finalProceduresTemplate
         ];
+        this.errorMessages = [];
+        this.warningMessages = [];
+        this.staffConvinced = false;
 
         this.getErrorData();
-        this.getNepalIrf();
+        this.getNepalIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -72,27 +81,33 @@ export class IrfNepalController {
 
     getErrorMessages() {
         let activeErrors = [];
-        if (this.messagesEnabled) {
-            if (this.questions[IrfNumberId].response.value === '') {
-                activeErrors.push(this.errorMessageIrfNumber);
-            }
-            if (_.size(this.cards) === 0) {
-                activeErrors.push(this.errorMessageInterceptee);
-            }
-        }
+        activeErrors = activeErrors.concat(this.errorMessages);
         return activeErrors;
+    }
+    
+    getWarningMessages() {
+        let activeWarnings = [];
+        activeWarnings = activeWarnings.concat(this.warningMessages);
+        return activeWarnings;
     }
 
     getIntercepteeImage(url) {
         return new URL(url, this.constants.BaseUrl).href;
     }
 
-    getNepalIrf() {
-        this.NepalService.getNepalIrf().then((response) => {
+    getNepalIrf(countryId, stationId, id) {
+        this.service.getIrf(countryId, stationId, id).then((response) => {
+        	this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            if (this.questions[4].response.value === null) {
+            	this.questions[4].response.value = new Date();
+            }
             this.setValuesForOtherInputs();
+            if (id === null) {
+            	this.response.status = 'in-progress';
+            }
         });
     }
 
@@ -100,24 +115,12 @@ export class IrfNepalController {
         return _.find(responses, (x) => x.question_id === questionId).response;
     }
 
-    getWarningMessages() {
-        let activeWarnings = [];
-        if (!this.ignoreWarnings && this.messagesEnabled) {
-            if (!this.questions[SignedId].response.value) {
-                activeWarnings.push(this.warningMessageNoSignature);
-            }
-            if (this.redFlagTotal === 0) {
-                activeWarnings.push(this.warningMessageRedFlags);
-            }
-        }
-        return activeWarnings;
-    }
-
     incrementRedFlags(numberOfFlagsToAdd) {
         this.redFlagTotal += numberOfFlagsToAdd;
     }
 
-    openIntercepteeModal(responses = [], isAdd = false) {
+    openIntercepteeModal(responses = [], isAdd = false, idx=null) {
+    	this.modalActions = [];
         if (isAdd) {
             responses.push({
                 question_id: 7,
@@ -133,11 +136,21 @@ export class IrfNepalController {
                     gender: {},
                     name: {},
                     age: {},
-                    address1: {},
-                    address2: {},
+                    address1: {
+                    	id: null,
+                    	name: ""
+                    },
+                    address2: {
+                    	id: null,
+                    	name: ""
+                    },
                     phone: {},
                     nationality: {},
                 }
+            });
+            responses.push({
+                question_id: 11,
+                response: {}
             });
         }
         this.$uibModal.open({
@@ -146,7 +159,9 @@ export class IrfNepalController {
             controllerAs: 'IntercepteeModalController',
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, (x) => x.question_id)
+                questions: () => _.keyBy(responses, (x) => x.question_id),
+                isViewing: () => this.isViewing,
+                modalActions: () => this.modalActions
             },
             size: 'lg',
             templateUrl: intercepteeModalTemplate,
@@ -155,23 +170,34 @@ export class IrfNepalController {
                 this.cards.push({
                     responses
                 });
+            } else if (this.modalActions.indexOf('removeCard') > -1 && idx !== null) {
+            	this.cards.splice(idx, 1);
             }
         });
     }
 
     save() {
-        this.messagesEnabled = true;
-        this.getErrorMessages();
-        this.getWarningMessages();
-    }
-
-    setRadioOther(items, valueId) {
-        let flattenedItems = _.flattenDeep(items);
-        let value = this.questions[valueId].response.value;
-        if (!_.includes(flattenedItems, value) && value !== '') {
-            this.questions[valueId].response.value = 'Other';
-            return value;
-        }
+    	this.response.status = 'in-progress';
+    	this.getValuesForOtherInputs();
+    	this.questions[144].response.value = this.redFlagTotal;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+   		 this.response = response.data;
+            this.cards = response.data.cards[0].instances;
+            this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.setValuesForOtherInputs();
+            if (this.stateParams.id === null) {
+           	 this.stateParams.id = response.data.id;
+            }
+            this.state.go('irfNewList');
+        }, (error) => {
+       	 this.errorMessages = error.data.errors;
+            this.warningMessages = error.data.warnings;
+           });
+    	 this.messagesEnabled = false;
     }
 
     setupFlagListener() {
@@ -179,11 +205,29 @@ export class IrfNepalController {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
+    
+    isString(val) {
+    	return typeof val === 'string';
+    }
+    getScannedFormUrl(url_segment) {
+    	var newUrl = new URL(url_segment, this.constants.BaseUrl).href;
+        return newUrl;
+    }
+    
+    staffConvincedClick() {
+    	this.questions[StaffConvicedId].response.value = '';
+    }
 
     setValuesForOtherInputs() {
-        this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
-        this.otherContactString = this.setRadioOther(this.contacts, OtherContactId);
-        this.otherFamilyString = this.setRadioOther(this.family, OtherFamilyId);
+    	this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
+    	this.staffConvinced = this.questions[StaffConvicedId].response.value !== '';
+    	this.otherData = new IrfOtherData(this.questions);
+        this.otherData.setRadioButton(this.contacts, OtherContactId);
+        this.otherData.setRadioButton(this.family, OtherFamilyId);
+    }
+    
+    getValuesForOtherInputs() {
+    	this.otherData.updateResponses();
     }
 
     showIgnoreWarningsCheckbox() {
@@ -191,9 +235,34 @@ export class IrfNepalController {
     }
 
     submit() {
+    	this.saved_status = this.response.status;
+    	this.getValuesForOtherInputs();
+    	this.questions[144].response.value = this.redFlagTotal;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+    	this.response.status = 'approved';
+    	if (this.ignoreWarnings) {
+    		this.response.ignore_warnings = 'True';
+    	} else {
+    		this.response.ignore_warnings = 'False';
+    	}
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    		 this.response = response.data;
+             this.cards = response.data.cards[0].instances;
+             this.responses = response.data.responses;
+             this.questions = _.keyBy(this.responses, x => x.question_id);
+             this.setValuesForOtherInputs();
+             if (this.stateParams.id === null) {
+            	 this.stateParams.id = response.data.id;
+             }
+             this.state.go('irfNewList');
+         }, (error) => {
+        	 this.errorMessages = error.data.errors;
+             this.warningMessages = error.data.warnings;
+             this.response.status = this.saved_status;
+            });
+    	
         this.messagesEnabled = true;
-        this.getErrorMessages();
-        this.getWarningMessages();
     }
 
     watchMessages() {

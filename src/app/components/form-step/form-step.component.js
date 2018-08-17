@@ -16,15 +16,30 @@ export class FormStepController {
         this.setOtherQuestionValues();
     }
 
-    clickRadio($event) {
+    clickRadio(newLabel) {
+        if (this.otherValue !== undefined && this.responseValue !== 'Other') {
+        	this.otherValue = '';
+        }
+    }
+    
+    clickRadioLabel($event) {
         $event.preventDefault();
         if (this.responseValue === this.label) {
             this.responseValue = '';
         } else {
             this.responseValue = this.label;
         }
+        if (this.otherValue !== undefined && this.responseValue !== 'Other') {
+        	this.otherValue = '';
+        }
     }
-
+    
+    changeRadioOther() {
+    	if (this.otherValue !== undefined && this.otherValue !== '') {
+    		this.responseValue = 'Other';
+    	}
+    }
+    
     emitFlag(amountToAdd) {
         this.$scope.$emit('flagTotalCheck', {
             numberOfFlagsToAdd: amountToAdd
@@ -52,8 +67,9 @@ export default {
     bindings: {
         inputClass: '@',
         label: '@',
-        otherValue: '<?',
+        otherValue: '=?',
         radioName: '@',
+        checkboxName: '@',
         redFlag: '<?',
         responseValue: '=?',
         stepLabel: '<',

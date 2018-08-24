@@ -44,7 +44,7 @@
                     <div class="col-md-6 form-group">
                         <form-step class="col-xs-4 control-label">Staff who noticed</form-step>
                         <div class="col-xs-6">
-                            <staff-select selected-staff="$ctrl.questions[106].response.value"></staff-select>
+                            <staff-select selected-staff="$ctrl.questions[106].response.value" station-id="$ctrl.stationId"></staff-select>
                         </div>
                     </div>
                     <div class="text">What was the sign that made you stop them for questioning? (check all that apply below) </div>
@@ -83,7 +83,7 @@
                         <hr/>
                         <div class="col-md-6">
                             <form-step type="checkbox" label="Waiting / sitting" response-value="$ctrl.questions[124].response.value"></form-step>
-                            <form-step type="checkbox" label="On a train" response-value="$ctrl.questions[125].response.value"></form-step>
+                            <form-step type="checkbox" label="Walking to border" response-value="$ctrl.questions[135].response.value"></form-step>
                             <form-step type="checkbox" label="Roaming around" response-value="$ctrl.questions[126].response.value"></form-step>
                             <form-step type="checkbox" label="Exiting vehicle" response-value="$ctrl.questions[127].response.value"></form-step>
                             <form-step type="checkbox" label="Heading to vehicle" response-value="$ctrl.questions[128].response.value"></form-step>

@@ -87,8 +87,8 @@
                 <td>{{ irf.date_time_of_interception | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ irf.date_time_entered_into_system | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ irf.date_time_last_updated | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
-                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-click="irfNewListCtrl.viewIrf(irf)">View</a></td>
-                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','EDIT',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-click="irfNewListCtrl.editIrf(irf)">Edit</a></td>
+                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.viewUrl}}">View</a></td>
+                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','EDIT',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.editUrl}}">Edit</a></td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','DELETE',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-danger" ng-click="irfNewListCtrl.deleteIrf(irf, $index)">
                     {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>

@@ -210,11 +210,22 @@ export default class IrfNewListController {
     		}
     	});
     }
+    
+    addUrls(irfs) {
+    	for (let idx=0; idx < irfs.length; idx++) {
+    		let irf = irfs[idx];
+    		if (irf.form_name !== null) {
+    			irf.viewUrl = this.state.href(irfs[idx].form_name, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:true})
+    			irf.editUrl = this.state.href(irfs[idx].form_name, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:false})
+    		}
+    	}
+    }
 
     getIrfList() {
         this.spinnerOverlayService.show("Searching for IRFs...");        
         this.service.getIrfList(this.transform(this.queryParameters)).then( (promise) => {
             this.irfs = promise.data.results;
+            this.addUrls(this.irfs);
             this.nextPage = this.extractPage(promise.data.next);
             this.spinnerOverlayService.hide();        
         });
@@ -227,26 +238,6 @@ export default class IrfNewListController {
             this.irfs = this.irfs.concat(promise.data.results);
             this.nextPage = this.extractPage(promise.data.next);
         });
-    }
-    
-    viewIrf(irf) {
-    	this.service.getFormForStation(irf.station.id).then((response) => {
-    		if (response.data.length > 0) {
-    			this.state.go(response.data[0].form_name, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:true});
-    		} else {
-    			this.toastr.error("Unable to find form for station " + station.label);
-    		}
-    	});
-    }
-    
-    editIrf(irf) {
-    	this.service.getFormForStation(irf.station.id).then((response) => {
-    		if (response.data.length > 0) {
-    			this.state.go(response.data[0].form_name, {id:irf.id, stationId:irf.station.id, countryId:irf.station.operating_country.id, isViewing:false});
-    		} else {
-    			this.toastr.error("Unable to find form for station " + station.label);
-    		}
-    	});
     }
 
     deleteIrf(irf, index) {

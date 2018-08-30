@@ -2,6 +2,20 @@
     <div class="container-fluid">
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
+                <h3>Reason for Intercept</h3>
+                <form-step>
+                    <em>You should intercept in cases where you have good reason to believe a person is 
+                        being trafficked or is at a high risk of being trafficked. What was the primary
+                        reason you believe this case qualified?</em>
+                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[142].response.value"></textarea>
+                </form-step>
+                <form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
+                    label="Reported Total Red Flag Points"></form-step>
+                <hr/>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
                 <h3>Interception</h3>
                 <div class="col-md-3">Interception made?</div>
                 <div class="col-md-2">
@@ -25,20 +39,6 @@
                         </select>
                     </form-step>
                 </div>
-            </div>
-        </div>
-        <div class="row center-vertical">
-            <div class="col-md-6 col-md-offset-3">
-                <h3>Case Notes</h3>
-                <form-step>
-                    <em>You should intercept in cases where you have good reason to believe a person is 
-                        being trafficked or is at a high risk of being trafficked. What was the primary
-                        reason you believe this case qualified?</em>
-                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[142].response.value"></textarea>
-                </form-step>
-                <form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
-                    label="Reported Total Red Flag Points"></form-step>
-                <hr/>
             </div>
         </div>
         <div class="container-fluid">

@@ -15,21 +15,6 @@
             </div>
         </div>
         <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-3">
-                    <h3>Procedures</h3>
-                    <form-step type="checkbox" response-value="$ctrl.questions[256].response.value" label="Call Cell Leader / Transit Monitoring Manager"></form-step>
-                    <div class="col-md-offset-1">
-                            <em>Call OG to cross-check the names<br></em>
-                            <label>Have any of the names come up before?</label>
-                            <form-step type="radio" radio-name="name-crosscheck" response-value="$ctrl.questions[136].response.value" label="Yes"></form-step>
-                            <form-step type="radio" radio-name="name-crosscheck" response-value="$ctrl.questions[136].response.value" label="No"></form-step>
-                            <form-step type="text" response-value="$ctrl.questions[137].response.value" label="If yes, write the # from the Interceptees list"></form-step>
-                    </div>
-                    <form-step type="checkbox" response-value="$ctrl.questions[151].response.value" label="Scan and submit the OG the same day"></form-step>
-                <hr/>
-                </div>
-        </div>
-        <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
                 <h3>Type of Intercept</h3>
                 <div class="row center-vertical">
@@ -52,22 +37,37 @@
                             label="Runaway (no direct evidence of trafficking"></form-step>
                     </div>
                 </div>
-                <div class="col-md-12 form-group padding-top-20">
+                <div class="col-md-12 form-group">
                     <form-step>
-                        <label for="how-sure">How sure are you that it was a trafficking case? </label>
+                        <label for="how-sure" class="padding-top-10">How sure are you that it was a trafficking case? </label>
                     </form-step>
                     <form-step>
                         Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)
-                        <select id="how-sure" class="margin-left-10 col-xs-md-6 form-control" ng-model="$ctrl.questions[147].response.value">
+                        <select id="how-sure" ng-model="$ctrl.questions[147].response.value">
                             <option value="1 - Not at all sure">1 - Not at all sure</option>
                             <option value="2 - Unsure but suspects it">2 - Unsure but suspects it</option>
                             <option value="3 - Somewhat sure">3 - Somewhat sure</option>
                             <option value="4 - Very sure">4 - Very sure</option>
                             <option value="5 - Absolutely sure">5 - Absolutely sure</option>
-                            </select>
+                        </select>
                     </form-step>
                 </div>
             </div>
+        </div>
+        <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3>Procedures</h3>
+                    <form-step type="checkbox" response-value="$ctrl.questions[256].response.value" label="Call Cell Leader / Transit Monitoring Manager"></form-step>
+                    <div class="col-md-offset-1">
+                            <em>Call OG to cross-check the names<br></em>
+                            <label>Have any of the names come up before?</label>
+                            <form-step type="radio" radio-name="name-crosscheck" response-value="$ctrl.questions[136].response.value" label="Yes"></form-step>
+                            <form-step type="radio" radio-name="name-crosscheck" response-value="$ctrl.questions[136].response.value" label="No"></form-step>
+                            <form-step type="text" response-value="$ctrl.questions[137].response.value" label="If yes, write the # from the Interceptees list"></form-step>
+                    </div>
+                    <form-step type="checkbox" response-value="$ctrl.questions[151].response.value" label="Scan and submit the OG the same day"></form-step>
+                <hr/>
+                </div>
         </div>
         <div class="container-fluid">
             <div class="row center-vertical">

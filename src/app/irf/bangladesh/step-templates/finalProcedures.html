@@ -65,10 +65,19 @@
                             <form-step type="radio" radio-name="name-crosscheck" response-value="$ctrl.questions[136].response.value" label="No"></form-step>
                             <form-step type="text" response-value="$ctrl.questions[137].response.value" label="If yes, write the # from the Interceptees list"></form-step>
                     </div>
-                    <form-step type="checkbox" response-value="$ctrl.questions[151].response.value" label="Scan and submit the OG the same day"></form-step>
+                    <form-step type="checkbox" response-value="$ctrl.questions[286].response.value" label="Scan and submit the OG the same day"></form-step>
                 <hr/>
                 </div>
         </div>
+        <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3>Case Narrative</h3>
+                    <form-step>
+                        <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value"></textarea>
+                    </form-step>
+                    <hr/>
+                </div>
+            </div>
         <div class="container-fluid">
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-3 panel panel-default text-center padding-20 margin-vertical-20">

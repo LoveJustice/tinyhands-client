@@ -20,6 +20,7 @@ const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const SignedId = 151;
+const StaffConvicedId=149;
 
 export class IrfIndiaController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
@@ -60,6 +61,7 @@ export class IrfIndiaController {
         ];
         this.errorMessages = [];
         this.warningMessages = [];
+        this.staffConvinced = false;
 
         this.getErrorData();
         this.getIndiaIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
@@ -208,9 +210,14 @@ export class IrfIndiaController {
     	var newUrl = new URL(url_segment, this.constants.BaseUrl).href;
         return newUrl;
     }
+    
+    staffConvincedClick() {
+    	this.questions[StaffConvicedId].response.value = '';
+    }
 
     setValuesForOtherInputs() {
     	this.questions[DateTimeId].response.value = this.formatDate(this.questions[DateTimeId].response.value);
+    	this.staffConvinced = this.questions[StaffConvicedId].response.value !== '';
     	this.otherData = new IrfOtherData(this.questions);
         this.otherData.setRadioButton(this.contacts, OtherContactId);
         this.otherData.setRadioButton(this.family, OtherFamilyId);

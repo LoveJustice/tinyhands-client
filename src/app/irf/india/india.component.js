@@ -149,6 +149,10 @@ export class IrfIndiaController {
                     nationality: {},
                 }
             });
+            responses.push({
+                question_id: 11,
+                response: {}
+            });
         }
         this.$uibModal.open({
             bindToController: true,

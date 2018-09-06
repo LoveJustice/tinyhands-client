@@ -45,7 +45,6 @@ export default class IntercepteeModalController {
     }
 
     save() {
-        console.log(this.originalQuestions);
         this.originalQuestions[ImageQuestion].response.value = this.questions[ImageQuestion].response.value;
         this.originalQuestions[TypeQuestion].response.value = this.questions[TypeQuestion].response.value;
         this.originalQuestions[DemographicQuestion].response.gender.value = this.questions[DemographicQuestion].response.gender.value;

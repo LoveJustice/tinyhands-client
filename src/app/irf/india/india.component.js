@@ -20,7 +20,7 @@ const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const SignedId = 151;
-const StaffConvicedId=149;
+const StaffConvicedId = 149;
 
 export class IrfIndiaController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
@@ -216,7 +216,7 @@ export class IrfIndiaController {
     }
     
     staffConvincedClick() {
-    	this.questions[StaffConvicedId].response.value = '';
+        this.questions[StaffConvicedId].response.value = '';
     }
 
     setValuesForOtherInputs() {

@@ -23,6 +23,10 @@ describe('IntercepteeModalController', () => {
                 nationality: {},
                 phone: {},
             }
+        }, {
+            response: {}
+        }, {
+            response: {}
         }];
         
         vm = new IntercepteeModalController($uibModalInstance, null, false, originalQuestions, false);
@@ -44,6 +48,10 @@ describe('IntercepteeModalController', () => {
                     nationality: {},
                     phone: {},
                 }
+            }, {
+                response: {}
+            }, {
+                response: {}
             }];
             vm.questions = [null, null, null, null, null, null, null, {
                 response: {}
@@ -59,6 +67,10 @@ describe('IntercepteeModalController', () => {
                     nationality: {},
                     phone: {},
                 }
+            }, {
+                response: {}
+            }, {
+                response: {}
             }];
         });
 

@@ -23,6 +23,10 @@ describe('IntercepteeModalController', () => {
                 nationality: {},
                 phone: {},
             }
+        }, {
+            response: {}
+        }, {
+            response: {}
         }];
         
         vm = new IntercepteeModalController($uibModalInstance, null, false, originalQuestions, false);
@@ -44,6 +48,10 @@ describe('IntercepteeModalController', () => {
                     nationality: {},
                     phone: {},
                 }
+            }, {
+                response: {}
+            }, {
+                response: {}
             }];
             vm.questions = [null, null, null, null, null, null, null, {
                 response: {}
@@ -59,10 +67,14 @@ describe('IntercepteeModalController', () => {
                     nationality: {},
                     phone: {},
                 }
+            }, {
+                response: {}
+            }, {
+                response: {}
             }];
         });
 
-        it('should set original question 7 to question 7', () => {
+        it('A should set original question 7 to question 7', () => {
             vm.questions[7].response.value = 'I am an interceptee image.png';
 
             vm.save();
@@ -70,7 +82,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[7].response.value).toEqual('I am an interceptee image.png');
         });
 
-        it('should set original question 8 to question 8', () => {
+        it('B should set original question 8 to question 8', () => {
             vm.questions[8].response.value = 'Victim';
 
             vm.save();
@@ -78,7 +90,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[8].response.value).toEqual('Victim');
         });
 
-        it('should set original question 9 gender to question 9 gender', () => {
+        it('C should set original question 9 gender to question 9 gender', () => {
             vm.questions[9].response.gender.value = 'Male';
 
             vm.save();
@@ -86,7 +98,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.gender.value).toEqual('Male');
         });
 
-        it('should set original question 9 name to question 9 name', () => {
+        it('D should set original question 9 name to question 9 name', () => {
             vm.questions[9].response.name.value = 'Bob Vance';
 
             vm.save();
@@ -94,7 +106,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.name.value).toEqual('Bob Vance');
         });
 
-        it('should set original question 9 age to question 9 age', () => {
+        it('E should set original question 9 age to question 9 age', () => {
             vm.questions[9].response.age.value = 12;
 
             vm.save();
@@ -102,7 +114,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.age.value).toEqual(12);
         });
 
-        it('should set original question 9 address1 to question 9 address1', () => {
+        it('F should set original question 9 address1 to question 9 address1', () => {
             vm.questions[9].response.address1.name = '123 Easy St';
 
             vm.save();
@@ -110,7 +122,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.address1.name).toEqual('123 Easy St');
         });
 
-        it('should set original question 9 address2 to question 9 address2', () => {
+        it('G should set original question 9 address2 to question 9 address2', () => {
             vm.questions[9].response.address2.name = 'Bangladesh';
 
             vm.save();
@@ -118,7 +130,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.address2.name).toEqual('Bangladesh');
         });
 
-        it('should set original question 9 phone to question 9 phone', () => {
+        it('H should set original question 9 phone to question 9 phone', () => {
             vm.questions[9].response.phone.value = '1234567990';
 
             vm.save();
@@ -126,7 +138,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.phone.value).toEqual('1234567990');
         });
 
-        it('should set original question 9 nationality to question 9 nationality', () => {
+        it('I should set original question 9 nationality to question 9 nationality', () => {
             vm.questions[9].response.nationality.value = 'Fridge';
 
             vm.save();
@@ -134,7 +146,7 @@ describe('IntercepteeModalController', () => {
             expect(vm.originalQuestions[9].response.nationality.value).toEqual('Fridge');
         });
 
-        it('when file is defined should set original question 7 to file', () => {
+        it('J when file is defined should set original question 7 to file', () => {
             vm.file = {
                 type: 'png'
             };

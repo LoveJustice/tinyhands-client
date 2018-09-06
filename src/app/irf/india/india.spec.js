@@ -8,6 +8,7 @@ const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 const SignedId = 151;
+const StaffConvicedId = 149;
 
 describe('IrfIndiaController', () => {
     let vm;
@@ -100,6 +101,9 @@ describe('IrfIndiaController', () => {
                         phone: {},
                         nationality: {},
                     }
+                }, {
+                    question_id: 11,
+                    response: {}
                 }]
             });
         });
@@ -138,6 +142,12 @@ describe('IrfIndiaController', () => {
                     response: {
                         value: 'great uncle'
                     }
+                },
+                [StaffConvicedId]: {
+                    question_id: StaffConvicedId,
+                    response: {
+                        value: 'how staff convinced'
+                    }
                 }
             };
         });
@@ -159,6 +169,12 @@ describe('IrfIndiaController', () => {
             vm.setValuesForOtherInputs();
 
             expect(vm.otherData.questions[OtherFamilyId].otherValue).toEqual('great uncle');
+        });
+
+        it('should set value for staff convinced in staffConvinced', () => {
+            vm.setValuesForOtherInputs();
+
+            expect(vm.questions[StaffConvicedId].response.value).toEqual('how staff convinced');
         });
     });
 

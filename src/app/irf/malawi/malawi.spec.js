@@ -103,7 +103,7 @@ describe('IrfMalawiController', () => {
                     }
                 },{
                     question_id: 11,
-                    response: {}
+                    response: {value:false}
                 }]
             });
         });

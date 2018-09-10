@@ -94,7 +94,7 @@ describe('IrfMalawiController', () => {
                     response: {
                         gender: {},
                         name: {},
-                        birthdate: {},
+                        birthdate: {value: null},
                         address1: {id:null, name:''},
                         address2: {id:null, name:''},
                         phone: {},

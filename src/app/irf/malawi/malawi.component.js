@@ -135,7 +135,9 @@ export class IrfMalawiController {
                 response: {
                     gender: {},
                     name: {},
-                    birthdate: {},
+                    birthdate: {
+                        value: null
+                    },
                     address1: {
                     	id: null,
                     	name: ""

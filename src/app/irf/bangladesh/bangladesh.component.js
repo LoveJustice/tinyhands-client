@@ -142,6 +142,11 @@ export class IrfBangladeshController {
                     nationality: {},
                 }
             });
+            responses.push({
+                question_id: 11,
+                response: {
+                    value: false}
+            });
         }
         this.$uibModal.open({
             bindToController: true,

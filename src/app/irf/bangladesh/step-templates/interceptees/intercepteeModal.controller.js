@@ -2,6 +2,7 @@
 const ImageQuestion = 7;
 const TypeQuestion = 8;
 const DemographicQuestion = 9;
+const CustodyQuestion = 11;
 
 export default class IntercepteeModalController {
     constructor($uibModalInstance, constants, isAdd, questions, isViewing, modalActions) {
@@ -55,6 +56,7 @@ export default class IntercepteeModalController {
         this.originalQuestions[DemographicQuestion].response.address2.name = this.questions[DemographicQuestion].response.address2.name;
         this.originalQuestions[DemographicQuestion].response.phone.value = this.questions[DemographicQuestion].response.phone.value;
         this.originalQuestions[DemographicQuestion].response.nationality.value = this.questions[DemographicQuestion].response.nationality.value;
+        this.originalQuestions[CustodyQuestion].response.value = this.questions[CustodyQuestion].response.value;
         if (this.file) {
             this.originalQuestions[ImageQuestion].response.value = this.file;
         }

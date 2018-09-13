@@ -2,12 +2,26 @@
     <div class="container-fluid">
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
+                <h3>Case Narrative</h3>
+                <form-step>
+                    <em>Please give any additional information about the interception, how it occurred, etc.</em>
+                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value"></textarea>
+                </form-step>
+                <form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
+                    label="Reported Total Red Flag Points"></form-step>
+                <hr/>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-9 col-md-offset-3">
                 <h3>Type of Intercept</h3>
-                <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="Trafficking suspected"></form-step>
-                <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="High risk of being trafficked, but no evidence of trafficking"></form-step>
+                <div class="col-md-6">
+                    <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="Trafficking suspected"></form-step>
+                    <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="High risk of being trafficked, but no evidence of trafficking"></form-step>
+                </div>
                 <div class="col-md-12 form-group">
                     <form-step>
-                        <label for="how-sure">How sure are you that it was a trafficking case? </label>
+                        <label for="how-sure" class="padding-top-10">How sure are you that it was a trafficking case? </label>
                     </form-step>
                     <form-step>
                         Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)
@@ -19,14 +33,20 @@
                             <option value="5 - Absolutely sure">5 - Absolutely sure</option>
                         </select>
                     </form-step>
+                    <hr/>
                 </div>
             </div>
         </div>
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
                 <h3>How did you prevent the victim from going?</h3>
-                <form-step label="They were convinced (not forced) by our staff" type="checkbox" response-value="$ctrl.questions[148].response.value"></form-step>
-                <form-step type="checkbox" label="They were convinced by their family after call" response-value="$ctrl.questions[149].response.value"></form-step>
+                <form-step ng-disabled="!$ctrl.staffConvinced">
+                    <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced" ng-click="$ctrl.staffConvincedClick()">
+                    <label for="call">THN staff convinced victim not to go</label>
+                    <p>If so, what convinced the victim?</p>
+                    <textarea class="form-control" rows="2" ng-disabled="!$ctrl.staffConvinced" ng-model="$ctrl.questions[149].response.value"></textarea>
+                </form-step>
+                <form-step type="checkbox" label="They were convinced by their family after call" response-value="$ctrl.questions[148].response.value"></form-step>
                 <form-step type="checkbox" label="They were convinced or forced by the police" response-value="$ctrl.questions[150].response.value"></form-step>
                 <hr/>
             </div>
@@ -37,7 +57,6 @@
                     <h3>Procedures</h3>
                     <form-step type="checkbox" label="Call Project Manager to confirm intercept" response-value="$ctrl.questions[256].response.value"></form-step>
                     <form-step type="checkbox" label="Call Subcommittee Chairperson / Vice-Chairperson / Secretary" response-value="$ctrl.questions[249].response.value"></form-step>
-                    <form-step type="number" label="Reported Total Red Flag Points" response-value="$ctrl.questions[143].response.value"></form-step>
                 </div>
             </div>
             <div class="row center-vertical">

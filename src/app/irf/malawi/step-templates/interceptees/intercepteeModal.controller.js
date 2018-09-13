@@ -52,7 +52,7 @@ export default class IntercepteeModalController {
     
     initializeDateOfBirth() {
         let birthdate = this.questions[DemographicQuestion].response.birthdate.value;
-        let dateValue = angular.isDefined(birthdate) ? birthdate : '';
+        let dateValue = birthdate == null ? null: birthdate;
         this.questions[DemographicQuestion].response.birthdate.value = this.formatDate(dateValue);
     }
     
@@ -65,7 +65,7 @@ export default class IntercepteeModalController {
         this.originalQuestions[TypeQuestion].response.value = this.questions[TypeQuestion].response.value;
         this.originalQuestions[DemographicQuestion].response.gender.value = this.questions[DemographicQuestion].response.gender.value;
         this.originalQuestions[DemographicQuestion].response.name.value = this.questions[DemographicQuestion].response.name.value;
-        this.originalQuestions[DemographicQuestion].response.birthdate.value = this.formatDateString(this.questions[DemographicQuestion].response.birthdate.value);
+        this.originalQuestions[DemographicQuestion].response.birthdate.value = this.questions[DemographicQuestion].response.birthdate.value == null ? null : this.formatDateString(this.questions[DemographicQuestion].response.birthdate.value);
         this.originalQuestions[DemographicQuestion].response.address1.id = this.questions[DemographicQuestion].response.address1.id;
         this.originalQuestions[DemographicQuestion].response.address1.name = this.questions[DemographicQuestion].response.address1.name;
         this.originalQuestions[DemographicQuestion].response.address2.id = this.questions[DemographicQuestion].response.address2.id;

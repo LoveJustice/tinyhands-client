@@ -135,7 +135,9 @@ export class IrfMalawiController {
                 response: {
                     gender: {},
                     name: {},
-                    birthdate: {},
+                    birthdate: {
+                        value: null
+                    },
                     address1: {
                     	id: null,
                     	name: ""
@@ -151,7 +153,9 @@ export class IrfMalawiController {
             });
             responses.push({
                 question_id: 11,
-                response: {}
+                response: {
+                    value: false
+                }
             });
         }
         this.$uibModal.open({

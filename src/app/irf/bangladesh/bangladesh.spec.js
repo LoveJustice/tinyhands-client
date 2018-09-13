@@ -100,6 +100,9 @@ describe('IrfBangladeshController', () => {
                         phone: {},
                         nationality: {},
                     }
+                }, {
+                    question_id: 11,
+                    response: {value:false}
                 }]
             });
         });

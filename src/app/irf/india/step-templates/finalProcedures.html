@@ -1,0 +1,88 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+    <div class="container-fluid">
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>Case Narrative</h3>
+                <form-step>
+                    <em>Please give any additional information about the interception, how it occurred, etc.</em>
+                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value"></textarea>
+                </form-step>
+                <form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
+                    label="Reported Total Red Flag Points"></form-step>
+                <hr/>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-9 col-md-offset-3">
+                <h3>Type of Intercept</h3>
+                <div class="col-md-6">
+                    <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="Trafficking suspected"></form-step>
+                    <form-step type="radio" radio-name="typeOfIntercept" response-value="$ctrl.questions[141].response.value" label="High risk of being trafficked, but no evidence of trafficking"></form-step>
+                </div>
+                <div class="col-md-12 form-group">
+                    <form-step>
+                        <label for="how-sure" class="padding-top-10">How sure are you that it was a trafficking case? </label>
+                    </form-step>
+                    <form-step>
+                        Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)
+                        <select id="how-sure" ng-model="$ctrl.questions[147].response.value">
+                            <option value="1 - Not at all sure">1 - Not at all sure</option>
+                            <option value="2 - Unsure but suspects it">2 - Unsure but suspects it</option>
+                            <option value="3 - Somewhat sure">3 - Somewhat sure</option>
+                            <option value="4 - Very sure">4 - Very sure</option>
+                            <option value="5 - Absolutely sure">5 - Absolutely sure</option>
+                        </select>
+                    </form-step>
+                    <hr/>
+                </div>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>How did you prevent the victim from going?</h3>
+                <form-step ng-disabled="!$ctrl.staffConvinced">
+                    <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced" ng-click="$ctrl.staffConvincedClick()">
+                    <label for="call">THN staff convinced victim not to go</label>
+                    <p>If so, what convinced the victim?</p>
+                    <textarea class="form-control" rows="2" ng-disabled="!$ctrl.staffConvinced" ng-model="$ctrl.questions[149].response.value"></textarea>
+                </form-step>
+                <form-step type="checkbox" label="They were convinced by their family after call" response-value="$ctrl.questions[148].response.value"></form-step>
+                <form-step type="checkbox" label="They were convinced or forced by the police" response-value="$ctrl.questions[150].response.value"></form-step>
+                <hr/>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3>Procedures</h3>
+                    <form-step type="checkbox" label="Call Project Manager to confirm intercept" response-value="$ctrl.questions[256].response.value"></form-step>
+                    <form-step type="checkbox" label="Call Subcommittee Chairperson / Vice-Chairperson / Secretary" response-value="$ctrl.questions[249].response.value"></form-step>
+                </div>
+            </div>
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3 panel panel-default text-center padding-10 margin-vertical-20">
+                    <div class="row">
+                        I certify that I have followed procedures and filled out this form correctly, completely, and accurately.
+                    </div>
+                    <form-step>
+                        <input id="scanned" type="checkbox" ng-change="$ctrl.getWarningMessages()" ng-model="$ctrl.questions[151].response.value">
+                        <label for="scanned">Scanned form has signature</label>
+                    </form-step>
+                </div>
+            </div>
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-6 form-group">
+                        <form-step>
+                            <label>Attached scanned copy of form (pdf or image)</label>
+                        </form-step>
+                    </div>
+                    <input type="file" ngf-select value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                    <div ng-if="$ctrl.isString($ctrl.questions[152].response.value)">
+                		<a href="{{$ctrl.getScannedFormUrl($ctrl.questions[152].response.value)}}">{{$ctrl.questions[152].response.value.split("/")[3]}}</a>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

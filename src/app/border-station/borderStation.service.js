@@ -161,4 +161,31 @@ export default class BorderStationService {
         
         return this.service.get(`api/user_permission/stations/${id}/`, params);
     }
+    
+    getAllTimeZones() {
+       return this.service.get('api/timezones/');
+    }
+    
+    getFormTypes() {
+    	return this.service.get('api/forms/types/');
+    }
+    
+    getAvailableForms() {
+    	return this.service.get('api/forms/');
+    }
+
+    getCurrentForms(bsId = this.borderStationId) {
+    	if (typeof bsId === 'undefined') {
+    		return {
+                then: (f) => f({
+                    data: []})};                 			
+    	} else {
+    		return this.service.get('api/forms/?station_id=' + bsId);
+    	}
+    }
+    
+    updateCurrentForms(formIdList, bsId = this.borderStationId) {
+    	let url = `api/forms/${bsId}/station_forms/`;
+    	return this.service.put(url, formIdList);
+    }
 }

@@ -1,0 +1,94 @@
+<div class="form-horizontal">
+    <div class="container">
+        <div class="row center-vertical">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <div class="col-md-4">
+                            <form-step>
+                                How sure are you that it was a trafficking case?</form-step>
+                        </div>
+                        <div class="col-md-8">
+                            <form-step>
+                                <label for="how-sure">Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)</label>
+                                <select id="how-sure" ng-model="$ctrl.questions[147].response.value">
+                                    <option value="1 - Not at all sure">1 - Not at all sure</option>
+                                    <option value="2 - Unsure but suspects it">2 - Unsure but suspects it</option>
+                                    <option value="3 - Somewhat sure">3 - Somewhat sure</option>
+                                    <option value="4 - Very sure">4 - Very sure</option>
+                                    <option value="5 - Absolutely sure">5 - Absolutely sure</option>
+                                </select>
+                            </form-step>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-12 form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="col-md-12">
+                            <p>Interception mode?</p>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <form-step type="radio" label="Yes" radio-name="did-you-intercept" response-value="$ctrl.questions[263].response.value"></form-step>
+                    </div>
+                    <div class="col-md-5">
+                        <form-step type="radio" label="No" radio-name="did-you-intercept" response-value="$ctrl.questions[263].response.value"></form-step>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-2">
+                <div class="row">
+                    <form-step type="textarea" label="Case Notes" response-value="$ctrl.questions[146].response.value"></form-step>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-1">
+                <div class="row">
+                    <div class="form-group">
+                        <form-step class="col-md-4 control-label">Handed over to: </form-step>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" ng-model="$ctrl.questions[264].response.value">
+                        </div>
+                        <form-step class="center-vertical control-label">(Immigration Official)</form-step>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="container">
+            <div class="row center-vertical">
+                <div class="col-md-12 panel panel-default text-center padding-10">
+                    <div class="row">
+                        I certify that I have followed procedures and filled out this form correctly, completely, and accurately.
+                    </div>
+                    <form-step>
+                        <input id="scanned" type="checkbox" ng-change="$ctrl.getWarningMessages()" ng-model="$ctrl.questions[151].response.value">
+                        <label for="scanned">Scanned form has monitor and immigration official signature</label>
+                    </form-step>
+                </div>
+            </div>
+            <div class="row center-vertical">
+                <div class="col-md-6 col-md-offset-2">
+                    <div class="col-md-9 form-group">
+                        <form-step>
+                            <label>Attached scanned copy of form (pdf or image)</label>
+                        </form-step>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="file" value="Choose File" ng-model="$ctrl.questions[152].response.value">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

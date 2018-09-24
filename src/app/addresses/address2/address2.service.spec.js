@@ -4,7 +4,7 @@ describe('Address2Service', () => {
     let service, mockBaseService;
 
     beforeEach(() => {
-        mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'put'])
+        mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'put', 'post'])
         service = new Address2Service(mockBaseService);
     });
 
@@ -41,6 +41,15 @@ describe('Address2Service', () => {
         it(`should call get with '${url}' and '${address}'`, () => {
             service.saveAddress(address);
             expect(mockBaseService.put).toHaveBeenCalledWith(url, address);
+        });
+    });
+    
+    describe('function addAddress', () => {
+        let address = { id: 123 },
+            url = 'api/address2/';
+        it(`should call get with '${url}' and '${address}'`, () => {
+            service.addAddress(address);
+            expect(mockBaseService.post).toHaveBeenCalledWith(url, address);
         });
     });
 

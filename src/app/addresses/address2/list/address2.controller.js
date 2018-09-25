@@ -133,6 +133,42 @@ class Address2Controller {
                 });
         });
     }
+    
+    addAddress2() {
+        this.state.go('.', {editId: 0});
+        let address = {
+        		name:'',
+        		latitude:0,
+        		longitude:0,
+        		level:'',
+        		address:null,
+        		canonical_name:null,
+        		verified:false
+        }
+
+        var modalInstance = this.modal.open({
+            animation: true,
+            templateUrl: address2EditModalTemplate,
+            controller: 'Address2EditModalController as vm',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
+            }
+        });
+        modalInstance.result.then((address) => {
+            this.address2Service.addAddress(address)
+                .then(() => {
+                    this.getAddresses();
+                    this.state.go('.', {editId: null});
+                    this.toastr.success(`Address 2 Successfully Updated!`);
+                }, () => {
+                    this.toastr.error(`Address 2 Did Not Save Successfully!`);
+                });
+        });
+    }
 
     deleteAddress2(address) {
         this.state.go('.', {deleteId: address.id});

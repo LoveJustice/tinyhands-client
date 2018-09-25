@@ -27,6 +27,10 @@ class Address2Service {
     saveAddress(address) {
         return this.service.put('api/address2/' + address.id + '/', address);
     }
+    
+    addAddress(address) {
+        return this.service.post('api/address2/', address);
+    }
 
     getFuzzyAddress2s(val) {
         return this.service.get('api/address2/fuzzy/?address2=' + val);

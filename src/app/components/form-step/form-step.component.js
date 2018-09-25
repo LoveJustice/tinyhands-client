@@ -48,9 +48,21 @@ export class FormStepController {
 
     setFlagSend(newValue, oldValue) {
         if ((oldValue && newValue) || (!oldValue && newValue)) {
-            this.emitFlag(this.redFlag);
+        	if (this.type !== 'radio' && this.type !== 'otherRadio') {
+        		this.emitFlag(this.redFlag);
+        	} else {
+        		if (newValue === this.label) {
+        			this.emitFlag(this.redFlag);
+        		} else if (oldValue === this.label) {
+        			this.emitFlag(-this.redFlag);
+        		}
+        	}
         } else if (oldValue && !newValue) {
-            this.emitFlag(-this.redFlag);
+        	if (this.type !== 'radio' && this.type !== 'otherRadio') {
+        		this.emitFlag(-this.redFlag);
+        	} else if (oldValue === this.label) {
+        		this.emitFlag(-this.redFlag);
+        	}
         }
     }
 

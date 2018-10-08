@@ -29,6 +29,11 @@ export default class IntercepteeModalController {
     dismiss() {
         this.$uibModalInstance.dismiss();
     }
+    
+    delete() {
+    	this.modalActions.push('removeCard');
+        this.$uibModalInstance.close();
+    }
 
     fileUpload() {
         this.questions[ImageQuestion].response.value = '';

@@ -115,6 +115,7 @@ export class IrfBangladeshController {
     }
 
     openIntercepteeModal(responses = [], isAdd = false, idx=null) {
+    	this.modalActions = [];
         if (isAdd) {
             responses.push({
                 question_id: 7,

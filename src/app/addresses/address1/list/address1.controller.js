@@ -128,6 +128,36 @@ class Address1Controller {
                 });
         });
     }
+    
+    addAddress1() {
+    	this.state.go('address1', {editId: 0}, {notify: false});
+    	let address = {
+    			name:'',
+    			latitude:0,
+    			longitude:0,
+    			level:'District',
+    			completed:false
+    	};
+
+        var modalInstance = this.modal.open({
+            animation: true,
+            templateUrl: address1EditModalTemplate,
+            controller: 'Address1EditModalController as vm',
+            backdrop: 'static',
+            size: 'md',
+            resolve: {
+                address: function () {
+                    return address;
+                }
+            }
+        });
+        modalInstance.result.then((address) => {
+            this.address1Service.addAddress(address)
+                .then(() => {
+                    this.getAddresses();
+                });
+        });
+    }
 
     deleteAddress1(address) {
         this.state.go('address1', {deleteId: address.id}, {notify: false});

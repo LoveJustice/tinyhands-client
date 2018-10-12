@@ -14,10 +14,8 @@ import intercepteeModalTemplate from './step-templates/interceptees/intercepteeM
 const IrfOtherData = require('../irfOtherData.js');
 
 const DateTimeId = 4;
-const IrfNumberId = 1;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
-const SignedId = 151;
 
 export class IrfBangladeshController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
@@ -32,28 +30,13 @@ export class IrfBangladeshController {
         this.isViewing = this.stateParams.isViewing === 'true';
         this.stationId = this.stateParams.stationId;
 
-        this.contacts = [
-            ['Hotel owner', 'Rickshaw driver', 'Taxi driver'],
-            ['Bus driver', 'Church member', 'Other NGO'],
-            ['Police', 'Subcomittee member']
-        ];
-        this.family = [
-            ['Own brother', 'Own father', 'Own grandparent'],
-            ['Own sister', 'Own mother', 'Own aunt/uncle']
-        ];
+        this.contacts = [['Hotel owner', 'Rickshaw driver', 'Taxi driver'], ['Bus driver', 'Church member', 'Other NGO'], ['Police', 'Subcomittee member']];
+        this.family = [['Own brother', 'Own father', 'Own grandparent'], ['Own sister', 'Own mother', 'Own aunt/uncle']];
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.redFlagTotal = 0;
         this.selectedStep = 0;
-        this.stepTemplates = [
-            topBoxTemplate,
-            groupTemplate,
-            destinationTemplate,
-            familyTemplate,
-            signsTemplate,
-            intercepteesTemplate,
-            finalProceduresTemplate
-        ];
+        this.stepTemplates = [topBoxTemplate, groupTemplate, destinationTemplate, familyTemplate, signsTemplate, intercepteesTemplate, finalProceduresTemplate];
         this.errorMessages = [];
         this.warningMessages = [];
 
@@ -79,7 +62,7 @@ export class IrfBangladeshController {
         activeErrors = activeErrors.concat(this.errorMessages);
         return activeErrors;
     }
-    
+
     getWarningMessages() {
         let activeWarnings = [];
         activeWarnings = activeWarnings.concat(this.warningMessages);
@@ -87,17 +70,17 @@ export class IrfBangladeshController {
     }
 
     getBangladeshIrf(countryId, stationId, id) {
-        this.service.getIrf(countryId, stationId, id).then((response) => {
+        this.service.getIrf(countryId, stationId, id).then(response => {
             this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            this.questions = _.keyBy(this.responses, x => x.question_id);
             if (this.questions[4].response.value === null) {
-            	this.questions[4].response.value = new Date();
+                this.questions[4].response.value = new Date();
             }
             this.setValuesForOtherInputs();
             if (id === null) {
-            	this.response.status = 'in-progress';
+                this.response.status = 'in-progress';
             }
         });
     }
@@ -114,16 +97,16 @@ export class IrfBangladeshController {
         this.redFlagTotal += numberOfFlagsToAdd;
     }
 
-    openIntercepteeModal(responses = [], isAdd = false, idx=null) {
-    	this.modalActions = [];
+    openIntercepteeModal(responses = [], isAdd = false, idx = null) {
+        this.modalActions = [];
         if (isAdd) {
             responses.push({
                 question_id: 7,
-                response: {}
+                response: {},
             });
             responses.push({
                 question_id: 8,
-                response: {}
+                response: {},
             });
             responses.push({
                 question_id: 9,
@@ -132,68 +115,74 @@ export class IrfBangladeshController {
                     name: {},
                     age: {},
                     address1: {
-                    	id: null,
-                    	name: ""
+                        id: null,
+                        name: '',
                     },
                     address2: {
-                    	id: null,
-                    	name: ""
+                        id: null,
+                        name: '',
                     },
                     phone: {},
                     nationality: {},
-                }
+                },
             });
             responses.push({
                 question_id: 11,
                 response: {
-                    value: false}
+                    value: false,
+                },
             });
         }
-        this.$uibModal.open({
-            bindToController: true,
-            controller: IntercepteeModalController,
-            controllerAs: 'IntercepteeModalController',
-            resolve: {
-                isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, x => x.question_id),
-                isViewing: () => this.isViewing,
-                modalActions: () => this.modalActions
-            },
-            size: 'lg',
-            templateUrl: intercepteeModalTemplate,
-        }).result.then(() => {
-            if (isAdd) {
-                this.cards.push({
-                    responses
-                });
-            } else if (this.modalActions.indexOf('removeCard') > -1 && idx !== null) {
-            	this.cards.splice(idx, 1);
-            }
-        });
+        this.$uibModal
+            .open({
+                bindToController: true,
+                controller: IntercepteeModalController,
+                controllerAs: 'IntercepteeModalController',
+                resolve: {
+                    isAdd: () => isAdd,
+                    questions: () => _.keyBy(responses, x => x.question_id),
+                    isViewing: () => this.isViewing,
+                    modalActions: () => this.modalActions,
+                },
+                size: 'lg',
+                templateUrl: intercepteeModalTemplate,
+            })
+            .result.then(() => {
+                if (isAdd) {
+                    this.cards.push({
+                        responses,
+                    });
+                } else if (this.modalActions.indexOf('removeCard') > -1 && idx !== null) {
+                    this.cards.splice(idx, 1);
+                }
+            });
     }
 
     save() {
         this.response.status = 'in-progress';
-    	this.getValuesForOtherInputs();
-    	this.questions[144].response.value = this.redFlagTotal;
-    	this.errorMessages = [];
+        this.getValuesForOtherInputs();
+        this.questions[144].response.value = this.redFlagTotal;
+        this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
-    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
-   		 this.response = response.data;
-            this.cards = response.data.cards[0].instances;
-            this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, x => x.question_id);
-            this.setValuesForOtherInputs();
-            if (this.stateParams.id === null) {
-           	 this.stateParams.id = response.data.id;
+        this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then(
+            response => {
+                this.response = response.data;
+                this.cards = response.data.cards[0].instances;
+                this.responses = response.data.responses;
+                this.questions = _.keyBy(this.responses, x => x.question_id);
+                this.setValuesForOtherInputs();
+                if (this.stateParams.id === null) {
+                    this.stateParams.id = response.data.id;
+                }
+                this.state.go('irfNewList');
+            },
+            error => {
+                this.errorMessages = error.data.errors;
+                this.warningMessages = error.data.warnings;
             }
-            this.state.go('irfNewList');
-        }, (error) => {
-       	 this.errorMessages = error.data.errors;
-            this.warningMessages = error.data.warnings;
-           });
-    	 this.messagesEnabled = false;
+        );
+        this.messagesEnabled = false;
     }
 
     setupFlagListener() {
@@ -203,10 +192,10 @@ export class IrfBangladeshController {
     }
 
     isString(val) {
-    	return typeof val === 'string';
+        return typeof val === 'string';
     }
     getScannedFormUrl(url_segment) {
-    	var newUrl = new URL(url_segment, this.constants.BaseUrl).href;
+        var newUrl = new URL(url_segment, this.constants.BaseUrl).href;
         return newUrl;
     }
 
@@ -216,9 +205,9 @@ export class IrfBangladeshController {
         this.otherData.setRadioButton(this.contacts, OtherContactId);
         this.otherData.setRadioButton(this.family, OtherFamilyId);
     }
-    
+
     getValuesForOtherInputs() {
-    	this.otherData.updateResponses();
+        this.otherData.updateResponses();
     }
 
     showIgnoreWarningsCheckbox() {
@@ -226,51 +215,60 @@ export class IrfBangladeshController {
     }
 
     submit() {
-    	this.saved_status = this.response.status;
-    	this.getValuesForOtherInputs();
-    	this.questions[144].response.value = this.redFlagTotal;
-    	this.errorMessages = [];
+        this.saved_status = this.response.status;
+        this.getValuesForOtherInputs();
+        this.questions[144].response.value = this.redFlagTotal;
+        this.errorMessages = [];
         this.warningMessages = [];
-    	this.response.status = 'approved';
-    	if (this.ignoreWarnings) {
-    		this.response.ignore_warnings = 'True';
-    	} else {
-    		this.response.ignore_warnings = 'False';
-    	}
-    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
-    		 this.response = response.data;
-             this.cards = response.data.cards[0].instances;
-             this.responses = response.data.responses;
-             this.questions = _.keyBy(this.responses, x => x.question_id);
-             this.setValuesForOtherInputs();
-             if (this.stateParams.id === null) {
-            	 this.stateParams.id = response.data.id;
-             }
-             this.state.go('irfNewList');
-         }, (error) => {
-        	 this.errorMessages = error.data.errors;
-             this.warningMessages = error.data.warnings;
-             this.response.status = this.saved_status;
-            });
-    	
+        this.response.status = 'approved';
+        if (this.ignoreWarnings) {
+            this.response.ignore_warnings = 'True';
+        } else {
+            this.response.ignore_warnings = 'False';
+        }
+        this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then(
+            response => {
+                this.response = response.data;
+                this.cards = response.data.cards[0].instances;
+                this.responses = response.data.responses;
+                this.questions = _.keyBy(this.responses, x => x.question_id);
+                this.setValuesForOtherInputs();
+                if (this.stateParams.id === null) {
+                    this.stateParams.id = response.data.id;
+                }
+                this.state.go('irfNewList');
+            },
+            error => {
+                this.errorMessages = error.data.errors;
+                this.warningMessages = error.data.warnings;
+                this.response.status = this.saved_status;
+            }
+        );
+
         this.messagesEnabled = true;
     }
 
     watchMessages() {
-        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.getErrorMessages();
+        this.$scope.$watch(
+            () => this.cards,
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getErrorMessages();
+                }
             }
-        });
-        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.getWarningMessages();
+        );
+        this.$scope.$watch(
+            () => this.redFlagTotal,
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getWarningMessages();
+                }
             }
-        });
+        );
     }
 }
 
 export default {
     templateUrl,
-    controller: IrfBangladeshController
+    controller: IrfBangladeshController,
 };

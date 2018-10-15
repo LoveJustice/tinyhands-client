@@ -1,0 +1,102 @@
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
+    <div class="row center-vertical">
+        <div class="col-md-3">
+            <div class="padding-bottom-20">Where are you going, and for what?</div>
+            <form-step type="text" response-value="$ctrl.questions[245].response.value" label="Destination"></form-step>
+            <div class="margin-top-20 margin-bottom-10"></div>
+            <div>
+                <form-step red-flag="15" type="checkbox" label="Doesn't speak English" response-value="$ctrl.questions[193].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="30" type="checkbox" label="Doesn't speak language of destination" response-value="$ctrl.questions[290].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="25" type="checkbox" label="Going to a country in the Middle East / Persian Gulf" response-value="$ctrl.questions[268].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="40" type="checkbox" label="Doesn't know where they are going" response-value="$ctrl.questions[246].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="40" type="checkbox" label="Peson is not speaking on their own behalf / someone is speaking for them" response-value="$ctrl.questions[280].response.value"></form-step>
+            </div>
+        </div>
+        <div class="col-md-9 container">
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step class="sub-heading" type="checkbox" label="Job" response-value="$ctrl.questions[36].response.value"></form-step>
+                    <form-step red-flag="45" type="checkbox" label="Going abroad for domestic work" response-value="$ctrl.questions[291].response.value"></form-step>
+                    <form-step red-flag="15" type="checkbox" label="Just graduated" response-value="$ctrl.questions[292].response.value"></form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Check Documents
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="45" type="checkbox" label="Passport is with a broker" response-value="$ctrl.questions[55].response.value"></form-step>
+                            <form-step red-flag="40" type="checkbox" label="Job is too good to be true" response-value="$ctrl.questions[56].response.value"></form-step>
+                            <form-step red-flag="40" type="checkbox" label="Have visa for domestic work in passport" response-value="$ctrl.questions[293].response.value"></form-step>
+                            <form-step red-flag="45" type="checkbox" label="Going to work at massage parlor" response-value="$ctrl.questions[201].response.value"></form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Call job place
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="55" type="checkbox" label="Not a real job" response-value="$ctrl.questions[57].response.value"></form-step>
+                            <form-step red-flag="10" type="checkbox" label="Could not confirm job" response-value="$ctrl.questions[58].response.value"></form-step>
+                            <form-step red-flag="10" type="checkbox" label="Could not find job website" response-value="$ctrl.questions[283].response.value"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step type="checkbox" label="Study" response-value="$ctrl.questions[39].response.value"></form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Check documents
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="15" type="checkbox" label="No documentation of enrollment" response-value="$ctrl.questions[61].response.value"></form-step>
+                            <form-step red-flag="40" type="checkbox" label="Does not know school's name and location" response-value="$ctrl.questions[62].response.value"></form-step>
+                            <form-step red-flag="30" type="checkbox" label="No phone number for school" response-value="$ctrl.questions[63].response.value"></form-step>
+                            <form-step red-flag="30" type="checkbox" label="Distant relative paying for education" response-value="$ctrl.questions[284].response.value"></form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Call school
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="60" type="checkbox" label="Not enrolled in school" response-value="$ctrl.questions[64].response.value"></form-step>
+                            <form-step red-flag="10" type="checkbox" label="No school website" response-value="$ctrl.questions[285].response.value"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step type="checkbox" label="Runaway" response-value="$ctrl.questions[41].response.value"></form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Check where they are from and how old
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="15" type="checkbox" label="Running away from home (under 18)" response-value="$ctrl.questions[70].response.value"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

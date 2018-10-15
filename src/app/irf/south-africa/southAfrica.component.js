@@ -22,38 +22,22 @@ const OtherContactId = 92;
 const SignedId = 151;
 
 export class IrfSouthAfricaController {
-    constructor($scope, $uibModal, constants, SouthAfricaService, $stateParams) {
+    constructor($scope, $uibModal, constants, SouthAfricaService) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
         this.SouthAfricaService = SouthAfricaService;
 
-        this.contacts = [
-            ['Immigration', 'Police'],
-            ['Airline Official']
-        ];
-        this.family = [
-            ['Own brother', 'Own father', 'Own grandparent'],
-            ['Own sister', 'Own mother', 'Own aunt/uncle']
-        ];
+        this.contacts = [['Immigration', 'Police'], ['Airline Official']];
+        this.family = [['Own brother', 'Own father', 'Own grandparent'], ['Own sister', 'Own mother', 'Own aunt/uncle']];
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.otherContactString = '';
         this.otherFamilyString = '';
         this.redFlagTotal = 0;
         this.selectedStep = 0;
-        this.stepTemplates = [
-            topBoxTemplate,
-            visualTemplate,
-            documentationTemplate,
-            interviewTemplate,
-            hostTemplate,
-            childrenTemplate,
-            sourceTemplate,
-            intercepteesTemplate,
-            finalProceduresTemplate
-        ];
+        this.stepTemplates = [topBoxTemplate, visualTemplate, documentationTemplate, interviewTemplate, hostTemplate, childrenTemplate, sourceTemplate, intercepteesTemplate, finalProceduresTemplate];
 
         this.getErrorData();
         this.getSouthAfricaIrf();
@@ -86,10 +70,10 @@ export class IrfSouthAfricaController {
     }
 
     getSouthAfricaIrf() {
-        this.SouthAfricaService.getSouthAfricaIrf().then((response) => {
+        this.SouthAfricaService.getSouthAfricaIrf().then(response => {
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
         });
     }
@@ -99,7 +83,7 @@ export class IrfSouthAfricaController {
     }
 
     getResponseOfQuestionById(responses, questionId) {
-        return _.find(responses, (x) => x.question_id === questionId).response;
+        return _.find(responses, x => x.question_id === questionId).response;
     }
 
     getWarningMessages() {
@@ -123,11 +107,11 @@ export class IrfSouthAfricaController {
         if (isAdd) {
             responses.push({
                 question_id: 7,
-                response: {}
+                response: {},
             });
             responses.push({
                 question_id: 8,
-                response: {}
+                response: {},
             });
             responses.push({
                 question_id: 9,
@@ -139,26 +123,28 @@ export class IrfSouthAfricaController {
                     address2: {},
                     phone: {},
                     nationality: {},
-                }
+                },
             });
         }
-        this.$uibModal.open({
-            bindToController: true,
-            controller: IntercepteeModalController,
-            controllerAs: 'IntercepteeModalController',
-            resolve: {
-                isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, (x) => x.question_id)
-            },
-            size: 'lg',
-            templateUrl: intercepteeModalTemplate,
-        }).result.then(() => {
-            if (isAdd) {
-                this.cards.push({
-                    responses
-                });
-            }
-        });
+        this.$uibModal
+            .open({
+                bindToController: true,
+                controller: IntercepteeModalController,
+                controllerAs: 'IntercepteeModalController',
+                resolve: {
+                    isAdd: () => isAdd,
+                    questions: () => _.keyBy(responses, x => x.question_id),
+                },
+                size: 'lg',
+                templateUrl: intercepteeModalTemplate,
+            })
+            .result.then(() => {
+                if (isAdd) {
+                    this.cards.push({
+                        responses,
+                    });
+                }
+            });
     }
 
     save() {
@@ -199,20 +185,26 @@ export class IrfSouthAfricaController {
     }
 
     watchMessages() {
-        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.getErrorMessages();
+        this.$scope.$watch(
+            () => this.cards,
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getErrorMessages();
+                }
             }
-        });
-        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.getWarningMessages();
+        );
+        this.$scope.$watch(
+            () => this.redFlagTotal,
+            (newValue, oldValue) => {
+                if (newValue !== oldValue) {
+                    this.getWarningMessages();
+                }
             }
-        });
+        );
     }
 }
 
 export default {
     templateUrl,
-    controller: IrfSouthAfricaController
+    controller: IrfSouthAfricaController,
 };

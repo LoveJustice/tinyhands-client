@@ -48,41 +48,40 @@
 
                         </div>
                     </li>
+                </ul>
+            </li>
+            <!-- END: BORDERSTATIONS -->
+
+            <!-- START: FORMS -->
+            <li class="dropdown" ng-class="{open:formsOpen}" ng-hide="!navbarCtrl.session.user.permission_irf_view && !navbarCtrl.session.user.permission_vif_view"
+                ng-mouseleave="formsOpen = false">
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="formsOpen=!formsOpen">Forms
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
+                            ui-sref="irfList">IRFs</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null) && !navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
+                            ui-sref="irfNewList">IRFs</a>
+                    </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.user.permission_vif_view" ui-sref="vifList">VIFs</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END: FORMS -->
+
+            <li>
+                <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);" ui-sref="budgetList">Budget
+                    Sheets</a>
+            </li>
+
+            <li>
+                <a ng-show="navbarCtrl.session.user" ui-sref="events">Event Calendar</a>
             </li>
         </ul>
-        </li>
-        <!-- END: BORDERSTATIONS -->
 
-        <!-- START: FORMS -->
-        <li class="dropdown" ng-class="{open:formsOpen}" ng-hide="!navbarCtrl.session.user.permission_irf_view && !navbarCtrl.session.user.permission_vif_view"
-            ng-mouseleave="formsOpen = false">
-            <a class="dropdown-toggle" data-toggle="dropdown" ng-click="formsOpen=!formsOpen">Forms
-                <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
-                        ui-sref="irfList">IRFs</a>
-                    <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null) && !navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
-                        ui-sref="irfNewList">IRFs</a>
-                </li>
-                <li>
-                    <a ng-show="navbarCtrl.session.user.permission_vif_view" ui-sref="vifList">VIFs</a>
-                </li>
-            </ul>
-        </li>
-        <!-- END: FORMS -->
-
-        <li>
-            <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);" ui-sref="budgetList">Budget
-                Sheets</a>
-        </li>
-
-        <li>
-            <a ng-show="navbarCtrl.session.user" ui-sref="events">Event Calendar</a>
-        </li>
-
-        </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="hidden-sm">
                 <p class="navbar-text">Nepal Time: {{ navbarCtrl.nepalTime }}</p>

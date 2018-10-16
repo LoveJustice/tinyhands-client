@@ -5,17 +5,23 @@ describe('NavbarController', () => {
     let vm, session;
 
     beforeEach(inject(($http, $q) => {
-        let $scope = { $on: () => { } },
+        let $scope = { $on: () => {} },
             $timeout,
             bss = new BorderStationService($http, $q);
-        session = { logout: () => { }, user: {} , checkPermission: () => {return true;}};
+        session = {
+            logout: () => {},
+            user: {},
+            checkPermission: () => {
+                return true;
+            },
+        };
         vm = new NavbarController($scope, {}, $timeout, bss, session);
     }));
 
     describe('function constructor', () => {
-
-        it('should set borderStations to []', () => {
-            expect(vm.borderStations).toEqual([]);
+        it('should set Country names and borderStationMap to empty states', () => {
+            expect(vm.countryNames).toEqual([]);
+            expect(vm.borderStationMap).toEqual({});
         });
 
         it(`should set nepalTime to string`, () => {
@@ -24,28 +30,34 @@ describe('NavbarController', () => {
 
         it('should call window.moment.tz', () => {
             spyOn(window.moment, 'tz').and.callThrough();
-            vm.constructor({ $on: () => { } });
+            vm.constructor({ $on: () => {} });
             expect(window.moment.tz).toHaveBeenCalledWith('Asia/Kathmandu');
         });
 
         it("should call $scope.$on with first argument as 'GetNavBarBorderStations'", () => {
             let firstArg,
-                $scope = { $on: (a) => { firstArg = a } };
+                $scope = {
+                    $on: a => {
+                        firstArg = a;
+                    },
+                };
             vm.constructor($scope, null, null, session);
             expect(firstArg).toEqual('GetNavBarBorderStations');
         });
 
         it('should call getBorderStations', () => {
-            let $scope = { $on: (_, f) => { f() } };
+            let $scope = {
+                $on: (_, f) => {
+                    f();
+                },
+            };
             spyOn(vm, 'getBorderStations');
             vm.constructor($scope, null, null, session);
             expect(vm.getBorderStations).toHaveBeenCalled();
         });
-
     });
 
     describe('function getBorderStations', () => {
-
         it('should call borderStationService getUserStations', () => {
             spyOn(vm.borderStationService, 'getUserStations').and.callThrough();
             vm.session.user.permission_border_stations_view = true;
@@ -54,13 +66,19 @@ describe('NavbarController', () => {
         });
 
         it('should set borderStations to 123', () => {
-            let response = { data: 123 };
-            vm.borderStationService.getUserStations = () => { return { then: (f) => { f(response); } } };
+            let response = { data: [{ country_name: 'nepal', value: 5 }] };
+            vm.borderStationService.getUserStations = () => {
+                return {
+                    then: f => {
+                        f(response);
+                    },
+                };
+            };
             vm.session.user.permission_border_stations_view = true;
             vm.getBorderStations();
-            expect(vm.borderStations).toEqual(response.data);
+            expect(vm.countryNames).toEqual(['nepal']);
+            expect(vm.borderStationMap).toEqual({ nepal: [{ country_name: 'nepal', value: 5 }] });
         });
-
     });
 
     describe('function logout', () => {
@@ -70,5 +88,4 @@ describe('NavbarController', () => {
             expect(vm.session.logout).toHaveBeenCalled();
         });
     });
-
 });

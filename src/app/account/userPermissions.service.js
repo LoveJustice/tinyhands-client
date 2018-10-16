@@ -5,7 +5,7 @@ export default class UserPermissionsService {
     }
 
     getPermissions() {
-        return this.service.get('api/permission/');
+        return this.service.get('api/permission/?page_size=1000');
     }
 
     getUserPermissions(id) {

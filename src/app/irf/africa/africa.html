@@ -1,4 +1,4 @@
-<div id="irf-kenya" class="container-fluid padding-top-20">
+<div id="irf-africa" class="container-fluid padding-top-20">
     <div class="sticky">
         <h1 class="padding-bottom-40 text-danger text-right padding-right-20">
             Total Red Flags: {{$ctrl.redFlagTotal}}
@@ -14,7 +14,7 @@
         </div>
         <hr class="margin-bottom-0" />
     </div>
-    <div id="irf-kenya-content" class="padding-bottom-40">
+    <div id="irf-africa-content" class="padding-bottom-40">
         <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template" ng-hide="$ctrl.selectedStep != $index"></div>
     </div>
     <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">

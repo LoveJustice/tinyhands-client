@@ -120,11 +120,11 @@ describe('IntercepteeModalController', () => {
         });
 
         it('should set original question 9 address2 to question 9 address2', () => {
-            vm.questions[9].response.address2.name = 'Kenya';
+            vm.questions[9].response.address2.name = 'Africa';
 
             vm.save();
 
-            expect(vm.originalQuestions[9].response.address2.name).toEqual('Kenya');
+            expect(vm.originalQuestions[9].response.address2.name).toEqual('Africa');
         });
 
         it('should set original question 9 phone to question 9 phone', () => {

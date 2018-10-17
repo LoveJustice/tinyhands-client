@@ -1,7 +1,7 @@
 import {
-    IrfKenyaController
+    IrfAfricaController
 }
-from "./kenya.component";
+from "./africa.component";
 
 const DateId = 4;
 const IrfNumberId = 1;
@@ -9,7 +9,7 @@ const OtherFamilyId = 82;
 const OtherContactId = 92;
 const SignedId = 151;
 
-describe('IrfKenyaController', () => {
+describe('IrfAfricaController', () => {
     let vm;
     beforeEach(() => {
         let $scope = {
@@ -39,7 +39,7 @@ describe('IrfKenyaController', () => {
         };
         let $stateParams = {id:null,stationId:1,countryId:4,isViewing:false};
         let $state = {go: () => {}};
-        vm = new IrfKenyaController($scope, $uibModal, {}, IrfService, $stateParams, $state);
+        vm = new IrfAfricaController($scope, $uibModal, {}, IrfService, $stateParams, $state);
     });
 
     describe('function incrementRedFlags', () => {

@@ -1,4 +1,4 @@
-<fieldset ng-disabled="$ctrl.isViewing === true">
+<fieldset class="container-fluid"ng-disabled="$ctrl.isViewing === true">
     <div class="row">
     	<br>
     	<div class="col-md-2">
@@ -10,7 +10,6 @@
             	<form-step type="checkbox" class="col-md-3" label="Marriage" response-value="$ctrl.questions[332].response.value"></form-step>
             	<form-step type="checkbox" class="col-md-3" label="Visit family" response-value="$ctrl.questions[333].response.value"></form-step>
             	<form-step type="checkbox" class="col-md-3" label="Medical treatment" response-value="$ctrl.questions[334].response.value"></form-step>
-            	<form-step type="checkbox" class="col-md-3" label="Job - Massage" response-value="$ctrl.questions[335].response.value"></form-step>
             	<form-step type="checkbox" class="col-md-3" label="Job - Hotel" response-value="$ctrl.questions[336].response.value"></form-step>
             	<form-step type="checkbox" class="col-md-3" label="Job - Household" response-value="$ctrl.questions[337].response.value"></form-step>
             	<form-step type="otherCheckbox" class="col-md-3" label="Other:" response-value="$ctrl.questions[338].response.value"></form-step>
@@ -42,11 +41,10 @@
     		<form-step class="control-label">3.4 How did the PV cross the border? (Check all that apply):</form-step>
     	</div>
     	<div class="col-md-10">
-            	<form-step type="checkbox" class="col-md-3" label="At night" response-value="$ctrl.questions[453].response.value"></form-step>
-            	<form-step type="checkbox" class="col-md-3" label="Off road/path" response-value="$ctrl.questions[454].response.value"></form-step>
-            	<form-step type="checkbox" class="col-md-3" label="By foot" response-value="$ctrl.questions[455].response.value"></form-step>
-            	<form-step type="checkbox" class="col-md-3" label="By bus" response-value="$ctrl.questions[456].response.value"></form-step>
-            	<form-step type="checkbox" class="col-md-3" label="By rickshaw" response-value="$ctrl.questions[457].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-3" label="At night" response-value="$ctrl.questions[453].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-3" label="Off road/path" response-value="$ctrl.questions[454].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-3" label="By foot" response-value="$ctrl.questions[455].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-3" label="By vehicle" response-value="$ctrl.questions[456].response.value"></form-step>
 		</div>
  	</div>
  	<div class="row">
@@ -55,12 +53,12 @@
     		<form-step class="control-label">3.5 Was any Identity Document (ID) made for the PV?</form-step>
     	</div>
     	<div class="col-md-10">
-           	<form-step type="checkbox" class="col-md-3" label="No" response-value="$ctrl.questions[340].response.value"></form-step>
-           	<form-step type="checkbox" class="col-md-3" label="Real ID" response-value="$ctrl.questions[341].response.value"></form-step>
-           	<form-step type="checkbox" class="col-md-3" red-flag="12" label="Fake ID/passport" response-value="$ctrl.questions[342].response.value"></form-step>
-           	<form-step type="checkbox" class="col-md-3" label="ID with false name" response-value="$ctrl.questions[343].response.value"></form-step>
-           	<form-step type="checkbox" class="col-md-3" label="ID with other false info" response-value="$ctrl.questions[344].response.value"></form-step>
-           	<div class="col-md-5">
+           	<form-step type="checkbox" class="col-md-4" label="No" response-value="$ctrl.questions[340].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-4" label="Real ID" response-value="$ctrl.questions[341].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-4" red-flag="12" label="Fake ID/passport" response-value="$ctrl.questions[342].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-4" label="ID with false name" response-value="$ctrl.questions[343].response.value"></form-step>
+           	<form-step type="checkbox" class="col-md-4" label="ID with other false info" response-value="$ctrl.questions[344].response.value"></form-step>
+           	<div class="col-md-4">
            		<Label>*LB - Source of ID *PB#</Label>
            		<input type="text" placeholder="PB#" ng-model="$ctrl.questions[468].response.value">
            	</div>
@@ -75,10 +73,10 @@
            	<form-step type="radio" class="col-md-6" radio-name="brokerKept"  label="Yes" response-value="$ctrl.questions[346].response.value" ></form-step>
            	<form-step type="radio" class="col-md-6" radio-name="brokerKept"  label="No" response-value="$ctrl.questions[346].response.value" ></form-step>
 		</div>
-    	<div class="col-md-2">
+    	<div class="col-md-3">
     		<form-step class="control-label">3.7 May we contact the PV in a few weeks to see how they are doing?</form-step>
     	</div>
-    	<div class="col-md-4">
+    	<div class="col-md-3">
            	<form-step type="radio" class="col-md-6" radio-name="brokerKept"  label="Yes" response-value="$ctrl.questions[347].response.value" ></form-step>
            	<form-step type="radio" class="col-md-6" radio-name="brokerKept"  label="No" response-value="$ctrl.questions[347].response.value" ></form-step>
 		</div>

@@ -6,7 +6,7 @@
     	</div>
     	<div class="col-md-6">
     		<span>
-            	<form-step type="checkbox" class="inblock" label="Yes, a Recruitment Agency *LB - Recruitment Agency *PB#" response-value="$ctrl.questions[302].response.value"></form-step>
+            	<form-step type="checkbox" class="inblock" label="Yes, a Manpower Agency *LB - Agency *PB#" response-value="$ctrl.questions[302].response.value"></form-step>
             	&nbsp;
             	<input type="text" placeholder="PB#" ng-model="$ctrl.questions[467].response.value">
 				&nbsp;
@@ -20,22 +20,8 @@
     </div>
     <div class="row">
     	<br>
-    	<div class="col-md-2">
-    		<form-step class="control-label">2.2 Broker's relation to PV:</form-step>
-    	</div>
-		<div class="col-md-10">
-	        <span ng-repeat="relation in $ctrl.idConstants.RadioItems[305]">
-	            <form-step type="radio" class="col-md-2" radio-name="brokerRelation" label="{{relation}}"
-	            	response-value="$ctrl.otherData.questions[305].value" other-value="$ctrl.otherData.questions[305].otherValue"></form-step>
-	            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="brokerRelation" label="Other:" other-value="$ctrl.otherData.questions[305].otherValue"
-	                response-value="$ctrl.otherData.questions[305].value"></form-step>
-	        </span>
-        </div>
-    </div>
-    <div class="row">
-    	<br>
     	<div class="col-md-3">
-    		<form-step class="control-label">2.3 How did the PV meet the broker?</form-step>
+    		<form-step class="control-label">2.2 How did the PV meet the broker?</form-step>
     	</div>
     	<div class="col-md-9">
     		<span>
@@ -70,7 +56,7 @@
     <div class="row col-md-12">
     	<br>
     	<span>
-    		2.4 How long had the PV known the broker (PB#(s)
+    		2.3 How long had the PV known the broker (PB#(s)
     		<input type="text" placeholder="PB#(s)" ng-model="$ctrl.questions[469].response.value"> ) before leaving?
     		&nbsp;
     		<input type="number" ng-model="$ctrl.questions[320].response.value"> Years
@@ -80,7 +66,7 @@
  	<div class="row col-md-12">
     	<br>
     	<span>
-    		2.5 If the PV is married to a suspect (PB#
+    		2.4 If the PV is married to a suspect (PB#
     		<input type="text" placeholder="PB#" ng-model="$ctrl.questions[470].response.value">
     		) how long have they been married?
     		&nbsp;
@@ -93,7 +79,7 @@
  	</div>
  	<div class="row ">
     	<div class="col-md-3">
-    		<form-step class="control-label">2.6 How were the travel/migration expenses paid? </form-step>
+    		<form-step class="control-label">2.5 How were the travel/migration expenses paid? </form-step>
     	</div>
     	<div class="col-md-9">
     		<div class="col-md-12">
@@ -123,11 +109,18 @@
     <div class="row col-md-12">
     	<br>
     	<span>
-    		2.7 If If the PV is going for a job, how much did the broker (PB#
+    		2.6 If the PV is going for a job, how much did the broker (PB#
     		<input type="text" placeholder="PB#" ng-model="$ctrl.questions[473].response.value">
     		) say they would be earning per month?
     		&nbsp;
     		<input type="text" placeholder="Amount" ng-model="$ctrl.questions[328].response.value">
+    	</span>
+ 	</div>
+ 	<div class="row col-md-12">
+    	<br>
+    	<span>
+    		2.7 How many suspected traffickers are there in this case?
+    		TBD
     	</span>
  	</div>
  </fieldset>

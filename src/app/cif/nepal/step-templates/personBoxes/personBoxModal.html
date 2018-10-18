@@ -99,12 +99,17 @@
 		        </div>
             </div>
             <div class="row">
-                <div class="col-md-9 form-group margin-top-15">
-                    <label class="col-md-2 control-label">Nationality</label>
-                    <div class="col-md-10">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.nationality.value" required>
-                    </div>
-                </div>
+            	<div class="col-md-2 form-group">
+                	<label class="col-md-12">Nationality</label>
+				</div>
+                <div class="col-md-10 form-group">
+			        <span ng-repeat="nationality in PersonBoxModalController.config.RadioItems[9]">
+			            <form-step type="radio" class="col-md-3" radio-name="personNationality" label="{{nationality}}"
+			            	response-value="PersonBoxModalController.otherData.questions[9].response.nationality.value" other-value="PersonBoxModalController.otherData.questions[9].otherValue"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="personNationality" label="Other:" other-value="PersonBoxModalController.otherData.questions[9].otherValue"
+			                response-value="PersonBoxModalController.otherData.questions[9].value"></form-step>
+			        </span>
+		        </div>
             </div>
             <div class="row">
 	            <div class="col-md-2 form-group">
@@ -127,7 +132,7 @@
             </div>
             <div class="row col-md-12">
             	<div class="row col-md-12">
-                    <textarea class="form-control" rows="3" ng-model="PersonBoxModalController.questions[146].response.value"></textarea>
+                    <textarea class="form-control" rows="3" ng-model="PersonBoxModalController.questions[421].response.value"></textarea>
                 </div>
             </div>
             <div class="row">

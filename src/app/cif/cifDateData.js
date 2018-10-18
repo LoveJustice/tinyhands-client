@@ -27,7 +27,7 @@ class CifDateData {
 		    if (this.questions.hasOwnProperty(property)) {
 		    	let dt = this.questions[property].value;
 		    	let dateString = '';
-		    	if (dt !== null && dt !== '') {
+		    	if (dt !== null && dt instanceof Date && !isNaN(dt.getTime())) {
 		    		dateString = dt.getUTCFullYear() + '-' + (dt.getUTCMonth()+1) + "-" +dt.getUTCDate();
 		    	}
 		    	if (this.questions[property].dateType === 'person') {

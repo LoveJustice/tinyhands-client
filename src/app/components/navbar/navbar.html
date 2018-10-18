@@ -1,7 +1,7 @@
 <div class="navbar navbar-default navbar-fixed-top" ng-if="!navbarCtrl.state.current.data.hideNavbar">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-header-collapse" ng-click="mobileNavClosed = !mobileNavClosed"
-            ng-init="mobileNavClosed = true">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-header-collapse"
+            ng-click="mobileNavClosed = !mobileNavClosed" ng-init="mobileNavClosed = true">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -20,17 +20,33 @@
             </li>
 
             <!-- START: BORDERSTATIONS -->
-            <li class="dropdown" ng-class="{open:stationsOpen}" ng-show="navbarCtrl.session.checkPermission('STATIONS','VIEW',null, null);" ng-mouseleave="stationsOpen = false">
+            <li class="dropdown" ng-class="{open:stationsOpen}" ng-show="navbarCtrl.session.checkPermission('STATIONS','VIEW',null, null);"
+                ng-mouseleave="stationsOpen = false">
                 <a class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown" ng-click="stationsOpen=!stationsOpen">Stations
                     <b class="caret"></b>
                 </a>
                 <ul id="border-station-dropdown" class="dropdown-menu">
                     <li>
-                        <a ui-sref="border-station({id: null})" ng-show="navbarCtrl.session.checkPermission('STATIONS','ADD',null, null);">Create Station</a>
+                        <a ui-sref="border-station({id: null})" ng-show="navbarCtrl.session.checkPermission('STATIONS','ADD',null, null);">
+                            Create Station
+                        </a>
                     </li>
                     <hr style="margin: 4px" />
-                    <li ng-repeat="station in navbarCtrl.borderStations" ng-if="station.open">
-                        <a ui-sref="border-station({id: station.id, countryId: station.operating_country})">{{ station.station_name }}</a>
+                    <li class="country-menu" ng-repeat="country in navbarCtrl.countryNames" ng-click="isCollapsed = !isCollapsed">
+                        <div class="country-label">
+                            <h4>{{country}}</h4>
+                            <i ng-class="{'glyphicon-menu-right': isCollapsed, 'glyphicon-menu-down': !isCollapsed }"
+                                class="glyphicon icon"></i>
+                        </div>
+                        <div class="border-station">
+                            <p ng-repeat="station in navbarCtrl.borderStationMap[country]" ng-if="station.open"
+                                uib-collapse="isCollapsed">
+                                <a ui-sref="border-station({id: station.id, countryId: station.operating_country})">
+                                    {{ station.station_name }}
+                                </a>
+                            </p>
+
+                        </div>
                     </li>
                 </ul>
             </li>
@@ -44,8 +60,10 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)" ui-sref="irfList">IRFs</a>
-                        <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null) && !navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)" ui-sref="irfNewList">IRFs</a>
+                        <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
+                            ui-sref="irfList">IRFs</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null) && !navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
+                            ui-sref="irfNewList">IRFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.user.permission_vif_view" ui-sref="vifList">VIFs</a>
@@ -55,14 +73,15 @@
             <!-- END: FORMS -->
 
             <li>
-                <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);" ui-sref="budgetList">Budget Sheets</a>
+                <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);" ui-sref="budgetList">Budget
+                    Sheets</a>
             </li>
 
             <li>
                 <a ng-show="navbarCtrl.session.user" ui-sref="events">Event Calendar</a>
             </li>
-
         </ul>
+
         <ul class="nav navbar-nav navbar-right">
             <li class="hidden-sm">
                 <p class="navbar-text">Nepal Time: {{ navbarCtrl.nepalTime }}</p>
@@ -70,27 +89,33 @@
 
             <!-- START: USER SETTINGS -->
             <li class="dropdown" ng-class="{open:menuOpen}">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="menuOpen=!menuOpen">Hello {{ navbarCtrl.session.user.first_name + " " + navbarCtrl.session.user.last_name }}
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="menuOpen=!menuOpen">Hello {{
+                    navbarCtrl.session.user.first_name + " " + navbarCtrl.session.user.last_name }}
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#" ng-show="navbarCtrl.session.user.permission_accounts_manage" ui-sref="accounts.list">Accounts and Permissions</a>
+                        <a href="#" ng-show="navbarCtrl.session.user.permission_accounts_manage" ui-sref="accounts.list">
+                            Accounts and Permissions</a>
                     </li>
                     <li>
                         <a ui-sref="countries">Countries</a>
                     </li>
                     <li>
-                        <a ui-sref="address1" ng-show="navbarCtrl.session.user.permission_address2_manage">Edit Address 1</a>
+                        <a ui-sref="address1" ng-show="navbarCtrl.session.user.permission_address2_manage">
+                            Edit Address 1</a>
                     </li>
                     <li>
-                        <a ui-sref="address2" ng-show="navbarCtrl.session.user.permission_address2_manage">Edit Address 2</a>
+                        <a ui-sref="address2" ng-show="navbarCtrl.session.user.permission_address2_manage">
+                            Edit Address 2</a>
                     </li>
                     <li>
-                        <a ui-sref="idmanagement" ng-show="navbarCtrl.session.user.permission_person_match && navbarCtrl.session.user.permission_irf_edit && navbarCtrl.session.user.permission_vif_edit">ID Management</a>
+                        <a ui-sref="idmanagement" ng-show="navbarCtrl.session.user.permission_person_match && navbarCtrl.session.user.permission_irf_edit && navbarCtrl.session.user.permission_vif_edit">
+                            ID Management</a>
                     </li>
                     <li>
-                        <a ui-sref="traffickermatch" ng-show="navbarCtrl.session.user.permission_person_match">Person Match</a>
+                        <a ui-sref="traffickermatch" ng-show="navbarCtrl.session.user.permission_person_match">
+                            Person Match</a>
                     </li>
                     <li class="divider"></li>
                     <li ng-click="navbarCtrl.logout()">

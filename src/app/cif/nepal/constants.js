@@ -2,6 +2,7 @@ const Constants = {
 	MainPersonId:292,
 	
 	Person:[292],
+	Address:[],
 	RadioOther:[305,339],
 	Date:[288,479,375,386],
 	RadioItems:{
@@ -19,6 +20,7 @@ const Constants = {
 	OtherPotentialVictims: {
 		Category:40,
 		Person: [300],
+		Address:[],
 		Basic:[301],
 		Date:[],
 		RadioOther:[],
@@ -28,6 +30,7 @@ const Constants = {
 		Category:43,
 		IndexQuestion:352,
 		Person:[],
+		Address:[],
 		Basic:[351,352,487],
 		Date:[353],
 		RadioOther:[],
@@ -37,6 +40,7 @@ const Constants = {
 		Category:45,
 		IndexQuestion:480,
 		Person:[9],
+		Address:[],
 		Basic:[417,418,419,421,423,475,476,477,478,480,483,484,485,486],
 		Date:[],
 		RadioOther:[420,422,474],
@@ -50,7 +54,8 @@ const Constants = {
 	LocationBoxes: {
 		Category:46,
 		IndexQuestion:481,
-		Person:[427],
+		Person:[],
+		Address:[427],
 		Basic:[424,428,429,430,431,432,433,434,435,436,438,439,440,441,442,443,444,445, 481],
 		Date:[437],
 		RadioOther:[425,426],
@@ -64,6 +69,7 @@ const Constants = {
 		Category:47,
 		IndexQuestion:482,
 		Person:[],
+		Address:[],
 		Basic:[446,448,449,482],
 		Date:[],
 		RadioOther:[447],

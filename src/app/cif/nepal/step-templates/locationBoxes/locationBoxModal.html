@@ -103,10 +103,12 @@
             <div class="row col-md-12">
             	<label>For how long did the PV stay in this place?</label>&nbsp;
             	<form-step type="checkbox" class="inblock" label="N/A (Not Applicable)" response-value="LocationBoxModalController.questions[435].response.value"></form-step>
-            	<input type="number" min="0" ng-model="LocationBoxModalController.questions[436].response.value">
+				<input type="number" min="0" ng-model="LocationBoxModalController.questions[436].response.value">
+				<label>Days</label>
+			</div>
+			<div class="row col-md-12">
             	<label>Starting From:</label>
             	<input type="date" ng-model="LocationBoxModalController.questions[437].response.value">
-            	<label>Days</label>
             </div>
             <div class="row col-md-12">
             	<label>Was there any attempt made to hide the PV's presence at this place?</label>&nbsp;

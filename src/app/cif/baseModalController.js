@@ -2,15 +2,19 @@ const CifOtherData = require('./cifOtherData.js');
 const CifDateDate = require('./cifDateData.js');
 
 class BaseModalController {
-    constructor($uibModalInstance, isAdd, questions, isViewing, modalActions, config) {
+    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config) {
         'ngInject';
+        let questions =  _.keyBy(card.responses, (x) => x.question_id);
         this.$uibModalInstance = $uibModalInstance;
+        this.$scope = $scope;
 
         this.isAdd = isAdd;
+        this.card = card;
         this.originalQuestions = questions;
         this.questions = angular.copy(questions);
         this.isViewing = isViewing;
         this.modalActions = modalActions;
+        this.redFlagTotal = 0;
         this.config = config;
         
     	this.otherData = new CifOtherData(this.originalQuestions);
@@ -34,6 +38,14 @@ class BaseModalController {
     			this.dateData.setDate(questionId,'person');
     		}
     	}
+    	
+    	this.setupFlagListener();
+    }
+    
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
+        });
     }
     
     close() {
@@ -55,6 +67,10 @@ class BaseModalController {
     	}
     }
     
+    incrementRedFlags(numberOfFlagsToAdd) {
+        this.redFlagTotal += numberOfFlagsToAdd;
+    }
+    
     subclassSave() { 	
     }
 
@@ -72,6 +88,8 @@ class BaseModalController {
     	this.otherData.updateResponses();
     	
     	this.subclassSave();
+    	
+    	this.card.flag_count = this.redFlagTotal;
 
         this.close();
     }

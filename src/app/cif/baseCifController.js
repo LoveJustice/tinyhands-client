@@ -50,9 +50,14 @@ export class BaseCifController {
     getCif(countryId, stationId, id) {
         this.service.getCif(countryId, stationId, id).then((response) => {
         	this.response = response.data;
-            this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            this.questions = _.keyBy(this.responses, (x) => x.question_id)
+            for (let idx=0; idx < this.response.cards.length; idx++) {
+            	for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
+            		this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
+            	}
+            }
+            		
             if (this.questions[this.idConstants.MainPersonId].response.value === null) {
             	this.questions[this.idConstants.MainPersonId].response = {
             		"storage_id": null,
@@ -141,9 +146,14 @@ export class BaseCifController {
         this.redFlagTotal += numberOfFlagsToAdd;
     }
     
-    commonModal(responses, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
+    commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
     	let config = this.idConstants[config_name];
     	if (isAdd) {
+    		the_card = {
+    				storage_id:null,
+    				flag_count:0,
+    				responses:[]
+    		};
     		let indexQuestion = -1;
     		let lastIndex = 0;
     		if (config.hasOwnProperty('IndexQuestion')) {
@@ -167,7 +177,7 @@ export class BaseCifController {
     		}
     		if (config.hasOwnProperty('Person')) {
     			for (let idx=0; idx < config.Person.length; idx++) {
-    				responses.push({
+    				the_card.responses.push({
     	    			question_id: config.Person[idx],
     	    			response: {
     	                    gender: {},
@@ -190,7 +200,7 @@ export class BaseCifController {
     		}
     		if (config.hasOwnProperty('Address')) {
     			for (let idx=0; idx < config.Address.length; idx++) {
-    				responses.push({
+    				the_card.responses.push({
     					question_id: config.Address[idx],
     					response: {
 	    	    			address1: {
@@ -208,23 +218,24 @@ export class BaseCifController {
     		if (config.hasOwnProperty('Basic')) {
     			for (let idx=0; idx < config.Basic.length; idx++) {
     				if (config.Basic[idx] == indexQuestion) {
-    					responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
+    					the_card.responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
     				} else {
-    					responses.push({question_id: config.Basic[idx], response: {value:null}});
+    					the_card.responses.push({question_id: config.Basic[idx], response: {value:null}});
     				}
     			}
     		}
     		if (config.hasOwnProperty('Date')) {
     			for (let idx=0; idx < config.Date.length; idx++) {
-					responses.push({question_id: config.Date[idx], response: {value:null}});
+					the_card.responses.push({question_id: config.Date[idx], response: {value:null}});
     			}
     		}
     		if (config.hasOwnProperty('RadioOther')) {
     			for (let idx=0; idx < config.RadioOther.length; idx++) {
-					responses.push({question_id: config.RadioOther[idx], response: {value:null}});
+					the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
     			}
     		}
     	}
+    	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
     	this.$uibModal.open({
             bindToController: true,
@@ -232,7 +243,7 @@ export class BaseCifController {
             controllerAs: theControllerName,
             resolve: {
                 isAdd: () => isAdd,
-                questions: () => _.keyBy(responses, (x) => x.question_id),
+                card: () => the_card,
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config
@@ -241,12 +252,14 @@ export class BaseCifController {
             templateUrl: theTemplate,
         }).result.then(() => {
         	let cards = this.getCardInstances(config_name);
-            if (isAdd) {
-                cards.push({
-                    responses
-                });
-            } else if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
+        	if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
             	cards.splice(cardIndex, 1);
+            	this.redFlagTotal = this.redFlagTotal - starting_flag_count;
+            } else {
+            	this.redFlagTotal = this.redFlagTotal + the_card.flag_count - starting_flag_count;
+	            if (isAdd) {
+	                cards.push(the_card);
+	            }
             }
         });
     }
@@ -264,7 +277,6 @@ export class BaseCifController {
         this.messagesEnabled = false;
     	this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
    		 this.response = response.data;
-            this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
             this.setValuesForOtherInputs();
@@ -311,7 +323,6 @@ export class BaseCifController {
     	}
     	this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
     		 this.response = response.data;
-             this.cards = response.data.cards[0].instances;
              this.responses = response.data.responses;
              this.questions = _.keyBy(this.responses, x => x.question_id);
              this.setValuesForOtherInputs();
@@ -345,11 +356,6 @@ export class BaseCifController {
     }
 
     watchMessages() {
-        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.getErrorMessages();
-            }
-        });
         this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
             if (newValue !== oldValue) {
                 this.getWarningMessages();

@@ -87,21 +87,21 @@
 		            <form-step type="checkbox" class="inblock" label="The PV paid it themselves" response-value="$ctrl.questions[324].response.value"></form-step>
 		            &nbsp;
 		            <form-step type="checkbox" class="inblock" label="The broker" response-value="$ctrl.questions[325].response.value"></form-step>
-		            	&nbsp;(PB# <input type="number" placeholder="PB#" ng-model="$ctrl.questions[471].response.value"> ) <label>paid all expenses</label>
+		            	&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[491].response.value"> ) <label>paid all expenses</label>
 		        </span>
 	        </div>
 	        <div class="col-md-12">
 		        <span>
 		            <form-step type="checkbox" blue-flag="6" class="inblock" label="The PV paid" response-value="$ctrl.questions[471].response.value"></form-step>
 		            	&nbsp;<input type="text" placeholder="Amount" ng-model="$ctrl.questions[326].response.value"> <label>to broker</label>
-		            	&nbsp;(PB# <input type="number" placeholder="PB#" ng-model="$ctrl.questions[471].response.value"> )
+		            	&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[457].response.value"> )
 		        </span>
 	        </div>
 	        <div class="col-md-12">
 		        <span>
 		            <form-step type="checkbox" class="inblock" blue-flag="6" label="Broker" response-value="$ctrl.questions[472].response.value"></form-step>
-		            	&nbsp;(PB# <input type="number" placeholder="PB#" ng-model="$ctrl.questions[471].response.value"> )<label>paid</label>
-		            	&nbsp;<input type="text" placeholder="Amount" ng-model="$ctrl.questions[326].response.value"> <label>which must be repaid</label>
+		            	&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[492].response.value"> )<label>paid</label>
+		            	&nbsp;<input type="text" placeholder="Amount" ng-model="$ctrl.questions[327].response.value"> <label>which must be repaid</label>
 	            </span>
             </div>
     	</div>
@@ -120,7 +120,8 @@
     	<br>
     	<span>
     		2.7 How many suspected traffickers are there in this case?
-    		TBD
+    		&nbsp;
+    		<input type="number" ng-model="$ctrl.questions[490].response.value">
     	</span>
  	</div>
  </fieldset>

@@ -270,6 +270,7 @@ export class BaseCifController {
    
     save() {
     	this.response.status = 'in-progress';
+    	this.questions[this.idConstants['totalFlagId']].response.value = this.redFlagTotal
     	this.outCustomHandling();
     	this.saveExtra();
     	this.errorMessages = [];
@@ -311,6 +312,7 @@ export class BaseCifController {
 
     submit() {
     	this.saved_status = this.response.status;
+    	this.questions[this.idConstants['totalFlagId']].response.value = this.redFlagTotal
     	this.outCustomHandling();
     	this.submitExtra();
     	this.errorMessages = [];

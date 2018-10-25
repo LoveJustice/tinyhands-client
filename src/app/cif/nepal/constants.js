@@ -1,5 +1,6 @@
 const Constants = {
 	MainPersonId:292,
+	totalFlagId:451,
 	
 	Person:[292],
 	Address:[],

@@ -1,6 +1,6 @@
 <div id="irf-nepal-interceptees" class="row stretch-vertical">
     <div class="col-md-4 stretch-vertical" ng-repeat="card in $ctrl.cards">
-        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card.responses)">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card.responses, false, $index)">
             <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
             <div class="panel-body text-center">
                 <img class="img-rounded margin-bottom-20" ngf-thumbnail="$ctrl.getResponseOfQuestionById(card.responses, 7).value" ng-if="$ctrl.getResponseOfQuestionById(card.responses, 7).value.type"

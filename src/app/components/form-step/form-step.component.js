@@ -12,19 +12,22 @@ export class FormStepController {
     		this.redFlag = this.blueFlag;
     	}
         if (!isNaN(parseInt(this.redFlag))) {
-            this.$scope.$watch(() => this.responseValue, (newValue, oldValue) => {
-                this.setFlagSend(newValue, oldValue);
-            });
+            this.$scope.$watch(
+                () => this.responseValue,
+                (newValue, oldValue) => {
+                    this.setFlagSend(newValue, oldValue);
+                }
+            );
         }
         this.setOtherQuestionValues();
     }
 
-    clickRadio(newLabel) {
+    clickRadio() {
         if (this.otherValue !== undefined && this.responseValue !== 'Other') {
-        	this.otherValue = '';
+            this.otherValue = '';
         }
     }
-    
+
     clickRadioLabel($event) {
         $event.preventDefault();
         if (this.responseValue === this.label) {
@@ -33,39 +36,39 @@ export class FormStepController {
             this.responseValue = this.label;
         }
         if (this.otherValue !== undefined && this.responseValue !== 'Other') {
-        	this.otherValue = '';
+            this.otherValue = '';
         }
     }
-    
+
     changeRadioOther() {
-    	if (this.otherValue !== undefined && this.otherValue !== '') {
-    		this.responseValue = 'Other';
-    	}
+        if (this.otherValue !== undefined && this.otherValue !== '') {
+            this.responseValue = 'Other';
+        }
     }
-    
+
     emitFlag(amountToAdd) {
         this.$scope.$emit('flagTotalCheck', {
-            numberOfFlagsToAdd: amountToAdd
+            numberOfFlagsToAdd: amountToAdd,
         });
     }
 
     setFlagSend(newValue, oldValue) {
         if ((oldValue && newValue) || (!oldValue && newValue)) {
-        	if (this.type !== 'radio' && this.type !== 'otherRadio') {
-        		this.emitFlag(this.redFlag);
-        	} else {
-        		if (newValue === this.label) {
-        			this.emitFlag(this.redFlag);
-        		} else if (oldValue === this.label) {
-        			this.emitFlag(-this.redFlag);
-        		}
-        	}
+            if (this.type !== 'radio' && this.type !== 'otherRadio') {
+                this.emitFlag(this.redFlag);
+            } else {
+                if (newValue === this.label) {
+                    this.emitFlag(this.redFlag);
+                } else if (oldValue === this.label) {
+                    this.emitFlag(-this.redFlag);
+                }
+            }
         } else if (oldValue && !newValue) {
-        	if (this.type !== 'radio' && this.type !== 'otherRadio') {
-        		this.emitFlag(-this.redFlag);
-        	} else if (oldValue === this.label) {
-        		this.emitFlag(-this.redFlag);
-        	}
+            if (this.type !== 'radio' && this.type !== 'otherRadio') {
+                this.emitFlag(-this.redFlag);
+            } else if (oldValue === this.label) {
+                this.emitFlag(-this.redFlag);
+            }
         }
     }
 
@@ -93,5 +96,5 @@ export default {
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,
-    transclude: true
+    transclude: true,
 };

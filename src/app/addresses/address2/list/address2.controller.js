@@ -20,20 +20,19 @@ class Address2Controller {
         this.reverse = false;
         this.paginateBy = 25;
         this.addresses = [];
-        this.searchValue = "";
-        this.nextPageUrl = "";
-        this.sortColumn = "";
+        this.searchValue = '';
+        this.nextPageUrl = '';
+        this.sortColumn = '';
         this.stickyOptions = this.sticky.stickyOptions;
 
         this.getAddresses();
 
         if (this.stateParams.deleteId) {
-            this.address2Service.getAddress(this.stateParams.deleteId).then((promise) => {
+            this.address2Service.getAddress(this.stateParams.deleteId).then(promise => {
                 this.deleteAddress2(promise.data);
             });
-        }
-        else if (this.stateParams.editId) {
-            this.address2Service.getAddress(this.stateParams.editId).then((promise) => {
+        } else if (this.stateParams.editId) {
+            this.address2Service.getAddress(this.stateParams.editId).then(promise => {
                 this.editAddress2(promise.data);
             });
         }
@@ -42,73 +41,76 @@ class Address2Controller {
     sortIcon(column) {
         if (column === this.sortColumn) {
             switch (column) {
-                case "latitude":
-                case "longitude":
-                    return this.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
-                case "name":
-                case "canonical_name.name":
-                case "address1.name":
-                case "level":
-                case "verified":
-                    return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
+                case 'latitude':
+                case 'longitude':
+                    return this.reverse ? 'glyphicon-sort-by-order-alt' : 'glyphicon-sort-by-order';
+                case 'name':
+                case 'canonical_name.name':
+                case 'address1.name':
+                case 'level':
+                case 'verified':
+                    return this.reverse ? 'glyphicon-sort-by-alphabet-alt' : 'glyphicon-sort-by-alphabet';
                 default:
-                    return "glyphicon-sort";
+                    return 'glyphicon-sort';
             }
         }
-        return "glyphicon-sort";
+        return 'glyphicon-sort';
     }
 
     getAddresses() {
         this.loading = true;
-        this.address2Service.listAddresses(this.getQueryParams())
-            .then((promise) => {
-                this.addresses = promise.data.results;
-                this.nextPageUrl = this.nextUrl(promise.data.next);
-                this.loading = false;
-            });
+        this.address2Service.listAddresses(this.getQueryParams()).then(promise => {
+            this.addresses = promise.data.results;
+            this.nextPageUrl = this.nextUrl(promise.data.next);
+            this.loading = false;
+        });
     }
 
     loadMoreAddresses() {
         this.loading = true;
-        this.address2Service.loadMoreAddresses(this.getQueryParams(true))
-            .then((promise) => {
-                this.addresses = this.addresses.concat(promise.data.results);
-                this.nextPageUrl = this.nextUrl(promise.data.next);
-                this.loading = false;
-            });
+        this.address2Service.loadMoreAddresses(this.getQueryParams(true)).then(promise => {
+            this.addresses = this.addresses.concat(promise.data.results);
+            this.nextPageUrl = this.nextUrl(promise.data.next);
+            this.loading = false;
+        });
     }
 
     searchAddresses() {
         this.loading = true;
-        this.address2Service.searchAddresses(this.getQueryParams())
-            .then((promise) => {
-                this.addresses = promise.data.results;
-                this.nextPageUrl = this.nextUrl(promise.data.next);
-                this.loading = false;
-            });
+        this.address2Service.searchAddresses(this.getQueryParams()).then(promise => {
+            this.addresses = promise.data.results;
+            this.nextPageUrl = this.nextUrl(promise.data.next);
+            this.loading = false;
+        });
     }
 
     getQueryParams(loadMore = false) {
         var params = [];
-        params.push({ "name": "page_size", "value": this.paginateBy });
+        params.push({ name: 'page_size', value: this.paginateBy });
         if (this.nextPageUrl && loadMore) {
-            params.push({ "name": "page", "value": this.nextPageUrl });
+            params.push({ name: 'page', value: this.nextPageUrl });
         }
         if (this.searchValue) {
-            params.push({ "name": "search", "value": this.searchValue });
+            params.push({ name: 'search', value: this.searchValue });
         }
         if (this.sortColumn) {
             if (this.reverse) {
-                params.push({ "name": "ordering", "value": ("-" + this.sortColumn.replace(".", "__")) });
+                params.push({
+                    name: 'ordering',
+                    value: '-' + this.sortColumn.replace('.', '__'),
+                });
             } else {
-                params.push({ "name": "ordering", "value": (this.sortColumn.replace(".", "__")) });
+                params.push({
+                    name: 'ordering',
+                    value: this.sortColumn.replace('.', '__'),
+                });
             }
         }
         return params;
     }
 
     editAddress2(address) {
-        this.state.go('.', {editId: address.id});
+        this.state.go('.', { editId: address.id });
 
         var modalInstance = this.modal.open({
             animation: true,
@@ -117,34 +119,36 @@ class Address2Controller {
             backdrop: 'static',
             size: 'md',
             resolve: {
-                address: function () {
+                address: function() {
                     return address;
-                }
-            }
+                },
+            },
         });
-        modalInstance.result.then((address) => {
-            this.address2Service.saveAddress(address)
-                .then(() => {
+        modalInstance.result.then(address => {
+            this.address2Service.saveAddress(address).then(
+                () => {
                     this.getAddresses();
-                    this.state.go('.', {editId: null});
+                    this.state.go('.', { editId: null });
                     this.toastr.success(`Address 2 Successfully Updated!`);
-                }, () => {
+                },
+                () => {
                     this.toastr.error(`Address 2 Did Not Save Successfully!`);
-                });
+                }
+            );
         });
     }
-    
+
     addAddress2() {
-        this.state.go('.', {editId: 0});
+        this.state.go('.', { editId: 0 });
         let address = {
-        		name:'',
-        		latitude:0,
-        		longitude:0,
-        		level:'',
-        		address:null,
-        		canonical_name:null,
-        		verified:false
-        }
+            name: '',
+            latitude: 0,
+            longitude: 0,
+            level: '',
+            address: null,
+            canonical_name: null,
+            verified: false,
+        };
 
         var modalInstance = this.modal.open({
             animation: true,
@@ -153,25 +157,27 @@ class Address2Controller {
             backdrop: 'static',
             size: 'md',
             resolve: {
-                address: function () {
+                address: function() {
                     return address;
-                }
-            }
+                },
+            },
         });
-        modalInstance.result.then((address) => {
-            this.address2Service.addAddress(address)
-                .then(() => {
+        modalInstance.result.then(address => {
+            this.address2Service.addAddress(address).then(
+                () => {
                     this.getAddresses();
-                    this.state.go('.', {editId: null});
+                    this.state.go('.', { editId: null });
                     this.toastr.success(`Address 2 Successfully Updated!`);
-                }, () => {
+                },
+                () => {
                     this.toastr.error(`Address 2 Did Not Save Successfully!`);
-                });
+                }
+            );
         });
     }
 
     deleteAddress2(address) {
-        this.state.go('.', {deleteId: address.id});
+        this.state.go('.', { deleteId: address.id });
 
         this.modal.open({
             animation: true,
@@ -180,10 +186,10 @@ class Address2Controller {
             backdrop: 'static',
             size: 'md',
             resolve: {
-                address: function () {
+                address: function() {
                     return address;
-                }
-            }
+                },
+            },
         });
     }
 

@@ -6,7 +6,11 @@ class CifDateData {
 	
 	setDate(questionId, dateType) {
 		if (dateType === 'basic') {
-			let value = this.origQuestions[questionId].response.value;
+			let value = '';
+			if (this.origQuestions[questionId] != null && this.origQuestions[questionId].response != null &&
+					this.origQuestions[questionId].response.value != null) {
+				value = this.origQuestions[questionId].response.value;
+			}
 			let dateValue = '';
 			if (value !== null && value !== '') {
 				dateValue = new Date(value);

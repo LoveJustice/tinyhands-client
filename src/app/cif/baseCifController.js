@@ -18,8 +18,6 @@ export class BaseCifController {
         this.response = {status:'in-progress'};
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
-        this.otherContactString = '';
-        this.otherFamilyString = '';
         this.redFlagTotal = 0;
         this.selectedStep = 0;
        
@@ -28,23 +26,10 @@ export class BaseCifController {
 
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
-        this.watchMessages();
     }
 
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
-    }
-
-    getErrorMessages() {
-        let activeErrors = [];
-        activeErrors = activeErrors.concat(this.errorMessages);
-        return activeErrors;
-    }
-    
-    getWarningMessages() {
-        let activeWarnings = [];
-        activeWarnings = activeWarnings.concat(this.warningMessages);
-        return activeWarnings;
     }
 
     getCif(countryId, stationId, id) {
@@ -303,7 +288,7 @@ export class BaseCifController {
     }
 
     showIgnoreWarningsCheckbox() {
-        return (this.messagesEnabled && this.getWarningMessages().length > 0) || this.ignoreWarnings;
+        return (this.messagesEnabled && this.warningMessages.length > 0) || this.ignoreWarnings;
     }
     
     // Override in subclass for implementation specific features
@@ -355,14 +340,6 @@ export class BaseCifController {
     	}
     	
     	return [];
-    }
-
-    watchMessages() {
-        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
-            if (newValue !== oldValue) {
-                this.getWarningMessages();
-            }
-        });
     }
 }
 

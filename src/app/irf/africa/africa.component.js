@@ -1,5 +1,5 @@
 import MessageConstants from './constants.js';
-import templateUrl from './malawi.html';
+import templateUrl from './africa.html';
 import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
@@ -7,7 +7,7 @@ import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
 import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
-import './malawi.less';
+import './africa.less';
 import IntercepteeModalController from './step-templates/interceptees/intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
@@ -20,7 +20,7 @@ const DateTimeId = 4;
 const OtherFamilyId = 82;
 const OtherContactId = 92;
 
-export class IrfMalawiController {
+export class IrfAfricaController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
         this.$scope = $scope;
@@ -44,7 +44,7 @@ export class IrfMalawiController {
         this.warningMessages = [];
 
         this.getErrorData();
-        this.getMalawiIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
+        this.getAfricaIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
         this.watchMessages();
     }
@@ -72,7 +72,7 @@ export class IrfMalawiController {
         return activeWarnings;
     }
 
-    getMalawiIrf(countryId, stationId, id) {
+    getAfricaIrf(countryId, stationId, id) {
         this.service.getIrf(countryId, stationId, id).then(response => {
             this.response = response.data;
             this.cards = response.data.cards[0].instances;
@@ -276,5 +276,5 @@ export class IrfMalawiController {
 
 export default {
     templateUrl,
-    controller: IrfMalawiController,
+    controller: IrfAfricaController,
 };

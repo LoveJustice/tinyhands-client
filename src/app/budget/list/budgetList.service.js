@@ -5,11 +5,11 @@ export default class BudgetListService {
     }
 
     deleteBorderStationBudget(id) {
-        return this.service.delete(`/api/budget/${id}/`);
+        return this.service.delete(`api/budget/${id}/`);
     }
 
     getBudgetList(searchTerm, sortValue) {
-        return this.service.get('/api/budget/', [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, { name: "ordering", value: sortValue }]);
+        return this.service.get('api/budget/', [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, { name: "ordering", value: sortValue }]);
     }
 
     getNextBudgetPage(nextPageUrl) {
@@ -17,11 +17,11 @@ export default class BudgetListService {
     }
 
     getMdf(id) {
-        return this.service.get(`/api/mdf/${id}/`);
+        return this.service.get(`api/mdf/${id}/`);
     }
 
     sendMdfEmails(people) {
-        return this.service.post(`/api/mdf/${people.budget_id}/`, people);
+        return this.service.post(`api/mdf/${people.budget_id}/`, people);
     }
 
 }

@@ -3,7 +3,7 @@
        ng-repeat="persons in personCtrl.people">
     <h1>{{persons.name}}</h1>
     <hr/>
-    <div ng-repeat="person in persons.data | orderBy:'first_name'"
+    <div ng-repeat="person in persons.data"
          ng-mouseenter="person.hover = true"
          ng-mouseleave="person.hover = false; person.removeConfirmed = false">
       <div class="row">

@@ -75,6 +75,7 @@ export class IrfSouthAfricaController {
 
     getSouthAfricaIrf(countryId, stationId, id) {
         this.service.getIrf(countryId, stationId, id).then(response => {
+            this.response = response.data;
             this.cards = response.data.cards[0].instances;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);

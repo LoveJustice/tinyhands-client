@@ -9,7 +9,7 @@ describe('IntercepteeModalController', () => {
             dismiss() {}
         };
 
-        let questions = [null, null, null, null, null, null, null, {
+        let originalQuestions = [null, null, null, null, null, null, null, {
             response: {}
         }, {
             response: {}
@@ -22,14 +22,13 @@ describe('IntercepteeModalController', () => {
                 name: {},
                 nationality: {},
                 phone: {},
+                passport: {},
             }
+        }, null, {
+            response: {}
         }];
-
-        let constants = {};
-
-        let isAdd = false;
-
-        vm = new IntercepteeModalController($uibModalInstance, constants, isAdd, questions);
+        
+        vm = new IntercepteeModalController($uibModalInstance, null, false, originalQuestions, false);
     });
 
     describe('function save', () => {
@@ -47,7 +46,28 @@ describe('IntercepteeModalController', () => {
                     name: {},
                     nationality: {},
                     phone: {},
+                    passport: {},
                 }
+            }, null, {
+                response: {}
+            }];
+            vm.questions = [null, null, null, null, null, null, null, {
+                response: {}
+            }, {
+                response: {}
+            }, {
+                response: {
+                    address1: {},
+                    address2: {},
+                    birthdate: {},
+                    gender: {},
+                    name: {},
+                    nationality: {},
+                    phone: {},
+                    passport: {},
+                }
+            }, null, {
+                response: {}
             }];
         });
 
@@ -84,11 +104,11 @@ describe('IntercepteeModalController', () => {
         });
 
         it('should set original question 9 birthdate to question 9 birthdate', () => {
-            vm.questions[9].response.birthdate.value = 12;
+            vm.questions[9].response.birthdate.value = '2018-08-14';
 
             vm.save();
 
-            expect(vm.originalQuestions[9].response.birthdate.value).toEqual(12);
+            expect(vm.originalQuestions[9].response.birthdate.value).toEqual('2018-08-14');
         });
 
         it('should set original question 9 address1 to question 9 address1', () => {
@@ -100,11 +120,11 @@ describe('IntercepteeModalController', () => {
         });
 
         it('should set original question 9 address2 to question 9 address2', () => {
-            vm.questions[9].response.address2.name = 'India';
+            vm.questions[9].response.address2.name = 'South Africa';
 
             vm.save();
 
-            expect(vm.originalQuestions[9].response.address2.name).toEqual('India');
+            expect(vm.originalQuestions[9].response.address2.name).toEqual('South Africa');
         });
 
         it('should set original question 9 phone to question 9 phone', () => {

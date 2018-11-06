@@ -147,7 +147,9 @@ export default class IrfNewListController {
     }
 
     searchIrfs() {
-        this.timeout.cancel(this.timer);
+        if (this.timer.hasOwnProperty('$$timeoutId')) {
+            this.timeout.cancel(this.timer);
+        }
         this.timer = this.timeout(() => {
             this.state.go('.', {
                 search: this.queryParameters.search,

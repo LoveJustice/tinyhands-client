@@ -250,7 +250,7 @@ describe('CIF List Controller',() => {
     		expect(vm.stationsForAdd.length).toBe(2);
     		expect(vm.stationsForAdd[0].country_name).toBe('Nepal');
     		expect(vm.stationsForAdd[1].country_name).toBe('India');
-    	})
+    	});
     	
     });
     

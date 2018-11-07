@@ -1,6 +1,8 @@
 import {BaseCifController} from "./baseCifController";
 import {BaseModalController} from './baseModalController.js';
 
+/* global moment */
+
 const IdConstants = {
 		MainPersonId:292,
 		totalFlagId:451,
@@ -88,7 +90,7 @@ describe('CifTestController', () => {
         					instances:[]
         				}
         			]
-        	}
+        	};
             
         });
 

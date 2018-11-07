@@ -1,6 +1,9 @@
 const CifOtherData = require('./cifOtherData.js');
 const CifDateDate = require('./cifDateData.js');
 
+/* global _ */
+/* global angular */
+
 class BaseModalController {
     constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config) {
         'ngInject';

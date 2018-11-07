@@ -36,7 +36,7 @@ export class BaseCifController {
         this.service.getCif(countryId, stationId, id).then((response) => {
         	this.response = response.data;
             this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, (x) => x.question_id)
+            this.questions = _.keyBy(this.responses, (x) => x.question_id);
             for (let idx=0; idx < this.response.cards.length; idx++) {
             	for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
             		this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;

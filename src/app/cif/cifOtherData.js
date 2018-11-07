@@ -1,3 +1,5 @@
+/* global _ */
+
 class CifOtherData {
 	constructor(origQuestions) {
 		this.origQuestions = origQuestions;

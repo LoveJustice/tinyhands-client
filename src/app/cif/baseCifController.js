@@ -149,12 +149,12 @@ export class BaseCifController {
     	    		let card = cards[idx];
     	    		let value = null;
     	    		for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
-    	    			if (card.responses[respIdx].question_id == indexQuestion) {
+    	    			if (card.responses[respIdx].question_id === indexQuestion) {
     	    				value = card.responses[respIdx].response.value;
     	    				break;
     	    			}
     	    		}
-    	    		if (value != null && value != '') {
+    	    		if (value !== null && value !== '') {
     	    			lastIndex = value;
     	    		}
     	    	}
@@ -202,7 +202,7 @@ export class BaseCifController {
     		}
     		if (config.hasOwnProperty('Basic')) {
     			for (let idx=0; idx < config.Basic.length; idx++) {
-    				if (config.Basic[idx] == indexQuestion) {
+    				if (config.Basic[idx] === indexQuestion) {
     					the_card.responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
     				} else {
     					the_card.responses.push({question_id: config.Basic[idx], response: {value:null}});
@@ -255,7 +255,7 @@ export class BaseCifController {
    
     save() {
     	this.response.status = 'in-progress';
-    	this.questions[this.idConstants['totalFlagId']].response.value = this.redFlagTotal
+    	this.questions[this.idConstants.totalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.saveExtra();
     	this.errorMessages = [];
@@ -297,7 +297,7 @@ export class BaseCifController {
 
     submit() {
     	this.saved_status = this.response.status;
-    	this.questions[this.idConstants['totalFlagId']].response.value = this.redFlagTotal
+    	this.questions[this.idConstants.totalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.submitExtra();
     	this.errorMessages = [];
@@ -330,8 +330,8 @@ export class BaseCifController {
     	if (!this.idConstants.hasOwnProperty(constant_name)) {
     		return [];
     	}
-    	let category_id = this.idConstants[constant_name].Category
-    	if (this.response != null && this.response.cards != null) {
+    	let category_id = this.idConstants[constant_name].Category;
+    	if (this.response !== null && this.response.cards !== null) {
 	    	for (let idx=0; idx < this.response.cards.length; idx++) {
 	    		if (this.response.cards[idx].category_id === category_id) {
 	    			return this.response.cards[idx].instances;

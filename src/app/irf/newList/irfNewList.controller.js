@@ -268,6 +268,7 @@ export default class IrfNewListController {
         params.page = this.nextPage;
         this.service.getMoreIrfs(this.transform(params)).then(promise => {
             this.irfs = this.irfs.concat(promise.data.results);
+            this.addUrls(this.irfs);
             this.nextPage = this.extractPage(promise.data.next);
         });
     }

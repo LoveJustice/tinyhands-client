@@ -147,7 +147,9 @@ export default class IrfNewListController {
     }
 
     searchIrfs() {
-        this.timeout.cancel(this.timer);
+        if (this.timer.hasOwnProperty('$$timeoutId')) {
+            this.timeout.cancel(this.timer);
+        }
         this.timer = this.timeout(() => {
             this.state.go('.', {
                 search: this.queryParameters.search,
@@ -266,6 +268,7 @@ export default class IrfNewListController {
         params.page = this.nextPage;
         this.service.getMoreIrfs(this.transform(params)).then(promise => {
             this.irfs = this.irfs.concat(promise.data.results);
+            this.addUrls(this.irfs);
             this.nextPage = this.extractPage(promise.data.next);
         });
     }

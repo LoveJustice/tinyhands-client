@@ -25,7 +25,7 @@ export default class CifListService {
     }
     
     getFormForStation(stationId) {
-    	return this.service.get('/api/forms/?type_name=CIF&station_id=' + stationId);
+    	return this.service.get('api/forms/?type_name=CIF&station_id=' + stationId);
     	
     }
 }

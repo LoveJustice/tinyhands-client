@@ -2,7 +2,7 @@ const OtherData = require('../otherData.js');
 const DateData = require('../dateData.js');
 
 export class BaseIrfController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, idConstants) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
@@ -10,7 +10,6 @@ export class BaseIrfController {
         this.service = IrfService;
         this.stateParams = $stateParams;
         this.state = $state;
-        this.idConstants = idConstants;
         this.isViewing = this.stateParams.isViewing === 'true';
         this.stationId = this.stateParams.stationId;
 
@@ -32,21 +31,24 @@ export class BaseIrfController {
     }
 
     getIrf(countryId, stationId, id) {
-        this.service.getIrf(countryId, stationId, id).then((response) => {
-        	this.response = response.data;
-            this.responses = response.data.responses;
-            this.questions = _.keyBy(this.responses, (x) => x.question_id);
-            for (let idx=0; idx < this.response.cards.length; idx++) {
-            	for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
-            		this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
-            	}
-            }
+    	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
+    		this.config = response.data
+    		this.service.getIrf(countryId, stationId, id).then((response) => {
+            	this.response = response.data;
+                this.responses = response.data.responses;
+                this.questions = _.keyBy(this.responses, (x) => x.question_id);
+                for (let idx=0; idx < this.response.cards.length; idx++) {
+                	for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
+                		this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
+                	}
+                }
 
-            this.inCustomHandling();
-            if (id === null) {
-            	this.response.status = 'in-progress';
-            }
-        });
+                this.inCustomHandling();
+                if (id === null) {
+                	this.response.status = 'in-progress';
+                }
+            });
+    	});
     }
     
     getIntercepteeImage(url) {
@@ -65,25 +67,25 @@ export class BaseIrfController {
     
     setValuesForOtherInputs() {
     	this.otherData = new OtherData(this.questions);
-    	if (this.idConstants.hasOwnProperty('RadioOther')) {
-    		for (let idx=0; idx < this.idConstants.RadioOther.length; idx++) {
-    			let questionId = this.idConstants.RadioOther[idx];
-    			this.otherData.setRadioButton(this.idConstants.RadioItems[questionId], questionId);
+    	if (this.config.hasOwnProperty('RadioOther')) {
+    		for (let idx=0; idx < this.config.RadioOther.length; idx++) {
+    			let questionId = this.config.RadioOther[idx];
+    			this.otherData.setRadioButton(this.config.RadioItems[questionId], questionId);
     		}
     	}
     }
     
     setValuesForDateInputs() {
     	this.dateData = new DateData(this.questions);
-    	if (this.idConstants.hasOwnProperty('Date')) {
-    		for (let idx=0; idx < this.idConstants.Date.length; idx++) {
-    			let questionId = this.idConstants.Date[idx];
+    	if (this.config.hasOwnProperty('Date')) {
+    		for (let idx=0; idx < this.config.Date.length; idx++) {
+    			let questionId = this.config.Date[idx];
     			this.dateData.setDate(questionId,'basic');
     		}
     	}
-    	if (this.idConstants.hasOwnProperty('Person')) {
-    		for (let idx=0; idx < this.idConstants.Person.length; idx++) {
-    			let questionId = this.idConstants.Person[idx];
+    	if (this.config.hasOwnProperty('Person')) {
+    		for (let idx=0; idx < this.config.Person.length; idx++) {
+    			let questionId = this.config.Person[idx];
     			this.dateData.setDate(questionId,'person');
     		}
     	}
@@ -101,7 +103,7 @@ export class BaseIrfController {
     }
     
     commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
-    	let config = this.idConstants[config_name];
+    	let config = this.config[config_name];
     	if (isAdd) {
     		the_card = {
     				storage_id:null,
@@ -224,7 +226,7 @@ export class BaseIrfController {
    
     save() {
     	this.response.status = 'in-progress';
-    	this.questions[this.idConstants.totalFlagId].response.value = this.redFlagTotal;
+    	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.saveExtra();
     	this.errorMessages = [];
@@ -238,7 +240,7 @@ export class BaseIrfController {
             if (this.stateParams.id === null) {
            	 this.stateParams.id = response.data.id;
             }
-            this.state.go('irfList');
+            this.state.go('irfNewList');
         }, (error) => {
        	 this.errorMessages = error.data.errors;
             this.warningMessages = error.data.warnings;
@@ -266,7 +268,7 @@ export class BaseIrfController {
 
     submit() {
     	this.saved_status = this.response.status;
-    	this.questions[this.idConstants.totalFlagId].response.value = this.redFlagTotal;
+    	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.submitExtra();
     	this.errorMessages = [];
@@ -285,7 +287,7 @@ export class BaseIrfController {
              if (this.stateParams.id === null) {
             	 this.stateParams.id = response.data.id;
              }
-             this.state.go('irfList');
+             this.state.go('irfNewList');
          }, (error) => {
         	 this.errorMessages = error.data.errors;
              this.warningMessages = error.data.warnings;
@@ -296,10 +298,10 @@ export class BaseIrfController {
     }
     
     getCardInstances(constant_name) {
-    	if (!this.idConstants.hasOwnProperty(constant_name)) {
+    	if (!this.config.hasOwnProperty(constant_name)) {
     		return [];
     	}
-    	let category_id = this.idConstants[constant_name].Category;
+    	let category_id = this.config[constant_name].Category;
     	if (this.response !== null && this.response.cards !== null) {
 	    	for (let idx=0; idx < this.response.cards.length; idx++) {
 	    		if (this.response.cards[idx].category_id === category_id) {

@@ -30,6 +30,8 @@ class IrfTestController extends BaseIrfController {
 	constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';        
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, IdConstants);
+        
+        this.config = IdConstants;
        
         
     }
@@ -55,6 +57,9 @@ describe('IrfTestController', () => {
             }),
             submitIrf: (countryId, id, response) => ({
                 then: () => { }
+            }),
+            getFormConfig: () => ({
+                then: () => {}
             })
         };
         let $stateParams = {id:null,stationId:1,countryId:4,isViewing:false};

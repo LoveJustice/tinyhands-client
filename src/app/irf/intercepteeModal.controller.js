@@ -2,10 +2,11 @@
 import {BaseModalController} from '../baseModalController.js';
 
 export default class IntercepteeModalController extends BaseModalController {
-    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config) {
+    constructor($uibModalInstance, constants, $scope, isAdd, card, isViewing, modalActions, config) {
         'ngInject';
         super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config);
         
+        this.constants = constants;   
         
         var t = Object.prototype.toString.call(this.questions[this.config.ImageQuestion].response.value);
         if (t === '[object Blob]') {
@@ -18,7 +19,7 @@ export default class IntercepteeModalController extends BaseModalController {
     }
     
     getIntercepteeImage(url) {
-        return new URL(url, this.config.BaseUrl).href;
+        return new URL(url, this.constants.BaseUrl).href;
     }
 
     subclassSave() {

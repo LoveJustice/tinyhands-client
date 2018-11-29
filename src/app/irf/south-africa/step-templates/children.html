@@ -20,9 +20,9 @@
         <div class="col-md-4">
             <form-step>Which family member did you talk to?</form-step>
         </div>
-        <div class="col-md-4" ng-repeat="families in $ctrl.family">
-            <form-step type="radio" radio-name="familyRadio" label="{{family}}" ng-repeat="family in families" response-value="$ctrl.questions[82].response.value"></form-step>
-            <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherFamilyString" response-value="$ctrl.questions[82].response.value"></form-step>
+        <div class="col-md-4" ng-repeat="families in $ctrl.config.RadioItems[82]">
+             <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
+                    <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
         </div>
     </div>
     <hr/>

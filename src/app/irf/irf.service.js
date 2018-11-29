@@ -92,4 +92,9 @@ export default class IrfService {
     	formData.append("main", JSON.stringify(myIrf));
     	return this.service.post(`api/irfNew/`, formData, {'Content-Type': undefined});
     }
+    
+    getFormConfig(formName) {
+    	let url=`api/forms/config/${formName}/`;
+    	return this.service.get(url);
+    }
 }

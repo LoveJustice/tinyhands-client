@@ -1,4 +1,3 @@
-import IdConstants from './constants.js';
 import {BaseIrfController} from '../baseIrfController.js';
 import './nepal.less';
 
@@ -17,7 +16,7 @@ import intercepteeModalTemplate from './step-templates/interceptees/intercepteeM
 export class IrfNepalController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state, IdConstants)
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state);
         
         this.stepTemplates = [
         	topBoxTemplate,

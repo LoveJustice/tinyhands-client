@@ -138,6 +138,7 @@ export default class IrfNewListController {
                         stationId: station.id,
                         countryId: station.country_id,
                         isViewing: false,
+                        formName: response.data[0].form_name,
                     });
                 } else {
                     this.toastr.error('Unable to find form for station ' + station.label);
@@ -240,12 +241,14 @@ export default class IrfNewListController {
                     stationId: irf.station.id,
                     countryId: irf.station.operating_country.id,
                     isViewing: true,
+                    formName: irfs[idx].form_name,
                 });
                 irf.editUrl = this.state.href(irfs[idx].form_name, {
                     id: irf.id,
                     stationId: irf.station.id,
                     countryId: irf.station.operating_country.id,
                     isViewing: false,
+                    formName: irfs[idx].form_name,
                 });
             }
         }

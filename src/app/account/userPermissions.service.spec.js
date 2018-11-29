@@ -15,7 +15,7 @@ describe('UserPermissionsService', () => {
 
     describe('getPermissions', () => {
         it('should call BaseService.get with correct url', () => {
-            let url = 'api/permission/';
+            let url = 'api/permission/?page_size=1000';
 
             service.getPermissions();
 

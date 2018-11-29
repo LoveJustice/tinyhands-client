@@ -8,6 +8,9 @@ export class FormStepController {
     }
 
     $onInit() {
+    	if (!isNaN(parseInt(this.blueFlag))) {
+    		this.redFlag = this.blueFlag;
+    	}
         if (!isNaN(parseInt(this.redFlag))) {
             this.$scope.$watch(
                 () => this.responseValue,
@@ -86,6 +89,7 @@ export default {
         radioName: '@',
         checkboxName: '@',
         redFlag: '<?',
+        blueFlag: '<?',
         responseValue: '=?',
         stepLabel: '<',
         type: '@',

@@ -1,0 +1,419 @@
+import IdConstants from './constants.js';
+import templateUrl from './nepal.html';
+import topTemplate from './step-templates/top.html';
+import mainPvTemplate from './step-templates/mainPv.html';
+import pvsTemplate from './step-templates/potentialVictims/potentialVictims.html';
+import recruitmentTemplate from './step-templates/recruitment.html';
+import travelTemplate from './step-templates/travel.html';
+import tbsTemplate from './step-templates/transportationBoxes/transportationBoxes.html';
+import legalTemplate from './step-templates/legal.html';
+import pbsTemplate from './step-templates/personBoxes/personBoxes.html';
+import lbsTemplate from './step-templates/locationBoxes/locationBoxes.html';
+import vbsTemplate from './step-templates/vehicleBoxes/vehicleBoxes.html';
+import finalTemplate from './step-templates/final.html';
+import './nepal.less';
+import PotentialVictimModalController from './step-templates/potentialVictims/potentialVictimModal.controller';
+import potentialVictimModalTemplate from './step-templates/potentialVictims/potentialVictimModal.html';
+import TransportationBoxModalController from './step-templates/transportationBoxes/transportationBoxModal.controller';
+import transportationBoxModalTemplate from './step-templates/transportationBoxes/transportationBoxModal.html';
+import PersonBoxModalController from './step-templates/personBoxes/personBoxModal.controller';
+import personBoxTemplate from './step-templates/personBoxes/personBoxModal.html';
+import LocationBoxModalController from './step-templates/locationBoxes/locationBoxModal.controller';
+import LocationBoxTemplate from './step-templates/locationBoxes/locationBoxModal.html';
+import VehicleBoxModalController from './step-templates/vehicleBoxes/vehicleBoxModal.controller';
+import VehicleBoxTemplate from './step-templates/vehicleBoxes/vehicleBoxModal.html';
+
+/* global _ */
+/* global moment */
+
+const CifOtherData = require('../cifOtherData.js');
+
+export class CifNepalController {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
+        'ngInject';
+        this.$scope = $scope;
+        this.$uibModal = $uibModal;
+        this.constants = constants;
+        this.service = CifService;
+        this.stateParams = $stateParams;
+        this.state = $state;
+        this.isViewing = this.stateParams.isViewing === 'true';
+        this.stationId = this.stateParams.stationId;
+
+        this.source_of_intelligence = [
+        	['Intercept', 'Operation'],
+        	['Victim', 'Police'],
+        	['Trafficker', 'OSI'],
+        ];
+        this.brokerRelations = ['Father', 'Mother', 'Uncle', 'Aunt', 'Brother', 'Sister',
+        	'Other Relative', 'Friend', 'Agent', 'Boyfriend', 'Neighbor', 'Recently Met'];
+        this.brokerRelationsX = [
+            ['Father', 'Aunt', 'Other Relative', 'Boyfriend'],
+            ['Mother', 'Brother', 'Friend', 'Neighbor'],
+            ['Uncle', 'Sister', 'Agent', 'Recently Met']
+        ];
+        this.response = {status:'in-progress'};
+        this.ignoreWarnings = false;
+        this.messagesEnabled = false;
+        this.otherContactString = '';
+        this.otherFamilyString = '';
+        this.redFlagTotal = 0;
+        this.selectedStep = 0;
+        this.stepTemplates = [
+            topTemplate,
+            mainPvTemplate,
+            pvsTemplate,
+            recruitmentTemplate,
+            travelTemplate,
+            tbsTemplate,
+            legalTemplate,
+            pbsTemplate,
+            lbsTemplate,
+            vbsTemplate,
+            finalTemplate
+        ];
+        this.errorMessages = [];
+        this.warningMessages = [];
+        
+        this.pvBirthDate = "";
+        this.incidentDate = "";
+
+        this.getNepalCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
+        this.setupFlagListener();
+        this.watchMessages();
+    }
+
+    formatDate(UfcDate) {
+        return moment(UfcDate).toDate();
+    }
+
+    getErrorMessages() {
+        let activeErrors = [];
+        activeErrors = activeErrors.concat(this.errorMessages);
+        return activeErrors;
+    }
+    
+    getWarningMessages() {
+        let activeWarnings = [];
+        activeWarnings = activeWarnings.concat(this.warningMessages);
+        return activeWarnings;
+    }
+
+    getNepalCif(countryId, stationId, id) {
+        this.service.getCif(countryId, stationId, id).then((response) => {
+        	this.response = response.data;
+            this.cards = response.data.cards[0].instances;
+            this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, (x) => x.question_id);
+            if (this.questions[IdConstants.MainPersonId].response.value === null) {
+            	this.questions[IdConstants.MainPersonId].response = {
+            			"storage_id": null,
+	                "name": {
+	                    "value": ""
+	                },
+	                "address1": {
+	                    "id": null,
+	                    "name": ""
+	                },
+	                "address2": {
+	                    "id": null,
+	                    "name": ""
+	                },
+	                "phone": {
+	                    "value": ""
+	                },
+	                "gender": {
+	                    "value": ""
+	                },
+	                "age": {
+	                    "value": null
+	                },
+	                "birthdate": {
+	                	"value":""
+	                },
+	                "passport": {
+	                    "value": ""
+	                },
+	                "nationality": {
+	                    "value": ""
+	                }
+            	};
+            }
+            this.setValuesForOtherInputs();
+            if (id === null) {
+            	this.response.status = 'in-progress';
+            }
+        });
+    }
+
+    getResponseOfQuestionById(responses, questionId) {
+        return _.find(responses, (x) => x.question_id === questionId).response;
+    }
+
+    incrementRedFlags(numberOfFlagsToAdd) {
+        this.redFlagTotal += numberOfFlagsToAdd;
+    }
+    
+    commonModal(responses, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
+    	let config = IdConstants[config_name];
+    	if (isAdd) {
+    		let indexQuestion = -1;
+    		let lastIndex = 0;
+    		if (config.hasOwnProperty('IndexQuestion')) {
+    			indexQuestion = config.IndexQuestion;
+    			let cards = this.getCardInstances(config_name);
+    			
+    			for (let idx=0; idx < cards.length; idx++) {
+    	    		let card = cards[idx];
+    	    		let value = null;
+    	    		for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
+    	    			if (card.responses[respIdx].question_id == IdConstants.Transportations.IndexQuestion) {
+    	    				value = card.responses[respIdx].response.value;
+    	    				break;
+    	    			}
+    	    		}
+    	    		if (value != null && value != '') {
+    	    			lastIndex = value;
+    	    		}
+    	    	}
+    			
+    		}
+    		if (config.hasOwnProperty('Person')) {
+    			for (let idx=0; idx < config.Person.length; idx++) {
+    				responses.push({
+    	    			question_id: config.Person[idx],
+    	    			response: {
+    	                    gender: {},
+    	                    name: {},
+    	                    age: {},
+    	                    address1: {
+    	                    	id: null,
+    	                    	name: ""
+    	                    },
+    	                    address2: {
+    	                    	id: null,
+    	                    	name: ""
+    	                    },
+    	                    phone: {},
+    	                    nationality: {},
+    	                }
+    	    		});
+    			}
+    		}
+    		if (config.hasOwnProperty('Address')) {
+    			for (let idx=0; idx < config.Address.length; idx++) {
+    				responses.push({
+    					question_id: config.Address[idx],
+    					response: {
+	    	    			address1: {
+	    	                	id: null,
+	    	                	name: ""
+	    	                },
+	    	                address2: {
+	    	                	id: null,
+	    	                	name: ""
+	    	                }
+    					}
+    	    		});
+    			}
+    		}
+    		if (config.hasOwnProperty('Basic')) {
+    			for (let idx=0; idx < config.Basic.length; idx++) {
+    				if (config.Basic[idx] == indexQuestion) {
+    					responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
+    				} else {
+    					responses.push({question_id: config.Basic[idx], response: {}});
+    				}
+    			}
+    		}
+    		
+    	}
+    	this.modalActions = [];
+    	this.$uibModal.open({
+            bindToController: true,
+            controller: theController,
+            controllerAs: theControllerName,
+            resolve: {
+                isAdd: () => isAdd,
+                questions: () => _.keyBy(responses, (x) => x.question_id),
+                isViewing: () => this.isViewing,
+                modalActions: () => this.modalActions
+            },
+            size: 'lg',
+            templateUrl: theTemplate,
+        }).result.then(() => {
+        	let cards = this.getCardInstances(config_name);
+            if (isAdd) {
+                cards.push({
+                    responses
+                });
+            } else if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
+            	cards.splice(cardIndex, 1);
+            }
+        });
+    }
+    
+    openPotentialVictimModal(responses = [], isAdd = false, idx=null) {
+    	this.commonModal(responses, isAdd, idx, PotentialVictimModalController, 'PotentialVictimModalController',
+    			potentialVictimModalTemplate, 'OtherPotentialVictims');
+    }
+    
+    openTransportationBoxModal(responses = [], isAdd = false, idx=null) {
+    	this.commonModal(responses, isAdd, idx, TransportationBoxModalController, 'TransportationBoxModalController',
+    			transportationBoxModalTemplate, 'Transportations');
+    }
+    
+    openPersonBoxModal(responses = [], isAdd = false, idx=null) {
+    	this.commonModal(responses, isAdd, idx, PersonBoxModalController, 'PersonBoxModalController',
+    			personBoxTemplate, 'PersonBoxes');
+    }
+    
+    openLocationBoxModal(responses = [], isAdd = false, idx=null) {
+    	this.commonModal(responses, isAdd, idx, LocationBoxModalController, 'LocationBoxModalController',
+    			locationBoxModalTemplate, 'LocationBoxes');
+    }
+    
+    openVehicleBoxModal(responses = [], isAdd = false, idx=null) {
+    	let lastIndex = 0;
+      	if (isAdd) {
+    		let cards = this.getCardInstances('VehicleBoxes')
+	    	for (let idx=0; idx < cards.length; idx++) {
+	    		let card = cards[idx];
+	    		let value = null;
+	    		for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
+	    			if (card.responses[respIdx].question_id == IdConstants.VehicleBoxes.IndexQuestion) {
+	    				value = card.responses[respIdx].response.value;
+	    				break;
+	    			}
+	    		}
+	    		if (value != null && value != '') {
+	    			lastIndex = value;
+	    		}
+	    	}
+    	}
+    	this.commonModal(responses, isAdd, idx, VehicleBoxModalController, 'VehicleBoxModalController',
+    			vehicleBoxModalTemplate, 'VehicleBoxes', lastIndex + 1);
+    }
+   
+    save() {
+    	this.response.status = 'in-progress';
+    	this.getValuesForOtherInputs();
+    	this.questions[144].response.value = this.redFlagTotal;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+    	this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+   		 this.response = response.data;
+            this.cards = response.data.cards[0].instances;
+            this.responses = response.data.responses;
+            this.questions = _.keyBy(this.responses, x => x.question_id);
+            this.setValuesForOtherInputs();
+            if (this.stateParams.id === null) {
+           	 this.stateParams.id = response.data.id;
+            }
+            this.state.go('cifList');
+        }, (error) => {
+       	 this.errorMessages = error.data.errors;
+            this.warningMessages = error.data.warnings;
+           });
+    	 this.messagesEnabled = false;
+    }
+
+    setupFlagListener() {
+        this.$scope.$on('flagTotalCheck', (event, flagData) => {
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
+        });
+    }
+    
+    isString(val) {
+    	return typeof val === 'string';
+    }
+
+    setValuesForOtherInputs() {
+    	if (this.questions[IdConstants.MainPersonId].response.birthdate !== null && this.questions[IdConstants.MainPersonId].response.birthdate !== '') {
+    		this.pvBirthDate = new Date(this.questions[IdConstants.MainPersonId].response.birthdate.value);
+    	} else {
+    		this.pvBirthDate = '';
+    	}
+    	if (this.questions[IdConstants.IncidentDate].response.value !== null && this.questions[IdConstants.IncidentDate].response.value !== '') {
+    		this.incidentDate = new Date(this.questions[IdConstants.IncidentDate].response.value);
+    	} else {
+    		this.incidentDate = '';
+    	}
+    }
+    
+    getValuesForOtherInputs() {
+    	this.otherData.updateResponses();
+    }
+
+    showIgnoreWarningsCheckbox() {
+        return (this.messagesEnabled && this.getWarningMessages().length > 0) || this.ignoreWarnings;
+    }
+
+    submit() {
+    	this.saved_status = this.response.status;
+    	this.getValuesForOtherInputs();
+    	this.questions[144].response.value = this.redFlagTotal;
+    	this.errorMessages = [];
+        this.warningMessages = [];
+    	this.response.status = 'approved';
+    	if (this.ignoreWarnings) {
+    		this.response.ignore_warnings = 'True';
+    	} else {
+    		this.response.ignore_warnings = 'False';
+    	}
+    	this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    		 this.response = response.data;
+             this.cards = response.data.cards[0].instances;
+             this.responses = response.data.responses;
+             this.questions = _.keyBy(this.responses, x => x.question_id);
+             this.setValuesForOtherInputs();
+             if (this.stateParams.id === null) {
+            	 this.stateParams.id = response.data.id;
+             }
+             this.state.go('cifList');
+         }, (error) => {
+        	 this.errorMessages = error.data.errors;
+             this.warningMessages = error.data.warnings;
+             this.response.status = this.saved_status;
+            });
+    	
+        this.messagesEnabled = true;
+        //this.getErrorMessages();
+        //this.getWarningMessages();
+    }
+    
+    getCardInstances(constant_name) {
+    	if (!IdConstants.hasOwnProperty(constant_name)) {
+    		return [];
+    	}
+    	let category_id = IdConstants[constant_name].Category
+    	if (this.response != null && this.response.cards != null) {
+	    	for (let idx=0; idx < this.response.cards.length; idx++) {
+	    		if (this.response.cards[idx].category_id === category_id) {
+	    			return this.response.cards[idx].instances;
+	    		}
+	    	}
+    	}
+    	
+    	return [];
+    }
+
+    watchMessages() {
+        this.$scope.$watch(() => this.cards, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.getErrorMessages();
+            }
+        });
+        this.$scope.$watch(() => this.redFlagTotal, (newValue, oldValue) => {
+            if (newValue !== oldValue) {
+                this.getWarningMessages();
+            }
+        });
+    }
+}
+
+export default {
+    templateUrl,
+    controller: CifNepalController
+};

@@ -32,8 +32,12 @@ class Address2Service {
         return this.service.post('api/address2/', address);
     }
 
-    getFuzzyAddress2s(val) {
-        return this.service.get('api/address2/fuzzy/?address2=' + val);
+    getFuzzyAddress2s(val, address1Name=null) {
+    	if (address1Name == null) {
+    		return this.service.get('api/address2/fuzzy/?address2=' + val);
+    	} else {
+    		return this.service.get('api/address2/fuzzy/?address2=' + val + '&address1=' + address1Name);
+    	}
     }
 
     getRelatedItems(address) {

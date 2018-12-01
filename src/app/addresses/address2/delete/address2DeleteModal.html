@@ -5,7 +5,7 @@
 <div class="modal-body">
   <div ng-if="!delCtrl.canDelete">
     <h3 style="margin-top:0;">Swap all related items to another Address 2</h3>
-    <autocomplete-address2 label="'Address 2 to Swap'" ng-model="delCtrl.addressToSwapWith"></autocomplete-address2>
+    <autocomplete-address2 label="'Address 2 to Swap'" ng-model="delCtrl.addressToSwapWith" address1-name="delCtrl.blank"></autocomplete-address2>
 
     <confirm-button
         btn-class="btn btn-danger"

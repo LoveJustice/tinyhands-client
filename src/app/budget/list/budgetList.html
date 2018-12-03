@@ -56,10 +56,10 @@
         <td>{{ form.date_time_last_updated | date:'MMM d, y hh:mm:ss a' }}</td>
         <td>
           <a ui-sref="budget({id:form.id, isViewing:true})" class="btn btn-sm btn-primary">View</a>
-          <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary" ng-if="budgetListCtrl.session.checkPermission('BUDGETS','EDIT',form.border_station.operating_country.id, form.border_station.id)">Edit</a>
+          <a ui-sref="budget({id:form.id})" class="btn btn-sm btn-primary" ng-if="budgetListCtrl.session.checkPermission('BUDGETS','EDIT',form.border_station.operating_country, form.border_station.id)">Edit</a>
           <a ui-sref="mdf({id: form.id})" class="btn btn-sm btn-primary">Send MDF</a>
 
-          <button ng-if="budgetListCtrl.session.checkPermission('BUDGETS','DELETE',form.border_station.operating_country.id, form.border_station.id)" class="btn btn-sm btn-danger animated" ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
+          <button ng-if="budgetListCtrl.session.checkPermission('BUDGETS','DELETE',form.border_station.operating_country, form.border_station.id)" class="btn btn-sm btn-danger animated" ng-click="budgetListCtrl.removeBudget(budgetListCtrl.listOfBudgets, form)"
           ng-class="{fadeIn: form.hover && !form.budgetRemoved, fadeOut: !form.hover, pulse: form.budgetRemoved}">
             {{ form.budgetRemoved ? "Are you sure?" : "Remove Budget" }}
           </button>

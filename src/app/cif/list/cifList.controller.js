@@ -215,8 +215,8 @@ export default class CifListController {
     	for (let idx=0; idx < cifs.length; idx++) {
     		let cif = cifs[idx];
     		if (cif.form_name !== null) {
-    			cif.viewUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:true})
-    			cif.editUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:false})
+    			cif.viewUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:true});
+    			cif.editUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:false});
     		}
     	}
     }

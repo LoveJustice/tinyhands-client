@@ -3,9 +3,11 @@
 
   <i ng-show="loadingAddress2" class="glyphicon glyphicon-refresh"></i>
 
-  <input class="form-control" type="text" ng-model="ngModel" placeholder="Address 2" uib-typeahead="address2 as address2.name for address2 in acAddress2Ctrl.getFuzzyAddress2s($viewValue)"
+  <input ng-if="acAddress2Ctrl.scope.address1Object === undefined || acAddress2Ctrl.scope.address1Object.name" class="form-control" type="text" ng-model="ngModel" placeholder="Address 2" uib-typeahead="address2 as address2.name for address2 in acAddress2Ctrl.getFuzzyAddress2s($viewValue)"
     typeahead-loading="loadingAddress2" uib-typeahead-no-results="noResults" typeahead-wait-ms="300" typeahead-min-length="3"
   />
+  
+   <div ng-if="acAddress2Ctrl.scope.address1Object!==undefined && !acAddress2Ctrl.scope.address1Object.name"><label class="text-info">Select address1 first</label></div>
 
   <div ng-show="noResults">
     <i class="glyphicon glyphicon-remove"></i> No Results Found

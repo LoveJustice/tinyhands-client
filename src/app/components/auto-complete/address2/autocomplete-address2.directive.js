@@ -11,6 +11,7 @@ export default function AutocompleteAddress2Directive() {
         scope: {
             label: '=?',
             ngModel: '=',
+            address1Object: "=?",
         }
     };
 
@@ -22,10 +23,20 @@ class AutocompleteAddress2Controller {
         'ngInject';
         this.address2Service = address2Service;
         this.label = $scope.label;
+        this.scope = $scope;
+        this.address1Required = $scope.address1Required === true;
     }
-
+    
+    isEnabled() {
+    	return this.scope.address1Name != undefined;
+    }
+    
     getFuzzyAddress2s(val) {
-        return this.address2Service.getFuzzyAddress2s(val)
+    	let addressName = null;
+    	if (this.scope.address1Object && this.scope.address1Object.name) {
+    		addressName = this.scope.address1Object.name;
+    	}
+        return this.address2Service.getFuzzyAddress2s(val, addressName)
             .then((promise) => {
                 return promise.data;
             });

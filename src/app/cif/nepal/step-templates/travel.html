@@ -21,7 +21,7 @@
     		<form-step class="control-label">3.2 Destination:</form-step>
     	</div>
     	<div class="col-md-10">
-            <form-step type="radio" class="col-md-3" radio-name="destination" ng-repeat="dest in $ctrl.idConstants.RadioItems[339]" label="{{dest}}"
+            <form-step type="radio" class="col-md-3" radio-name="destination" ng-repeat="dest in $ctrl.config.RadioItems[339]" label="{{dest}}"
             	response-value="$ctrl.otherData.questions[339].value" other-value="$ctrl.otherData.questions[339].otherValue"></form-step>
             <form-step type="otherRadio" class="col-md-4" radio-name="destination" label="Other:" other-value="$ctrl.otherData.questions[339].otherValue"
 	                response-value="$ctrl.otherData.questions[339].value"></form-step>

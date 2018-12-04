@@ -121,7 +121,7 @@ export default class CifListController {
         modalInstance.result.then((station) => {
         	this.service.getFormForStation(station.id).then((response) => {
         		if (response.data.length > 0) {
-        			this.state.go(response.data[0].form_name, {stationId: station.id, countryId: station.country_id, isViewing:false});
+        			this.state.go(response.data[0].form_name, {stationId: station.id, countryId: station.country_id, isViewing:false, formName: response.data[0].form_name});
         		} else {
         			this.toastr.error("Unable to find form for station " + station.label);
         		}
@@ -215,8 +215,8 @@ export default class CifListController {
     	for (let idx=0; idx < cifs.length; idx++) {
     		let cif = cifs[idx];
     		if (cif.form_name !== null) {
-    			cif.viewUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:true});
-    			cif.editUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:false});
+    			cif.viewUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:true,formName: cifs[idx].form_name});
+    			cif.editUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:false, formName: cifs[idx].form_name});
     		}
     	}
     }

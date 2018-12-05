@@ -271,8 +271,7 @@ export class BaseIrfController {
             }
             this.state.go('irfNewList');
         }, (error) => {
-       	 this.errorMessages = error.data.errors;
-       	this.set_errors_and_warnings(error.data);
+        	this.set_errors_and_warnings(error.data);
            });
     	 this.messagesEnabled = false;
     }

@@ -26,6 +26,15 @@ export class BaseCifController {
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
     }
+    
+    getErrorMessages() {
+    	return this.errorMessages;
+    }
+    
+    getWarningMessages() {
+    	return this.warningMessages;
+    }
+
 
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
@@ -257,6 +266,27 @@ export class BaseCifController {
     // Override in subclass for implementation specific features
     saveExtra() {	
     }
+    
+    set_errors_and_warnings(response) {
+    	if (response.errors != null) {
+    		if (response.errors instanceof Array) {
+    			this.errorMessages = response.errors;
+    		} else {
+    			this.errorMessages = [response.errors];
+    		}
+    	} else {
+    		this.errorMessages = [];
+    	}
+    	if (response.warnings != null) {
+    		if (response.warnings instanceof Array) {
+    			this.warningMessages = response.warnings;
+    		} else {
+    			this.warningMessages = [response.warnings];
+    		}
+    	} else {
+    		this.warningMessages = [];
+    	}
+    }
    
     save() {
     	this.response.status = 'in-progress';
@@ -276,8 +306,7 @@ export class BaseCifController {
             }
             this.state.go('cifList');
         }, (error) => {
-       	 this.errorMessages = error.data.errors;
-            this.warningMessages = error.data.warnings;
+        	this.set_errors_and_warnings(error.data);
            });
     	 this.messagesEnabled = false;
     }
@@ -323,8 +352,7 @@ export class BaseCifController {
              }
              this.state.go('cifList');
          }, (error) => {
-        	 this.errorMessages = error.data.errors;
-             this.warningMessages = error.data.warnings;
+        	 this.set_errors_and_warnings(error.data);
              this.response.status = this.saved_status;
             });
     	

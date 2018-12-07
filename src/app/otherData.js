@@ -1,4 +1,6 @@
-class IrfOtherData {
+/* global _ */
+
+class OtherData {
 	constructor(origQuestions) {
 		this.origQuestions = origQuestions;
 		this.questions = {};
@@ -9,8 +11,12 @@ class IrfOtherData {
     		this.questions[valueId] = {};
     	}
         let flattenedItems = _.flattenDeep(items);
-        let value = this.origQuestions[valueId].response.value;
-        if (!_.includes(flattenedItems, value) && value !== '') {
+        let value = '';
+        if (this.origQuestions[valueId] != null && this.origQuestions[valueId].response != null &&
+				this.origQuestions[valueId].response.value != null) {
+			value = this.origQuestions[valueId].response.value;
+		}
+        if (!_.includes(flattenedItems, value) && value !== '' && value != null) {
         	this.questions[valueId].value = 'Other';
         	this.questions[valueId].otherValue = value;
         } else {
@@ -33,4 +39,4 @@ class IrfOtherData {
 	}
 }
 
-module.exports = IrfOtherData;
+module.exports = OtherData;

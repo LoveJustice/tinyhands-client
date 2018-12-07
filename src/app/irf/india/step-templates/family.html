@@ -44,7 +44,7 @@
         </div>
         <div class="col-md-8">
             <div class="row">
-                <div class="col-md-6" ng-repeat="families in $ctrl.family">
+                <div class="col-md-6" ng-repeat="families in $ctrl.config.RadioItems[82]">
                     <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
                     <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
                 </div>

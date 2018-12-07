@@ -1,16 +1,15 @@
 import {BaseCifController} from "./baseCifController";
-import {BaseModalController} from './baseModalController.js';
+import {BaseModalController} from '../baseModalController.js';
 
 /* global moment */
 
 const IdConstants = {
-		MainPersonId:292,
-		totalFlagId:451,
+		TotalFlagId:451,
 		
 		Person:[292],
 		Address:[],
 		RadioOther:[305,339],
-		Date:[288,479,375,386],
+		Date:[288],
 		RadioItems:{
 			"289":[
 	        	['Intercept', 'Operation'],
@@ -37,7 +36,8 @@ const IdConstants = {
 class CifTestController extends BaseCifController {
 	constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
         'ngInject';        
-        super($scope, $uibModal, constants, CifService, $stateParams, $state, IdConstants);
+        super($scope, $uibModal, constants, CifService, $stateParams, $state);
+        this.config = IdConstants;
        
         
     }
@@ -62,6 +62,9 @@ describe('CifTestController', () => {
                 then: () => {}
             }),
             submitCif: (countryId, id, response) => ({
+                then: () => { }
+            }),
+            getFormConfig: (formName) => ({
                 then: () => { }
             })
         };

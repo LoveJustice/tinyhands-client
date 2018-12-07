@@ -45,7 +45,7 @@
         <form-step class="col-md-3 control-label">Source of Intelligence: </form-step>
         <div class="col-md-9">
         	<div class="col-md-12">
-		        <div class="col-md-3" ng-repeat="sources in $ctrl.idConstants.RadioItems[289]">
+		        <div class="col-md-3" ng-repeat="sources in $ctrl.config.RadioItems[289]">
 		            <form-step type="radio" radio-name="sourceType" ng-repeat="source in sources" label="{{source}}"
 		            	response-value="$ctrl.questions[289].response.value"></form-step>    
 		        </div>

@@ -1,14 +1,13 @@
+const OtherData = require('../otherData.js');
+const DateData = require('../dateData.js');
 
-const CifOtherData = require('../otherData.js');
-const CifDateDate = require('../dateData.js');
-
-export class BaseCifController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
+export class BaseIrfController {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.constants = constants;
-        this.service = CifService;
+        this.service = IrfService;
         this.stateParams = $stateParams;
         this.state = $state;
         this.isViewing = this.stateParams.isViewing === 'true';
@@ -23,7 +22,7 @@ export class BaseCifController {
         this.errorMessages = [];
         this.warningMessages = [];
 
-        this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
+        this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
     }
     
@@ -35,15 +34,14 @@ export class BaseCifController {
     	return this.warningMessages;
     }
 
-
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
     }
 
-    getCif(countryId, stationId, id) {
-        this.service.getFormConfig(this.stateParams.formName).then ((response) => {
-            this.config = response.data
-            this.service.getCif(countryId, stationId, id).then((response) => {
+    getIrf(countryId, stationId, id) {
+    	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
+    		this.config = response.data
+    		this.service.getIrf(countryId, stationId, id).then((response) => {
             	this.response = response.data;
                 this.responses = response.data.responses;
                 this.questions = _.keyBy(this.responses, (x) => x.question_id);
@@ -52,50 +50,17 @@ export class BaseCifController {
                 		this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
                 	}
                 }
-                	
-                for (let person_entry in this.config.Person) {
-                    let person_id = this.config.Person[person_entry];
-                    if (this.questions[person_id].response.name == null) {
-                        this.questions[person_id].response = {
-                            "storage_id": null,
-                            "name": {
-                                "value": ""
-                            },
-                            "address1": {
-                                "id": null,
-                                "name": ""
-                            },
-                            "address2": {
-                                "id": null,
-                                "name": ""
-                            },
-                            "phone": {
-                                "value": ""
-                            },
-                            "gender": {
-                                "value": ""
-                            },
-                            "age": {
-                                "value": null
-                            },
-                            "birthdate": {
-                                    "value":""
-                            },
-                            "passport": {
-                                "value": ""
-                            },
-                            "nationality": {
-                                "value": ""
-                            }
-                        };
-                    }
-                }
+
                 this.inCustomHandling();
                 if (id === null) {
                 	this.response.status = 'in-progress';
                 }
             });
-        });
+    	});
+    }
+    
+    getIntercepteeImage(url) {
+        return new URL(url, this.constants.BaseUrl).href;
     }
     
     inCustomHandling() {
@@ -109,7 +74,7 @@ export class BaseCifController {
     }
     
     setValuesForOtherInputs() {
-    	this.otherData = new CifOtherData(this.questions);
+    	this.otherData = new OtherData(this.questions);
     	if (this.config.hasOwnProperty('RadioOther')) {
     		for (let idx=0; idx < this.config.RadioOther.length; idx++) {
     			let questionId = this.config.RadioOther[idx];
@@ -119,7 +84,7 @@ export class BaseCifController {
     }
     
     setValuesForDateInputs() {
-    	this.dateData = new CifDateDate(this.questions);
+    	this.dateData = new DateData(this.questions);
     	if (this.config.hasOwnProperty('Date')) {
     		for (let idx=0; idx < this.config.Date.length; idx++) {
     			let questionId = this.config.Date[idx];
@@ -296,7 +261,7 @@ export class BaseCifController {
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
-    	this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
    		 this.response = response.data;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -304,7 +269,7 @@ export class BaseCifController {
             if (this.stateParams.id === null) {
            	 this.stateParams.id = response.data.id;
             }
-            this.state.go('cifList');
+            this.state.go('irfNewList');
         }, (error) => {
         	this.set_errors_and_warnings(error.data);
            });
@@ -342,7 +307,7 @@ export class BaseCifController {
     	} else {
     		this.response.ignore_warnings = 'False';
     	}
-    	this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+    	this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
     		 this.response = response.data;
              this.responses = response.data.responses;
              this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -350,17 +315,16 @@ export class BaseCifController {
              if (this.stateParams.id === null) {
             	 this.stateParams.id = response.data.id;
              }
-             this.state.go('cifList');
+             this.state.go('irfNewList');
          }, (error) => {
         	 this.set_errors_and_warnings(error.data);
-             this.response.status = this.saved_status;
             });
     	
         this.messagesEnabled = true;
     }
     
     getCardInstances(constant_name) {
-    	if (!this.config || !this.config.hasOwnProperty(constant_name) || !this.response || !this.response.cards) {
+    	if (!this.config.hasOwnProperty(constant_name)) {
     		return [];
     	}
     	let category_id = this.config[constant_name].Category;
@@ -377,5 +341,5 @@ export class BaseCifController {
 }
 
 export default {
-	BaseCifController
+	BaseIrfController
 };

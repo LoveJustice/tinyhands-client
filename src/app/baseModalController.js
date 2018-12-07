@@ -1,5 +1,5 @@
-const CifOtherData = require('./cifOtherData.js');
-const CifDateDate = require('./cifDateData.js');
+const OtherData = require('./otherData.js');
+const DateDate = require('./dateData.js');
 
 /* global _ */
 /* global angular */
@@ -20,7 +20,7 @@ class BaseModalController {
         this.redFlagTotal = 0;
         this.config = config;
         
-    	this.otherData = new CifOtherData(this.originalQuestions);
+    	this.otherData = new OtherData(this.originalQuestions);
     	if (this.config.hasOwnProperty('RadioOther')) {
     		for (let idx=0; idx < this.config.RadioOther.length; idx++) {
     			let questionId = this.config.RadioOther[idx];
@@ -28,7 +28,7 @@ class BaseModalController {
     		}
     	}
     
-    	this.dateData = new CifDateDate(this.originalQuestions);
+    	this.dateData = new DateDate(this.originalQuestions);
     	if (this.config.hasOwnProperty('Date')) {
     		for (let idx=0; idx < this.config.Date.length; idx++) {
     			let questionId = this.config.Date[idx];

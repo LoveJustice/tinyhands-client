@@ -52,4 +52,9 @@ export default class CifService {
     	formData.append("main", JSON.stringify(myCif));
     	return this.service.post(`api/cif/`, formData, {'Content-Type': undefined});
     }
+    
+    getFormConfig(formName) {
+        let url=`api/forms/config/${formName}/`;
+        return this.service.get(url);
+    }
 }

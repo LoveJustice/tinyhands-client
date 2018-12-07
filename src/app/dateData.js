@@ -1,4 +1,4 @@
-class CifDateData {
+class DateData {
 	constructor(origQuestions) {
 		this.origQuestions = origQuestions;
 		this.questions = {};
@@ -7,7 +7,7 @@ class CifDateData {
 	setDate(questionId, dateType) {
 		if (dateType === 'basic') {
 			let value = '';
-			if (questionId in this.origQuestions && this.origQuestions[questionId].response !== null &&
+			if (this.origQuestions[questionId] !== null && this.origQuestions[questionId].response !== null &&
 					this.origQuestions[questionId].response.value !== null) {
 				value = this.origQuestions[questionId].response.value;
 			}
@@ -45,4 +45,4 @@ class CifDateData {
 	}
 }
 
-module.exports = CifDateData;
+module.exports = DateData;

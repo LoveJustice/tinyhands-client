@@ -1,6 +1,5 @@
-import IdConstants from './constants.js';
 import {BaseCifController} from '../baseCifController.js';
-import {BaseModalController} from '../baseModalController.js';
+import {BaseModalController} from '../../baseModalController.js';
 import './nepal.less';
 
 import templateUrl from './nepal.html';
@@ -25,7 +24,7 @@ import vehicleBoxTemplate from './step-templates/vehicleBoxes/vehicleBoxModal.ht
 export class CifNepalController extends BaseCifController {
     constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
         'ngInject';        
-        super($scope, $uibModal, constants, CifService, $stateParams, $state, IdConstants);
+        super($scope, $uibModal, constants, CifService, $stateParams, $state);
        
         this.stepTemplates = [
             topTemplate,

@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add Address 2</h3>
+</div>
+
+<div class="modal-body">
+    <div class="form-group">
+        <label for="addressName">Name</label>
+        <input type="text" id="addressName" class="form-control" ng-model="address.name"/>
+    </div>
+
+    <div class="form-group">
+        <label for="addressName">Latitude</label>
+        <input type="number" class="form-control" ng-model="address.latitude"/>
+    </div>
+
+
+    <div class="form-group">
+        <label for="addressName">Longitude</label>
+        <input type="number" class="form-control" ng-model="address.longitude"/>
+    </div>
+
+    <div class="form-group">
+        <label for="addressLevel">Level</label>
+        <select id="addressLevel" ng-model="address.level" ng-options="choice for choice in ['State','Country','City','District','VDC','Building', 'Block', 'Upozilla', 'Post Office', 'Village']" class="form-control">
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="addressName">Address 1</label>
+        <i ng-show="loadingAddress1" class="glyphicon glyphicon-refresh"></i>
+        <input ng-disabled="vm.address1Disabled" id="address1" type="text" ng-model="address.address1" placeholder="Address 1" uib-typeahead="address1 as address1.name for address1 in vm.getFuzzyAddress1s($viewValue)" uib-typeahead-loading="loadingAddress1" uib-typeahead-no-results="noResults" class="form-control">
+        <div ng-show="noResults">
+          <i class="glyphicon glyphicon-remove"></i> No Results Found
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="addressName">Canonical Name</label>
+        <i ng-show="loadingAddress2" class="glyphicon glyphicon-refresh" style="position: relative; bottom:25px;"></i>
+        <input id="canonical_name" type="text" ng-model="address.canonical_name" placeholder="Canonical Name" uib-typeahead="address2 as address2.name for address2 in vm.getFuzzyAddress2s($viewValue)" uib-typeahead-loading="loadingAddress2" uib-typeahead-no-results="noResults" class="form-control">
+        <div ng-show="noResults">
+          <i class="glyphicon glyphicon-remove"></i> No Results Found
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Verified</label>
+        <input id="verified_checkbox" type="checkbox" class="form-control" ng-model="address.verified"/>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button id="updateSubmitButton" class="btn btn-primary" type="button" ng-click="vm.save()">Save</button>
+    <button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
+</div>

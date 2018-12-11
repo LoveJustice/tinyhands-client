@@ -1,5 +1,6 @@
 import {BaseCifController} from '../baseCifController.js';
 import {BaseModalController} from '../../baseModalController.js';
+import {AssociatedPersonModalController} from '../associatedPersonModalController.js';
 import './nepal.less';
 
 import templateUrl from './nepal.html';
@@ -42,7 +43,7 @@ export class CifNepalController extends BaseCifController {
     }
     
     openPotentialVictimModal(responses = [], isAdd = false, idx=null) {
-    	this.commonModal(responses, isAdd, idx, BaseModalController, 'PotentialVictimModalController',
+    	this.commonModal(responses, isAdd, idx, AssociatedPersonModalController, 'PotentialVictimModalController',
     			potentialVictimModalTemplate, 'OtherPotentialVictims');
     }
     
@@ -52,7 +53,7 @@ export class CifNepalController extends BaseCifController {
     }
     
     openPersonBoxModal(responses = [], isAdd = false, idx=null) {
-    	this.commonModal(responses, isAdd, idx, BaseModalController, 'PersonBoxModalController',
+    	this.commonModal(responses, isAdd, idx, AssociatedPersonModalController, 'PersonBoxModalController',
     			personBoxTemplate, 'PersonBoxes');
     }
     

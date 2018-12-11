@@ -1,4 +1,3 @@
-
 const CifOtherData = require('../otherData.js');
 const CifDateDate = require('../dateData.js');
 
@@ -22,6 +21,8 @@ export class BaseCifController {
        
         this.errorMessages = [];
         this.warningMessages = [];
+        this.cifNumber = "";
+        this.associatedPersons = [];
 
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
@@ -38,6 +39,21 @@ export class BaseCifController {
 
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
+    }
+    
+    number_change() {
+        let question_id = 287;
+        let cifNumber = this.questions[question_id].response.value;
+        if (this.cifNumber !== cifNumber) {
+            this.cifNumber = cifNumber;
+            if (cifNumber === '') {
+                this.associatedPersons = [];
+            } else {
+                this.service.getAssociatedPersons(this.stateParams.stationId, cifNumber).then((response) => {
+                    this.associatedPersons = response.data;
+                });
+            }
+        }
     }
 
     getCif(countryId, stationId, id) {
@@ -94,6 +110,7 @@ export class BaseCifController {
                 if (id === null) {
                 	this.response.status = 'in-progress';
                 }
+                this.number_change();
             });
         });
     }
@@ -245,7 +262,8 @@ export class BaseCifController {
                 card: () => the_card,
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
-                config: () => config
+                config: () => config,
+                associatedPersons: () => this.associatedPersons
             },
             size: 'lg',
             templateUrl: theTemplate,

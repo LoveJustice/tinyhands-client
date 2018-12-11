@@ -41,6 +41,7 @@ import AutocompleteAddress1Directive from './components/auto-complete/address1/a
 import AutocompleteAddress2Directive from './components/auto-complete/address2/autocomplete-address2.directive';
 import CreateButtonComponent from './components/create-budget/create-budget.component.js';
 import MdfExportComponent from './components/mdf-export/mdf-export.component';
+import AssociatedPersonDirective from './components/associated-person/associated-person.directive';
 
 angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap, 'ui.dateTimeInput', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 
         sharedModule,
@@ -70,5 +71,6 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
     .directive('navbar', NavbarDirective)
     .directive('autocompleteAddress1', AutocompleteAddress1Directive)
     .directive('autocompleteAddress2', AutocompleteAddress2Directive)
+    .directive('associatedPerson', AssociatedPersonDirective)
     .component('mdfexport', MdfExportComponent)
     .component('createbudget', CreateButtonComponent);

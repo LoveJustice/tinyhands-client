@@ -13,7 +13,8 @@ export default function AssociatedPersonDirective() {
         scope: {
             ngModel: '=',
             personList: "=",
-        }
+            birthDate: "="
+            }
     };
 
     return directive;
@@ -38,6 +39,11 @@ class AssociatedPersonController {
             templateUrl: selectPersonTemplate,
         }).result.then((person) => {
             this.$scope.ngModel = person;
+            let dateValue = '';
+            if (person.birthdate !== undefined && person.birthdate !== null && person.birthdate.value !== null && person.birthdate.value !== '') {
+                dateValue = new Date(person.birthdate.value);
+            }
+            this.$scope.birthDate = {dateType:'person', value:dateValue};
         });
 }
 }

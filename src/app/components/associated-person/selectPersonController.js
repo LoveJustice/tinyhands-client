@@ -12,6 +12,7 @@ export default class SelectPersonController {
         for (let idx=0; idx < this.personList.length; idx++) {
             if (Number(this.selectedItem) === this.personList[idx].storage_id) {
                 selectedPerson = angular.copy(this.personList[idx]);
+                selectedPerson.link_id = selectedPerson.storage_id;
                 selectedPerson.storage_id = null;
                 break;
             }

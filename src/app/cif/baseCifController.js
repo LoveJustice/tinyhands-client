@@ -58,7 +58,7 @@ export class BaseCifController {
 
     getCif(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
-            this.config = response.data
+            this.config = response.data;
             this.service.getCif(countryId, stationId, id).then((response) => {
             	this.response = response.data;
                 this.responses = response.data.responses;
@@ -71,7 +71,7 @@ export class BaseCifController {
                 	
                 for (let person_entry in this.config.Person) {
                     let person_id = this.config.Person[person_entry];
-                    if (this.questions[person_id].response.name == null) {
+                    if (this.questions[person_id].response.name === null) {
                         this.questions[person_id].response = {
                             "storage_id": null,
                             "name": {
@@ -286,7 +286,7 @@ export class BaseCifController {
     }
     
     set_errors_and_warnings(response) {
-    	if (response.errors != null) {
+    	if (response.errors !== null) {
     		if (response.errors instanceof Array) {
     			this.errorMessages = response.errors;
     		} else {
@@ -295,7 +295,7 @@ export class BaseCifController {
     	} else {
     		this.errorMessages = [];
     	}
-    	if (response.warnings != null) {
+    	if (response.warnings !== null) {
     		if (response.warnings instanceof Array) {
     			this.warningMessages = response.warnings;
     		} else {

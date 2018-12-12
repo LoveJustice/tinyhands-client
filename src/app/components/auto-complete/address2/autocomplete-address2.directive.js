@@ -31,7 +31,7 @@ class AutocompleteAddress2Controller {
     }
     
     isEnabled() {
-    	return this.$scope.address1Name != undefined;
+    	return this.$scope.address1Name !== undefined;
     }
     
     getFuzzyAddress2s(val) {

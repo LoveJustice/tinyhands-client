@@ -51,6 +51,6 @@
 </div>
 
 <div class="modal-footer">
-    <button id="updateSubmitButton" class="btn btn-primary" type="button" ng-click="vm.save()">Save</button>
+    <button ng-disabled="!address.name || !address.level" id="updateSubmitButton" class="btn btn-primary" type="button" ng-click="vm.save()">Save</button>
     <button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
 </div>

@@ -30,10 +30,6 @@ class AutocompleteAddress2Controller {
         this.$uibModal = $uibModal;
     }
     
-    isEnabled() {
-    	return this.$scope.address1Name !== undefined;
-    }
-    
     getFuzzyAddress2s(val) {
         this.typeAhead = val;
     	let addressName = null;

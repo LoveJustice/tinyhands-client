@@ -31,7 +31,7 @@ export default class AddAddress2Controller {
     }
     
     save() {
-        if (this.scope.address.canonical_name === "" || this.scope.address.canonical_name === undefined || this.scope.address.canonical_name === null) {
+        if (this.scope.address.canonical_name === "" || !this.scope.address.canonical_name || this.scope.address.canonical_name === null) {
             this.scope.address.canonical_name = { id: -1, name: "Empty" };
         }
         this.address2Service.addAddress(this.scope.address)

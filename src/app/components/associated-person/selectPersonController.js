@@ -1,3 +1,4 @@
+/* global angular */
 export default class SelectPersonController {
     constructor($uibModal, $uibModalInstance, $scope, personList) {
         'ngInject';

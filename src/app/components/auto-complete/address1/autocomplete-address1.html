@@ -3,9 +3,18 @@
 
   <i ng-show="loadingAddress1" class="glyphicon glyphicon-refresh"></i>
 
-  <input class="form-control" type="text" ng-model="ngModel" placeholder="Address 1" uib-typeahead="address1 as address1.name for address1 in acAddress1Ctrl.getFuzzyAddress1s($viewValue)"
-    typeahead-loading="loadingAddress1" uib-typeahead-no-results="noResults" typeahead-wait-ms="300" typeahead-min-length="3"
-  />
+  <div class="row">
+  	<div class="col-md-10">
+      <input class="form-control" type="text" ng-model="ngModel" placeholder="Address 1" uib-typeahead="address1 as address1.name for address1 in acAddress1Ctrl.getFuzzyAddress1s($viewValue)"
+        typeahead-loading="loadingAddress1" uib-typeahead-no-results="noResults" typeahead-wait-ms="300" typeahead-min-length="3"
+      />
+    </div>
+    <div class="col-md-2">
+      <button ng-click="acAddress1Ctrl.addAddress1()">
+         <i class="fa fa-plus"></i>
+      </button>
+    </div>
+  </div>
 
 
   <div ng-show="noResults">

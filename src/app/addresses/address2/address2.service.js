@@ -33,7 +33,7 @@ class Address2Service {
     }
 
     getFuzzyAddress2s(val, address1Name=null) {
-    	if (address1Name == null) {
+    	if (address1Name === null) {
     		return this.service.get('api/address2/fuzzy/?address2=' + val);
     	} else {
     		return this.service.get('api/address2/fuzzy/?address2=' + val + '&address1=' + address1Name);

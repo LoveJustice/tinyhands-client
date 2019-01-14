@@ -1,6 +1,7 @@
 /*global FormData */
 /* global jQuery */
 // Common service used for all IRF forms
+// Test
 export default class CifService {
     constructor(BaseService) {
         'ngInject';

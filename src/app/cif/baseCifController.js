@@ -1,4 +1,3 @@
-
 const CifOtherData = require('../otherData.js');
 const CifDateDate = require('../dateData.js');
 
@@ -22,6 +21,8 @@ export class BaseCifController {
        
         this.errorMessages = [];
         this.warningMessages = [];
+        this.cifNumber = "";
+        this.associatedPersons = [];
 
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.setupFlagListener();
@@ -39,10 +40,25 @@ export class BaseCifController {
     formatDate(UfcDate) {
         return moment(UfcDate).toDate();
     }
+    
+    number_change() {
+        let question_id = 287;
+        let cifNumber = this.questions[question_id].response.value;
+        if (this.cifNumber !== cifNumber) {
+            this.cifNumber = cifNumber;
+            if (cifNumber === '') {
+                this.associatedPersons = [];
+            } else {
+                this.service.getAssociatedPersons(this.stateParams.stationId, cifNumber).then((response) => {
+                    this.associatedPersons = response.data;
+                });
+            }
+        }
+    }
 
     getCif(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
-            this.config = response.data
+            this.config = response.data;
             this.service.getCif(countryId, stationId, id).then((response) => {
             	this.response = response.data;
                 this.responses = response.data.responses;
@@ -55,7 +71,7 @@ export class BaseCifController {
                 	
                 for (let person_entry in this.config.Person) {
                     let person_id = this.config.Person[person_entry];
-                    if (this.questions[person_id].response.name == null) {
+                    if (this.questions[person_id].response.name === null) {
                         this.questions[person_id].response = {
                             "storage_id": null,
                             "name": {
@@ -94,6 +110,7 @@ export class BaseCifController {
                 if (id === null) {
                 	this.response.status = 'in-progress';
                 }
+                this.number_change();
             });
         });
     }
@@ -245,7 +262,8 @@ export class BaseCifController {
                 card: () => the_card,
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
-                config: () => config
+                config: () => config,
+                associatedPersons: () => this.associatedPersons
             },
             size: 'lg',
             templateUrl: theTemplate,
@@ -268,7 +286,7 @@ export class BaseCifController {
     }
     
     set_errors_and_warnings(response) {
-    	if (response.errors != null) {
+    	if (response.errors !== null) {
     		if (response.errors instanceof Array) {
     			this.errorMessages = response.errors;
     		} else {
@@ -277,7 +295,7 @@ export class BaseCifController {
     	} else {
     		this.errorMessages = [];
     	}
-    	if (response.warnings != null) {
+    	if (response.warnings !== null) {
     		if (response.warnings instanceof Array) {
     			this.warningMessages = response.warnings;
     		} else {

@@ -32,6 +32,9 @@
                         <input class="form-control" ng-model="PotentialVictimModalController.questions[300].response.name.value" required>
                     </div>
                 </div>
+                <div class="col-md-1 form-group margin-top-15">
+            		<associated-person ng-model="PotentialVictimModalController.questions[300].response" person-list="PotentialVictimModalController.associatedPersons" birth-date="PotentialVictimModalController.dateData.questions[300]"></associatedPerson>
+           		</div>
             </div>
             <div class="row">
                 <div class="col-md-6 form-group margin-top-15">

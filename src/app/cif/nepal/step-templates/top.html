@@ -3,7 +3,7 @@
         <div class="col-md-4 form-group">
             <form-step class="col-md-3 control-label">Cif Number: </form-step>
             <div class="col-md-9">
-                <input type="text" class="form-control" ng-change="$ctrl.getErrorMessages()" placeholder="Cif Number" ng-model="$ctrl.questions[287].response.value">
+                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="Cif Number" ng-model="$ctrl.questions[287].response.value">
             </div>
         </div>
         <div class="col-md-4 form-group">

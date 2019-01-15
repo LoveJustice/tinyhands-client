@@ -57,4 +57,9 @@ export default class CifService {
         let url=`api/forms/config/${formName}/`;
         return this.service.get(url);
     }
+    
+    getAssociatedPersons(station_id, cif_number) {
+        let url = `api/person/associated/${station_id}/${cif_number}/`;
+        return this.service.get(url);
+    }
 }

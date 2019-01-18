@@ -2,7 +2,17 @@
     <div class="row center-vertical">
         <div class="col-md-3">
             <div class="padding-bottom-20">Who is in the group?</div>
-            <form-step red-flag="40" type="checkbox" label="Girl appears drugged or drowsy" response-value="$ctrl.questions[10].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="Person appears drugged or drowsy" response-value="$ctrl.questions[10].response.value"></form-step>
+            <div class="margin-top-20 margin-bottom-10">Is or was travelling with someone they recently met through:</div>
+            <div>
+                <form-step red-flag="50" type="checkbox" label="Missed Call" response-value="$ctrl.questions[242].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="40" type="checkbox" label="Facebook" response-value="$ctrl.questions[243].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="40" type="otherCheckbox" label="Other Website: " response-value="$ctrl.questions[244].response.value"></form-step>
+            </div>
         </div>
         <div class="col-md-9 container">
             <div class="row center-vertical">
@@ -12,20 +22,20 @@
                 <div class="row col-md-8">
                     <div class="row center-vertical">
                         <div class="col-md-4">
-                            Are you meeting someone in India?
+                            Are you meeting someone?
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="30" type="checkbox" label="Is meeting with someone just across border" response-value="$ctrl.questions[21].response.value"></form-step>
+                            <form-step red-flag="20" type="checkbox" label="Is meeting with someone just across border" response-value="$ctrl.questions[21].response.value"></form-step>
                             <form-step red-flag="20" type="checkbox" label="Meeting someone they've seen in Nepal in last month" response-value="$ctrl.questions[22].response.value"></form-step>
                         </div>
                     </div>
                     <hr/>
                     <div class="row center-vertical">
                         <div class="col-md-4">
-                            Was she travelling with someone earlier?
+                            Were you travelling with someone earlier?
                         </div>
                         <div class="col-md-8">
-                            <form-step red-flag="45" type="checkbox" label="Was travelling with someone not with them now" response-value="$ctrl.questions[23].response.value"></form-step>
+                            <form-step red-flag="25" type="checkbox" label="Was travelling with someone not with them now" response-value="$ctrl.questions[23].response.value"></form-step>
                         </div>
                     </div>
                 </div>
@@ -33,17 +43,20 @@
             <hr/>
             <div class="row center-vertical">
                 <div class="col-md-4">
-                    <form-step type="checkbox" label="Husband / Wife" response-value="$ctrl.questions[13].response.value"></form-step>
-                    <form-step red-flag="45" type="checkbox" label="Wife is under 18" response-value="$ctrl.questions[17].response.value"></form-step>
+                    <form-step type="checkbox" class="inblock" label="Married," response-value="$ctrl.questions[13].response.value"></form-step>
+                    &nbsp; <form-step type="checkbox" class="inblock" label="Engaged," response-value="$ctrl.questions[600].response.value"></form-step>
+                    &nbsp; <form-step type="checkbox" class="inblock" label="Dating Couple" response-value="$ctrl.questions[601].response.value"></form-step>
+                    <form-step red-flag="45" type="checkbox" label="Wife/fiancée is under 18" response-value="$ctrl.questions[17].response.value"></form-step>
                 </div>
                 <div class="row col-md-8">
                     <div class="row center-vertical">
                         <div class="col-md-4">
-                            Ask when she was married
+                            Ask when they were married
                         </div>
                         <div class="col-md-8">
                             <form-step red-flag="15" type="checkbox" label="Married in the past 2 weeks" response-value="$ctrl.questions[24].response.value"></form-step>
-                            <form-step red-flag="10" type="checkbox" label="Married within the past 2-8 weeks" response-value="$ctrl.questions[25].response.value"></form-step>
+                            <form-step red-flag="5" type="checkbox" label="Married within the past 2-8 weeks" response-value="$ctrl.questions[25].response.value"></form-step>
+                            <form-step red-flag="15" type="checkbox" label="On their way to get married" response-value="$ctrl.questions[216].response.value"></form-step>
                         </div>
                     </div>
                     <hr/>
@@ -80,13 +93,18 @@
     <hr/>
     <div class="row">
         <div class="col-md-5">If there is more than one person in the group separate them at this point.</div>
-        <div class="col-md-3">
-            <form-step red-flag="40" type="checkbox" label="Caught in a lie or contradiction" response-value="$ctrl.questions[30].response.value">
-            </form-step>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <form-step red-flag="20" type="checkbox" label="Caught in a lie" response-value="$ctrl.questions[30].response.value"></form-step>
+        </div>
+        <div class="col-md-4">
+            <form-step red-flag="25" type="checkbox" label="Contradiction between stories" response-value="$ctrl.questions[603].response.value"></form-step>
         </div>
         <div class="col-md-4">
             <form-step red-flag=" " type="otherCheckbox" label="Other red flags" response-value="$ctrl.questions[31].response.value">
             </form-step>
         </div>
     </div>
+    <br>
 </fieldset>

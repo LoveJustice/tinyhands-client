@@ -46,7 +46,7 @@
             <input type="number" min="0" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass">
         </span>
         <span ng-switch-when="otherCheckbox">
-            <input type="checkbox" ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-checked="$ctrl.responseValue != '' && $ctrl.responseValue != null" ng-click="$ctrl.updateCheckboxOther($event, $ctrl.responseValue)" id="{{$ctrl.label}}">
+            <input type="checkbox" ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-checked="$ctrl.responseValue != '' && $ctrl.responseValue != null" ng-click="$ctrl.updateCheckboxOther($event)" id="{{$ctrl.label}}">
             <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
                 <img ng-src="assets/images/cropped_flag.png" alt="flag-container" ng-if="!$ctrl.blueFlag">
                 <img ng-src="assets/images/cropped_flag_blue.png" alt="flag-container" ng-if="$ctrl.blueFlag">

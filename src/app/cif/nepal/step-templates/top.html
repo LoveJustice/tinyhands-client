@@ -1,0 +1,77 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Cif Number: </form-step>
+            <div class="col-md-9">
+                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="Cif Number" ng-model="$ctrl.questions[287].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label"># of PVOTs: </form-step>
+            <div class="col-md-9">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interviewer Name:</form-step>
+            <div class="col-md-9">
+                <staff-select selected-staff="$ctrl.questions[6].response.value" station-id="$ctrl.stationId"></staff-select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interview Date: </form-step>
+            <div class="col-md-9">
+                 <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[288].value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label"># of Suspects: </form-step>
+            <div class="col-md-9">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[5].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interview Location: </form-step>
+            <div class="col-md-9">
+                <location-select selected-location="$ctrl.questions[3].response.value" station-id="$ctrl.stationId"></location-select>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <form-step class="col-md-3 control-label">Source of Intelligence: </form-step>
+        <div class="col-md-9">
+        	<div class="col-md-12">
+		        <div class="col-md-3" ng-repeat="sources in $ctrl.config.RadioItems[289]">
+		            <form-step type="radio" radio-name="sourceType" ng-repeat="source in sources" label="{{source}}"
+		            	response-value="$ctrl.questions[289].response.value"></form-step>    
+		        </div>
+	        </div>
+	        <div class="col-md-9">
+	        	<div class="col-md-2">
+		        	<form-step type="radio" radio-name="sourceType" label="Informant #"
+		            	response-value="$ctrl.questions[289].response.value"></form-step>
+		        </div>
+		        <div class="col-md-2">
+		            <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[290].response.value">
+		        </div>
+	        </div>
+        </div>
+        
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Date of Incident</form-step>
+            <div class="col-md-9">
+                <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[479].value">
+            </div>
+        </div>
+        <div class="col-md-3 form-group">
+            <form-step type="checkbox" label="PV Signed" response-value="$ctrl.questions[291].response.value"></form-step>
+        </div>
+    </div>
+</fieldset>

@@ -8,6 +8,9 @@ export class FormStepController {
     }
 
     $onInit() {
+    	if (!isNaN(parseInt(this.blueFlag))) {
+    		this.redFlag = this.blueFlag;
+    	}
         if (!isNaN(parseInt(this.redFlag))) {
             this.$scope.$watch(
                 () => this.responseValue,
@@ -50,22 +53,22 @@ export class FormStepController {
     }
 
     setFlagSend(newValue, oldValue) {
-        if ((oldValue && newValue) || (!oldValue && newValue)) {
-            if (this.type !== 'radio' && this.type !== 'otherRadio') {
-                this.emitFlag(this.redFlag);
-            } else {
+        if (this.type === 'radio' || this.type === 'otherRadio') {
+            if (newValue) {
                 if (newValue === this.label) {
                     this.emitFlag(this.redFlag);
                 } else if (oldValue === this.label) {
                     this.emitFlag(-this.redFlag);
                 }
-            }
-        } else if (oldValue && !newValue) {
-            if (this.type !== 'radio' && this.type !== 'otherRadio') {
-                this.emitFlag(-this.redFlag);
-            } else if (oldValue === this.label) {
+            } else if (oldValue && !newValue) {
                 this.emitFlag(-this.redFlag);
             }
+        } else {
+           if (!oldValue && newValue) {
+               this.emitFlag(this.redFlag);
+           } else if (oldValue && !newValue) {
+               this.emitFlag(-this.redFlag);
+           }
         }
     }
 
@@ -75,6 +78,14 @@ export class FormStepController {
             this.responseValue = valueSet || '';
             this.otherValue = !!valueSet;
         }
+    }
+    
+    updateCheckboxOther(event) {
+        var checkbox = event.target;
+        if (!checkbox.checked) {
+            this.responseValue = '';
+        }
+        
     }
 }
 
@@ -86,6 +97,7 @@ export default {
         radioName: '@',
         checkboxName: '@',
         redFlag: '<?',
+        blueFlag: '<?',
         responseValue: '=?',
         stepLabel: '<',
         type: '@',

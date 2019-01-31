@@ -12,7 +12,7 @@
             </div>
             <div class="row col-md-10">
                 <div class="row center-vertical">
-                    <div class="col-md-3" ng-repeat="contacts in $ctrl.contacts">
+                    <div class="col-md-3" ng-repeat="contacts in $ctrl.config.RadioItems[92]">
                         <form-step type="radio" radio-name="contactType" ng-repeat="contact in contacts" label="{{contact}}" other-value="$ctrl.otherData.questions[92].otherValue"
                         	response-value="$ctrl.otherData.questions[92].value"></form-step>
                         <form-step ng-if="$last" type="otherRadio" radio-name="contactType" label="Other" other-value="$ctrl.otherData.questions[92].otherValue"
@@ -72,7 +72,7 @@
                     <div class="col-md-2">
                         <div class="text-center">Appearance </div>
                         <hr/>
-                        <form-step type="checkbox" label="Indian looking" response-value="$ctrl.questions[119].response.value"></form-step>
+                        <form-step type="checkbox" label="Foreign looking" response-value="$ctrl.questions[119].response.value"></form-step>
                         <form-step type="checkbox" label="Typical village look" response-value="$ctrl.questions[120].response.value"></form-step>
                         <form-step type="checkbox" label="Looked like agent" response-value="$ctrl.questions[121].response.value"></form-step>
                         <form-step type="checkbox" label="Caste difference" response-value="$ctrl.questions[122].response.value"></form-step>
@@ -83,7 +83,7 @@
                         <hr/>
                         <div class="col-md-6">
                             <form-step type="checkbox" label="Waiting / sitting" response-value="$ctrl.questions[124].response.value"></form-step>
-                            <form-step type="checkbox" label="Walking to border" response-value="$ctrl.questions[135].response.value"></form-step>
+                            <form-step type="checkbox" label="On a train" response-value="$ctrl.questions[135].response.value"></form-step>
                             <form-step type="checkbox" label="Roaming around" response-value="$ctrl.questions[126].response.value"></form-step>
                             <form-step type="checkbox" label="Exiting vehicle" response-value="$ctrl.questions[127].response.value"></form-step>
                             <form-step type="checkbox" label="Heading to vehicle" response-value="$ctrl.questions[128].response.value"></form-step>

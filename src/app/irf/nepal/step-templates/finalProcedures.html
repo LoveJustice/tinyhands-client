@@ -2,10 +2,30 @@
     <div class="container-fluid">
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
-                <h3>Case Narrative</h3>
+                <label for="evidence">Choose one:</label>
+                <div id="evidence">
+                    <form-step type="radio" radio-name="evidenceRadio" response-value="$ctrl.questions[607].response.value" label="Clear Evidence of Trafficking"></form-step>
+                    <form-step type="radio" radio-name="evidenceRadio" response-value="$ctrl.questions[607].response.value" label="Some Clear Evidence of Trafficking"></form-step>
+                    <form-step type="radio" radio-name="evidenceRadio" response-value="$ctrl.questions[607].response.value" label="High Risk of Trafficking"></form-step>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <label for="primary-reason">What is the primary reason you believe this person is being trafficked or is at high risk of being trafficked?</label>
+                <form-step>
+                    <textarea class="form-control" rows="2" ng-model="$ctrl.questions[142].response.value" id="primary-reason"></textarea>
+                </form-step>
+                <hr/>
+            </div>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-6 col-md-offset-3">
+                <label for="case-narrative">Case Narrative</label>
                 <form-step>
                     <em>Please give any additional information about the interception, how it occurred, etc.</em>
-                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value"></textarea>
+                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value" id="case-narrative"></textarea>
                 </form-step>
                 <form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
                     label="Reported Total Red Flag Points"></form-step>
@@ -14,19 +34,9 @@
         </div>
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
-                <h3>Type of Intercept</h3>
-                <div class="col-md-6">
-                    <form-step type="radio" label="Sex trafficking" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
-                    <form-step type="radio" label="India Labor Trafficking" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
-                    <form-step type="radio" label="Nepal internal trafficking" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
-                </div>
-                <div class="col-md-6">
-                    <form-step type="radio" label="Gulf (or country other than India)" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
-                    <form-step type="radio" label="Runaway (no direct evidence of trafficking)" radio-name="trafficking-type" response-value="$ctrl.questions[141].response.value"></form-step>
-                </div>
                 <div class="col-md-12 form-group">
                     <form-step>
-                        <label for="how-sure" class="padding-top-10">How sure are you that it was a trafficking case? </label>
+                        <label for="how-sure" class="padding-top-10">How sure are you that you were right to intercept given the "When to Intercept Posters"? </label>
                     </form-step>
                     <form-step>
                         Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)
@@ -45,22 +55,17 @@
         </div>
         <div class="row center-vertical">
             <div class="col-md-6 col-md-offset-3">
-                <h3>How did you prevent the victim from going?</h3>
-                <form-step label="Her parents used their authority and prevented victim from going" type="checkbox" response-value="$ctrl.questions[148].response.value"></form-step>
-                <form-step ng-disabled="!$ctrl.staffConvinced">
-                    <input id="call" type="checkbox" ng-model="$ctrl.staffConvinced" ng-click="$ctrl.staffConvincedClick()">
-                    <label for="call">THN staff convinced victim not to go</label>
-                    <p>If so, what convinced the victim?</p>
-                    <textarea class="form-control" rows="2" ng-disabled="!$ctrl.staffConvinced" ng-model="$ctrl.questions[149].response.value"></textarea>
-                </form-step>
-                <form-step label="The police forced the victim to stop" type="checkbox" response-value="$ctrl.questions[150].response.value"></form-step>
+                <label for="how-stopped">How did you prevent the victim from going?</label>
+                <form-step label="Staff convinced (not forced) to stop" type="checkbox" response-value="$ctrl.questions[609].response.value"></form-step>
+                <form-step label="Family convinced or forced (if under 18 years old) to stop. Family phone #:" type="otherCheckbox" response-value="$ctrl.questions[608].response.value"></form-step>
+                <form-step label="Police convinced or forced to stop" type="checkbox" response-value="$ctrl.questions[150].response.value"></form-step>
                 <hr/>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row center-vertical">
                 <div class="col-md-6 col-md-offset-3">
-                    <h3>Procedures</h3>
+                    <label for="procedures">Procedures</label>
                 </div>
             </div>
             <div class="row center-vertical">
@@ -78,7 +83,7 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="col-md-6 form-group">
                         <form-step>
-                            <label>Attached scanned copy of form (pdf or image)</label>
+                            <label>Attach scanned copy of form (pdf or image)</label>
                         </form-step>
                     </div>
                     <input type="file" ngf-select value="Choose File" ng-model="$ctrl.questions[152].response.value">

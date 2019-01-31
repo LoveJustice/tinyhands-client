@@ -1,6 +1,6 @@
 <div id="irf-africa-interceptees" class="row stretch-vertical">
-    <div class="col-md-4 stretch-vertical" ng-repeat="card in $ctrl.cards">
-        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card.responses, false, $index)">
+    <div class="col-md-4 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Interceptees')">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card, false, $index)">
             <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
             <div class="panel-body text-center">
                 <img class="img-rounded margin-bottom-20" ngf-thumbnail="$ctrl.getResponseOfQuestionById(card.responses, 7).value" ng-if="$ctrl.getResponseOfQuestionById(card.responses, 7).value.type"
@@ -14,9 +14,9 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 text-center center-vertical" ng-if="!$ctrl.isViewing">
+    <div class="col-md-4 text-center center-vertical">
         <div class="col-md-12">
-            <button class="btn btn-success" ng-click="$ctrl.openIntercepteeModal([], true)">
+            <button class="btn btn-success" ng-click="$ctrl.openIntercepteeModal(null, true)">
                 <i class="fa fa-plus"></i>
             </button>
         </div>

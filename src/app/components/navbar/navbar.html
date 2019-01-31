@@ -59,6 +59,9 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
+                	<li>
+                        <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)" ui-sref="cifList">CIFs</a>
+                    </li>
                     <li>
                         <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
                             ui-sref="irfList">IRFs</a>

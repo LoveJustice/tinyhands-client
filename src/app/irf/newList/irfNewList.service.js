@@ -36,4 +36,8 @@ export default class IrfNewListService {
     	return this.service.get('api/forms/?type_name=IRF&station_id=' + stationId);
     	
     }
+    
+    getConfigForForm(formId) {
+    	return this.service.get(`api/forms/config/${stationId}`);
+    }
 }

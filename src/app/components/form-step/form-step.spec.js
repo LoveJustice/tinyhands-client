@@ -86,14 +86,6 @@ describe('FormStepController', () => {
 
     describe('function setFlagSend', () => {
 
-        it('when newValue and oldValue are true, should call emit flag with red flag', () => {
-            spyOn(vm, 'emitFlag');
-            vm.redFlag = 2800;
-            vm.setFlagSend(true, true);
-
-            expect(vm.emitFlag).toHaveBeenCalledWith(2800);
-        });
-
         it('when newValue and oldValue are false, should do nothing', () => {
             spyOn(vm, 'emitFlag');
             vm.redFlag = 2800;

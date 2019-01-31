@@ -1,8 +1,13 @@
 <div id="irf-south-africa" class="container-fluid padding-top-20">
     <div class="sticky">
-        <h1 class="padding-bottom-40 text-danger text-right padding-right-20">
-            Total Red Flags: {{$ctrl.redFlagTotal}}
-        </h1>
+        <div class="padding-bottom-40">
+            <h1 class="form-number-header float-left padding-left-20">
+                {{$ctrl.questions[1].response.value}}
+            </h1>
+            <h1 class="text-danger float-right padding-right-20">
+                Total Red Flags: {{$ctrl.redFlagTotal}}
+            </h1>
+        </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
             <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.selectedStep = 0">Top Box</a>
             <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.selectedStep = 1">Visual</a>

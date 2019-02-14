@@ -63,6 +63,10 @@ export class BaseIrfController {
         return new URL(url, this.constants.BaseUrl).href;
     }
     
+    getScannedFormUrl(url) {
+        return new URL(url, this.constants.BaseUrl).href;
+    }
+    
     inCustomHandling() {
     	this.setValuesForOtherInputs();
     	this.setValuesForDateInputs();

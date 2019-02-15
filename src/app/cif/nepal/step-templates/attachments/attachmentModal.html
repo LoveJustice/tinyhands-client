@@ -31,10 +31,17 @@
 	                </form-step>
 	            </div>
 	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.questions[612].response.value">
-	            <div ng-if="AttachmentModalController.isString(AttachmentModalController.questions[612].response.value)">
+            </div>
+            <div class="row center-vertical">
+            	<div class="col-md-2 form-group">
+	            </div>
+	            <div ng-if="!AttachmentModalController.isString(AttachmentModalController.questions[612].response.value)">
+	        		<p>{{AttachmentModalController.questions[612].response.value.name}}</a>
+	        	</div>
+	        	<div ng-if="AttachmentModalController.isString(AttachmentModalController.questions[612].response.value)">
 	        		<a href="{{AttachmentModalController.getScannedFormUrl(AttachmentModalController.questions[612].response.value)}}">{{AttachmentModalController.questions[612].response.value.split("/")[3]}}</a>
 	        	</div>
-            </div>
+        	</div>
         </div>
         <div class="modal-footer">
             <div class="row">

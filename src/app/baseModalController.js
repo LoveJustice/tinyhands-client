@@ -14,7 +14,7 @@ class BaseModalController {
         this.isAdd = isAdd;
         this.card = card;
         this.originalQuestions = questions;
-        this.questions = angular.copy(questions);
+        this.questions = _.cloneDeep(questions);
         this.isViewing = isViewing;
         this.modalActions = modalActions;
         this.redFlagTotal = 0;

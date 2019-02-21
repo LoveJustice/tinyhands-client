@@ -237,7 +237,7 @@ export class BaseIrfController {
     }
     
     set_errors_and_warnings(response) {
-    	if (response.errors != null) {
+    	if (response.errors !== null) {
     		if (response.errors instanceof Array) {
     			this.errorMessages = response.errors;
     		} else {
@@ -246,7 +246,7 @@ export class BaseIrfController {
     	} else {
     		this.errorMessages = [];
     	}
-    	if (response.warnings != null) {
+    	if (response.warnings !== null) {
     		if (response.warnings instanceof Array) {
     			this.warningMessages = response.warnings;
     		} else {

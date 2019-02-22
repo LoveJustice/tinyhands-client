@@ -5,7 +5,7 @@ const DateDate = require('./dateData.js');
 /* global angular */
 
 class BaseModalController {
-    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config) {
+    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants) {
         'ngInject';
         let questions =  _.keyBy(card.responses, (x) => x.question_id);
         this.$uibModalInstance = $uibModalInstance;
@@ -14,11 +14,12 @@ class BaseModalController {
         this.isAdd = isAdd;
         this.card = card;
         this.originalQuestions = questions;
-        this.questions = angular.copy(questions);
+        this.questions = _.cloneDeep(questions);
         this.isViewing = isViewing;
         this.modalActions = modalActions;
         this.redFlagTotal = 0;
         this.config = config;
+        this.constants = constants;
         
     	this.otherData = new OtherData(this.originalQuestions);
     	if (this.config.hasOwnProperty('RadioOther')) {
@@ -72,6 +73,14 @@ class BaseModalController {
     
     incrementRedFlags(numberOfFlagsToAdd) {
         this.redFlagTotal += numberOfFlagsToAdd;
+    }
+    
+    getScannedFormUrl(url) {
+        return new URL(url, this.constants.BaseUrl).href;
+    }
+    
+    isString(val) {
+        return typeof val === 'string';
     }
     
     subclassSave() { 	

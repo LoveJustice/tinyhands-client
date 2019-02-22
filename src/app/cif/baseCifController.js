@@ -71,7 +71,7 @@ export class BaseCifController {
                 	
                 for (let person_entry in this.config.Person) {
                     let person_id = this.config.Person[person_entry];
-                    if (this.questions[person_id].response.name === null) {
+                    if (this.questions[person_id].response === null || this.questions[person_id].response.value === null) {
                         this.questions[person_id].response = {
                             "storage_id": null,
                             "name": {

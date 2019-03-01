@@ -503,7 +503,7 @@ export default class BudgetController {
                     staff.salaryInfo = $.grep(staffSalaries, s => {
                         return s.staff_person === staff.id;
                     })[0];
-                    if (staff.salaryInfo === null) {
+                    if (!staff.salaryInfo) {
                         staff.salaryInfo = {
                             salary: 0,
                             staff_person: staff.id,
@@ -511,7 +511,10 @@ export default class BudgetController {
                     }
                 }
             } else {
-                staff.salaryInfo = { salary: 0 };
+                staff.salaryInfo = {
+                    salary: 0,
+                    staff_person: staff.id,
+                };
             }
             staff.salaryInfo.id = null;
         });

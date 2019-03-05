@@ -15,12 +15,14 @@ import pbsTemplate from './step-templates/personBoxes/personBoxes.html';
 import lbsTemplate from './step-templates/locationBoxes/locationBoxes.html';
 import vbsTemplate from './step-templates/vehicleBoxes/vehicleBoxes.html';
 import finalTemplate from './step-templates/final.html';
+import attachmentsTemplate from './step-templates/attachments/attachment.html';
 
 import potentialVictimModalTemplate from './step-templates/potentialVictims/potentialVictimModal.html';
 import transportationBoxModalTemplate from './step-templates/transportationBoxes/transportationBoxModal.html';
 import personBoxTemplate from './step-templates/personBoxes/personBoxModal.html';
 import locationBoxTemplate from './step-templates/locationBoxes/locationBoxModal.html';
 import vehicleBoxTemplate from './step-templates/vehicleBoxes/vehicleBoxModal.html';
+import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
 export class CifNepalController extends BaseCifController {
     constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
@@ -38,7 +40,8 @@ export class CifNepalController extends BaseCifController {
             pbsTemplate,
             lbsTemplate,
             vbsTemplate,
-            finalTemplate
+            finalTemplate,
+            attachmentsTemplate
         ];
     }
     
@@ -65,6 +68,11 @@ export class CifNepalController extends BaseCifController {
     openVehicleBoxModal(responses = [], isAdd = false, idx=null) {
     	this.commonModal(responses, isAdd, idx, BaseModalController, 'VehicleBoxModalController',
     			vehicleBoxTemplate, 'VehicleBoxes');
+    }
+    
+    openAttachmentModal(responses = [], isAdd = false, idx=null) {
+        this.commonModal(responses, isAdd, idx, BaseModalController, 'AttachmentModalController',
+                attachmentTemplate, 'Attachments');
     }
 }
 

@@ -4,6 +4,8 @@
  * @export
  * @class BudgetList
  */
+import createBudgetModalTemplate from './createBudgetModal.html';
+
 export default class BudgetList {
     /**
      * Creates an instance of BudgetList.
@@ -11,19 +13,59 @@ export default class BudgetList {
      * @param BudgetListService (set of functions that controls data flow from front-end to back-end)
      * @param session (user session data)
      */
-    constructor(BudgetListService, SessionService, StickyHeader, toastr) {
+    constructor(BudgetListService, SessionService, StickyHeader, toastr, $state, $uibModal, $stateParams, $timeout) {
         'ngInject';
-
         this.service = BudgetListService;
         this.session = SessionService;
         this.sticky = StickyHeader;
         this.toastr = toastr;
+        this.state = $state;
+        this.modal = $uibModal;
+        this.stateParams = $stateParams;
+        this.timeout = $timeout;
+        
+        this.timer = {};
 
         this.searchTerm = '';
+        this.countryIds = '';
         this.sortValue = 'month_year';
         this.stickyOptions = this.sticky.stickyOptions;
+        this.stickyOptions.zIndex = 1;
 
+        this.hasAddPermission = true;
+        this.listOfBudgets = [];
+        
+        this.countryDropDown = {};
+        this.countryDropDown.options = [];
+        this.countryDropDown.selectedOptions = [];
+        this.countryDropDown.settings = {
+            smartButtonMaxItems: 2,
+            showCheckAll: false,
+            showUncheckAll: false,
+        };
+        this.countryDropDown.customText = { buttonDefaultText: 'All' };
+        this.countryDropDown.eventListener = {
+            onItemSelect: this.countryChange,
+            onItemDeselect: this.countryChange,
+            onSelectAll: this.countryChange,
+            onDeselectAll: this.countryChange,
+            ctrl: this,
+        };
+        
+        if ($stateParams) {
+            this.searchTerm = $stateParams.search;
+            this.countryIds = $stateParams.countryIds;
+        }
+        
+        this.getUserCountries();
         this.getBudgetList(this.searchTerm, this.sortValue);
+    }
+    
+    getBudgetListInternal() {
+        this.service.getBudgetList(this.searchTerm, this.sortValue, this.countryIds).then((response) => {
+            this.listOfBudgets = response.data.results;
+            this.nextBudgetPage = response.data.next;
+        });
     }
 
     /**
@@ -36,10 +78,13 @@ export default class BudgetList {
         } else {
             this.sortValue = sortValue;
         }
-        this.service.getBudgetList(this.searchTerm, this.sortValue).then((response) => {
-            this.listOfBudgets = response.data.results;
-            this.nextBudgetPage = response.data.next;
-        });
+        this.getBudgetListInternal();
+        this.timer = this.timeout(() => {
+            this.state.go('.', {
+                search: this.searchTerm,
+                countryIds: this.countryIds,
+            });
+        }, 500);
     }
 
     getNextBudgetPage() {
@@ -51,6 +96,21 @@ export default class BudgetList {
                 this.nextBudgetPage = response.data.next;
             });
         }
+    }
+    
+    createBudget() {
+        let modalInstance = this.modal.open({
+            animation: true,
+            templateUrl: createBudgetModalTemplate,
+            controller: 'CreateBudgetModalController as vm',
+            size: 'md',
+        });
+        modalInstance.result.then(station => {
+            this.state.go('budget', {
+                borderStationId: station.id,
+                isViewing: false,
+            });
+        });
     }
 
     /**
@@ -74,5 +134,42 @@ export default class BudgetList {
             budget.budgetRemoved = true;
         }
     }
+    
+    getUserCountries() {
+        this.service.getUserCountries(this.session.user.id).then(promise => {
+            this.countries = promise.data;
+            this.countryDropDown.options = [];
+            for (var idx = 0; idx < this.countries.length; idx++) {
+                this.countryDropDown.options.push({
+                    id: this.countries[idx].id,
+                    label: this.countries[idx].name,
+                });
+            }
+            
+            this.countryDropDown.options = _.sortBy( this.countryDropDown.options, 'label' );
+            if (this.countryIds) {
+                let countryArry = this.countryIds.split(',');
+                for (var idx1 in countryArry) {
+                    let countryId = parseInt(countryArry[idx1]);
+                    for (var idx=0; idx < this.countryDropDown.options.length; idx++) {
+                        if (countryId === this.countryDropDown.options[idx].id) {
+                            this.countryDropDown.selectedOptions.push(this.countryDropDown.options[idx]);
+                        }
+                    }
+                }
+            }
+        });
+    }
 
+    countryChange() {
+        var selectedCountries = '';
+        var sep = '';
+        var ctrl = this.ctrl;
+        for (var idx = 0; idx < ctrl.countryDropDown.selectedOptions.length; idx++) {
+            selectedCountries = selectedCountries + sep + ctrl.countryDropDown.selectedOptions[idx].id;
+            sep = ',';
+        }
+        this.ctrl.countryIds = selectedCountries;
+        this.ctrl.getBudgetList(this.searchTerm, this.sortValue);
+    }
 }

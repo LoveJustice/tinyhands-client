@@ -5,28 +5,42 @@ describe('budgetList Controller', () => {
     let vm,
         MockSessionService,
         MockStickyHeader,
-        mockToastr;
+        mockToastr,
+        $state,
+        $stateParams,
+        $timeout,
+        $uibModal,
+        http;
 
-    beforeEach(inject(($http) => {
-        MockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin']);
+    beforeEach(inject(($http, _$state_, _$timeout_) => {
+        http = $http;
+        $state = _$state_;
+        $timeout = _$timeout_;
+        $stateParams = {"search": "BHD"};
+        MockSessionService = jasmine.createSpyObj('SessionService', ['attemptLogin', 'getUserPermissionList']);
+        var user = Object();
+        user.id = 10022;
+        MockSessionService.user = user;
+        MockSessionService.getUserPermissionList.and.callFake((a,b) => {
+            return [{account:10, country: null, station: null, permission:23}];
+        });
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         mockToastr = jasmine.createSpyObj('toastr', ['success', 'error']);
 
         let service = new BudgetListService($http);
-        vm = new BudgetListController(service, MockSessionService, MockStickyHeader, mockToastr);
+        vm = new BudgetListController(service, MockSessionService, MockStickyHeader, mockToastr, $state, $uibModal, $stateParams, $timeout);
     }));
 
     /*No tests verifying $rootScope, $scope, etc (constructor pass ins) because they are
     just services. We only want to test local variables.*/
 
     describe('function constructor', () => {
-
-        it('expect getBudgetList to be called', () => {
-            spyOn(vm, 'getBudgetList');
-            vm.constructor({}, {}, {});
-            expect(vm.getBudgetList).toHaveBeenCalled();
+        it('expect getUserCountries to be called', () => {
+            spyOn(vm, 'getUserCountries');
+            let service = new BudgetListService(http);
+            vm.constructor(service, {}, {stickyOptions:{}}, {}, $state, $uibModal, $stateParams, $timeout);
+            expect(vm.getUserCountries).toHaveBeenCalled();
         });
-
     });
 
     describe('function listofBudgets', () => {

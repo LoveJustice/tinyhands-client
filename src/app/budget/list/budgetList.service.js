@@ -11,7 +11,7 @@ export default class BudgetListService {
     getBudgetList(searchTerm, sortValue, country_ids) {
         let params = [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, { name: "ordering", value: sortValue }];
         if (country_ids !== null && country_ids !== '') {
-            params.push({name:"country_ids", value:country_ids})
+            params.push({name:"country_ids", value:country_ids});
         }
         return this.service.get('api/budget/', params);
     }

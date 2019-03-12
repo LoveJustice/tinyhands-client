@@ -3,6 +3,7 @@ import './form/budget.less';
 import budgetListTemplate from './list/budgetList.html';
 import mdfTemplate from './mdf/mdf.html';
 import './mdf/mdf.less';
+import './list/budgetList.less';
 
 function budgetRouteConfig($stateProvider) {
     'ngInject';
@@ -17,7 +18,11 @@ function budgetRouteConfig($stateProvider) {
             }
         })
         .state('budgetList', {
-            url: '/budget',
+            url: '/budget?search&countryIds',
+            params: {
+                search: { dynamic: true },
+                countryIds: { dynamic: true }
+            },
             templateUrl: budgetListTemplate,
             controller: 'BudgetListController',
             controllerAs: 'budgetListCtrl',

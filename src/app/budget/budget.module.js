@@ -4,6 +4,7 @@ import budgetRouteConfig from './budget.route';
 
 import BudgetController from './form/budget.controller';
 import BudgetListController from './list/budgetList.controller';
+import CreateBudgetModalController from './list/createBudgetModal.controller';
 import MdfController from './mdf/mdf.controller';
 
 import MathOperator from './mathOperator/mathOperator.directive';
@@ -17,6 +18,7 @@ export default angular.module('tinyhands.Budget', [sharedModule])
     .controller('BudgetController', BudgetController)
     .controller('BudgetListController', BudgetListController)
     .controller('MdfController', MdfController)
+    .controller('CreateBudgetModalController', CreateBudgetModalController)
 
     .directive('operator', MathOperator)
 

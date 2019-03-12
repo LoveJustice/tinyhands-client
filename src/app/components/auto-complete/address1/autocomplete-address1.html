@@ -6,7 +6,7 @@
   <div class="row">
   	<div class="col-md-10">
       <input class="form-control" type="text" ng-model="ngModel" placeholder="Address 1" uib-typeahead="address1 as address1.name for address1 in acAddress1Ctrl.getFuzzyAddress1s($viewValue)"
-        typeahead-loading="loadingAddress1" uib-typeahead-no-results="noResults" typeahead-wait-ms="300" typeahead-min-length="3"
+        typeahead-loading="loadingAddress1" uib-typeahead-no-results="noResults" typeahead-wait-ms="300" typeahead-min-length="3" autocomplete="False"
       />
     </div>
     <div class="col-md-2">

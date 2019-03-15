@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             How was the PVOT identified?
@@ -7,12 +7,12 @@
     </div>
     <div class="row center-vertical">
         <div class="col-md-2 col-md-offset-2">
-            <form-step type="radio" label="Contact" response-value="$ctrl.questions[91].response.value" radio-name="contactOrThStaff"></form-step>
+            <form-step type="radio" label="Referral" response-value="$ctrl.questions[91].response.value" radio-name="contactOrThStaff"></form-step>
         </div>
         <div class="col-md-8">
             <div class="row center-vertical">
                 <div class=col-md-2>
-                    Name of Contact:
+                    Name of Referral Partner:
                 </div>
                 <div class="col-md-4">
                     <form-step type="text" response-value="$ctrl.questions[261].response.value" class="padding-bottom-20"></form-step>
@@ -38,7 +38,7 @@
     </div>
     <div class="row center-vertical">
         <div class="col-md-2 col-md-offset-2">
-            <form-step type="radio" label="TH Staff" response-value="$ctrl.questions[91].response.value" radio-name="contactOrThStaff"></form-step>
+            <form-step type="radio" label="LJ Staff" response-value="$ctrl.questions[91].response.value" radio-name="contactOrThStaff"></form-step>
         </div>
         <div class="col-md-8">
             <div class="row center-vertical margin-bottom-20">
@@ -57,4 +57,4 @@
             </div>
         </div>
     </div>
-</div>
+</fieldset>

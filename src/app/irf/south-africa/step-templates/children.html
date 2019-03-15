@@ -1,15 +1,15 @@
-<div class="container-fluid">
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
     <div class="row center-vertical">
         <div class="col-md-4 col-md-offset-4">
             <form-step red-flag="10" type="checkbox" label="Reluctant to give family info" response-value="$ctrl.questions[73].response.value"></form-step>
             <form-step red-flag="35" type="checkbox" label="Refuses to give family info" response-value="$ctrl.questions[74].response.value"></form-step>
-            <form-step red-flag="40" type="checkbox" label="No affidavit/birth certificates" response-value="$ctrl.questions[242].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="No affidavit/birth certificates" response-value="$ctrl.questions[239].response.value"></form-step>
             <form-step red-flag="50" type="checkbox" label="No family contact established" response-value="$ctrl.questions[77].response.value"></form-step>
             <form-step red-flag="40" type="checkbox" label="Child fearful of handler" response-value="$ctrl.questions[240].response.value"></form-step>
         </div>
         <div class="col-md-4">
             <form-step red-flag="10" type="checkbox" label="Not being escorted by direct relative" response-value="$ctrl.questions[241].response.value"></form-step>
-            <form-step red-flag="60" type="checkbox" label="Family unwilling to let them go" response-value="$ctrl.questions[79].response.value"></form-step>
+            <form-step red-flag="60" type="checkbox" label="Contact established and family unwilling to let them go" response-value="$ctrl.questions[79].response.value"></form-step>
             <form-step red-flag="40" type="checkbox" label="Child and handler's stories are inconsistent" response-value="$ctrl.questions[257].response.value"></form-step>
             <form-step red-flag="50" type="checkbox" label="Handler falsely claims to be a relative" response-value="$ctrl.questions[258].response.value"></form-step>
             <form-step red-flag="30" type="checkbox" label="Handler involved in criminal activity" response-value="$ctrl.questions[259].response.value"></form-step>
@@ -34,3 +34,4 @@
             <form-step type="text" response-value="$ctrl.questions[260].response.value" input-class="form-control"></form-step>
         </div>
     </div>
+</fieldset>

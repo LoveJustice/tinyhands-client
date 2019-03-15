@@ -1,49 +1,22 @@
-<div class="container-fluid">
-    <div class="row center-vertical">
-        <div class="col-md-3">
-            Nationality and Gender
-        </div>
-        <div class=col-md-9>
-            <div class="row center-vertical">
-                <div class="col-md-6">
-                    <form-step red-flag="5" type="checkbox" label="Asian Female" response-value="$ctrl.questions[95].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Pakistani Male" response-value="$ctrl.questions[96].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Bangladeshi Male" response-value="$ctrl.questions[153].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Nepali Male" response-value="$ctrl.questions[154].response.value"></form-step>
-                    <form-step red-flag=" " type="otherCheckbox" label="Other" response-value="$ctrl.questions[160].response.value"></form-step>
-                </div>
-                <div class="col-md-6">
-                    <form-step red-flag="5" type="checkbox" label="African Female" response-value="$ctrl.questions[155].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Ethiopian Female/Male" response-value="$ctrl.questions[156].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Eastern Europe Female" response-value="$ctrl.questions[157].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Any African child" response-value="$ctrl.questions[158].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Malawian Female" response-value="$ctrl.questions[159].response.value"></form-step>
-                </div>
-            </div>
-            <hr/>
-        </div>
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing === true">
+    <div class="row text-center">
+    	<h4>Appearance/Demeanor</h4>
     </div>
     <div class="row center-vertical">
-        <div class="col-md-3">
-            Appearance/Demeanor
-        </div>
-        <div class=col-md-9>
-            <div class="row center-vertical">
-                <div class="col-md-6">
-                    <form-step red-flag="10" type="checkbox" label="Signs of Drug withdrawal" response-value="$ctrl.questions[161].response.value"></form-step>
-                    <form-step red-flag="10" type="checkbox" label="Signs of Abuse" response-value="$ctrl.questions[162].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Disorentated/Uncertain" response-value="$ctrl.questions[163].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Impoverished" response-value="$ctrl.questions[164].response.value"></form-step>
-                    <form-step red-flag="15" type="checkbox" label="Long journey but little luggage" response-value="$ctrl.questions[165].response.value"></form-step>
-                </div>
-                <div class="col-md-6">
-                    <form-step red-flag="5" type="checkbox" label="Revealing clothing" response-value="$ctrl.questions[166].response.value"></form-step>
-                    <form-step red-flag="10" type="checkbox" label="Avoiding officials/ hesitant to talk" response-value="$ctrl.questions[167].response.value"></form-step>
-                    <form-step red-flag="15" type="checkbox" label="Lady boy" response-value="$ctrl.questions[168].response.value"></form-step>
-                    <form-step red-flag="15" type="checkbox" label="Group that does not know each other" response-value="$ctrl.questions[169].response.value"></form-step>
-                    <form-step red-flag="10" type="checkbox" label="With a chaperone" response-value="$ctrl.questions[170].response.value"></form-step>
-                </div>
-            </div>
-        </div>
+    	<div class="col-md-3">
+    		<form-step red-flag="10" type="checkbox" label="Signs of Drug withdrawal" response-value="$ctrl.questions[161].response.value"></form-step>
+    		<form-step red-flag="10" type="checkbox" label="Signs of Abuse" response-value="$ctrl.questions[162].response.value"></form-step>
+    		<form-step red-flag="5" type="checkbox" label="Disorentated/Uncertain" response-value="$ctrl.questions[163].response.value"></form-step>
+    	</div>
+	    <div class="col-md-3">
+	        <form-step red-flag="5" type="checkbox" label="Impoverished" response-value="$ctrl.questions[164].response.value"></form-step>
+	        <form-step red-flag="15" type="checkbox" label="Long journey but little luggage" response-value="$ctrl.questions[165].response.value"></form-step>
+	        <form-step red-flag="5" type="checkbox" label="Revealing clothing" response-value="$ctrl.questions[166].response.value"></form-step>
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="10" type="checkbox" label="Avoiding officials/ hesitant to talk" response-value="$ctrl.questions[167].response.value"></form-step>
+	        <form-step red-flag="15" type="checkbox" label="Group that does not know each other" response-value="$ctrl.questions[169].response.value"></form-step>
+	        <form-step red-flag="10" type="checkbox" label="With a chaperone" response-value="$ctrl.questions[170].response.value"></form-step>
+	    </div>
     </div>
-</div>
+</fieldset>

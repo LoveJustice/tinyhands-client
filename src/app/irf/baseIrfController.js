@@ -40,7 +40,7 @@ export class BaseIrfController {
 
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
-    		this.config = response.data
+    		this.config = response.data;
     		this.service.getIrf(countryId, stationId, id).then((response) => {
             	this.response = response.data;
                 this.responses = response.data.responses;

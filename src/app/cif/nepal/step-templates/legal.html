@@ -48,7 +48,7 @@
     	<br>
     	<form-step class="control-label col-md-2">4.6 Date of visit to Police Station</form-step>
     	<div class="col-md-2">
-    		<input type="date" class="col-md-12" ng-model="$ctrl.dateData.questions[375].value">
+    		<input type="date" class="col-md-12"  ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[375].value">
     	</div>
     	<form-step class="control-label col-md-2">4.7 Name of Officer</form-step>
     	<div class="col-md-3">
@@ -85,7 +85,7 @@
     	</div>
     	<form-step class="control-label col-md-1">4.11 Date</form-step>
     	<div class="col-md-2">
-    		<input type="date" class="col-md-12" ng-model="$ctrl.dateData.questions[386].value">
+    		<input type="date" class="col-md-12" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[386].value">
     	</div>
  	</div>
  	<div class="row">

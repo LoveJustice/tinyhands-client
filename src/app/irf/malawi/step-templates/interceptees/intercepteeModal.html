@@ -50,7 +50,7 @@
                 <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-3 control-label">Date of Birth</label>
                     <div class="col-md-9">
-                        <input type="date" class="form-control" ng-model="IntercepteeModalController.dateData.questions[9].value">
+                        <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="IntercepteeModalController.dateData.questions[9].value">
                     </div>
                 </div>
             </div>

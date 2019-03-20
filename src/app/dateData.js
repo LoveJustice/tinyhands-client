@@ -4,6 +4,15 @@ class DateData {
 		this.questions = {};
 	}
 	
+	dateAsUTC(inDateString) {
+	    let parts = inDateString.split("-");
+	    let year = Number(parts[0]);
+	    let month = Number(parts[1]) - 1;
+	    let date = Number(parts[2]);
+	    let utcDate = new Date(Date.UTC(year, month, date, 0, 0, 0, 0));
+	    return utcDate;
+	}
+	
 	setDate(questionId, dateType) {
 		if (dateType === 'basic') {
 			let value = '';
@@ -13,14 +22,14 @@ class DateData {
 			}
 			let dateValue = '';
 			if (value !== null && value !== '') {
-				dateValue = new Date(value);
+				dateValue = this.dateAsUTC(value);
 			}
 			this.questions[questionId] = {dateType:dateType, value:dateValue};
 		} else if (dateType === 'person') {
 			let bdate = this.origQuestions[questionId].response.birthdate;
 			let dateValue = '';
-			if (bdate !== undefined && bdate !== null && bdate.value !== null && bdate.value !== '') {
-				dateValue = new Date(bdate.value);
+			if (bdate && bdate.value) {
+				dateValue = this.dateAsUTC(bdate.value);
 			}
 			this.questions[questionId] = {dateType:dateType, value:dateValue};
 		}

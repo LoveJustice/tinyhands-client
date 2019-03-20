@@ -40,7 +40,7 @@ export class BaseIrfController {
 
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
-    		this.config = response.data
+    		this.config = response.data;
     		this.service.getIrf(countryId, stationId, id).then((response) => {
             	this.response = response.data;
                 this.responses = response.data.responses;
@@ -125,10 +125,10 @@ export class BaseIrfController {
     		let indexQuestion = -1;
     		let lastIndex = 0;
     		if (config.hasOwnProperty('IndexQuestion')) {
-    			indexQuestion = config.IndexQuestion;
-    			let cards = this.getCardInstances(config_name);
-    			
-    			for (let idx=0; idx < cards.length; idx++) {
+    		    indexQuestion = config.IndexQuestion;
+    		    let cards = this.getCardInstances(config_name);
+			
+    		    for (let idx=0; idx < cards.length; idx++) {
     	    		let card = cards[idx];
     	    		let value = null;
     	    		for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
@@ -137,10 +137,10 @@ export class BaseIrfController {
     	    				break;
     	    			}
     	    		}
-    	    		if (value !== null && value !== '') {
+    	    		if (value !== null && value !== '' && value > lastIndex) {
     	    			lastIndex = value;
     	    		}
-    	    	}
+    	    	    }
     			
     		}
     		if (config.hasOwnProperty('Person')) {

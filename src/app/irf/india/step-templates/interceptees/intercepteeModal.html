@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" ng-show="IntercepteeModalController.questions[8].response.value !== 'PVOT'">
                 <div class="col-md-5 col-md-offset-1 padding-left-45 margin-top-15">
                     <input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[11].response.value">
                     <label for="custody">Taken into police custody</label>

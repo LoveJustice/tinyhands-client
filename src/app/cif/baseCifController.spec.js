@@ -134,7 +134,7 @@ describe('CifTestController', () => {
                                         question_id: 300,
                                         response: Object(
                                                 {
-                                                        gender: Object({  }),
+                                                        gender: Object({ value: '' }),
                                                         name: Object({  }),
                                                         age: Object({  }),
                                                         birthdate: Object({  }),

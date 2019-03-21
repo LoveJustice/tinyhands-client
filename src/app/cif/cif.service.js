@@ -21,15 +21,16 @@ export default class CifService {
     
     appendScannedForm(formData, responses, cards, formNumber) {
         this.appendScannedFiles(formData, responses, formNumber);
+        let attachmentIdx = 0;
         for (let card in cards) {
             for (let instance in cards[card].instances) {
-                this.appendScannedFiles(formData, cards[card].instances[instance].responses, formNumber);
+                attachmentIdx = this.appendScannedFiles(formData, cards[card].instances[instance].responses, formNumber, attachmentIdx);
             }
         }
     }
     
-    appendScannedFiles(formData, responses, formNumber) {
-        let cnt = 0;
+    appendScannedFiles(formData, responses, formNumber, startingIndex) {
+        let cnt = startingIndex;
         for (let idx=0; idx < responses.length; idx++) {
             if (this.file_questions.indexOf(responses[idx].question_id) !== -1) {
                 let t = Object.prototype.toString.call(responses[idx].response.value);
@@ -46,6 +47,7 @@ export default class CifService {
                 }
             }
         }
+        return cnt;
     }
 
     getCif(countryId, stationId, id) {

@@ -196,7 +196,9 @@ export class BaseCifController {
     				the_card.responses.push({
     	    			question_id: config.Person[idx],
     	    			response: {
-    	                    gender: {},
+    	                    gender: {
+    	                        "value": ""
+    	                    },
     	                    name: {},
     	                    age: {},
     	                    birthdate:{},

@@ -1,74 +1,45 @@
-<div class="container-fluid">
-    <div class="row center-vertical">
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
+    <div class="row">
         <div class="col-md-2">
-            Passport
+        	<h4>Passport</h4>
+            <form-step red-flag="40" type="checkbox" label="Imposter" response-value="$ctrl.questions[171].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="Fraudulent" response-value="$ctrl.questions[172].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="Illegally obtained" response-value="$ctrl.questions[173].response.value"></form-step>
+            <form-step red-flag="25" type="checkbox" label="Expired" response-value="$ctrl.questions[174].response.value"></form-step>
+            <form-step red-flag="30" type="checkbox" label="With a broker" response-value="$ctrl.questions[55].response.value"></form-step>
         </div>
-        <div class="col-md-10">
-            <div class="row center-vertical">
-                <div class="col-md-8 col-md-offset-1">
-                    <form-step red-flag="40" type="checkbox" label="Imposter" response-value="$ctrl.questions[171].response.value"></form-step>
-                    <form-step red-flag="40" type="checkbox" label="Fake" response-value="$ctrl.questions[172].response.value"></form-step>
-                    <form-step red-flag="40" type="checkbox" label="Illegally obtained" response-value="$ctrl.questions[173].response.value"></form-step>
-                    <form-step red-flag="25" type="checkbox" label="Expired" response-value="$ctrl.questions[174].response.value"></form-step>
-                    <form-step red-flag="30" type="checkbox" label="Is with a broker" response-value="$ctrl.questions[55].response.value"></form-step>
-                </div>
-            </div>
-            <hr/>
-        </div>
-    </div>
-    <div class="row center-vertical">
-        <div class="col-md-2">
-            Visa
-        </div>
-        <div class="col-md-10">
-            <div class="row center-vertical">
+        <div class="col-md-5">
+        		<div class="text-center"><h4>Visa</h4></div>
                 <div class="col-md-6 col-md-offset-1">
+                
+                <div class=margin-bottom-10></div>
+                		&nbsp;
                     <form-step red-flag="30" type="checkbox" label="None" response-value="$ctrl.questions[176].response.value"></form-step>
                     <form-step red-flag="40" type="checkbox" label="Fake" response-value="$ctrl.questions[177].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Misuse - for purposes other than issued" response-value="$ctrl.questions[178].response.value"></form-step>
+                    <form-step red-flag="20" type="checkbox" label="Misuse for other purposes" response-value="$ctrl.questions[178].response.value"></form-step>
                 </div>
                 <div class="col-md-5">
                     <div class=margin-bottom-10>Does not match:</div>
                     <form-step red-flag="35" type="checkbox" label="Nature of travel" response-value="$ctrl.questions[179].response.value"></form-step>
                     <form-step red-flag="30" type="checkbox" label="Duration of travel" response-value="$ctrl.questions[180].response.value"></form-step>
-                    <form-step red-flag="30" type="checkbox" label="Destination of travel" response-value="$ctrl.questions[181].response.value"></form-step>
+                    <form-step red-flag="30" type="checkbox" label="Destination" response-value="$ctrl.questions[181].response.value"></form-step>
                 </div>
-            </div>
-            <hr/>
         </div>
-    </div>
-    <div class="row center-vertical">
         <div class="col-md-2">
-            Supporting Documents
+        	<h4>Supporting Documents</h4>
+            <form-step red-flag="25" type="checkbox" label="None " response-value="$ctrl.questions[182].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="Fraudulent " response-value="$ctrl.questions[183].response.value"></form-step>
+            <form-step red-flag="20" type="checkbox" label="Insufficient" response-value="$ctrl.questions[184].response.value"></form-step>
+            <form-step red-flag="30" type="checkbox" label="Inaccurate" response-value="$ctrl.questions[185].response.value"></form-step>
+            <form-step red-flag="30" type="checkbox" label="One way ticket" response-value="$ctrl.questions[186].response.value"></form-step>
         </div>
-        <div class="col-md-10">
-            <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="25" type="checkbox" label="None" response-value="$ctrl.questions[182].response.value"></form-step>
-                    <form-step red-flag="40" type="checkbox" label="Fake" response-value="$ctrl.questions[183].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Insufficient" response-value="$ctrl.questions[184].response.value"></form-step>
-                    <form-step red-flag="30" type="checkbox" label="Inaccurate" response-value="$ctrl.questions[185].response.value"></form-step>
-                    <form-step red-flag="30" type="checkbox" label="One way ticket" response-value="$ctrl.questions[186].response.value"></form-step>
-                </div>
-            </div>
-            <hr/>
-        </div>
-    </div>
-    <div class="row center-vertical">
         <div class="col-md-2">
-            Destination
-        </div>
-        <div class="col-md-10">
-            <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="20" type="checkbox" label="Middle East" response-value="$ctrl.questions[187].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Ireland" response-value="$ctrl.questions[188].response.value"></form-step>
-                    <form-step red-flag="5" type="checkbox" label="Manchester" response-value="$ctrl.questions[189].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Swaziland" response-value="$ctrl.questions[190].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Mozambique" response-value="$ctrl.questions[191].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Nigeria" response-value="$ctrl.questions[192].response.value"></form-step>
-                </div>
-            </div>
+        	<h4>Destination</h4>
+            <form-step red-flag="20" type="checkbox" label="Middle East" response-value="$ctrl.questions[187].response.value"></form-step>
+            <form-step red-flag="20" type="checkbox" label="Nigeria" response-value="$ctrl.questions[192].response.value"></form-step>
+            <form-step red-flag="20" type="checkbox" label="Lesotho" response-value="$ctrl.questions[613].response.value"></form-step>
+            <form-step red-flag="20" type="checkbox" label="Mozambique" response-value="$ctrl.questions[191].response.value"></form-step>
+            
         </div>
     </div>
-</div>
+</fieldset>

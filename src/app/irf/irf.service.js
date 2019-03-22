@@ -5,6 +5,18 @@ export default class IrfService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
+        this.attachments = [
+            {
+                questions:[7],
+                elementName:"images",
+                includeFormNumber:false
+            },
+            {
+                questions:[152,641],
+                elementName:"scanned",
+                includeFormNumber:true
+            }
+        ];
     }
 
     getIrf(countryId, stationId, id) {
@@ -51,6 +63,64 @@ export default class IrfService {
     	}
     }
     
+    getFormNumber(irf) {
+        let response = '';
+        for (let idx in irf.responses) {
+            if (irf.responses[idx].question_id === 1) {
+                response = irf.responses[idx].response.value;
+                break;
+            }
+        }
+        return response; 
+}
+    
+    appendAttachments (formData, irf) {
+        for (let attachIdx in this.attachments) {
+            let formNumber = null;
+            if (this.attachments[attachIdx].includeFormNumber) {
+                formNumber = this.getFormNumber(irf);
+            }
+            let attachmentIdx  = 0;
+            let questions = this.attachments[attachIdx].questions;
+            let elementName = this.attachments[attachIdx].elementName;
+            
+            attachmentIdx = this.appendFiles(formData, irf.responses, formNumber, attachmentIdx, questions, elementName);
+            
+            for (let cardIdx in irf.cards) {
+                for (let instanceIdx in irf.cards[cardIdx].instances) {
+                    attachmentIdx = this.appendFiles(formData, irf.cards[cardIdx].instances[instanceIdx].responses, formNumber, attachmentIdx, questions, elementName);
+                }
+            }
+        }
+        
+    }
+    
+    appendFiles(formData, responses, formNumber, startCnt, questions, elementName) {
+        let cnt = startCnt;
+        for (let idx=0; idx < responses.length; idx++) {
+            if (questions.indexOf(responses[idx].question_id) > -1) {
+                let t = Object.prototype.toString.call(responses[idx].response.value);
+                let fileName = '';
+                if (formNumber !== null) {
+                    fileName = formNumber + '_';
+                }
+                if (t === '[object Blob]') {
+                    fileName = fileName + responses[idx].response.value.$ngfName;
+                    formData.append(elementName + '[' + cnt + ']', responses[idx].response.value, fileName);
+                    responses[idx].response.value = {'name': fileName};
+                    cnt += 1;
+                } else if (t === '[object File]') {
+                    fileName = fileName + responses[idx].response.value.name;
+                    formData.append(elementName + '[' + cnt + ']', responses[idx].response.value, fileName);
+                    responses[idx].response.value = {'name': fileName};
+                    cnt += 1;
+                }
+            }
+        }
+        
+        return cnt;
+    }
+    
     removeTimeZoneAdjustment(irf) {
     	let dateTimeQuestions = [4];
     	for (let idx=0; idx < irf.responses.length; idx++) {
@@ -76,9 +146,8 @@ export default class IrfService {
     putIrf(stationId, id, irf) {
     	let myIrf = jQuery.extend(true, {}, irf);
     	let formData = new FormData();
-    	this.appendImages(formData, myIrf.cards[0].instances);
+    	this.appendAttachments(formData, myIrf);
     	this.removeTimeZoneAdjustment(myIrf);
-    	this.appendScannedForm(formData, myIrf.responses);
     	formData.append("main", JSON.stringify(myIrf));
     	return this.service.put(`api/irfNew/${stationId}/${id}`, formData, {'Content-Type': undefined});
     }
@@ -86,9 +155,8 @@ export default class IrfService {
     postIrf(irf) {
     	let myIrf = jQuery.extend(true, {}, irf);
     	let formData = new FormData();
-    	this.appendImages(formData, myIrf.cards[0].instances);
-    	this.removeTimeZoneAdjustment(myIrf);
-    	this.appendScannedForm(formData, myIrf.responses);  	
+    	this.appendAttachments(formData, myIrf);
+    	this.removeTimeZoneAdjustment(myIrf);	
     	formData.append("main", JSON.stringify(myIrf));
     	return this.service.post(`api/irfNew/`, formData, {'Content-Type': undefined});
     }

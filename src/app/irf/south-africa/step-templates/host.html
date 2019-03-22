@@ -1,64 +1,52 @@
-<div class="container-fluid">
-    <div class="row center-vertical">
-        <div class="col-md-1 col-md-offset-2">
-            Story
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
+    <div class="row">
+    	<div class="col-md-4">
+	    	<h4>Story</h4>
+	        <form-step red-flag="30" type="checkbox" label="Caught in a lie" response-value="$ctrl.questions[621].response.value"></form-step>
+	        <form-step red-flag="30" type="checkbox" label="Contradicts PVOT's story" response-value="$ctrl.questions[622].response.value"></form-step>
+	        <form-step red-flag="40" type="checkbox" label="Claims not to know PVOT" response-value="$ctrl.questions[225].response.value"></form-step>
+	        <form-step red-flag="20" type="checkbox" label="Inviting them on behalf of someone else" response-value="$ctrl.questions[226].response.value"></form-step>
+	        <form-step red-flag="20" type="checkbox" label="Hangs up when asked for permit/ID" response-value="$ctrl.questions[623].response.value"></form-step>
+	        <form-step red-flag="20" type="checkbox" label="Illogical story" response-value="$ctrl.questions[227].response.value"></form-step>
+	        <form-step red-flag="50" type="checkbox" label="Offered a bribe" response-value="$ctrl.questions[228].response.value"></form-step>
+	    </div>
+		<div class="col-md-5">
+        	<h4>Payment</h4>
+            <form-step red-flag="20" type="checkbox" label="Has paid for flight" response-value="$ctrl.questions[229].response.value"></form-step>
+            <form-step red-flag="15" type="checkbox" label="Flight was paid in cash" response-value="$ctrl.questions[230].response.value"></form-step>
+            <form-step red-flag="10" type="checkbox" label="Offering to pay all expenses without expectations/explanations" response-value="$ctrl.questions[231].response.value"></form-step>
+            <form-step red-flag="30" type="checkbox" label="No determined payback terms" response-value="$ctrl.questions[232].response.value"></form-step>
+            <form-step red-flag="30" type="checkbox" label="Paid for accomodation" response-value="$ctrl.questions[624].response.value"></form-step>
         </div>
-        <div class="col-md-9">
-            <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="30" type="checkbox" label="Caught in a lie/contradiction" response-value="$ctrl.questions[30].response.value"></form-step>
-                    <form-step red-flag="40" type="checkbox" label="Claims not to know them" response-value="$ctrl.questions[225].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Inviting them on behalf of someone else" response-value="$ctrl.questions[226].response.value"></form-step>
-                    <form-step red-flag="20" type="checkbox" label="Illogical story" response-value="$ctrl.questions[227].response.value"></form-step>
-                    <form-step red-flag="50" type="checkbox" label="Offered a bribe" response-value="$ctrl.questions[228].response.value"></form-step>
-                </div>
-            </div>
-            <hr/>
-        </div>
-    </div>
-    <div class="row center-vertical">
-        <div class="col-md-1 col-md-offset-2">
-            Payment
-        </div>
-        <div class="col-md-9">
-            <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="20" type="checkbox" label="Has paid for flight" response-value="$ctrl.questions[229].response.value"></form-step>
-                    <form-step red-flag="15" type="checkbox" label="Flight was paid in cash" response-value="$ctrl.questions[230].response.value"></form-step>
-                    <form-step red-flag="10" type="checkbox" label="Offering to pay all expenses without explanation" response-value="$ctrl.questions[231].response.value"></form-step>
-                    <form-step red-flag="30" type="checkbox" label="Not determined payback terms" response-value="$ctrl.questions[232].response.value"></form-step>
-                </div>
-            </div>
-            <hr/>
+        <div class="col-md-3">
+        	<h4>Status</h4>
+            <form-step red-flag="40" type="checkbox" label="Not in the country legally" response-value="$ctrl.questions[233].response.value"></form-step>
+            <form-step red-flag="70" type="checkbox" label="Is a known trafficker" response-value="$ctrl.questions[234].response.value"></form-step>
+            <form-step red-flag="50" type="checkbox" label="Associated to known trafficker" response-value="$ctrl.questions[235].response.value"></form-step>
+            <form-step red-flag="50" type="checkbox" label="Involved in illegal activity" response-value="$ctrl.questions[236].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="Provided false details" response-value="$ctrl.questions[237].response.value"></form-step>
+            <form-step red-flag="40" type="checkbox" label="Misuse of permit" response-value="$ctrl.questions[625].response.value"></form-step>
         </div>
     </div>
-    <div class="row center-vertical">
-        <div class="col-md-1 col-md-offset-2">
-            Status
-        </div>
-        <div class="col-md-9">
-            <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag="40" type="checkbox" label="Not in the country legally" response-value="$ctrl.questions[233].response.value"></form-step>
-                    <form-step red-flag="70" type="checkbox" label="Is a known trafficker" response-value="$ctrl.questions[234].response.value"></form-step>
-                    <form-step red-flag="50" type="checkbox" label="Associated to known trafficker" response-value="$ctrl.questions[235].response.value"></form-step>
-                    <form-step red-flag="50" type="checkbox" label="Involved in illegal activity" response-value="$ctrl.questions[236].response.value"></form-step>
-                    <form-step red-flag="40" type="checkbox" label="Provided false details" response-value="$ctrl.questions[237].response.value"></form-step>
-                </div>
-            </div>
-            <hr/>
-        </div>
+    <div class="row text-center">
+    	<form-step red-flag=" " type="otherCheckbox" label="Other red flag" response-value="$ctrl.questions[31].response.value"></form-step>
     </div>
-    <div class="row center-vertical">
-        <div class="col-md-1 col-md-offset-2">
-            Other
-        </div>
-        <div class="col-md-9">
-            <div class="row center-vertical">
-                <div class="col-md-6 col-md-offset-1">
-                    <form-step red-flag=" " type="otherCheckbox" label="Other red flag" response-value="$ctrl.questions[31].response.value"></form-step>
-                </div>
-            </div>
-        </div>
+    <hr/>
+    <div class="row text-center">
+    	<h4>Green Flags</h4>
     </div>
-</div>
+    <div class="row">
+    	<div class="col-md-3">
+    		<form-step type="checkbox" label="Documentation in order" response-value="$ctrl.questions[626].response.value"></form-step>
+    	</div>
+    	<div class="col-md-2">
+    		<form-step type="checkbox" label="No red flags" response-value="$ctrl.questions[627].response.value"></form-step>
+    	</div>
+    	<div class="col-md-2">
+    		<form-step type="checkbox" label="Story consistent" response-value="$ctrl.questions[628].response.value"></form-step>
+    	</div>
+    	<div class="col-md-3">
+    		<form-step type="checkbox" label="Details were validated and corrected" response-value="$ctrl.questions[629].response.value"></form-step>
+    	</div>
+    </div>
+</fieldset>

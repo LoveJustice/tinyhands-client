@@ -12,11 +12,11 @@ class OtherData {
     	}
         let flattenedItems = _.flattenDeep(items);
         let value = '';
-        if (this.origQuestions[valueId] != null && this.origQuestions[valueId].response != null &&
-				this.origQuestions[valueId].response.value != null) {
+        if (this.origQuestions[valueId] !== null && this.origQuestions[valueId].response !== null &&
+				this.origQuestions[valueId].response.value !== null) {
 			value = this.origQuestions[valueId].response.value;
 		}
-        if (!_.includes(flattenedItems, value) && value !== '' && value != null) {
+        if (!_.includes(flattenedItems, value) && value !== '' && value !== null) {
         	this.questions[valueId].value = 'Other';
         	this.questions[valueId].otherValue = value;
         } else {

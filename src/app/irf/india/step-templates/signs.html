@@ -8,7 +8,7 @@
         </div>
         <div class="row center-vertical">
             <div class="col-md-2">
-                <form-step type="radio" label="Contact" response-value="$ctrl.questions[91].response.value" radio-name="contactOrStaff"></form-step>
+                <form-step type="radio" label="6.0 Contact" response-value="$ctrl.questions[91].response.value" radio-name="contactOrStaff"></form-step>
             </div>
             <div class="row col-md-10">
                 <div class="row center-vertical">
@@ -23,10 +23,10 @@
                 <div class="padding-bottom-20">Did you pay the contact for this information?</div>
                 <div class="row center-vertical">
                     <div class="col-md-2">
-                        <form-step type="radio" label="No" response-value="$ctrl.questions[102].response.value" radio-name="didYouPay"></form-step>
+                        <form-step type="radio" label="6.10 No" response-value="$ctrl.questions[102].response.value" radio-name="didYouPay"></form-step>
                     </div>
                     <div class="col-md-2">
-                        <form-step type="radio" label="Yes" response-value="$ctrl.questions[102].response.value" radio-name="didYouPay"></form-step>
+                        <form-step type="radio" label="6.11 Yes" response-value="$ctrl.questions[102].response.value" radio-name="didYouPay"></form-step>
                     </div>
                     <div class="col-md-4 margin-left-10">
                         <form-step label="How much?" type="text" response-value="$ctrl.questions[104].response.value"></form-step>
@@ -37,12 +37,12 @@
         <hr/>
         <div class="row center-vertical">
             <div class="col-md-2">
-                <form-step type="radio" label="Staff" response-value="$ctrl.questions[91].response.value" radio-name="contactOrStaff"></form-step>
+                <form-step type="radio" label="7.0 Staff" response-value="$ctrl.questions[91].response.value" radio-name="contactOrStaff"></form-step>
             </div>
             <div class="row col-md-10">
                 <div class="row center-vertical">
                     <div class="col-md-6 form-group">
-                        <form-step class="col-xs-4 control-label">Staff who noticed</form-step>
+                        <form-step class="col-xs-4 control-label">7.1 Staff who noticed</form-step>
                         <div class="col-xs-6">
                             <staff-select selected-staff="$ctrl.questions[106].response.value" station-id="$ctrl.stationId"></staff-select>
                         </div>
@@ -54,53 +54,47 @@
                     <div class="col-md-2">
                         <div class="text-center">Manner </div>
                         <hr/>
-                        <form-step type="checkbox" label="Hesitant" response-value="$ctrl.questions[111].response.value"></form-step>
-                        <form-step type="checkbox" label="Nervous or afraid" response-value="$ctrl.questions[112].response.value"></form-step>
-                        <form-step type="checkbox" label="Hurrying" response-value="$ctrl.questions[113].response.value"></form-step>
-                        <form-step type="checkbox" label="Drugged or drowsy" response-value="$ctrl.questions[114].response.value"></form-step>
+                        <form-step type="checkbox" label="7.2 Hesitant" response-value="$ctrl.questions[111].response.value"></form-step>
+                        <form-step type="checkbox" label="7.3 Nervous or afraid" response-value="$ctrl.questions[112].response.value"></form-step>
+                        <form-step type="checkbox" label="7.4 Hurrying" response-value="$ctrl.questions[113].response.value"></form-step>
+                        <form-step type="checkbox" label="7.5 Drugged or drowsy" response-value="$ctrl.questions[114].response.value"></form-step>
                         <br>
                     </div>
                     <div class="col-md-2">
                         <div class="text-center">Attire </div>
                         <hr/>
-                        <form-step type="checkbox" label="New clothes" response-value="$ctrl.questions[115].response.value"></form-step>
-                        <form-step type="checkbox" label="Dirty clothes" response-value="$ctrl.questions[116].response.value"></form-step>
-                        <form-step type="checkbox" label="Carry full bags" response-value="$ctrl.questions[117].response.value"></form-step>
-                        <form-step type="checkbox" label="Village dress" response-value="$ctrl.questions[118].response.value"></form-step>
+                        <form-step type="checkbox" label="7.6 New clothes" response-value="$ctrl.questions[115].response.value"></form-step>
+                        <form-step type="checkbox" label="7.7 Dirty clothes" response-value="$ctrl.questions[116].response.value"></form-step>
+                        <form-step type="checkbox" label="7.8 Carrying full bags" response-value="$ctrl.questions[117].response.value"></form-step>
+                        <form-step type="checkbox" label="7.9 Village dress" response-value="$ctrl.questions[118].response.value"></form-step>
                         <br>
                     </div>
                     <div class="col-md-2">
                         <div class="text-center">Appearance </div>
                         <hr/>
-                        <form-step type="checkbox" label="Foreign looking" response-value="$ctrl.questions[119].response.value"></form-step>
-                        <form-step type="checkbox" label="Typical village look" response-value="$ctrl.questions[120].response.value"></form-step>
-                        <form-step type="checkbox" label="Looked like agent" response-value="$ctrl.questions[121].response.value"></form-step>
-                        <form-step type="checkbox" label="Caste difference" response-value="$ctrl.questions[122].response.value"></form-step>
-                        <form-step type="checkbox" label="Young looking" response-value="$ctrl.questions[123].response.value"></form-step>
+                        <form-step type="checkbox" label="7.10 Foreign looking" response-value="$ctrl.questions[119].response.value"></form-step>
+                        <form-step type="checkbox" label="7.11 Typical village look" response-value="$ctrl.questions[120].response.value"></form-step>
+                        <form-step type="checkbox" label="7.12 Looked like agent" response-value="$ctrl.questions[121].response.value"></form-step>
+                        <form-step type="checkbox" label="7.13 Caste difference" response-value="$ctrl.questions[122].response.value"></form-step>
+                        <form-step type="checkbox" label="7.14 Young looking" response-value="$ctrl.questions[123].response.value"></form-step>
                     </div>
                     <div class="col-md-6">
                         <div class="text-center">Action </div>
                         <hr/>
                         <div class="col-md-6">
-                            <form-step type="checkbox" label="Waiting / sitting" response-value="$ctrl.questions[124].response.value"></form-step>
-                            <form-step type="checkbox" label="On a train" response-value="$ctrl.questions[125].response.value"></form-step>
-                            <form-step type="checkbox" label="Roaming around" response-value="$ctrl.questions[126].response.value"></form-step>
-                            <form-step type="checkbox" label="Exiting vehicle" response-value="$ctrl.questions[127].response.value"></form-step>
-                            <form-step type="checkbox" label="Heading to vehicle" response-value="$ctrl.questions[128].response.value"></form-step>
+                            <form-step type="checkbox" label="7.15 Waiting / sitting" response-value="$ctrl.questions[124].response.value"></form-step>
+                            <form-step type="checkbox" label="7.16 On a train" response-value="$ctrl.questions[125].response.value"></form-step>
+                            <form-step type="checkbox" label="7.17 Roaming around" response-value="$ctrl.questions[126].response.value"></form-step>
+                            <form-step type="checkbox" label="7.18 Exiting vehicle" response-value="$ctrl.questions[127].response.value"></form-step>
+                            <form-step type="checkbox" label="7.19 Heading to vehicle" response-value="$ctrl.questions[128].response.value"></form-step>
                         </div>
                         <div class="col-md-6">
-                            <form-step type="checkbox" label="In a vehicle" response-value="$ctrl.questions[129].response.value"></form-step>
-                            <form-step type="checkbox" label="In a rickshaw" response-value="$ctrl.questions[130].response.value"></form-step>
-                            <form-step type="checkbox" label="In a cart" response-value="$ctrl.questions[131].response.value"></form-step>
-                            <form-step type="checkbox" label="Carrying a baby" response-value="$ctrl.questions[132].response.value"></form-step>
-                            <form-step type="checkbox" label="On the phone" response-value="$ctrl.questions[133].response.value"></form-step>
+                            <form-step type="checkbox" label="7.20 In a vehicle" response-value="$ctrl.questions[129].response.value"></form-step>
+                            <form-step type="checkbox" label="7.21 In a rickshaw" response-value="$ctrl.questions[130].response.value"></form-step>
+                            <form-step type="checkbox" label="7.22 In a cart" response-value="$ctrl.questions[131].response.value"></form-step>
+                            <form-step type="checkbox" label="7.23 Carrying a baby" response-value="$ctrl.questions[132].response.value"></form-step>
+                            <form-step type="checkbox" label="7.24 On the phone" response-value="$ctrl.questions[133].response.value"></form-step>
                         </div>
-                    </div>
-                </div>
-                <div class="row center-vertical">
-                    <div class="col-md-6">
-                        <div class="padding-top-30"></div>
-                        <form-step type="otherCheckbox" label="Other Sign" response-value="$ctrl.questions[134].response.value"></form-step>
                     </div>
                 </div>
             </div>

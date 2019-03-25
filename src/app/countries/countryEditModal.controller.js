@@ -8,6 +8,8 @@ class CountryModalController {
     }
 
     save() {
+        //this.scope.country.currency = escape(this.scope.country.currency);
+        alert(this.scope.country.currency);
         this.modalInstance.close(this.scope.country);
     }
 

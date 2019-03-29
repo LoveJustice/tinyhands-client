@@ -18,7 +18,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">Rs.</div>
+      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
       <input class="form-control text-center" ng-value="budgetCtrl.shelterUtilTotal() | number" disabled="disabled" />
     </div>
   </div>
@@ -41,7 +41,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">Rs.</div>
+      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
       <input class="form-control text-center" ng-value="budgetCtrl.shelterCheckboxTotal() | number" disabled="disabled" />
     </div>
   </div>
@@ -68,7 +68,7 @@
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Shelter Total</label>
-      <input class="form-control text-center" ng-value="budgetCtrl.shelterTotal() | currency:'Rs. '" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.shelterTotal() | currency:budgetCtrl.currency" disabled="disabled" />
     </div>
   </div>
 </div>

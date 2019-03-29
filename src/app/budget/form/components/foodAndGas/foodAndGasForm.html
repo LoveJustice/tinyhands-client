@@ -16,7 +16,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group text-center">
-      <div class="input-group-addon">Rs.</div>
+      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
       <input class="form-control text-center" ng-value="budgetCtrl.foodGasInterceptedGirls() | number" disabled="disabled" />
     </div>
     <small>Intercepted Girls</small>
@@ -38,7 +38,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">Rs.</div>
+      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
       <input class="form-control text-center" ng-value="budgetCtrl.foodGasLimboGirls() | number" disabled="disabled" />
     </div>
     <small>Limbo Girls</small>
@@ -66,7 +66,7 @@
   <div class="row text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Food</label>
-      <input class="form-control text-center" ng-value="budgetCtrl.foodAndGasTotal() | currency:'Rs. '" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.foodAndGasTotal() | currency:budgetCtrl.currency" disabled="disabled" />
     </div>
     <div class="col-md-4"></div>
   </div>

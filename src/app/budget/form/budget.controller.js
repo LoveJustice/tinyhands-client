@@ -20,6 +20,7 @@ export default class BudgetController {
         this.service = BudgetService;
         this.utils = UtilService;
         this.toastr = toastr;
+        this.currency = '';
 
         this.sections = {
             allSections: [
@@ -363,6 +364,7 @@ export default class BudgetController {
     getBorderStation() {
         this.service.getBorderStation(this.borderStationId).then(response => {
             this.form.station_name = response.data.station_name;
+            this.currency = decodeURI(response.data.country_currency);
         });
     }
 

@@ -43,7 +43,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
+      <div class="input-group-addon">Rs.</div>
       <input class="form-control text-center" ng-value="budgetCtrl.communicationNumberOfStaffTotal() | number" disabled="disabled"
       />
     </div>
@@ -62,7 +62,7 @@
     </div>
     <operator>=</operator>
     <div class="col-md-3 input-group">
-      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
+      <div class="input-group-addon">Rs.</div>
       <input class="form-control text-center" ng-value="budgetCtrl.communicationEachStaffTotal() | number" disabled="disabled"
       />
     </div>
@@ -91,7 +91,7 @@
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
       <label>Total Communication</label>
-      <input class="form-control text-center" ng-value="budgetCtrl.communicationTotal() | currency:budgetCtrl.currency" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.communicationTotal() | currency:'Rs. '" disabled="disabled" />
     </div>
   </div>
 </div>

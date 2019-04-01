@@ -1,2 +1,10 @@
-<select class="form-control" ng-model="$ctrl.selectedLocation" ng-options="location for location in $ctrl.locations">
-</select>
+<chips ng-model="$ctrl.selectedLocationList">
+    <chip-tmpl>
+        <div class="default-chip">
+            {{chip}}
+            <span class="glyphicon glyphicon-remove" remove-chip></span>
+        </div>
+    </chip-tmpl>
+    <input ng-model-control chip-control type="text" ng-model="$ctrl.searchLocation"
+            uib-typeahead="location for location in $ctrl.location | filter:$viewValue:$ctrl.filterLocationByName"></input>
+</chips>

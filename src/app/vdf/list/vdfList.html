@@ -74,7 +74,7 @@
             <tr ng-repeat="vdf in vdfListCtrl.vdfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ vdf.vdf_number }}</td>
                 <td>{{ vdf.staff_name }}</td>
-                <td>{{ vdf.date_of_discharge | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
+                <td>{{ vdf.date_of_interview | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ vdf.date_time_entered_into_system | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
                 <td class="hidden-xs">{{ vdf.date_time_last_updated | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
                 <td ng-if="vdfListCtrl.session.checkPermission('VDF','VIEW',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{vdf.viewUrl}}">View</a></td>

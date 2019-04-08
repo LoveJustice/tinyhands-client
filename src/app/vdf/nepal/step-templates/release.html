@@ -1,0 +1,62 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <form-step class="col-md-3 control-label">4.1 What date did victim leave the care of the Station?</form-step>
+        <div class="col-md-2">
+            <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[682].value">    
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <form-step class="col-md-3 control-label">4.2 Did someone pick up victim from the station?</form-step>
+        <div class="col-md-1">
+            <form-step type="radio" radio-name="victimPickUp" label="No" response-value="$ctrl.questions[684].response.value"></form-step>    
+        </div>
+        <div class="col-md-1">
+            <form-step type="radio" radio-name="victimPickUp" label="Yes" response-value="$ctrl.questions[684].response.value"></form-step>    
+        </div>
+        <form-step class="col-md-3 control-label">4.3 If Yes, who was the victim released to?</form-step>
+        <div class="col-md-4">
+	        <div class="col-md-3">
+	            <form-step type="radio" radio-name="releasedTo" label="Mother" other-value="$ctrl.otherData.questions[685].otherValue" response-value="$ctrl.otherData.questions[685].value"></form-step>    
+	        </div>
+	        <div class="col-md-3">
+	            <form-step type="radio" radio-name="releasedTo" label="Father" other-value="$ctrl.otherData.questions[685].otherValue" response-value="$ctrl.otherData.questions[685].value"></form-step>    
+	        </div>
+	        <div class="col-md-4">
+	            <form-step type="radio" radio-name="releasedTo" label="Grandparents" other-value="$ctrl.otherData.questions[685].otherValue" response-value="$ctrl.otherData.questions[685].value"></form-step>    
+	        </div>
+	        <div class="col-md-3">
+	            <form-step type="radio" radio-name="releasedTo" label="Brother" other-value="$ctrl.otherData.questions[685].otherValue" response-value="$ctrl.otherData.questions[685].value"></form-step>    
+	        </div>
+	        <div class="col-md-3">
+	            <form-step type="radio" radio-name="releasedTo" label="Sister" other-value="$ctrl.otherData.questions[685].otherValue" response-value="$ctrl.otherData.questions[685].value"></form-step>    
+	        </div>
+	        <div class="col-md-12">
+	            <form-step type="otherRadio" radio-name="releasedTo" label="Other" other-value="$ctrl.otherData.questions[685].otherValue" response-value="$ctrl.otherData.questions[685].value"></form-step>    
+	        </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+	    <form-step class="col-md-3 control-label">4.4 Name of person whom the victim was released to:</form-step>
+	    <div class="col-md-4">
+	        <input  type="text" class="form-control" placeholder="Name" ng-model="$ctrl.questions[686].response.value">   
+	    </div>
+	    <form-step class="col-md-2 control-label">Phone Number:</form-step>
+	    <div class="col-md-2">
+	        <input  type="text" class="form-control" placeholder="Phone" ng-model="$ctrl.questions[687].response.value">   
+	    </div>
+	</div>
+	<br>
+	<div class="row">
+	    <form-step class="col-md-2 control-label">4.5 Where was the victim sent?</form-step>
+	    <div class="col-md-2">
+            <form-step type="radio" radio-name="sent" label="Home to stay with guardians" other-value="$ctrl.otherData.questions[688].otherValue" response-value="$ctrl.otherData.questions[688].value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+            <form-step type="radio" radio-name="sent" label="Sent to stay with other relatives" other-value="$ctrl.otherData.questions[688].otherValue" response-value="$ctrl.otherData.questions[688].value"></form-step>    
+	    </div>
+	    <div class="col-md-5">
+            <form-step type="otherRadio" radio-name="sent" label="Found another place for them to go:" other-value="$ctrl.otherData.questions[688].otherValue" response-value="$ctrl.otherData.questions[688].value"></form-step>    
+	    </div>
+	</div>
+</fieldset>

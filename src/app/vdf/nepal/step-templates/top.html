@@ -1,0 +1,31 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">VDF Number: </form-step>
+            <div class="col-md-9">
+                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="VDF Number" ng-model="$ctrl.questions[651].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interviewer Name:</form-step>
+            <div class="col-md-9">
+                <staff-select selected-staff="$ctrl.questions[6].response.value" station-id="$ctrl.stationId"></staff-select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interview Date: </form-step>
+            <div class="col-md-9">
+                 <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[652].value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interview Location: </form-step>
+            <div class="col-md-9">
+                <location-select selected-location="$ctrl.questions[3].response.value" station-id="$ctrl.stationId"></location-select>
+            </div>
+        </div>
+    </div>
+</fieldset>

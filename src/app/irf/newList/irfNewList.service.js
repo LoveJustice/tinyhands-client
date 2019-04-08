@@ -38,6 +38,6 @@ export default class IrfNewListService {
     }
     
     getConfigForForm(formId) {
-    	return this.service.get(`api/forms/config/${stationId}`);
+    	return this.service.get(`api/forms/config/${formId}`);
     }
 }

@@ -132,7 +132,8 @@ describe('IrfTestController', () => {
             				address1: { id: null, name: '' },
             				address2: { id: null, name: '' },
             				phone: {  },
-            				nationality: {  }
+            				nationality: {  },
+            				identifiers: {  }
             			}
             		},
             		{

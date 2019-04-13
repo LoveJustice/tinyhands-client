@@ -36,6 +36,10 @@ export class IrfSouthAfricaController extends BaseIrfController {
         	finalProceduresTemplate,
         	attachmentsTemplate];
     }
+    
+    getIdentificationType() {
+        return "Passport";
+    }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
     	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',

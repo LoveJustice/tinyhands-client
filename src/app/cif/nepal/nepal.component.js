@@ -1,5 +1,5 @@
 import {BaseCifController} from '../baseCifController.js';
-import {BaseModalController} from '../../baseModalController.js';
+import {CifModalController} from '../cifModalController.js';
 import {AssociatedPersonModalController} from '../associatedPersonModalController.js';
 import './nepal.less';
 
@@ -45,13 +45,21 @@ export class CifNepalController extends BaseCifController {
         ];
     }
     
+    getDefaultIdentificationTypes() {
+        return ['Citizenship', 'Passport'];
+    }
+    
+    getChooseSingleIdentificationType() {
+        return true;
+    }
+    
     openPotentialVictimModal(responses = [], isAdd = false, idx=null) {
     	this.commonModal(responses, isAdd, idx, AssociatedPersonModalController, 'PotentialVictimModalController',
     			potentialVictimModalTemplate, 'OtherPotentialVictims');
     }
     
     openTransportationBoxModal(responses = [], isAdd = false, idx=null) {
-    	this.commonModal(responses, isAdd, idx, BaseModalController, 'TransportationBoxModalController',
+    	this.commonModal(responses, isAdd, idx, CifModalController, 'TransportationBoxModalController',
     			transportationBoxModalTemplate, 'Transportations');
     }
     
@@ -61,17 +69,17 @@ export class CifNepalController extends BaseCifController {
     }
     
     openLocationBoxModal(responses = [], isAdd = false, idx=null) {
-    	this.commonModal(responses, isAdd, idx, BaseModalController, 'LocationBoxModalController',
+    	this.commonModal(responses, isAdd, idx, CifModalController, 'LocationBoxModalController',
     			locationBoxTemplate, 'LocationBoxes');
     }
     
     openVehicleBoxModal(responses = [], isAdd = false, idx=null) {
-    	this.commonModal(responses, isAdd, idx, BaseModalController, 'VehicleBoxModalController',
+    	this.commonModal(responses, isAdd, idx, CifModalController, 'VehicleBoxModalController',
     			vehicleBoxTemplate, 'VehicleBoxes');
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, BaseModalController, 'AttachmentModalController',
+        this.commonModal(responses, isAdd, idx, CifModalController, 'AttachmentModalController',
                 attachmentTemplate, 'Attachments');
     }
 }

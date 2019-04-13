@@ -113,6 +113,7 @@ describe('CifTestController', () => {
                     isViewing: jasmine.any(Function),
                     modalActions: jasmine.any(Function),
                     config: jasmine.any(Function),
+                    identificationTypes: jasmine.any(Function),
                     associatedPersons: jasmine.any(Function)
                 },
                 size: 'lg',
@@ -141,7 +142,9 @@ describe('CifTestController', () => {
                                                         address1: Object({ id: null, name: '' }),
                                                         address2: Object({ id: null, name: '' }),
                                                         phone: Object({  }),
-                                                        nationality: Object({  })
+                                                        nationality: Object({  }),
+                                                        identifiers: Object({  })
+
                                                 }
                                         )
                                 }

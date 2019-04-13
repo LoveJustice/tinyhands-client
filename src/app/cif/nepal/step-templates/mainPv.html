@@ -91,16 +91,38 @@
 	        </div>
 	     </div>
     </div>
+    <br>
+    <div class="row center-vertical">
+    	<div class="col-md-4 center-vertical">
+            <form-step class="control-label col-md-5">ID Type</form-step>
+            <div class="col-md-7">
+                <form-step type="radio" radio-name="idType" label="Citizenship" response-value="$ctrl.personIdentifierChoice.questions[292].radioValue"></form-step>
+                <form-step type="radio" radio-name="idType" label="Passport" response-value="$ctrl.personIdentifierChoice.questions[292].radioValue"></form-step>
+            </div>
+        </div>
+        <div class="col-md-4 center-vertical">
+            <form-step class="control-label col-md-4">1.11 ID #</form-step>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.identifiers[$ctrl.personIdentifierChoice.getChoice(292)].number.value">
+            </div>
+        </div>
+        <div class="col-md-4 center-vertical">
+            <form-step class="control-label col-md-5">1.12 ID Issuing Location</form-step>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.identifiers[$ctrl.personIdentifierChoice.getChoice(292)].location.value">
+            </div>
+        </div>
+    </div>
     <div class="row">
     	<br>
     	<div class="col-md-7">
-            <form-step class="col-md-4 control-label">1.11 (If Under 18) Name of Guardian</form-step>
+            <form-step class="col-md-4 control-label">1.13 (If Under 18) Name of Guardian</form-step>
             <div class="col-md-8">
                 <input type="text" class="form-control" ng-model="$ctrl.questions[296].response.value">
             </div>
         </div>
 		<div class="col-md-5">
-			<form-step class="col-md-5 control-label">1.12 Guardian Phone Number</form-step>
+			<form-step class="col-md-5 control-label">1.14 Guardian Phone Number</form-step>
             <div class="col-md-7">
                 <input type="text" class="form-control" ng-model="$ctrl.questions[297].response.value">
             </div>
@@ -110,7 +132,7 @@
     <div class="row">
     	<br>
 		<div class="col-md-2">
-           	<form-step class="col-md-12 control-label">1.13 Relationship to Guardian</form-step>
+           	<form-step class="col-md-12 control-label">1.15 Relationship to Guardian</form-step>
         </div>
         <div class="col-md-7">
 	        <div class="col-md-2">
@@ -130,7 +152,7 @@
     <div class="row">
     	<br>
  		<div class="col-md-4">
-           	<form-step class="col-md-12 control-label">1.14 Were there other possible victims associated with this case?</form-step>
+           	<form-step class="col-md-12 control-label">1.16 Were there other possible victims associated with this case?</form-step>
         </div>
         <div class="col-md-7">
 	        <div class="col-md-2">

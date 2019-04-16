@@ -49,10 +49,6 @@ export class CifNepalController extends BaseCifController {
         return ['Citizenship', 'Passport'];
     }
     
-    getChooseSingleIdentificationType() {
-        return true;
-    }
-    
     openPotentialVictimModal(responses = [], isAdd = false, idx=null) {
     	this.commonModal(responses, isAdd, idx, AssociatedPersonModalController, 'PotentialVictimModalController',
     			potentialVictimModalTemplate, 'OtherPotentialVictims');

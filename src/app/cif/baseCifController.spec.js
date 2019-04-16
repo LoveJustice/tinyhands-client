@@ -38,8 +38,10 @@ class CifTestController extends BaseCifController {
         'ngInject';        
         super($scope, $uibModal, constants, CifService, $stateParams, $state);
         this.config = IdConstants;
-       
-        
+    }
+	
+	getDefaultIdentificationTypes() {
+        return ['TypeA', 'TypeB'];
     }
 }
 
@@ -81,6 +83,97 @@ describe('CifTestController', () => {
 
             expect(vm.redFlagTotal).toEqual(42);
         });
+    });
+    
+    describe('function processPersonIdentificationIn', () => {
+        it('should set person to question response when respone is null', () => {
+            let question = {
+                    response: null
+            };
+
+            vm.processPersonIdentificationIn(question);
+
+            expect(question.response.storage_id).toEqual(null);
+            expect(question.response.name).toEqual({value:''});
+            expect(question.response.phone).toEqual({value:''});
+            expect(question.response.gender).toEqual({value:''});
+            expect(question.response.age).toEqual({value:null});
+            expect(question.response.birthdate).toEqual({value:''});
+            expect(question.response.nationality).toEqual({value:''});
+            expect(question.response.identifiers).toEqual({
+                TypeA: {type:{value:'TypeA'}, number:{value:''}, location:{value:''}},
+                TypeB: {type:{value:'TypeB'}, number:{value:''}, location:{value:''}}
+            });
+        });
+        it('should add missing default identifiers', () => {
+            let question = {
+                response: {
+                    storage_id: null,
+                    name: {value:'test name'},
+                    phone:{value:''},
+                    age:{value:''},
+                    birthdate:{value:''},
+                    nationality:{value:''},
+                    identifiers: {
+                        TypeA: {type:{value:'TypeA'}, number:{value:'ANumber'}, location:{value:'ALocation'}},
+                        TypeC: {type:{value:'TypeC'}, number:{value:'CNumber'}, location:{value:'CLocation'}}
+                    }
+                    }
+            };
+
+            vm.processPersonIdentificationIn(question);
+            expect(question.response.name).toEqual({value:'test name'});
+            expect(question.response.identifiers).toEqual({
+                TypeA: {type:{value:'TypeA'}, number:{value:'ANumber'}, location:{value:'ALocation'}},
+                TypeC: {type:{value:'TypeC'}, number:{value:'CNumber'}, location:{value:'CLocation'}},
+                TypeB: {type:{value:'TypeB'}, number:{value:''}, location:{value:''}}
+            });
+        });    
+    });
+    
+    describe('function processPersonIdentificationOut', () => {
+        it('should remove all identifiers from person when the are all empty', () => {
+            let question = {
+                    response: {
+                        storage_id: null,
+                        name: {value:'test name'},
+                        phone:{value:''},
+                        age:{value:''},
+                        birthdate:{value:''},
+                        nationality:{value:''},
+                        identifiers: {
+                            TypeA: {type:{value:'TypeA'}, number:{value:''}, location:{value:'ALocation'}},
+                            TypeC: {type:{value:''}, number:{value:'CNumber'}, location:{value:'CLocation'}},
+                        }
+                    }
+            };
+
+            vm.processPersonIdentificationOut(question);
+
+            expect(question.response.identifiers).toEqual({});
+        });
+        
+        it('hould remove empty identifiers from person', () => {
+            let question = {
+                    response: {
+                        storage_id: null,
+                        name: {value:'test name'},
+                        phone:{value:''},
+                        age:{value:''},
+                        birthdate:{value:''},
+                        nationality:{value:''},
+                        identifiers: {
+                            TypeA: {type:{value:'TypeA'}, number:{value:'ANumber'}, location:{value:'ALocation'}},
+                            TypeC: {type:{value:'TypeC'}, number:{value:''}, location:{value:'CLocation'}}
+                        }
+                    }
+            };
+
+            vm.processPersonIdentificationOut(question);
+            expect(question.response.identifiers).toEqual({
+                TypeA: {type:{value:'TypeA'}, number:{value:'ANumber'}, location:{value:'ALocation'}}
+            });
+        });    
     });
 
 
@@ -143,7 +236,10 @@ describe('CifTestController', () => {
                                                         address2: Object({ id: null, name: '' }),
                                                         phone: Object({  }),
                                                         nationality: Object({  }),
-                                                        identifiers: Object({  })
+                                                        identifiers: {
+                                                            TypeA: {type:{value:'TypeA'}, number:{value:''}, location:{value:''}},
+                                                            TypeB: {type:{value:'TypeB'}, number:{value:''}, location:{value:''}}
+                                                        }
 
                                                 }
                                         )

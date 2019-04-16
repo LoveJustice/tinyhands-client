@@ -13,12 +13,11 @@ class PersonIdentifierChoice {
         let radioValue = this.identifierTypes[0];
         let activeValue = this.identifierTypes[0];
         for (let key in identifiers) {
-            if (identifiers[key].number.value !== '') {
+            if (this.identifierTypes.indexOf(key) > -1 && identifiers[key].number.value !== '') {
                 radioValue = identifiers[key].type.value;
                 activeValue = radioValue;
             }
         }
-        
         this.questions[question_id] = {'radioValue':radioValue, 'activeValue':activeValue};
     }
     
@@ -37,8 +36,9 @@ class PersonIdentifierChoice {
     changedValue(question_id) {
         if (question_id in this.questions) {
             let identifiers = this.origQuestions[question_id].response.identifiers;
-            for (let key in identifiers) {
-                if (key !== this.questions[question_id].radioValue) {
+            for (let keyIdx in this.identifierTypes) {
+                let key = this.identifierTypes[keyIdx];
+                if (key !== this.questions[question_id].radioValue && key in identifiers) {
                     identifiers[key].number.value = '';
                     identifiers[key].location.value = '';
                 }

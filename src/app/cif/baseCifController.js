@@ -62,14 +62,8 @@ export class BaseCifController {
         return [];
     }
     
-    // Override to set to true in subclass when only one identification type can be
-    // specified for a person, but the user may select from multiple types
-    getChooseSingleIdentificationType() {
-        return false;
-    }
-    
     processPersonIdentificationIn(question) {
-        if (!question.response || !question.response.name) {
+        if (!question.storage_id && (!question.response || !question.response.name)) {
             question.response = {
                 storage_id: null,
                 name: {
@@ -114,10 +108,9 @@ export class BaseCifController {
     }
     
     processPersonIdentificationOut (question) {
-        let choice = this.getChooseSingleIdentificationType();
         let toDelete = [];
         for (let theKey in question.response.identifiers) {
-            if (question.response.identifiers[theKey].number.value == '' || question.response.identifiers[theKey].type.value == '') {
+            if (question.response.identifiers[theKey].number.value === '' || question.response.identifiers[theKey].type.value === '') {
                 toDelete.push(theKey);
             }
         }

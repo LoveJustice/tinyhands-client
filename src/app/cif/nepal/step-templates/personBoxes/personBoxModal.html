@@ -67,11 +67,11 @@
             </div>
             <div class="row">
             	<div class="col-md-6">
-		            <label class="col-md-4 margin-top-25">Dist./State/Country</label>
+		            <label class="col-md-4 margin-top-25">District/Country</label>
 		            <autocomplete-address1 class="col-md-8 padding-horizontal-30" ng-model="PersonBoxModalController.questions[9].response.address1"></autocomplete-address1>
 		        </div>
                  <div class="col-md-6 form-group">
-		        	<label class="col-md-4 margin-top-25">VDC/Town/Ward</label>
+		        	<label class="col-md-4 margin-top-25">VDC/Town</label>
 		            <autocomplete-address2 class="col-md-8 padding-horizontal-30" ng-model="PersonBoxModalController.questions[9].response.address2" address1-object="PersonBoxModalController.questions[9].response.address1"></autocomplete-address2>
 		        </div>
             </div>
@@ -115,6 +115,28 @@
 			        </span>
 		        </div>
             </div>
+            <div class="row center-vertical">
+		    	<div class="col-md-4 center-vertical">
+		            <label class="col-md-5">ID Type</label>
+		            <div class="col-md-7">
+		                <form-step type="radio" radio-name="idType" label="Citizenship" response-value="PersonBoxModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
+		                <form-step type="radio" radio-name="idType" label="Passport" response-value="PersonBoxModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
+		            </div>
+		        </div>
+		        <div class="col-md-4 center-vertical">
+		            <label class="col-md-3">ID #</label>
+		            <div class="col-md-9">
+		                <input type="text" class="form-control" ng-model="PersonBoxModalController.questions[9].response.identifiers[PersonBoxModalController.personIdentifierChoice.getChoice(9)].number.value">
+		            </div>
+		        </div>
+		        <div class="col-md-4 center-vertical">
+		            <label class="col-md-5">ID Issuing Location</label>
+		            <div class="col-md-7">
+		                <input type="text" class="form-control" ng-model="PersonBoxModalController.questions[9].response.identifiers[PersonBoxModalController.personIdentifierChoice.getChoice(9)].location.value">
+		            </div>
+		        </div>
+		    </div>
+		    <br>
             <div class="row">
 	            <div class="col-md-2 form-group">
 		    		<label class="col-md-12">Relation to PV</form-step>

@@ -1,5 +1,6 @@
 const CifOtherData = require('../otherData.js');
 const CifDateDate = require('../dateData.js');
+const PersonIdentifierChoice = require('./personIdentifierChoice.js');
 
 export class BaseCifController {
     constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
@@ -55,6 +56,108 @@ export class BaseCifController {
             }
         }
     }
+    
+    // Override in subclass to select a default identification types
+    getDefaultIdentificationTypes() {
+        return [];
+    }
+    
+    processPersonIdentificationIn(question) {
+        if (!question.storage_id && (!question.response || !question.response.name)) {
+            question.response = {
+                storage_id: null,
+                name: {
+                    value: ""
+                },
+                address1: {
+                    id: null,
+                    name: ""
+                },
+                address2: {
+                    id: null,
+                    name: ""
+                },
+                phone: {
+                    value: ""
+                },
+                gender: {
+                    value: ""
+                },
+                age: {
+                    value: null
+                },
+                birthdate: {
+                        value:""
+                },
+                nationality: {
+                    value: ""
+                },
+                identifiers: {}
+            };
+        }
+        let defaultTypes = this.getDefaultIdentificationTypes();
+        for (let idx in defaultTypes) {
+            if (!(defaultTypes[idx] in question.response.identifiers)) {
+                question.response.identifiers[defaultTypes[idx]] = {
+                        type: {value:defaultTypes[idx]},
+                        number: {value:""},
+                        location: {value:""}
+                };
+            }
+        }
+    }
+    
+    processPersonIdentificationOut (question) {
+        let toDelete = [];
+        for (let theKey in question.response.identifiers) {
+            if (question.response.identifiers[theKey].number.value === '' || question.response.identifiers[theKey].type.value === '') {
+                toDelete.push(theKey);
+            }
+        }
+        for (let idx in toDelete) {
+            delete question.response.identifiers[toDelete[idx]];
+        }
+    }
+    
+    processPersonResponses(responses, personConfigList, phase, mainForm) {
+        for (let idx in responses) {
+            if (personConfigList.indexOf(responses[idx].question_id) > -1) {
+                if (phase === 'In') {
+                    this.processPersonIdentificationIn(responses[idx]);
+                    if (mainForm && this.personIdentifierChoice) {
+                        this.personIdentifierChoice.manage(responses[idx].question_id);
+                    }
+                } else if (phase === 'Out') {
+                    this.processPersonIdentificationOut(responses[idx]);
+                }
+            }
+        }
+    }
+    
+    processPersons(phase) {
+        let identificationTypes = this.getDefaultIdentificationTypes();
+        if (identificationTypes.length > 0) {
+            if (phase === 'In') {
+                this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, identificationTypes);
+            }
+        } else {
+            this.personIdentifierChoice = null;
+        }
+        // Main form
+        if (this.config.hasOwnProperty('Person')) {
+            this.processPersonResponses(this.responses, this.config.Person, phase, true);
+        }
+        
+        // Process cards
+        for (let key in this.config) {
+            if (this.config[key].hasOwnProperty('Person')) {
+                let cards = this.getCardInstances(key);
+                for (let cardIdx in cards) {
+                    this.processPersonResponses(cards[cardIdx].responses, this.config[key].Person, phase, false);
+                }
+            }
+        }
+    }
 
     getCif(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -68,44 +171,8 @@ export class BaseCifController {
                 		this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
                 	}
                 }
-                	
-                for (let person_entry in this.config.Person) {
-                    let person_id = this.config.Person[person_entry];
-                    if (this.questions[person_id].response === null || this.questions[person_id].response.value === null) {
-                        this.questions[person_id].response = {
-                            "storage_id": null,
-                            "name": {
-                                "value": ""
-                            },
-                            "address1": {
-                                "id": null,
-                                "name": ""
-                            },
-                            "address2": {
-                                "id": null,
-                                "name": ""
-                            },
-                            "phone": {
-                                "value": ""
-                            },
-                            "gender": {
-                                "value": ""
-                            },
-                            "age": {
-                                "value": null
-                            },
-                            "birthdate": {
-                                    "value":""
-                            },
-                            "passport": {
-                                "value": ""
-                            },
-                            "nationality": {
-                                "value": ""
-                            }
-                        };
-                    }
-                }
+                
+                this.processPersons('In');
                 this.inCustomHandling();
                 if (id === null) {
                 	this.response.status = 'in-progress';
@@ -151,8 +218,6 @@ export class BaseCifController {
     	}
     	
     }
-    
-   
 
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, (x) => x.question_id === questionId).response;
@@ -197,7 +262,7 @@ export class BaseCifController {
     	    			question_id: config.Person[idx],
     	    			response: {
     	                    gender: {
-    	                        "value": ""
+    	                        value: ""
     	                    },
     	                    name: {},
     	                    age: {},
@@ -212,6 +277,7 @@ export class BaseCifController {
     	                    },
     	                    phone: {},
     	                    nationality: {},
+    	                    identifiers: {}
     	                }
     	    		});
     			}
@@ -253,6 +319,15 @@ export class BaseCifController {
     			}
     		}
     	}
+    	
+    	if (config.hasOwnProperty('Person')) {
+    	    for (let idx in the_card.responses) {
+                if (config.Person.indexOf(the_card.responses[idx].question_id) > -1) {
+                    this.processPersonIdentificationIn(the_card.responses[idx]);
+                }
+            }
+    	}
+        
     	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
     	this.$uibModal.open({
@@ -265,6 +340,7 @@ export class BaseCifController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                identificationTypes: () => this.getDefaultIdentificationTypes(),
                 associatedPersons: () => this.associatedPersons
             },
             size: 'lg',
@@ -310,6 +386,7 @@ export class BaseCifController {
    
     save() {
     	this.response.status = 'in-progress';
+    	this.processPersons('Out');
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.saveExtra();
@@ -351,6 +428,7 @@ export class BaseCifController {
 
     submit() {
     	this.saved_status = this.response.status;
+    	this.processPersons('Out');
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.submitExtra();

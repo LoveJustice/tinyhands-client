@@ -114,6 +114,10 @@ export class BaseIrfController {
         this.redFlagTotal += numberOfFlagsToAdd;
     }
     
+    getIdentificationType() {
+        return null;
+    }
+    
     commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
     	let config = this.config[config_name];
     	if (isAdd) {
@@ -162,6 +166,7 @@ export class BaseIrfController {
     	                    },
     	                    phone: {},
     	                    nationality: {},
+    	                    identifiers: {}
     	                }
     	    		});
     			}
@@ -202,6 +207,26 @@ export class BaseIrfController {
 					the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
     			}
     		}
+    	}
+    	let identificationType = this.getIdentificationType();
+    	if (config.hasOwnProperty('Person') && identificationType !== null) {
+            for (let idx=0; idx < config.Person.length; idx++) {
+                for (let idx1=0; idx1 < the_card.responses.length; idx1++) {
+                    if (the_card.responses[idx1].question_id == config.Person[idx]) {
+                        if (!('identifiers' in  the_card.responses[idx1].response)) {
+                            the_card.responses[idx1].response['identifiers'] = {};
+                        }
+                        if (!(identificationType in the_card.responses[idx1].response.identifiers)) {
+                            the_card.responses[idx1].response.identifiers[identificationType] = {
+                                    type: {value:identificationType},
+                                    number: {value:""},
+                                    location: {value:""}
+                                        
+                            };
+                        }
+                    }
+                }
+            }
     	}
     	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
@@ -256,10 +281,38 @@ export class BaseIrfController {
     		this.warningMessages = [];
     	}
     }
+    
+    checkUpdatePersonIdentifiers() {
+        let cards = this.getCardInstances('Interceptees');
+        let config = this.config['Interceptees'];
+        if (config.hasOwnProperty('Person')) {
+            for (let idx=0; idx < config.Person.length; idx++) {
+                let the_question = config.Person[idx];
+                for (let idx1=0; idx1 < cards.length; idx1++) {
+                    let the_card = cards[idx1];
+                    for (let idx2=0; idx2 < the_card.responses.length; idx2++) {
+                        if (the_card.responses[idx2].question_id !== the_question) {
+                            continue;
+                        }
+                        let the_person = the_card.responses[idx2];
+                        if ('identifiers' in the_person.response) {
+                            for (let id_type in the_person.response.identifiers) {
+                                if (!the_person.response.identifiers[id_type].number || !the_person.response.identifiers[id_type].number.value ||
+                                    !the_person.response.identifiers[id_type].type || !the_person.response.identifiers[id_type].type.value) {
+                                    delete the_person.response.identifiers[id_type];
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
    
     save() {
     	this.response.status = 'in-progress';
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
+    	this.checkUpdatePersonIdentifiers();
     	this.outCustomHandling();
     	this.saveExtra();
     	this.errorMessages = [];
@@ -301,6 +354,7 @@ export class BaseIrfController {
     submit() {
     	this.saved_status = this.response.status;
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
+    	this.checkUpdatePersonIdentifiers();
     	this.outCustomHandling();
     	this.submitExtra();
     	this.errorMessages = [];

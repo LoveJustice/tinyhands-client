@@ -1,0 +1,73 @@
+<div id="cif-india-Vehicle-box-modal" class="modal-content">
+    <form name="vehicleBoxForm" ng-disabled="VehicleBoxModalController.isViewing === 'true'">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="VehicleBoxModalController.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-4">
+            	<h3 class="modal-title">{{VehicleBoxModalController.questions[446].response.value || 'Vehicle Box'}}</h3>
+            </div>
+            <div class="col-md-1 margin-top-10">
+	    		<label>VB#</label>
+	    	</div>
+			<div class="col-md-3 form-group">
+		        <input type="number" min="0" class="form-control" ng-model="VehicleBoxModalController.questions[482].response.value">
+	        </div>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+        		<div class="col-md-2">
+            		<label>License Plate #</label>
+            	</div>
+            	<div class="col-md-3">
+            		<input type="text" ng-model="VehicleBoxModalController.questions[446].response.value">
+            	</div>
+            </div>
+            <div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label>Type of Vehicle</label>
+		    	</div>
+				<div class="col-md-10 form-group">
+			        <span ng-repeat="vType in VehicleBoxModalController.config.RadioItems[447]">
+			            <form-step type="radio" class="col-md-4" radio-name="vehicleType" label="{{vType}}"
+			            	other-value="VehicleBoxModalController.otherData.questions[447].otherValue"
+			            	response-value="VehicleBoxModalController.otherData.questions[447].value"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="vehicleType" label="Other"
+			            	other-value="VehicleBoxModalController.otherData.questions[447].otherValue"
+			            	response-value="VehicleBoxModalController.otherData.questions[447].value"></form-step>
+			        </span>
+		        </div>
+            </div>
+	        <div class="row">
+        		<div class="col-md-2">
+            		<label>Description:</label>
+            	</div>
+            	<div class="col-md-10">
+            		 <textarea class="form-control" rows="3" ng-model="VehicleBoxModalController.questions[448].response.value"></textarea>
+            	</div>
+	        </div>
+	        <div class="row">
+        		<div class="col-md-4">
+            		<label>Who is linked to this vehicle?  PB#:</label>
+            	</div>
+            	<div class="col-md-8">
+            		 <input type="text" ng-model="VehicleBoxModalController.questions[449].response.value">
+            	</div>
+	        </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="VehicleBoxModalController.save()" ng-disabled="intercepteeForm.$invalid" ng-if="!VehicleBoxModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="VehicleBoxModalController.delete()" ng-if="!VehicleBoxModalController.isAdd && !VehicleBoxModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="VehicleBoxModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

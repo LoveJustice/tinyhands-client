@@ -1,8 +1,8 @@
 import {BaseVdfController} from '../baseVdfController.js';
 import {BaseModalController} from '../../baseModalController.js';
-import './nepal.less';
+import './common.less';
 
-import templateUrl from './nepal.html';
+import templateUrl from './common.html';
 import topTemplate from './step-templates/top.html';
 import victimTemplate from './step-templates/victim.html';
 import homeAssessmentTemplate from './step-templates/homeAssessment.html';
@@ -13,7 +13,7 @@ import attachmentsTemplate from './step-templates/attachments/attachment.html';
 
 import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
-export class VdfNepalController extends BaseVdfController {
+export class VdfCommonController extends BaseVdfController {
     constructor($scope, $uibModal, constants, VdfService, $stateParams, $state) {
         'ngInject';        
         super($scope, $uibModal, constants, VdfService, $stateParams, $state);
@@ -37,5 +37,5 @@ export class VdfNepalController extends BaseVdfController {
 
 export default {
     templateUrl,
-    controller: VdfNepalController
+    controller: VdfCommonController
 };

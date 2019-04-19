@@ -1,4 +1,4 @@
-<div id="vdf-nepal" class="container-fluid padding-top-20">
+<div id="vdf-common" class="container-fluid padding-top-20">
     <div class="sticky">
         <div class="padding-bottom-40">
             <h1 class="form-number-header float-left padding-left-20">
@@ -19,7 +19,7 @@
         </div>
         <hr class="margin-bottom-0" />
     </div>
-    <div id="vdf-nepal-content" class="padding-bottom-40">
+    <div id="vdf-common-content" class="padding-bottom-40">
         <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template" ng-hide="$ctrl.selectedStep != $index"></div>
 	    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
 	        <strong>Warning! {{warnings}}</strong>

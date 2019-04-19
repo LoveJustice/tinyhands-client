@@ -1,0 +1,181 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+ 	<div class="row">
+   		<form-step class="control-label col-md-4">4.1 Has legal action been taken against any of the traffickers?</form-step>
+       	<form-step type="radio" class="col-md-1" radio-name="legalAction"  label="No" response-value="$ctrl.questions[354].response.value" ></form-step>
+       	<form-step type="radio" class="col-md-2" radio-name="legalAction"  label="No, but PV is willing to" response-value="$ctrl.questions[354].response.value" ></form-step>
+       	<form-step type="radio" class="col-md-2" radio-name="legalAction"  label="Yes, case filed" response-value="$ctrl.questions[354].response.value" ></form-step>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-2">4.2 Type of Case Filed:</form-step>
+    	<div class="col-md-2">
+    		<input type="text" class="col-md-12" ng-model="$ctrl.questions[357].response.value">
+    	</div>
+    	<form-step class="control-label col-md-2">4.3 Filed Against:</form-step>
+    	<div class="col-md-3">
+    		<input type="text" class="col-md-12" ng-model="$ctrl.questions[358].response.value">
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.4 If no case filed, what is the main reason? (Check all that apply):</form-step>
+    	<div class="col-md-8">
+			<form-step type="checkbox" class="col-md-6" label="Police say not enough information" response-value="$ctrl.questions[360].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="Trafficker ran away" response-value="$ctrl.questions[361].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="Trafficker is a relative" response-value="$ctrl.questions[362].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV afraid for reputation" response-value="$ctrl.questions[363].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="PV afraid for his/her safety" response-value="$ctrl.questions[364].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-8" blue-flag="6" label="Trafficker attempted to bribe victim or family not to file case" response-value="$ctrl.questions[365].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV doesn't believe they were being trafficked" response-value="$ctrl.questions[366].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" blue-flag="6" label="PV has been threatened" response-value="$ctrl.questions[367].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV family not willing" response-value="$ctrl.questions[368].response.value"></form-step>
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.5 Case Exploration Checklist (Check all that apply):</form-step>
+    	<div class="col-md-8">
+			<form-step type="checkbox" class="col-md-6" label="PV is under 16 and separated from guardian without consent" response-value="$ctrl.questions[369].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV is under 14 and being sent for a job" response-value="$ctrl.questions[698].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV is under 18 and sexually abused" response-value="$ctrl.questions[699].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV was detained or confined against his/her will" response-value="$ctrl.questions[373].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="PV was physically or sexually abused without consent" response-value="$ctrl.questions[374].response.value"></form-step>
+    	</div>
+ 	</div>
+	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-2">4.6 Date of visit to Police Station</form-step>
+    	<div class="col-md-2">
+    		<input type="date" class="col-md-12"  ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[375].value">
+    	</div>
+    	<form-step class="control-label col-md-2">4.7 Name of Officer</form-step>
+    	<div class="col-md-3">
+    		<input type="text" class="col-md-12" ng-model="$ctrl.questions[376].response.value">
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.8 What happened at the police station? (Check all that apply):</form-step>
+    	<div class="col-md-8">
+			<form-step type="checkbox" class="col-md-6" label="Police took Statement" response-value="$ctrl.questions[377].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="Statement taken Privately" response-value="$ctrl.questions[378].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="Threats prevented statement" response-value="$ctrl.questions[697].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="Police gave victim name to Media" response-value="$ctrl.questions[379].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-6" label="Police gave Trafficker(s) access to PV" response-value="$ctrl.questions[380].response.value"></form-step>
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.9 How did the police interact with the PV? (Check all that apply):</form-step>
+    	<div class="col-md-8">
+			<form-step type="checkbox" class="col-md-2" label="Disrespectful" response-value="$ctrl.questions[381].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-2" label="Unprofessional" response-value="$ctrl.questions[382].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-3" label="Resistant to filing an FIR" response-value="$ctrl.questions[383].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-3" label="None of the above" response-value="$ctrl.questions[384].response.value"></form-step>
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.10 Was a victim statement certified by a judge?</form-step>
+    	<div class="col-md-4">
+			<form-step type="radio" class="col-md-2" radio-name="certified"  label="No" response-value="$ctrl.questions[385].response.value" ></form-step>
+			<form-step type="radio" class="col-md-4" radio-name="certified"  label="Yes, privately" response-value="$ctrl.questions[385].response.value" ></form-step>
+			<form-step type="radio" class="col-md-6" radio-name="certified"  label="Yes, not privately" response-value="$ctrl.questions[385].response.value" ></form-step>
+    	</div>
+    	<form-step class="control-label col-md-1">4.11 Date</form-step>
+    	<div class="col-md-2">
+    		<input type="date" class="col-md-12" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[386].value">
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.12 If not certified by a judge, why? (Check all that apply):</form-step>
+    	<div class="col-md-8">
+			<form-step type="checkbox" class="col-md-4" label="Police don't believe it was crime" response-value="$ctrl.questions[458].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="Police say not enough Evidence" response-value="$ctrl.questions[459].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="Trafficker Ran away" response-value="$ctrl.questions[460].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="Unable to Locate trafficker" response-value="$ctrl.questions[461].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="PV won't testify" response-value="$ctrl.questions[462].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="Delayed waiting for other traffickers" response-value="$ctrl.questions[463].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-4" label="Police are Scared" response-value="$ctrl.questions[464].response.value"></form-step>
+			<form-step type="checkbox" class="col-md-8" label="Suspect Corruption or bribes (include names and explain in notes below)" response-value="$ctrl.questions[465].response.value"></form-step>
+			
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-4">4.13 Does the PV think they would have been trafficked if not intercepted?</form-step>
+    	<div class="col-md-4">
+			<form-step type="radio" class="col-md-2" radio-name="pvtrafficked" label="No" response-value="$ctrl.questions[387].response.value" ></form-step>
+			<form-step type="radio" class="col-md-3" radio-name="pvtrafficked" blue-flag="8" label="Yes" response-value="$ctrl.questions[387].response.value" ></form-step>
+			<form-step type="radio" class="col-md-6" radio-name="pvtrafficked" label="Doesn't know" response-value="$ctrl.questions[387].response.value" ></form-step>
+    	</div>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<form-step class="control-label col-md-12"> 4.14 Is any specific type of exploitation expected or known to have occurred? *PB *LB (Check all that apply):</form-step>
+    </div>
+    <div class="row col-md-12">
+		<table class="table table-striped">
+			<thead>
+	            <tr>
+	                <th>Type of Exploitation</th>
+	                <th>Expected</th>
+	                <th>Occurred</th>
+	                <th>PB#</th>
+	                <th>LB#</th>
+	                <th>Type of Exploitation</th>
+	                <th>Expected</th>
+	                <th>Occurred</th>
+	                <th>PB#</th>
+	                <th>LB#</th>
+	            </tr>
+           </thead>
+           <tbody>
+	           <tr>
+	            	<td>Forced Prostitution</td>
+	            	<td><form-step type="checkbox" response-value="$ctrl.questions[388].response.value"></form-step></td>
+	            	<td><form-step type="checkbox" blue-flag="10" response-value="$ctrl.questions[389].response.value"></form-step></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[390].response.value"></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[391].response.value"></td>
+	            	<td>Forced Labor</td>
+	            	<td><form-step type="checkbox" response-value="$ctrl.questions[404].response.value"></form-step></td>
+	            	<td><form-step type="checkbox" blue-flag="12" response-value="$ctrl.questions[405].response.value"></form-step></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[406].response.value"></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[407].response.value"></td>
+	            </tr>
+	            <tr>
+	            	<td>Sexual Abuse (Forced)</td>
+	            	<td><form-step type="checkbox" response-value="$ctrl.questions[392].response.value"></form-step></td>
+	            	<td><form-step type="checkbox" blue-flag="8" response-value="$ctrl.questions[393].response.value"></form-step></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[394].response.value"></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[395].response.value"></td>
+	            	<td>Forced Organ Removal</td>
+	            	<td><form-step type="checkbox" response-value="$ctrl.questions[408].response.value"></form-step></td>
+	            	<td><form-step type="checkbox" blue-flag="12" response-value="$ctrl.questions[409].response.value"></form-step></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[410].response.value"></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[411].response.value"></td>
+	            </tr>
+	            <tr>
+	            	<td>Physical Abuse</td>
+	            	<td><form-step type="checkbox" response-value="$ctrl.questions[396].response.value"></form-step></td>
+	            	<td><form-step type="checkbox" blue-flag="6" response-value="$ctrl.questions[397].response.value"></form-step></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[398].response.value"></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[399].response.value"></td>
+	            	<td rowspan="2">Other:<input type="text" class="col-md-12" ng-model="$ctrl.questions[412].response.value"></td>
+	            	<td rowspan="2"><form-step type="checkbox" response-value="$ctrl.questions[413].response.value"></form-step></td>
+	            	<td rowspan="2"><form-step type="checkbox" response-value="$ctrl.questions[414].response.value"></form-step></td>
+	            	<td rowspan="2"><input type="text" class="col-md-12" ng-model="$ctrl.questions[415].response.value"></td>
+	            	<td rowspan="2"><input type="text" class="col-md-12" ng-model="$ctrl.questions[416].response.value"></td>
+	            </tr>
+	            <tr>
+	            	<td>Debt Bondage</td>
+	            	<td><form-step type="checkbox" response-value="$ctrl.questions[400].response.value"></form-step></td>
+	            	<td><form-step type="checkbox" blue-flag="10" response-value="$ctrl.questions[401].response.value"></form-step></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[402].response.value"></td>
+	            	<td><input type="text" class="col-md-12" ng-model="$ctrl.questions[403].response.value"></td>
+	            </tr>
+           </tbody>
+		</table>
+	</div>
+ </fieldset>

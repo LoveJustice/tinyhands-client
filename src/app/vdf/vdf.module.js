@@ -1,5 +1,5 @@
 import sharedModule from '../shared/shared.module';
-import VdfNepalModule from './nepal/vdf.nepal.module';
+import VdfCommonModule from './common/vdf.common.module';
 
 import VdfRoutes from './vdf.route';
 import VdfService from './vdf.service';
@@ -11,7 +11,7 @@ import VdfListService from './list/vdfList.service';
 
 /* global angular */
 
-export default angular.module('tinyhands.VDF', [VdfNepalModule, sharedModule])
+export default angular.module('tinyhands.VDF', [VdfCommonModule, sharedModule])
     .config(VdfRoutes)
     .controller('VdfListController', VdfListController)
     .service('VdfListService', VdfListService)

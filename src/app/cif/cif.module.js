@@ -1,5 +1,6 @@
 import sharedModule from '../shared/shared.module';
 import CifNepalModule from './nepal/cif.nepal.module';
+import CifIndiaModule from './india/cif.india.module';
 
 import CifRoutes from './cif.route';
 import CifService from './cif.service';
@@ -11,7 +12,7 @@ import CifListService from './list/cifList.service';
 
 /* global angular */
 
-export default angular.module('tinyhands.CIF', [CifNepalModule, sharedModule])
+export default angular.module('tinyhands.CIF', [CifNepalModule, CifIndiaModule,sharedModule])
     .config(CifRoutes)
     .controller('CifListController', CifListController)
     .service('CifListService', CifListService)

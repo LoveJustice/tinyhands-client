@@ -193,7 +193,7 @@ export class BaseIrfController {
     				if (config.Basic[idx] === indexQuestion) {
     					the_card.responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
     				} else {
-    				    if (config.Basic[idx] in config.FormDefault) {
+    				    if (config.hasOwnProperty('FormDefault') && config.Basic[idx] in config.FormDefault) {
                             the_card.responses.push({question_id: config.Basic[idx], response:config.FormDefault[config.Basic[idx]]});
                         } else {
                             the_card.responses.push({question_id: config.Basic[idx], response: {value:null}});

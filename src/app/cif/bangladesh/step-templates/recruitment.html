@@ -1,0 +1,128 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+    	<div class="col-md-4">
+    		<form-step class="control-label">2.1 Did someone recruit the PV / persuade them to go abroad?</form-step>
+    	</div>
+    	<div class="col-md-6">
+    		<span>
+            	<form-step type="checkbox" class="inblock" label="Yes, a Manpower Agency *LB - Agency *PB#" response-value="$ctrl.questions[302].response.value"></form-step>
+            	&nbsp;
+            	<input type="text" placeholder="PB#" ng-model="$ctrl.questions[467].response.value">
+				&nbsp;
+            	<form-step type="checkbox" class="inblock" label="Yes, one or more brokers -> *PB#(s)" response-value="$ctrl.questions[303].response.value"></form-step>
+            	&nbsp;
+            	<input type="text" placeholder="PB#" ng-model="$ctrl.questions[468].response.value">
+            	&nbsp;
+            	<form-step type="checkbox" class="inblock" label="No" response-value="$ctrl.questions[304].response.value"></form-step>
+            </span>
+		</div>
+    </div>
+    <div class="row">
+    	<br>
+    	<div class="col-md-3">
+    		<form-step class="control-label">2.2 How did the PV meet the broker?</form-step>
+    	</div>
+    	<div class="col-md-9">
+    		<span>
+	            <form-step type="checkbox" class="inblock" label="Promised a job" response-value="$ctrl.questions[306].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="checkbox" class="inblock" label="Got married" response-value="$ctrl.questions[307].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="checkbox" class="inblock" label="Promised marriage" response-value="$ctrl.questions[308].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="checkbox" class="inblock" label="Approached at Work" response-value="$ctrl.questions[309].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="checkbox" class="inblock" label="Approached at School" response-value="$ctrl.questions[310].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="checkbox" class="inblock" label="Online Job advertisement" response-value="$ctrl.questions[311].response.value"></form-step>
+				<br>
+				<form-step type="checkbox" class="inblock" label="Met Broker online" response-value="$ctrl.questions[312].response.value"/>
+         			&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[313].response.value"> )
+         		&nbsp;
+         		<form-step type="checkbox" class="inblock" label="Broker approached PV directly" response-value="$ctrl.questions[314].response.value"/>
+					&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[315].response.value"> )
+				&nbsp;
+	            <form-step type="checkbox" class="inblock" label="Through friends" response-value="$ctrl.questions[316].response.value"></form-step>
+	            <br>
+	            <form-step type="checkbox" class="inblock" label="Through family" response-value="$ctrl.questions[317].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="checkbox" class="inblock" label="Broker called PV's mobile" response-value="$ctrl.questions[318].response.value"></form-step>
+	            &nbsp;
+	            <form-step type="otherCheckbox" class="inblock" label="Other:" response-value="$ctrl.questions[319].response.value"></form-step>
+            </span>
+    	</div>
+    </div>
+    <div class="row col-md-12">
+    	<br>
+    	<span>
+    		2.3 How long had the PV known the broker (PB#(s)
+    		<input type="text" placeholder="PB#(s)" ng-model="$ctrl.questions[469].response.value"> ) before leaving?
+    		&nbsp;
+    		<input type="number" ng-model="$ctrl.questions[320].response.value"> Years
+    		<input type="number" ng-model="$ctrl.questions[321].response.value"> Months
+    		<input type="number" ng-model="$ctrl.questions[694].response.value"> Days
+    	</span>
+ 	</div>
+ 	<div class="row col-md-12">
+    	<br>
+    	<span>
+    		2.4 If the PV is married to a suspect (PB#
+    		<input type="text" placeholder="PB#" ng-model="$ctrl.questions[470].response.value">
+    		) how long have they been married?
+    		&nbsp;
+    		<input type="number" ng-model="$ctrl.questions[322].response.value"> Years
+    		<input type="number" ng-model="$ctrl.questions[323].response.value"> Months
+    		<input type="number" ng-model="$ctrl.questions[695].response.value"> Days
+    	</span>
+ 	</div>
+ 	<div class="row col-md-12">
+ 	<br>
+ 	</div>
+ 	<div class="row ">
+    	<div class="col-md-3">
+    		<form-step class="control-label">2.5 How were the travel/migration expenses paid? </form-step>
+    	</div>
+    	<div class="col-md-9">
+    		<div class="col-md-12">
+	    		<span>
+		            <form-step type="checkbox" class="inblock" label="The PV paid it themselves" response-value="$ctrl.questions[324].response.value"></form-step>
+		            &nbsp;
+		            <form-step type="checkbox" class="inblock" label="The broker" response-value="$ctrl.questions[325].response.value"></form-step>
+		            	&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[491].response.value"> ) <label>paid all expenses</label>
+		        </span>
+	        </div>
+	        <div class="col-md-12">
+		        <span>
+		            <form-step type="checkbox" blue-flag="6" class="inblock" label="The PV paid" response-value="$ctrl.questions[471].response.value"></form-step>
+		            	&nbsp;<input type="text" placeholder="Amount" ng-model="$ctrl.questions[326].response.value"> <label>to broker</label>
+		            	&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[457].response.value"> )
+		        </span>
+	        </div>
+	        <div class="col-md-12">
+		        <span>
+		            <form-step type="checkbox" class="inblock" blue-flag="6" label="Broker" response-value="$ctrl.questions[472].response.value"></form-step>
+		            	&nbsp;(PB# <input type="text" placeholder="PB#" ng-model="$ctrl.questions[492].response.value"> )<label>paid</label>
+		            	&nbsp;<input type="text" placeholder="Amount" ng-model="$ctrl.questions[327].response.value"> <label>which must be repaid</label>
+	            </span>
+            </div>
+    	</div>
+    </div>
+    <div class="row col-md-12">
+    	<br>
+    	<span>
+    		2.6 If the PV is going for a job, how much did the broker (PB#
+    		<input type="text" placeholder="PB#" ng-model="$ctrl.questions[473].response.value">
+    		) say they would be earning per month?
+    		&nbsp;
+    		<input type="text" placeholder="Amount" ng-model="$ctrl.questions[328].response.value">
+    	</span>
+ 	</div>
+ 	<div class="row col-md-12">
+    	<br>
+    	<span>
+    		2.7 How many suspected traffickers are there in this case?
+    		&nbsp;
+    		<input type="number" ng-model="$ctrl.questions[490].response.value">
+    	</span>
+ 	</div>
+ </fieldset>

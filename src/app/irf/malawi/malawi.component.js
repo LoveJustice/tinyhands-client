@@ -29,8 +29,8 @@ export class IrfMalawiController extends BaseIrfController {
         ];
     }
     
-    getIdentificationType() {
-        return "Passport";
+    getDefaultIdentificationTypes() {
+        return ['Passport'];
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {

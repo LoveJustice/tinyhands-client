@@ -20,12 +20,24 @@ class AssociatedPersonController {
             size: 'md',
             templateUrl: selectPersonTemplate,
         }).result.then((person) => {
-            this.$scope.ngModel = person;
+            let personCopy = _.cloneDeep(person);
+            for (let key in this.$scope.ngModel.identifiers) {
+                if (!(key in personCopy.identifiers)) {
+                    personCopy.identifiers[key] = this.$scope.ngModel.identifiers[key];
+                }
+            }
+            this.$scope.ngModel = personCopy;
             let dateValue = '';
             if (person.birthdate && person.birthdate.value !== null && person.birthdate.value !== '') {
                 dateValue = new Date(person.birthdate.value);
             }
             this.$scope.birthDate = {dateType:'person', value:dateValue};
+            if (this.$scope.idChoice) {
+                for (let key in person.identifiers) {
+                    this.$scope.idChoice =  key;
+                    break;
+                }
+            }
         });
     }
 }
@@ -41,7 +53,8 @@ export default function AssociatedPersonDirective() {
         scope: {
             ngModel: '=',
             personList: "=",
-            birthDate: "="
+            birthDate: "=",
+            idChoice: "="
             }
     };
 

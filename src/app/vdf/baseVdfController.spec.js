@@ -141,7 +141,8 @@ describe('VdfTestController', () => {
                                                         address1: Object({ id: null, name: '' }),
                                                         address2: Object({ id: null, name: '' }),
                                                         phone: Object({  }),
-                                                        nationality: Object({  })
+                                                        nationality: Object({  }),
+                                                        identifiers: Object({ })
                                                 }
                                         )
                                 }

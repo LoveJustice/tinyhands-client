@@ -2,9 +2,9 @@ import {BaseModalController} from '../baseModalController.js';
 const PersonIdentifierChoice = require('./personIdentifierChoice.js');
 
 class CifModalController extends BaseModalController {
-    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, identificationTypes) {
+    constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, identificationTypes) {
         'ngInject';
-        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config);
+        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants);
         
         this.identificationTypes = identificationTypes;
         

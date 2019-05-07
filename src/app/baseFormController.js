@@ -296,7 +296,9 @@ export class BaseFormController {
             }
             if (config.hasOwnProperty('RadioOther')) {
                 for (let idx=0; idx < config.RadioOther.length; idx++) {
-                    the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
+                    if (!(config.hasOwnProperty('Person') && config.Person.indexOf(config.RadioOther[idx]) > -1)) {
+                        the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
+                    }
                 }
             }
         }

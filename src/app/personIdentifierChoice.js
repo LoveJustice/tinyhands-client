@@ -23,7 +23,7 @@ class PersonIdentifierChoice {
     
     getChoice(question_id) {
         if (question_id in this.questions) {
-            if (this.questions[question_id].radioValue != this.questions[question_id].activeValue) {
+            if (this.questions[question_id].radioValue !== this.questions[question_id].activeValue) {
                 this.changedValue(question_id);
                 this.questions[question_id].activeValue = this.questions[question_id].radioValue;
             }

@@ -2,7 +2,6 @@ const OtherData = require('./otherData.js');
 const DateDate = require('./dateData.js');
 
 /* global _ */
-/* global angular */
 
 class BaseModalController {
     constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants) {

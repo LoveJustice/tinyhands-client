@@ -1,0 +1,18 @@
+<div id="cif-transportations" class="row stretch-vertical">
+    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Transportations')">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openTransportationBoxModal(card, false, $index)">
+            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionById(card.responses, 352).value}}) {{$ctrl.getResponseOfQuestionById(card.responses, 351).value}}</h3>
+            <div class="panel-body text-center">
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 487).value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 353).value}}</form-step>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center center-vertical" ng-if="!$ctrl.isViewing">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="$ctrl.openTransportationBoxModal(null, true)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>

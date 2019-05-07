@@ -42,8 +42,7 @@ export class BaseCifController extends BaseFormController {
     }
     
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
-    	let config = this.config[config_name];
-        
+    	let config = this.config[config_name];      
     	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
     	this.$uibModal.open({

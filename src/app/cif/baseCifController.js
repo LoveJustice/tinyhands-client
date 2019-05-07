@@ -319,7 +319,9 @@ export class BaseCifController {
     		}
     		if (config.hasOwnProperty('RadioOther')) {
     			for (let idx=0; idx < config.RadioOther.length; idx++) {
+    			        if (!(config.hasOwnProperty('Person') && config.Person.indexOf(config.RadioOther[idx]) > -1)) {
 					the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
+    			        }
     			}
     		}
     	}

@@ -14,6 +14,13 @@ function VdfCommonRoutes($stateProvider) {
             params: {
                 id: null
             }
+        })
+        .state('vdfBangladesh', {
+            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonComponent',
+            params: {
+                id: null
+            }
         });
 }
 

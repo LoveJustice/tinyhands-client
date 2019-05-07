@@ -109,7 +109,7 @@
                 <div class="col-md-10 form-group">
 			        <span ng-repeat="nationality in PersonBoxModalController.config.RadioItems[9]">
 			            <form-step type="radio" class="col-md-3" radio-name="personNationality" label="{{nationality}}"
-			            	response-value="PersonBoxModalController.otherData.questions[9].response.nationality.value" other-value="PersonBoxModalController.otherData.questions[9].otherValue"></form-step>
+			            	response-value="PersonBoxModalController.otherData.questions[9].value" other-value="PersonBoxModalController.otherData.questions[9].otherValue"></form-step>
 			            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="personNationality" label="Other:" other-value="PersonBoxModalController.otherData.questions[9].otherValue"
 			                response-value="PersonBoxModalController.otherData.questions[9].value"></form-step>
 			        </span>

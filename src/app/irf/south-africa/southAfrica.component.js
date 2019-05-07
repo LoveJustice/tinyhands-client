@@ -37,8 +37,8 @@ export class IrfSouthAfricaController extends BaseIrfController {
         	attachmentsTemplate];
     }
     
-    getIdentificationType() {
-        return "Passport";
+    getDefaultIdentificationTypes() {
+        return ['Passport'];
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {

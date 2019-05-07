@@ -1,5 +1,5 @@
 import {BaseModalController} from '../baseModalController.js';
-const PersonIdentifierChoice = require('./personIdentifierChoice.js');
+const PersonIdentifierChoice = require('../personIdentifierChoice.js');
 
 class CifModalController extends BaseModalController {
     constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, identificationTypes) {

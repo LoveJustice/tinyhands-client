@@ -1,0 +1,77 @@
+<fieldset ng-disabled="$ctrl.isViewing">
+	<h4>STAFF - The following questions are asked of the border staff (not victim).</h4>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.1 Did the staff share the gospel with the victim?</form-step>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="economic" label="No" response-value="$ctrl.questions[667].response.value"></form-step>
+	        <form-step type="radio" radio-name="economic" label="Yes" response-value="$ctrl.questions[667].response.value"></form-step> 
+	    </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.2 If yes, how? (check all that apply)</form-step>
+	    <div class="col-md-8">
+	            <form-step type="checkbox" label="Film" response-value="$ctrl.questions[668].response.value"></form-step>
+	            <form-step type="checkbox" label="Tract" response-value="$ctrl.questions[669].response.value"></form-step>
+	            <form-step type="checkbox" label="Oral Preaching" response-value="$ctrl.questions[670].response.value"></form-step>
+	            <form-step type="checkbox" label="Shared Personal Testimony" response-value="$ctrl.questions[671].response.value"></form-step>
+	            <form-step type="checkbox" label="Message Book" response-value="$ctrl.questions[672].response.value"></form-step>
+	            <form-step type="otherCheckbox" label="Other:" response-value="$ctrl.questions[673].response.value"></form-step>
+	    </div>
+    </div>
+	<h4>VICTIM - The following questions are asked directly to the victim.</h4>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.3 Before you were intercepted were you aware that migrants going abroad are often deceived and end up in
+very exploitative situations?</form-step>
+        <div class="col-md-5">
+            <form-step type="radio" radio-name="exploitive" label="Had heard, but never knew how bad it was until I was intercepted by TH/LJ" response-value="$ctrl.questions[674].response.value"></form-step>
+            <form-step type="radio" radio-name="exploitive" label="Knew how bad it was, but didn't think it was happening to them" response-value="$ctrl.questions[674].response.value"></form-step>
+            <form-step type="radio" radio-name="exploitive" label="Had never heard about it" response-value="$ctrl.questions[674].response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.4 Had you ever heard the message before?</form-step>
+        <div class="col-md-8">
+            <form-step type="radio" radio-name="heardGospel" label="No" response-value="$ctrl.questions[675].response.value"></form-step>
+            <form-step type="radio" radio-name="heardGospel" label="Yes - heard but didn't believe" response-value="$ctrl.questions[675].response.value"></form-step>
+            <form-step type="radio" radio-name="heardGospel" label="Yes - heard and was believer" response-value="$ctrl.questions[675].response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.5 What do you believe now?</form-step>
+        <div class="col-md-8">
+            <form-step type="radio" radio-name="believe" label="Don't believe" response-value="$ctrl.questions[676].response.value"></form-step>
+            <form-step type="radio" radio-name="believe" label="Do believe, but don't plan on going to center" response-value="$ctrl.questions[676].response.value"></form-step>
+            <form-step type="radio" radio-name="believe" label="Do believe and plan on going to center" response-value="$ctrl.questions[676].response.value"></form-step>
+        </div>
+    </div>
+    <div class="row">
+    	<form-step class="col-md-12 control-label">3.6 How would you rate the work that TH/LJ is doing on a scale of 1-10 (1 being the worst and 10 being the best), in each area:</form-step>
+    </div>
+    <br>
+    <div class="row">
+    	<form-step class="col-md-2 col-md-offset-1 control-label">Transit Staff Polite and Respectful</form-step>
+    	<div class="col-md-1">
+    		<input type="number" class="form-control" min="0" ng-model="$ctrl.questions[677].response.value">
+    	</div>
+    	<form-step class="col-md-2 control-label">Trafficking Awareness</form-step>
+    	<div class="col-md-1">
+    		<input type="number" class="form-control" min="0" ng-model="$ctrl.questions[678].response.value">
+    	</div>
+    </div>
+     <div class="row">
+    	<form-step class="col-md-11 col-md-offset-1 control-label">If victim spent time in TH/LJ Shelter, rate the following:</form-step>
+    </div>
+     <div class="row">
+    	<form-step class="col-md-2 col-md-offset-1 control-label">Shelter Staff Polite and Respectful</form-step>
+    	<div class="col-md-1">
+    		<input type="number" class="form-control" min="0" ng-model="$ctrl.questions[679].response.value">
+    	</div>
+    	<form-step class="col-md-2 control-label">Shelter Accommodations</form-step>
+    	<div class="col-md-1">
+    		<input type="number" class="form-control" min="0" ng-model="$ctrl.questions[680].response.value">
+    	</div>
+    </div>
+</fieldset>

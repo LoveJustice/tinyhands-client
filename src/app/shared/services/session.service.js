@@ -46,7 +46,7 @@ export default class SessionService {
     }
     
     getPermissions() {
-        return this.service.get(`api/permission/`).then((result) => {
+        return this.service.get(`api/permission/?page_size=1000`).then((result) => {
             this.permissions = result.data.results;
         });
     }

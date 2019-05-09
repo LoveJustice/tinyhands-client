@@ -1,4 +1,5 @@
 /* global angular */
+/* global Image */
 import {BaseModalController} from '../baseModalController.js';
 
 export default class IntercepteeModalController extends BaseModalController {
@@ -43,7 +44,7 @@ export default class IntercepteeModalController extends BaseModalController {
     loadImage(imageUrl) {
         this.questions[this.config.ImageQuestion].response.value = '';
         let img = new Image();
-        img.addEventListener('load', (e)=>{this.resizeImage(img);});
+        img.addEventListener('load', (e)=>{/*jshint unused: false */this.resizeImage(img);});
         img.src = imageUrl;
     }
     

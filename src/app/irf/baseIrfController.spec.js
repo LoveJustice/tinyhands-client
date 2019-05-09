@@ -125,14 +125,15 @@ describe('IrfTestController', () => {
             		{
             			question_id: 9, 
             			response: {
-            				gender: {  },
+            				gender: { value: '' },
             				name: {  },
             				age: {  },
             				birthdate: {  },
             				address1: { id: null, name: '' },
             				address2: { id: null, name: '' },
             				phone: {  },
-            				nationality: {  }
+            				nationality: {  },
+            				identifiers: {  }
             			}
             		},
             		{

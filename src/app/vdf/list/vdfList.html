@@ -1,0 +1,96 @@
+<div class="container" id="vdfList"><br/>
+
+    <div class="row">
+        <div class="col-xs-5">
+            <h1>VDFs</h1>
+        </div>
+
+        <div class="pull-right"><br>
+            <photoexport ng-if="vdfListCtrl.session.checkPermission('VDF','VIEW',null, null)"></photoexport>
+            <a ng-if="vdfListCtrl.hasAddPermission" class="btn btn-success" ng-click="vdfListCtrl.createVdf()">
+                Input A New VDF
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="vdfListCtrl.countryDropDown.options"
+							selected-model="vdfListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="vdfListCtrl.countryDropDown.settings"
+                             translation-texts="vdfListCtrl.countryDropDown.customText"
+                             events="vdfListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="vdfListCtrl.searchVdfs()" ng-model="vdfListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+            <div ng-dropdown-multiselect="" options="vdfListCtrl.status.options"
+							selected-model="vdfListCtrl.status.selectedOptions"
+                             extra-settings="vdfListCtrl.status.settings"
+                             translation-texts="vdfListCtrl.status.customText"
+                             events="vdfListCtrl.status.eventListener" class="pull-right">
+			</div>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="vdfListCtrl.stickyOptions" ng-model="vdfListCtrl.vdfs">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="vdfListCtrl.updateSort('vdf_number')" width="8%">VDF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('vdf_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('vdf_number', 'reverse') }"></i>
+                </th>
+                <th ng-click="vdfListCtrl.updateSort('staff_name')" width="15%">Staff Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('staff_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
+                </th>
+                <th ng-click="vdfListCtrl.updateSort('discharge_date')" width="16%">Date of Interview
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('interview_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('interview_date', 'reverse')}"></i>
+                </th>
+                <th ng-click="vdfListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                </th>
+                <th ng-click="vdfListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="vdf in vdfListCtrl.vdfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ vdf.vdf_number }}</td>
+                <td>{{ vdf.staff_name }}</td>
+                <td>{{ vdf.date_of_interview | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ vdf.date_time_entered_into_system | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ vdf.date_time_last_updated | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
+                <td ng-if="vdfListCtrl.session.checkPermission('VDF','VIEW',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{vdf.viewUrl}}">View</a></td>
+                <td ng-if="vdfListCtrl.session.checkPermission('VDF','EDIT',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{vdf.editUrl}}">Edit</a></td>
+                <td ng-if="vdfListCtrl.session.checkPermission('VDF','DELETE',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-danger" ng-click="vdfListCtrl.deleteVdf(vdf, $index)">
+                    {{ vdf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="vdfListCtrl.vdfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No VDFs Matched your search for: "{{ vdfListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <button ng-disabled="!vdfListCtrl.nextPage" ng-click="vdfListCtrl.showMoreVdfs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
+            Load more results
+        </button>
+    </div>
+</div>

@@ -2,7 +2,6 @@ const OtherData = require('./otherData.js');
 const DateDate = require('./dateData.js');
 
 /* global _ */
-/* global angular */
 
 class BaseModalController {
     constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants) {
@@ -24,8 +23,13 @@ class BaseModalController {
     	this.otherData = new OtherData(this.originalQuestions);
     	if (this.config.hasOwnProperty('RadioOther')) {
     		for (let idx=0; idx < this.config.RadioOther.length; idx++) {
+    		    let dataType = 'basic';
+    		    
     			let questionId = this.config.RadioOther[idx];
-    			this.otherData.setRadioButton(this.config.RadioItems[questionId], questionId);
+    			if (this.config.hasOwnProperty('Person') && this.config.Person.indexOf(questionId) > -1) {
+    			    dataType = 'person';
+    			}
+    			this.otherData.setRadioButton(this.config.RadioItems[questionId], questionId, dataType=dataType);
     		}
     	}
     

@@ -103,9 +103,9 @@ describe('SessionService', () => {
             });
         });
 
-        it("should call get with 'api/permission/'", () => {
+        it("should call get with 'api/permission/?page_size=1000'", () => {
             service.getPermissions();
-            expect(mockBaseService.get).toHaveBeenCalledWith('api/permission/');
+            expect(mockBaseService.get).toHaveBeenCalledWith('api/permission/?page_size=1000');
         });
 
         it(`should set permissions to '${result.data.results}'`, () => {

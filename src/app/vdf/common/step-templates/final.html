@@ -1,0 +1,49 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row col-md-12">
+    	<label class="col-md-12 control-label">5. VICTIM CONSENT</label>
+    	<div class="col-md-12">
+At Tiny Hands/Love Justice, we have dedicated our lives to serving, protecting, and helping local men, women and children. For that reason,
+we are committed to preventing human trafficking and the enslavement of males and females by deception. Having heard the
+testimonies of hundreds of men and women who have been deceived and enslaved, we believe human trafficking is one of the worst
+injustices in the world, and we are tirelessly dedicated to preventing it. At the same time, we fully recognize the right of girls, boys,
+women and men to migrate for work or other legitimate reasons. Our goal is to allow all safe and legitimate migration, while
+preventing unsafe migration and migration by deception--which almost always leads to enslavement and exploitation. We care about
+you, and that is why you are here. We only want to make sure that nothing bad happens to you. We care about your story and what
+happened to you. Your story can help us to better understand human trafficking and migration and learn to better serve and help
+protect precious individuals around the world. It can also help us to identify traffickers and save other individuals from being enslaved.
+With your cooperation, your story can help save other people from exploitation! By signing this consent, you are giving Tiny Hands
+Nepal permission to use any information provided throughout the duration of your time with the staff for operational and awareness
+purposes. If you choose to NOT have your story shared or information used for awareness, please check the box below:
+		</div>
+		<br>&nbsp;<br>
+	</div>
+	<div class="row col-md-12">
+        <form-step class="col-md-12 control-label">I give Tiny Hands Nepal consent to use any information I have shared throughout the duration of my time with the staff for operational and awareness purposes.</form-step>
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-md-offset-1">
+            <form-step type="radio" radio-name="borderStation" label="Yes" response-value="$ctrl.questions[689].response.value"></form-step>    
+        </div>
+        <div class="col-md-3">
+        	<form-step type="checkbox" label="Victim Signature" response-value="$ctrl.questions[690].response.value"></form-step>
+        </div>
+        <div class="col-md-3">
+        	<form-step type="checkbox" label="Guardian Signature" response-value="$ctrl.questions[691].response.value"></form-step>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-md-1 col-md-offset-1">
+            <form-step type="radio" radio-name="borderStation" label="No" response-value="$ctrl.questions[689].response.value"></form-step>    
+        </div>
+    </div>
+    <br>&nbsp;<br>
+    <div class="row col-md-12">
+    	<label class="col-md-12 control-label">6. Staff Assessment / Other Relevant Notes</label>
+    </div>
+    <div class="row col-md-12">
+    	<div class="row col-md-12">
+            <textarea class="form-control" rows="3" ng-model="$ctrl.questions[146].response.value"></textarea>
+        </div>
+    </div>
+</fieldset>

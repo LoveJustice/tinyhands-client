@@ -4,23 +4,54 @@ export class LocationSelectController {
     constructor(LocationService) {
         'ngInject';
         this.LocationService = LocationService;
-        this.priorStationId = this.stationId;
-        this.getLocations();
+        this.getLocation();
+        this.searchLocation = '';
+        this._selectedLocationList = [];
+    }
+
+    get selectedLocationList() {
+        return this._selectedLocationList;
+    }
+
+    set selectedLocationList(value) {
+        this._selectedLocationList = value;
+        this.selectedLocation = this._selectedLocationList.join(';');
+    }
+
+    $onInit() {
+        if (this.selectedLocation === undefined) {
+                this.selectedLocation = '';
+        }
+        this.priorSelectedLocation = this.selectedLocation;
+        this.selectedLocationList = this.selectedLocation.split(';').filter((x) => x.length > 0).map((x) => x.trim());
+        this.priorStationId = '';
     }
     
     $doCheck() {
-    	if (this.priorStationId !== this.stationId) {
-    		this.priorStationId = this.stationId;
-    		this.getLocations();
-    	}
+        if (this.selectedLocation !== this.priorSelectedLocation) {
+                this.priorSelectedLocation = this.selectedLocation;
+                this.selectedLocationList = this.selectedLocation.split(';').filter(x => x.length > 0).map(x => x.trim());
+        }
+        if (this.priorStationId !== this.stationId) {
+                this.priorStationId = this.stationId;
+                this.getLocation();
+        }
     }
 
-    getLocations() {
-    	if (typeof this.stationId !== 'undefined') {
-	        this.LocationService.getLocation(this.stationId).then((response) => {
-	            this.locations = response.data.results.map((x) => x.name);
-	        });
-    	}
+    filterLocationByName(locationName, value) {
+        if (locationName && value) {
+            let searchValue = value.toLowerCase();
+            return _.includes(locationName.toLowerCase(), searchValue);
+        }
+        return false;
+    }
+
+    getLocation() {
+        if (typeof this.stationId !== 'undefined') {
+                this.LocationService.getLocation(this.stationId).then((response) => {
+                    this.location = response.data.results.map((x) => x.name);
+                });
+        }
     }
 }
 

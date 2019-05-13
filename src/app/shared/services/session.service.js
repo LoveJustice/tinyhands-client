@@ -115,14 +115,9 @@ export default class SessionService {
     }
 
     logout() {
-        this.service.get('api/logout/')
-        .then((promise) => {
-            this.clearSession();
-            this.routeState.go('login');
-        }, (reason) => {
-            this.clearSession();
-            this.routeState.go('login');
-        });
+        this.service.get('api/logout/');
+        this.clearSession();
+        this.routeState.go('login');
     }
 
     clearSession() {

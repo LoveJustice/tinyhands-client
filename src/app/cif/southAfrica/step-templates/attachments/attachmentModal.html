@@ -1,0 +1,63 @@
+<div id="cif-southAfrica-attachment-modal" class="modal-content">
+    <form name="AttachmentForm" ng-disabled="AttachmentModalController.isViewing === 'true'">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="AttachmentModalController.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-5">
+            	<h3 class="modal-title">{{AttachmentModalController.questions[611].response.value || 'Attachment'}}</h3>
+            </div>
+            <div class="col-md-2 margin-top-10">
+	    		<label>Attachment#</label>
+	    	</div>
+			<div class="col-md-3 form-group">
+		        <input type="number" min="0" class="form-control" ng-model="AttachmentModalController.questions[610].response.value">
+	        </div>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label>Description</label>
+		    	</div>
+				<div class="col-md-10 form-group">
+			        <input type="text" min="0" class="form-control" ng-model="AttachmentModalController.questions[611].response.value">
+		        </div>
+            </div>
+            <div class="row center-vertical">
+	            <div class="col-md-2 form-group">
+	                <form-step>
+	                    <label>File to attach</label>
+	                </form-step>
+	            </div>
+	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.questions[612].response.value">
+            </div>
+            <div class="row center-vertical">
+            	<div class="col-md-2 form-group">
+	            </div>
+	            <div ng-if="!AttachmentModalController.isString(AttachmentModalController.questions[612].response.value)">
+	        		<p>{{AttachmentModalController.questions[612].response.value.name}}</a>
+	        	</div>
+	        	<div ng-if="AttachmentModalController.isString(AttachmentModalController.questions[612].response.value)">
+	        		<a href="{{AttachmentModalController.getScannedFormUrl(AttachmentModalController.questions[612].response.value)}}">{{AttachmentModalController.questions[612].response.value.split("/")[3]}}</a>
+	        	</div>
+        	</div>
+        	<div class="row center-vertical">
+        		<form-step type="checkbox" class="col-md-6" label="Attachment contains private data" response-value="AttachmentModalController.questions[700].response.value"></form-step>
+        	</div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="AttachmentModalController.save()" ng-disabled="!AttachmentModalController.questions[612].response.value" ng-if="!AttachmentModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="AttachmentModalController.delete()" ng-if="!AttachmentModalController.isAdd && !AttachmentModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="AttachmentModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -21,7 +21,7 @@
                 <img ng-src="assets/images/cropped_flag_blue.png" alt="flag-container" ng-if="$ctrl.blueFlag">
                 <span ng-bind="$ctrl.redFlag"></span>
             </span>
-            <label for="{{$ctrl.radioName + '-' + $ctrl.label}}" >Other</label>
+            <label for="{{$ctrl.radioName + '-' + $ctrl.label}}">{{$ctrl.label}}</label>
             <input ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-change="$ctrl.changeRadioOther()">
         </span>
         <span ng-switch-when="checkbox">

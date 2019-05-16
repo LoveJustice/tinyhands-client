@@ -1,0 +1,159 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Aftercare');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">EDUCATION</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">[list different awareness videos to track if being used]</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="videos" blue-flag="0" flag-context="Aftercare" label="<25%" response-value="$ctrl.questions[1080].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="videos" blue-flag="2" flag-context="Aftercare" label="25-75%" response-value="$ctrl.questions[1080].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="videos" blue-flag="3" flag-context="Aftercare" label="76-99%" response-value="$ctrl.questions[1080].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="videos" blue-flag="4" flag-context="Aftercare" label="100%" response-value="$ctrl.questions[1080].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">GOSPEL</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Tracts Given</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="tracts" blue-flag="0" flag-context="Aftercare" label="<25%" response-value="$ctrl.questions[1081].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name=""tracts"" blue-flag="2" flag-context="Aftercare" label="25-75%" response-value="$ctrl.questions[1081].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name=""tracts"" blue-flag="4" flag-context="Aftercare" label="76-99%" response-value="$ctrl.questions[1081].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name=""tracts"" blue-flag="5" flag-context="Aftercare" label="100%" response-value="$ctrl.questions[1081].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Bibles Given</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="bibles" blue-flag="0" flag-context="Aftercare" label="<25%" response-value="$ctrl.questions[10892].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="bibles" blue-flag="3" flag-context="Aftercare" label="25-75%" response-value="$ctrl.questions[10892].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="bibles" blue-flag="5" flag-context="Aftercare" label="76-99%" response-value="$ctrl.questions[10892].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="bibles" blue-flag="7" flag-context="Aftercare" label="100%" response-value="$ctrl.questions[10892].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Jesus Film</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="film" blue-flag="0" flag-context="Aftercare" label="<25%" response-value="$ctrl.questions[1082].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="film" blue-flag="2" flag-context="Aftercare" label="25-75%" response-value="$ctrl.questions[1082].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="film" blue-flag="4" flag-context="Aftercare" label="76-99%" response-value="$ctrl.questions[1082].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="film" blue-flag="6" flag-context="Aftercare" label="100%" response-value="$ctrl.questions[1082].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">SHELTER</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Only female LJ staff enter the shelter</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="female-shelter" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1083].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="female-shelter" blue-flag="11" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1083].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">1 staff/SC in shelter at all times (only if there is victim)</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="staff-shelter" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1084].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="staff-shelter" blue-flag="9" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1084].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Victims being tested for STD, when appropriate</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="test-std" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1085].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="test-std" blue-flag="4" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1085].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">INTERVIEWS</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Interviews recorded w/victim's knowledge</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="recorded" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1086].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="recorded" blue-flag="7" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1086].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">All interviews in private room, max. 2 women</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="private-interview" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1087].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="private-interview" blue-flag="10" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1087].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Discussion of victims' case does not take place with anyone except LJ's staff, SC members and Police (if necessary)</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="discussion" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1088].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="discussion" blue-flag="8" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1088].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">FOLLOW-UP</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Church/NGO in victims' areas contacted</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="church-contact" blue-flag="0" flag-context="Aftercare" label="no" response-value="$ctrl.questions[1089].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="church-contact" blue-flag="12" flag-context="Aftercare" label="yes" response-value="$ctrl.questions[1089].response.value"></form-step>
+	    </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Aftercare Coordinator Signature" response-value="$ctrl.questions[10890].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[10891].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

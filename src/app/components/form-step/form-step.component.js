@@ -54,6 +54,7 @@ export class FormStepController {
     emitFlag(amountToAdd) {
         this.$scope.$emit('flagTotalCheck', {
             numberOfFlagsToAdd: amountToAdd,
+            flagContext: this.flagContext,
         });
     }
 
@@ -66,7 +67,9 @@ export class FormStepController {
                     this.emitFlag(-this.redFlag);
                 }
             } else if (oldValue && !newValue) {
-                this.emitFlag(-this.redFlag);
+                if (oldValue === this.label) {
+                    this.emitFlag(-this.redFlag);
+                }
             }
         } else {
            if (!oldValue && newValue) {
@@ -108,6 +111,7 @@ export default {
         responseValue: '=?',
         stepLabel: '<',
         type: '@',
+        flagContext: '@',
     },
     controller: FormStepController,
     templateUrl: formStepTemplateUrl,

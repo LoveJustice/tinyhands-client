@@ -1,0 +1,135 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Awareness');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Staff awareness hours</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="staff-aware" blue-flag="0" flag-context="Awareness" label="<5" response-value="$ctrl.questions[1030].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="staff-aware" blue-flag="8" flag-context="Awareness" label="6-25" response-value="$ctrl.questions[1030].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="staff-aware" blue-flag="15" flag-context="Awareness" label="26-50" response-value="$ctrl.questions[1030].response.value"></form-step>
+        </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="staff-aware" blue-flag="25" flag-context="Awareness" label=">50" response-value="$ctrl.questions[1030].response.value"></form-step>   
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">SC awareness hours</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="sc-aware" blue-flag="0" flag-context="Awareness" label="<10" response-value="$ctrl.questions[1031].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="sc-aware" blue-flag="5" flag-context="Awareness" label="10-20" response-value="$ctrl.questions[1031].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="sc-aware" blue-flag="10" flag-context="Awareness" label="21-30" response-value="$ctrl.questions[1031].response.value"></form-step>
+        </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="sc-aware" blue-flag="20" flag-context="Awareness" label=">30" response-value="$ctrl.questions[1031].response.value"></form-step>   
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Phone calls from materials</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="phone-calls" blue-flag="0" flag-context="Awareness" label="<10" response-value="$ctrl.questions[1032].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="phone-calls" blue-flag="6" flag-context="Awareness" label="10-20" response-value="$ctrl.questions[1032].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="phone-calls" blue-flag="8" flag-context="Awareness" label="21-30" response-value="$ctrl.questions[1032].response.value"></form-step>
+        </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="phone-calls" blue-flag="10" flag-context="Awareness" label=">30" response-value="$ctrl.questions[1032].response.value"></form-step>   
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">MATERIALS USED</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Contact Cards</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="contact-cards" blue-flag="0" flag-context="Awareness" label="<10" response-value="$ctrl.questions[1033].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="contact-cards" blue-flag="5" flag-context="Awareness" label="10-20" response-value="$ctrl.questions[1033].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="contact-cards" blue-flag="8" flag-context="Awareness" label=">20" response-value="$ctrl.questions[1033].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Brochures/Stickers/Posters</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="brochures" blue-flag="0" flag-context="Awareness" label="<20" response-value="$ctrl.questions[1034].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="brochures" blue-flag="5" flag-context="Awareness" label="20-35" response-value="$ctrl.questions[1034].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="brochures" blue-flag="9" flag-context="Awareness" label=">36-50" response-value="$ctrl.questions[1034].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="brochures" blue-flag="12" flag-context="Awareness" label=">50" response-value="$ctrl.questions[1034].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">SPECIAL EVENTS</b>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Most Recent Awareness Gathering</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="gathering" blue-flag="0" flag-context="Awareness" label="never" response-value="$ctrl.questions[1035].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="gathering" blue-flag="3" flag-context="Awareness" label=">1 year" response-value="$ctrl.questions[1035].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="gathering" blue-flag="7" flag-context="Awareness" label="6-12 months" response-value="$ctrl.questions[1035].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="gathering" blue-flag="10" flag-context="Awareness" label="3-6 months" response-value="$ctrl.questions[1035].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="gathering" blue-flag="15" flag-context="Awareness" label="<3 months" response-value="$ctrl.questions[1035].response.value"></form-step>
+        </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Most Recent Transportation Workers Gathering</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="transportation" blue-flag="0" flag-context="Awareness" label="never" response-value="$ctrl.questions[1036].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="transportation" blue-flag="2" flag-context="Awareness" label=">1 year" response-value="$ctrl.questions[1036].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="transportation" blue-flag="6" flag-context="Awareness" label="6-12 months" response-value="$ctrl.questions[1036].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="transportation" blue-flag="8" flag-context="Awareness" label="3-6 months" response-value="$ctrl.questions[1036].response.value"></form-step>
+        </div>
+        <div class="col-md-2">
+	        <form-step type="radio" radio-name="transportation" blue-flag="10" flag-context="Awareness" label="<3 months" response-value="$ctrl.questions[1036].response.value"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Chairperson/Station Manager Signature" response-value="$ctrl.questions[1038].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[1039].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

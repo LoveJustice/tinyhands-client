@@ -22,6 +22,7 @@ import addressesModule from './addresses/addresses.module';
 import CIFModule from './cif/cif.module';
 import dashboardModule from './dashboard/dashboard.module';
 import loginModule from './login/login.module';
+import MSRModule from './msr/msr.module';
 import VDFModule from './vdf/vdf.module';
 import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
@@ -55,6 +56,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         eventsModule,
         IRFModule,
         loginModule,
+        MSRModule,
         VDFModule,
         VIFModule,
         photoExportModule,

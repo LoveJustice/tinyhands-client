@@ -1,0 +1,63 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Paralegal');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">Total cases filed</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="total-cases" blue-flag="0" flag-context="Paralegal" label="0" response-value="$ctrl.questions[1090].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="total-cases" blue-flag="15" flag-context="Paralegal" label="1" response-value="$ctrl.questions[1090].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="total-cases" blue-flag="35" flag-context="Paralegal" label="3 or more" response-value="$ctrl.questions[1090].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">If filed case, did you scan & send copy of charge sheet to National Office?</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="send-charges" blue-flag="0" flag-context="Paralegal" label="no" response-value="$ctrl.questions[1091].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="send-charges" blue-flag="25" flag-context="Paralegal" label="yes" response-value="$ctrl.questions[1091].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label"># of CIFs filled out and submitted to National Office (in last month)</form-step>
+		<div class="col-md-1">
+	        <input type="text" class="form-control" placeholder="# CIFS" ng-model="$ctrl.questions[1092].response.value">
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">CIF % for Clear Evidence Cases</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="cif-percent" blue-flag="0" flag-context="Paralegal" label="<60%" response-value="$ctrl.questions[1094].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="cif-percent" blue-flag="15" flag-context="Paralegal" label="60-79%" response-value="$ctrl.questions[1094].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="cif-percent" blue-flag="30" flag-context="Paralegal" label="80-99%" response-value="$ctrl.questions[1094].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="cif-percent" blue-flag="40" flag-context="Paralegal" label="100%" response-value="$ctrl.questions[1094].response.value"></form-step>
+	    </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Paralegal Coordinator Signature" response-value="$ctrl.questions[1098].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[1099].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

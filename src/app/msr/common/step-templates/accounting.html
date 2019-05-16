@@ -1,0 +1,48 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Accounting');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Receipt & Voucher for all transactions</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="receipt" blue-flag="0" flag-context="Accounting" label="no" response-value="$ctrl.questions[1050].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="receipt" blue-flag="30" flag-context="Accounting" label="yes" response-value="$ctrl.questions[1050].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">All Transactions Listed in Daybook</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="daybook" blue-flag="0" flag-context="Accounting" label="no" response-value="$ctrl.questions[1051].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="daybook" blue-flag="15" flag-context="Accounting" label="yes" response-value="$ctrl.questions[1051].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Monthly Payment Record filled out, sent</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="payment-record" blue-flag="0" flag-context="Accounting" label="no" response-value="$ctrl.questions[1052].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="payment-record" blue-flag="20" flag-context="Accounting" label="yes" response-value="$ctrl.questions[1052].response.value"></form-step>
+	    </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Records Coordinator Signature" response-value="$ctrl.questions[1058].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[1059].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

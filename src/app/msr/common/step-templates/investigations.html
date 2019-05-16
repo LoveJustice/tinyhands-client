@@ -1,0 +1,60 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Investigations');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label"># of HVCs</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="number-hvc" blue-flag="0" flag-context="Investigations" label="<2" response-value="$ctrl.questions[1100].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="number-hvc" blue-flag="15" flag-context="Investigations" label="3-5" response-value="$ctrl.questions[1100].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="number-hvc" blue-flag="35" flag-context="Investigations" label=">5" response-value="$ctrl.questions[1100].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">INT from HVCs</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="int-hvc" blue-flag="0" flag-context="Investigations" label="None" response-value="$ctrl.questions[1101].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="int-hvc" blue-flag="15" flag-context="Investigations" label="<15%" response-value="$ctrl.questions[1101].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="int-hvc" blue-flag="25" flag-context="Investigations" label="15-30%" response-value="$ctrl.questions[1101].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="int-hvc" blue-flag="40" flag-context="Investigations" label=">30%" response-value="$ctrl.questions[1101].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">How many times visited hotels?</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="photo-percent" blue-flag="0" flag-context="Investigations" label="<6" response-value="$ctrl.questions[1102].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="photo-percent" blue-flag="15" flag-context="Investigations" label="6-20" response-value="$ctrl.questions[1102].response.value"></form-step>
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="photo-percent" blue-flag="25" flag-context="Investigations" label=">20" response-value="$ctrl.questions[1102].response.value"></form-step>
+	    </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Investigator Signature" response-value="$ctrl.questions[1108].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[1109].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

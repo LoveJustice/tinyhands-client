@@ -14,6 +14,7 @@ export default class IntercepteeModalController extends BaseModalController {
     init() {
         if (this.questions[this.config.ImageQuestion].response.value !== null &&
                 this.questions[this.config.ImageQuestion].response.value !== '') {
+            this.initialPhoto = this.questions[this.config.ImageQuestion].response.value;
             this.photoPresent = true;
             var t = Object.prototype.toString.call(this.questions[this.config.ImageQuestion].response.value);
             if (t !== '[object String]') {
@@ -61,6 +62,8 @@ export default class IntercepteeModalController extends BaseModalController {
     subclassSave() {
         if (this.file) {
             this.originalQuestions[this.config.ImageQuestion].response.value = this.file;
+        } else {
+            this.originalQuestions[this.config.ImageQuestion].response.value = this.initialPhoto;
         }
     }
 }

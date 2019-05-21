@@ -1,0 +1,78 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+    	<form-step class="col-md-4 control-label">2.1 Did someone recruit the PV / persuade them to go abroad?</form-step>
+        <div class="col-md-8">
+            <form-step type="checkbox" label="Yes, a Recruitment Agency ->LB - Recruitment Agency ->PB - Agent" response-value="$ctrl.questions[302].response.value"></form-step>
+            <form-step type="checkbox" label="Yes, another person -> PB - Broker" response-value="$ctrl.questions[303].response.value"></form-step>
+            <form-step type="checkbox" label="No" response-value="$ctrl.questions[304].response.value"></form-step>
+        </div>
+    </div>
+    <div class="row">
+    	<br>
+    	<form-step class="col-md-4 control-label">2.2 Broker's relation to PV: </form-step>
+        <div class="col-md-2" ng-repeat="relations in $ctrl.brokerRelations">
+            <form-step type="radio" radio-name="brokerRelation" ng-repeat="relation in relations" label="{{relation}}"
+            	response-value="$ctrl.questions[305].response.value" other-value="$ctrl.otherData.questions[305].otherValue"></form-step>
+            <form-step ng-if="$first" type="otherRadio" radio-name="brokerRelation" label="Other:" other-value="$ctrl.otherData.questions[305].otherValue"
+                response-value="$ctrl.otherData.questions[305].value"></form-step>
+        </div>
+    </div>
+    <div class="row">
+    	<br>
+    	<form-step class="col-md-4 control-label">2.3 How did the PV meet the broker?</form-step>
+    	<div class="col-md-4">
+    		<div class="container-fluid">
+	            <form-step type="checkbox" label="Promised a job" response-value="$ctrl.questions[306].response.value"></form-step>
+	            <form-step type="checkbox" label="Promised marriage" response-value="$ctrl.questions[308].response.value"></form-step>
+	            <form-step type="checkbox" label="Approached at School" response-value="$ctrl.questions[310].response.value"></form-step>
+	        </div>
+			<div class="container-fluid">
+				<form-step type="checkbox" class="pull-left" label="Met Broker online" response-value="$ctrl.questions[312].response.value"/>
+         		&nbsp;(PB# <input type="number" placeholder="PB#" ng-model="$ctrl.questions[313].response.value"> )
+			</div>
+			<div class="container-fluid">
+	            <form-step type="checkbox" label="Through friends" response-value="$ctrl.questions[316].response.value"></form-step>
+	            <form-step type="checkbox" label="Broker called PV's mobile" response-value="$ctrl.questions[318].response.value"></form-step>
+            </div>
+    	</div>
+    	<div class="container-fluid col-md-4">
+    		<div class="container-fluid">
+            	<form-step type="checkbox" label="Got married" response-value="$ctrl.questions[307].response.value"></form-step>
+            	<form-step type="checkbox" label="Approached at Work" response-value="$ctrl.questions[309].response.value"></form-step>
+            	<form-step type="checkbox" label="Online Job advertisement" response-value="$ctrl.questions[311].response.value"></form-step>
+            </div>
+            <div class="container-fluid">
+	            <form-step type="checkbox" class="pull-left" label="Broker approached PV directly" response-value="$ctrl.questions[314].response.value"/>
+					&nbsp;(PB# <input type="number" placeholder="PB#" ng-model="$ctrl.questions[315].response.value"> )
+			</div>
+			<div class="container-fluid">
+            	<form-step type="checkbox" label="Through family" response-value="$ctrl.questions[317].response.value"></form-step>
+            	<form-step type="otherCheckbox" label="Other:" response-value="$ctrl.questions[319].response.value"></form-step>
+            </div>
+    	</div>
+    </div>
+    <div class="row">
+    	<br>
+    	<span class=col-md-12>
+    		<label>2.3 How long had the PV known the broker (PB#(s)</label>
+    		<input type="text" placeholder="PB#(s)" ng-model="$ctrl.questions[287].response.value">
+    		<label>) before leaving?</label>
+    		<input type="number" ng-model="$ctrl.questions[320].response.value">
+    		<label>Years</label>
+    		<input type="number" ng-model="$ctrl.questions[321].response.value">
+    		<label>Months</label>
+    	</span>
+ 	</div>
+ 	<div class="row">
+    	<br>
+    	<span class=col-md-12>
+    		<label>2.4 If the PV is married to a suspect (PB#</label>
+    		<input type="text" placeholder="PB#" ng-model="$ctrl.questions[287].response.value">
+    		<label>) how long have they been married?</label>
+    		<input type="number" ng-model="$ctrl.questions[320].response.value">
+    		<label>Years</label>
+    		<input type="number" ng-model="$ctrl.questions[321].response.value">
+    		<label>Months</label>
+    	</span>
+ 	</div>
+ </fieldset>

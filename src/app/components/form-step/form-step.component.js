@@ -5,6 +5,11 @@ export class FormStepController {
     constructor($scope) {
         'ngInject';
         this.$scope = $scope;
+        this.uniqueId = 'uniq'+FormStepController.baseId;
+        FormStepController.baseId = FormStepController.baseId + 1;
+        if (FormStepController.baseId > 10000) {
+            FormStepController.baseId = 1;
+        }
     }
 
     $onInit() {
@@ -88,6 +93,8 @@ export class FormStepController {
         
     }
 }
+FormStepController.baseId = 1;
+
 
 export default {
     bindings: {

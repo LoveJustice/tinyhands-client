@@ -115,6 +115,7 @@ export default class SessionService {
     }
 
     logout() {
+        this.service.get('api/logout/');
         this.clearSession();
         this.routeState.go('login');
     }

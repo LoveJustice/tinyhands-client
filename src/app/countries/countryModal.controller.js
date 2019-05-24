@@ -5,7 +5,9 @@ class CountryModalController {
         this.modalInstance = $uibModalInstance;
         this.scope = $scope;
         this.scope.country = angular.copy(country);
-        this.scope.country.currency = decodeURI(this.scope.country.currency);
+        if (this.scope.country && this.scope.country.currency) {
+            this.scope.country.currency = decodeURI(this.scope.country.currency);
+        }
     }
 
     save() {

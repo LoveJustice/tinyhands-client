@@ -5,7 +5,7 @@ import {BaseModalController} from '../baseModalController.js';
 export default class IntercepteeModalController extends BaseModalController {
     constructor($uibModalInstance, constants, $scope, isAdd, card, isViewing, modalActions, config) {
         'ngInject';
-        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config);
+        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants);
         
         this.constants = constants;
         this.photoPresent = false;

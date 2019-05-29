@@ -1,0 +1,42 @@
+<div id="irf-uganda" class="container-fluid padding-top-20">
+    <div class="sticky">
+        <div class="padding-bottom-40">
+            <h1 class="form-number-header float-left padding-left-20">
+                {{$ctrl.questions[1].response.value}}
+            </h1>
+            <h1 class="text-danger float-right padding-right-20">
+                Total Red Flags: {{$ctrl.redFlagTotal}}
+            </h1>
+        </div>
+        <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.selectedStep = 0">Top Box</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.selectedStep = 1">Group</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.selectedStep = 2">Destination</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.selectedStep = 3">Family</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.selectedStep = 4">Signs</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.selectedStep = 5">Interceptees</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.selectedStep = 6">Final Procedures</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.selectedStep = 7">Attachments</a>
+        </div>
+        <hr class="margin-bottom-0" />
+    </div>
+    <div id="irf-uganda-content" class="padding-bottom-40">
+        <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template" ng-hide="$ctrl.selectedStep != $index"></div>
+    </div>
+    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
+        <strong>Warning! {{warnings}}</strong>
+    </div>
+    <div class="alert alert-danger" ng-repeat="errors in $ctrl.getErrorMessages()">
+        <strong>Error! {{errors}}</strong>
+    </div>
+    <div class="container-fluid padding-bottom-20">
+        <div class="col-xs-6">
+            <button class="btn btn-warning" ng-if="$ctrl.response.status == 'in-progress'" ng-disabled="$ctrl.stateParams.isViewing === 'true'" ng-click="$ctrl.save()">Save for Later</button>
+        </div>
+        <div class="col-xs-6 text-right">
+            <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox()" ng-model="$ctrl.ignoreWarnings">
+            <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox()">Ignore warnings</label>
+            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true'">Submit</button>
+        </div>
+    </div>
+</div>

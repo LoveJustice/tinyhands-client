@@ -5,6 +5,9 @@ import IrfMalawiModule from './malawi/irf.malawi.module';
 import IrfNepalModule from './nepal/irf.nepal.module';
 import IrfSouthAfricaModule from './south-africa/irf.southAfrica.module';
 import IrfAfricaModule from './africa/irf.africa.module';
+import IrfBeninModule from './benin/irf.benin.module';
+import IrfUgandaModule from './uganda/irf.uganda.module';
+import IrfKenyaModule from './kenya/irf.kenya.module';
 
 import IrfRoutes from './irf.route';
 import IrfService from './irf.service';
@@ -20,7 +23,7 @@ import IrfNewListService from './newList/irfNewList.service';
 
 /* global angular */
 
-export default angular.module('tinyhands.IRF', [IrfIndiaModule, IrfNepalModule, IrfSouthAfricaModule, IrfBangladeshModule, IrfMalawiModule, IrfAfricaModule, sharedModule])
+export default angular.module('tinyhands.IRF', [IrfIndiaModule, IrfNepalModule, IrfSouthAfricaModule, IrfBangladeshModule, IrfMalawiModule, IrfAfricaModule, IrfBeninModule, IrfUgandaModule, IrfKenyaModule, sharedModule])
     .config(IrfRoutes)
     .controller('IrfListController', IrfListController)
     .service('IrfListService', IrfListService)

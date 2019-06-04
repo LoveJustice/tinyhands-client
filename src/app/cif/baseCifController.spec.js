@@ -265,7 +265,7 @@ describe('CifTestController', () => {
 
             vm.setupFlagListener();
 
-            expect(vm.incrementRedFlags).toHaveBeenCalledWith(21);
+            expect(vm.incrementRedFlags).toHaveBeenCalledWith(21, undefined);
         });
     });
 

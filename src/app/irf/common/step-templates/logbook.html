@@ -1,0 +1,106 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+	<div class="row">
+	 	<h3>Pre-Submission</h3>
+	</div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-4">Were there incomplete questions on the IRF that prevented submission?</form-step>
+    	<div class="col-md-1">
+      		<form-step type="radio" label="No" response-value="$ctrl.questions[1000].response.value" radio-name="incompleteQuestions"></form-step>
+     	</div>
+   		<div class="col-md-1">
+			<form-step type="radio" label="Yes" response-value="$ctrl.questions[1000].response.value" radio-name="incompleteQuestions"></form-step>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Please list incomplete sections that prevented submission</form-step>
+		<div class="col-md-4">
+			<input type="text" class="form-control" placeholder="Incomplete sections" ng-model="$ctrl.questions[1001].response.value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date Complete Information was Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1002].value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-1">Notes:</form-step>
+		<div class=col-md-8>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.questions[1003].response.value"></textarea>
+		</div>
+	</div>
+	
+	
+	<hr>
+	<div class="row center-vertical">
+	 	<h3>First Verification</h3>
+	</div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Verification</form-step>
+    	<div class="col-md-8">
+	    	<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[1004].response.value" label="Clear Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[1004].response.value" label="Some Clear Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[1004].response.value" label="High Risk of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[1004].response.value" label="Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Reason</form-step>
+    	<div class="col-md-8">
+			<textarea class="form-control" placeholder="Reason" rows="3" ng-model="$ctrl.questions[1005].response.value"></textarea>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Followup call completed</form-step>
+    	<div class="col-md-1">
+	    	<form-step type="radio" radio-name="followup" response-value="$ctrl.questions[1006].response.value" label="No"></form-step>
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="followup" response-value="$ctrl.questions[1006].response.value" label="Yes"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">First Verification Date</form-step>
+    	<div class="col-md-4">
+			6/3/2019
+		</div>
+	</div>
+	
+	
+	<hr>
+	<div class="row center-vertical">
+	 	<h3>Leadership Verification</h3>
+	</div>
+		<div class="row center-vertical">
+    	<form-step class="col-md-2">Reviewed by leadership</form-step>
+    	<div class="col-md-3">
+	    	<form-step type="radio" radio-name="leadershipReview" response-value="$ctrl.questions[1008].response.value" label="Yes - agreed with staff's recommendation"></form-step>
+	    </div>
+	    <div class="col-md-3">
+	        <form-step type="radio" radio-name="leadershipReview" response-value="$ctrl.questions[1008].response.value" label="Yes - changed staff's recommendation"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Verification</form-step>
+    	<div class="col-md-8">
+	    	<form-step type="radio" radio-name="leadEvidenceRadio" response-value="$ctrl.questions[1009].response.value" label="Clear Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="leadEvidenceRadio" response-value="$ctrl.questions[1009].response.value" label="Some Clear Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="leadEvidenceRadio" response-value="$ctrl.questions[1009].response.value" label="High Risk of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="leadEvidenceRadio" response-value="$ctrl.questions[1009].response.value" label="Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)"></form-step>
+        </div>
+	</div>
+		<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Leadership Verification Date</form-step>
+    	<div class="col-md-4">
+			6/6/2019
+		</div>
+	</div>
+</fieldset>

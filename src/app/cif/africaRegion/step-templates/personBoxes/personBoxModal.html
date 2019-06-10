@@ -1,4 +1,4 @@
-<div id="cif-southAfrica-person-box-modal" class="modal-content">
+<div id="cif-africaRegion-person-box-modal" class="modal-content">
     <form name="personBoxForm" ng-disabled="PersonBoxModalController.isViewing === 'true'">
         <div class="modal-header">
             <button type="button" class="close" ng-click="PersonBoxModalController.dismiss()">
@@ -38,7 +38,7 @@
                 <div class="col-md-9 form-group">
                     <label class="col-md-2 control-label">Full Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.name.value" required>
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.name.value">
                     </div>
                 </div>
                 <div class="col-md-1 form-group">
@@ -128,26 +128,26 @@
 		        </div>
 		    </div>
 		    <br>
+            <div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label class="col-md-12">Relation to PV</form-step>
+		    	</div>
+				<div class="col-md-10 form-group">
+			        <span ng-repeat="pvRelation in PersonBoxModalController.config.RadioItems[474]">
+			            <form-step type="radio" class="col-md-3" radio-name="relationToPv" label="{{pvRelation}}"
+			            	response-value="PersonBoxModalController.otherData.questions[474].value" other-value="PersonBoxModalController.otherData.questions[474].otherValue"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-6" radio-name="relationToPv" label="Other:" other-value="PersonBoxModalController.otherData.questions[474].otherValue"
+			                response-value="PersonBoxModalController.otherData.questions[474].value"></form-step>
+			        </span>
+		        </div>
+            </div>
             <div class="row center-vertical">
 	            <div class="col-md-4 form-group">
 		    		<label class="col-md-12">How well does the PV know them?</form-step>
 		    	</div>
 				<div class="col-md-8 form-group">
-					<span ng-repeat="val in [1,2,3,4,5,6,7,8,9,10]">
-			        	<form-step type="radio" class="col-md-2" radio-name="pvKnow" label="{{val}}" response-value="PersonBoxModalController.otherData.questions[709].response.value"></form-step>
-			        </span>
-		        </div>
-            </div>
-            <div class="row">
-	            <div class="col-md-2 form-group">
-		    		<label class="col-md-12">Occupation</form-step>
-		    	</div>
-				<div class="col-md-10 form-group">
-			        <span ng-repeat="occupation in PersonBoxModalController.config.RadioItems[422]">
-			            <form-step type="radio" class="col-md-3" radio-name="personOccupation" label="{{occupation}}"
-			            	response-value="PersonBoxModalController.otherData.questions[422].value" other-value="PersonBoxModalController.otherData.questions[422].otherValue"></form-step>
-			            <form-step ng-if="$last" type="otherRadio" class="col-md-6" radio-name="personOccupation" label="Other:" other-value="PersonBoxModalController.otherData.questions[422].otherValue"
-			                response-value="PersonBoxModalController.otherData.questions[422].value"></form-step>
+					<span ng-repeat="val in ['1','2','3','4','5','6','7','8','9','10']">
+			        	<form-step type="radio" class="col-md-2" radio-name="pvKnow" label="{{val}}" response-value="PersonBoxModalController.questions[709].response.value"></form-step>
 			        </span>
 		        </div>
             </div>
@@ -212,7 +212,7 @@
                 <div class="col-md-9 form-group margin-top-15">
                     <label class="col-md-3 control-label">Associated LB#</label>
                     <div class="col-md-2">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[423].response.value" required>
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[423].response.value">
                     </div>
                 </div>
             </div>

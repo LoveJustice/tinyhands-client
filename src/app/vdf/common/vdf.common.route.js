@@ -21,6 +21,13 @@ function VdfCommonRoutes($stateProvider) {
             params: {
                 id: null
             }
+        })
+        .state('vdfBenin', {
+            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonComponent',
+            params: {
+                id: null
+            }
         });
 }
 

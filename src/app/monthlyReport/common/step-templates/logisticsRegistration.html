@@ -1,0 +1,39 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+			<i class="row col-md-12">[include any requirements included in the TMS]</i>
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Logistics & Registration');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Station is submitting Reports to WDO every 3 months</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="wdo" blue-flag="0" flag-context="Logistics & Registration" label="no" response-value="$ctrl.questions[1010].response.value"></form-step>
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="wdo" blue-flag="30" flag-context="Logistics & Registration" label="yes" response-value="$ctrl.questions[1010].response.value"></form-step>
+	    </div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-3 control-label">Submitting Reports to Local Law Enforcement</form-step>
+		<div class="col-md-1">
+	        <form-step type="radio" radio-name="local law" blue-flag="0" flag-context="Logistics & Registration" label="no" response-value="$ctrl.questions[1011].response.value"></form-step>
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="local law" blue-flag="25" flag-context="Logistics & Registration" label="yes" response-value="$ctrl.questions[1011].response.value"></form-step>
+	    </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Chairperson/Station Manager Signature" flag-context="Governance" response-value="$ctrl.questions[1012].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[1013].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

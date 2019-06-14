@@ -46,7 +46,7 @@ const Constants = {
 		Date:[],
 		RadioOther:[420,422,474],
 		RadioItems:{
-			9:['SouthAfricai','Indian'],
+			9:['AfricaRegioni','Indian'],
 			420:['Broker', 'Companion', 'Host', 'ID Facilitator', 'Agent', 'Witness', 'Complainant'],
 			422:['None', 'Recruitment Agent', 'Police', 'Army', 'Guard', 'Driver'],
 			474:['Immediate Family', 'Friend', 'From Community', 'Met recently', 'Other Relative', 'Co-worker']
@@ -63,7 +63,7 @@ const Constants = {
 		RadioItems:{
 			"424":['Transit Location', 'Meet Point', 'Destination', 'Source of ID', 'Recruitment Agency'],
 			"425":['House', 'Bus Station', 'Hotel', 'Train Station', 'Airport'],
-			"426":['SouthAfrica', 'India']
+			"426":['AfricaRegion', 'India']
 		}
 	},
 	VehicleBoxes: {

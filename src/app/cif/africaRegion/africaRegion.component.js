@@ -1,9 +1,9 @@
 import {BaseCifController} from '../baseCifController.js';
 import {CifModalController} from '../cifModalController.js';
 import {AssociatedPersonModalController} from '../associatedPersonModalController.js';
-import './southAfrica.less';
+import './africaRegion.less';
 
-import templateUrl from './southAfrica.html';
+import templateUrl from './africaRegion.html';
 import topTemplate from './step-templates/top.html';
 import mainPvTemplate from './step-templates/mainPv.html';
 import pvsTemplate from './step-templates/potentialVictims/potentialVictims.html';
@@ -24,7 +24,7 @@ import locationBoxTemplate from './step-templates/locationBoxes/locationBoxModal
 import vehicleBoxTemplate from './step-templates/vehicleBoxes/vehicleBoxModal.html';
 import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
-export class CifSouthAfricaController extends BaseCifController {
+export class CifAfricaRegionController extends BaseCifController {
     constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
         'ngInject';        
         super($scope, $uibModal, constants, CifService, $stateParams, $state);
@@ -82,5 +82,5 @@ export class CifSouthAfricaController extends BaseCifController {
 
 export default {
     templateUrl,
-    controller: CifSouthAfricaController
+    controller: CifAfricaRegionController
 };

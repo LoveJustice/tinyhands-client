@@ -2,16 +2,16 @@ import {BaseIrfController} from '../baseIrfController.js';
 import './africa.less';
 
 import templateUrl from './africa.html';
-import topBoxTemplate from './step-templates/topBox.html';
+import topBoxTemplate from '../common/step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
 import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
-import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
+import intercepteesTemplate from '../common/step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
 
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteePassportModal.html';
 
 export class IrfAfricaController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {

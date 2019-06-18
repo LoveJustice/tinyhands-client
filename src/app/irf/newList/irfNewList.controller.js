@@ -28,7 +28,7 @@ export default class IrfNewListController {
             reverse: true,
             ordering: 'date_time_of_interception',
             search: '',
-            status: 'approved',
+            status: 'in-progress,approved,first-verification,second-verification',
             country_ids: '',
         };
         this.stickyOptions = this.sticky.stickyOptions;
@@ -52,33 +52,41 @@ export default class IrfNewListController {
         };
 
         this.status = {};
-        this.status.options = [{ id: 'approved', label: 'approved' }, { id: 'in-progress', label: 'in-progress' }];
-        this.status.selectedOptions = [this.status.options[0]];
+        this.status.options = [{ id: 'in-progress', label: 'in-progress' }, { id: 'approved', label: 'approved' },
+            { id: 'first-verification', label: 'first-verification' }, { id: 'second-verification', label: 'second-verification' },
+            { id: 'invalid', label: 'invalid' }];
+        this.status.selectedOptions = [this.status.options[0], this.status.options[1], this.status.options[2], this.status.options[3]];
         this.status.settings = {
-            smartButtonMaxItems: 1,
+            smartButtonMaxItems: 2,
             showCheckAll: false,
             showUncheckAll: false,
-            selectionLimit: 1,
-            closeOnSelect: true,
         };
         this.status.customText = {};
         this.status.eventListener = {
             onItemSelect: this.statusChange,
+            onItemDeselect: this.statusChange,
             ctrl: this,
         };
 
         // If there was a search value provided in the url, set it
         if ($stateParams) {
-            this.queryParameters.search = $stateParams.search;
-            this.queryParameters.status = $stateParams.status;
+            if ($stateParams.search) {
+                this.queryParameters.search = $stateParams.search;
+            }
             if ($stateParams.country_ids) {
                 this.queryParameters.country_ids = $stateParams.country_ids;
             }
-
-            if (this.queryParameters.status === 'in-progress') {
-                this.status.selectedOptions = [this.status.options[1]];
-            } else {
-                this.queryParameters.status = 'approved';
+            if ($stateParams.status) {
+                this.queryParameters.status = $stateParams.status;
+                let statusList = this.queryParameters.status.split(',');
+                this.status.selectedOptions = [];
+                for (let statusIdx in statusList) {
+                    for (let optionIdx in this.status.options) {
+                        if (statusList[statusIdx] === this.status.options[optionIdx].id) {
+                            this.status.selectedOptions.push(this.status.options[optionIdx]);
+                        }
+                    }
+                }
             }
         }
 
@@ -175,7 +183,13 @@ export default class IrfNewListController {
 
     statusChange() {
         var ctrl = this.ctrl;
-        ctrl.queryParameters.status = ctrl.status.selectedOptions[0].id;
+        ctrl.queryParameters.status = '';
+        let sep = '';
+        for (let optionIdx in ctrl.status.selectedOptions){
+            ctrl.queryParameters.status += sep + ctrl.status.selectedOptions[optionIdx].id;
+            sep = ',';
+        }
+
         ctrl.searchIrfs();
     }
 

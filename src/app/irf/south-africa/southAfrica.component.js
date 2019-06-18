@@ -13,6 +13,7 @@ import sourceTemplate from './step-templates/source.html';
 import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
+import logbookTemplate from '../common/step-templates/logbook.html';
 
 import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
@@ -34,7 +35,8 @@ export class IrfSouthAfricaController extends BaseIrfController {
         	sourceTemplate,
         	intercepteesTemplate,
         	finalProceduresTemplate,
-        	attachmentsTemplate];
+        	attachmentsTemplate,
+        	logbookTemplate];
     }
     
     getDefaultIdentificationTypes() {

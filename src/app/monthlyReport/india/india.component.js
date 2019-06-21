@@ -566,7 +566,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:">20",format:"col-md-2",points:25},
                 ]
             },
-        }
+        };
     }
 }
 

@@ -75,21 +75,17 @@ export default class CifListController {
         }
         
         if (!foundStateParams) {
-            try {
-                let tmp = sessionStorage.getItem('cifList-search');
-                if (tmp !== null) {
-                    this.queryParameters.search = tmp;
-                }
-                tmp = sessionStorage.getItem('cifList-status');
-                if (tmp !== null) {
-                    this.queryParameters.status = tmp;
-                }
-                tmp = sessionStorage.getItem('cifList-country_ids');
-                if (tmp !== null) {
-                    this.queryParameters.country_ids = tmp;
-                }
-            } catch(err) {
-                // Values not in session storage initially
+            let tmp = sessionStorage.getItem('cifList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('cifList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('cifList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
             }
         }
         

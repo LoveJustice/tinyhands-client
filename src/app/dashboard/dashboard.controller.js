@@ -20,15 +20,13 @@ class DashboardController {
         this.service.getUserCountries(this.session.user.id).then(promise => {
             this.countries = promise.data;
             if (this.countries.length > 0) {
-                try{
-                    this.selectedCountryName = sessionStorage.getItem('dashboard-country');
-                    for (let countryIdx in this.countries) {
-                        if (this.countries[countryIdx].name === this.selectedCountryName) {
-                            this.selectedCountry = this.countries[countryIdx];
-                            break;
-                        }
+                this.selectedCountryName = window.localStorage.getItem('dashboard-country');
+                for (let countryIdx in this.countries) {
+                    if (this.countries[countryIdx].name === this.selectedCountryName) {
+                        this.selectedCountry = this.countries[countryIdx];
+                        break;
                     }
-                } catch (err) {}
+                }
                     
                 if (this.selectedCountry === null) {
                     this.selectedCountry = this.countries[0];
@@ -59,7 +57,7 @@ class DashboardController {
     }
     
     setMapLocation() {
-        sessionStorage.setItem('dashboard-country', this.selectedCountry.name);
+        window.localStorage.setItem('dashboard-country', this.selectedCountry.name);
         this.$rootScope.$emit('mapLocation', this.selectedCountry);
     }
 

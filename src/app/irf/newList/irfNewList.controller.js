@@ -86,21 +86,17 @@ export default class IrfNewListController {
         }
         
         if (!foundStateParams) {
-            try {
-                let tmp = sessionStorage.getItem('irfList-search');
-                if (tmp !== null) {
-                    this.queryParameters.search = tmp;
-                }
-                tmp = sessionStorage.getItem('irfList-status');
-                if (tmp !== null) {
-                    this.queryParameters.status = tmp;
-                }
-                tmp = sessionStorage.getItem('irfList-country_ids');
-                if (tmp !== null) {
-                    this.queryParameters.country_ids = tmp;
-                }
-            } catch(err) {
-                alert(err);
+            let tmp = sessionStorage.getItem('irfList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('irfList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('irfList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
             }
         }
         

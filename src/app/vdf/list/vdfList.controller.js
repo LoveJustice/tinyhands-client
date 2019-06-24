@@ -75,21 +75,17 @@ export default class VdfListController {
         }
         
         if (!foundStateParams) {
-            try {
-                let tmp = sessionStorage.getItem('vdfList-search');
-                if (tmp !== null) {
-                    this.queryParameters.search = tmp;
-                }
-                tmp = sessionStorage.getItem('vdfList-status');
-                if (tmp !== null) {
-                    this.queryParameters.status = tmp;
-                }
-                tmp = sessionStorage.getItem('vdfList-country_ids');
-                if (tmp !== null) {
-                    this.queryParameters.country_ids = tmp;
-                }
-            } catch(err) {
-             // Values not in session storage initially
+            let tmp = sessionStorage.getItem('vdfList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('vdfList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('vdfList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
             }
         }
         

@@ -58,18 +58,45 @@ export default class CifListController {
         };
 
         // If there was a search value provided in the url, set it
+        let foundStateParams = false;
         if($stateParams) {
-           this.queryParameters.search = $stateParams.search;
-           this.queryParameters.status = $stateParams.status;
-           if ($stateParams.country_ids) {
-        	   this.queryParameters.country_ids = $stateParams.country_ids;
-           }
-           
-           if (this.queryParameters.status === 'in-progress') {
-        	   this.status.selectedOptions = [this.status.options[1]];
-           } else {
-        	   this.queryParameters.status = 'approved';
-           }
+            if ($stateParams.search) {
+                foundStateParams = true;
+                this.queryParameters.search = $stateParams.search;
+            }
+            if ($stateParams.status) {
+                foundStateParams = true;
+                this.queryParameters.status = $stateParams.status;
+            }
+            if ($stateParams.country_ids) {
+                foundStateParams = true;
+                this.queryParameters.country_ids = $stateParams.country_ids;
+            }
+        }
+        
+        if (!foundStateParams) {
+            try {
+                let tmp = sessionStorage.getItem('cifList-search');
+                if (tmp !== null) {
+                    this.queryParameters.search = tmp;
+                }
+                tmp = sessionStorage.getItem('cifList-status');
+                if (tmp !== null) {
+                    this.queryParameters.status = tmp;
+                }
+                tmp = sessionStorage.getItem('cifList-country_ids');
+                if (tmp !== null) {
+                    this.queryParameters.country_ids = tmp;
+                }
+            } catch(err) {
+                // Values not in session storage initially
+            }
+        }
+        
+        if (this.queryParameters.status === 'in-progress') {
+            this.status.selectedOptions = [this.status.options[1]];
+        } else {
+            this.queryParameters.status = 'approved';
         }
 
         this.getUserCountries();
@@ -133,6 +160,9 @@ export default class CifListController {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
         }
+        sessionStorage.setItem('cifList-search', this.queryParameters.search);
+        sessionStorage.setItem('cifList-status', this.queryParameters.status);
+        sessionStorage.setItem('cifList-country_ids', this.queryParameters.country_ids);
         this.timer = this.timeout( () => {
             this.state.go('.', {
             	search: this.queryParameters.search, 

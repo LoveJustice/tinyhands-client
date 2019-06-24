@@ -1,7 +1,8 @@
 class MapController {
-    constructor($rootScope, NgMap, BorderStationService) {
+    constructor($rootScope, NgMap, SessionService, DashboardService) {
         'ngInject';
-        this.borderStationService = BorderStationService;
+        this.sessionService = SessionService;
+        this.dashboardService = DashboardService;
         this.rootScope = $rootScope;
 
         this.stationInfoWindowId = 'marker-station-info-window';
@@ -9,7 +10,7 @@ class MapController {
 
         this.borderStations = [];
         this._fusionLayerOptions = null;
-        this.showAddress2Layer = true;
+        this.showAddress2Layer = false;
         this.showBorderStationLocations = false;
 
         this.createMapListeners();
@@ -21,10 +22,23 @@ class MapController {
         //Due to using an on-click callback with ng-map. ng-click does not work.
         this.showStationInfoWindow = this.showStationInfoWindow.bind(this);
         this.showLocationInfoWindow = this.showLocationInfoWindow.bind(this);
+        this.country = null;
     }
 
     get center() {
-        return '28.394857, 84.124008';
+        let center = '0, 0';
+        if (this.country !== null) {
+            center = this.country.latitude + ', ' + this.country.longitude;
+        }
+        return center;
+    }
+    
+    get zoom() {
+        let zoom_level = 8;
+        if (this.country !== null) {
+            zoom_level = this.country.zoom_level;
+        }
+        return zoom_level;
     }
 
     get apiUrl() {
@@ -50,34 +64,43 @@ class MapController {
         }
         return this._fusionLayerOptions;
     }
+    
 
     createMapListeners() {
         this.rootScope.$on('toggleBorderStationLocations', (e, showBorderStationLocations) => { this.showBorderStationLocations = showBorderStationLocations; });
         this.rootScope.$on('toggleAddress2Layer', (e, showAddress2Layer) => { this.showAddress2Layer = showAddress2Layer; });
+        this.rootScope.$on('mapLocation', (e, country) => { this.country = country; this.separateBorderStations();});
     }
 
     getBorderStations() {
-        this.borderStationService.getBorderStations(true).then((response) => {
-            this.borderStations = response.data.map(this.mapStationData);
-            this.locations = this.mapLocationData(response.data);
+        this.dashboardService.getUserStations(this.sessionService.user.id).then((response) => {
+            this.borderStations = response.data;
+            this.separateBorderStations();
         });
     }
-
-    mapLocationData(borderStations) {
-        let locations = [];
-        borderStations.forEach((borderStation) => {
-            borderStation.location_set.forEach((location) => {
-                locations.push({
-                    id: location.id,
-                    name: location.name,
-                    markerId: `station-${borderStation.id}-location-${location.id}`,
-                    station: borderStation,
-                    position: [location.latitude, location.longitude],
-                    dateEstablished: borderStation.date_established,
+    
+    separateBorderStations() {
+        this.inCountryStations = [];
+        this.outOfCountryStations = [];
+        this.inCountryLocations = [];
+        
+        this.borderStations.forEach((borderStation) => {
+            if (borderStation.country_name === this.country.name) {
+                this.inCountryStations.push(this.mapStationData(borderStation));
+                borderStation.location_set.forEach((location) => {
+                    this.inCountryLocations.push({
+                        id: location.id,
+                        name: location.name,
+                        markerId: `station-${borderStation.id}-location-${location.id}`,
+                        station: borderStation,
+                        position: [location.latitude, location.longitude],
+                        dateEstablished: borderStation.date_established,
+                    });
                 });
-            });
+            } else {
+                this.outOfCountryStations.push(this.mapStationData(borderStation));
+            }
         });
-        return locations;
     }
 
     mapStationData(borderStation) {

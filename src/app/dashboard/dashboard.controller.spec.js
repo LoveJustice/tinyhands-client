@@ -1,25 +1,22 @@
+import BaseService from '../base.service'
 import DashboardController from './dashboard.controller';
+import DashboardService from './dashboard.service';
 
 describe('DashboardController', () => {
 
     let vm;
-
-    beforeEach(() => {
+    beforeEach(inject(($http) => {
         let $rootScope = { $emit: () => { } };
-        vm = new DashboardController($rootScope);
-    });
+        let sessionService = {user:{id:10032}};
+        let baseService = new BaseService($http);
+        let dashboardService = new DashboardService(baseService);
+        vm = new DashboardController($rootScope, sessionService, dashboardService);
+    }));
 
     describe('function constructor', () => {
-        it('showEvents should be true', () => {
-            expect(vm.showEvents).toBe(true);
-        });
 
         it('showTally should be true', () => {
             expect(vm.showTally).toBe(true);
-        });
-
-        it('showAddress2Layer shouw be true', () => {
-            expect(vm.showAddress2Layer).toBe(true);
         });
 
         it('showBorderStationLocations should be false', () => {
@@ -27,15 +24,6 @@ describe('DashboardController', () => {
         });
     });
 
-    describe('toggleAddress2Layer', () => {
-        it("emits the thing it's supposed to", () => {
-            spyOn(vm.$rootScope, '$emit');
-
-            vm.toggleAddress2Layer();
-
-            expect(vm.$rootScope.$emit).toHaveBeenCalledWith('toggleAddress2Layer', vm.showAddress2Layer);
-        });
-    });
 
     describe('toggleBorderStationLocations', () => {
         it("emits the thing it's supposed to", () => {

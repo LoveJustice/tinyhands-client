@@ -9,6 +9,9 @@ class MapController {
         this.locationInfoWindowId = 'marker-location-info-window';
 
         this.borderStations = [];
+        this.inCountryStations = [];
+        this.outOfCountryStations = [];
+        this.inCountryLocations = [];
         this._fusionLayerOptions = null;
         this.showAddress2Layer = false;
         this.showBorderStationLocations = false;

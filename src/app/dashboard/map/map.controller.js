@@ -15,9 +15,11 @@ class MapController {
         this._fusionLayerOptions = null;
         this.showAddress2Layer = false;
         this.showBorderStationLocations = false;
+        this.mapKey = null;
 
         this.createMapListeners();
         this.getBorderStations();
+        this.getMapKey();
 
         NgMap.getMap().then((map) => { this.map = map; });
 
@@ -43,9 +45,17 @@ class MapController {
         }
         return zoom_level;
     }
+    
+    getMapKey() {
+        this.dashboardService.getMapKey().then((response) => { this.mapKey = response.data; });
+    }
 
     get apiUrl() {
-        return "https://maps.google.com/maps/api/js?key=AIzaSyCi7iznUzIHppkD5Jr5iH2dUdnI8pCRM2E";
+        let api = null
+        if (this.mapKey) {
+            api = "https://maps.google.com/maps/api/js?key=" + this.mapKey;
+        }
+        return api;
     }
 
     get fusionLayerOptions() {

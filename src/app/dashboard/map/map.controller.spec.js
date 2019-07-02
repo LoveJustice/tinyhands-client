@@ -50,10 +50,13 @@ describe('MapController', () => {
 
         let sessionService = {user:{id:10032}};
         
-        mockDashboardService = jasmine.createSpyObj('dashboardService', ['getUserStations']);
+        mockDashboardService = jasmine.createSpyObj('dashboardService', ['getUserStations', 'getMapKey']);
         mockDashboardService.getUserStations.and.callFake(() => {
             return $q.resolve({ data: borderStations });
-});
+        });
+        mockDashboardService.getMapKey.and.callFake(() => {
+            return $q.resolve({ data: 'theKey' });
+        });
 
         controller = new MapController($rootScope, mockNgMap, sessionService, mockDashboardService);
         controller.country = {
@@ -70,7 +73,8 @@ describe('MapController', () => {
 
     describe('apiUrl', () => {
         it(`should return correct map api url`,() => {
-            expect(controller.apiUrl).toBe("https://maps.google.com/maps/api/js?key=AIzaSyCi7iznUzIHppkD5Jr5iH2dUdnI8pCRM2E");
+            controller.mapKey='theKey';
+            expect(controller.apiUrl).toBe("https://maps.google.com/maps/api/js?key=theKey");
         });
     });
 

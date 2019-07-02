@@ -11,5 +11,9 @@ class DashboardService {
     getUserStations(id) {
         return this.service.get(`api/user_permission/stations/${id}/?permission_group=STATIONS`);
     }
+    
+    getMapKey() {
+        return this.service.get(`api/site-settings/google_map_key/`);
+    }
 }
 export default DashboardService;

@@ -1,4 +1,4 @@
-<div class='map' map-lazy-load="http://maps.google.com/maps/api/js" map-lazy-load-params="{{ctrl.apiUrl}}">
+<div class='map' map-lazy-load="http://maps.google.com/maps/api/js" map-lazy-load-params="{{ctrl.apiUrl}}" ng-if="ctrl.mapKey !== null">
 	<ng-map class='map' center="{{ctrl.center}}" zoom="{{ctrl.zoom}}">
 		<fusion-tables-layer ng-if="ctrl.showAddress2Layer" query={{ctrl.fusionLayerOptions.query}} styles={{ctrl.fusionLayerOptions.styles}}
 			style-id="{{ctrl.fusionLayerOptions.styleId}}" template-id="{{ctrl.fusionLayerOptions.templateId}}">

@@ -22,7 +22,7 @@ export class BaseMonthlyReportController extends BaseFormController {
                 "Aftercare":789,
                 "Paralegal":796,
                 "Investigations":802
-        }
+        };
         
         this.country_name = "";
         this.station_name = "";

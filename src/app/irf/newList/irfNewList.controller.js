@@ -69,26 +69,49 @@ export default class IrfNewListController {
         };
 
         // If there was a search value provided in the url, set it
+        let foundStateParams = false;
         if ($stateParams) {
             if ($stateParams.search) {
+                foundStateParams = true;
                 this.queryParameters.search = $stateParams.search;
             }
             if ($stateParams.country_ids) {
+                foundStateParams = true;
                 this.queryParameters.country_ids = $stateParams.country_ids;
             }
             if ($stateParams.status) {
+                foundStateParams = true;
                 this.queryParameters.status = $stateParams.status;
-                let statusList = this.queryParameters.status.split(',');
-                this.status.selectedOptions = [];
-                for (let statusIdx in statusList) {
-                    for (let optionIdx in this.status.options) {
-                        if (statusList[statusIdx] === this.status.options[optionIdx].id) {
-                            this.status.selectedOptions.push(this.status.options[optionIdx]);
-                        }
+            }
+        }
+        
+        if (!foundStateParams) {
+            let tmp = sessionStorage.getItem('irfList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('irfList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('irfList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
+            }
+        }
+        
+        if (this.queryParameters.status !== '') {
+            let statusList = this.queryParameters.status.split(',');
+            this.status.selectedOptions = [];
+            for (let statusIdx in statusList) {
+                for (let optionIdx in this.status.options) {
+                    if (statusList[statusIdx] === this.status.options[optionIdx].id) {
+                        this.status.selectedOptions.push(this.status.options[optionIdx]);
                     }
                 }
             }
         }
+        
 
         this.getUserCountries();
         this.getIrfList();
@@ -159,6 +182,9 @@ export default class IrfNewListController {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
         }
+        sessionStorage.setItem('irfList-search', this.queryParameters.search);
+        sessionStorage.setItem('irfList-status', this.queryParameters.status);
+        sessionStorage.setItem('irfList-country_ids', this.queryParameters.country_ids);
         this.timer = this.timeout(() => {
             this.state.go('.', {
                 search: this.queryParameters.search,

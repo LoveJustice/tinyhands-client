@@ -10,12 +10,12 @@
         <div class="modal-body form-horizontal">
             <div class="text-center padding-bottom-20">
                 <div class="upload-image clickable" ngf-select ng-change="IntercepteeModalController.fileUpload($file)" ng-model="IntercepteeModalController.file"
-                    name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100"
+                    name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="50"
                     ng-if="!IntercepteeModalController.photoPresent">Upload Image
                 </div>
                 <canvas id="myCanvas" width="200" height="200" style="border:1px solid #d3d3d3;" ng-init="IntercepteeModalController.init()"
                 		ngf-select ng-model="IntercepteeModalController.file" ng-change="IntercepteeModalController.fileUpload($file)"
-                		ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="100"
+                		ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="50"
                 		ng-show="IntercepteeModalController.photoPresent">
 					Your browser does not support the HTML5 canvas tag.
 				</canvas>

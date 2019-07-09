@@ -85,17 +85,9 @@
                 <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);" ui-sref="budgetList">Budget
                     Sheets</a>
             </li>
-
-            <li>
-                <a ng-show="navbarCtrl.session.user" ui-sref="events">Event Calendar</a>
-            </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <li class="hidden-sm">
-                <p class="navbar-text">Nepal Time: {{ navbarCtrl.nepalTime }}</p>
-            </li>
-
             <!-- START: USER SETTINGS -->
             <li class="dropdown" ng-class="{open:menuOpen}">
                 <a class="dropdown-toggle" data-toggle="dropdown" ng-click="menuOpen=!menuOpen">Hello {{

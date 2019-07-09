@@ -26,7 +26,6 @@ import MonthlyReportModule from './monthlyReport/monthlyReport.module';
 import VDFModule from './vdf/vdf.module';
 import VIFModule from './vif/vif.module';
 import IRFModule from './irf/irf.module';
-import eventsModule from './events/events.module';
 import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';
 import idmanagementModule from './idmanagement/idmanagement.module';
@@ -53,7 +52,6 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         budgetModule,
         CIFModule,
         dashboardModule,
-        eventsModule,
         IRFModule,
         loginModule,
         MonthlyReportModule,

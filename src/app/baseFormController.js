@@ -220,7 +220,7 @@ export class BaseFormController {
         /*jshint unused: false */
     }
     
-    commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
+    commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options = {}) {
         let config = this.config[config_name];
         if (isAdd) {
             the_card = {
@@ -327,7 +327,7 @@ export class BaseFormController {
             }
         }
         
-        this.openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name);
+        this.openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options);
     }
     
     set_errors_and_warnings(response) {

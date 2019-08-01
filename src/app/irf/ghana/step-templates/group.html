@@ -1,0 +1,125 @@
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
+    <div class="row center-vertical">
+        <div class="col-md-3">
+            <div class="padding-bottom-20">Who is in the group?  If there is more than one person separate the possible victims (PVs) and traffickers</div>
+            <form-step red-flag="40" type="checkbox" label="1.1 Person appears drugged/drowsy or under spell/witchcraft" response-value="$ctrl.questions[10].response.value"></form-step>
+            <form-step>1.2 Traveling with or planning to meet someone they know from:</form-step>
+            <div>
+                <form-step red-flag="25" type="checkbox" label="Facebook" other-value="" response-value="$ctrl.questions[243].response.value"></form-step>
+            </div>
+            <div>
+                <form-step red-flag="25" type="otherCheckbox" label="Other Website: " response-value="$ctrl.questions[244].response.value"></form-step>
+            </div>
+        </div>
+        <div class="col-md-9 container">
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step type="checkbox" label="Adult(s)" response-value="$ctrl.questions[831].response.value"></form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask about travel companions
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="20" type="checkbox" label="1.3 (Adult) meeting someone at destination who they don't know at all or don't know well" response-value="$ctrl.questions[837].response.value"></form-step>
+                            <form-step red-flag="10" type="checkbox" label="1.4 Met companion on their way" response-value="$ctrl.questions[838].response.value"></form-step>
+                            <form-step red-flag="45" type="checkbox" label="1.5 Their mobile phone was taken away" response-value="$ctrl.questions[501].response.value"></form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask if they are married or traveling to get married
+                        </div>
+                        <div class="col-md-8">
+                        	<form-step red-flag="10" type="checkbox" label="1.6 Going to get married" response-value="$ctrl.questions[216].response.value"></form-step>
+                            <form-step red-flag="10" type="checkbox" label="1.7 Married in the past 2 weeks" response-value="$ctrl.questions[24].response.value"></form-step>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step type="checkbox" label="Child(ren) with parents" response-value="$ctrl.questions[832].response.value"></form-step>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask questions about their travel plans
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="45" type="checkbox" label="1.8 Someone approached them with an opportunity for their child that's too good to be true" response-value="$ctrl.questions[839].response.value"></form-step>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Ask questions to verify their relationship
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="40" type="checkbox" label="1.9 Alleged parent(s) don't know or provide conflicting answers to basic questions" response-value="$ctrl.questions[840].response.value"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step type="checkbox" label="Child(ren) with other adults" response-value="$ctrl.questions[833].response.value"></form-step>
+                    <div class="col-md-12">
+	                    <form-step type="checkbox" label="Non-relative" response-value="$ctrl.questions[834].response.value"></form-step>
+	                    <form-step type="otherCheckbox" label="Relative" response-value="$ctrl.questions[835].response.value"></form-step>
+                    </div>
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            Call Parents
+                            <br>
+                            Ask questions about their travel
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="10" type="checkbox" label="1.10 Child(ren) have no ID" response-value="$ctrl.questions[276].response.value"></form-step>
+                            <form-step red-flag="20" type="checkbox" label="1.11 Non-relative(s) organized their travel" response-value="$ctrl.questions[842].response.value"></form-step>
+                            <form-step red-flag="25" type="checkbox" label="1.12 Non-relatives paid for their travel" response-value="$ctrl.questions[247].response.value"></form-step>
+                            <form-step red-flag="40" type="checkbox" label="1.13 Child(ren) seem uncomfortable/fearful" response-value="$ctrl.questions[843].response.value"></form-step>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="row center-vertical">
+                <div class="col-md-4">
+                    <form-step type="checkbox" label="Child(ren) traveling alone" response-value="$ctrl.questions[836].response.value"></form-step>             
+                </div>
+                <div class="row col-md-8">
+                    <div class="row center-vertical">
+                        <div class="col-md-4">
+                            How long have they known each other?
+                        </div>
+                        <div class="col-md-8">
+                            <form-step red-flag="35" type="checkbox" label="1.14 (Child) meeting someone at destination who they don't know at all or don't know well" response-value="$ctrl.questions[844].response.value"></form-step>
+                            <form-step red-flag="25" type="checkbox" label="1.15 Was traveling with someone who is meeting back up with them later" response-value="$ctrl.questions[23].response.value"></form-step>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-md-3">
+            <form-step red-flag="20" type="checkbox" label="1.16 Caught in a lie" response-value="$ctrl.questions[30].response.value"></form-step>
+        </div>
+        <div class="col-md-3">
+            <form-step red-flag="25" type="checkbox" label="1.17 Contradiction between stories" response-value="$ctrl.questions[603].response.value"></form-step>
+        </div>
+        <div class="col-md-4">
+            <form-step red-flag="' '" type="otherCheckbox" label="1.18 Other red flags" response-value="$ctrl.questions[31].response.value"></form-step>
+        </div>
+    </div>
+</fieldset>

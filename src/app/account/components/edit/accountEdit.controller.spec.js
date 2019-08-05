@@ -1,307 +1,4 @@
 import AccountEditController from './accountEdit.controller';
-import PermDropDownGroup from './accountEdit.controller';
-var pdg = require('./accountEdit.controller.js');
-
-describe ('PermDropDownGroup', () => {
-    let controller = null;
-    
-    beforeEach(inject(() => {
-        let permission = {
-                id:32,
-                action:'VIEW',
-                min_level:'STATION'
-        };
-        
-        let managePermissions = [];
-        let allCurrentPermissions = [];
-        let allCountries = [];
-        let allStations = [];
-        let accountId = 10032;
-        
-        controller = new pdg.PermDropDownGroup(permission, managePermissions, allCountries, allStations, allCurrentPermissions, accountId);
-    }));
-    
-    describe('find country for station', () => {
-        let stations = [
-            {
-                id: 5,
-                operating_country:10
-            },
-            {
-                id: 7,
-                operating_country:10
-            },
-            {
-                id: 9,
-                operating_country:12
-            },
-            
-        ];
-        it('country found', () => {
-            let country = controller.findStationCountry(7, stations);
-            expect(country).toEqual(10);
-        });
-        it('country not found found', () => {
-            let country = controller.findStationCountry(8, stations);
-            expect(country).toEqual(null);
-        });
-    });
-    
-    describe('Check for global account management', () => {
-        it('global account management found', () => {
-            let managementPermissions = [
-                {
-                    country:1,
-                    station:null
-                },
-                {
-                    country:null,
-                    station:10
-                },
-                {
-                    country:null,
-                    station:null
-                },
-                {
-                    country:null,
-                    station:12
-                }
-            ];
-            
-            let rv = controller.globalManagePermission(managementPermissions);
-            expect(rv).toEqual(true);
-            
-        });
-        it('country management not found', () => {
-            let managementPermissions = [
-                {
-                    country:1,
-                    station:null
-                },
-                {
-                    country:null,
-                    station:10
-                },
-                {
-                    country:2,
-                    station:null
-                },
-                {
-                    country:null,
-                    station:12
-                }
-            ];
-            
-            let rv = controller.globalManagePermission(managementPermissions);
-            expect(rv).toEqual(false);
-        });
-        
-    });
-    
-    describe('Check if user permission should be displayed', () => {
-        let stations, managePermissions;
-        beforeEach(() =>{
-            stations=[
-                {
-                    id: 5,
-                    operating_country:1
-                },
-                {
-                    id: 10,
-                    operating_country:3
-                },
-                {
-                    id: 12,
-                    operating_country:2
-                },
-            ];
-            managePermissions = [
-                {
-                    country:1,
-                    station:null
-                },
-                {
-                    country:null,
-                    station:10
-                },
-                {
-                    country:2,
-                    station:null
-                },
-                {
-                    country:null,
-                    station:12
-                }
-            ];
-        });
-        
-        it('management country and user country match', () => {
-            let userPermission = {
-                country: 2,
-                station: null
-            };
-            
-            let rv = controller.displayPermission(userPermission, managePermissions, stations);
-            expect(rv).toEqual(true);
-        });
-        
-        it('management station -> country and user country match', () => {
-            let userPermission = {
-                country: 3,
-                station: null
-            };
-            
-            let rv = controller.displayPermission(userPermission, managePermissions, stations);
-            expect(rv).toEqual(true);
-        });
-        
-        it('management station -> country and user country match', () => {
-            let userPermission = {
-                country: 3,
-                station: null
-            };
-            
-            let rv = controller.displayPermission(userPermission, managePermissions, stations);
-            expect(rv).toEqual(true);
-        });
-        
-        it('management station and user station match', () => {
-            let userPermission = {
-                country: null,
-                station: 10
-            };
-            
-            let rv = controller.displayPermission(userPermission, managePermissions, stations);
-            expect(rv).toEqual(true);
-        });
-        
-        it('management station and user station -> country match', () => {
-            let userPermission = {
-                country: null,
-                station: 5
-            };
-            
-            let rv = controller.displayPermission(userPermission, managePermissions, stations);
-            expect(rv).toEqual(true);
-        });
-        
-        it('nothing matches', () => {
-            let userPermission = {
-                country: 4,
-                station: null
-            };
-            
-            let rv = controller.displayPermission(userPermission, managePermissions, stations);
-            expect(rv).toEqual(false);
-        });
-        
-    });
-    
-    it('Filter countries', () => {
-        let allCountries=[
-            {id:1},
-            {id:2},
-            {id:3},
-            {id:4},
-            {id:5},
-            {id:6},
-            {id:7},
-            {id:8},
-            {id:9},
-            {id:10},
-        ];
-        let currentPermissions=[
-            {country:1, station:null},
-            {country:null, station:10}
-        ];
-        let managePermissions = [
-            {country:2,station:null},
-            {country:null, station:20}
-        ];
-        let filteredStations = [
-            {id:5, operating_country:1},
-            {id:7, operating_country:2},
-            {id:10, operating_country:7},
-            {id:15, operating_country:8},
-            {id:20, operating_country:9},
-            {id:25, operating_country:10},
-        ];
-        let filteredCountries = [
-            {id:1},
-            {id:2},
-            {id:7},
-            {id:9}
-        ];
-        let theCountries = controller.filterCountries(allCountries, currentPermissions, managePermissions, filteredStations);
-        expect(theCountries).toEqual(filteredCountries);
-    });
-    
-    it('filter out stations', () => {
-        let allStations = [
-            {
-                id:10,
-                operating_country:3
-            },
-            {
-                id:11,
-                operating_country:7
-            },
-            {
-                id:12,
-                operating_country:1
-            },
-            {
-                id:20,
-                operating_country:7
-            },
-            {
-                id:21,
-                operating_country:2
-            }
-        ];
-        let currentPermissions = [
-            {
-                station:10,
-                country:null
-            },
-            {
-                station:null,
-                country:1
-            }
-        ];
-        let managePermissions = [
-            {
-                station:20,
-                country:null
-            },
-            {
-                station:null,
-                country:2
-            }
-        ];
-        let filteredStations = [
-            {
-                id:10,
-                operating_country:3
-            },
-            {
-                id:12,
-                operating_country:1
-            },
-            {
-                id:20,
-                operating_country:7
-            },
-            {
-                id:21,
-                operating_country:2
-            }
-        ];
-        
-        let theStations = controller.filterStations(allStations, currentPermissions, managePermissions);
-        expect(theStations).toEqual(filteredStations);
-    });
-});
 
 describe('AccountEditController', () => {
 
@@ -627,7 +324,7 @@ describe('AccountEditController', () => {
 
                 beforeEach(() => {
                     mockAccountService.update.and.callFake((id, account) => {
-                        return $q.reject({ data: { error_text: error } });
+                        return $q.reject({ data: { email: [error] } });
                     });
                 });
 
@@ -638,11 +335,11 @@ describe('AccountEditController', () => {
                     expect(controller.saveButtonClicked).toEqual(false);
                 });
 
-                it('should set error_text to response email error', () => {
+                it('should set emailError to response email error', () => {
                     controller.updateOrCreate();
                     rootScope.$apply();
 
-                    expect(controller.errorText).toEqual(error);
+                    expect(controller.emailError).toEqual(error);
                 });
             });
         });
@@ -686,7 +383,7 @@ describe('AccountEditController', () => {
 
                 beforeEach(() => {
                     mockAccountService.create.and.callFake((account) => {
-                        return $q.reject({ data: { error_text: error } });
+                        return $q.reject({ data: { email: [error] } });
                     });
                 });
 
@@ -699,9 +396,9 @@ describe('AccountEditController', () => {
 
                 it('should set emailError to response email error', () => {
                     controller.updateOrCreate();
-                    rootScope.$apply(); 
+                    rootScope.$apply();
 
-                    expect(controller.errorText).toEqual(error);
+                    expect(controller.emailError).toEqual(error);
                 });
             });
         });

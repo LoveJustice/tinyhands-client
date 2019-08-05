@@ -1,21 +1,17 @@
 import {BaseIrfController} from '../baseIrfController.js';
-import {BaseModalController} from '../../baseModalController.js';
 import './malawi.less';
 
 import templateUrl from './malawi.html';
-import topBoxTemplate from '../common/step-templates/topBox.html';
+import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
 import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
-import intercepteesTemplate from '../common/step-templates/interceptees/interceptees.html';
+import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
-import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
-import logbookTemplate from '../common/step-templates/logbook.html';
 
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteePassportModal.html';
-import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
+import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
 
 export class IrfMalawiController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
@@ -29,9 +25,7 @@ export class IrfMalawiController extends BaseIrfController {
         	familyTemplate,
         	signsTemplate,
         	intercepteesTemplate,
-        	finalProceduresTemplate,
-        	attachmentsTemplate,
-        	logbookTemplate
+        	finalProceduresTemplate
         ];
     }
     
@@ -42,11 +36,6 @@ export class IrfMalawiController extends BaseIrfController {
     openIntercepteeModal(card, isAdd = false, idx = null) {
     	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
     			intercepteeModalTemplate, 'Interceptees');
-    }
-    
-    openAttachmentModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, BaseModalController, 'AttachmentModalController',
-                attachmentTemplate, 'Attachments');
     }
 }
 

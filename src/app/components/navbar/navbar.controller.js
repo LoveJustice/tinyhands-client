@@ -11,7 +11,7 @@ export default class NavbarController {
         this.borderStationMap = {};
         this.countryNames = [];
 
-       
+        this.nepalTime = window.moment.tz('Asia/Kathmandu').format('MMMM Do YYYY, h:mm:ssA');
         this.state = $state;
 
         $scope.$on('GetNavBarBorderStations', () => {

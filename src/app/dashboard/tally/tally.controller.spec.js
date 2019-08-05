@@ -4,15 +4,12 @@ import TallyService from './tally.service';
 import constants from '../../constants';
 
 describe('TallyController', () => {
-    let vm, httpBackend,
-        $rootScope,
-        tallyService;
-    beforeEach(inject(($httpBackend, $http, _$rootScope_) => {
-        $rootScope = _$rootScope_;
+    let vm, httpBackend;
+    beforeEach(inject(($httpBackend, $http) => {
+        let $rootScope = null;
         let baseService = new BaseService($http);
-        tallyService = new TallyService(baseService);
+        let tallyService = new TallyService(baseService);
         vm = new TallyController($rootScope, tallyService);
-        vm.country = {id:1};
         httpBackend = $httpBackend;
     }));
 
@@ -28,7 +25,7 @@ describe('TallyController', () => {
 
         it('should have called getTallyData with true', () => {
             spyOn(vm, 'getTallyData');
-            vm.constructor($rootScope, tallyService);
+            vm.constructor();
             expect(vm.getTallyData).toHaveBeenCalledWith(true);
         });
 
@@ -124,7 +121,7 @@ describe('TallyController', () => {
 
         it('should have days that have changed', () => {
             // REGION: Data Setup
-            httpBackend.whenGET(constants.BaseUrl + 'api/irfNew/tally/?country_ids=1').respond(200, {
+            httpBackend.whenGET(constants.BaseUrl + 'api/portal/tally/days/').respond(200, {
                 id: 0,
                 days: [
                     { date: '2015-05-02T02:11:49.556', interceptions: { 'BSD': 4 } },
@@ -136,7 +133,7 @@ describe('TallyController', () => {
                     { date: '2015-04-26T02:11:49.556', interceptions: { 'BSD': 4 } },
                 ]
             });
-            httpBackend.expectGET(constants.BaseUrl + 'api/irfNew/tally/?country_ids=1');
+            httpBackend.expectGET(constants.BaseUrl + 'api/portal/tally/days/');
             // ENDREGION: Data Setup
             expect(vm.days).toEqual([]);
 
@@ -152,7 +149,7 @@ describe('TallyController', () => {
 
         it('should have days that have not changed', () => {
             // REGION: Data Setup
-            httpBackend.whenGET(constants.BaseUrl + 'api/irfNew/tally/?country_ids=1').respond(200, {
+            httpBackend.whenGET(constants.BaseUrl + 'api/portal/tally/days/').respond(200, {
                 id: 0,
                 days: [
                     { date: '2015-05-02T02:11:49.556', interceptions: {} },
@@ -164,7 +161,7 @@ describe('TallyController', () => {
                     { date: '2015-04-26T02:11:49.556', interceptions: {} },
                 ]
             });
-            httpBackend.expectGET(constants.BaseUrl + 'api/irfNew/tally/?country_ids=1');
+            httpBackend.expectGET(constants.BaseUrl + 'api/portal/tally/days/');
             // ENDREGION: Data Setup
             expect(vm.days).toEqual([]);
 

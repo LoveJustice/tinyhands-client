@@ -106,8 +106,7 @@ describe('IrfTestController', () => {
                     card: jasmine.any(Function),
                     isViewing: jasmine.any(Function),
                     modalActions: jasmine.any(Function),
-                    config: jasmine.any(Function),
-                    options: jasmine.any(Function),
+                    config: jasmine.any(Function)
                 },
                 size: 'lg',
                 templateUrl: jasmine.any(String)

@@ -49,7 +49,6 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('irf_number', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('irf_number', 'reverse') }"></i>
                 </th>
-                <th width="8%">Status</th>
                 <th ng-click="irfNewListCtrl.updateSort('staff_name')" width="15%">Staff Name
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('staff_name', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
@@ -82,7 +81,6 @@
         <tbody>
             <tr ng-repeat="irf in irfNewListCtrl.irfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ irf.irf_number }}</td>
-                <td>{{ irf.status }}</td>
                 <td>{{ irf.staff_name }}</td>
                 <td>{{ irf.number_of_victims | number }}</td>
                 <td>{{ irf.number_of_traffickers | number }}</td>

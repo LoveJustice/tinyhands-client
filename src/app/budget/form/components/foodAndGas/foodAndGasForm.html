@@ -8,7 +8,7 @@
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
       <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls" ng-init="budgetCtrl.form.food_and_gas_number_of_intercepted_girls=budgetCtrl.form.food_and_gas_number_of_intercepted_girls ? budgetCtrl.form.food_and_gas_number_of_intercepted_girls : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)" ng-disabled="budgetCtrl.isViewing"/>
-      <small># of PVOTs</small>
+      <small># of Girls</small>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
@@ -19,7 +19,7 @@
       <div class="input-group-addon">{{budgetCtrl.currency}}</div>
       <input class="form-control text-center" ng-value="budgetCtrl.foodGasInterceptedGirls() | number" disabled="disabled" />
     </div>
-    <small>Intercepted PVOTs</small>
+    <small>Intercepted Girls</small>
   </div>
   <hr>
   <div class="row">
@@ -29,7 +29,7 @@
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
       <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_limbo_girls" ng-disabled="budgetCtrl.isViewing"/>
-      <small># of PVOTs</small>
+      <small># of Girls</small>
     </div>
     <operator>*</operator>
     <div class="col-md-2 calc-form-input-no-width">
@@ -41,7 +41,7 @@
       <div class="input-group-addon">{{budgetCtrl.currency}}</div>
       <input class="form-control text-center" ng-value="budgetCtrl.foodGasLimboGirls() | number" disabled="disabled" />
     </div>
-    <small>Limbo PVOTs</small>
+    <small>Limbo Girls</small>
   </div>
   <hr>
   <div class="row">

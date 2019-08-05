@@ -436,7 +436,6 @@ export default class BudgetController {
     getAllOtherItems() {
         return this.service.getOtherItems(this.budgetId).then(response => {
             this.otherItems = response.data;
-            this.setTotals();
         });
     }
 
@@ -467,7 +466,6 @@ export default class BudgetController {
 
         return this.service.getPreviousData(this.borderStationId, month, year).then(response => {
             this.form.previousData = response.data;
-            this.setTotals();
         });
     }
 
@@ -477,7 +475,6 @@ export default class BudgetController {
             return this.service.getStaff(this.borderStationId).then(response => {
                 this.form.staff = response.data.results;
                 this.mapNewStaffSalaries(this.form.staffSalaries);
-                this.setTotals();
             });
         }
         // On edit: get staff salaries connected to old sheet and extract staff from there
@@ -485,7 +482,6 @@ export default class BudgetController {
             return this.service.getStaffSalaries(this.budgetId).then(response => {
                 this.form.staffSalaries = response.data;
                 this.extractStaffFromSalaries(this.form.staffSalaries);
-                this.setTotals();
             });
         }
     }

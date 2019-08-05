@@ -1,25 +1,19 @@
 class MapController {
-    constructor($rootScope, NgMap, SessionService, DashboardService) {
+    constructor($rootScope, NgMap, BorderStationService) {
         'ngInject';
-        this.sessionService = SessionService;
-        this.dashboardService = DashboardService;
+        this.borderStationService = BorderStationService;
         this.rootScope = $rootScope;
 
         this.stationInfoWindowId = 'marker-station-info-window';
         this.locationInfoWindowId = 'marker-location-info-window';
 
         this.borderStations = [];
-        this.inCountryStations = [];
-        this.outOfCountryStations = [];
-        this.inCountryLocations = [];
         this._fusionLayerOptions = null;
-        this.showAddress2Layer = false;
+        this.showAddress2Layer = true;
         this.showBorderStationLocations = false;
-        this.mapKey = null;
 
         this.createMapListeners();
         this.getBorderStations();
-        this.getMapKey();
 
         NgMap.getMap().then((map) => { this.map = map; });
 
@@ -27,35 +21,14 @@ class MapController {
         //Due to using an on-click callback with ng-map. ng-click does not work.
         this.showStationInfoWindow = this.showStationInfoWindow.bind(this);
         this.showLocationInfoWindow = this.showLocationInfoWindow.bind(this);
-        this.country = null;
     }
 
     get center() {
-        let center = '0, 0';
-        if (this.country !== null) {
-            center = this.country.latitude + ', ' + this.country.longitude;
-        }
-        return center;
-    }
-    
-    get zoom() {
-        let zoom_level = 8;
-        if (this.country !== null) {
-            zoom_level = this.country.zoom_level;
-        }
-        return zoom_level;
-    }
-    
-    getMapKey() {
-        this.dashboardService.getMapKey().then((response) => { this.mapKey = response.data; });
+        return '28.394857, 84.124008';
     }
 
     get apiUrl() {
-        let api = null
-        if (this.mapKey) {
-            api = "https://maps.google.com/maps/api/js?key=" + this.mapKey;
-        }
-        return api;
+        return "https://maps.google.com/maps/api/js?key=AIzaSyCi7iznUzIHppkD5Jr5iH2dUdnI8pCRM2E";
     }
 
     get fusionLayerOptions() {
@@ -77,43 +50,34 @@ class MapController {
         }
         return this._fusionLayerOptions;
     }
-    
 
     createMapListeners() {
         this.rootScope.$on('toggleBorderStationLocations', (e, showBorderStationLocations) => { this.showBorderStationLocations = showBorderStationLocations; });
         this.rootScope.$on('toggleAddress2Layer', (e, showAddress2Layer) => { this.showAddress2Layer = showAddress2Layer; });
-        this.rootScope.$on('mapLocation', (e, country) => { this.country = country; this.separateBorderStations();});
     }
 
     getBorderStations() {
-        this.dashboardService.getUserStations(this.sessionService.user.id).then((response) => {
-            this.borderStations = response.data;
-            this.separateBorderStations();
+        this.borderStationService.getBorderStations(true).then((response) => {
+            this.borderStations = response.data.map(this.mapStationData);
+            this.locations = this.mapLocationData(response.data);
         });
     }
-    
-    separateBorderStations() {
-        this.inCountryStations = [];
-        this.outOfCountryStations = [];
-        this.inCountryLocations = [];
-        
-        this.borderStations.forEach((borderStation) => {
-            if (borderStation.country_name === this.country.name) {
-                this.inCountryStations.push(this.mapStationData(borderStation));
-                borderStation.location_set.forEach((location) => {
-                    this.inCountryLocations.push({
-                        id: location.id,
-                        name: location.name,
-                        markerId: `station-${borderStation.id}-location-${location.id}`,
-                        station: borderStation,
-                        position: [location.latitude, location.longitude],
-                        dateEstablished: borderStation.date_established,
-                    });
+
+    mapLocationData(borderStations) {
+        let locations = [];
+        borderStations.forEach((borderStation) => {
+            borderStation.location_set.forEach((location) => {
+                locations.push({
+                    id: location.id,
+                    name: location.name,
+                    markerId: `station-${borderStation.id}-location-${location.id}`,
+                    station: borderStation,
+                    position: [location.latitude, location.longitude],
+                    dateEstablished: borderStation.date_established,
                 });
-            } else {
-                this.outOfCountryStations.push(this.mapStationData(borderStation));
-            }
+            });
         });
+        return locations;
     }
 
     mapStationData(borderStation) {

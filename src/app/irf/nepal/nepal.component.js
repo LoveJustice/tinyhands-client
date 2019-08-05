@@ -3,19 +3,18 @@ import {BaseModalController} from '../../baseModalController.js';
 import './nepal.less';
 
 import templateUrl from './nepal.html';
-import topBoxTemplate from '../common/step-templates/topBox.html';
+import topBoxTemplate from './step-templates/topBox.html';
 import groupTemplate from './step-templates/group.html';
 import destinationTemplate from './step-templates/destination.html';
 import familyTemplate from './step-templates/family.html';
 import signsTemplate from './step-templates/signs.html';
-import intercepteesTemplate from '../common/step-templates/interceptees/interceptees.html';
+import intercepteesTemplate from './step-templates/interceptees/interceptees.html';
 import finalProceduresTemplate from './step-templates/finalProcedures.html';
-import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
-import logbookTemplate from '../common/step-templates/logbook.html';
+import attachmentsTemplate from './step-templates/attachments/attachment.html';
 
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeModal.html';
-import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
+import intercepteeModalTemplate from './step-templates/interceptees/intercepteeModal.html';
+import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
 export class IrfNepalController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
@@ -30,8 +29,7 @@ export class IrfNepalController extends BaseIrfController {
         	signsTemplate,
         	intercepteesTemplate,
         	finalProceduresTemplate,
-            attachmentsTemplate,
-            logbookTemplate
+            attachmentsTemplate
         ];
     }
 

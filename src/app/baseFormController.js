@@ -14,7 +14,6 @@ export class BaseFormController {
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.redFlagTotal = 0;
-        this.flagContextCount = {};
         this.selectedStep = 0;
        
         this.errorMessages = [];
@@ -196,23 +195,8 @@ export class BaseFormController {
         return _.find(responses, (x) => x.question_id === questionId).response;
     }
 
-    incrementRedFlags(numberOfFlagsToAdd, context) {
+    incrementRedFlags(numberOfFlagsToAdd) {
         this.redFlagTotal += numberOfFlagsToAdd;
-        if (context) {
-            if (!(context in this.flagContextCount)) {
-                this.flagContextCount[context] = numberOfFlagsToAdd;
-            } else {
-                this.flagContextCount[context] += numberOfFlagsToAdd;
-            }
-        }
-    }
-    
-    getContextCount(context) {
-        if (!(context in this.flagContextCount)) {
-            this.flagContextCount[context] = 0;
-        }
-        
-        return this.flagContextCount[context];
     }
     
     // Override in subclass for implementation specific features
@@ -220,7 +204,7 @@ export class BaseFormController {
         /*jshint unused: false */
     }
     
-    commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options = {}) {
+    commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
         let config = this.config[config_name];
         if (isAdd) {
             the_card = {
@@ -327,7 +311,7 @@ export class BaseFormController {
             }
         }
         
-        this.openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options);
+        this.openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name);
     }
     
     set_errors_and_warnings(response) {
@@ -362,7 +346,7 @@ export class BaseFormController {
     
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
-            this.incrementRedFlags(flagData.numberOfFlagsToAdd, flagData.flagContext);
+            this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
     

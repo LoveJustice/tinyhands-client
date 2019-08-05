@@ -1,0 +1,53 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Irf Number: </form-step>
+            <div class="col-xs-9">
+                <input type="text" class="form-control" ng-change="$ctrl.getErrorMessages()" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label"># of PVOTs: </form-step>
+            <div class="col-xs-9">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Location: </form-step>
+            <div class="col-xs-9">
+                <location-select selected-location="$ctrl.questions[3].response.value" station-id="$ctrl.stationId"></location-select>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <br>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Date/Time: </form-step>
+            <div class="col-xs-9">
+                <div class="dropup" uib-dropdown>
+                    <a uib-dropdown-toggle role="button" href="">
+                        <div class="input-group">
+                                <input type="text" class="form-control" ng-model="$ctrl.questions[4].response.value" ng-model-options="{timezone: 'utc'}" date-time-input="MMMM D, YYYY hh:mm A "><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </a>
+                    <ul uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+                        <datetimepicker ng-model="$ctrl.questions[4].response.value"/>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label"># of Suspects: </form-step>
+            <div class="col-xs-9">
+                <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[5].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Staff Name: </form-step>
+            <div class="col-xs-9">
+                <staff-select selected-staff="$ctrl.questions[6].response.value" station-id="$ctrl.stationId"></staff-select>
+            </div>
+        </div>
+    </div>
+</fieldset>

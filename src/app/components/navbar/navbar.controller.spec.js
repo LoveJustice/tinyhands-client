@@ -24,6 +24,16 @@ describe('NavbarController', () => {
             expect(vm.borderStationMap).toEqual({});
         });
 
+        it(`should set nepalTime to string`, () => {
+            expect(typeof vm.nepalTime).toEqual('string');
+        });
+
+        it('should call window.moment.tz', () => {
+            spyOn(window.moment, 'tz').and.callThrough();
+            vm.constructor({ $on: () => {} });
+            expect(window.moment.tz).toHaveBeenCalledWith('Asia/Kathmandu');
+        });
+
         it("should call $scope.$on with first argument as 'GetNavBarBorderStations'", () => {
             let firstArg,
                 $scope = {

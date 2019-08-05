@@ -80,7 +80,6 @@ describe('FormStepController', () => {
 
             expect(vm.$scope.$emit).toHaveBeenCalledWith('flagTotalCheck', {
                 numberOfFlagsToAdd: 35,
-                flagContext: undefined
             });
         });
     });

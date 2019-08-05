@@ -30,7 +30,7 @@ export class BaseIrfController extends BaseFormController {
         return new URL(url, this.constants.BaseUrl).href;
     }
     
-    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options={age:false}) {
+    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
     	let config = this.config[config_name];
 
     	let starting_flag_count = the_card.flag_count;
@@ -44,8 +44,7 @@ export class BaseIrfController extends BaseFormController {
                 card: () => the_card,
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
-                config: () => config,
-                options: () => options,
+                config: () => config
             },
             size: 'lg',
             templateUrl: theTemplate,
@@ -108,36 +107,16 @@ export class BaseIrfController extends BaseFormController {
     // Override in subclass for implementation specific features
     submitExtra() {
     }
-    
-    determineSubmitStatus() {
-        let status = "approved";
-        if (this.questions[819].response.value) {
-            if (this.questions[819].response.value === 'Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)') {
-                status = "invalid";
-            } else {
-                status = 'second-verification';
-            }
-            if (!this.questions[821].response.value) {
-                this.dateData.questions[821].value = new Date();
-            }
-        } else if (this.questions[814].response.value) {
-            status = 'first-verification';
-            if (!this.questions[817].response.value) {
-                this.dateData.questions[817].value = new Date();
-            }
-        }
-        return status;
-    }
 
     submit() {
     	this.saved_status = this.response.status;
     	this.processPersons('Out');
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
-    	this.response.status = this.determineSubmitStatus();
     	this.outCustomHandling();
     	this.submitExtra();
     	this.errorMessages = [];
         this.warningMessages = [];
+    	this.response.status = 'approved';
     	if (this.ignoreWarnings) {
     		this.response.ignore_warnings = 'True';
     	} else {

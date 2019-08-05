@@ -38,7 +38,7 @@
                 <div class="col-md-9 form-group">
                     <label class="col-md-2 control-label">Full Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.name.value" required>
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.name.value">
                     </div>
                 </div>
                 <div class="col-md-1 form-group">
@@ -146,7 +146,7 @@
 				<div class="col-md-10 form-group">
 			        <span ng-repeat="relation in PersonBoxModalController.config.RadioItems[474]">
 			            <form-step type="radio" class="col-md-3" radio-name="personRelation" label="{{relation}}"
-			            	response-value="PersonBoxModalController.otherData.questions[474].response.value" other-value="PersonBoxModalController.otherData.questions[474].otherValue"></form-step>
+			            	response-value="PersonBoxModalController.otherData.questions[474].value" other-value="PersonBoxModalController.otherData.questions[474].otherValue"></form-step>
 			            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="personRelation" label="Other:" other-value="PersonBoxModalController.otherData.questions[474].otherValue"
 			                response-value="PersonBoxModalController.otherData.questions[474].value"></form-step>
 			        </span>
@@ -213,7 +213,7 @@
                 <div class="col-md-9 form-group margin-top-15">
                     <label class="col-md-3 control-label">Associated LB#</label>
                     <div class="col-md-2">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[423].response.value" required>
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[423].response.value">
                     </div>
                 </div>
             </div>

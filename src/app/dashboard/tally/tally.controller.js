@@ -8,8 +8,14 @@ class TallyController {
         this.days = [];
         this.ytd = 0;
         this.userId = null;
+        this.country = null;
+        this.createMapListeners();
 
         this.getTallyData(true);
+    }
+    
+    createMapListeners() {
+        this.rootScope.$on('mapLocation', (e, country) => { this.country = country; this.getTallyData(true);});
     }
 
     changeColor(day) {
@@ -61,19 +67,21 @@ class TallyController {
     }
 
     getTallyData(firstCall) {
-        return this.service.getTallyDays().then((promise) => {
-            let data = promise.data;
-            if (firstCall) {
-                this.userId = data.id;
-                this.ytd = data.ytd;
-                this.getTallyLocalStorage();
-                this.checkDifferences(data.days);
-                window.setInterval(() => { this.getTallyData(); }, 60000);
-            } else { //updates
-                this.checkDifferences(data.days);
-            }
-            this.saveTallyLocalStorage();
-        });
+        if (this.country !== null) {
+            return this.service.getTallyDays(this.country.id).then((promise) => {
+                let data = promise.data;
+                if (firstCall) {
+                    this.userId = data.id;
+                    this.ytd = data.ytd;
+                    this.getTallyLocalStorage();
+                    this.checkDifferences(data.days);
+                    window.setInterval(() => { this.getTallyData(); }, 60000);
+                } else { //updates
+                    this.checkDifferences(data.days);
+                }
+                this.saveTallyLocalStorage();
+            });
+        }
     }
 
     getTallyLocalStorage() {

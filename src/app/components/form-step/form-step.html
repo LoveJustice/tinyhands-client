@@ -25,13 +25,15 @@
             <input ng-model="$ctrl.otherValue" ng-class="$ctrl.inputClass" ng-change="$ctrl.changeRadioOther()">
         </span>
         <span ng-switch-when="checkbox">
-            <input type="checkbox" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass" id="{{$ctrl.uniqueId}}">
-            <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
-                <img ng-src="assets/images/cropped_flag.png" alt="flag-container" ng-if="!$ctrl.blueFlag">
-                <img ng-src="assets/images/cropped_flag_blue.png" alt="flag-container" ng-if="$ctrl.blueFlag">
-                <span ng-bind="$ctrl.redFlag"></span>
-            </span>
-            <label for="{{$ctrl.uniqueId}}">{{$ctrl.label}}</label>
+        	<span class="checkbox-text">
+	            <input type="checkbox" ng-model="$ctrl.responseValue" ng-class="$ctrl.inputClass" id="{{$ctrl.uniqueId}}">
+	            <span class="margin-left-10 flag-container" ng-if="$ctrl.redFlag">
+	                <img ng-src="assets/images/cropped_flag.png" alt="flag-container" ng-if="!$ctrl.blueFlag">
+	                <img ng-src="assets/images/cropped_flag_blue.png" alt="flag-container" ng-if="$ctrl.blueFlag">
+	                <span ng-bind="$ctrl.redFlag"></span>
+	            </span>
+	            <label for="{{$ctrl.uniqueId}}">{{$ctrl.label}}</label>
+	            </span>
         </span>
         <span ng-switch-when="text">
             <label>{{$ctrl.label}}</label>

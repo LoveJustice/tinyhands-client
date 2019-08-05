@@ -1,5 +1,5 @@
-<div class='map' map-lazy-load="http://maps.google.com/maps/api/js" map-lazy-load-params="{{ctrl.apiUrl}}">
-	<ng-map class='map' center="{{ctrl.center}}" zoom="8">
+<div class='map' map-lazy-load="http://maps.google.com/maps/api/js" map-lazy-load-params="{{ctrl.apiUrl}}" ng-if="ctrl.mapKey !== null">
+	<ng-map class='map' center="{{ctrl.center}}" zoom="{{ctrl.zoom}}">
 		<fusion-tables-layer ng-if="ctrl.showAddress2Layer" query={{ctrl.fusionLayerOptions.query}} styles={{ctrl.fusionLayerOptions.styles}}
 			style-id="{{ctrl.fusionLayerOptions.styleId}}" template-id="{{ctrl.fusionLayerOptions.templateId}}">
 		</fusion-tables-layer>
@@ -12,8 +12,8 @@
 
 				<div class="row text-center">
 					<button class="btn btn-default" ui-sref="border-station({id: ctrl.station.id})">Details</button>
-					<button class="btn btn-default" ui-sref="irfList({search: ctrl.station.stationCode})">IRFs</button>
-					<button class="btn btn-default" ui-sref="vifList({search: ctrl.station.stationCode})">VIFs</button>
+					<button class="btn btn-default" ui-sref="irfNewList({search: ctrl.station.stationCode})">IRFs</button>
+					<button class="btn btn-default" ui-sref="cifList({search: ctrl.station.stationCode})">CIFs</button>
 				</div>
 
 				<br/>
@@ -36,7 +36,7 @@
 
 				<div class="row text-center">
 					<button class="btn btn-default" ui-sref="border-station({id: ctrl.location.station.id})">Details</button>
-					<button class="btn btn-default" ui-sref="irfList({search: ctrl.location.station.station_code})">IRFs</button>
+					<button class="btn btn-default" ui-sref="irfNewList({search: ctrl.location.station.station_code})">IRFs</button>
 					<button class="btn btn-default" ui-sref="vifList({search: ctrl.location.station.station_code})">VIFs</button>
 				</div>
 
@@ -48,12 +48,18 @@
 			</div>
 		</info-window>
 
-		<marker ng-repeat="station in ctrl.borderStations"
+		<marker ng-repeat="station in ctrl.inCountryStations"
 				id='{{station.markerId}}'
 				position="{{station.position}}"
 				on-click="ctrl.showStationInfoWindow(station)"/>
+				
+		<marker ng-repeat="station in ctrl.outOfCountryStations"
+				id='{{station.markerId}}'
+				position="{{station.position}}"
+				icon="assets/images/Map-Marker-Marker-Outside-Chartreuse-icon.png"
+				on-click="ctrl.showStationInfoWindow(station)"/>
 
-		<marker ng-repeat="location in ctrl.locations"
+		<marker ng-repeat="location in ctrl.inCountryLocations"
 				visible="{{ctrl.showBorderStationLocations}}"
 				id='{{location.markerId}}'
 				position="{{location.position}}"

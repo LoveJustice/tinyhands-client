@@ -5,7 +5,7 @@ describe('MapController', () => {
         mockNgMap,
         mockMap,
         borderStations,
-        mockBorderStationService,
+        mockDashboardService,
         $rootScope;
 
     let borderStation =     {
@@ -18,7 +18,9 @@ describe('MapController', () => {
         has_shelter: true,
         number_of_interceptions: 10,
         ytd_interceptions: 6,
-        number_of_staff: 3
+        number_of_staff: 3,
+        country_name: 'Nepal',
+        location_set: []
     };
 
     let expectedMappedStation = {
@@ -34,8 +36,9 @@ describe('MapController', () => {
         numberOfStaff: 3
     };
 
-    beforeEach(inject((_$rootScope_, $q) => {
+    beforeEach(inject((_$rootScope_, $q, $http) => {
         $rootScope = _$rootScope_;
+        
         mockMap = jasmine.createSpyObj('map', ['showInfoWindow', 'hideInfoWindow']);
 
         mockNgMap = jasmine.createSpyObj('ngMap', ['getMap']);
@@ -45,12 +48,21 @@ describe('MapController', () => {
 
         borderStations = [ borderStation ];
 
-        mockBorderStationService = jasmine.createSpyObj('borderStationService', ['getBorderStations']);
-        mockBorderStationService.getBorderStations.and.callFake(() => {
+        let sessionService = {user:{id:10032}};
+        
+        mockDashboardService = jasmine.createSpyObj('dashboardService', ['getUserStations', 'getMapKey']);
+        mockDashboardService.getUserStations.and.callFake(() => {
             return $q.resolve({ data: borderStations });
         });
+        mockDashboardService.getMapKey.and.callFake(() => {
+            return $q.resolve({ data: 'theKey' });
+        });
 
-        controller = new MapController($rootScope, mockNgMap, mockBorderStationService);
+        controller = new MapController($rootScope, mockNgMap, sessionService, mockDashboardService);
+        controller.country = {
+                name:'Nepal',
+                latitude:28.394857,
+                longitude:84.124008};
     }));
 
     describe('center', () => {
@@ -61,7 +73,8 @@ describe('MapController', () => {
 
     describe('apiUrl', () => {
         it(`should return correct map api url`,() => {
-            expect(controller.apiUrl).toBe("https://maps.google.com/maps/api/js?key=AIzaSyCi7iznUzIHppkD5Jr5iH2dUdnI8pCRM2E");
+            controller.mapKey='theKey';
+            expect(controller.apiUrl).toBe("https://maps.google.com/maps/api/js?key=theKey");
         });
     });
 
@@ -97,9 +110,9 @@ describe('MapController', () => {
 
     describe('getBorderStations', () => {
 
-        it('should call borderStationService getBorderStations', () => {
+        it('should call dashboardService getBorderStations', () => {
             controller.getBorderStations();
-            expect(mockBorderStationService.getBorderStations).toHaveBeenCalled();
+            expect(mockDashboardService.getUserStations).toHaveBeenCalled();
         });
 
         describe('when border stations received', () => {
@@ -107,7 +120,7 @@ describe('MapController', () => {
                 controller.getBorderStations();
                 $rootScope.$apply();
 
-                expect(controller.borderStations).toEqual([ expectedMappedStation ]);
+                expect(controller.inCountryStations).toEqual([ expectedMappedStation ]);
             });
         });
     });

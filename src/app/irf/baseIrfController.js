@@ -30,7 +30,7 @@ export class BaseIrfController extends BaseFormController {
         return new URL(url, this.constants.BaseUrl).href;
     }
     
-    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
+    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options={age:false}) {
     	let config = this.config[config_name];
 
     	let starting_flag_count = the_card.flag_count;
@@ -44,7 +44,8 @@ export class BaseIrfController extends BaseFormController {
                 card: () => the_card,
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
-                config: () => config
+                config: () => config,
+                options: () => options,
             },
             size: 'lg',
             templateUrl: theTemplate,

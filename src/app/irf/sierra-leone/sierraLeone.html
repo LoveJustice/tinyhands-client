@@ -1,4 +1,4 @@
-<div id="irf-africa" class="container-fluid padding-top-20">
+<div id="irf-sierra-leone" class="container-fluid padding-top-20">
     <div class="sticky">
         <div class="padding-bottom-40">
             <h1 class="form-number-header float-left padding-left-20">
@@ -16,10 +16,12 @@
             <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.selectedStep = 4">Signs</a>
             <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.selectedStep = 5">Interceptees</a>
             <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.selectedStep = 6">Final Procedures</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.selectedStep = 7">Attachments</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 8}" ng-click="$ctrl.selectedStep = 8">Logbook</a>
         </div>
         <hr class="margin-bottom-0" />
     </div>
-    <div id="irf-africa-content" class="padding-bottom-40">
+    <div id="irf-sierra-leone-content" class="padding-bottom-40">
         <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template" ng-hide="$ctrl.selectedStep != $index"></div>
     </div>
     <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">

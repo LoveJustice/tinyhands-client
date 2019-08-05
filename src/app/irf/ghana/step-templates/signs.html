@@ -10,8 +10,8 @@
             </div>
             <div class="row col-md-10">
 	            <div class="row center-vertical">
-	             	<div class="col-md-3">
-                		<form-step type="text" response-value="$ctrl.questions[261].response.value" label="Name of Contact"></form-step>
+	             	<div class="col-md-8">
+                		<form-step type="text" response-value="$ctrl.questions[261].response.value" label="6.1 Name of Contact"></form-step>
                 	</div>
 	            </div>
 	            <hr/>
@@ -32,22 +32,16 @@
             </div>
             <div class="row col-md-10">
                 <div class="row center-vertical">
-                    <div class="col-md-6 form-group">
-                        <form-step class="col-xs-4 control-label">Staff who noticed</form-step>
-                        <div class="col-xs-6">
-                            <staff-select selected-staff="$ctrl.questions[106].response.value" station-id="$ctrl.stationId"></staff-select>
-                        </div>
+                    <div class="col-md-2">
+                        <b>7.1 Name of Staff</b>
+                    </div>
+                    <div class="col-xs-3">
+                        <staff-select selected-staff="$ctrl.questions[106].response.value" station-id="$ctrl.stationId"></staff-select>
                     </div>
                 </div>
                 <hr/>
-                <div class="row center-vertical">
-                	<div class="text">What sign(s) initially drew your attention to them?</div>
-                </div>
-                <div class="row center-vertical">
-                    <div class="col-md-6">
-                        <div class="padding-top-30"></div>
-                        <form-step type="text" response-value="$ctrl.questions[262].response.value" label=""></form-step>
-                    </div>
+                <div class="row center-vertical col-md-12">
+                	<form-step type="text" response-value="$ctrl.questions[262].response.value" label="7.2 What sign(s) initially drew your attention to them?"></form-step>
                 </div>
             </div>
         </div>

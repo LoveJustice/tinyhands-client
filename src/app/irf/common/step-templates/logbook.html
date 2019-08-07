@@ -1,0 +1,116 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+	<div class="row col-md-12">
+	 	<h3>Compliance</h3>
+	</div>
+	<div class="row"></div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-4">Were there incomplete questions on the IRF that prevented submission?</form-step>
+    	<div class="col-md-1">
+      		<form-step type="radio" label="No" response-value="$ctrl.questions[810].response.value" radio-name="incompleteQuestions"></form-step>
+     	</div>
+   		<div class="col-md-1">
+			<form-step type="radio" label="Yes" response-value="$ctrl.questions[810].response.value" radio-name="incompleteQuestions"></form-step>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Please list incomplete sections that prevented submission</form-step>
+		<div class="col-md-4">
+			<input type="text" class="form-control" placeholder="Incomplete sections" ng-model="$ctrl.questions[811].response.value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date Complete Information was Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[812].value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-1">Notes:</form-step>
+		<div class=col-md-8>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.questions[813].response.value"></textarea>
+		</div>
+	</div>
+	
+	
+	<hr>
+	<div class="row col-md-12">
+	 	<h3>First Verification</h3>
+	</div>
+	<div class="row"></div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Verification</form-step>
+    	<div class="col-md-8">
+	    	<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Clear Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Some Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="High Risk of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Reason</form-step>
+    	<div class="col-md-8">
+			<textarea class="form-control" placeholder="Reason" rows="3" ng-model="$ctrl.questions[815].response.value"></textarea>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Followup call completed</form-step>
+    	<div class="col-md-1">
+	    	<form-step type="radio" radio-name="followup" response-value="$ctrl.questions[816].response.value" label="No"></form-step>
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="followup" response-value="$ctrl.questions[816].response.value" label="Yes"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">First Verification Date</form-step>
+    	<div class="col-md-4">
+			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[817].value">
+		</div>
+	</div>
+	
+	
+	<hr>
+	<div class="row col-md-12">
+	 	<h3>Second Verification</h3>
+	</div>
+	<div class="row"></div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Reviewed by leadership</form-step>
+    	<div class="col-md-3">
+	    	<form-step type="radio" radio-name="SecondReview" response-value="$ctrl.questions[818].response.value" label="Yes - agreed with staff's recommendation"></form-step>
+	    </div>
+	    <div class="col-md-3">
+	        <form-step type="radio" radio-name="SecondReview" response-value="$ctrl.questions[818].response.value" label="Yes - changed staff's recommendation"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Verification</form-step>
+    	<div class="col-md-8">
+	    	<form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Clear Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Some Evidence of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="High Risk of Trafficking"></form-step>
+	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)"></form-step>
+        </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Reason</form-step>
+    	<div class="col-md-8">
+			<textarea class="form-control" placeholder="Reason" rows="3" ng-model="$ctrl.questions[820].response.value"></textarea>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+    	<form-step class="col-md-2">Second Verification Date</form-step>
+    	<div class="col-md-4">
+			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[821].value">
+		</div>
+	</div>
+</fieldset>

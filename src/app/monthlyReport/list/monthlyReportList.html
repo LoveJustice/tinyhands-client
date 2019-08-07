@@ -1,0 +1,94 @@
+<div class="container" id="monthlyReportList"><br/>
+
+    <div class="row">
+        <div class="col-xs-5">
+            <h1>Monthly Reports</h1>
+        </div>
+
+        <div class="pull-right"><br>
+            <a ng-if="monthlyReportListCtrl.hasAddPermission" class="btn btn-success" ng-click="monthlyReportListCtrl.createMonthlyReport()">
+                Input A New Monthly Report
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="monthlyReportListCtrl.countryDropDown.options"
+							selected-model="monthlyReportListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="monthlyReportListCtrl.countryDropDown.settings"
+                             translation-texts="monthlyReportListCtrl.countryDropDown.customText"
+                             events="monthlyReportListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="monthlyReportListCtrl.searchMonthlyReports()" ng-model="monthlyReportListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+            <div ng-dropdown-multiselect="" options="monthlyReportListCtrl.status.options"
+							selected-model="monthlyReportListCtrl.status.selectedOptions"
+                             extra-settings="monthlyReportListCtrl.status.settings"
+                             translation-texts="monthlyReportListCtrl.status.customText"
+                             events="monthlyReportListCtrl.status.eventListener" class="pull-right">
+			</div>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="monthlyReportListCtrl.stickyOptions" ng-model="monthlyReportListCtrl.monthlyReports">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="monthlyReportListCtrl.updateSort('year')" width="8%">Year
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': monthlyReportListCtrl.getSortIcon('year', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': monthlyReportListCtrl.getSortIcon('year', 'reverse') }"></i>
+                </th>
+                <th ng-click="monthlyReportListCtrl.updateSort('month')" width="15%">Month
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': monthlyReportListCtrl.getSortIcon('month', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': monthlyReportListCtrl.getSortIcon('month', 'reverse')}"></i>
+                </th>
+                <th width="16%">Station Code
+                </th>
+                <th ng-click="monthlyReportListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': monthlyReportListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': monthlyReportListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                </th>
+                <th ng-click="monthlyReportListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': monthlyReportListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': monthlyReportListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="monthlyReport in monthlyReportListCtrl.monthlyReports | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ monthlyReport.year }}</td>
+                <td>{{ monthlyReport.month }}</td>
+                <td>{{ monthlyReport.station.station_code }}</td>
+                <td class="hidden-xs">{{ monthlyReport.date_time_entered_into_system | date:"medium" : monthlyReportListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ monthlyReport.date_time_last_updated | date:"medium" : monthlyReportListCtrl.timeZoneDifference }}</td>
+                <td ng-if="monthlyReportListCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',monthlyReport.station.operating_country.id, monthlyReport.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{monthlyReport.viewUrl}}">View</a></td>
+                <td ng-if="monthlyReportListCtrl.session.checkPermission('MONTHLY_REPORT','EDIT',monthlyReport.station.operating_country.id, monthlyReport.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{monthlyReport.editUrl}}">Edit</a></td>
+                <td ng-if="monthlyReportListCtrl.session.checkPermission('MONTHLY_REPORT','DELETE',monthlyReport.station.operating_country.id, monthlyReport.station.id)"><a class="btn btn-sm btn-danger" ng-click="monthlyReportListCtrl.deleteMonthlyReport(monthlyReport, $index)">
+                    {{ monthlyReport.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="monthlyReportListCtrl.monthlyReports.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No Monthly Reports Matched your search for: "{{ monthlyReportListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <button ng-disabled="!monthlyReportListCtrl.nextPage" ng-click="monthlyReportListCtrl.showMoreMonthlyReports()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
+            Load more results
+        </button>
+    </div>
+</div>
+                

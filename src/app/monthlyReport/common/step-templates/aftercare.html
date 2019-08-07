@@ -1,0 +1,61 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Aftercare');}}</h4>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<b class="col-md-12">EDUCATION</b>
+	</div>
+	<div ng-repeat="radQuest in [776,777,778]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
+		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
+		</div>
+	</div>
+
+	<div class="row center-vertical">
+		<b class="col-md-12">H.T. MESSAGE</b>
+	</div>
+	<div ng-repeat="radQuest in [779,781,782]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
+		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
+		</div>
+	</div>
+	
+
+	<div class="row center-vertical">
+		<b class="col-md-12">INTERVIEWS</b>
+	</div>
+	<div ng-repeat="radQuest in [783,784,785]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
+		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
+		</div>
+	</div>
+	
+	<div class="row center-vertical">
+		<b class="col-md-12">FOLLOW-UP</b>
+	</div>
+	<div ng-repeat="radQuest in [786]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
+		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Aftercare Coordinator Signature" response-value="$ctrl.questions[787].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[788].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

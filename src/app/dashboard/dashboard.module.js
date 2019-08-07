@@ -12,7 +12,7 @@ import MapDirective from './map/map.directive';
 import TallyDirective from './tally/tally.directive';
 import DashboardEventsDirective from './events/dashboardEvents.directive';
 
-
+import DashboardService from './dashboard.service';
 import TallyService from './tally/tally.service';
 
 export default angular.module('tinyhands.Dashboard', [ngMap, eventsModule, sharedModule])
@@ -26,5 +26,6 @@ export default angular.module('tinyhands.Dashboard', [ngMap, eventsModule, share
     .directive('tally', TallyDirective)
     .directive('dashevents', DashboardEventsDirective)
 
+    .service('DashboardService', DashboardService)
     .service('TallyService', TallyService)
     .name;

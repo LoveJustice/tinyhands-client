@@ -58,18 +58,41 @@ export default class VdfListController {
         };
 
         // If there was a search value provided in the url, set it
+        let foundStateParams = false;
         if($stateParams) {
-           this.queryParameters.search = $stateParams.search;
-           this.queryParameters.status = $stateParams.status;
-           if ($stateParams.country_ids) {
-               this.queryParameters.country_ids = $stateParams.country_ids;
-           }
-           
-           if (this.queryParameters.status === 'in-progress') {
-               this.status.selectedOptions = [this.status.options[1]];
-           } else {
-               this.queryParameters.status = 'approved';
-           }
+            if ($stateParams.search) {
+                foundStateParams = true;
+                this.queryParameters.search = $stateParams.search;
+            }
+            if ($stateParams.status) {
+                foundStateParams = true;
+                this.queryParameters.status = $stateParams.status;
+            }
+            if ($stateParams.country_ids) {
+                foundStateParams = true;
+                this.queryParameters.country_ids = $stateParams.country_ids;
+            }
+        }
+        
+        if (!foundStateParams) {
+            let tmp = sessionStorage.getItem('vdfList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('vdfList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('vdfList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
+            }
+        }
+        
+        if (this.queryParameters.status === 'in-progress') {
+            this.status.selectedOptions = [this.status.options[1]];
+        } else {
+            this.queryParameters.status = 'approved';
         }
 
         this.getUserCountries();
@@ -133,6 +156,9 @@ export default class VdfListController {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
         }
+        sessionStorage.setItem('vdfList-search', this.queryParameters.search);
+        sessionStorage.setItem('vdfList-status', this.queryParameters.status);
+        sessionStorage.setItem('vdfList-country_ids', this.queryParameters.country_ids);
         this.timer = this.timeout( () => {
             this.state.go('.', {
                 search: this.queryParameters.search, 

@@ -1,0 +1,44 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-8">
+			<b>Notes/Comments:</b>
+			<textarea class="form-control" rows="10" ng-model="$ctrl.questions[803].response.value"></textarea>
+		</div>
+		<div class="col-md-4">
+			<table width="80%" style="border:1px solid #000;">
+				<thead>
+					<th width="60%" style="border:1px solid #000;">SECTION</th>
+					<th width="40%" style="border:1px solid #000;">SCORE</th>
+				</thead>
+				<tbody>
+					<tr ng-repeat="context in $ctrl.contexts">
+						<td style="border:1px solid #000;">{{context}}</td>
+						<td align="right" style="border:1px solid #000;">{{$ctrl.getContextCount(context)}}</td>
+					</tr>
+					<tr>
+						<td style="border:1px solid #000;">AVERAGE(Total/{{$ctrl.contexts.length}})</td>
+						<td align="right">{{$ctrl.getAverageScore()}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="col-md-10">
+			<b>I swear that all the above is true to the best of my knowledge</b>  (Note: not taking time to correctly
+			understand each section of this report will be taken as careless errors, and will result in 2 months' financial probation.
+			If you have any questions, please call the THN Border Monitoring department.)
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Chairperson Signature" response-value="$ctrl.questions[804].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[805].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

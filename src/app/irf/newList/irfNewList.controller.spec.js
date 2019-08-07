@@ -175,7 +175,7 @@ describe('IRF List Controller',() => {
 
     describe('function extractPage', () => {
         it('expect it to extract the page number so it can load the next page', () => {
-            var val = vm.extractPage('http://tinyhandsdreamsuite.org/api/irf/?page=6&ordering=irf_number');
+            var val = vm.extractPage('http://searchlightdata.org/api/irf/?page=6&ordering=irf_number');
             expect(val).toBe('6');
         });
         it('When a null is passed in, expect to return 0', () => {

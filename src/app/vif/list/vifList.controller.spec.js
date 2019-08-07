@@ -195,7 +195,7 @@ describe('VIF List Controller',() => {
 
     describe('function extractPage', () => {
         it('expect it to extract the page number so it can load the next page', () => {
-            var val = vm.extractPage('http://tinyhandsdreamsuite.org/api/vif/?page=6&ordering=vif_number');
+            var val = vm.extractPage('searchlightdata.org/api/vif/?page=6&ordering=vif_number');
             expect(val).toBe('6');
         });
         it('When a null is passed in, expect to return 0', () => {

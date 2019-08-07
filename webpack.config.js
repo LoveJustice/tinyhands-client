@@ -11,9 +11,9 @@ function getOutputFileName(env) {
 
 function getServerApiUrl(env) {
     if (env.production) {
-        return '"https://dreamsuite.org/"';
+        return '"https://searchlightdata.org/"';
     } else if (env.staging) {
-        return '"https://staging.dreamsuite.org/"';
+        return '"https://staging.searchlightdata.org/"';
     } else {
         return '"http://localhost/"';
     }

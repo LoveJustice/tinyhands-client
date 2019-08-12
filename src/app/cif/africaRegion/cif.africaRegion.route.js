@@ -8,6 +8,13 @@ function CifAfricaRegionRoutes($stateProvider) {
                 id: null
             }
         })
+        .state('cifGhana', {
+            url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
+            component: 'cifAfricaRegionComponent',
+            params: {
+                id: null
+            }
+        })
         .state('cifKenya', {
             url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
             component: 'cifAfricaRegionComponent',
@@ -22,7 +29,21 @@ function CifAfricaRegionRoutes($stateProvider) {
                 id: null
             }
         })
+        .state('cifSierraLeone', {
+            url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
+            component: 'cifAfricaRegionComponent',
+            params: {
+                id: null
+            }
+        })
         .state('cifSouthAfrica', {
+            url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
+            component: 'cifAfricaRegionComponent',
+            params: {
+                id: null
+            }
+        })
+        .state('cifTanzania', {
             url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
             component: 'cifAfricaRegionComponent',
             params: {

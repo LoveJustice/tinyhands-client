@@ -11,8 +11,8 @@ import recruitmentTemplate from './step-templates/recruitment.html';
 import travelTemplate from './step-templates/travel.html';
 import tbsTemplate from '../common/step-templates/transportationBoxes/transportationBoxes.html';
 import legalTemplate from './step-templates/legal.html';
-import pbsTemplate from './step-templates/personBoxes/personBoxes.html';
-import lbsTemplate from './step-templates/locationBoxes/locationBoxes.html';
+import pbsTemplate from '../common/step-templates/personBoxes/personBoxes.html';
+import lbsTemplate from '../common/step-templates/locationBoxes/locationBoxes.html';
 import vbsTemplate from '../common/step-templates/vehicleBoxes/vehicleBoxes.html';
 import finalTemplate from './step-templates/final.html';
 import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
@@ -25,23 +25,23 @@ import vehicleBoxTemplate from '../common/step-templates/vehicleBoxes/vehicleBox
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class CifIndiaController extends BaseCifController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout) {
         'ngInject';        
-        super($scope, $uibModal, constants, CifService, $stateParams, $state);
+        super($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout);
        
         this.stepTemplates = [
-            topTemplate,
-            mainPvTemplate,
-            pvsTemplate,
-            recruitmentTemplate,
-            travelTemplate,
-            tbsTemplate,
-            legalTemplate,
-            pbsTemplate,
-            lbsTemplate,
-            vbsTemplate,
-            finalTemplate,
-            attachmentsTemplate
+            {template:topTemplate, name:"Top"},
+            {template:mainPvTemplate, name:"Potential Victim"},
+            {template:pvsTemplate, name:"Other PVs"},
+            {template:recruitmentTemplate, name:"Recruitment"},
+            {template:travelTemplate, name:"Travel"},
+            {template:tbsTemplate, name:"Transportation"},
+            {template:legalTemplate, name:"Legal"},
+            {template:pbsTemplate, name:"Person Boxes"},
+            {template:lbsTemplate, name:"Location Boxes"},
+            {template:vbsTemplate, name:"Vehicle Boxes"},
+            {template:finalTemplate, name:"Final"},
+            {template:attachmentsTemplate, name:"Attachments"},
         ];
     }
     

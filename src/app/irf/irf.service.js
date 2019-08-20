@@ -128,8 +128,10 @@ export default class IrfService {
     		if (t1 > -1) {
     			let dt = irf.responses[idx].response.value;
 	    		if (dt instanceof  Date) {
+	    		        let dtCopy = new Date(dt.getTime());
 	    			let tzo = dt.getTimezoneOffset();
-	    			dt.setMinutes(dt.getMinutes() - tzo);
+	    			dtCopy.setMinutes(dtCopy.getMinutes() - tzo);
+	    			irf.responses[idx].response.value = dtCopy;
 	    		}
     		}
     	}

@@ -29,7 +29,7 @@ export default class IrfNewListController {
             reverse: true,
             ordering: 'date_time_of_interception',
             search: '',
-            status: 'in-progress,A-CE,A-SE,A-HR,1V-CE,1V-SE,1V-HR,1V-SNHI,2V-CE,2V-SE,2V-HR',
+            status: '!invalid',
             country_ids: '',
         };
         this.stickyOptions = this.sticky.stickyOptions;
@@ -53,17 +53,25 @@ export default class IrfNewListController {
         };
 
         this.status = {};
-        this.status.options = [{ id: 'in-progress', label: 'in-progress' }, 
-            { id: 'A-CE', label: 'A-CE' }, { id: 'A-SE', label: 'A-SE' }, { id: 'A-HR', label: 'A-HR' },
-            { id: '1V-CE', label: '1V-CE' }, { id: '1V-SE', label: '1V-SE' }, { id: '1V-HR', label: '1V-HR' }, { id: '1V-SNHI', label: '1V-SNHI' },
-            { id: '2V-CE', label: '2V-CE' }, { id: '2V-SE', label: '2V-SE' }, { id: '2V-HR', label: '2V-HR' }, { id: '2V-SNHI', label: '2V-SNHI' }];
-        this.status.selectedOptions = [this.status.options[0], this.status.options[1], this.status.options[2], this.status.options[3],
-            this.status.options[4], this.status.options[5], this.status.options[6], this.status.options[7],
-            this.status.options[8], this.status.options[9], this.status.options[10]];
+        this.status.options = [ {id: '!invalid', label: 'all valid', group:'z'},
+            { id: 'in-progress', label: 'in-progress', group:'Status' }, 
+            { id: 'approved,!None', label: 'submitted with evidence category', group:'Status' },
+            { id: 'approved,None', label: 'old - submitted without evidence category', group:'Status'},
+            { id: 'first-verification', label: 'first-verification', group:'Status' },
+            { id: 'second-verification', label: 'second-verification', group:'Status'},
+            { id: 'second-verification,Clear', label: 'clear evidence', group:'Second Verification Evidence Category'},
+            { id: 'second-verification,Some', label: 'some evidence', group:'Second Verification Evidence Category'},
+            { id: 'second-verification,High', label: 'high risk', group:'Second Verification Evidence Category'},
+            { id: 'invalid', label: 'invalid', group:'Second Verification Evidence Category' }];
+        this.status.selectedOptions = [this.status.options[0]];
         this.status.settings = {
-            smartButtonMaxItems: 2,
+            smartButtonMaxItems: 1,
             showCheckAll: false,
             showUncheckAll: false,
+            selectionLimit:1,
+            groupByTextProvider(groupValue) { if (groupValue ==='z') {return '';} else {return groupValue;} },
+            groupBy:'group', 
+            closeOnSelect: true,
         };
         this.status.customText = {};
         this.status.eventListener = {
@@ -89,14 +97,27 @@ export default class IrfNewListController {
             }
         }
         
+        if (!foundStateParams) {
+            let tmp = sessionStorage.getItem('irfList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('irfList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('irfList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
+            }
+        }
+        
         if (this.queryParameters.status !== '') {
-            let statusList = this.queryParameters.status.split(',');
             this.status.selectedOptions = [];
-            for (let statusIdx in statusList) {
-                for (let optionIdx in this.status.options) {
-                    if (statusList[statusIdx] === this.status.options[optionIdx].id) {
-                        this.status.selectedOptions.push(this.status.options[optionIdx]);
-                    }
+            for (let optionIdx in this.status.options) {
+                if (this.queryParameters.status === this.status.options[optionIdx].id) {
+                    this.status.selectedOptions.push(this.status.options[optionIdx]);
+                    break;
                 }
             }
         }
@@ -197,7 +218,7 @@ export default class IrfNewListController {
     }
 
     statusChange() {
-        this.ctrl.setSearchTimer();
+        this.ctrl.searchTimerExpired();
     }
     
     searchTimerExpired() {
@@ -211,14 +232,13 @@ export default class IrfNewListController {
         }
         
         var selectedStatus = '';
-        for (let optionIdx in this.status.selectedOptions){
-            selectedStatus += sep + this.status.selectedOptions[optionIdx].id;
-            sep = ',';
+        if (this.status.selectedOptions.length > 0) {
+            selectedStatus = this.status.selectedOptions[0].id;
         }
         
         if (this.queryParameters.country_ids !== selectedCountries || this.queryParameters.status !== selectedStatus) {
             this.queryParameters.country_ids = selectedCountries;
-            this.queryParameters.status = selectedStatus
+            this.queryParameters.status = selectedStatus;
             this.searchIrfs(); 
         }
     }

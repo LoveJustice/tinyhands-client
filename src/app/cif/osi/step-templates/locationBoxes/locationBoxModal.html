@@ -1,0 +1,155 @@
+<div id="cif-osi-location-box-modal" class="modal-content">
+    <form name="locationBoxForm" ng-disabled="LocationBoxModalController.isViewing === 'true'">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="LocationBoxModalController.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-4">
+            	<h3 class="modal-title">{{LocationBoxModalController.questions[424].response.value || 'Location Box'}}</h3>
+            </div>
+            <div class="col-md-1 margin-top-10">
+	    		<label>LB#</label>
+	    	</div>
+			<div class="col-md-3 form-group">
+		        <input type="number" min="0" class="form-control" ng-model="LocationBoxModalController.questions[481].response.value">
+	        </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label>Which Place?</label>
+		    	</div>
+				<div class="col-md-10 form-group">
+			        <span ng-repeat="placeItem in LocationBoxModalController.config.RadioItems[424]">
+			            <form-step type="radio" class="col-md-4" radio-name="locationPlace" label="{{placeItem}}"
+			            	response-value="LocationBoxModalController.questions[424].response.value"></form-step>
+			        </span>
+		        </div>
+            </div>
+            <div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label>What kind of place is it?</label>
+		    	</div>
+				<div class="col-md-10 form-group">
+			        <span ng-repeat="placeKind in LocationBoxModalController.config.RadioItems[425]">
+			            <form-step type="radio" class="col-md-4" radio-name="locationKind" label="{{placeKind}}"
+			            	other-value="LocationBoxModalController.otherData.questions[425].otherValue"
+			            	response-value="LocationBoxModalController.otherData.questions[425].value"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="locationKind" label="Other"
+			            	other-value="LocationBoxModalController.otherData.questions[425].otherValue"
+			            	response-value="LocationBoxModalController.otherData.questions[425].value"></form-step>
+			        </span>
+		        </div>
+            </div>
+            <div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label>Which country?</label>
+		    	</div>
+				<div class="col-md-10 form-group">
+					<input type="text" class="form-control" ng-model="LocationBoxModalController.questions[852].response.value">
+		        </div>
+            </div>
+            <div class="row">
+		            <label class="col-md-2 margin-top-25">District/State</label>
+		            <autocomplete-address1 class="col-md-4 padding-horizontal-30" ng-model="LocationBoxModalController.questions[427].response.address1"></autocomplete-address1>
+		        	<label class="col-md-2 margin-top-25">Town/City</label>
+		            <autocomplete-address2 class="col-md-4 padding-horizontal-30" ng-model="LocationBoxModalController.questions[427].response.address2" address1-object="LocationBoxModalController.questions[427].response.address1"></autocomplete-address2>
+            </div>
+            <div class="row">
+	            <label class="col-md-2">Phone</label>
+	            <div class="col-md-4">
+	            	<input type="text" min="0" class="form-control" ng-model="LocationBoxModalController.questions[428].response.value">
+	            </div>
+	        	<label class="col-md-2">Name/Signboard</label>
+	        	<div class="col-md-4">
+	            	<input type="text" min="0" class="form-control" ng-model="LocationBoxModalController.questions[429].response.value">
+	            </div>
+            </div>
+            <div class="row">
+	            <label class="col-md-2">Location in Town</label>
+	            <div class="col-md-4">
+	            	<input type="text" min="0" class="form-control" ng-model="LocationBoxModalController.questions[430].response.value">
+	            </div>
+                 <div class="col-md-3 form-group">
+		        	<label class="col-md-4">Color</label>
+		        	<div class="col-md-8">
+		            	<input type="text" min="0" class="form-control" ng-model="LocationBoxModalController.questions[431].response.value">
+		            </div>
+		        </div>
+		        <div class="col-md-3 form-group">
+		        	<label class="col-md-4"># of levels</label>
+		        	<div class="col-md-8">
+		            	<input type="number" min="0" class="form-control" ng-model="LocationBoxModalController.questions[432].response.value">
+		            </div>
+		        </div>
+            </div>
+            <div class="row">
+	            <label class="col-md-2">Person in Charge</label>
+	            <div class="col-md-4">
+	            	<input type="text" min="0" class="form-control" ng-model="LocationBoxModalController.questions[433].response.value">
+	            </div>
+	        	<label class="col-md-2">Name/Nearby Landmarks</label>
+	        	<div class="col-md-4">
+	            	<input type="text" min="0" class="form-control" ng-model="LocationBoxModalController.questions[434].response.value">
+	            </div>
+            </div>
+            <div class="row col-md-12">
+            	<label>For how long did the PV stay in this place?</label>&nbsp;
+            	<form-step type="checkbox" class="inblock" label="N/A (Not Applicable)" response-value="LocationBoxModalController.questions[435].response.value"></form-step>
+				<input type="number" min="0" ng-model="LocationBoxModalController.questions[436].response.value">
+				<label>Days</label>
+			</div>
+			<div class="row col-md-12">
+            	<label>Starting From:</label>
+            	<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="LocationBoxModalController.dateData.questions[437].value">
+            </div>
+            <div class="row col-md-12">
+            	<label>Was there any attempt made to hide the PV's presence at this place?</label>&nbsp;
+            	<form-step type="checkbox" class="inblock" label="N/A" response-value="LocationBoxModalController.questions[438].response.value"></form-step>
+            	&nbsp;
+            	<form-step type="checkbox" class="inblock" label="No" response-value="LocationBoxModalController.questions[439].response.value"></form-step>
+            	&nbsp;
+            	<form-step type="checkbox" blue-flag="12" class="inblock" label="Yes" response-value="LocationBoxModalController.questions[440].response.value"></form-step>
+            	(explaination
+            	<input type="text" min="0" class="inblock" ng-model="LocationBoxModalController.questions[489].response.value">
+            	)
+            </div>
+            <div class="row col-md-12">
+            	<label>Was the PV free to go out from the place?</label>&nbsp;
+            	<form-step type="checkbox" class="inblock" label="N/A" response-value="LocationBoxModalController.questions[441].response.value"></form-step>
+            	&nbsp;
+            	<form-step type="checkbox" class="inblock" label="Yes" response-value="LocationBoxModalController.questions[442].response.value"></form-step>
+            	&nbsp;
+            	<form-step type="checkbox" blue-flag="11" class="inblock" label="No" response-value="LocationBoxModalController.questions[443].response.value"></form-step>
+            	(explaination
+            	<input type="text" min="0" class="inblock" ng-model="LocationBoxModalController.questions[488].response.value">
+            	)
+            </div>
+            <div class="row col-md-12">
+            	<label>Besides those with them now, how many other PVs were there at this location?</label>
+            	<input type="number" class="inblock" ng-model="LocationBoxModalController.questions[444].response.value">
+            </div>
+            <div class="row col-md-12">
+            	<label>Associated with PB#(s)</label>
+            	<input type="text" class="inblock" ng-model="LocationBoxModalController.questions[445].response.value">
+            </div>
+            <div class="row">
+            	
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="LocationBoxModalController.save()" ng-disabled="intercepteeForm.$invalid" ng-if="!LocationBoxModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="LocationBoxModalController.delete()" ng-if="!LocationBoxModalController.isAdd && !LocationBoxModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="LocationBoxModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

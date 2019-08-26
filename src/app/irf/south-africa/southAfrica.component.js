@@ -40,12 +40,12 @@ export class IrfSouthAfricaController extends BaseIrfController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport'];
+        return ['Passport', 'ID#'];
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
     	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-    			intercepteeModalTemplate, 'Interceptees');
+    			intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

@@ -52,6 +52,7 @@ export default class IrfNewListController {
             ctrl: this,
         };
 
+        this.oldIndex = 3;
         this.status = {};
         this.status.options = [ {id: '!invalid', label: 'all valid', group:'z'},
             { id: 'in-progress', label: 'in-progress', group:'Status' }, 
@@ -59,10 +60,10 @@ export default class IrfNewListController {
             { id: 'approved,None', label: 'old - submitted without evidence category', group:'Status'},
             { id: 'first-verification', label: 'first-verification', group:'Status' },
             { id: 'second-verification', label: 'second-verification', group:'Status'},
-            { id: 'second-verification,Clear', label: 'clear evidence', group:'Second Verification Evidence Category'},
-            { id: 'second-verification,Some', label: 'some evidence', group:'Second Verification Evidence Category'},
-            { id: 'second-verification,High', label: 'high risk', group:'Second Verification Evidence Category'},
-            { id: 'invalid', label: 'invalid', group:'Second Verification Evidence Category' }];
+            { id: 'second-verification,Clear', label: 'clear evidence', group:'Final Verification Evidence Category'},
+            { id: 'second-verification,Some', label: 'some evidence', group:'Final Verification Evidence Category'},
+            { id: 'second-verification,High', label: 'high risk', group:'Final Verification Evidence Category'},
+            { id: 'invalid', label: 'invalid', group:'Final Verification Evidence Category' }];
         this.status.selectedOptions = [this.status.options[0]];
         this.status.settings = {
             smartButtonMaxItems: 1,
@@ -259,6 +260,8 @@ export default class IrfNewListController {
     }
 
     getUserCountries() {
+        let keepOldList = ['Nepal', 'Bangladesh', 'India'];
+        let keepOld = false;
         this.service.getUserCountries(this.session.user.id).then(promise => {
             this.countries = promise.data;
             this.countryDropDown.options = [];
@@ -267,6 +270,9 @@ export default class IrfNewListController {
                     id: this.countries[idx].id,
                     label: this.countries[idx].name,
                 });
+                if (keepOldList.indexOf(this.countries[idx].name) > -1) {
+                    keepOld = true;
+                }
             }
             this.getUserStationsForAdd();
 
@@ -281,6 +287,11 @@ export default class IrfNewListController {
                     }
                 }
             }
+            
+            if (!keepOld && this.status.options[this.oldIndex].label.startsWith('old')) {
+                this.status.options.splice(this.oldIndex, 1);
+            }
+
         });
     }
 

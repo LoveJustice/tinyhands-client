@@ -1,7 +1,8 @@
 import {BaseFormController} from '../baseFormController.js';
+import printCardTemplate from './common/printCardTemplate.html';
 
 export class BaseCifController extends BaseFormController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout) {
         'ngInject';
         super($scope, $stateParams);
 
@@ -9,9 +10,13 @@ export class BaseCifController extends BaseFormController {
         this.constants = constants;
         this.service = CifService;
         this.state = $state;
+        this.timeout = $timeout;
        
         this.cifNumber = "";
         this.associatedPersons = [];
+        this.printCardTemplate = printCardTemplate;
+        this.printMode = false;
+        this.config = {};
 
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
@@ -135,6 +140,24 @@ export class BaseCifController extends BaseFormController {
             });
     	
         this.messagesEnabled = true;
+    }
+    
+    getSimpleQuestions(config) {
+        let simpleQuestions = config.Basic.concat(config.Date);
+        for (let otherIdx in config.RadioOther) {
+            if (config.Person.indexOf(config.RadioOther[otherIdx]) < 0) {
+                simpleQuestions.push(config.RadioOther[otherIdx]);
+            }
+        }
+        return simpleQuestions;
+    }
+    
+    cifPrint() {
+        this.printMode=true;
+        this.timeout(() => {
+            window.print();
+            this.printMode=false;
+        }, 1000);
     }
 }
 

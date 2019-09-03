@@ -1,0 +1,27 @@
+ <div class="col-md-6" ng-repeat="card in $ctrl.getCardInstances(cardName)">
+ 
+  	<form-step><b>{{cardHeading}}</b></form-step>
+  	<div class="col-md-12" ng-repeat="personQuestId in $ctrl.config[cardName].Person">
+  		<form-step>{{$ctrl.config.ExportNames[personQuestId]}}</form-step>
+  		<div class="col-md-12">
+    		<form-step>Name: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).name.value}}</form-step>
+    		<form-step>Gender: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).gender.value}}</form-step>
+    		<form-step>Age: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).age.value}}</form-step>
+	    	<form-step>Address1: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).address1.name}}</form-step>
+	    	<form-step>Address2: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).address2.name}}</form-step>
+	    	<form-step>Phone: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).phone.value}}</form-step>
+	    	<form-step>Nationality: {{$ctrl.getResponseOfQuestionById(card.responses, personQuestId).nationality.value}}</form-step>
+	    	<form-step ng-repeat="idType in $ctrl.getResponseOfQuestionById(card.responses, personQuestId).identifiers" ng-show="idType.number.value !== ''">{{idType.type.value}}: {{idType.number.value}}</form-step>
+   		</div>
+  	</div>
+  	<div class="col-md-12" ng-repeat="addressQuestId in $ctrl.config[cardName].Address">
+  		<form-step>{{$ctrl.config.ExportNames[addressQuestId]}}</form-step>
+  		<div class="col-md-12">
+   			<form-step>Address1: {{$ctrl.getResponseOfQuestionById(card.responses, addressQuestId).address1.name}}</form-step>
+   			<form-step>Address2: {{$ctrl.getResponseOfQuestionById(card.responses, addressQuestId).address2.name}}</form-step>
+   		</div>
+  	</div>
+  	<div class="col-md-12" ng-repeat="basicQuestId in $ctrl.getSimpleQuestions($ctrl.config[cardName])">
+  		<form-step>{{$ctrl.config['ExportNames'][basicQuestId]}}: {{$ctrl.getResponseOfQuestionById(card.responses, basicQuestId).value}}</form-step>
+  	</div>
+</div>

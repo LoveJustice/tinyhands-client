@@ -1,5 +1,5 @@
 export default class SessionService {
-    constructor($rootScope, $state, $timeout, $q, BaseService) {
+    constructor($rootScope, $state, $timeout, $q, BaseService, $cookies) {
         'ngInject';
 
         this.service = BaseService;
@@ -7,6 +7,7 @@ export default class SessionService {
         this.routeState = $state;
         this.timeout = $timeout;
         this.$q = $q;
+        this.cookies = $cookies;
 
         this.user = {};
         this.userPermissions = [];
@@ -17,6 +18,11 @@ export default class SessionService {
         return this.service.post('api/login/', { "username": username, "password": password })
             .then((promise) => {
                 localStorage.token = "Token " + promise.data.token;
+                if (promise.data.sessionid) {
+                    var expireDate = new Date();
+                    expireDate.setDate(expireDate.getDate() + 1);
+                    this.cookies.put('sessionid', promise.data.sessionid, {'expires': expireDate});
+                }
                 this.root.authenticated = true;
                 return true;
             }, (reason) => {

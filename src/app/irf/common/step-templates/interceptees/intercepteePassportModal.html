@@ -89,15 +89,23 @@
                 </div>
             </div>
             <div class="row">
-            		<div class="col-md-6 form-group margin-top-15">
-                    <label class="col-md-3 control-label">Passport</label>
-                    <div class="col-md-9">
-                        <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.identifiers['Passport'].number.value">
-                    </div>
-                </div>
-                 <div class="col-md-5 form-group margin-top-15" ng-show="IntercepteeModalController.questions[8].response.value!=='PVOT'">
+            	<div class="row center-vertical">
+		    		<div class="col-md-3 center-vertical">
+		            	<label class="col-md-5">ID Type</label>
+		            	<div class="col-md-7">
+		                	<form-step type="radio" radio-name="idType" label="Passport" response-value="IntercepteeModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
+		                	<form-step type="radio" radio-name="idType" label="ID#" response-value="IntercepteeModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
+		            	</div>
+		        	</div>
+		        	<div class="col-md-4 center-vertical">
+		            	<div class="col-md-12">
+		                	<input type="text" class="form-control" ng-model="IntercepteeModalController.questions[9].response.identifiers[IntercepteeModalController.personIdentifierChoice.getChoice(9)].number.value">
+		            	</div>
+		        	</div>
+                 <div class="col-md-4 form-group margin-top-15" ng-show="IntercepteeModalController.questions[8].response.value!=='PVOT'">
                     <input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[11].response.value">
                     <label for="custody">Taken into police custody</label>
+				</div>
 				</div>
             </div>
            
@@ -111,7 +119,7 @@
                     <button class="btn btn-danger" ng-click="IntercepteeModalController.delete()" ng-if="!IntercepteeModalController.isAdd && !IntercepteeModalController.isViewing">Delete</button>
                 </div>
                 <div class="col-xs-4">
-                    <button class="btn btn-default" ng-click="IntercepteeModalController.dismiss()">Close</button>
+                    <button class="btn btn-default" ng-click="IntercepteeModalController.dismiss()" formnovalidate>Close</button>
                 </div>
             </div>
         </div>

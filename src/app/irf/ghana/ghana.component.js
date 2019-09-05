@@ -36,12 +36,12 @@ export class IrfGhanaController extends BaseIrfController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport'];
+        return ['Passport', 'ID#'];
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
     	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-    			intercepteeModalTemplate, 'Interceptees', {age:true});
+    			intercepteeModalTemplate, 'Interceptees', {age:true, identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

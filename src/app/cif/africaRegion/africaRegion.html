@@ -1,5 +1,5 @@
 <div id="cif-africaRegion" class="container-fluid padding-top-20">
-    <div class="sticky">
+    <div class="sticky"  ng-if="!$ctrl.printMode">
         <div class="padding-bottom-40">
             <h1 class="form-number-header float-left padding-left-20">
                 {{$ctrl.questions[287].response.value}}
@@ -9,23 +9,15 @@
             </h1>
         </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.selectedStep = 0">Top</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.selectedStep = 1">Potential Victim</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.selectedStep = 2">Other PVs</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.selectedStep = 3">Recruitment</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.selectedStep = 4">Travel</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.selectedStep = 5">Transportation</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.selectedStep = 6">Legal</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.selectedStep = 7">Person Boxes</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 8}" ng-click="$ctrl.selectedStep = 8">Location Boxes</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 9}" ng-click="$ctrl.selectedStep = 9">Vehicle Boxes</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 10}" ng-click="$ctrl.selectedStep = 10">Final</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 11}" ng-click="$ctrl.selectedStep = 11">Attachments</a>
+        	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
+        		class="btn btn-default"
+        		ng-class="{active: $ctrl.selectedStep == $index}" 
+        		ng-click="$ctrl.selectedStep = $index">{{stepTemplate.name}}</a>
         </div>
         <hr class="margin-bottom-0" />
     </div>
-    <div id="cif-africaRegion-content" class="padding-bottom-40">
-        <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template" ng-hide="$ctrl.selectedStep != $index"></div>
+    <div id="cif-africaRegion-content" class="padding-bottom-40"  ng-show="!$ctrl.printMode">
+        <div ng-repeat="stepTemplate in $ctrl.stepTemplates" ng-include="stepTemplate.template" ng-hide="$ctrl.selectedStep != $index"></div>
 	    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
 	        <strong>Warning! {{warnings}}</strong>
 	    </div>
@@ -33,14 +25,24 @@
 	        <strong>Error! {{errors}}</strong>
 	    </div>
 	    <div class="container-fluid padding-bottom-20">
-	        <div class="col-xs-6">
+	        <div class="col-xs-4">
 	            <button class="btn btn-warning" ng-if="$ctrl.response.status == 'in-progress'" ng-disabled="$ctrl.stateParams.isViewing === 'true'" ng-click="$ctrl.save()">Save for Later</button>
 	        </div>
-	        <div class="col-xs-6 text-right">
+	        <div class="col-xs-4 text-center">
+				<button class="btn btn-info" ng-click="$ctrl.cifPrint();">Print</button>
+			</div>
+	        <div class="col-xs-4 text-right">
 	            <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox()" ng-model="$ctrl.ignoreWarnings">
 	            <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox()">Ignore warnings</label>
 	            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true'">Submit</button>
 	        </div>
 	    </div>
+	</div>
+	<div class="row"></div>
+	<div id="print-content" class="padding-bottom-40" ng-if="$ctrl.printMode">
+		<div ng-repeat="stepTemplate in $ctrl.stepTemplates" >
+			<h1>{{stepTemplate.name}}</h1>
+			<div ng-include="stepTemplate.template"></div>
+		</div>
 	</div>
 </div>

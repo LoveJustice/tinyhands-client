@@ -31,7 +31,7 @@ import SpinnerOverlay from './directives/spinnerOverlay/spinnerOverlay.directive
 import MonthFilter from './filters/month.filter';
 import CapitalizeFilter from './filters/capitalize.filter';
 
-export default angular.module('tinyhands.Shared', [ngFileSaver, 'floatThead', 'ui.validate', uiRouter, 'angularjs-dropdown-multiselect'])
+export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'floatThead', 'ui.validate', uiRouter, 'angularjs-dropdown-multiselect'])
     .run(TransitionOnBefore)
     .config(config)
 

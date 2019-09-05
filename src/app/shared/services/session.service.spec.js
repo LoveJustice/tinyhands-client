@@ -2,17 +2,19 @@ import SessionService from './session.service';
 
 describe('SessionService', () => {
 
-    let service, mockBaseService, $rootScope;
+    let service, mockBaseService, $rootScope, $cookies;
 
-    beforeEach(inject(($q, _$rootScope_) => {
+    beforeEach(inject(($q, _$rootScope_, _$cookies_) => {
         $rootScope = _$rootScope_;
+        $cookies = _$cookies_;
         let $state = { go: () => { } },
             $timeout = (f) => { f(); };
         mockBaseService = jasmine.createSpyObj('mockBaseService', ['get', 'post']);
         mockBaseService.get.and.callFake(() => {
             return $q.resolve('success');
         });
-        service = new SessionService($rootScope, $state, $timeout, $q, mockBaseService);
+        
+        service = new SessionService($rootScope, $state, $timeout, $q, mockBaseService, $cookies);
     }));
 
 

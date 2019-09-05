@@ -20,6 +20,7 @@ export default class IrfNewListController {
         this.stationsForAdd = [];
 
         this.timer = {};
+        this.searchTimer = null;
         this.irfs = [];
         this.nextPage = '';
         this.timeZoneDifference = '+0545';
@@ -28,7 +29,7 @@ export default class IrfNewListController {
             reverse: true,
             ordering: 'date_time_of_interception',
             search: '',
-            status: 'in-progress,approved,first-verification,second-verification',
+            status: '!invalid',
             country_ids: '',
         };
         this.stickyOptions = this.sticky.stickyOptions;
@@ -51,15 +52,27 @@ export default class IrfNewListController {
             ctrl: this,
         };
 
+        this.oldIndex = 3;
         this.status = {};
-        this.status.options = [{ id: 'in-progress', label: 'in-progress' }, { id: 'approved', label: 'approved' },
-            { id: 'first-verification', label: 'first-verification' }, { id: 'second-verification', label: 'second-verification' },
-            { id: 'invalid', label: 'invalid' }];
-        this.status.selectedOptions = [this.status.options[0], this.status.options[1], this.status.options[2], this.status.options[3]];
+        this.status.options = [ {id: '!invalid', label: 'all valid', group:'z'},
+            { id: 'in-progress', label: 'in-progress', group:'Status' }, 
+            { id: 'approved,!None', label: 'submitted with evidence category', group:'Status' },
+            { id: 'approved,None', label: 'old - submitted without evidence category', group:'Status'},
+            { id: 'first-verification', label: 'first-verification', group:'Status' },
+            { id: 'second-verification', label: 'second-verification', group:'Status'},
+            { id: 'second-verification,Clear', label: 'clear evidence', group:'Final Verification Evidence Category'},
+            { id: 'second-verification,Some', label: 'some evidence', group:'Final Verification Evidence Category'},
+            { id: 'second-verification,High', label: 'high risk', group:'Final Verification Evidence Category'},
+            { id: 'invalid', label: 'invalid', group:'Final Verification Evidence Category' }];
+        this.status.selectedOptions = [this.status.options[0]];
         this.status.settings = {
-            smartButtonMaxItems: 2,
+            smartButtonMaxItems: 1,
             showCheckAll: false,
             showUncheckAll: false,
+            selectionLimit:1,
+            groupByTextProvider(groupValue) { if (groupValue ==='z') {return '';} else {return groupValue;} },
+            groupBy:'group', 
+            closeOnSelect: true,
         };
         this.status.customText = {};
         this.status.eventListener = {
@@ -101,13 +114,11 @@ export default class IrfNewListController {
         }
         
         if (this.queryParameters.status !== '') {
-            let statusList = this.queryParameters.status.split(',');
             this.status.selectedOptions = [];
-            for (let statusIdx in statusList) {
-                for (let optionIdx in this.status.options) {
-                    if (statusList[statusIdx] === this.status.options[optionIdx].id) {
-                        this.status.selectedOptions.push(this.status.options[optionIdx]);
-                    }
+            for (let optionIdx in this.status.options) {
+                if (this.queryParameters.status === this.status.options[optionIdx].id) {
+                    this.status.selectedOptions.push(this.status.options[optionIdx]);
+                    break;
                 }
             }
         }
@@ -194,29 +205,43 @@ export default class IrfNewListController {
             this.getIrfList();
         }, 500);
     }
+    
+    setSearchTimer() {
+        if (this.searchTimer) {
+            this.timeout.cancel(this.searchTimer);
+        }
+        
+        this.searchTimer = this.timeout(() => {this.searchTimerExpired();}, 1500);
+    }
 
     countryChange() {
-        var selectedCountries = '';
-        var sep = '';
-        var ctrl = this.ctrl;
-        for (var idx = 0; idx < ctrl.countryDropDown.selectedOptions.length; idx++) {
-            selectedCountries = selectedCountries + sep + ctrl.countryDropDown.selectedOptions[idx].id;
-            sep = ',';
-        }
-        ctrl.queryParameters.country_ids = selectedCountries;
-        ctrl.searchIrfs();
+        this.ctrl.setSearchTimer();
     }
 
     statusChange() {
-        var ctrl = this.ctrl;
-        ctrl.queryParameters.status = '';
-        let sep = '';
-        for (let optionIdx in ctrl.status.selectedOptions){
-            ctrl.queryParameters.status += sep + ctrl.status.selectedOptions[optionIdx].id;
+        this.ctrl.searchTimerExpired();
+    }
+    
+    searchTimerExpired() {
+        this.searchTimer = null;
+        
+        var selectedCountries = '';
+        var sep = '';
+        for (var idx = 0; idx < this.countryDropDown.selectedOptions.length; idx++) {
+            selectedCountries = selectedCountries + sep + this.countryDropDown.selectedOptions[idx].id;
             sep = ',';
         }
-
-        ctrl.searchIrfs();
+        
+        var selectedStatus = '';
+        if (this.status.selectedOptions.length > 0) {
+            selectedStatus = this.status.selectedOptions[0].id;
+        }
+        
+        if (this.queryParameters.country_ids !== selectedCountries || this.queryParameters.status !== selectedStatus) {
+            this.queryParameters.country_ids = selectedCountries;
+            this.queryParameters.status = selectedStatus;
+            this.searchIrfs(); 
+        }
     }
 
     getSortIcon(column, reverse) {
@@ -235,6 +260,8 @@ export default class IrfNewListController {
     }
 
     getUserCountries() {
+        let keepOldList = ['Nepal', 'Bangladesh', 'India'];
+        let keepOld = false;
         this.service.getUserCountries(this.session.user.id).then(promise => {
             this.countries = promise.data;
             this.countryDropDown.options = [];
@@ -243,6 +270,9 @@ export default class IrfNewListController {
                     id: this.countries[idx].id,
                     label: this.countries[idx].name,
                 });
+                if (keepOldList.indexOf(this.countries[idx].name) > -1) {
+                    keepOld = true;
+                }
             }
             this.getUserStationsForAdd();
 
@@ -257,6 +287,11 @@ export default class IrfNewListController {
                     }
                 }
             }
+            
+            if (!keepOld && this.status.options[this.oldIndex].label.startsWith('old')) {
+                this.status.options.splice(this.oldIndex, 1);
+            }
+
         });
     }
 

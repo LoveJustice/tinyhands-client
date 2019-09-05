@@ -14,7 +14,7 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-2 col-xs-3" >
+        <div class="col-md-3" >
         	<p>Countries</p>
             <div ng-dropdown-multiselect="" options="irfNewListCtrl.countryDropDown.options"
 							selected-model="irfNewListCtrl.countryDropDown.selectedOptions"
@@ -24,7 +24,10 @@
 			</div>
         </div>
         <!-- End dropdown -->
-
+        <div class="col-md-2">
+        	&nbsp;
+        </div>
+        
         <!-- Search -->
         <div class="col-md-3 search-bar pull-right">
             <form>
@@ -32,7 +35,9 @@
                       <input ng-change="irfNewListCtrl.searchIrfs()" ng-model="irfNewListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
                   </label>
             </form>
-            <div ng-dropdown-multiselect="" options="irfNewListCtrl.status.options"
+            
+            <div style="width:180px" ng-dropdown-multiselect="" options="irfNewListCtrl.status.options"
+            				ng-show="irfNewListCtrl.filterType!='Filter by Second-Verification Evidence'" options="irfNewListCtrl.status.options" ng-show="irfNewListCtrl.filterType=='Filter by IRF status'"
 							selected-model="irfNewListCtrl.status.selectedOptions"
                              extra-settings="irfNewListCtrl.status.settings"
                              translation-texts="irfNewListCtrl.status.customText"

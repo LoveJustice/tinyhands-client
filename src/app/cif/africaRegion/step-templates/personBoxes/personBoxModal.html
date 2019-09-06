@@ -96,12 +96,14 @@
 		    		<label class="col-md-4">Role</form-step>
 		    	</div>
 				<div class="col-md-10 form-group">
-			        <span ng-repeat="roleItem in PersonBoxModalController.config.RadioItems[420]">
-			            <form-step type="radio" class="col-md-3" radio-name="personRole" label="{{roleItem}}"
-			            	response-value="PersonBoxModalController.otherData.questions[420].value" other-value="PersonBoxModalController.otherData.questions[420].otherValue"></form-step>
-			            <form-step ng-if="$last" type="otherRadio" class="col-md-5" radio-name="personRole" label="Other:" other-value="PersonBoxModalController.otherData.questions[420].otherValue"
-			                response-value="PersonBoxModalController.otherData.questions[420].value"></form-step>
-			        </span>
+					<form-step type="checkbox" class="col-md-3" label="Broker" response-value="PersonBoxModalController.questions[853].response.value"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Companion" response-value="PersonBoxModalController.questions[854].response.value"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Host" response-value="PersonBoxModalController.questions[855].response.value"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Id Facilitator" response-value="PersonBoxModalController.questions[856].response.value"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Agent" response-value="PersonBoxModalController.questions[857].response.value"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Witness" response-value="PersonBoxModalController.questions[858].response.value"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Complainant" response-value="PersonBoxModalController.questions[859].response.value"></form-step>
+			        <form-step type="otherCheckbox" class="col-md-6" label="Other:" response-value="PersonBoxModalController.questions[860].response.value"></form-step>
 		        </div>
             </div>
             <div class="row center-vertical">

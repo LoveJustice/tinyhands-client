@@ -1,18 +1,34 @@
 <div class="container" style="margin-top: -51px">
 	<div class="row">
-		<h1 class="text-center">व्यक्ति खोज</h1>
-		<h4 class="text-center">कृपया नाम वा नम्बर English मा तल राखेर खोज्नुहोस् ।</h4>
+		<h1 ng-show="vm.language=='English'" class="text-center">Person Match</h1>
+		<h1 ng-show="vm.language=='Nepali'" class="text-center">à¤µà¥�à¤¯à¤•à¥�à¤¤à¤¿ à¤–à¥‹à¤œ</h1>
+		<h4 ng-show="vm.language=='Nepali'" class="text-center">à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¨à¤¾à¤® à¤µà¤¾ à¤¨à¤®à¥�à¤¬à¤° English à¤®à¤¾ à¤¤à¤² à¤°à¤¾à¤–à¥‡à¤° à¤–à¥‹à¤œà¥�à¤¨à¥�à¤¹à¥‹à¤¸à¥� à¥¤</h4>
 	</div>
 
 	<div class="row" style="padding: 20px 0 20px 0">
 		<div class="col-xs-10">
 			<form ng-submit="vm.matchSearch()">
 				<div class="row">
-					<div class="col-xs-11">
-						<input type="search" placeholder="नाम वा फोन English मा राख्नुहोस्...." ng-model="vm.searchValue" class="form-control">
+					<div class="col-xs-2">
+						<select class="form-control" ng-model="vm.language">
+                            <option value="Nepali">Nepali</option>
+                            <option value="English">English</option>
+                        </select>
+					</div>
+					<div class="col-xs-2">
+						<select class="form-control" ng-model="vm.filter">
+                            <option value="Suspect" ng-if="vm.language=='English'" >Suspect</option>
+                            <option value="Suspect" ng-if="vm.language=='Nepali'">संदिग्ध व्यक्ति</option>
+                            <option value="PVOT">PVOT</option>
+                        </select>
+					</div>
+					<div class="col-xs-7">
+						<input ng-show="vm.language=='English'" type="search" placeholder="Search value..." ng-model="vm.searchValue" class="form-control">
+						<input ng-show="vm.language=='Nepali'" type="search" placeholder="à¤¨à¤¾à¤® à¤µà¤¾ à¤«à¥‹à¤¨ English à¤®à¤¾ à¤°à¤¾à¤–à¥�à¤¨à¥�à¤¹à¥‹à¤¸à¥�...." ng-model="vm.searchValue" class="form-control">
 					</div>
 					<div class="col-xs-1">
-						<button class="btn btn-primary" type="submit">खोज्नुहोस्</a>
+						<button ng-show="vm.language=='English'" class="btn btn-primary" type="submit">Search</a>
+						<button ng-show="vm.language=='Nepali'" class="btn btn-primary" type="submit">à¤–à¥‹à¤œà¥�à¤¨à¥�à¤¹à¥‹à¤¸à¥�</a>
 					</div>
 				</div>
 			</form>
@@ -23,14 +39,22 @@
 		<table class="table table-striped">
 			<thead class="sticky-table-header">
 				<tr>
-					<th width="20%" title="Name">नाम</th>
-					<th width="11%" title="Gender">लिङ्ग</th>
-					<th width="8%" title="Age">उमेर</th>
-					<th width="16%" title="Address 1">ठेगाना १ </th>
-					<th width="16%" title="Address 2">ठेगाना २</th>
-					<th width="16%" title="Phone">फोन</th>
-					<th width="13%" title="Form">फारम</th>
-					<th width="13%" title="Photo">फोटो</th>
+					<th ng-if="vm.language=='English'" width="20%">Name</th>
+					<th ng-if="vm.language=='English'" width="11%">Gender</th>
+					<th ng-if="vm.language=='English'" width="8%">Age</th>
+					<th ng-if="vm.language=='English'" width="16%">Address 1</th>
+					<th ng-if="vm.language=='English'" width="16%">Address 2</th>
+					<th ng-if="vm.language=='English'" width="16%">Phone</th>
+					<th ng-if="vm.language=='English'" width="13%">Form</th>
+					<th ng-if="vm.language=='English'" width="13%">Photo</th>
+					<th ng-if="vm.language=='Nepali'" width="20%" title="Name">à¤¨à¤¾à¤®</th>
+					<th ng-if="vm.language=='Nepali'" width="11%" title="Gender">à¤²à¤¿à¤™à¥�à¤—</th>
+					<th ng-if="vm.language=='Nepali'" width="8%" title="Age">à¤‰à¤®à¥‡à¤°</th>
+					<th ng-if="vm.language=='Nepali'" width="16%" title="Address 1">à¤ à¥‡à¤—à¤¾à¤¨à¤¾ à¥§ </th>
+					<th ng-if="vm.language=='Nepali'" width="16%" title="Address 2">à¤ à¥‡à¤—à¤¾à¤¨à¤¾ à¥¨</th>
+					<th ng-if="vm.language=='Nepali'" width="16%" title="Phone">à¤«à¥‹à¤¨</th>
+					<th ng-if="vm.language=='Nepali'" width="13%" title="Form">à¤«à¤¾à¤°à¤®</th>
+					<th ng-if="vm.language=='Nepali'" width="13%" title="Photo">à¤«à¥‹à¤Ÿà¥‹</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,8 +72,9 @@
 				</tr>
 				<tr ng-show="vm.matchCandidates.length == 0">
 					<td colspan="12" style="text-align:center;">
-						<h2 ng-if="vm.type == 'name'">तपाईँले खोज्नुभएको नाम<strong> "{{ vm.searchValue }}" </strong>भेटिएन</h2>
-						<h2 ng-if="vm.type == 'phone'">तपाईँले खोज्नुभएको फोन<strong> "{{ vm.searchValue }}" </strong>भेटिएन</h2>
+						<h2 ng-if="vm.language=='English'">No {{vm.type}} Matched your search for: "{{ vm.searchValue }}"</h2>
+						<h2 ng-if="vm.type == 'name' && vm.language=='Nepali'">à¤¤à¤ªà¤¾à¤ˆà¤�à¤²à¥‡ à¤–à¥‹à¤œà¥�à¤¨à¥�à¤­à¤�à¤•à¥‹ à¤¨à¤¾à¤®<strong> "{{ vm.searchValue }}" </strong>à¤­à¥‡à¤Ÿà¤¿à¤�à¤¨</h2>
+						<h2 ng-if="vm.type == 'phone' && vm.language=='Nepali'">à¤¤à¤ªà¤¾à¤ˆà¤�à¤²à¥‡ à¤–à¥‹à¤œà¥�à¤¨à¥�à¤­à¤�à¤•à¥‹ à¤«à¥‹à¤¨<strong> "{{ vm.searchValue }}" </strong>à¤­à¥‡à¤Ÿà¤¿à¤�à¤¨</h2>
 					</td>
 				</tr>
 			</tbody>

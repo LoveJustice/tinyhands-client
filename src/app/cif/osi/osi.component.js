@@ -1,9 +1,9 @@
 import {BaseCifController} from '../baseCifController.js';
 import {CifModalController} from '../cifModalController.js';
 import {AssociatedPersonModalController} from '../associatedPersonModalController.js';
-import './africaRegion.less';
+import './osi.less';
 
-import templateUrl from './africaRegion.html';
+import templateUrl from './osi.html';
 import topTemplate from './step-templates/top.html';
 import mainPvTemplate from './step-templates/mainPv.html';
 import pvsTemplate from '../common/step-templates/potentialVictims/potentialVictims.html';
@@ -24,7 +24,7 @@ import locationBoxTemplate from './step-templates/locationBoxes/locationBoxModal
 import vehicleBoxTemplate from '../common/step-templates/vehicleBoxes/vehicleBoxModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class CifAfricaRegionController extends BaseCifController {
+export class CifOsiController extends BaseCifController {
     constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout) {
         'ngInject';        
         super($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout);
@@ -46,7 +46,7 @@ export class CifAfricaRegionController extends BaseCifController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'Citizenship'];
+        return ['Citizenship', 'Passport'];
     }
     
     openPotentialVictimModal(responses = [], isAdd = false, idx=null) {
@@ -82,5 +82,5 @@ export class CifAfricaRegionController extends BaseCifController {
 
 export default {
     templateUrl,
-    controller: CifAfricaRegionController
+    controller: CifOsiController
 };

@@ -1,5 +1,5 @@
-<div id="cif-bangladesh" class="container-fluid padding-top-20">
-    <div class="sticky" ng-if="!$ctrl.printMode">
+<div id="cif-osi" class="container-fluid padding-top-20">
+    <div class="sticky"  ng-if="!$ctrl.printMode">
         <div class="padding-bottom-40">
             <h1 class="form-number-header float-left padding-left-20">
                 {{$ctrl.questions[287].response.value}}
@@ -16,7 +16,7 @@
         </div>
         <hr class="margin-bottom-0" />
     </div>
-    <div id="cif-bangladesh-content" class="padding-bottom-40" ng-if="!$ctrl.printMode">
+    <div id="cif-osi-content" class="padding-bottom-40"  ng-show="!$ctrl.printMode">
         <div ng-repeat="stepTemplate in $ctrl.stepTemplates" ng-include="stepTemplate.template" ng-hide="$ctrl.selectedStep != $index"></div>
 	    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
 	        <strong>Warning! {{warnings}}</strong>

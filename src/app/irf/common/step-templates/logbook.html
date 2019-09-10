@@ -4,6 +4,13 @@
 	</div>
 	<div class="row"></div>
 	<div class="row center-vertical">
+		<form-step class="col-md-4">Date IRF Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[861].value">
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row center-vertical">
     	<form-step class="col-md-4">Were there incomplete questions on the IRF that prevented submission?</form-step>
     	<div class="col-md-1">
       		<form-step type="radio" label="No" response-value="$ctrl.questions[810].response.value" radio-name="incompleteQuestions"></form-step>
@@ -33,7 +40,13 @@
 			<textarea class="form-control" rows="3" ng-model="$ctrl.questions[813].response.value"></textarea>
 		</div>
 	</div>
-	
+	<div class="row">&nbsp;</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date IRF Submitted</form-step>
+		<div class="col-md-4">
+			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[862].value">
+		</div>
+	</div>
 	
 	<hr>
 	<div class="row col-md-12">
@@ -111,6 +124,13 @@
     	<form-step class="col-md-2">Second Verification Date</form-step>
     	<div class="col-md-4">
 			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[821].value">
+		</div>
+	</div>
+	<hr>
+	<div class="row center-vertical">
+		<form-step class="col-md-1">Back Corrected</form-step>
+		<div class=col-md-8>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.questions[863].response.value"></textarea>
 		</div>
 	</div>
 </fieldset>

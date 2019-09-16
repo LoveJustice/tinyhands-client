@@ -1,0 +1,141 @@
+<h1 class="text-center">Data Entry Indicators</h1>
+<div class="row center-vertical">
+	<div class="col-md-1">
+		&nbsp;
+	</div>
+	<div class="col-md-2">
+		<p>Countries</p>
+		<div ng-dropdown-multiselect="" options="indicators.countryDropDown.options"
+				selected-model="indicators.countryDropDown.selectedOptions"
+				extra-settings="indicators.countryDropDown.settings"
+				translation-texts="indicators.countryDropDown.customText"
+				events="indicators.countryDropDown.eventListener">
+		</div>
+	</div>
+	<div class="col-md-2">
+		Start Date
+		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="indicators.startDate">
+	</div>
+	<div class="col-md-2">
+		End Date
+		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="indicators.endDate">
+	</div>
+	<div class="col-md-3">
+		<button class="btn btn-success float-left" ng-disabled="indicators.startDate=='' || indicators.endDate==''" ng-click="indicators.calculate()">Calculate Indicators</button>
+	</div>
+	<div class="col-md-8" ng-if="indicators.indicatorsData">
+		<table class="table table-striped" ng-model="indicators.indicatorsData">
+	        <thead>
+	            <tr>
+	                <th width="40%">Data Entry Compliance</th>
+	                <th width="20%">IRF</th>
+	                <th width="20%">VDF</th>
+	                <th width="20%">CIF</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr>
+	                <td><b>Forms Entered</b></td>
+	                <td>{{ indicators.indicatorsData.irfSubmittedCount }}</td>
+	                <td>{{ indicators.indicatorsData.vdfSubmittedCount }}</td>
+	                <td>{{ indicators.indicatorsData.cifSubmittedCount }}</td>
+	            </tr>
+	            <tr>
+	                <td><b>Data Entry Lag Time</b></td>
+	                <td ng-if="indicators.indicatorsData.irfSubmittedCount > 0">{{ (indicators.indicatorsData.irfTotalLag/indicators.indicatorsData.irfSubmittedCount).toFixed(2) }}</td>
+	                <td ng-if="indicators.indicatorsData.irfSubmittedCount <= 0">N/A</td>
+	                <td ng-if="indicators.indicatorsData.vdfSubmittedCount > 0">{{ (indicators.indicatorsData.vdfTotalLag/indicators.indicatorsData.vdfSubmittedCount).toFixed(2) }}</td>
+	                <td ng-if="indicators.indicatorsData.vdfSubmittedCount <= 0">N/A</td>
+	                <td ng-if="indicators.indicatorsData.cifSubmittedCount > 0">{{ (indicators.indicatorsData.cifTotalLag/indicators.indicatorsData.cifSubmittedCount).toFixed(2) }}</td>
+	                <td ng-if="indicators.indicatorsData.cifSubmittedCount <= 0">N/A</td>
+	            </tr>
+	            <tr>
+					<td><b>Photos Uploaded</b></td>
+					<td>{{ indicators.indicatorsData.photosUploaded }}</td>
+	            </tr>
+	            <tr>
+					<td><b>Photos Upload Lag Time</b></td>
+					<td ng-if="indicators.indicatorsData.photosUploaded > 0">{{ (indicators.indicatorsData.photosLagTotal/indicators.indicatorsData.photosUploaded).toFixed(2) }}</td>
+					<td ng-if="indicators.indicatorsData.photosUploaded <= 0">N/A</td>
+	            </tr>
+	            <tr>
+					<td><b>Interceptees Loaded</b></td>
+					<td>{{ indicators.indicatorsData.intercepteeCount }}</td>
+	            </tr>
+	            <tr>
+					<td><b>Interceptees Loaded with Photo</b></td>
+					<td>{{ indicators.indicatorsData.intercepteePhotoCount }}</td>
+	            </tr>
+	        </tbody>
+	    </table>
+	    <hr>
+	    <table class="table table-striped" ng-model="indicators.indicatorsData">
+	        <thead>
+	            <tr>
+	                <th width="25%">Verification Compliance</th>
+	                <th width="15%">First Verification Based on Second Verification Date</th>
+	                <th width="15%">First Verification Based on First Verification Date</th>
+	                <th width="15%">Second Verification Based on Second Verification Date</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr>
+	                <td><b>Clear Evidence of Trafficking</b></td>
+	                <td>{{ indicators.indicatorsData.clearCount2v1v }}</td>
+	                <td>{{ indicators.indicatorsData.clearCount1v }}</td>
+	                <td>{{ indicators.indicatorsData.clearCount2v }}</td>
+	            </tr>
+	        	<tr>
+	                <td><b>Some Evidence of Trafficking</b></td>
+	                <td>{{ indicators.indicatorsData.someCount2v1v }}</td>
+	                <td>{{ indicators.indicatorsData.someCount1v }}</td>
+	                <td>{{ indicators.indicatorsData.someCount2v }}</td>
+	            </tr>
+	            <tr>
+	                <td><b>High Risk of Trafficking</b></td>
+	                <td>{{ indicators.indicatorsData.highCount2v1v }}</td>
+	                <td>{{ indicators.indicatorsData.highCount1v }}</td>
+	                <td>{{ indicators.indicatorsData.highCount2v }}</td>
+	            </tr>
+	            <tr>
+	                <td><b>Should Not have Intercepted or Should Not have Completed IRF</b></td>
+	                <td>{{ indicators.indicatorsData.snhiCount2v1v }}</td>
+	                <td>{{ indicators.indicatorsData.snhiCount1v }}</td>
+	                <td>{{ indicators.indicatorsData.snhiCount2v }}</td>
+	            </tr>
+	            <tr>
+	                <td><b>Total Verifications</b></td>
+	                <td></td>
+	                <td>{{ indicators.indicatorsData.clearCount1v + indicators.indicatorsData.someCount1v + indicators.indicatorsData.highCount1v + indicators.indicatorsData.snhiCount1v }}</td>
+	                <td>{{ indicators.indicatorsData.clearCount2v + indicators.indicatorsData.someCount2v + indicators.indicatorsData.highCount2v + indicators.indicatorsData.snhiCount2v }}</td>
+	            </tr>
+	            <tr>
+	                <td><b>Verification Lag Time</b></td>
+	                <td></td>
+	                <td ng-if="indicators.indicatorsData.lagCount1v > 0">{{ (indicators.indicatorsData.lagTime1v/indicators.indicatorsData.lagCount1v).toFixed(2) }}</td>
+	                <td ng-if="indicators.indicatorsData.lagCount1v <= 0">N/A</td>
+	                <td ng-if="indicators.indicatorsData.lagCount2v > 0">{{ (indicators.indicatorsData.lagTime2v/indicators.indicatorsData.lagCount2v).toFixed(2) }}</td>
+	                <td ng-if="indicators.indicatorsData.lagCount2v <= 0">N/A</td>
+	            </tr>
+	            <tr>
+	                <td><b># of Completed Follow Up Calls</b></td>
+	                <td></td>
+	                <td>{{ indicators.indicatorsData.followUp }}</td>
+	                <td></td>
+	            </tr>
+	            <tr>
+	                <td><b># of Back Corrected Forms in Date Range</b></td>
+	                <td></td>
+	                <td></td>
+	                <td>{{ indicators.indicatorsData.backCorrected }}</td>
+	            </tr>
+	            <tr>
+	                <td><b>Forms still needing verification</b></td>
+	                <td></td>
+	                <td>{{ indicators.indicatorsData.need_first_verification }}</td>
+	                <td>{{ indicators.indicatorsData.need_second_verification}}</td>
+	            </tr>
+	        </tbody>
+	    </table>
+    </div>
+</div>

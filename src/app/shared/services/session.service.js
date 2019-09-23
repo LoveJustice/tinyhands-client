@@ -44,7 +44,7 @@ export default class SessionService {
             if (this.permissions.length < 1) {
                 this.getPermissions();
             }
-            if (typeof this.user !== 'undefined') {
+            if (typeof this.user !== 'undefined' && this.userPermissions.length < 1) {
                 this.getUserPermissions();
             }       
             return this.user;

@@ -18,7 +18,7 @@ describe('IdManagementController', () => {
 
     ];
 
-    beforeEach(inject(($http, _$rootScope_, _$q_) => {
+    beforeEach(inject((_$state_, $http, _$rootScope_, _$q_) => {
         $q = _$q_;
         mockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
         mockToastr = jasmine.createSpyObj('mockToastr', ['success', 'error']);
@@ -30,7 +30,7 @@ describe('IdManagementController', () => {
         });
 
         $stateParams = {};
-        $state = {go: () => {}};
+        $state = _$state_;
         $rootScope = _$rootScope_;
         $scope = {};
 
@@ -203,8 +203,21 @@ describe('IdManagementController', () => {
     });
     
     describe('function addGroupSearch', () => {
-    	let fuzzyResponse = { "data": 'Name-Candidates' };
-    	let phoneResponse = { "data": 'Phone-Candidates' };
+        let expectedFuzzyData = [{
+                'form_name':'irIndia',
+                'form_id':1,
+                'stationId':1,
+                'countryId':1,
+            }];
+    	let fuzzyResponse = {
+    	        "data": expectedFuzzyData };
+    	let expectedPhoneData = [{
+            'form_name':'irIndia',
+            'form_id':1,
+            'stationId':2,
+            'countryId':1,
+        }];
+    	let phoneResponse = {"data":expectedPhoneData };
     	let knownperson = {full_name: 'foo', id: 123};
     	
         beforeEach(() => {
@@ -227,18 +240,26 @@ describe('IdManagementController', () => {
     	it("addCandidates should be Name-Candidates", () => {
     		vm.addSearchOption = "name";
     		vm.addGroupSearch(knownperson);
-            expect(vm.addCandidates).toEqual('Name-Candidates');
+            expect(vm.addCandidates).toEqual(expectedFuzzyData);
         });
     	
     	it("addCandidates should be Phone-Candidates", () => {
     		vm.addSearchOption = "phone";
     		vm.addGroupSearch(knownperson);
-            expect(vm.addCandidates).toEqual('Phone-Candidates');
+            expect(vm.addCandidates).toEqual(expectedPhoneData);
         });
     });
     
     describe('function getForms', () => {
-    	let formsResponse = { "data": 'Forms' };
+        let expectedFormsData = [
+            {
+                'form_name':'irIndia',
+                'form_id':1,
+                'stationId':1,
+                'countryId':1,
+            }
+        ];
+    	let formsResponse = { "data": expectedFormsData};
     	let person_id = 123;
     	
         beforeEach(() => {
@@ -253,14 +274,38 @@ describe('IdManagementController', () => {
         });
         
         it("forms should be Forms", () => {
-            expect(vm.forms).toEqual('Forms');
+            expect(vm.forms).toEqual(expectedFormsData);
         });
     });
     
     describe('function aliasMgmtAdd', () => {
-    	let fuzzyResponse = { "data": 'Candidates' };
-    	let formsResponse = { "data": 'Forms' };
-    	let knownperson = {full_name: 'foo', id: 123};
+        let expectedFuzzyData = [{
+            'form_name':'irIndia',
+            'form_id':1,
+            'stationId':1,
+            'countryId':1,
+        }];
+        let fuzzyResponse = {"data": expectedFuzzyData };
+    	let expectedFormsData = [
+             {
+                 'form_name':'irIndia',
+                 'form_id':1,
+                 'stationId':2,
+                 'countryId':1,
+             }
+             ];
+         let formsResponse = { "data": expectedFormsData};
+         let expectedKnownData = [
+             {
+                 'id':1,
+                 'full_name':'foo',
+                 'form_name':'irIndia',
+                 'form_id':1,
+                 'stationId':3,
+                 'countryId':1,
+             }
+             ];
+         let knownResponse = { "data": expectedKnownData};
     	
         beforeEach(() => {
             vm.idManagementService.getFuzzyKnownPersons = () => {
@@ -277,7 +322,7 @@ describe('IdManagementController', () => {
                     }
                 };
             };
-            vm.aliasMgmtAdd(knownperson);
+            vm.aliasMgmtAdd(expectedKnownData[0]);
         });
         
     	it("addSearchOption should be name", () => {
@@ -304,12 +349,8 @@ describe('IdManagementController', () => {
             expect(vm.matchSelected).toBe(false);
         });
         
-        it("addCandidates should be Candidates", () => {
-            expect(vm.addCandidates).toEqual('Candidates');
-        });
-        
         it("forms should be Forms", () => {
-            expect(vm.forms).toEqual('Forms');
+            expect(vm.forms).toEqual(expectedFormsData);
         });
     });
     
@@ -458,8 +499,27 @@ describe('IdManagementController', () => {
     
     describe('function aliasMgmtDelete', () => {
     	let knownperson = {full_name: 'foo', id: 123, alias_group : 987};
-    	let aliasMembersResponse = {data : 'aliasMembers'};
-    	let formsResponse = {data : 'personForms'};
+    	let expectedAliasMembers = [
+    	    {
+                'id':1,
+                'full_name':'foo',
+                'form_name':'irIndia',
+                'form_id':1,
+                'stationId':3,
+                'countryId':1,
+    	    }
+    	    
+    	];
+    	let aliasMembersResponse = {data : expectedAliasMembers};
+    	let expectedFormsData = [
+            {
+                'form_name':'irIndia',
+                'form_id':1,
+                'stationId':2,
+                'countryId':1,
+            }
+            ];
+        let formsResponse = { "data": expectedFormsData};
 
     	beforeEach(() => {
     		vm.idManagementService.getAliasMembers = () => {
@@ -480,11 +540,11 @@ describe('IdManagementController', () => {
     	});
        
     	it("delCandidates should be aliasMembers", () => {
-    		expect(vm.delCandidates).toEqual('aliasMembers');
+    		expect(vm.delCandidates).toEqual(expectedAliasMembers);
     	});
     	
        	it("forms should be personForms", () => {
-    		expect(vm.forms).toEqual('personForms');
+    		expect(vm.forms).toEqual(expectedFormsData);
     	});
    	
     	it("knownperson matches", () => {

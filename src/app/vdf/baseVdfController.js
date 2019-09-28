@@ -9,6 +9,7 @@ export class BaseVdfController extends BaseFormController {
         this.constants = constants;
         this.service = VdfService;
         this.state = $state;
+        this.relatedUrl = null;
 
         this.vdfNumber = "";
         this.associatedPersons = [];
@@ -37,6 +38,12 @@ export class BaseVdfController extends BaseFormController {
             this.service.getVdf(countryId, stationId, id).then((response) => {
                 this.processResponse(response, id);
                 this.number_change();
+                if (this.stateParams.id !== null && this.questions[651].response.value !== null) {
+                    this.relatedUrl = this.state.href('relatedForms', {
+                        stationId: this.stateParams.stationId,
+                        formNumber: this.questions[651].response.value
+                    });
+                }
             });
         });
     }

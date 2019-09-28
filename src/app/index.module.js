@@ -30,6 +30,8 @@ import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';
 import idmanagementModule from './idmanagement/idmanagement.module';
 import traffickermatchModule from './traffickermatch/traffickermatch.module';
+import relatedFormsModule from './relatedForms/relatedForms.module';
+
 
 import constants from './constants.js';
 import config from './index.config';
@@ -61,6 +63,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         countriesModule,
         idmanagementModule,
         traffickermatchModule,
+        relatedFormsModule,
     ])
 
     .constant('constants', constants)

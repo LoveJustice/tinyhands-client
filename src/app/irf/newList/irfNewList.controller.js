@@ -328,6 +328,10 @@ export default class IrfNewListController {
                     formName: irfs[idx].form_name,
                 });
             }
+            irf.relatedUrl = this.state.href('relatedForms', {
+                stationId: irf.station.id,
+                formNumber: irf.irf_number
+            });
         }
     }
 

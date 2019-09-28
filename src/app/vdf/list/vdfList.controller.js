@@ -246,6 +246,7 @@ export default class VdfListController {
                 vdf.viewUrl = this.state.href(vdfs[idx].form_name, {id:vdf.id, stationId:vdf.station.id, countryId:vdf.station.operating_country.id, isViewing:true,formName: vdfs[idx].form_name});
                 vdf.editUrl = this.state.href(vdfs[idx].form_name, {id:vdf.id, stationId:vdf.station.id, countryId:vdf.station.operating_country.id, isViewing:false, formName: vdfs[idx].form_name});
             }
+            vdf.relatedUrl = this.state.href('relatedForms', {stationId: vdf.station.id, formNumber: vdf.vdf_number});
         }
     }
 

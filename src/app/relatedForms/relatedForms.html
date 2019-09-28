@@ -1,0 +1,42 @@
+<div class="container" id="relatedFormsList"><br/>
+
+    <div class="row">
+        <div class="col-xs-5">
+            <h1>Related Forms</h1>
+        </div>
+    </div>
+    <br/>
+    <table class="table table-striped" ng-model="vm.relatedForms">
+        <thead>
+            <tr>
+                <th width="8%">Form Number</th>
+                <th width="8%">Form Type</th>
+                <th width="15%">Staff Name</th>
+                <th width="16%">Time Entered Into System</th>
+                <th width="16%">Time Last Edited</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="related in vm.relatedForms">
+                <td>{{ related.form_number }}</td>
+                <td>{{ related.form_type }}</td>
+                <td>{{ related.staff_name }}</td>
+                <td class="hidden-xs">{{ related.time_entered}}</td>
+                <td class="hidden-xs">{{ related.time_last_edited}}</td>
+                <td ng-if="vm.session.checkPermission(related.form_type,'VIEW',related.country_id, related.station_id)"><a class="btn btn-sm btn-primary" ng-href="{{related.viewUrl}}">View</a></td>
+                <td ng-if="vm.session.checkPermission(related.form_type,'EDIT',related.country_id, related.station_id)"><a class="btn btn-sm btn-primary" ng-href="{{related.editUrl}}">Edit</a></td>
+                <td ng-if="vm.session.checkPermission(related.form_type,'DELETE',related.country_id, related.country_id)"><a class="btn btn-sm btn-danger" ng-click="vm.deleteForm(related, $index)">
+                    {{ related.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="vdfListCtrl.vdfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No VDFs Matched your search for: "{{ vdfListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="alert alert-danger" ng-repeat="error in vm.errors">
+    	<strong>Error! {{error}}</strong>
+    </div>
+</div>

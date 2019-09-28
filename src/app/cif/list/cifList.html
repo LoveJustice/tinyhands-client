@@ -49,6 +49,7 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('cif_number', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('cif_number', 'reverse') }"></i>
                 </th>
+                <th></th>
                 <th ng-click="cifListCtrl.updateSort('staff_name')" width="15%">Staff Name
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('staff_name', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
@@ -81,6 +82,7 @@
         <tbody>
             <tr ng-repeat="cif in cifListCtrl.cifs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ cif.cif_number }}</td>
+                <td><a ng-href="{{cif.relatedUrl}}" title="Related Forms"><img ng-src="assets/images/pages.png"></a></td>
                 <td>{{ cif.staff_name }}</td>
                 <td>{{ cif.number_of_victims | number }}</td>
                 <td>{{ cif.number_of_traffickers | number }}</td>

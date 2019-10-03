@@ -16,6 +16,7 @@ import lbsTemplate from '../common/step-templates/locationBoxes/locationBoxes.ht
 import vbsTemplate from '../common/step-templates/vehicleBoxes/vehicleBoxes.html';
 import finalTemplate from './step-templates/final.html';
 import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
+import logbookTemplate from '../common/step-templates/logbook.html';
 
 import potentialVictimModalTemplate from '../common/step-templates/potentialVictims/potentialVictimModal.html';
 import transportationBoxModalTemplate from '../common/step-templates/transportationBoxes/transportationBoxModal.html';
@@ -42,6 +43,7 @@ export class CifAfricaRegionController extends BaseCifController {
             {template:vbsTemplate, name:"Vehicle Boxes"},
             {template:finalTemplate, name:"Final"},
             {template:attachmentsTemplate, name:"Attachments"},
+            {template:logbookTemplate, name:"Logbook"},
         ];
     }
     

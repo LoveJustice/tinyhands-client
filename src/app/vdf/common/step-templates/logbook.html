@@ -4,14 +4,14 @@
 	</div>
 	<div class="row"></div>
 	<div class="row center-vertical">
-		<form-step class="col-md-4">Date IRF Received</form-step>
+		<form-step class="col-md-4">Date VDF Received</form-step>
 		<div class="col-md-4">
 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[861].value">
 		</div>
 	</div>
 	<div class="row">&nbsp;</div>
 	<div class="row center-vertical">
-    	<form-step class="col-md-4">Were there incomplete questions on the IRF that prevented submission?</form-step>
+    	<form-step class="col-md-4">Were there incomplete questions on the VDF that prevented submission?</form-step>
     	<div class="col-md-1">
       		<form-step type="radio" label="No" response-value="$ctrl.questions[810].response.value" radio-name="incompleteQuestions"></form-step>
      	</div>
@@ -42,7 +42,7 @@
 	</div>
 	<div class="row">&nbsp;</div>
 	<div class="row center-vertical">
-		<form-step class="col-md-4">Date IRF Submitted</form-step>
+		<form-step class="col-md-4">Date VDF Submitted</form-step>
 		<div class="col-md-4">
 			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[862].value">
 		</div>

@@ -4,24 +4,34 @@ class IndicatorsController {
         
         this.indicatorsService = indicatorsService;
         this.countriesService = countriesService;
-        this.spinnerOverlayService = SpinnerOverlayService
+        this.spinnerOverlayService = SpinnerOverlayService;
         this.indicatorsData = null;
+        this.displayHistory = 10;
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
         this.countryDropDown.selectedOptions = [];
         this.countryDropDown.settings = {
-            smartButtonMaxItems: 2,
+            smartButtonMaxItems:1,
+            selectionLimit:1,
+            closeOnSelect: true,
             showCheckAll: false,
             showUncheckAll: false,
         };
-        this.countryDropDown.customText = { buttonDefaultText: 'All' };
+        this.countryDropDown.eventListener = {
+                onItemSelect: this.countryChange,
+                ctrl: this,
+        };
         
         this.startDate = '';
         this.endDate = '';
         
         this.loading = true;
         this.getCountries();
+    }
+    
+    countryChange() {
+        this.ctrl.calculate();
     }
     
     getCountries() {
@@ -42,23 +52,44 @@ class IndicatorsController {
         return dateString;
     }
     
-    calculate() {
-        this.spinnerOverlayService.show('Calculating Indicators...');
-        let params = [];
-        params.push({'name':'start_date', 'value':this.dateAsString(this.startDate)});
-        params.push({'name':'end_date', 'value':this.dateAsString(this.endDate)});
-        if (this.countryDropDown.selectedOptions.length > 0) {
-            let countryIds='';
-            let sep='';
-            for (let idx=0; idx < this.countryDropDown.selectedOptions.length; idx++) {
-                countryIds += sep + this.countryDropDown.selectedOptions[idx].id;
-                sep = ',';
+    scroll(increment) {
+        this.scrollHistory(this.scrollPos + increment);
+    }
+    
+    scrollHistory(to_idx) {
+        if (this.indicatorsData.history.length < this.displayHistory) {
+            this.history = this.indicatorsData.history;
+            let hist = [];
+            for (let idx=0; idx < this.indicatorsData.history.length; idx++) {
+                hist.push(this.indicatorsData.history[idx]);
             }
-            
-            params.push({'name':'country_ids', 'value':countryIds});
+            for (let idx=0; idx < (this.displayHistory-this.indicatorsData.history.length); idx++) {
+                hist.push({});
+            }
+            this.history = hist;
+            this.scrollPos = 0;
+            this.scrollLeft = false;
+            this.scrollRight = false;
+        } else {
+            let hist = [];
+            for (let idx=to_idx; idx < to_idx+this.displayHistory; idx++) {
+                hist.push(this.indicatorsData.history[idx]);
+            }
+            this.history = hist;
+            this.scrollPos = to_idx;
+            this.scrollLeft = (to_idx > 0);
+            this.scrollRight = (to_idx + this.displayHistory < this.indicatorsData.history.length);
         }
-        this.indicatorsService.calculate(params).then(promise => {
+    }
+    
+    calculate() {
+        if (this.countryDropDown.selectedOptions.length !== 1) {
+            return;
+        }
+        this.spinnerOverlayService.show('Calculating Indicators...');
+        this.indicatorsService.calculate(this.countryDropDown.selectedOptions[0].id).then(promise => {
             this.indicatorsData = promise.data;
+            this.scrollHistory(0);
             this.spinnerOverlayService.hide();
         });
     }

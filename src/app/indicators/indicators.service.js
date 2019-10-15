@@ -4,7 +4,7 @@ export default class IndicatorsService {
         this.service = BaseService;
     }
     
-    calculate(params) {
-        return this.service.get('api/indicators/', params);
+    calculate(country_id) {
+        return this.service.get(`api/indicators/${country_id}`);
     }
 }

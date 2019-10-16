@@ -1,5 +1,5 @@
 <h1 class="text-center">Data Entry Indicators</h1>
-<div class="row center-vertical">
+<div class="row center-vertical" id="dataEntryIndicator">
 	<div class="col-md-1">
 		&nbsp;
 	</div>
@@ -30,95 +30,18 @@
 	            <tr>
 	                <th width="17%">Data Indicators</th>
 	                <th width="5%">Goal</th>
-	                <th width="5%">Last 30 days</th>
+	                <th width="5%" class="cell-right-border">Last 30 days</th>
 	                <th width="5%" ng-repeat="indicator in indicators.history">{{ indicator.title }}</th>
 	            </tr>
 	        </thead>
 	        <tbody>
-	            <tr>
-	                <td><b>IRF Lag Time</b></td>
-	                <td>{{ indicators.indicatorsData.goals.irfLag }}</td>
-	                <td>{{ indicators.indicatorsData.latest.irfLag }}</td>
-	                <td  ng-repeat="indicator in indicators.history">{{ indicator.irfLag }}</td>
+	        	<tr ng-repeat="entry in indicators.indicatorTypes">
+	        		<td><b>{{ entry.name }}</b></td>
+	                <td>{{ indicators.indicatorsData.goals[entry.key] }}</td>
+	                <td ng-class="indicators.getCellClass(entry, indicators.indicatorsData.latest[entry.key],'cell-right-border')"><b>{{ indicators.indicatorsData.latest[entry.key] }}</b></td>
+	                <td ng-class="indicators.getCellClass(entry, indicator[entry.key])" ng-repeat="indicator in indicators.history">{{ indicator[entry.key] }}</td>
 	            </tr>
-	            <tr>
-	                <td><b>IRF Forms Entered</b></td>
-	                <td></td>
-	                <td>{{ indicators.indicatorsData.latest.irfCount }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.irfCount }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Photo Upload Lag Time</b></td>
-	                <td>{{ indicators.indicatorsData.goals.photosLag }}</td>
-	                <td>{{ indicators.indicatorsData.latest.photosLag }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.photosLag }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Photos Uploaded</b></td>
-	                <td></td>
-	                <td>{{ indicators.indicatorsData.latest.photosCount }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.photosCount }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>VDF Lag Time</b></td>
-	                <td>{{ indicators.indicatorsData.goals.vdfLag }}</td>
-	                <td>{{ indicators.indicatorsData.latest.vdfLag }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.vdfLag }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>VDFs Entered</b></td>
-	                <td></td>
-	                <td>{{ indicators.indicatorsData.latest.vdfCount }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.vdfCount }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>CIF Lag Time</b></td>
-	                <td>{{ indicators.indicatorsData.goals.cifLag }}</td>
-	                <td>{{ indicators.indicatorsData.latest.cifLag }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.cifLag }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>CIFs Entered</b></td>
-	                <td></td>
-	                <td>{{ indicators.indicatorsData.latest.cifCount }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.cifCount }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Step 1: Verification Lag time</b></td>
-	                <td> {{indicators.indicatorsData.goals.v1Lag }}</td>
-	                <td>{{ indicators.indicatorsData.latest.v1Lag }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.v1Lag }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Step 1: Verifications Completed</b></td>
-	                <td></td>
-	                <td>{{ indicators.indicatorsData.latest.v1Count }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.v1Count }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Step 1: Verification Backlog</b></td>
-	                <td>{{ indicators.indicatorsData.goals.v1Backlog }}</td>
-	                <td>{{ indicators.indicatorsData.latest.v1Backlog }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.v1Backlog }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Step 2: Verification Lag time</b></td>
-	                <td>{{ indicators.indicatorsData.goals.v2Lag }}</td>
-	                <td>{{ indicators.indicatorsData.latest.v2Lag }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.v2Lag }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Step 2: Verifications Completed</b></td>
-	                <td></td>
-	                <td>{{ indicators.indicatorsData.latest.v2Count }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.v2Count }}</td>
-	            </tr>
-	            <tr>
-	                <td><b>Step 2: Verification Backlog</b></td>
-	                <td>{{ indicators.indicatorsData.goals.v2Backlog }}</td>
-	                <td>{{ indicators.indicatorsData.latest.v2Backlog }}</td>
-	                <td ng-repeat="indicator in indicators.history">{{ indicator.v2Backlog }}</td>
-	            </tr>
+	           
 	   		</tbody>
 	    </table>
     </div>

@@ -1,3 +1,4 @@
+import './indicators.less';
 class IndicatorsController {
     constructor($rootScope, SessionService, indicatorsService, SpinnerOverlayService, countriesService) {
         'ngInject';
@@ -22,6 +23,23 @@ class IndicatorsController {
                 onItemSelect: this.countryChange,
                 ctrl: this,
         };
+        
+        this.indicatorTypes = [
+            {'key':'irfLag', 'name':'IRF Lag Time', 'color':true},
+            {'key':'irfCount', 'name':'IRF Forms Entered', 'color':false},
+            {'key':'photosLag', 'name':'Photo Upload Lag Time', 'color':true},
+            {'key':'photosCount', 'name':'Photos Uploaded', 'color':false},
+            {'key':'vdfLag', 'name':'VDF Lag Time', 'color':true},
+            {'key':'vdfCount', 'name':'VDF Forms Entered', 'color':false},
+            {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
+            {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
+            {'key':'v1Lag', 'name':'Step 1: Verification Lag time', 'color':true},
+            {'key':'v1Count', 'name':'Step 1: Verifications Completed', 'color':false},
+            {'key':'v1Backlog', 'name':'Step 1: Verification Backlog', 'color':true},
+            {'key':'v2Lag', 'name':'Step 2: Verification Lag time', 'color':true},
+            {'key':'v2Count', 'name':'Step 2: Verifications Completed', 'color':false},
+            {'key':'v2Backlog', 'name':'Step 2: Verification Backlog', 'color':true},
+        ];
         
         this.startDate = '';
         this.endDate = '';
@@ -92,6 +110,23 @@ class IndicatorsController {
             this.scrollHistory(0);
             this.spinnerOverlayService.hide();
         });
+    }
+    
+    getCellClass(entry, value, extra='') {
+        let goal = this.indicatorsData.goals[entry.key];
+        if (!entry.color || isNaN(value)) {
+            return extra;
+        }
+        
+        if (value < goal / 2) {
+            return "exceeds-goal" + " " + extra;
+        } else if (value <= goal) {
+            return "meets-goal" + " " + extra;
+        } else if (value <= goal * 2) {
+            return "needs-improvement" + " " + extra;
+        } else {
+            return "does-not-meet-goal" + " " + extra;
+        }
     }
 }
 

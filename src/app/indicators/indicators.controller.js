@@ -7,6 +7,7 @@ class IndicatorsController {
         this.countriesService = countriesService;
         this.spinnerOverlayService = SpinnerOverlayService;
         this.indicatorsData = null;
+        this.highlight = null;
         this.displayHistory = 10;
         
         this.countryDropDown = {};
@@ -72,6 +73,9 @@ class IndicatorsController {
     
     scroll(increment) {
         this.scrollHistory(this.scrollPos + increment);
+        if (this.highlight !== null) {
+            this.highlight -= increment;
+        }
     }
     
     scrollHistory(to_idx) {
@@ -112,21 +116,39 @@ class IndicatorsController {
         });
     }
     
-    getCellClass(entry, value, extra='') {
+    selectColumn(idx) {
+        if (this.highlight === idx) {
+            this.highlight = null;
+        }  else {
+            this.highlight = idx;
+        }
+    }
+    
+    getCellClass(entry, value, idx) {
+        let displayClass = "";
         let goal = this.indicatorsData.goals[entry.key];
         if (!entry.color || isNaN(value)) {
-            return extra;
+            displayClass = "no-color";
+        } else if (value < goal/2) {
+            displayClass = "exceeds-goal";
+        } else if (value <= goal) {
+            displayClass = "meets-goal";
+        } else if (value <= goal * 2) {
+            displayClass = "needs-improvement";
+        } else {
+            displayClass = "does-not-meet-goal";
+        }
+        if (this.highlight === null || this.highlight === idx) {
+            displayClass = displayClass + "-highlight";
+        } else {
+            displayClass = displayClass + "-non-highlight";
         }
         
-        if (value < goal / 2) {
-            return "exceeds-goal" + " " + extra;
-        } else if (value <= goal) {
-            return "meets-goal" + " " + extra;
-        } else if (value <= goal * 2) {
-            return "needs-improvement" + " " + extra;
-        } else {
-            return "does-not-meet-goal" + " " + extra;
+        if (idx < -1000) {
+            displayClass = displayClass + " cell-right-border";
         }
+        
+        return displayClass;
     }
 }
 

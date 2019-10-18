@@ -27,21 +27,30 @@
 	<div class="col-md-12" ng-if="indicators.indicatorsData">
 		<table class="table table-striped" ng-model="indicators.indicatorsData">
 	        <thead>
+	        	<tr>
+	                <th width="17%" class="title1"></th>
+	                <th width="5%" class="title1"></th>
+	                <th width="5%" class="title1 cell-right-border">Last 30</th>
+	                <th width="5%" class="title1" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title1 }}</th>
+	            </tr>
 	            <tr>
-	                <th width="17%">Data Indicators</th>
-	                <th width="5%">Goal</th>
-	                <th width="5%" class="cell-right-border">Last 30 days</th>
-	                <th width="5%" ng-repeat="indicator in indicators.history">{{ indicator.title }}</th>
+	                <th class="title2">Data Indicators</th>
+	                <th class="title2">Goal</th>
+	                <th class="title2 cell-right-border">Days</th>
+	                <th class="title2" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title2 }}</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	        	<tr ng-repeat="entry in indicators.indicatorTypes">
 	        		<td><b>{{ entry.name }}</b></td>
 	                <td>{{ indicators.indicatorsData.goals[entry.key] }}</td>
-	                <td ng-class="indicators.getCellClass(entry, indicators.indicatorsData.latest[entry.key],'cell-right-border')"><b>{{ indicators.indicatorsData.latest[entry.key] }}</b></td>
-	                <td ng-class="indicators.getCellClass(entry, indicator[entry.key])" ng-repeat="indicator in indicators.history">{{ indicator[entry.key] }}</td>
+	                <td ng-class="indicators.getCellClass(entry, indicators.indicatorsData.latest[entry.key], -1001)"><b>{{ indicators.indicatorsData.latest[entry.key] }}</b></td>
+	                <td ng-class="indicators.getCellClass(entry, indicator[entry.key], $index)" ng-repeat="indicator in indicators.history">{{ indicator[entry.key] }}</td>
 	            </tr>
-	           
+	            <tr>
+	            	<td><b>Date of Newest Form Entered:</b></td>
+	            	<td colspan="2">{{ indicators.indicatorsData.latest.latestDate }}</td>
+	            </tr>
 	   		</tbody>
 	    </table>
     </div>

@@ -11,6 +11,7 @@ export class BaseCifController extends BaseFormController {
         this.service = CifService;
         this.state = $state;
         this.timeout = $timeout;
+        this.relatedUrl = null;
        
         this.cifNumber = "";
         this.associatedPersons = [];
@@ -42,6 +43,12 @@ export class BaseCifController extends BaseFormController {
             this.service.getCif(countryId, stationId, id).then((response) => {
                 this.processResponse(response, id);
                 this.number_change();
+                if (this.stateParams.id !== null && this.questions[287].response.value !== null) {
+                    this.relatedUrl = this.state.href('relatedForms', {
+                        stationId: this.stateParams.stationId,
+                        formNumber: this.questions[287].response.value
+                    });
+                }
             });
         });
     }

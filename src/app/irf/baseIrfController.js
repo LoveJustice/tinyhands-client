@@ -9,7 +9,8 @@ export class BaseIrfController extends BaseFormController {
         this.constants = constants;
         this.service = IrfService;
         this.state = $state;
-
+        this.relatedUrl = null;
+        
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
     
@@ -18,6 +19,12 @@ export class BaseIrfController extends BaseFormController {
     		this.config = response.data;
     		this.service.getIrf(countryId, stationId, id).then((response) => {
     		    this.processResponse(response, id);
+    		    if (this.stateParams.id !== null && this.questions[1].response.value !== null) {
+    		        this.relatedUrl = this.state.href('relatedForms', {
+    	                stationId: this.stateParams.stationId,
+    	                formNumber: this.questions[1].response.value
+    	            });
+    		    }
             });
     	});
     }

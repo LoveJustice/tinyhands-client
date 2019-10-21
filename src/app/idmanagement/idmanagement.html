@@ -66,7 +66,7 @@
 	                <td class="text-center">{{ knownPerson.phone_contact }}</td>
 	                <td class="text-center">{{ knownPerson.form_kind }}</td>
 	                <td class="text-center">{{ knownPerson.aliases }}</td>
-	                <td class="text-center"><a href="">{{ knownPerson.form_number }}</a></td>
+	                <td class="text-center"><a ng-href="{{knownPerson.viewUrl}}">{{ knownPerson.form_number }}</a></td>
 	                <td class="text-center">
 	                	<center>{{ knownPerson.form_date }}</center>
 	                	<button class="btn btn-sm btn-primary animated" ng-class="{fadeIn:knownPerson.hover,fadeOut:!knownPerson.hover}" ng-click="vm.aliasMgmt(knownPerson)">Alias Mgmt </button>
@@ -126,7 +126,7 @@
 					<table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" >
 					<tbody>
 						<tr ng-repeat="form in vm.forms">
-							<td class="text-left" style="width:50%;"><a href="">{{ form.number }}</a></td>
+							<td class="text-left" style="width:50%;"><a ng-href="{{form.viewUrl}}">{{ form.number }}</a></td>
 							<td class="text-left">{{ form.date }}</td>
 						</tr>
 					</table>
@@ -175,7 +175,7 @@
                 <td class="text-left">{{ candidate.address2.name }}</td>
                 <td class="text-left">{{ candidate.phone_contact }}</td>
                 <td class="text-left">{{ candidate.form_kind }}</td>
-                <td class="text-left"><a href="">{{ candidate.form_number }}</a></td>
+                <td class="text-left"><a href="{{candidate.viewUrl}}">{{ candidate.form_number }}</a></td>
                 <td class="text-center">
                 	<center>{{ candidate.form_date }}</center>
                 	<div ng-hide="candidate.alias_group == null">

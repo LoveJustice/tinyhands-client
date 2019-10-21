@@ -1,0 +1,51 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+	<div class="row col-md-12">
+	 	<h3>Compliance</h3>
+	</div>
+	<div class="row"></div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date CIF Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[861].value">
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-4">Were there incomplete questions on the CIF that prevented submission?</form-step>
+    	<div class="col-md-1">
+      		<form-step type="radio" label="No" response-value="$ctrl.questions[810].response.value" radio-name="incompleteQuestions"></form-step>
+     	</div>
+   		<div class="col-md-1">
+			<form-step type="radio" label="Yes" response-value="$ctrl.questions[810].response.value" radio-name="incompleteQuestions"></form-step>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Please list incomplete sections that prevented submission</form-step>
+		<div class="col-md-4">
+			<input type="text" class="form-control" placeholder="Incomplete sections" ng-model="$ctrl.questions[811].response.value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date Complete Information was Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[812].value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-1">Notes:</form-step>
+		<div class=col-md-8>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.questions[813].response.value"></textarea>
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date CIF Submitted</form-step>
+		<div class="col-md-4">
+			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[862].value">
+		</div>
+	</div>
+	<div>&nbsp;</div>
+</fieldset>

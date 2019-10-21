@@ -77,6 +77,13 @@ class IdManagementController {
         this.idManagementService.listKnownPersons(this.getQueryParams())
             .then((promise) => {
                 this.knownPersons = promise.data.results;
+                for (let idx in this.knownPersons) {
+                    if (this.knownPersons[idx].form_name) {
+                        this.knownPersons[idx].viewUrl = this.state.href(this.knownPersons[idx].form_name, {id:this.knownPersons[idx].form_id, 
+                            stationId:this.knownPersons[idx].station_id, countryId:this.knownPersons[idx].country_id, isViewing:true,
+                            formName:this.knownPersons[idx].form_name});
+                    }
+                }
                 this.nextPageUrl = this.nextUrl(promise.data.next);
                 this.loading = false;
             });
@@ -152,12 +159,22 @@ class IdManagementController {
 	        this.idManagementService.getFuzzyKnownPersons(this.addSearchValue)
 	            .then((promise) => {
 	                this.addCandidates = promise.data;
+	                for (let idx in this.addCandidates) {
+	                    this.addCandidates[idx].viewUrl = this.state.href(this.addCandidates[idx].form_name, {id:this.addCandidates[idx].form_id, 
+	                        stationId:this.addCandidates[idx].station_id, countryId:this.addCandidates[idx].country_id, isViewing:true,
+	                        formName:this.addCandidates[idx].form_name});
+	                }
 	                this.loading = false;
 	            });
     	} else {
     		 this.idManagementService.getPhoneKnownPersons(this.addSearchValue)
 	            .then((promise) => {
 	                this.addCandidates = promise.data;
+	                for (let idx in this.addCandidates) {
+                        this.addCandidates[idx].viewUrl = this.state.href(this.addCandidates[idx].form_name, {id:this.addCandidates[idx].form_id, 
+                            stationId:this.addCandidates[idx].station_id, countryId:this.addCandidates[idx].country_id, isViewing:true,
+                            formName:this.addCandidates[idx].form_name});
+                    }
 	                this.loading = false;
 	            });
     	}
@@ -167,6 +184,11 @@ class IdManagementController {
     	this.idManagementService.getKnownPersonForms(person_id)
 	    	.then((promise) => {
 	            this.forms = promise.data;
+	            for (let idx in this.forms) {
+	                this.forms[idx].viewUrl = this.state.href(this.forms[idx].form_name, {id:this.forms[idx].form_id, 
+                        stationId:this.forms[idx].station_id, countryId:this.forms[idx].country_id, isViewing:true,
+                        formName:this.forms[idx].form_name});
+	            }
 	        });
     }
     

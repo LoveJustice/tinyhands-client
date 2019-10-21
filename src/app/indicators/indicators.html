@@ -1,0 +1,57 @@
+<h1 class="text-center">Data Entry Indicators</h1>
+<div class="row center-vertical" id="dataEntryIndicator">
+	<div class="col-md-1">
+		&nbsp;
+	</div>
+	<div class="col-md-3 text-center">
+		<div class="col-md-3 text-center">
+			<p>Country</p>
+		</div>
+		<div class="col-md-9" ng-dropdown-multiselect="" options="indicators.countryDropDown.options"
+				selected-model="indicators.countryDropDown.selectedOptions"
+				extra-settings="indicators.countryDropDown.settings"
+				translation-texts="indicators.countryDropDown.customText"
+				events="indicators.countryDropDown.eventListener">
+		</div>
+	</div>
+	<div class="col-md-4">
+		&nbsp;
+	</div>
+	<div class="col-md-1">
+		<img ng-src="assets/images/Actions-go-previous-icon.png" ng-show="indicators.scrollLeft" ng-click="indicators.scroll(-1)">
+	</div>
+	<div class="col-md-1">
+		<img ng-src="assets/images/Actions-go-next-icon.png" ng-show="indicators.scrollRight" ng-click="indicators.scroll(1)">
+	</div>
+	<hr>
+	<div class="col-md-12" ng-if="indicators.indicatorsData">
+		<table class="table table-striped" ng-model="indicators.indicatorsData">
+	        <thead>
+	        	<tr>
+	                <th width="17%" class="title1"></th>
+	                <th width="5%" class="title1"></th>
+	                <th width="5%" class="title1 cell-right-border">Last 30</th>
+	                <th width="5%" class="title1" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title1 }}</th>
+	            </tr>
+	            <tr>
+	                <th class="title2">Data Indicators</th>
+	                <th class="title2">Goal</th>
+	                <th class="title2 cell-right-border">Days</th>
+	                <th class="title2" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title2 }}</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr ng-repeat="entry in indicators.indicatorTypes">
+	        		<td><b>{{ entry.name }}</b></td>
+	                <td>{{ indicators.indicatorsData.goals[entry.key] }}</td>
+	                <td ng-class="indicators.getCellClass(entry, indicators.indicatorsData.latest[entry.key], -1001)"><b>{{ indicators.indicatorsData.latest[entry.key] }}</b></td>
+	                <td ng-class="indicators.getCellClass(entry, indicator[entry.key], $index)" ng-repeat="indicator in indicators.history">{{ indicator[entry.key] }}</td>
+	            </tr>
+	            <tr>
+	            	<td><b>Date of Newest Form Entered:</b></td>
+	            	<td colspan="2">{{ indicators.indicatorsData.latest.latestDate }}</td>
+	            </tr>
+	   		</tbody>
+	    </table>
+    </div>
+</div>

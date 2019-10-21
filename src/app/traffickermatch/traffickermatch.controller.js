@@ -6,6 +6,8 @@ class TraffickerMatchController {
         this.traffickerMatchService = traffickerMatchService;
         this.spinnerOverlayService = SpinnerOverlayService;
         this.$uibModal = $uibModal;
+        this.language = 'Nepali';
+        this.filter = "Suspect";
 
         this.type = "name";
         this.searchValue = "";
@@ -22,7 +24,7 @@ class TraffickerMatchController {
     matchSearch() {
         this.spinnerOverlayService.show("Searching for matches");
         this.type = isNaN(this.searchValue.replace(/[\s-\(\)\.]+/g, "")) ? "name" : "phone";
-        this.traffickerMatchService.getKnownPersons(this.searchValue, this.type)
+        this.traffickerMatchService.getKnownPersons(this.searchValue, this.type, this.filter)
             .then((promise) => {
                 this.matchCandidates = promise.data;
                 this.spinnerOverlayService.hide();

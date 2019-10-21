@@ -48,6 +48,7 @@
 		</div>
 	</div>
 	
+	<div ng-if="$ctrl.dateData.questions[862].value">
 	<hr>
 	<div class="row col-md-12">
 	 	<h3>First Verification</h3>
@@ -86,8 +87,9 @@
 			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[817].value">
 		</div>
 	</div>
+	</div>
 	
-	
+	<div ng-if="$ctrl.dateData.questions[817].value">
 	<hr>
 	<div class="row col-md-12">
 	 	<h3>Second Verification</h3>
@@ -132,5 +134,6 @@
 		<div class=col-md-8>
 			<textarea class="form-control" rows="3" ng-model="$ctrl.questions[863].response.value"></textarea>
 		</div>
+	</div>
 	</div>
 </fieldset>

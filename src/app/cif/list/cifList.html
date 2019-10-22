@@ -49,24 +49,28 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('cif_number', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('cif_number', 'reverse') }"></i>
                 </th>
-                <th></th>
-                <th ng-click="cifListCtrl.updateSort('staff_name')" width="15%">Staff Name
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('staff_name', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
+                <th width="3%"></th>
+                <th ng-click="cifListCtrl.updateSort('main_pv__full_name')" width="15%">PVOT
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('main_pv__full_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('main_pv__full_name', 'reverse')}"></i>
                 </th>
-                <th ng-click="cifListCtrl.updateSort('number_of_victims')" width="10%">Number of Victims
+                <th ng-click="cifListCtrl.updateSort('source_of_intelligence')" width="15%">Source
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('source_of_intelligence', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('source_of_intelligence', 'reverse')}"></i>
+                </th>
+                <th ng-click="cifListCtrl.updateSort('number_of_victims')" width="5%">#V
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('number_of_victims', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('number_of_victims', 'reverse')}"></i>
                 </th>
-                <th ng-click="cifListCtrl.updateSort('number_of_traffickers')" width="10%">Number of Traffickers
+                <th ng-click="cifListCtrl.updateSort('number_of_traffickers')" width="5%">#T
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('number_of_traffickers', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('number_of_traffickers', 'reverse')}"></i>
                 </th>
-                <th ng-click="cifListCtrl.updateSort('interview_date')" width="16%">Date of Interview
+                <th ng-click="cifListCtrl.updateSort('interview_date')" width="10%">Date of Interview
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('interview_date', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('interview_date', 'reverse')}"></i>
                 </th>
-                <th ng-click="cifListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
+                <th ng-click="cifListCtrl.updateSort('date_time_entered_into_system')" width="10%" class="hidden-xs">Date Entered
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': cifListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': cifListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
                 </th>
@@ -83,16 +87,17 @@
             <tr ng-repeat="cif in cifListCtrl.cifs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ cif.cif_number }}</td>
                 <td><a ng-href="{{cif.relatedUrl}}" title="Related Forms"><img ng-src="assets/images/pages.png"></a></td>
-                <td>{{ cif.staff_name }}</td>
+                <td>{{ cif.pvot_name }}</td>
+                <td>{{ cif.source_of_intelligence }}</td>
                 <td>{{ cif.number_of_victims | number }}</td>
                 <td>{{ cif.number_of_traffickers | number }}</td>
-                <td>{{ cif.date_time_of_interview | date:"medium" : cifListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ cif.date_time_entered_into_system | date:"medium" : cifListCtrl.timeZoneDifference }}</td>
+                <td>{{ cif.date_of_interview }}</td>
+                <td>{{ cif.date_entered_into_system }}</td>
                 <td class="hidden-xs">{{ cif.date_time_last_updated | date:"medium" : cifListCtrl.timeZoneDifference }}</td>
-                <td ng-if="cifListCtrl.session.checkPermission('CIF','VIEW',cif.station.operating_country.id, cif.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{cif.viewUrl}}">View</a></td>
-                <td ng-if="cifListCtrl.session.checkPermission('CIF','EDIT',cif.station.operating_country.id, cif.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{cif.editUrl}}">Edit</a></td>
-                <td ng-if="cifListCtrl.session.checkPermission('CIF','DELETE',cif.station.operating_country.id, cif.station.id)"><a class="btn btn-sm btn-danger" ng-click="cifListCtrl.deleteCif(cif, $index)">
-                    {{ cif.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','VIEW',cif.station.operating_country.id, cif.station.id)" title="View"><a ng-href="{{cif.viewUrl}}"><img ng-src="assets/images/eye-icon.png"></a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','EDIT',cif.station.operating_country.id, cif.station.id)" title="Edit"><a ng-href="{{cif.editUrl}}"><img ng-src="assets/images/Edit-Document-icon.png"></a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','DELETE',cif.station.operating_country.id, cif.station.id) && !cif.confirmedDelete"><a ng-click="cifListCtrl.deleteCif(cif, $index)" title="Delete"><img ng-src="assets/images/Button-Delete-icon.png"></a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','DELETE',cif.station.operating_country.id, cif.station.id) && cif.confirmedDelete""><a class="btn btn-sm btn-danger" ng-click="cifListCtrl.deleteCif(cif, $index)">"Confirm?"</a></td>
             </tr>
             <tr ng-show="cifListCtrl.cifs.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No CIFs Matched your search for: "{{ cifListCtrl.queryParameters.search }}"</h2></td>

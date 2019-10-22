@@ -125,7 +125,10 @@ export class BaseIrfController extends BaseFormController {
                 status = 'second-verification';
             }
             if (!this.questions[821].response.value) {
-                this.dateData.questions[821].value = new Date();
+                this.dateData.questions[821].value = new Date(); 
+            }
+            if (!this.questions[817].response.value) {
+                this.dateData.questions[817].value = this.dateData.questions[821].value;
             }
         } else if (this.questions[814].response.value) {
             status = 'first-verification';

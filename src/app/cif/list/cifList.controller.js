@@ -246,6 +246,7 @@ export default class CifListController {
     			cif.viewUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:true,formName: cifs[idx].form_name});
     			cif.editUrl = this.state.href(cifs[idx].form_name, {id:cif.id, stationId:cif.station.id, countryId:cif.station.operating_country.id, isViewing:false, formName: cifs[idx].form_name});
     		}
+    		cif.relatedUrl = this.state.href('relatedForms', {stationId: cif.station.id, formNumber: cif.cif_number});
     	}
     }
 

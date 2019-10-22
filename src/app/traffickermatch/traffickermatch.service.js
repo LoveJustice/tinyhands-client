@@ -4,9 +4,9 @@ class TraffickerMatchService {
         this.service = BaseService;
     }
 
-    getKnownPersons(val, type) {
+    getKnownPersons(val, type, filter) {
         let endpoint = type === "name" ? "fuzzy" : "phone";
-        return this.service.get(`api/idmgmt/${endpoint}/?${type}=${val}&exclude=victims`);
+        return this.service.get(`api/idmgmt/${endpoint}/?${type}=${val}&filter=${filter}`);
     }
 }
 

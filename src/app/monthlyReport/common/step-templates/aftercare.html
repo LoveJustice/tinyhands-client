@@ -10,7 +10,7 @@
 	<div class="row center-vertical">
 		<b class="col-md-12">EDUCATION</b>
 	</div>
-	<div ng-repeat="radQuest in [776,777,778]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+	<div ng-repeat="radQuest in [776,777,870,778,871,872]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
 		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
 		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
@@ -26,8 +26,15 @@
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
 		</div>
 	</div>
-	
-
+	<div class="row center-vertical">
+		<b class="col-md-12">SHELTER</b>
+	</div>
+	<div ng-repeat="radQuest in [873,874,875]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
+		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Aftercare" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
+		</div>
+	</div>
 	<div class="row center-vertical">
 		<b class="col-md-12">INTERVIEWS</b>
 	</div>

@@ -1,0 +1,56 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="padding-top-20">How was the PVOT identified?</div>
+            <hr/>
+        </div>
+        <div class="row center-vertical">
+            <div class="col-md-2">
+                <form-step type="radio" label="Contact" response-value="$ctrl.questions[91].response.value" radio-name="contactOrStaff"></form-step>
+            </div>
+            <div class="row col-md-10">
+	            <div class="row center-vertical">
+	             	<div class="col-md-3">
+                		<form-step type="text" response-value="$ctrl.questions[261].response.value" label="6.1 Name of Contact"></form-step>
+                	</div>
+	            </div>
+	            <hr/>
+                <div class="row center-vertical">
+                	<form-step> 6.2 Type of contact</form-step>
+                    <div class="col-md-3" ng-repeat="contacts in $ctrl.config.RadioItems[92]">
+                        <form-step type="radio" radio-name="contactType" ng-repeat="contact in contacts" label="{{contact}}" other-value="$ctrl.otherData.questions[92].otherValue"
+                        	response-value="$ctrl.otherData.questions[92].value"></form-step>
+                        <form-step ng-if="$last" type="otherRadio" radio-name="contactType" label="Other" other-value="$ctrl.otherData.questions[92].otherValue"
+                        	response-value="$ctrl.otherData.questions[92].value"></form-step>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row center-vertical">
+            <div class="col-md-2">
+                <form-step type="radio" label="Staff" response-value="$ctrl.questions[91].response.value" radio-name="contactOrStaff"></form-step>
+            </div>
+            <div class="row col-md-10">
+                <div class="row center-vertical">
+                    <div class="col-md-6 form-group">
+                        <form-step class="col-xs-4 control-label">7.1 Name of staff</form-step>
+                        <div class="col-xs-6">
+                            <staff-select selected-staff="$ctrl.questions[106].response.value" station-id="$ctrl.stationId"></staff-select>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <div class="row center-vertical">
+                	<div class="text">7.2 What sign(s) initially drew your attention to them?</div>
+                </div>
+                <div class="row center-vertical">
+                    <div class="col-md-6">
+                        <div class="padding-top-30"></div>
+                        <form-step type="text" response-value="$ctrl.questions[262].response.value" label=""></form-step>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

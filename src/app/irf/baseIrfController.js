@@ -164,6 +164,7 @@ export class BaseIrfController extends BaseFormController {
              this.state.go('irfNewList');
          }, (error) => {
         	 this.set_errors_and_warnings(error.data);
+        	 this.response.status = this.saved_status;
             });
     	
         this.messagesEnabled = true;

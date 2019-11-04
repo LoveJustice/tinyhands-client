@@ -56,6 +56,12 @@ function CifAfricaRegionRoutes($stateProvider) {
             params: {
                 id: null
             }
+        }).state('cifZimbabwe', {
+            url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
+            component: 'cifAfricaRegionComponent',
+            params: {
+                id: null
+            }
         });
 }
 

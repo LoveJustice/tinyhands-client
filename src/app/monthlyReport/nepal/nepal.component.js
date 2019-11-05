@@ -1,9 +1,10 @@
 import {BaseMonthlyReportController} from '../baseMonthlyReportController.js';
-import './india.less';
+import './nepal.less';
 
-import templateUrl from './india.html';
+import templateUrl from './nepal.html';
 
 import governanceTemplate from '../common/step-templates/governance.html';
+import logisticsTemplate from '../common/step-templates/logisticsRegistration.html';
 import resourcesTemplate from '../common/step-templates/humanResources.html';
 import awarenessTemplate from '../common/step-templates/awareness.html';
 import securityTemplate from '../common/step-templates/security.html';
@@ -15,12 +16,13 @@ import paralegalTemplate from '../common/step-templates/paralegal.html';
 import investigationsTemplate from '../common/step-templates/investigations.html';
 import finalTemplate from '../common/step-templates/final.html';
 
-export class MonthlyReportIndiaController extends BaseMonthlyReportController {
+export class MonthlyReportNepalController extends BaseMonthlyReportController {
     constructor($scope, constants, MonthlyReportService, $stateParams, $state) {
         'ngInject';        
         super($scope, constants, MonthlyReportService, $stateParams, $state,
                     [
                         "Governance",
+                        "Logistics & Registration",
                         "Human Resources",
                         "Awareness",
                         "Security",
@@ -35,6 +37,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
        
         this.stepTemplates = [
             governanceTemplate,
+            logisticsTemplate,
             resourcesTemplate,
             awarenessTemplate,
             securityTemplate,
@@ -106,6 +109,45 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 points:10
                 
             },
+            
+            // Logistics & Registration
+            864: {
+                enabled:true,
+                prompt: "Submitting Progress Reports to CDO",
+                promptFormat: "col-md-4 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:25},
+                ]
+            },
+            865: {
+                enabled:true,
+                prompt: "Submitting Progress Reports to DDC",
+                promptFormat: "col-md-4 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:25},
+                ]
+            },
+            866: {
+                enabled:true,
+                prompt: "Submitting Progress Reports to Women & Children",
+                promptFormat: "col-md-4 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:25},
+                ]
+            },
+            867: {
+                enabled:true,
+                prompt: "Submitting Progress Reports to Police",
+                promptFormat: "col-md-4 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:25},
+                ]
+            },
+            
             
             // Human Resources
             731: {
@@ -243,23 +285,23 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             // Security
             749: {
                 enabled:true,
-                prompt: "Security Protocol followed when taking victims to safe house",
+                prompt: "Security Protocol followed when taking victims to safe house / church",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"never",format:"col-md-1",points:0},
                     {label:"<50% of the time",format:"col-md-2",points:5},
                     {label:">50% of the time",format:"col-md-2",points:15},
-                    {label:"always",format:"col-md-2",points:25},
+                    {label:"always",format:"col-md-2",points:30},
                 ]
             },
             750: {
                 enabled:true,
-                prompt: "Staff vary routes when traveling to the shelter / booth",
+                prompt: "Staff vary routes when traveling to the shelter / church / booth",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"never",format:"col-md-1",points:0},
                     {label:"<50% of the time",format:"col-md-2",points:5},
-                    {label:">50% of the time",format:"col-md-2",points:10},
+                    {label:">50% of the time",format:"col-md-2",points:7},
                     {label:"always",format:"col-md-2",points:15},
                 ]
             },
@@ -269,7 +311,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             752: {
@@ -278,7 +320,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             753: {
@@ -287,11 +329,11 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:25},
+                    {label:"yes",format:"col-md-2",points:30},
                 ]
             },
             754: {
-                enabled:true,
+                enabled:false,
                 prompt: "If prior threat, staff have protection devices?",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -321,20 +363,20 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             },
             760: {
                 enabled:true,
-                prompt: "Monthly Payment Record filled out, sent",
+                prompt: "Completed most recent Quarterly Payment Record",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:25},
+                    {label:"yes",format:"col-md-2",points:20},
                 ]
             },
             761: {
                 enabled:true,
-                prompt: "Yearly Accounting Submitted to TH India by last March 31st",
+                prompt: "Yearly Accounting Submitted to THN by last Shrawan 15",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:30},
+                    {label:"yes",format:"col-md-2",points:35},
                 ]
             },
             
@@ -344,11 +386,14 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 prompt: "Potential Victims questioned this month",
                 promptFormat: "col-md-3 control-label",
                 options: [
-                    {label:"<50",format:"col-md-1",points:20},
-                    {label:"51-150",format:"col-md-2",points:55},
-                    {label:"151-300",format:"col-md-2",points:75},
-                    {label:">300",format:"col-md-2",points:100},
+                    {label:"<50",format:"col-md-1",points:0},
+                    {label:"51-150",format:"col-md-2",points:15},
+                    {label:"151-300",format:"col-md-2",points:35},
+                    {label:">300",format:"col-md-2",points:50},
                 ]
+            },
+            868: {
+                enabled:true,
             },
             
             // Records
@@ -359,6 +404,15 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:15},
+                ]
+            },
+            869: {
+                enabled:true,
+                prompt: "Shelter Logbooks filled out",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             770: {
@@ -386,10 +440,10 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 prompt: "VDF percentage",
                 promptFormat: "col-md-3 control-label",
                 options: [
-                    {label:"<70%",format:"col-md-1",points:10},
-                    {label:"70-89% of the time",format:"col-md-2",points:20},
-                    {label:"90-99% of the time",format:"col-md-2",points:35},
-                    {label:"100%",format:"col-md-2",points:40},
+                    {label:"<60%",format:"col-md-1",points:0},
+                    {label:"60-79% of the time",format:"col-md-2",points:15},
+                    {label:"80-99% of the time",format:"col-md-2",points:30},
+                    {label:"100%",format:"col-md-2",points:50},
                 ]
             },
             793: {
@@ -413,12 +467,23 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<25%",format:"col-md-1",points:0},
                     {label:"25-75% of the time",format:"col-md-2",points:2},
                     {label:"76-99% of the time",format:"col-md-2",points:3},
-                    {label:"100%",format:"col-md-2",points:5},
+                    {label:"100%",format:"col-md-2",points:4},
                 ]
             },
             777: {
-                enabled:true,
+                enabled:false,
                 prompt: "TDMGD",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<25%",format:"col-md-1",points:0},
+                    {label:"25-75% of the time",format:"col-md-2",points:2},
+                    {label:"76-99% of the time",format:"col-md-2",points:3},
+                    {label:"100%",format:"col-md-2",points:5},
+                ]
+            },
+            870: {
+                enabled:true,
+                prompt: "Dhuwani",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<25%",format:"col-md-1",points:0},
@@ -435,6 +500,28 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<25%",format:"col-md-1",points:0},
                     {label:"25-75% of the time",format:"col-md-2",points:2},
                     {label:"76-99% of the time",format:"col-md-2",points:3},
+                    {label:"100%",format:"col-md-2",points:4},
+                ]
+            },
+            871: {
+                enabled:true,
+                prompt: "Nepalese Homes video",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<25%",format:"col-md-1",points:0},
+                    {label:"25-75% of the time",format:"col-md-2",points:1},
+                    {label:"76-99% of the time",format:"col-md-2",points:2},
+                    {label:"100%",format:"col-md-2",points:3},
+                ]
+            },
+            872: {
+                enabled:true,
+                prompt: "Top Jobs for Women",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<25%",format:"col-md-1",points:0},
+                    {label:"25-75% of the time",format:"col-md-2",points:2},
+                    {label:"76-99% of the time",format:"col-md-2",points:3},
                     {label:"100%",format:"col-md-2",points:5},
                 ]
             },
@@ -444,9 +531,9 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<25%",format:"col-md-1",points:0},
-                    {label:"25-75% of the time",format:"col-md-2",points:3},
+                    {label:"25-75% of the time",format:"col-md-2",points:2},
                     {label:"76-99% of the time",format:"col-md-2",points:4},
-                    {label:"100%",format:"col-md-2",points:10},
+                    {label:"100%",format:"col-md-2",points:5},
                 ]
             },
             781: {
@@ -457,7 +544,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<25%",format:"col-md-1",points:0},
                     {label:"25-75% of the time",format:"col-md-2",points:3},
                     {label:"76-99% of the time",format:"col-md-2",points:5},
-                    {label:"100%",format:"col-md-2",points:15},
+                    {label:"100%",format:"col-md-2",points:7},
                 ]
             },
             782: {
@@ -468,7 +555,34 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<25%",format:"col-md-1",points:0},
                     {label:"25-75% of the time",format:"col-md-2",points:2},
                     {label:"76-99% of the time",format:"col-md-2",points:4},
-                    {label:"100%",format:"col-md-2",points:15},
+                    {label:"100%",format:"col-md-2",points:6},
+                ]
+            },
+            873: {
+                enabled:true,
+                prompt: "Only female THN staff enter the shelter",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:11},
+                ]
+            },
+            874: {
+                enabled:true,
+                prompt: "1 staff / SC in shelter at all times (only if there is victim)",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:9},
+                ]
+            },
+            875: {
+                enabled:true,
+                prompt: "Victims being tested for STDs, when appropriate",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:4},
                 ]
             },
             783: {
@@ -477,7 +591,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:7},
                 ]
             },
             784: {
@@ -486,16 +600,16 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             785: {
                 enabled:true,
-                prompt: "Discussion of a victims' case does not take place with anyone except TH India staff, SC members, and police (if necessary)",
+                prompt: "Discussion of a victims' case does not take place with anyone except TH Nepal staff, SC members, and police (if necessary)",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:8},
                 ]
             },
             786: {
@@ -504,7 +618,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:12},
                 ]
             },
             
@@ -515,25 +629,36 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"0",format:"col-md-1",points:0},
-                    {label:"1",format:"col-md-2",points:20},
-                    {label:"2",format:"col-md-2",points:30},
-                    {label:"3 or more",format:"col-md-2",points:40},
+                    {label:"1",format:"col-md-2",points:15},
+                    {label:"2",format:"col-md-2",points:25},
+                    {label:"3 or more",format:"col-md-2",points:35},
                 ]
             },
             791: {
                 enabled:true,
-                prompt: "If filed case, did you scan &amp; send copy of FIR to Regional HQ?",
+                prompt: "If filed case, did you scan & send copy of FIR to Regional HQ?",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:20},
+                    {label:"yes",format:"col-md-2",points:25},
                 ]
             },
             792: {
-                enabled:true,
+                enabled:false,
                 // integer input
             },
-            
+            876: {
+                enabled:true,
+                prompt: "If active cases at Station, did you give monthly update to National Office on the progress of the case?",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:40},
+                ]
+            },
+            877: {
+                enabled:true,
+            },
             
             // Investigations
             797: {
@@ -573,5 +698,5 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
 
 export default {
     templateUrl,
-    controller: MonthlyReportIndiaController
+    controller: MonthlyReportNepalController
 };

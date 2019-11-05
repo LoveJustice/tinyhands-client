@@ -13,6 +13,12 @@
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Victim Engagement" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
 		</div>
 	</div>
+	<div class="row center-vertical" ng-if="$ctrl.questionFormat[868].enabled">
+		<form-step class="col-md-4 control-label"># of VDFs filled out and submitted to THN (in last month)</form-step>
+		<div class="col-md-1">
+	        <input type="text" class="form-control" placeholder="# VDFs" ng-model="$ctrl.questions[868].response.value">
+	    </div>
+	</div>
 	<br>
 	<div class="row center-vertical">
 		<div class="col-md-3">

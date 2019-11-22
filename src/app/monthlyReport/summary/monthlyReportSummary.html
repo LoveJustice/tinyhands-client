@@ -1,0 +1,68 @@
+<div class="row center-vertical" id="monthlyReportSummary">
+	<div class="row text-center col-md-12">
+    		<h3>Monthly Report Summary</h3>
+    </div>
+	<div class="row col-md-12">
+		<div class="col-md-1">
+		</div>
+       	<div class="col-md-2 header-div'>
+            <h4 class="">
+            	<p class="inline">Country</p>
+                <div class="inline" ng-dropdown-multiselect="" options="monthlyReportSummaryCtrl.countryDropDown.options"
+							selected-model="monthlyReportSummaryCtrl.countryDropDown.selectedOptions"
+                             extra-settings="monthlyReportSummaryCtrl.countryDropDown.settings"
+                             translation-texts="monthlyReportSummaryCtrl.countryDropDown.customText"
+                             events="monthlyReportSummaryCtrl.countryDropDown.eventListener">
+				</div>
+            </h4>
+        </div>
+        <div class="col-md-1">
+        </div>
+		<div class="col-md-3">
+			<h4 class="">
+				<p class="inline">Month of:</p>
+				<select class="inline" ng-model="monthlyReportSummaryCtrl.month" ng-change="monthlyReportSummaryCtrl.getSummary();">
+	                     <option value="1">January</option>
+	                     <option value="2">February</option>
+	                     <option value="3">March</option>
+	                     <option value="4">April</option>
+	                     <option value="5">May</option>
+	                     <option value="6">June</option>
+	                     <option value="7">July</option>
+	                     <option value="8">August</option>
+	                     <option value="9">September</option>
+	                     <option value="10">October</option>
+	                     <option value="11">November</option>
+	                     <option value="12">December</option>
+	                </select>
+                </h4>
+         </div>
+		<div class="col-md-4">
+			<h4 class="">
+				<p class="inline">Year:</p>
+				<input class="inline" type="number" class="form-control" placeholder="Year" ng-model="monthlyReportSummaryCtrl.year" ng-change="monthlyReportSummaryCtrl.getSummary();">
+			</h4>
+		</div>
+	</div>
+	<hr>
+	<div class="col-md-12" ng-if="monthlyReportSummaryCtrl.summaryData">
+		<table class="table table-striped" ng-model="monthlyReportSummaryCtrl.summaryData">
+	        <thead>
+	        	<tr>
+	                <th ng-repeat="header in monthlyReportSummaryCtrl.summaryData.headings">{{header}}</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr ng-repeat="report in monthlyReportSummaryCtrl.summaryData.reports">
+	        		<td ng-repeat="entry in report track by $index" ng-class="monthlyReportSummaryCtrl.getClass($index, entry)">{{ entry }}</td>
+	            </tr>
+	            <tr>
+	            	<td ng-repeat="avg in monthlyReportSummaryCtrl.summaryData.averages track by $index" ng-class="monthlyReportSummaryCtrl.getAverageClass($index, avg)">{{ avg }}</td>
+	            </tr>
+	   		</tbody>
+	    </table>
+    </div>
+    <div class="col-md-12 text-center" ng-if="monthlyReportSummaryCtrl.noReports">
+    	<b>No Monthly Reports found for country, month and year selected.</b>
+    </div>
+</div>

@@ -7,6 +7,7 @@ import MonthlyReportService from './monthlyReport.service';
 
 import MonthlyReportListController from './list/monthlyReportList.controller';
 import CreateMonthlyReportModalController from './list/createMonthlyReportModal.controller';
+import MonthlyReportSummaryController from './summary/monthlyReportSummary.controller';
 
 import MonthlyReportListService from './list/monthlyReportList.service';
 
@@ -18,4 +19,5 @@ export default angular.module('tinyhands.MonthlyReport', [MonthlyReportIndiaModu
     .service('MonthlyReportListService', MonthlyReportListService)
     .controller('CreateMonthlyReportModalController', CreateMonthlyReportModalController)
     .service('MonthlyReportService', MonthlyReportService)
+    .controller('MonthlyReportSummaryController', MonthlyReportSummaryController)
     .name;

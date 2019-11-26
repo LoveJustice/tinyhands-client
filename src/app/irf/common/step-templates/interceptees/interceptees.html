@@ -3,11 +3,13 @@
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card, false, $index)">
             <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
             <div class="panel-body text-center">
-                <img class="img-rounded margin-bottom-20" ngf-thumbnail="$ctrl.getResponseOfQuestionById(card.responses, 7).value" ng-if="$ctrl.getResponseOfQuestionById(card.responses, 7).value.type"
-                />
-                <img class="img-rounded margin-bottom-20" ng-if="$ctrl.getResponseOfQuestionById(card.responses, 7).value && !$ctrl.getResponseOfQuestionById(card.responses, 7).value.type"
-                    ng-src="{{$ctrl.getIntercepteeImage($ctrl.getResponseOfQuestionById(card.responses, 7).value)}}" alt="Interceptee Picture"
-                />
+                <div class="text-center padding-bottom-20">
+                	<canvas id="intercepteeCanvas{{$index}}" width="150" height="150" style="border:1px solid #d3d3d3;"
+                			ng-init="$ctrl.loadCanvas('intercepteeCanvas' + $index,$ctrl.getResponseOfQuestionById(card.responses, 7).value)"
+                			ng-show="$ctrl.getResponseOfQuestionById(card.responses, 7).value">
+						Your browser does not support the HTML5 canvas tag.
+					</canvas>
+            	</div>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 8).value}}</form-step>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</form-step>

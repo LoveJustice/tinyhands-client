@@ -59,7 +59,7 @@ export class BaseMonthlyReportController extends BaseFormController {
         for (let contextIdx in this.contexts) {
             total += this.getContextCount(this.contexts[contextIdx]);
         }
-        return Math.round(total/this.contexts.length * 100)/100;
+        return Math.round(total/this.contexts.length * 10)/10;
     }
     
     savePoints() {

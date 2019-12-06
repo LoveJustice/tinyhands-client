@@ -340,7 +340,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:30},
+                    {label:"yes",format:"col-md-2",points:50},
                 ]
             },
             759: {
@@ -358,7 +358,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:20},
+                    {label:"yes",format:"col-md-2",points:35},
                 ]
             },
             761: {
@@ -542,7 +542,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                     {label:"<25%",format:"col-md-1",points:0},
                     {label:"25-75% of the time",format:"col-md-2",points:2},
                     {label:"76-99% of the time",format:"col-md-2",points:3},
-                    {label:"100%",format:"col-md-2",points:4},
+                    {label:"100%",format:"col-md-2",points:5},
                 ]
             },
             779: {
@@ -551,9 +551,9 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<25%",format:"col-md-1",points:0},
-                    {label:"25-75% of the time",format:"col-md-2",points:2},
-                    {label:"76-99% of the time",format:"col-md-2",points:4},
-                    {label:"100%",format:"col-md-2",points:5},
+                    {label:"25-75% of the time",format:"col-md-2",points:4},
+                    {label:"76-99% of the time",format:"col-md-2",points:7},
+                    {label:"100%",format:"col-md-2",points:10},
                 ]
             },
             781: {
@@ -562,9 +562,9 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<25%",format:"col-md-1",points:0},
-                    {label:"25-75% of the time",format:"col-md-2",points:3},
-                    {label:"76-99% of the time",format:"col-md-2",points:5},
-                    {label:"100%",format:"col-md-2",points:7},
+                    {label:"25-75% of the time",format:"col-md-2",points:4},
+                    {label:"76-99% of the time",format:"col-md-2",points:7},
+                    {label:"100%",format:"col-md-2",points:10},
                 ]
             },
             782: {
@@ -573,9 +573,9 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<25%",format:"col-md-1",points:0},
-                    {label:"25-75% of the time",format:"col-md-2",points:2},
-                    {label:"76-99% of the time",format:"col-md-2",points:4},
-                    {label:"100%",format:"col-md-2",points:6},
+                    {label:"25-75% of the time",format:"col-md-2",points:4},
+                    {label:"76-99% of the time",format:"col-md-2",points:7},
+                    {label:"100%",format:"col-md-2",points:10},
                 ]
             },
             873: {
@@ -584,7 +584,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:11},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             874: {
@@ -593,7 +593,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:9},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             875: {
@@ -602,7 +602,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:4},
+                    {label:"yes",format:"col-md-2",points:5},
                 ]
             },
             783: {
@@ -611,7 +611,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:7},
+                    {label:"yes",format:"col-md-2",points:5},
                 ]
             },
             784: {
@@ -629,16 +629,16 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:8},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             786: {
                 enabled:true,
-                prompt: "NGO in victims’ areas contacted",
+                prompt: "Church/NGO in victims’ areas contacted",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:12},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             

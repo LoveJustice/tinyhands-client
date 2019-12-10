@@ -9,11 +9,11 @@ export default class VdfListService {
     }
     
     getUserCountries(id) {
-        return this.service.get(`api/user_permission/countries/${id}/?permission_group=VDF`);
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=VDF&form_present=true`);
     }
     
     getUserStationsForAdd(id) {
-        return this.service.get(`api/user_permission/stations/${id}/?permission_group=VDF&action=ADD`);
+        return this.service.get(`api/user_permission/stations/${id}/?permission_group=VDF&form_present=true&action=ADD`);
     }
 
     getMoreVdfs(queryParameters) {

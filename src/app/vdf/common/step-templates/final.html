@@ -18,6 +18,20 @@ purposes. If you choose to NOT have your story shared or information used for aw
 		<br>&nbsp;<br>
 	</div>
 	<div class="row col-md-12">
+        <form-step class="col-md-12 control-label">Please specify below your desire for how we can use your photo and the information collected during this interview for operational fundraising purposes.</form-step>
+		<form-step class="col-md-12" type="radio" radio-name="purpose" label="I give permission to use my story and photograph anywhere"
+					response-value="$ctrl.otherData.questions[901].value" other-value="$ctrl.otherData.questions[901].otherValue"></form-step>
+		<form-step class="col-md-12" type="radio" radio-name="purpose" label="I give permission to use my story and photograph, but not in home country"
+					response-value="$ctrl.otherData.questions[901].value" other-value="$ctrl.otherData.questions[901].otherValue"></form-step>
+		<form-step class="col-md-12" type="radio" radio-name="purpose" label="I give permission to use my story and cropped photograph, but not in home country"
+					response-value="$ctrl.otherData.questions[901].value" other-value="$ctrl.otherData.questions[901].otherValue"></form-step>
+		<form-step class="col-md-12" type="radio" radio-name="purpose" label="I do not give permission to use my story or photograph"
+					response-value="$ctrl.otherData.questions[901].value" other-value="$ctrl.otherData.questions[901].otherValue"></form-step>
+		<form-step class="col-md-12" type="otherRadio" class="col-md-6" radio-name="purpose" label="Other:"
+					response-value="$ctrl.otherData.questions[901].value" other-value="$ctrl.otherData.questions[901].otherValue"></form-step>
+    </div>
+	<div class="row col-md-12">
+		&nbsp;
         <form-step class="col-md-12 control-label">I give Tiny Hands Nepal consent to use any information I have shared throughout the duration of my time with the staff for operational and awareness purposes.</form-step>
     </div>
     <div class="row">

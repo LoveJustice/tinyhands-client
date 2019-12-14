@@ -9,11 +9,11 @@ export default class IrfNewListService {
     }
     
     getUserCountries(id) {
-    	return this.service.get(`api/user_permission/countries/${id}/?permission_group=IRF`);
+    	return this.service.get(`api/user_permission/countries/${id}/?permission_group=IRF&form_present=true`);
     }
     
     getUserStationsForAdd(id) {
-    	return this.service.get(`api/user_permission/stations/${id}/?permission_group=IRF&action=ADD`);
+    	return this.service.get(`api/user_permission/stations/${id}/?permission_group=IRF&form_present=true&action=ADD`);
     }
 
     getMoreIrfs(queryParameters) {

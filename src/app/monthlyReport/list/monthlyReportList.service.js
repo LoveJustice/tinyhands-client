@@ -9,11 +9,11 @@ export default class MonthlyReportListService {
     }
     
     getUserCountries(id) {
-        return this.service.get(`api/user_permission/countries/${id}/?permission_group=MONTHLY_REPORT`);
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=MONTHLY_REPORT&form_present=true`);
     }
     
     getUserStationsForAdd(id) {
-        return this.service.get(`api/user_permission/stations/${id}/?permission_group=MONTHLY_REPORT&action=ADD`);
+        return this.service.get(`api/user_permission/stations/${id}/?permission_group=MONTHLY_REPORT&form_present=true&action=ADD`);
     }
 
     getMoreMonthlyReports(queryParameters) {

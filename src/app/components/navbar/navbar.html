@@ -89,16 +89,19 @@
             <!-- END: FORMS -->
             <!-- START: REPORTS -->
             <li class="dropdown" ng-class="{open:reportsOpen}"
+            	ng-hide="!(navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)||navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null))"
                 ng-mouseleave="reportsOpen = false">
                 <a class="dropdown-toggle" data-toggle="dropdown" ng-click="reportsOpen=!reportsOpen">Reports
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a ui-sref="indicators">Data Entry Indicators</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)"
+                        	ui-sref="indicators">Data Entry Indicators</a>
                     </li>
                     <li>
-                    	<a ui-sref="monthlyReportSummary">Monthly Report Summary</a>
+                    	<a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
+                    		ui-sref="monthlyReportSummary">Monthly Report Summary</a>
                     </li>
                 </ul>
             </li>

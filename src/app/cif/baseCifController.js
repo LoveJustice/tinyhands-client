@@ -86,8 +86,6 @@ export class BaseCifController extends BaseFormController {
             }
             this.autoSaveModified = true;
             this.autoSave();
-        }, () => {
-            this.autoSave();
         });
     }
     
@@ -171,11 +169,11 @@ export class BaseCifController extends BaseFormController {
             this.printMode=false;
         }, 1000);
     }
-    
+
     autoSaveInterval() {
-        return 20000;
+        return 30000;
     }
-    
+
     autoSaveHasMinimumData() {
         if (this.questions[287].response.value === null || this.questions[287].response.value === '') {
             return false;
@@ -183,7 +181,7 @@ export class BaseCifController extends BaseFormController {
         
         return true;
     }
-    
+
     doAutoSave() {
         this.response.status = 'in-progress';
         this.processPersons('Out');
@@ -195,6 +193,7 @@ export class BaseCifController extends BaseFormController {
         this.messagesEnabled = false;
         this.spinner.show('Auto saving CIF...');
         this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+            this.stateParams.id = response.data.storage_id;
             this.processResponse(response, this.stateParams.id);
             this.number_change();
             if (this.stateParams.id !== null && this.questions[287].response.value !== null) {

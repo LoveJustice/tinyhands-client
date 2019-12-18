@@ -140,9 +140,8 @@ export class BaseFormController {
             }
         }
     }
-    
-    
-    processResponse(response, id) {
+
+    processResponse(response) {
         this.response = response.data;
         this.responses = response.data.responses;
         this.questions = _.keyBy(this.responses, (x) => x.question_id);
@@ -154,7 +153,7 @@ export class BaseFormController {
         if (this.response.status === null || this.response.status === '' || this.response.status === 'pending') {
             this.response.status = 'in-progress';
         }
-        
+
         // Copy response data for auto-save compare
         let originalResponse = jQuery.extend(true, {}, this.response);
         this.originalQuestions = _.keyBy(originalResponse.responses, (x) => x.question_id);
@@ -164,24 +163,21 @@ export class BaseFormController {
         } else {
             this.lastAutoSave = null;
         }
-        
+
         this.processPersons('In');
         this.inCustomHandling();
-        if (id === null) {
-            this.response.status = 'in-progress';
-        }
     }
-    
+
     inCustomHandling() {
         this.setValuesForOtherInputs();
         this.setValuesForDateInputs();
     }
-    
+
     outCustomHandling() {
         this.otherData.updateResponses();
         this.dateData.updateResponses();
     }
-    
+
     setValuesForOtherInputs() {
         this.otherData = new OtherData(this.questions);
         if (this.config.hasOwnProperty('RadioOther')) {
@@ -191,7 +187,7 @@ export class BaseFormController {
             }
         }
     }
-    
+
     setValuesForDateInputs() {
         this.dateData = new DateData(this.questions);
         if (this.config.hasOwnProperty('Date')) {
@@ -206,7 +202,6 @@ export class BaseFormController {
                 this.dateData.setDate(questionId,'person');
             }
         }
-        
     }
 
     getResponseOfQuestionById(responses, questionId) {
@@ -223,7 +218,7 @@ export class BaseFormController {
             }
         }
     }
-    
+
     getContextCount(context) {
         if (!(context in this.flagContextCount)) {
             this.flagContextCount[context] = 0;
@@ -367,8 +362,7 @@ export class BaseFormController {
             this.warningMessages = [];
         }
     }
-    
-    
+
     // Override in subclass for implementation specific features
     save() {
     }
@@ -376,13 +370,13 @@ export class BaseFormController {
     // Override in subclass for implementation specific features
     submit() {
     }
-    
+
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd, flagData.flagContext);
         });
     }
-    
+
     isString(val) {
         return typeof val === 'string';
     }
@@ -390,7 +384,7 @@ export class BaseFormController {
     showIgnoreWarningsCheckbox() {
         return (this.messagesEnabled && this.warningMessages.length > 0) || this.ignoreWarnings;
     }
-    
+
     getCardInstances(constant_name) {
         if (!this.config || !this.config.hasOwnProperty(constant_name) || !this.response || !this.response.cards) {
             return [];
@@ -403,25 +397,25 @@ export class BaseFormController {
                 }
             }
         }
-        
+
         return [];
     }
-    
+
     // Override in subclass and set to non-zero value to enable auto-save
     autoSaveInterval() {
         return 0;
     }
-    
+
     // Override in subclass to identify the minimum set of data values that must be populated
     // before a save should be attempted
     autoSaveHasMinimumData() {
         return false;
     }
-    
+
     // Override in subclass to make the calls to the endpoint to save the form data
     doAutoSave() {
     }
-    
+
     autoSave() {
         if (this.shouldAutoSave()) {
             this.doAutoSave();
@@ -429,7 +423,7 @@ export class BaseFormController {
             this.autoSaveModified = false;
         }
     }
-    
+
     shouldAutoSave() {
         if (this.lastAutoSave === null  || this.isViewing) {
             // Auto-save is not enabled
@@ -448,7 +442,7 @@ export class BaseFormController {
             // Already know form is modified (card has been modified)
             return true;
         }
-        
+
         // Check if any of the basic data type question values have been modified
         if (this.config.hasOwnProperty('Basic')) {
             for (let idx=0; idx < this.config.Basic.length; idx++) {
@@ -471,6 +465,19 @@ export class BaseFormController {
                         return true;
                     }
                 } else if (this.otherData.getValue(questionId) === null || this.questions[questionId].response.value !== this.otherData.getValue(questionId)) {
+                    return true;
+                }
+            }
+        }
+        // Check if any of the date data type question values have been modified
+        if (this.config.hasOwnProperty('Date')) {
+            for (let idx=0; idx < this.config.Date.length; idx++) {
+                let questionId = this.config.Date[idx];
+                if (this.questions[questionId].response === null) {
+                    if (this.dateData.getValue(questionId) !== null) {
+                        return true;
+                    }
+                } else if (this.questions[questionId].response.value !== this.dateData.getValue(questionId)) {
                     return true;
                 }
             }
@@ -544,7 +551,6 @@ export class BaseFormController {
                 }
             }
         }
-        
         return false;
     }
 }

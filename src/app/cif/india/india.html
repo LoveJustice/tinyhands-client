@@ -18,7 +18,7 @@
         	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
         		class="btn btn-default"
         		ng-class="{active: $ctrl.selectedStep == $index}" 
-        		ng-click="$ctrl.selectedStep = $index">{{stepTemplate.name}}</a>
+        		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
         </div>
         <hr class="margin-bottom-0" />
     </div>

@@ -1,0 +1,175 @@
+<h1 class="text-center">Data Collection Indicators</h1>
+<div class="row center-vertical" id="dataCollectionIndicator">
+	<div class="col-md-1">
+		&nbsp;
+	</div>
+	<div class="col-md-3 text-center">
+		<div class="col-md-3 text-center">
+			<p>Country</p>
+		</div>
+		<div class="col-md-9" ng-dropdown-multiselect="" options="collectionIndicators.countryDropDown.options"
+				selected-model="collectionIndicators.countryDropDown.selectedOptions"
+				extra-settings="collectionIndicators.countryDropDown.settings"
+				translation-texts="collectionIndicators.countryDropDown.customText"
+				events="collectionIndicators.countryDropDown.eventListener">
+		</div>
+	</div>
+	<div class="col-md-3 text-center">
+		<form-step class="col-md-4 text-center">Start Date</form-step>
+		<div class="col-md-8">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="collectionIndicators.startDate" ng-change="collectionIndicators.calculate();">
+		</div>
+	</div>
+	<div class="col-md-3 text-center">
+		<form-step class="col-md-4">End Date</form-step>
+		<div class="col-md-8">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="collectionIndicators.endDate"  ng-change="collectionIndicators.calculate();">
+		</div>
+	</div>
+	<div class="col-md-4">
+		&nbsp;
+	</div>
+	
+	<hr>
+	<div class="col-md-12" ng-if="collectionIndicators.indicatorsData">
+		<table class="table" ng-model="collectionIndicators.indicatorsData">
+	        <thead>
+	        	<tr>
+	                <th ng-class="collectionIndicators.getCellClass('heading heading-type', -1)" colspan="2">Data Collection Indicators</th>
+	                <th ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('heading',  $index)">{{ indicator.label }}</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('victims', -1)"></td>
+	        		<td ng-class="collectionIndicators.getCellClass('victims', -1)"># of Victims</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('victims',  $index)">{{ indicator.victim_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td rowspan="4" ng-class="collectionIndicators.getCellClass('irf-dark', -1)">IRF</td>
+	        		<td ng-class="collectionIndicators.getCellClass('irf-light', -1)">IRFs</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('irf-light', $index)">{{ indicator.irf_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('irf-dark', -1)">IRFs in Compliance #</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData"  ng-class="collectionIndicators.getCellClass('irf-dark', $index)">{{ indicator.irf_compliance_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('irf-light', -1)">IRFs in Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('irf-light', $index)">{{ collectionIndicators.displayPercent(indicator.irf_compliance_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('irf-dark', -1)">IRF Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('irf-dark', $index)">{{ indicator.irf_lag }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td rowspan="6" ng-class="collectionIndicators.getCellClass('cif-dark', -1)">CIF</td>
+	        		<td ng-class="collectionIndicators.getCellClass('cif-light', -1)">CIFs</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('cif-light', $index)">{{ indicator.cif_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('cif-dark', -1)">CIF %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('cif-dark', $index)">{{ collectionIndicators.displayPercent(indicator.cif_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('cif-light', -1)">CIF in Compliance #</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('cif-light', $index)">{{ indicator.cif_compliance_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('cif-dark', -1)">CIF in Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('cif-dark', $index)">{{ collectionIndicators.displayPercent(indicator.cif_compliance_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('cif-light', -1)">CIF Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('cif-light', $index)">{{ indicator.cif_lag }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('cif-dark', -1)"># of CIFs with "Evidence"</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('cif-dark', $index)">{{ indicator.cif_with_evidence_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td rowspan="4" ng-class="collectionIndicators.getCellClass('vdf-dark', -1)">VDF</td>
+	        		<td ng-class="collectionIndicators.getCellClass('vdf-light', -1)">VDFs</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('vdf-light', $index)">{{ indicator.vdf_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('vdf-dark', -1)">VDFs in Compliance #</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('vdf-dark', $index)">{{ indicator.vdf_compliance_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('vdf-light', -1)">VDFs in Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('vdf-light', $index)">{{ collectionIndicators.displayPercent(indicator.vdf_compliance_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('vdf-dark', -1)">VDF Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('vdf-dark', $index)">{{ indicator.vdf_lag }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td rowspan="9" ng-class="collectionIndicators.getCellClass('verification-dark', -1)">Verification</td>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-dark', -1)">Total# of Verified Forms</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-dark', $index)">{{ indicator.verified_forms }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-clear', -1)">Clear Evidence</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-clear', $index)">{{ indicator.clear_evidence_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-clear', -1)">%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-clear', $index)">{{ collectionIndicators.displayPercent(indicator.clear_evidence_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-some', -1)">Some Evidence</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-some', $index)">{{ indicator.some_evidence_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-some', -1)">%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-some', $index)">{{ collectionIndicators.displayPercent(indicator.some_evidence_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-invalid', -1)">Invalid Intercept</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-invalid', $index)">{{ indicator.invalid_intercept_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-invalid', -1)">%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-invalid', $index)">{{ collectionIndicators.displayPercent(indicator.invalid_intercept_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-high', -1)">High Risk of Trafficking</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-high', $index)">{{ indicator.high_risk_count }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('verification-high', -1)">%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('verification-high', $index)">{{ collectionIndicators.displayPercent(indicator.high_risk_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td rowspan="9" ng-class="collectionIndicators.getCellClass('compliance-dark', -1)">Station Compliance</td>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-light', -1)">VDF %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-light', $index)">{{ collectionIndicators.displayPercent(indicator.vdf_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-dark', -1)">V Photos %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-dark', $index)">{{ collectionIndicators.displayPercent(indicator.photo_percent) }}</td>
+	        	</tr>
+				<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-light', -1)">Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-light', $index)">{{ collectionIndicators.displayPercent(indicator.compliance_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-dark', -1)">Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-dark', $index)">{{ collectionIndicators.displayPercent(indicator.collection_lag_time) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-light', -1)">Clear Cases with CIF%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-light', $index)">{{ collectionIndicators.displayPercent(indicator.clear_case_cif_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-dark', -1)">% of Valid Intercepts</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-dark', $index)">{{ collectionIndicators.displayPercent(indicator.valid_intercept_percent) }}</td>
+	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getCellClass('compliance-light', -1)"><b>Total</b></td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicatorsData" ng-class="collectionIndicators.getCellClass('compliance-light', $index)"><b>{{ collectionIndicators.displayPercent(indicator.compliance_total) }}</b></td>
+	        	</tr>
+	    </table>
+    </div>
+</div>

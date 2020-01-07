@@ -215,6 +215,105 @@ export class BaseFormController {
         return this.flagContextCount[context];
     }
     
+    createCard(config_name) {
+        let config = this.config[config_name];
+        let the_card = {
+            storage_id:null,
+            flag_count:0,
+            responses:[]
+        };
+        let indexQuestion = -1;
+        let lastIndex = 0;
+        if (config.hasOwnProperty('IndexQuestion')) {
+            indexQuestion = config.IndexQuestion;
+            let cards = this.getCardInstances(config_name);
+            
+            for (let idx=0; idx < cards.length; idx++) {
+                let card = cards[idx];
+                let value = null;
+                for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
+                    if (card.responses[respIdx].question_id === indexQuestion) {
+                        value = card.responses[respIdx].response.value;
+                        break;
+                    }
+                }
+                if (value !== null && value !== '') {
+                    lastIndex = value;
+                }
+            }
+            
+        }
+        if (config.hasOwnProperty('Person')) {
+            for (let idx=0; idx < config.Person.length; idx++) {
+                the_card.responses.push({
+                    question_id: config.Person[idx],
+                    response: {
+                        gender: {
+                            value: ""
+                        },
+                        name: {},
+                        age: {},
+                        birthdate:{},
+                        address1: {
+                            id: null,
+                            name: ""
+                        },
+                        address2: {
+                            id: null,
+                            name: ""
+                        },
+                        phone: {},
+                        nationality: {},
+                        identifiers: {}
+                    }
+                });
+            }
+        }
+        if (config.hasOwnProperty('Address')) {
+            for (let idx=0; idx < config.Address.length; idx++) {
+                the_card.responses.push({
+                    question_id: config.Address[idx],
+                    response: {
+                        address1: {
+                            id: null,
+                            name: ""
+                        },
+                        address2: {
+                            id: null,
+                            name: ""
+                        }
+                    }
+                });
+            }
+        }
+        if (config.hasOwnProperty('Basic')) {
+            for (let idx=0; idx < config.Basic.length; idx++) {
+                if (config.Basic[idx] === indexQuestion) {
+                    the_card.responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
+                } else {
+                    if (config.hasOwnProperty('FormDefault') && config.Basic[idx] in config.FormDefault) {
+                        the_card.responses.push({question_id: config.Basic[idx], response:config.FormDefault[config.Basic[idx]]});
+                    } else {
+                        the_card.responses.push({question_id: config.Basic[idx], response: {value:null}});
+                    }
+                }
+            }
+        }
+        if (config.hasOwnProperty('Date')) {
+            for (let idx=0; idx < config.Date.length; idx++) {
+                the_card.responses.push({question_id: config.Date[idx], response: {value:null}});
+            }
+        }
+        if (config.hasOwnProperty('RadioOther')) {
+            for (let idx=0; idx < config.RadioOther.length; idx++) {
+                if (!(config.hasOwnProperty('Person') && config.Person.indexOf(config.RadioOther[idx]) > -1)) {
+                    the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
+                }
+            }
+        }
+        return the_card;
+    }
+    
     // Override in subclass for implementation specific features
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
         /*jshint unused: false */
@@ -223,100 +322,7 @@ export class BaseFormController {
     commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options = {}) {
         let config = this.config[config_name];
         if (isAdd) {
-            the_card = {
-                    storage_id:null,
-                    flag_count:0,
-                    responses:[]
-            };
-            let indexQuestion = -1;
-            let lastIndex = 0;
-            if (config.hasOwnProperty('IndexQuestion')) {
-                indexQuestion = config.IndexQuestion;
-                let cards = this.getCardInstances(config_name);
-                
-                for (let idx=0; idx < cards.length; idx++) {
-                    let card = cards[idx];
-                    let value = null;
-                    for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
-                        if (card.responses[respIdx].question_id === indexQuestion) {
-                            value = card.responses[respIdx].response.value;
-                            break;
-                        }
-                    }
-                    if (value !== null && value !== '') {
-                        lastIndex = value;
-                    }
-                }
-                
-            }
-            if (config.hasOwnProperty('Person')) {
-                for (let idx=0; idx < config.Person.length; idx++) {
-                    the_card.responses.push({
-                        question_id: config.Person[idx],
-                        response: {
-                            gender: {
-                                value: ""
-                            },
-                            name: {},
-                            age: {},
-                            birthdate:{},
-                            address1: {
-                                id: null,
-                                name: ""
-                            },
-                            address2: {
-                                id: null,
-                                name: ""
-                            },
-                            phone: {},
-                            nationality: {},
-                            identifiers: {}
-                        }
-                    });
-                }
-            }
-            if (config.hasOwnProperty('Address')) {
-                for (let idx=0; idx < config.Address.length; idx++) {
-                    the_card.responses.push({
-                        question_id: config.Address[idx],
-                        response: {
-                            address1: {
-                                id: null,
-                                name: ""
-                            },
-                            address2: {
-                                id: null,
-                                name: ""
-                            }
-                        }
-                    });
-                }
-            }
-            if (config.hasOwnProperty('Basic')) {
-                for (let idx=0; idx < config.Basic.length; idx++) {
-                    if (config.Basic[idx] === indexQuestion) {
-                        the_card.responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
-                    } else {
-                        if (config.hasOwnProperty('FormDefault') && config.Basic[idx] in config.FormDefault) {
-                            the_card.responses.push({question_id: config.Basic[idx], response:config.FormDefault[config.Basic[idx]]});
-                        } else {
-                            the_card.responses.push({question_id: config.Basic[idx], response: {value:null}});
-                        }
-                    }
-                }
-            }
-            if (config.hasOwnProperty('Date')) {
-                for (let idx=0; idx < config.Date.length; idx++) {
-                    the_card.responses.push({question_id: config.Date[idx], response: {value:null}});
-                }
-            }
-            if (config.hasOwnProperty('RadioOther')) {
-                for (let idx=0; idx < config.RadioOther.length; idx++) {
-                    if (!(config.hasOwnProperty('Person') && config.Person.indexOf(config.RadioOther[idx]) > -1)) {
-                        the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
-                    }
-                }
-            }
+            the_card = this.createCard(config_name);
         }
         
         if (config.hasOwnProperty('Person')) {

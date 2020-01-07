@@ -1,4 +1,12 @@
 <fieldset ng-disabled="$ctrl.isViewing === true">
+<div ng-if="$ctrl.irf" class="row col-md-12">
+    	<label class="col-md-2 control-label">IRF Notes</label>
+    </div>
+    <div ng-if="$ctrl.irf" class="row col-md-12">
+    	<div class="row col-md-12">
+            <textarea class="form-control" rows="3" ng-model="$ctrl.irf.questions[146].response.value" readonly="true"></textarea>
+        </div>
+    </div>
     <div class="row col-md-12">
     	<label class="col-md-2 control-label">Case Notes</label>
     </div>

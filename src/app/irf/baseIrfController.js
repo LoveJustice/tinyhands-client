@@ -17,6 +17,10 @@ export class BaseIrfController extends BaseFormController {
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
     
+    // Override in sublcass to be triggered on complete retrieval of IRF
+    getIrfComplete() {
+    }
+    
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
     		this.config = response.data;
@@ -28,6 +32,7 @@ export class BaseIrfController extends BaseFormController {
     	                formNumber: this.questions[1].response.value
     	            });
     		    }
+    		    this.getIrfComplete();
             });
     	});
     }

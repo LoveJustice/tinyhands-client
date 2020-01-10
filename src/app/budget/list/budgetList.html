@@ -15,7 +15,7 @@
 			</div>
         </div>
 		<div class="col-sm-4">
-        	<input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, '')">
+        	<input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, null)">
 		</div>
 		<div class="col-sm-4">
           <div class="col-sm-6">
@@ -35,23 +35,23 @@
          float-thead="budgetListCtrl.stickyOptions">
     <thead class="sticky-table-header">
       <tr>
-        <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','border_station__station_name');">Station
+        <th class="text-center" ng-click="budgetListCtrl.getBudgetList(null,'border_station__station_name');">Station
           <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'border_station__station_name' || budgetListCtrl.sortValue === '-border_station__station_name'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-border_station__station_name', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'border_station__station_name'}">
         </i>
         </th>
-        <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','border_station__station_code');">Station Code
+        <th class="text-center" ng-click="budgetListCtrl.getBudgetList(null,'border_station__station_code');">Station Code
           <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'border_station__station_code' || budgetListCtrl.sortValue === '-border_station__station_code'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-border_station__station_code', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'border_station__station_code'}">
         </i>
         </th>
-        <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','month_year');">Budget For
+        <th class="text-center" ng-click="budgetListCtrl.getBudgetList(null,'month_year');">Budget For
           <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'month_year' || budgetListCtrl.sortValue === '-month_year'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-month_year', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'month_year'}">
         </i>
         </th>
-        <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','date_time_entered');">Date Entered
+        <th class="text-center" ng-click="budgetListCtrl.getBudgetList(null,'date_time_entered');">Date Entered
           <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'date_time_entered' || budgetListCtrl.sortValue === '-date_time_entered'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-date_time_entered', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'date_time_entered'}">
         </i>
         </th>
-        <th class="text-center" ng-click="budgetListCtrl.getBudgetList('','date_time_last_updated');">Last Updated
+        <th class="text-center" ng-click="budgetListCtrl.getBudgetList(null,'date_time_last_updated');">Last Updated
           <i class="glyphicon" ng-show="budgetListCtrl.sortValue === 'date_time_last_updated' || budgetListCtrl.sortValue === '-date_time_last_updated'" ng-class="{'glyphicon-sort-by-attributes-alt': budgetListCtrl.sortValue === '-date_time_last_updated', 'glyphicon-sort-by-attributes': budgetListCtrl.sortValue === 'date_time_last_updated'}">
         </i>
         </th>
@@ -83,5 +83,10 @@
   <div ng-if="budgetListCtrl.listOfBudgets.length == 0" class="row col-xs-12 text-center">
     <h3>No Budget Forms</h3>
     <h4>Go to a Border Station Form to create one.</h4>
+  </div>
+  <div class="row text-center">
+    <button ng-disabled="!budgetListCtrl.nextBudgetPage" ng-click="budgetListCtrl.getNextBudgetPage()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
+        Load more results
+    </button>
   </div>
 </div>

@@ -15,17 +15,17 @@
             </h1>
         </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.selectedStep = 0">Top Box</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.selectedStep = 1">Visual</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.selectedStep = 2">Documentation</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.selectedStep = 3">Interview</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.selectedStep = 4">Host</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.selectedStep = 5">Children</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.selectedStep = 6">Source</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.selectedStep = 7">Interceptees</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 8}" ng-click="$ctrl.selectedStep = 8">Final Procedures</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 9}" ng-click="$ctrl.selectedStep = 9">Attachments</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 10}" ng-click="$ctrl.selectedStep = 10">Logbook</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 0">Top Box</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 1">Visual</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 2">Documentation</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 3">Interview</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 4">Host</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 5">Children</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 6">Source</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 7">Interceptees</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 8}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 8">Final Procedures</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 9}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 9">Attachments</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 10}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 10">Logbook</a>
         </div>
         <hr class="margin-bottom-0" />
     </div>

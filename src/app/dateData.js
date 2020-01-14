@@ -35,13 +35,40 @@ class DateData {
 		}
 	}
 	
+	dateToString(dt) {
+	    let dateString = '';
+	    dateString = dt.getUTCFullYear() + '-';
+            if (dt.getUTCMonth() < 9) {
+                dateString += '0';
+            }
+            dateString += (dt.getUTCMonth()+1) + "-";
+            if (dt.getUTCDate() < 9) {
+                dateString += '0';
+            }
+            dateString += dt.getUTCDate();
+            return dateString;
+	}
+	
+	getValue(questionId) {
+	    if (this.questions.hasOwnProperty(questionId)) {
+	        let dt = this.questions[questionId].value;
+	        let dateString = null;
+	        if (dt !== null && dt instanceof Date && !isNaN(dt.getTime())) {
+                    dateString = this.dateToString(dt);
+                }
+	        return dateString;
+	    } else {
+	        return null;
+	    }
+	}
+	
 	updateResponses() {
 		for (var property in this.questions) {
 		    if (this.questions.hasOwnProperty(property)) {
 		    	let dt = this.questions[property].value;
 		    	let dateString = '';
 		    	if (dt !== null && dt instanceof Date && !isNaN(dt.getTime())) {
-		    		dateString = dt.getUTCFullYear() + '-' + (dt.getUTCMonth()+1) + "-" +dt.getUTCDate();
+		    	    dateString = this.dateToString(dt);
 		    	}
 		    	if (this.questions[property].dateType === 'person') {
 		    		this.origQuestions[property].response.birthdate.value = dateString;

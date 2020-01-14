@@ -1,7 +1,7 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseVdfController extends BaseFormController {
-    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService) {
         'ngInject';
         super($scope, $stateParams);
         
@@ -9,6 +9,7 @@ export class BaseVdfController extends BaseFormController {
         this.constants = constants;
         this.service = VdfService;
         this.state = $state;
+        this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
 
         this.vdfNumber = "";
@@ -78,6 +79,8 @@ export class BaseVdfController extends BaseFormController {
                     cards.push(the_card);
                 }
             }
+            this.autoSaveModified = true;
+            this.autoSave();
         });
     }
     
@@ -140,6 +143,44 @@ export class BaseVdfController extends BaseFormController {
             });
         
         this.messagesEnabled = true;
+    }
+    
+    autoSaveInterval() {
+        return 30000;
+    }
+    
+    autoSaveHasMinimumData() {
+        if (this.questions[651].response.value === null || this.questions[651].response.value === '') {
+            return false;
+        }
+        return true;
+    }
+    
+    doAutoSave() {
+        this.response.status = 'in-progress';
+        this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
+        this.outCustomHandling();
+        this.saveExtra();
+        this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+        this.spinner.show('Auto saving VDF...');
+        this.service.submitVdf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+            this.stateParams.id = response.data.storage_id;
+            this.processResponse(response, this.stateParams.id);
+            this.number_change();
+            if (this.stateParams.id !== null && this.questions[651].response.value !== null) {
+                this.relatedUrl = this.state.href('relatedForms', {
+                    stationId: this.stateParams.stationId,
+                    formNumber: this.questions[651].response.value
+                });
+            }
+            this.spinner.hide();
+        }, (error) => {
+            this.set_errors_and_warnings(error.data);
+            this.spinner.hide();
+           });
+        this.messagesEnabled = false;
     }
 }
 

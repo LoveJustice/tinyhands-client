@@ -1,6 +1,7 @@
-
+/* global angular */
+/* global Image */
 class IdManagementController {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, $document, toastr) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, idManagementService, $uibModal, $state, $stateParams, $document, toastr, constants) {
         'ngInject';
 
         this.state = $state;
@@ -13,6 +14,7 @@ class IdManagementController {
         this.idManagementService = idManagementService;
         this.modal = $uibModal;
         this.toastr = toastr;
+        this.constants = constants;
 
         this.loading = false;
         this.reverse = false;
@@ -30,27 +32,46 @@ class IdManagementController {
         this.showRemoveAlias = false;
         this.isViewing = false;
         
-        $scope.showPopup=false;
-        $scope.displayPopup=function(event, photo){
-        	if (photo !== null && $scope.showPopup === false) {
-	        	var img = $document[0].getElementById('popupImageId');
-	        	var div = $document[0].getElementById('popupDiv');
-	        	div.style.position = "absolute";
-	        	div.style.left = (event.currentTarget.offsetLeft + event.currentTarget.offsetParent.offsetLeft)+'px';
-	        	div.style.top = (event.currentTarget.offsetTop + event.currentTarget.offsetParent.offsetTop + event.currentTarget.offsetHeight) + 'px';
-	        	img.src = photo;
-	            $scope.showPopup=true;
-        	}
-        };
-        $scope.hidePopup=function(){
-            $scope.showPopup=false;
-        };
+       this.showPopup=false;
         
         $scope.radioSelected=function(event, id) {
         	this.addSelectedId = id;
         };
 
         this.getKnownPersons();
+    }
+    
+    resizeImage(img) {
+        let photoSquare = 150.0;
+        let temp = angular.element('#myCanvas');
+        let canvas = temp.get(0);
+        let ctx = canvas.getContext('2d');
+        if (img.width > img.height) {
+            canvas.width = photoSquare;
+            canvas.height = img.height * photoSquare/img.width;
+        } else {
+            canvas.height = photoSquare;
+            canvas.width = img.width * photoSquare/img.height;
+        }
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+    
+    displayPopup(event, photo) {
+        if (photo && this.showPopup === false) {
+            var tmp = angular.element('#popupDiv');
+            var div = tmp[0];
+            div.style.position = "absolute";
+            div.style.left = (event.currentTarget.offsetLeft + event.currentTarget.offsetParent.offsetLeft)+'px';
+            div.style.top = (event.currentTarget.offsetTop + event.currentTarget.offsetParent.offsetTop + event.currentTarget.offsetHeight) + 'px';
+            let img = new Image();
+            img.addEventListener('load', (e)=>{/*jshint unused: false */this.resizeImage(img);});
+            img.src = new URL(photo, this.constants.BaseUrl).href;
+            this.showPopup = true;
+        }
+    }
+    
+    hidePopup() {
+        this.showPopup = false;
     }
     
     sortIcon(column) {

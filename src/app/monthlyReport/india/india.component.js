@@ -56,8 +56,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 options: [
                     {label:"0",format:"col-md-1",points:0},
                     {label:"1",format:"col-md-1",points:20},
-                    {label:"2",format:"col-md-1",points:40},
-                    {label:">2",format:"col-md-1",points:50},
+                    {label:"2",format:"col-md-1",points:30},
+                    {label:">2",format:"col-md-1",points:40},
                 ]
             },
             717: {
@@ -69,6 +69,15 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"10-20",format:"col-md-1",points:5},
                     {label:"20-30",format:"col-md-1",points:10},
                     {label:">30",format:"col-md-1",points:20},
+                ]
+            },
+            902: {
+                enabled:true,
+                prompt: "3 Core Value Posters on display at station ",
+                promptFormat: "col-md-2 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             718: {
@@ -125,12 +134,21 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:30},
+                    {label:"yes",format:"col-md-2",points:15},
+                ]
+            },
+            903: {
+                enabled:true,
+                prompt: "Corruption Policy Agreement Signed for all staff",
+                promptFormat: "col-md-4 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             733: {
                 enabled:true,
-                prompt: "Information on all staff provided to National Office",
+                prompt: "Information on all staff provided to Regional Manager",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
@@ -189,7 +207,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<10",format:"col-md-1",points:0},
-                    {label:"10-20",format:"col-md-2",points:5},
+                    {label:"10-20",format:"col-md-2",points:6},
                     {label:"21-30",format:"col-md-2",points:8},
                     {label:">30",format:"col-md-2",points:10},
                 ]
@@ -344,10 +362,28 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 prompt: "Potential Victims questioned this month",
                 promptFormat: "col-md-3 control-label",
                 options: [
-                    {label:"<50",format:"col-md-1",points:20},
-                    {label:"51-150",format:"col-md-2",points:55},
-                    {label:"151-300",format:"col-md-2",points:75},
-                    {label:">300",format:"col-md-2",points:100},
+                    {label:"<50",format:"col-md-1",points:15},
+                    {label:"51-150",format:"col-md-2",points:25},
+                    {label:"151-300",format:"col-md-2",points:45},
+                    {label:">300",format:"col-md-2",points:65},
+                ]
+            },
+            904: {
+                enabled:true,
+                prompt: "When to intercept Posters displayed at station",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:20},
+                ]
+            },
+            905: {
+                enabled:true,
+                prompt: "Freedom of Movement & Migration Posters displayed",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             
@@ -358,7 +394,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             770: {
@@ -367,7 +403,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:30},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             771: {
@@ -383,13 +419,24 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             },
             772: {
                 enabled:true,
-                prompt: "Photo percentage",
+                prompt: "VDF percentage",
                 promptFormat: "col-md-3 control-label",
                 options: [
-                    {label:"<70%",format:"col-md-1",points:10},
-                    {label:"70-89% of the time",format:"col-md-2",points:20},
-                    {label:"90-99% of the time",format:"col-md-2",points:35},
-                    {label:"100%",format:"col-md-2",points:40},
+                    {label:"<70%",format:"col-md-1",points:5},
+                    {label:"70-89% of the time",format:"col-md-2",points:10},
+                    {label:"90-99% of the time",format:"col-md-2",points:20},
+                    {label:"100%",format:"col-md-2",points:30},
+                ]
+            },
+            793: {
+                enabled:true,
+                prompt: "CIF % for Clear Evidence Cases",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<60%",format:"col-md-1",points:10},
+                    {label:"60-79%",format:"col-md-2",points:15},
+                    {label:"80-99%",format:"col-md-2",points:20},
+                    {label:"100%",format:"col-md-2",points:30},
                 ]
             },
             
@@ -500,39 +547,51 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             //Paralegal
             790: {
                 enabled:true,
-                prompt: "Total FIRs filed",
+                prompt: "FIRs filed last month",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"0",format:"col-md-1",points:0},
                     {label:"1",format:"col-md-2",points:20},
-                    {label:"2",format:"col-md-2",points:30},
-                    {label:"3 or more",format:"col-md-2",points:40},
+                    {label:"2",format:"col-md-2",points:25},
+                    {label:"3 or more",format:"col-md-2",points:30},
                 ]
             },
             791: {
                 enabled:true,
-                prompt: "If filed case, did you scan &amp; send copy of FIR to Regional HQ?",
+                prompt: "If filed case, did you scan & send copy of FIR to Regional HQ?",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:10},
+                ]
+            },
+            876: {
+                enabled:true,
+                prompt: "If active cases at Station, did you give monthly update to National Office on the progress of the case?",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:40},
+                ]
+            },
+            792: {
+                enabled:false,
+                // integer input
+            },
+            877: {
+                enabled:true,
+                // integer input
+            },
+            907: {
+                enabled:true,
+                prompt: "When to File a Case poster displayed at station",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:20},
                 ]
             },
-            792: {
-                enabled:true,
-                // integer input
-            },
-            793: {
-                enabled:true,
-                prompt: "CIF % for Clear Evidence Cases",
-                promptFormat: "col-md-3 control-label",
-                options: [
-                    {label:"<60%",format:"col-md-1",points:0},
-                    {label:"60-79%",format:"col-md-2",points:15},
-                    {label:"80-99%",format:"col-md-2",points:30},
-                    {label:"100%",format:"col-md-2",points:40},
-                ]
-            },
+            
             
             // Investigations
             797: {

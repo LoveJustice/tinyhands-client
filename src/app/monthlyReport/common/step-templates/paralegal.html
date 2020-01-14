@@ -7,21 +7,31 @@
 			<h4>Score {{$ctrl.getContextCount('Paralegal');}}</h4>
 		</div>
 	</div>
-	<div ng-repeat="radQuest in [790,791]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+	<div ng-repeat="radQuest in [790,791, 876]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
 		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
 		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Paralegal" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
 		</div>
 	</div>
-	
-	<div class="row center-vertical">
+	<div class="row center-vertical" ng-if="$ctrl.questionFormat[792].enabled">
 		<form-step class="col-md-4 control-label"># of CIFs filled out and submitted to National Office (in last month)</form-step>
 		<div class="col-md-1">
 	        <input type="text" class="form-control" placeholder="# CIFS" ng-model="$ctrl.questions[792].response.value">
 	    </div>
 	</div>
-	
-	<div ng-repeat="radQuest in [793]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+	<div class="row center-vertical" ng-if="$ctrl.questionFormat[877].enabled">
+		<form-step class="col-md-4 control-label">Arrests last month</form-step>
+		<div class="col-md-1">
+	        <input type="text" class="form-control" placeholder="# Arrests" ng-model="$ctrl.questions[877].response.value">
+	    </div>
+	</div>
+	<div class="row center-vertical" ng-if="$ctrl.questionFormat[906].enabled">
+		<form-step class="col-md-4 control-label">GDs last month</form-step>
+		<div class="col-md-1">
+	        <input type="text" class="form-control" placeholder="# GD" ng-model="$ctrl.questions[906].response.value">
+	    </div>
+	</div>
+	<div ng-repeat="radQuest in [907]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
 		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
 		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Paralegal" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>

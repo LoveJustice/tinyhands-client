@@ -24,6 +24,8 @@ class AssociatedPersonController {
             for (let key in this.$scope.ngModel.identifiers) {
                 if (!(key in personCopy.identifiers)) {
                     personCopy.identifiers[key] = this.$scope.ngModel.identifiers[key];
+                    personCopy.identifiers[key].location.value = '';
+                    personCopy.identifiers[key].number.value = '';
                 }
             }
             this.$scope.ngModel = personCopy;
@@ -37,6 +39,9 @@ class AssociatedPersonController {
                     this.$scope.idChoice =  key;
                     break;
                 }
+            }
+            if (this.$scope.associatedController) {
+                this.$scope.associatedController.associatedPersonChange(person);
             }
         });
     }
@@ -54,7 +59,8 @@ export default function AssociatedPersonDirective() {
             ngModel: '=',
             personList: "=",
             birthDate: "=",
-            idChoice: "="
+            idChoice: "=",
+            associatedController: "="
             }
     };
 

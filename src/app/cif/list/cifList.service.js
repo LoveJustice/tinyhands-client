@@ -9,11 +9,11 @@ export default class CifListService {
     }
     
     getUserCountries(id) {
-    	return this.service.get(`api/user_permission/countries/${id}/?permission_group=CIF`);
+    	return this.service.get(`api/user_permission/countries/${id}/?permission_group=CIF&form_present=true`);
     }
     
     getUserStationsForAdd(id) {
-    	return this.service.get(`api/user_permission/stations/${id}/?permission_group=CIF&action=ADD`);
+    	return this.service.get(`api/user_permission/stations/${id}/?permission_group=CIF&form_present=true&action=ADD`);
     }
 
     getMoreCifs(queryParameters) {

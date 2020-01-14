@@ -1,4 +1,5 @@
 import monthlyReportListTemplate from './list/monthlyReportList.html';
+import monthlyReportSummaryTemplate from './summary/monthlyReportSummary.html';
 import './list/monthlyReportList.less';
 
 function MonthlyReportRoutes($stateProvider) {
@@ -14,6 +15,14 @@ function MonthlyReportRoutes($stateProvider) {
       templateUrl: monthlyReportListTemplate,
       controller: 'MonthlyReportListController',
       controllerAs: 'monthlyReportListCtrl',
+    })
+    .state('monthlyReportSummary', {
+      url: '/monthlyReportSummary',
+      params: {
+      },
+      templateUrl: monthlyReportSummaryTemplate,
+      controller: 'MonthlyReportSummaryController',
+      controllerAs: 'monthlyReportSummaryCtrl',
     });
 }
 

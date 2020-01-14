@@ -67,4 +67,8 @@ export default class MonthlyReportService {
     getStation(stationId) {
         return this.service.get(`api/border-station/${stationId}/`);
     }
+    
+    getMonthlyReportSummary(countryId,year, month) {
+        return this.service.get(`api/monthly_report/summary/${countryId}/${year}/${month}/`);
+    }
 }

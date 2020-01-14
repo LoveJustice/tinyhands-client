@@ -107,4 +107,8 @@ export default class CifService {
         let url = `api/person/associated/${station_id}/${cif_number}/`;
         return this.service.get(url);
     }
+    
+    getRelatedForms(stationId, formNumber) {
+        return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
+    }
 }

@@ -5,7 +5,7 @@ function indicatorsRoutes($stateProvider) {
     'ngInject';
     $stateProvider
         .state('indicators', {
-            url: '/',
+            url: '/entryIndicators',
             templateUrl: indicatorsTemplate,
             controller: 'IndicatorsController',
             controllerAs: 'indicators',

@@ -17,7 +17,7 @@ import investigationsTemplate from '../common/step-templates/investigations.html
 import finalTemplate from '../common/step-templates/final.html';
 
 export class MonthlyReportNepalController extends BaseMonthlyReportController {
-    constructor($scope, constants, MonthlyReportService, $stateParams, $state) {
+    constructor($scope, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService) {
         'ngInject';        
         super($scope, constants, MonthlyReportService, $stateParams, $state,
                     [
@@ -32,7 +32,8 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                         "Aftercare",
                         "Paralegal",
                         "Investigations"
-                    ]
+                    ],
+                    SpinnerOverlayService
                 );
        
         this.stepTemplates = [

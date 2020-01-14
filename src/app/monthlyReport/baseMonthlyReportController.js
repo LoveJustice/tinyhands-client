@@ -1,7 +1,7 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseMonthlyReportController extends BaseFormController {
-    constructor($scope, constants, MonthlyReportService, $stateParams, $state, contexts) {
+    constructor($scope, constants, MonthlyReportService, $stateParams, $state, contexts, SpinnerOverlayService) {
         'ngInject';
         super($scope, $stateParams);
         
@@ -9,6 +9,7 @@ export class BaseMonthlyReportController extends BaseFormController {
         this.service = MonthlyReportService;
         this.state = $state;
         this.contexts = contexts;
+        this.spinner = SpinnerOverlayService;
         
         this.contextPointQuestions = {
                 "Governance":725,
@@ -130,6 +131,34 @@ export class BaseMonthlyReportController extends BaseFormController {
             });
         
         this.messagesEnabled = true;
+    }
+    
+    autoSaveInterval() {
+        return 30000;
+    }
+    
+    autoSaveHasMinimumData() {
+        return true;
+    }
+    
+    doAutoSave() {
+        this.response.status = 'in-progress';
+        this.savePoints();
+        this.outCustomHandling();
+        this.saveExtra();
+        this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+        this.spinner.show('Auto saving Monthly Report...');
+        this.service.submitMonthlyReport(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+            this.stateParams.id = response.data.storage_id;
+            this.processResponse(response, this.stateParams.id);
+            this.spinner.hide();
+        }, (error) => {
+            this.set_errors_and_warnings(error.data);
+            this.spinner.hide();
+           });
+         this.messagesEnabled = false;
     }
 }
 

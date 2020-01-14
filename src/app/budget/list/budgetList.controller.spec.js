@@ -50,7 +50,7 @@ describe('budgetList Controller', () => {
                 { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
                 { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
                 { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' },
-                { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' }], 'next': 'page2'
+                { 'month_year': '0001 2000', 'date_time_entered': '123', 'date_time_last_updated': '123' }], 'next': 'page=2'
             }
         };
 
@@ -73,7 +73,7 @@ describe('budgetList Controller', () => {
 
                 it('nextBudgetPage should be the tested response[next]', () => {
                     vm.getBudgetList();
-                    expect(vm.nextBudgetPage).toEqual(response.data.next);
+                    expect(vm.nextBudgetPage).toEqual('2');
                 });
             });
 
@@ -130,15 +130,11 @@ describe('budgetList Controller', () => {
             });
 
             it('nextBudgetPage should be the tested response[next]', () => {
-                expect(vm.nextBudgetPage).toEqual(response.data.next);
-            });
-
-            it('listOfBudgets should be the tested response[results]', () => {
-                expect(vm.listOfBudgets).toEqual(response.data.results);
+                expect(vm.nextBudgetPage).toEqual('2'); 
             });
 
             it('size of listOfBudgets after the function is called should equal 80 based on the tests', () => {
-                expect(vm.listOfBudgets.length).toEqual(40);
+                expect(vm.listOfBudgets.length).toEqual(10);
             });
 
         });

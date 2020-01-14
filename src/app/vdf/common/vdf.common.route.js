@@ -70,6 +70,20 @@ function VdfCommonRoutes($stateProvider) {
             params: {
                 id: null
             }
+        })
+        .state('vdfIndiaNetwork', {
+            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonComponent',
+            params: {
+                id: null
+            }
+        })
+        .state('vdfRwanda', {
+            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonComponent',
+            params: {
+                id: null
+            }
         });
 }
 

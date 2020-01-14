@@ -18,9 +18,9 @@ import intercepteeModalTemplate from '../common/step-templates/interceptees/inte
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfIndiaController extends BaseIrfController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService);
         
         this.stepTemplates = [
         	topBoxTemplate,
@@ -34,10 +34,14 @@ export class IrfIndiaController extends BaseIrfController {
         	logbookTemplate
         ];
     }
+    
+    getDefaultIdentificationTypes() {
+        return ['Passport', 'ID#'];
+    }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
     	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-    			intercepteeModalTemplate, 'Interceptees');
+    			intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

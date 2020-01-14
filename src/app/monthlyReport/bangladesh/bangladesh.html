@@ -40,18 +40,18 @@
         	Note: if there are no victims at the shelter or a question does not apply, mark full points. 
         </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.selectedStep = 0">Governance</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" style="white-space: normal;word-wrap: break-word;" ng-click="$ctrl.selectedStep = 1">Logistics & Registration</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" style="white-space: normal;word-wrap: break-word;" ng-click="$ctrl.selectedStep = 2">Human Resources</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.selectedStep = 3">Awareness</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.selectedStep = 4">Security</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.selectedStep = 5">Accounting</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" style="white-space: normal;word-wrap: break-word;" ng-click="$ctrl.selectedStep = 6">Victim Engagement</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.selectedStep = 7">Records</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 8}" ng-click="$ctrl.selectedStep = 8">Aftercare</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 9}" ng-click="$ctrl.selectedStep = 9">Paralegal</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 10}" ng-click="$ctrl.selectedStep = 10">Investigations</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 11}" ng-click="$ctrl.selectedStep = 11">Final</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 0">Governance</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" style="white-space: normal;word-wrap: break-word;" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 1">Logistics & Registration</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" style="white-space: normal;word-wrap: break-word;" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 2">Human Resources</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 3">Awareness</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 4">Security</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 5">Accounting</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" style="white-space: normal;word-wrap: break-word;" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 6">Victim Engagement</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 7">Records</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 8}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 8">Aftercare</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 9}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 9">Paralegal</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 10}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 10">Investigations</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 11}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 11">Final</a>
         </div>
         <hr class="margin-bottom-0" />
     </div>

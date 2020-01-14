@@ -95,6 +95,10 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
+                	<li>
+                        <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)"
+                        	ui-sref="collectionIndicators">Data Collection Indicators</a>
+                    </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)"
                         	ui-sref="indicators">Data Entry Indicators</a>

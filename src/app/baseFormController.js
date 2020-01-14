@@ -1,3 +1,4 @@
+/* global jQuery */
 const OtherData = require('./otherData.js');
 const DateData = require('./dateData.js');
 const PersonIdentifierChoice = require('./personIdentifierChoice.js');
@@ -16,6 +17,8 @@ export class BaseFormController {
         this.redFlagTotal = 0;
         this.flagContextCount = {};
         this.selectedStep = 0;
+        this.autoSaveModified = false;
+        this.lastAutoSave = null;
        
         this.errorMessages = [];
         this.warningMessages = [];
@@ -137,8 +140,8 @@ export class BaseFormController {
             }
         }
     }
-    
-    processResponse(response, id) {
+
+    processResponse(response) {
         this.response = response.data;
         this.responses = response.data.responses;
         this.questions = _.keyBy(this.responses, (x) => x.question_id);
@@ -147,24 +150,34 @@ export class BaseFormController {
                 this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
             }
         }
-        
-        this.processPersons('In');
-        this.inCustomHandling();
-        if (id === null) {
+        if (this.response.status === null || this.response.status === '' || this.response.status === 'pending') {
             this.response.status = 'in-progress';
         }
+
+        // Copy response data for auto-save compare
+        let originalResponse = jQuery.extend(true, {}, this.response);
+        this.originalQuestions = _.keyBy(originalResponse.responses, (x) => x.question_id);
+        this.autoSaveModified = false;
+        if (this.response.status === 'in-progress' && this.autoSaveInterval() > 0) {
+            this.lastAutoSave = new Date();
+        } else {
+            this.lastAutoSave = null;
+        }
+
+        this.processPersons('In');
+        this.inCustomHandling();
     }
-    
+
     inCustomHandling() {
         this.setValuesForOtherInputs();
         this.setValuesForDateInputs();
     }
-    
+
     outCustomHandling() {
         this.otherData.updateResponses();
         this.dateData.updateResponses();
     }
-    
+
     setValuesForOtherInputs() {
         this.otherData = new OtherData(this.questions);
         if (this.config.hasOwnProperty('RadioOther')) {
@@ -174,7 +187,7 @@ export class BaseFormController {
             }
         }
     }
-    
+
     setValuesForDateInputs() {
         this.dateData = new DateData(this.questions);
         if (this.config.hasOwnProperty('Date')) {
@@ -189,7 +202,6 @@ export class BaseFormController {
                 this.dateData.setDate(questionId,'person');
             }
         }
-        
     }
 
     getResponseOfQuestionById(responses, questionId) {
@@ -206,7 +218,7 @@ export class BaseFormController {
             }
         }
     }
-    
+
     getContextCount(context) {
         if (!(context in this.flagContextCount)) {
             this.flagContextCount[context] = 0;
@@ -356,8 +368,7 @@ export class BaseFormController {
             this.warningMessages = [];
         }
     }
-    
-    
+
     // Override in subclass for implementation specific features
     save() {
     }
@@ -365,13 +376,13 @@ export class BaseFormController {
     // Override in subclass for implementation specific features
     submit() {
     }
-    
+
     setupFlagListener() {
         this.$scope.$on('flagTotalCheck', (event, flagData) => {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd, flagData.flagContext);
         });
     }
-    
+
     isString(val) {
         return typeof val === 'string';
     }
@@ -379,7 +390,7 @@ export class BaseFormController {
     showIgnoreWarningsCheckbox() {
         return (this.messagesEnabled && this.warningMessages.length > 0) || this.ignoreWarnings;
     }
-    
+
     getCardInstances(constant_name) {
         if (!this.config || !this.config.hasOwnProperty(constant_name) || !this.response || !this.response.cards) {
             return [];
@@ -392,8 +403,161 @@ export class BaseFormController {
                 }
             }
         }
-        
+
         return [];
+    }
+
+    // Override in subclass and set to non-zero value to enable auto-save
+    autoSaveInterval() {
+        return 0;
+    }
+
+    // Override in subclass to identify the minimum set of data values that must be populated
+    // before a save should be attempted
+    autoSaveHasMinimumData() {
+        return false;
+    }
+
+    // Override in subclass to make the calls to the endpoint to save the form data
+    doAutoSave() {
+    }
+
+    autoSave() {
+        if (this.shouldAutoSave()) {
+            this.doAutoSave();
+            this.lastAutoSave = new Date();
+            this.autoSaveModified = false;
+        }
+    }
+
+    shouldAutoSave() {
+        if (this.lastAutoSave === null  || this.isViewing) {
+            // Auto-save is not enabled
+            return false;
+        }
+        let elapsed = new Date() - this.lastAutoSave;
+        if (elapsed < this.autoSaveInterval()) {
+            // interval has not been reached yet
+            return false;
+        }
+        if (!this.autoSaveHasMinimumData()) {
+            // The minimum set of data needed to save the form has not yet been entered
+            return false;
+        }
+        if (this.autoSaveModified) {
+            // Already know form is modified (card has been modified)
+            return true;
+        }
+
+        // Check if any of the basic data type question values have been modified
+        if (this.config.hasOwnProperty('Basic')) {
+            for (let idx=0; idx < this.config.Basic.length; idx++) {
+                let questionId = this.config.Basic[idx];
+                if (this.questions[questionId].response === null) {
+                    if (this.originalQuestions[questionId].response !== null) {
+                        return true;
+                    } 
+                } else if (this.originalQuestions[questionId].response === null || this.questions[questionId].response.value !== this.originalQuestions[questionId].response.value) {
+                    return true;
+                }
+            }
+        }
+        // Check if any of the radio button with other data type question values have been modified
+        if (this.config.hasOwnProperty('RadioOther')) {
+            for (let idx=0; idx < this.config.RadioOther.length; idx++) {
+                let questionId = this.config.RadioOther[idx];
+                if (this.questions[questionId].response === null) {
+                    if (this.otherData.getValue(questionId) !== null) {
+                        return true;
+                    }
+                } else if (this.otherData.getValue(questionId) === null || this.questions[questionId].response.value !== this.otherData.getValue(questionId)) {
+                    return true;
+                }
+            }
+        }
+        // Check if any of the date data type question values have been modified
+        if (this.config.hasOwnProperty('Date')) {
+            for (let idx=0; idx < this.config.Date.length; idx++) {
+                let questionId = this.config.Date[idx];
+                if (this.questions[questionId].response === null) {
+                    if (this.dateData.getValue(questionId) !== null) {
+                        return true;
+                    }
+                } else if (this.questions[questionId].response.value !== this.dateData.getValue(questionId)) {
+                    return true;
+                }
+            }
+        }
+        // Check if any of the address data type question values have been modified
+        if (this.config.hasOwnProperty('Address')) {
+            for (let idx=0; idx < this.config.Address.length; idx++) {
+                let questionId = this.config.Address[idx];
+                if (this.questions[questionId].response === null) {
+                    if (this.originalQuestions[questionId].response !== null) {
+                        return true;
+                    } else {
+                        continue;
+                    }
+                } 
+                if (this.originalQuestions[questionId].response === null) {
+                    return true;
+                }
+                if (this.questions[questionId].response.address1 === null) {
+                    if (this.originalQuestions[questionId].response.address1 !== null) {
+                        return true;
+                    }
+                } else if (this.originalQuestions[questionId].response.address1 === null || this.questions[questionId].response.address1.id !== this.originalQuestions[questionId].response.address1.id) {
+                    return true;
+                }
+                if (this.questions[questionId].response.address2 === null) {
+                    if (this.originalQuestions[questionId].response.address2 !== null) {
+                        return true;
+                    }
+                } else if (this.originalQuestions[questionId].response.address2 === null || this.questions[questionId].response.address2.id !== this.originalQuestions[questionId].response.address2.id) {
+                    return true;
+                }
+            }
+        }
+        // Check if any of the person data type question values have been modified
+        if (this.config.hasOwnProperty('Person')) {
+            for (let idx=0; idx < this.config.Person.length; idx++) {
+                let questionId = this.config.Person[idx];
+                if (this.questions[questionId].response === null) {
+                    if (this.originalQuestions[questionId].response !== null) {
+                        return true;
+                    } else {
+                        continue;
+                    }
+                } 
+                if (this.originalQuestions[questionId].response === null) {
+                    return true;
+                }
+                if (this.questions[questionId].response.address1 === null) {
+                    if (this.originalQuestions[questionId].response.address1 !== null) {
+                        return true;
+                    }
+                } else if (this.originalQuestions[questionId].response.address1 === null || this.questions[questionId].response.address1.storage_id !== this.originalQuestions[questionId].response.address1.storage_id) {
+                    return true;
+                }
+                if (this.questions[questionId].address2 === null) {
+                    if (this.originalQuestions[questionId].response.address2 !== null) {
+                        return true;
+                    }
+                } else if (this.originalQuestions[questionId].response.address2 === null || this.questions[questionId].response.address2.storage_id !== this.originalQuestions[questionId].response.address2.storage_id) {
+                    return true;
+                }
+                if (this.questions[questionId].response.storage_id !== this.originalQuestions[questionId].response.storage_id ||
+                        this.questions[questionId].response.name.value !== this.originalQuestions[questionId].response.name.value ||
+                        this.questions[questionId].response.gender.value !== this.originalQuestions[questionId].response.gender.value ||
+                        this.questions[questionId].response.age.value !== this.originalQuestions[questionId].response.age.value ||
+                        this.questions[questionId].response.phone.value !== this.originalQuestions[questionId].response.phone.value ||
+                        this.questions[questionId].response.birthdate.value !== this.originalQuestions[questionId].response.birthdate.value ||
+                        this.questions[questionId].response.nationality.value !== this.originalQuestions[questionId].response.nationality.value) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

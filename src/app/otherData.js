@@ -32,6 +32,17 @@ class OtherData {
         }
 	}
 	
+	getValue(valueId) {
+	    if (!this.questions.hasOwnProperty(valueId)) {
+	        return null;
+	    }
+	    if (this.questions[valueId].value === 'Other') {
+	        return this.questions[valueId].otherValue;
+	    } else {
+	        return this.questions[valueId].value;
+	    }
+	}
+	
 	updateResponses() {
 		for (var property in this.questions) {
 		    if (this.questions.hasOwnProperty(property)) {

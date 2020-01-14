@@ -3,7 +3,7 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseIrfController extends BaseFormController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
         'ngInject';
         super($scope, $stateParams);
 
@@ -11,6 +11,7 @@ export class BaseIrfController extends BaseFormController {
         this.constants = constants;
         this.service = IrfService;
         this.state = $state;
+        this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
         this.intercepteeImages = {};
         
@@ -46,7 +47,7 @@ export class BaseIrfController extends BaseFormController {
     }
     
     modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
-        if (theControllerName === 'IntercepteeModalController' && cardIndex != null) {
+        if (theControllerName === 'IntercepteeModalController' && cardIndex !== null) {
             this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
         }
     }
@@ -82,6 +83,8 @@ export class BaseIrfController extends BaseFormController {
     	            }
     	            this.modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options);
                 }
+        	this.autoSaveModified = true;
+        	this.autoSave();
         });
     }
     
@@ -221,6 +224,45 @@ export class BaseIrfController extends BaseFormController {
             });
     	
         this.messagesEnabled = true;
+    }
+
+    autoSaveInterval() {
+        return 30000;
+    }
+
+    autoSaveHasMinimumData() {
+        if (this.questions[1].response.value === null || this.questions[1].response.value === '' ||
+                this.questions[4].response.value === null || this.questions[4].response.value === '') {
+            return false;
+        }
+        return true;
+    }
+
+    doAutoSave() {
+        this.response.status = 'in-progress';
+        this.processPersons('Out');
+        this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
+        this.outCustomHandling();
+        this.saveExtra();
+        this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+        this.spinner.show('Auto saving IRF...');
+        this.service.submitIrf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+            this.stateParams.id = response.data.storage_id;
+            this.processResponse(response, this.stateParams.id);
+            if (this.stateParams.id !== null && this.questions[1].response.value !== null) {
+                this.relatedUrl = this.state.href('relatedForms', {
+                    stationId: this.stateParams.stationId,
+                    formNumber: this.questions[1].response.value
+                });
+            }
+            this.spinner.hide();
+        }, (error) => {
+                this.set_errors_and_warnings(error.data);
+                this.spinner.hide();
+           });
+         this.messagesEnabled = false;
     }
 }
 

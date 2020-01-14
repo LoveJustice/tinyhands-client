@@ -3,7 +3,7 @@ import printCardTemplate from './common/printCardTemplate.html';
 import {IrfStubController} from './irfStub.js';
 
 export class BaseCifController extends BaseFormController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService) {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService) {
         'ngInject';
         super($scope, $stateParams);
 
@@ -14,6 +14,7 @@ export class BaseCifController extends BaseFormController {
         this.state = $state;
         this.timeout = $timeout;
         this.relatedUrl = null;
+        this.spinner = SpinnerOverlayService;
        
         this.cifNumber = "";
         this.associatedPersons = [];
@@ -175,6 +176,8 @@ export class BaseCifController extends BaseFormController {
 	                cards.push(the_card);
 	            }
             }
+            this.autoSaveModified = true;
+            this.autoSave();
         });
     }
     
@@ -297,6 +300,46 @@ export class BaseCifController extends BaseFormController {
             window.print();
             this.printMode=false;
         }, 1000);
+    }
+
+    autoSaveInterval() {
+        return 30000;
+    }
+
+    autoSaveHasMinimumData() {
+        if (this.questions[287].response.value === null || this.questions[287].response.value === '') {
+            return false;
+        }
+        
+        return true;
+    }
+
+    doAutoSave() {
+        this.response.status = 'in-progress';
+        this.processPersons('Out');
+        this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
+        this.outCustomHandling();
+        this.saveExtra();
+        this.errorMessages = [];
+        this.warningMessages = [];
+        this.messagesEnabled = false;
+        this.spinner.show('Auto saving CIF...');
+        this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+            this.stateParams.id = response.data.storage_id;
+            this.processResponse(response, this.stateParams.id);
+            this.number_change();
+            if (this.stateParams.id !== null && this.questions[287].response.value !== null) {
+                this.relatedUrl = this.state.href('relatedForms', {
+                    stationId: this.stateParams.stationId,
+                    formNumber: this.questions[287].response.value
+                });
+            }
+            this.spinner.hide();
+        }, (error) => {
+                this.set_errors_and_warnings(error.data);
+                this.spinner.hide();
+           });
+         this.messagesEnabled = false;
     }
 }
 

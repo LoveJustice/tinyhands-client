@@ -23,7 +23,11 @@
 				<div class="col-md-10 form-group">
 			        <span ng-repeat="placeItem in LocationBoxModalController.config.RadioItems[424]">
 			            <form-step type="radio" class="col-md-4" radio-name="locationPlace" label="{{placeItem}}"
-			            	response-value="LocationBoxModalController.questions[424].response.value"></form-step>
+			            	other-value="LocationBoxModalController.otherData.questions[424].otherValue"
+			            	response-value="LocationBoxModalController.otherData.questions[424].value"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-4" radio-name="locationPlace" label="Other"
+			            	other-value="LocationBoxModalController.otherData.questions[424].otherValue"
+			            	response-value="LocationBoxModalController.otherData.questions[424].value"></form-step>
 			        </span>
 		        </div>
             </div>

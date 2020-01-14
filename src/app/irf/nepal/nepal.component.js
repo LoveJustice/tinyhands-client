@@ -14,7 +14,7 @@ import attachmentsTemplate from '../common/step-templates/attachments/attachment
 import logbookTemplate from '../common/step-templates/logbook.html';
 
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteePassportModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfNepalController extends BaseIrfController {

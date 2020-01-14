@@ -57,7 +57,7 @@
 	            </tr>
 	        </thead>
 	        <tbody ng-init="vm.sortColumn = 'name'">
-	            <tr ng-repeat="knownPerson in vm.knownPersons | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="knownPerson.hover = true;displayPopup($event, knownPerson.form_photo)" ng-mouseleave="knownPerson.hover = false;hidePopup()">
+	            <tr ng-repeat="knownPerson in vm.knownPersons | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="knownPerson.hover = true;vm.displayPopup($event, knownPerson.form_photo)" ng-mouseleave="knownPerson.hover = false;vm.hidePopup()">
 	                <td class="text-center">{{ knownPerson.full_name }}</td>
 	                <td class="text-center">{{ knownPerson.gender }}</td>
 	                <td class="text-center">{{ knownPerson.age }}</td>
@@ -166,7 +166,7 @@
 	        </tr>
         </thead>
         <tbody ng-init="vm.sortColumn = 'name'">
-            <tr ng-repeat="candidate in vm.addCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()" ng-show="{{candidate.id}} != {{vm.knownperson.id}}">
+            <tr ng-repeat="candidate in vm.addCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;vm.displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;vm.hidePopup()" ng-show="{{candidate.id}} != {{vm.knownperson.id}}">
             	<td class="text-center"><input type="radio" name="matchRadio" ng-click="vm.enableMatch(candidate.id)"></td>
                 <td class="text-left">{{ candidate.full_name }}</td>
                 <td class="text-center">{{ candidate.gender }}</td>
@@ -216,7 +216,7 @@
 	            </tr>
 	        </thead>
 	        <tbody ng-init="vm.sortColumn = 'name'">
-	            <tr ng-repeat="candidate in vm.delCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;hidePopup()">
+	            <tr ng-repeat="candidate in vm.delCandidates | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="candidate.hover = true;vm.displayPopup($event, candidate.form_photo)" ng-mouseleave="candidate.hover = false;vm.hidePopup()">
 	                <td class="text-left">{{ candidate.full_name }}</td>
 	                <td class="text-center">{{ candidate.gender }}</td>
 	                <td class="text-right">{{ candidate.age }}</td>
@@ -239,7 +239,9 @@
 	<div ng-show="vm.loading" class="loader-container">
 		<div class="loader">Loading...</div>
 	</div>
-    <div id="popupDiv" ng-show="showPopup">
-    	<img id="popupImageId" src="">
+    <div id="popupDiv" ng-show="vm.showPopup">
+    	<canvas id="myCanvas" width="150" height="150" style="border:1px solid #d3d3d3;">
+					Your browser does not support the HTML5 canvas tag.
+		</canvas>
     </div>
 </div>

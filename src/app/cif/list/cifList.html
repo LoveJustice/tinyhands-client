@@ -94,9 +94,9 @@
                 <td>{{ cif.date_of_interview }}</td>
                 <td>{{ cif.date_entered_into_system }}</td>
                 <td class="hidden-xs">{{ cif.date_time_last_updated | date:"medium" : cifListCtrl.timeZoneDifference }}</td>
-                <td ng-if="cifListCtrl.session.checkPermission('CIF','VIEW',cif.station.operating_country.id, cif.station.id)" title="View"><a ng-href="{{cif.viewUrl}}"><img ng-src="assets/images/eye-icon.png"></a></td>
-                <td ng-if="cifListCtrl.session.checkPermission('CIF','EDIT',cif.station.operating_country.id, cif.station.id)" title="Edit"><a ng-href="{{cif.editUrl}}"><img ng-src="assets/images/Edit-Document-icon.png"></a></td>
-                <td ng-if="cifListCtrl.session.checkPermission('CIF','DELETE',cif.station.operating_country.id, cif.station.id) && !cif.confirmedDelete"><a ng-click="cifListCtrl.deleteCif(cif, $index)" title="Delete"><img ng-src="assets/images/Button-Delete-icon.png"></a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','VIEW',cif.station.operating_country.id, cif.station.id)" title="View"><a ng-href="{{cif.viewUrl}}"><img class="btn" ng-src="assets/images/eye-icon.png"></a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','EDIT',cif.station.operating_country.id, cif.station.id)" title="Edit"><a ng-href="{{cif.editUrl}}"><img class="btn" ng-src="assets/images/Edit-Document-icon.png"></a></td>
+                <td ng-if="cifListCtrl.session.checkPermission('CIF','DELETE',cif.station.operating_country.id, cif.station.id) && !cif.confirmedDelete"><a class="btn" ng-click="cifListCtrl.deleteCif(cif, $index)" title="Delete"><img ng-src="assets/images/Button-Delete-icon.png"></a></td>
                 <td ng-if="cifListCtrl.session.checkPermission('CIF','DELETE',cif.station.operating_country.id, cif.station.id) && cif.confirmedDelete""><a class="btn btn-sm btn-danger" ng-click="cifListCtrl.deleteCif(cif, $index)">"Confirm?"</a></td>
             </tr>
             <tr ng-show="cifListCtrl.cifs.length == 0">

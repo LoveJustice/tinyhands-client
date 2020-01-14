@@ -1,3 +1,5 @@
+/* global angular */
+/* global Image */
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseIrfController extends BaseFormController {
@@ -10,6 +12,7 @@ export class BaseIrfController extends BaseFormController {
         this.service = IrfService;
         this.state = $state;
         this.relatedUrl = null;
+        this.intercepteeImages = {};
         
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
@@ -37,6 +40,12 @@ export class BaseIrfController extends BaseFormController {
         return new URL(url, this.constants.BaseUrl).href;
     }
     
+    modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
+        if (theControllerName === 'IntercepteeModalController' && cardIndex != null) {
+            this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
+        }
+    }
+    
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options={age:false}) {
     	let config = this.config[config_name];
 
@@ -59,15 +68,54 @@ export class BaseIrfController extends BaseFormController {
         }).result.then(() => {
         	let cards = this.getCardInstances(config_name);
         	if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
-            	cards.splice(cardIndex, 1);
-            	this.redFlagTotal = this.redFlagTotal - starting_flag_count;
-            } else {
-            	this.redFlagTotal = this.redFlagTotal + the_card.flag_count - starting_flag_count;
-	            if (isAdd) {
-	                cards.push(the_card);
-	            }
-            }
+                	cards.splice(cardIndex, 1);
+                	this.redFlagTotal = this.redFlagTotal - starting_flag_count;
+                } else {
+                    this.redFlagTotal = this.redFlagTotal + the_card.flag_count - starting_flag_count;
+    	            if (isAdd) {
+    	                cards.push(the_card);
+    	            }
+    	            this.modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options);
+                }
         });
+    }
+    
+    resizeImage(canvasName, img) {
+        let maxSize = 150;
+        let temp = angular.element('#' + canvasName);
+        let canvas = temp.get(0);
+        let ctx = canvas.getContext('2d');
+        if (img.width > img.height) {
+            canvas.width = maxSize;
+            canvas.height = img.height * maxSize/img.width;
+        } else {
+            canvas.height = maxSize;
+            canvas.width = img.width * maxSize/img.height;
+        }
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+    
+    loadCanvas (canvasName,  questionValue){
+        if (!questionValue) {
+            return;
+        }
+        let imageUrl = null;
+        let t = Object.prototype.toString.call(questionValue);
+        if (t !== '[object String]') {
+            imageUrl = questionValue.$ngfBlobUrl;
+        } else {
+            imageUrl = this.getIntercepteeImage(questionValue);
+        }
+        
+        let img = new Image();
+        img.src = imageUrl;
+        this.intercepteeImages[canvasName] = img;
+        img.addEventListener('load', (e)=>{/*jshint unused: false */
+                for (let canvas in this.intercepteeImages) {
+                    this.resizeImage(canvas, this.intercepteeImages[canvas]);
+                }
+            });
+        
     }
     
     // Override in subclass for implementation specific features
@@ -164,6 +212,7 @@ export class BaseIrfController extends BaseFormController {
              this.state.go('irfNewList');
          }, (error) => {
         	 this.set_errors_and_warnings(error.data);
+        	 this.response.status = this.saved_status;
             });
     	
         this.messagesEnabled = true;

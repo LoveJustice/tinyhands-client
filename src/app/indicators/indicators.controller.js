@@ -1,14 +1,16 @@
 import './indicators.less';
 class IndicatorsController {
-    constructor($rootScope, SessionService, indicatorsService, SpinnerOverlayService, countriesService) {
+    constructor($rootScope, SessionService, indicatorsService, SpinnerOverlayService) {
         'ngInject';
         
+        this.session = SessionService;
         this.indicatorsService = indicatorsService;
-        this.countriesService = countriesService;
         this.spinnerOverlayService = SpinnerOverlayService;
         this.indicatorsData = null;
         this.highlight = null;
         this.displayHistory = 10;
+        this.countries = [];
+        this.countryRequestCount = 0;
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -28,12 +30,15 @@ class IndicatorsController {
         this.indicatorTypes = [
             {'key':'irfLag', 'name':'IRF Lag Time', 'color':true},
             {'key':'irfCount', 'name':'IRF Forms Entered', 'color':false},
+            {'key':'irfOriginalFormPercent', 'name':'IRF Original Form Attached %', 'color':false},
             {'key':'photosLag', 'name':'Photo Upload Lag Time', 'color':true},
             {'key':'photosCount', 'name':'Photos Uploaded', 'color':false},
             {'key':'vdfLag', 'name':'VDF Lag Time', 'color':true},
             {'key':'vdfCount', 'name':'VDF Forms Entered', 'color':false},
+            {'key':'vdfOriginalFormPercent', 'name':'VDF Original Form Attached %', 'color':false},
             {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
             {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
+            {'key':'cifOriginalFormPercent', 'name':'CIF Original Form Attached %', 'color':false},
             {'key':'v1Lag', 'name':'Step 1: Verification Lag time', 'color':true},
             {'key':'v1Count', 'name':'Step 1: Verifications Completed', 'color':false},
             {'key':'v1Backlog', 'name':'Step 1: Verification Backlog', 'color':true},
@@ -53,16 +58,60 @@ class IndicatorsController {
         this.ctrl.calculate();
     }
     
-    getCountries() {
-        this.countriesService.getCountries([]).then((promise) => {
-            this.countries = promise.data.results;
-            for (var idx = 0; idx < this.countries.length; idx++) {
-                this.countryDropDown.options.push({
-                    id: this.countries[idx].id,
-                    label: this.countries[idx].name,
-                });
+    mergeCountries() {
+        let len = this.countries.length - 1;
+        let result_array = [];
+        let assoc = {};
+        
+        while (len--) {
+            let item = this.countries[len];
+            
+            if (!assoc[item.id]) {
+                result_array.unshift(item);
+                assoc[item.id] = true;
             }
-            this.loading = false;
+        }
+        
+        result_array.sort((a,b)=>{
+            if (a.name < b.name) {
+                return -1;
+            }
+            if (a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        });
+        
+        for (var idx = 0; idx < result_array.length; idx++) {
+            this.countryDropDown.options.push({
+                id: result_array[idx].id,
+                label: result_array[idx].name,
+            });
+        }
+        this.loading = false;
+    }
+    
+    getCountries() {
+        this.indicatorsService.getUserCountries(this.session.user.id, 'IRF').then((promise) => {
+            this.countries = this.countries.concat(promise.data);
+            this.countryRequestCount += 1;
+            if (this.countryRequestCount > 2) {
+                this.mergeCountries();
+            }
+        });
+        this.indicatorsService.getUserCountries(this.session.user.id, 'CIF').then((promise) => {
+            this.countries = this.countries.concat(promise.data);
+            this.countryRequestCount += 1;
+            if (this.countryRequestCount > 2) {
+                this.mergeCountries();
+            }
+        });
+        this.indicatorsService.getUserCountries(this.session.user.id, 'VDF').then((promise) => {
+            this.countries = this.countries.concat(promise.data);
+            this.countryRequestCount += 1;
+            if (this.countryRequestCount > 2) {
+                this.mergeCountries();
+            }
         });
     }
     

@@ -1,4 +1,5 @@
 import {BaseMonthlyReportController} from '../baseMonthlyReportController.js';
+import {BaseModalController} from '../../baseModalController.js';
 import './nepal.less';
 
 import templateUrl from './nepal.html';
@@ -15,11 +16,14 @@ import aftercareTemplate from '../common/step-templates/aftercare.html';
 import paralegalTemplate from '../common/step-templates/paralegal.html';
 import investigationsTemplate from '../common/step-templates/investigations.html';
 import finalTemplate from '../common/step-templates/final.html';
+import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
+
+import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class MonthlyReportNepalController extends BaseMonthlyReportController {
-    constructor($scope, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService) {
         'ngInject';        
-        super($scope, constants, MonthlyReportService, $stateParams, $state,
+        super($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state,
                     [
                         "Governance",
                         "Logistics & Registration",
@@ -48,7 +52,8 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             aftercareTemplate,
             paralegalTemplate,
             investigationsTemplate,
-            finalTemplate
+            finalTemplate,
+            attachmentsTemplate
         ];
         
         this.questionFormat = {
@@ -740,6 +745,11 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 ]
             },
         };
+    }
+    
+    openAttachmentModal(responses = [], isAdd = false, idx=null) {
+        this.commonModal(responses, isAdd, idx, BaseModalController, 'AttachmentModalController',
+                attachmentTemplate, 'Attachments');
     }
 }
 

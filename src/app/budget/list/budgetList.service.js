@@ -8,10 +8,13 @@ export default class BudgetListService {
         return this.service.delete(`api/budget/${id}/`);
     }
 
-    getBudgetList(searchTerm, sortValue, country_ids) {
+    getBudgetList(searchTerm, sortValue, country_ids, nextPage) {
         let params = [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, { name: "ordering", value: sortValue }];
         if (country_ids !== null && country_ids !== '') {
             params.push({name:"country_ids", value:country_ids});
+        }
+        if (nextPage !== null) {
+            params.push({name:"page", value:nextPage});
         }
         return this.service.get('api/budget/', params);
     }

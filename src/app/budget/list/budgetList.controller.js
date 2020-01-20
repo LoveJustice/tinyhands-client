@@ -61,10 +61,21 @@ export default class BudgetList {
         this.getBudgetList(this.searchTerm, this.sortValue);
     }
     
+    extractPage(url) {
+        try {
+            return url
+                .slice(url.indexOf('page='))
+                .split('&')[0]
+                .split('=')[1];
+        } catch (e) {
+            return 0;
+        }
+    }
+    
     getBudgetListInternal() {
-        this.service.getBudgetList(this.searchTerm, this.sortValue, this.countryIds).then((response) => {
+        this.service.getBudgetList(this.searchTerm, this.sortValue, this.countryIds, null).then((response) => {
             this.listOfBudgets = response.data.results;
-            this.nextBudgetPage = response.data.next;
+            this.nextBudgetPage = this.extractPage(response.data.next);
         });
     }
 
@@ -72,11 +83,15 @@ export default class BudgetList {
      * Gets list of budgets from API.
      */
     getBudgetList(searchTerm, sortValue) {
-        this.searchTerm = searchTerm;
-        if (this.sortValue === sortValue) {
-            this.sortValue = `-${sortValue}`;
-        } else {
-            this.sortValue = sortValue;
+        if (searchTerm !== null) {
+            this.searchTerm = searchTerm;
+        }
+            if (sortValue !== null) {
+            if (this.sortValue === sortValue) {
+                this.sortValue = `-${sortValue}`;
+            } else {
+                this.sortValue = sortValue;
+            }
         }
         this.getBudgetListInternal();
         this.timer = this.timeout(() => {
@@ -88,14 +103,10 @@ export default class BudgetList {
     }
 
     getNextBudgetPage() {
-        if (this.nextBudgetPage) {
-            this.service.getNextBudgetPage(this.nextBudgetPage).then((response) => {
-                response.data.results.forEach(function (element) {
-                    this.listOfBudgets.push(element);
-                }, this);
-                this.nextBudgetPage = response.data.next;
-            });
-        }
+        this.service.getBudgetList(this.searchTerm, this.sortValue, this.countryIds, this.nextBudgetPage).then((response) => {
+            this.listOfBudgets = this.listOfBudgets.concat(response.data.results);
+            this.nextBudgetPage = this.extractPage(response.data.next);
+        });
     }
     
     createBudget() {

@@ -31,11 +31,17 @@ class ExportMdfsModalController {
     }
 
     exportPhotos() {
+        if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12) {
+            return;
+        }
         let url = constants.BaseUrl + `api/mdf/${this.selectedMonth}/${this.selectedYear}/pdf`;
         this.window.open(url, '_blank');
     }
 
     getNumberOfMdfs() {
+        if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12) {
+            return;
+        }
         this.service.get(`api/mdf/${this.selectedMonth}/${this.selectedYear}/count/`).then((promise) => {
             this.numberOfMdfs = promise.data.count;
         });

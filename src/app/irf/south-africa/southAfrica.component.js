@@ -20,9 +20,9 @@ import intercepteeModalTemplate from '../common/step-templates/interceptees/inte
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfSouthAfricaController extends BaseIrfController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService);
         
         
         this.stepTemplates = [

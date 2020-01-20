@@ -62,7 +62,15 @@ function CifAfricaRegionRoutes($stateProvider) {
             params: {
                 id: null
             }
-        });
+        }).state('cifNamibia', {
+            url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
+            component: 'cifAfricaRegionComponent',
+            params: {
+                id: null
+            }
+        })
+        
+        ;
 }
 
 export default CifAfricaRegionRoutes;

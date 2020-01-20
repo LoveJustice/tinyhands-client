@@ -20,6 +20,7 @@ import budgetModule from './budget/budget.module';
 import borderStationModule from './border-station/borderStation.module';
 import addressesModule from './addresses/addresses.module';
 import CIFModule from './cif/cif.module';
+import collectionIndicatorsModule from './collectionIndicators/collectionIndicators.module';
 import dashboardModule from './dashboard/dashboard.module';
 import indicatorsModule from './indicators/indicators.module';
 import loginModule from './login/login.module';
@@ -53,6 +54,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         addressesModule,
         borderStationModule,
         budgetModule,
+        collectionIndicatorsModule,
         CIFModule,
         dashboardModule,
         indicatorsModule,

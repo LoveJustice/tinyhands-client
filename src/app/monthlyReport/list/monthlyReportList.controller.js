@@ -26,7 +26,7 @@ export default class MonthlyReportListController {
         this.queryParameters = {
             "page_size": 25,
             "reverse": true,
-            "ordering": '-year,-month',
+            "ordering": 'year, -month',
             "search": '',
             "status": 'approved',
             "country_ids": ''
@@ -58,11 +58,19 @@ export default class MonthlyReportListController {
         };
 
         // If there was a search value provided in the url, set it
+        let foundStateParams = false;
         if($stateParams) {
-           this.queryParameters.search = $stateParams.search;
-           this.queryParameters.status = $stateParams.status;
+           if ($stateParams.search) {
+               foundStateParams = true;
+               this.queryParameters.search = $stateParams.search;
+           }
+           if ($stateParams.status) {
+               foundStateParams = true;
+               this.queryParameters.status = $stateParams.status;
+           }
            if ($stateParams.country_ids) {
                this.queryParameters.country_ids = $stateParams.country_ids;
+               foundStateParams = true;
            }
            
            if (this.queryParameters.status === 'in-progress') {
@@ -70,6 +78,21 @@ export default class MonthlyReportListController {
            } else {
                this.queryParameters.status = 'approved';
            }
+        }
+        
+        if (!foundStateParams) {
+            let tmp = sessionStorage.getItem('mrfList-search');
+            if (tmp !== null) {
+                this.queryParameters.search = tmp;
+            }
+            tmp = sessionStorage.getItem('mrfList-status');
+            if (tmp !== null) {
+                this.queryParameters.status = tmp;
+            }
+            tmp = sessionStorage.getItem('mrfList-country_ids');
+            if (tmp !== null) {
+                this.queryParameters.country_ids = tmp;
+            }
         }
 
         this.getUserCountries();
@@ -133,6 +156,9 @@ export default class MonthlyReportListController {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
         }
+        sessionStorage.setItem('mrfList-search', this.queryParameters.search);
+        sessionStorage.setItem('mrfList-status', this.queryParameters.status);
+        sessionStorage.setItem('mrfList-country_ids', this.queryParameters.country_ids);
         this.timer = this.timeout( () => {
             this.state.go('.', {
                 search: this.queryParameters.search, 

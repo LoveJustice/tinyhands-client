@@ -69,7 +69,13 @@ function CifAfricaRegionRoutes($stateProvider) {
                 id: null
             }
         })
-        
+        .state('cifRwanda', {
+            url: '/cif/africaRegion:?id&stationId&countryId&isViewing&formName',
+            component: 'cifAfricaRegionComponent',
+            params: {
+                id: null
+            }
+        })
         ;
 }
 

@@ -33,6 +33,7 @@ import countriesModule from './countries/countries.module';
 import idmanagementModule from './idmanagement/idmanagement.module';
 import traffickermatchModule from './traffickermatch/traffickermatch.module';
 import relatedFormsModule from './relatedForms/relatedForms.module';
+import helpModule from './help/help.module.js';
 
 
 import constants from './constants.js';
@@ -68,6 +69,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         idmanagementModule,
         traffickermatchModule,
         relatedFormsModule,
+        helpModule,
     ])
 
     .constant('constants', constants)

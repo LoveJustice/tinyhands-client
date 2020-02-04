@@ -1,10 +1,11 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseMonthlyReportController extends BaseFormController {
-    constructor($scope, constants, MonthlyReportService, $stateParams, $state, contexts, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, contexts, SpinnerOverlayService) {
         'ngInject';
         super($scope, $stateParams);
         
+        this.$uibModal = $uibModal;
         this.constants = constants;
         this.service = MonthlyReportService;
         this.state = $state;
@@ -52,6 +53,7 @@ export class BaseMonthlyReportController extends BaseFormController {
         this.service.getStation(stationId).then ((response) => {
             this.country_name = response.data.country_name;
             this.station_name = response.data.station_name;
+            this.station_code = response.data.station_code;
         });
     }
     
@@ -72,6 +74,38 @@ export class BaseMonthlyReportController extends BaseFormController {
         }
     }
     
+    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
+        let config = this.config[config_name];
+        this.modalActions = [];
+        this.$uibModal.open({
+            bindToController: true,
+            controller: theController,
+            controllerAs: theControllerName,
+            resolve: {
+                isAdd: () => isAdd,
+                card: () => the_card,
+                isViewing: () => this.isViewing,
+                modalActions: () => this.modalActions,
+                config: () => config,
+                identificationTypes: () => this.getDefaultIdentificationTypes(),
+                associatedPersons: () => this.associatedPersons
+            },
+            size: 'lg',
+            templateUrl: theTemplate,
+        }).result.then(() => {
+                let cards = this.getCardInstances(config_name);
+                if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
+                cards.splice(cardIndex, 1);
+            } else {
+                if (isAdd) {
+                    cards.push(the_card);
+                }
+            }
+            this.autoSaveModified = true;
+            this.autoSave();
+        });
+    }
+    
     // Override in subclass for implementation specific features
     saveExtra() {   
     }
@@ -84,7 +118,7 @@ export class BaseMonthlyReportController extends BaseFormController {
         this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
-        this.service.submitMonthlyReport(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+        this.service.submitMonthlyReport(this.stateParams.stationId, this.stateParams.id, this.response, this.station_code).then((response) => {
          this.response = response.data;
             this.responses = response.data.responses;
             this.questions = _.keyBy(this.responses, x => x.question_id);
@@ -116,7 +150,7 @@ export class BaseMonthlyReportController extends BaseFormController {
         } else {
             this.response.ignore_warnings = 'False';
         }
-        this.service.submitMonthlyReport(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
+        this.service.submitMonthlyReport(this.stateParams.stationId, this.stateParams.id, this.response, this.station_code).then((response) => {
              this.response = response.data;
              this.responses = response.data.responses;
              this.questions = _.keyBy(this.responses, x => x.question_id);

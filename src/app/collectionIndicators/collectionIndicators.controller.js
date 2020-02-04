@@ -7,8 +7,10 @@ class IndicatorsController {
         this.indicatorsService = collectionIndicatorsService;
         this.spinnerOverlayService = SpinnerOverlayService;
         this.indicatorsData = null;
+        this.indicators = null;
         this.countries = [];
         this.countryRequestCount = 0;
+        this.displayIndicators = 13;
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -47,8 +49,8 @@ class IndicatorsController {
     }
     
     displayPercent(value) {
-        if (value === '') {
-            return value;
+        if (typeof value === 'undefined' || value === '') {
+            return '';
         } else {
             return value + '%';
         }
@@ -125,6 +127,40 @@ class IndicatorsController {
         return displayClass;
     }
     
+    scroll(increment) {
+        this.scrollIndicators(this.scrollPos + increment);
+    }
+    
+    scrollIndicators(to_idx) {
+        if (this.indicatorsData.length < this.displayIndicators) {
+            this.indicators = this.indicatorsData;
+            let inds = [];
+            for (let idx=0; idx < this.indicatorsData.length; idx++) {
+                inds.push(this.indicatorsData[idx]);
+            }
+            for (let idx=0; idx < (this.displayIndicators-this.indicatorsData.length); idx++) {
+                inds.push({});
+            }
+            this.indicators = inds;
+            this.scrollPos = 0;
+            this.scrollLeft = false;
+            this.scrollRight = false;
+        } else {
+            let inds = [];
+            inds.push(this.indicatorsData[0]);
+            if (to_idx < 1) {
+                to_idx = 1;
+            }
+            for (let idx=to_idx; idx < to_idx+this.displayIndicators-1; idx++) {
+                inds.push(this.indicatorsData[idx]);
+            }
+            this.indicators = inds;
+            this.scrollPos = to_idx;
+            this.scrollLeft = (to_idx > 1);
+            this.scrollRight = (to_idx + this.displayIndicators - 1 < this.indicatorsData.length);
+        }
+    }
+    
     dateAsString(theDate) {
         let dateString = '' + theDate.getUTCFullYear() + '-' + (theDate.getUTCMonth() + 1) + '-' + theDate.getUTCDate();
         return dateString;
@@ -137,6 +173,7 @@ class IndicatorsController {
         this.spinnerOverlayService.show('Calculating Indicators...');
         this.indicatorsService.calculate(this.countryDropDown.selectedOptions[0].id, this.dateAsString(this.startDate), this.dateAsString(this.endDate)).then(promise => {
             this.indicatorsData = promise.data;
+            this.scrollIndicators(1);
             this.spinnerOverlayService.hide();
         }, (error) => {
             alert(error.data);

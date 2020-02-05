@@ -7,6 +7,13 @@ function CifIndiaRoutes($stateProvider) {
             params: {
                 id: null
             }
+        })
+        .state('cifIndiaNetwork', {
+            url: '/cif/indiaNetwork:?id&stationId&countryId&isViewing&formName',
+            component: 'cifIndiaComponent',
+            params: {
+                id: null
+            }
         });
 }
 

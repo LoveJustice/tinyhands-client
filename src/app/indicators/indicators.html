@@ -29,15 +29,15 @@
 	        <thead class="sticky-table-header">
 	        	<tr>
 	                <th ng-style="{'width':indicators.labelWidth + 'px'}" class="title1 col1-heading"></th>
-	                <th ng-style="{'width':indicators.goalWidth + 'px'}" class="title1 col2-heading"></th>
-	                <th ng-style="{'width':indicators.last30Width + 'px'}" class="title1 col3-heading">Last 30</th>
-	                <th ng-style="{'width':indicators.dataWidth + 'px'}" class="title1 cell-light-border" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title1 }}</th>
+	                <th ng-style="{'width':indicators.goalWidth + 'px'}" class="title1 col2-heading text-center"></th>
+	                <th ng-style="{'width':indicators.last30Width + 'px'}" class="title1 col3-heading text-center">Last 30</th>
+	                <th ng-style="{'width':indicators.dataWidth + 'px'}" class="title1 cell-light-border text-center" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title1 }}</th>
 	            </tr>
 	            <tr>
 	                <th class="title2 col1-heading">Data Indicators</th>
-	                <th class="title2 col2-heading">Goal</th>
-	                <th class="title2 col3-heading">Days</th>
-	                <th class="title2 cell-light-border" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title2 }}</th>
+	                <th class="title2 col2-heading text-center">Goal</th>
+	                <th class="title2 col3-heading text-center">Days</th>
+	                <th class="title2 cell-light-border text-center" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title2 }}</th>
 	            </tr>
 	        </thead>
 	        <tbody>

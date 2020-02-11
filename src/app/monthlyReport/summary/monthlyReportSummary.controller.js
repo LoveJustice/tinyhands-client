@@ -70,6 +70,12 @@ export default class MonthlyReportSummaryController {
         });
     }
     
+    getTableStyle() {
+        return {
+            'max-width': this.summaryData.headings.length * 105
+        };
+    }
+    
     colorCell(value) {
         if (value >= 90) {
             return ' meets-goal';
@@ -82,16 +88,23 @@ export default class MonthlyReportSummaryController {
         }
     }
     
+    getHeaderClass(index) {
+        let displayClass = this.getBorderClass(index, '') + ' table-heading';
+        return displayClass;
+    }
+    
     getClass(index, value) {
-        let displayClass = this.getBorderClass(index);
+        let displayClass = this.getBorderClass(index) + " center-text";
         if (index === this.summaryData.headings.length - 1) {
-            displayClass += this.colorCell(value);
+            displayClass += this.colorCell(value) + " bold-text";
+        } else if (index === 0) {
+            displayClass += " bold-text";
         }
         return displayClass;
     }
     
     getAverageClass(index, value) {
-        let displayClass = this.getBorderClass(index, 'cell-top-border');
+        let displayClass = this.getBorderClass(index, 'cell-top-border bold-text center-text');
         if (index > 0) {
             displayClass += this.colorCell(value);
         }
@@ -102,9 +115,10 @@ export default class MonthlyReportSummaryController {
     getBorderClass(index, displayClass = "") {
         if (index === 0) {
             displayClass = displayClass + " cell-right-border";
-        }
-        if (index === this.summaryData.headings.length - 1) {
-            displayClass = displayClass + " cell-left-border";
+        } else if (index === this.summaryData.headings.length - 1) {
+            displayClass = displayClass + "  cell-left-border";
+        } else {
+            displayClass = displayClass + " cell-light-border";
         }
         
         return displayClass;
@@ -112,6 +126,33 @@ export default class MonthlyReportSummaryController {
     
     countryChange() {
         this.ctrl.getSummary();
+    }
+    
+    mapHeaders() {
+        let headerMap = {
+            'Station':'Sta',
+            'Governance':'Gov',
+            'Logistics & Registration':'LR',
+            'Human Resources':'HR',
+            'Awareness':'Awa',
+            'Security':'Sec',
+            'Accounting':'Acc',
+            'Victim Engagement':'VE',
+            'Records':'Rec',
+            'Aftercare':'Aft',
+            'Paralegal':'Par',
+            'Investigations':'Inv',
+            'Average':'Avg'
+        };
+        
+        for (let idx=0; idx < this.summaryData.headings.length; idx++) {
+            if (headerMap[this.summaryData.headings[idx]]) {
+                this.summaryData.headings[idx] = headerMap[this.summaryData.headings[idx]];
+            }
+        }
+        if (headerMap[this.summaryData.averages[0]]) {
+            this.summaryData.averages[0] = headerMap[this.summaryData.averages[0]];
+        }
     }
     
     getSummary() {
@@ -123,6 +164,7 @@ export default class MonthlyReportSummaryController {
         this.service.getMonthlyReportSummary(this.countryDropDown.selectedOptions[0].id, this.year, this.month).then((promise) => {
             if (promise.data.reports.length > 0) {
                 this.summaryData = promise.data;
+                this.mapHeaders();
             } else {
                 this.noReports = true;
             }

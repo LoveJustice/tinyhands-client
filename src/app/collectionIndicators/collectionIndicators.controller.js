@@ -1,16 +1,31 @@
 import './collectionIndicators.less';
 class IndicatorsController {
-    constructor($rootScope, SessionService, collectionIndicatorsService, SpinnerOverlayService) {
+    constructor($rootScope, SessionService, collectionIndicatorsService, SpinnerOverlayService, StickyHeader) {
         'ngInject';
         
         this.session = SessionService;
         this.indicatorsService = collectionIndicatorsService;
         this.spinnerOverlayService = SpinnerOverlayService;
+        this.sticky = StickyHeader;
+        this.stickyOptions = this.sticky.stickyOptions;
+        this.stickyOptions.zIndex = 1;
         this.indicatorsData = null;
         this.indicators = null;
         this.countries = [];
         this.countryRequestCount = 0;
-        this.displayIndicators = 13;
+        
+        this.sectionWidth = 100;
+        this.labelWidth = 180;
+        this.dataWidth = 50;
+        this.marginWidth = 150;
+        
+        let remaining = window.innerWidth - (this.sectionWidth + this.labelWidth + this.marginWidth);
+        if (remaining > 2 * this.dataWidth) {
+            this.displayIndicators = Math.floor(remaining/this.dataWidth);
+        } else {
+            this.displayIndicators = 2;
+        }
+        this.tableDivSize = (window.innerWidth - this.marginWidth) + "px";
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -113,15 +128,24 @@ class IndicatorsController {
         });
     }
     
-    getCellClass(baseClass, idx) {
-        let displayClass = baseClass;
-        
+    getHeadClass(theClass) {
+        return this.getCellClass(theClass, theClass, -1);
+    }
+    
+    getCellClass(totalClass, stationClass, idx) {
+        let displayClass = ''
         if (idx === 0) {
-            displayClass = displayClass + ' heavy-border number-value';
-        } else if (idx < 0) {
-            displayClass = displayClass + ' light-border';
+            displayClass = totalClass + ' heavy-border';
         } else {
-            displayClass = displayClass + ' light-border number-value';
+            displayClass = stationClass + ' light-border';
+        }
+        
+        if (idx >= 0) {
+            if (typeof this.indicators[idx].label === 'undefined') {
+                displayClass = '';
+            } else {
+                displayClass += ' center';
+            }
         }
         
         return displayClass;

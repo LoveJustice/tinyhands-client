@@ -45,11 +45,11 @@
 		</div>
 	</div>
 	<hr>
-	<div class="col-md-12" ng-if="monthlyReportSummaryCtrl.summaryData">
-		<table class="table table-striped" ng-model="monthlyReportSummaryCtrl.summaryData">
+	<div ng-style="{'width':'520px', 'margin': 'auto'}" ng-if="monthlyReportSummaryCtrl.summaryData">
+		<table class="table table-striped" border="1" ng-model="monthlyReportSummaryCtrl.summaryData">
 	        <thead>
 	        	<tr>
-	                <th ng-repeat="header in monthlyReportSummaryCtrl.summaryData.headings">{{header}}</th>
+	                <th ng-repeat="header in monthlyReportSummaryCtrl.summaryData.headings" ng-style="{'width':'40px'}" ng-class="monthlyReportSummaryCtrl.getHeaderClass($index)">{{header}}</th>
 	            </tr>
 	        </thead>
 	        <tbody>

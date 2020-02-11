@@ -1,6 +1,17 @@
 #dataEntryIndicator {
+	.sticky.stick {
+	    z-index: 1;
+	    position: fixed;
+	    width: inherit;
+	}
 	.cell-right-border {
 		border-right: 2px solid black;
+	}
+	.cell-light-border {
+		border-right: 1px solid black;
+	}
+	.cell-bold {
+		font-weight: bold;
 	}
 	.title1 {
 		border-bottom: none;
@@ -10,33 +21,64 @@
 		border-top: none;
 		padding-top: 0;
 	}
+	.col1-heading {
+		background-color: #264d00;
+		color: white;
+	}
+	.col2-heading {
+		background-color: black;
+		color: white;
+		border-left: 2px solid black;
+		border-right: 2px solid black;
+	}
+	.col2-data {
+		border-left: 2px solid black;
+		border-right: 2px solid black;
+		text-align: center;
+		font-weight: bold;
+	}
+	.col3-heading {
+		background-color: #660033;
+		color: white;
+		border-right: 2px solid black;
+	}
 	.no-color-highlight {
+		text-align: center;
 	}
 	.no-color-non-highlight {
 		background-color: #e0e0eb;
+		text-align: center;
 	}
 	.exceeds-goal-highlight {
 		background-color: #4caf50;
+		text-align: center;
 	}
 	.exceeds-goal-non-highlight {
 		background-color: #85adad;
+		text-align: center;
 	}
 	.meets-goal-highlight {
 		background-color: #a5d6a7;
+		text-align: center;
 	}
 	.meets-goal-non-highlight {
 		background-color: #c2d6d6;
+		text-align: center;
 	}
 	.needs-improvement-highlight {
 		background-color: #ffcdd2;
+		text-align: center;
 	}
 	.needs-improvement-non-highlight {
 		background-color: #df9fbf;
+		text-align: center;
 	}
 	.does-not-meet-goal-highlight {
 		background-color: #f44336;
+		text-align: center;
 	}
 	.does-not-meet-goal-non-highlight {
 		background-color: #cc6699;
+		text-align: center;
 	}
 }

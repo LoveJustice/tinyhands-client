@@ -24,32 +24,32 @@
 		<img ng-src="assets/images/Actions-go-next-icon.png" ng-show="indicators.scrollRight" ng-click="indicators.scroll(1)">
 	</div>
 	<hr>
-	<div class="col-md-12" ng-if="indicators.indicatorsData">
-		<table class="table table-striped" ng-model="indicators.indicatorsData">
-	        <thead>
+	<div ng-style="{'width':indicators.tableDivSize, 'margin': 'auto'}" ng-if="indicators.indicatorsData">
+		<table float-thead="indicators.stickyOptions" border="1" ng-model="indicators.indicatorsData">
+	        <thead class="sticky-table-header">
 	        	<tr>
-	                <th width="17%" class="title1"></th>
-	                <th width="5%" class="title1"></th>
-	                <th width="5%" class="title1 cell-right-border">Last 30</th>
-	                <th width="5%" class="title1" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title1 }}</th>
+	                <th ng-style="{'width':indicators.labelWidth + 'px'}" class="title1 col1-heading"></th>
+	                <th ng-style="{'width':indicators.goalWidth + 'px'}" class="title1 col2-heading"></th>
+	                <th ng-style="{'width':indicators.last30Width + 'px'}" class="title1 col3-heading">Last 30</th>
+	                <th ng-style="{'width':indicators.dataWidth + 'px'}" class="title1 cell-light-border" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title1 }}</th>
 	            </tr>
 	            <tr>
-	                <th class="title2">Data Indicators</th>
-	                <th class="title2">Goal</th>
-	                <th class="title2 cell-right-border">Days</th>
-	                <th class="title2" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title2 }}</th>
+	                <th class="title2 col1-heading">Data Indicators</th>
+	                <th class="title2 col2-heading">Goal</th>
+	                <th class="title2 col3-heading">Days</th>
+	                <th class="title2 cell-light-border" ng-click="indicators.selectColumn($index)" ng-repeat="indicator in indicators.history">{{ indicator.title2 }}</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	        	<tr ng-repeat="entry in indicators.indicatorTypes">
 	        		<td><b>{{ entry.name }}</b></td>
-	                <td>{{ indicators.indicatorsData.goals[entry.key] }}</td>
+	                <td class="col2-data">{{ indicators.indicatorsData.goals[entry.key] }}</td>
 	                <td ng-class="indicators.getCellClass(entry, indicators.indicatorsData.latest[entry.key], -1001)"><b>{{ indicators.indicatorsData.latest[entry.key] }}</b></td>
 	                <td ng-class="indicators.getCellClass(entry, indicator[entry.key], $index)" ng-repeat="indicator in indicators.history">{{ indicator[entry.key] }}</td>
 	            </tr>
 	            <tr>
 	            	<td><b>Date of Newest Form Entered:</b></td>
-	            	<td colspan="2">{{ indicators.indicatorsData.latest.latestDate }}</td>
+	            	<td class="col2-data" colspan="2">{{ indicators.indicatorsData.latest.latestDate }}</td>
 	            </tr>
 	   		</tbody>
 	    </table>

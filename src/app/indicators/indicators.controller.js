@@ -1,16 +1,31 @@
 import './indicators.less';
 class IndicatorsController {
-    constructor($rootScope, SessionService, indicatorsService, SpinnerOverlayService) {
+    constructor($rootScope, SessionService, indicatorsService, SpinnerOverlayService, StickyHeader) {
         'ngInject';
         
         this.session = SessionService;
         this.indicatorsService = indicatorsService;
         this.spinnerOverlayService = SpinnerOverlayService;
+        this.sticky = StickyHeader;
+        this.stickyOptions = this.sticky.stickyOptions;
         this.indicatorsData = null;
         this.highlight = null;
         this.displayHistory = 10;
         this.countries = [];
         this.countryRequestCount = 0;
+        
+        this.labelWidth = 230;
+        this.goalWidth = 50;
+        this.last30Width = 75;
+        this.dataWidth = 85;
+        this.margin = 150;
+        let remaining = window.innerWidth - (this.labelWidth + this.goalWidth + this.last30Width + this.margin);
+        if (remaining > 2 * this.dataWidth) {
+            this.displayHistory = Math.floor(remaining / this.dataWidth);
+        } else {
+            this.displayHistory = 2;
+        }
+        this.tableDivSize = (window.innerWidth - this.margin) + 'px';
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -54,7 +69,7 @@ class IndicatorsController {
         this.getCountries();
     }
     
-    countryChange() {
+    countryChange() {     
         this.ctrl.calculate();
     }
     
@@ -194,7 +209,9 @@ class IndicatorsController {
         }
         
         if (idx < -1000) {
-            displayClass = displayClass + " cell-right-border";
+            displayClass = displayClass + " cell-right-border cell-bold";
+        } else if (idx >= 0 && typeof this.history[idx].title1 !== 'undefined') {
+            displayClass = displayClass + " cell-light-border";
         }
         
         return displayClass;

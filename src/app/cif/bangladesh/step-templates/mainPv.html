@@ -56,13 +56,16 @@
     </div>
     <div class="row">
      	<div class="col-md-6 form-group">
-        	<form-step class="col-md-5 margin-top-25">1.8 Address: District/State/Country</form-step>
-        	<autocomplete-address1 class="col-md-7 padding-horizontal-30" ng-model="$ctrl.questions[292].response.address1"></autocomplete-address1>
+        	<form-step class="col-md-2 margin-top-15">1.8 Address:</form-step>
+        	<address-entry class="col-md-10 margin-top-15" ng-model="$ctrl.questions[292].response.address"
+        			latitude-model="$ctrl.questions[292].response.latitude.value"
+        			longitude-model="$ctrl.questions[292].response.longitude.value"></addressEntry>
         </div>
-        <div class="col-md-6">
-            <form-step class="col-md-4 margin-top-25">VDC/Town/Ward</form-step>
-            
-            <autocomplete-address2 class="col-md-8 padding-horizontal-30" ng-model="$ctrl.questions[292].response.address2" address1-object="$ctrl.questions[292].response.address1"></autocomplete-address2>
+        <div class="col-md-6 form-group">
+        	<form-step class="col-md-2 margin-top-15">Address Notes:</form-step>
+        	<div class="col-md-10">
+                <input type="text" class="form-control margin-top-15" ng-model="$ctrl.questions[292].response.address_notes.value">
+            </div>
         </div>
     </div>
     <div class="row">

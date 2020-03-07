@@ -51,7 +51,7 @@ class MapController {
     }
 
     get apiUrl() {
-        let api = null
+        let api = null;
         if (this.mapKey) {
             api = "https://maps.google.com/maps/api/js?key=" + this.mapKey;
         }

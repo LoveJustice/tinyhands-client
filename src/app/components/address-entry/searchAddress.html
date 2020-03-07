@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h3 class="modal-title">Search Address</h3>
+</div>
+
+<div class="modal-body" id="searchAddress">
+	<div class="form-group col-md-4">
+	   <div class="row">
+	        <label for="addressName">Search text</label>
+	        <input type="text" id="addressName" class="form-control" ng-model="vm.addressString" ng-keypress="vm.keyPress($event)"/>
+	   </div>
+	   <div class="row">
+	        <button class="btn btn-info" type="button" ng-click="vm.search()">Search</button>
+	    </div>
+	    <hr ng-if="vm.address.address">
+	    <div ng-if="vm.address.address">
+	    	<b>Prior Address:</b>
+	    </div>
+	    <div ng-click="vm.selectCandidate(-1)">
+	    	{{vm.address.address}}
+	    </div>
+	    <hr ng-if="vm.selectedCandidate.address">
+	    <div ng-if="vm.selectedCandidate.address">
+	    	<b>Selected Address:</b>
+	    </div>
+	    <div ng-if="vm.selectedCandidate.address">
+	    	{{vm.selectedCandidate.address}}
+	    </div>
+	</div>
+	<div class='map' map-lazy-load="http://maps.google.com/maps/api/js" map-lazy-load-params="{{vm.apiUrl}}" ng-if="vm.mapKey !== null">
+		<ng-map class='map col-md-8' center="{{vm.center}}" zoom="{{vm.zoom}}">
+			<marker position="{{vm.selectedPosition}}" ng-if="vm.selectedPosition"/>
+		</ng-map>
+	</div>
+	
+	<div id="searchAddressScroll" style="overflow-y:scroll; height:200px;">
+	<table class="table table-striped" ng-model="vm.candidates">
+		<thead>
+			<th width="90%">Address</th>
+			<th width="10%">Score</th>
+		</thead>
+		<tbody>
+			<tr ng-click="vm.selectCandidate($index)" ng-repeat="candidate in vm.candidates">
+				<td>
+					<input id="{{'SearchAddress-' + $index}}" type="radio" ng-value="$index" name="SearchAddress" ng-model="vm.searchValue">
+                	<label for="{{'SearchAddress-' + $index}}">{{candidate.address}}</label>
+			    </td>
+				<td> {{ candidate.score }} </td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<div class="row">
+	    <div class="col-xs-4">
+	        <button class="btn btn-success float-left" ng-click="vm.save()" ng-disabled="!vm.selectedCandidate">Save</button>
+	    </div>
+	    <div class="col-xs-4 text-center">
+	        <button class="btn btn-danger" ng-click="vm.clearAddress()">Clear Address</button>
+	    </div>
+	    <div class="col-xs-4">
+	        <button class="btn btn-default float-right" ng-click="vm.cancel()">Close</button>
+	    </div>
+	</div>
+</div>

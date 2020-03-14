@@ -13,6 +13,7 @@ import config from './shared.config';
 import BaseService from '../base.service';
 import FileDownloaderService from './services/fileDownloader.service';
 import LocationService from '../components/location-select/location.service';
+import SearchAddressService from '../components/address-entry/searchAddress.service';
 import SessionService from './services/session.service';
 import SpinnerOverlayService from './directives/spinnerOverlay/spinnerOverlay.service';
 import StaffService from '../components/staff-select/staff.service';
@@ -44,6 +45,7 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'fl
     .service('BaseService', BaseService)
     .service('FileDownloader', FileDownloaderService)
     .service('LocationService', LocationService)
+    .service('SearchAddressService', SearchAddressService)
     .service('SessionService', SessionService)
     .service('SpinnerOverlayService', SpinnerOverlayService)
     .service('StaffService', StaffService)

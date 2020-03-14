@@ -61,10 +61,16 @@
 		        </div>
             </div>
             <div class="row">
-		            <label class="col-md-2 margin-top-25">District/State</label>
-		            <autocomplete-address1 class="col-md-4 padding-horizontal-30" ng-model="LocationBoxModalController.questions[427].response.address1"></autocomplete-address1>
-		        	<label class="col-md-2 margin-top-25">Town/City</label>
-		            <autocomplete-address2 class="col-md-4 padding-horizontal-30" ng-model="LocationBoxModalController.questions[427].response.address2" address1-object="LocationBoxModalController.questions[427].response.address1"></autocomplete-address2>
+		            <label class="col-md-2">Address</label>
+		            <address-entry class="col-md-10" ng-model="LocationBoxModalController.questions[911].response"
+			        		latitude-model="LocationBoxModalController.questions[912].response.value"
+			        		longitude-model="LocationBoxModalController.questions[913].response.value"></addressEntry>
+            </div>
+            <div class="row">
+		            <label class="col-md-2 control-label">Address Notes</label>
+		            <div class="col-md-10">
+		            	<input class="form-control" type="text" ng-model="LocationBoxModalController.questions[914].response.value">
+		            </div>
             </div>
             <div class="row">
 	            <label class="col-md-2">Phone</label>

@@ -13,7 +13,7 @@ export default class IntercepteeModalController extends BaseModalController {
         this.photoPresent = false;
         
         if (options.hasOwnProperty('identificationTypes')) {
-            this.identificationTypes = options['identificationTypes'];
+            this.identificationTypes = options.identificationTypes;
             this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, this.identificationTypes);
             if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
                 this.processPersonResponses(this.questions, this.config.Person);

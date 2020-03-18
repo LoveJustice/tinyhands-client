@@ -168,6 +168,22 @@ export class BaseIrfController extends BaseFormController {
         return (this.messagesEnabled && this.warningMessages.length > 0) || this.ignoreWarnings;
     }
     
+    setFindings() {
+        if (this.questions[814].response.value || this.questions[4].response.value.length < 10) {
+            return;
+        }
+        let irfDate = new Date(this.questions[4].response.value);
+        let cutoff = new Date(2020,3,17);
+        if (irfDate < cutoff) {
+            return;
+        }
+        if (this.redFlagTotal >= 10) {
+            this.questions[607].response.value = "Clear Evidence of Trafficking";
+        } else {
+            this.questions[607].response.value = "High Risk of Trafficking";
+        }
+    }
+    
     // Override in subclass for implementation specific features
     submitExtra() {
     }

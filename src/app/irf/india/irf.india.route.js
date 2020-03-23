@@ -7,13 +7,6 @@ function IrfIndiaRoutes($stateProvider) {
             params: {
                 id: null
             }
-        })
-        .state('irfIndiaNetwork', {
-            url: '/irf/india:?id&stationId&countryId&isViewing&formName',
-            component: 'irfIndiaComponent',
-            params: {
-                id: null
-            }
         });
 }
 

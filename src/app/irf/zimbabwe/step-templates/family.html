@@ -1,0 +1,36 @@
+<fieldset class="container-fluid" ng-disabled="$ctrl.isViewing">
+    <div class="row center-vertical">
+        <div class="col-md-4">
+            <div class="padding-bottom-20">Who is your family?</div>
+        </div>
+        <div class="col-md-8">
+            <div class="row center-vertical">
+                <div class="col-md-6">
+                    <div class="padding-bottom-20">Under 18 years old</div>
+                </div>
+                <div class="col-md-6">
+                	<form-step red-flag="45" type="checkbox" response-value="$ctrl.questions[74].response.value" label="3.1 Will not give family info"></form-step>
+                    <form-step red-flag="50" type="checkbox" response-value="$ctrl.questions[77].response.value" label="3.2 Called, no family contact established"></form-step>
+                    <form-step red-flag="45" type="checkbox" response-value="$ctrl.questions[78].response.value" label="3.3 Family does not know where they are going"></form-step>
+                    <form-step red-flag="60" type="checkbox" response-value="$ctrl.questions[79].response.value" label="3.4 Called, family unwilling to let them go"></form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row center-vertical">
+        <div class="col-md-4">
+            <div class="margin-top-40 margin-bottom-10">
+                <form-step>4.1 Which family member did you talk to?</form-step>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-6" ng-repeat="families in $ctrl.config.RadioItems[82]">
+                    <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
+                    <form-step ng-if="$first" type="otherRadio" radio-name="familyRadio" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
+                </div>
+            </div>
+        </div>
+    </div>
+</fieldset>

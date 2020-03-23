@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="text-center">All Budget Calculations</h1>
+  <h1 class="text-center">Monthly Distribution Forms (MDFs)</h1>
   <br/>
   <form>
     <div class="row">
@@ -62,7 +62,7 @@
       <tr ng-repeat="form in budgetListCtrl.listOfBudgets" ng-mouseenter="form.hover = true" ng-mouseleave="form.hover = false; form.budgetRemoved = false">
         <td>{{ form.border_station.station_name }}</td>
         <td>{{ form.border_station.station_code }}</td>
-        <td>{{ form.month_year | date:'MMMM, y' }}</td>
+        <td>{{ form.month_year | date:'MMMM y' }}</td>
         <td>{{ form.date_time_entered | date:'MMM d, y hh:mm:ss a' }}</td>
         <td>{{ form.date_time_last_updated | date:'MMM d, y hh:mm:ss a' }}</td>
         <td>

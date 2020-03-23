@@ -3,7 +3,7 @@
 
     <div class="col-lg-6" >
         <div class="row">
-            <h2 class="text-center col-lg-8">Money Distribution Form</h2>
+            <h2 class="text-center col-lg-8">Monthly Distribution Form</h2>
             <a style="margin-top: 20px; margin-bottom:25px;" ui-sref="budget({id: vm.stateParams.id})" class="btn btn-primary col-lg-3">Update Budget</a>
         </div>
 
@@ -31,13 +31,13 @@
 
         <br/>
 
-        <h2 class="text-center">Committee Email Recipients</h2>
+        <h2 class="text-center">Subcommitee (SC) Email Recipients</h2>
         <table class="table">
             <thead>
                 <tr>
                     <th class="text-center" width="150px">Send Email</th>
-                    <th>Member Name</th>
-                    <th>Member Email</th>
+                    <th>SC Name</th>
+                    <th>SC Email</th>
                 </tr>
             </thead>
             <tr ng-repeat="member in vm.committeeMembers" ng-class="{'notReceiving': !member.receives_money_distribution_form, 'receiving': member.receives_money_distribution_form}">
@@ -67,7 +67,7 @@
             <a type="button" id="sendEmails" style="margin-top: 50px"
                class="btn btn-primary" value="Send to Selected Staff and Members"
                ng-click="vm.sendEmails()" ng-disabled="!vm.recipientSelected()">
-                  Send to Selected Staff and Members
+                  Send to Selected Staff and SC
             </a>
         </div>
     </div>

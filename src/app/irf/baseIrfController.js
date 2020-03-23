@@ -173,7 +173,7 @@ export class BaseIrfController extends BaseFormController {
             return;
         }
         let irfDate = new Date(this.questions[4].response.value);
-        let cutoff = new Date(2020,3,17);
+        let cutoff = new Date(2020,2,1);
         if (irfDate < cutoff) {
             return;
         }

@@ -142,7 +142,7 @@ class IndicatorsController {
     }
     
     getCellClass(totalClass, stationClass, idx) {
-        let displayClass = ''
+        let displayClass = '';
         if (idx === 0) {
             displayClass = totalClass + ' heavy-border';
         } else {
@@ -208,8 +208,7 @@ class IndicatorsController {
             this.indicatorsData = promise.data;
             this.scrollIndicators(1);
             this.spinnerOverlayService.hide();
-        }, (error) => {
-            alert(error.data);
+        }, () => {
             this.spinnerOverlayService.hide();
         });
     }

@@ -48,8 +48,8 @@ class IndicatorsController {
             this.startDate.setMonth(11);
             this.startDate.setDate(1);
         } else {
-            this.startDate.setMonth(this.startDate.getMonth()-1);
             this.startDate.setDate(1);
+            this.startDate.setMonth(this.startDate.getMonth()-1);
         }
         
         this.endDate = new Date();
@@ -100,6 +100,15 @@ class IndicatorsController {
                 id: result_array[idx].id,
                 label: result_array[idx].name,
             });
+        }
+        
+        let selectedCountryName = window.localStorage.getItem('dashboard-country');
+        for (var countryIdx=0; countryIdx < this.countryDropDown.options.length; countryIdx++) {
+            if (this.countryDropDown.options[countryIdx].label === selectedCountryName) {
+                this.countryDropDown.selectedOptions = [this.countryDropDown.options[countryIdx]];
+                this.calculate();
+                break;
+            }
         }
         this.loading = false;
     }

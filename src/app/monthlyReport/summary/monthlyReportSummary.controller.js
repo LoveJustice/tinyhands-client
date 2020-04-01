@@ -53,18 +53,13 @@ export default class MonthlyReportSummaryController {
             for (var idx=0; idx < this.countries.length; idx++) {
                 this.countryDropDown.options.push({id: this.countries[idx].id, label: this.countries[idx].name});
             }
-            this.getUserStationsForAdd();
             
-            if (this.queryParameters.country_ids.length > 0) {
-                let country_array = this.queryParameters.country_ids.split(',');
-                for (let idx=0; idx < country_array.length; idx++) {
-                    let country_id = Number(country_array[idx]);
-                    for (let idx1=0; idx1 < this.countries.length; idx1++) {
-                        if (this.countries[idx1].id === country_id) {
-                            this.countryDropDown.selectedOptions.push(this.countryDropDown.options[idx1]);
-                        }
-                    }
-                    
+            let selectedCountryName = window.localStorage.getItem('dashboard-country');
+            for (var countryIdx=0; countryIdx < this.countryDropDown.options.length; countryIdx++) {
+                if (this.countryDropDown.options[countryIdx].label === selectedCountryName) {
+                    this.countryDropDown.selectedOptions = [this.countryDropDown.options[countryIdx]];
+                    this.getSummary();
+                    break;
                 }
             }
         });

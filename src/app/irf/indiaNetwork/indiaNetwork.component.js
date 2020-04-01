@@ -45,7 +45,7 @@ export class IrfIndiaNetworkController extends BaseIrfController {
         this.profileQuestions = [41,123,642,166, 915, 916, 917];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5, 924.6];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,"metLabel",242,243,244];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,"metLabel",243,242,244];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = ["jobLabel",934,935,936,937,938,939,57,712,"marriedLable",24,25,26,216];
@@ -268,14 +268,14 @@ export class IrfIndiaNetworkController extends BaseIrfController {
             },
             242:{
                 enabled:true,
-                label:'Facebook',
+                label:'Missed call',
                 type:'checkbox',
                 format:'col-md-3',
                 points:0
             },
             243:{
                 enabled:true,
-                label:'Missed call',
+                label:'Facebook',
                 type:'checkbox',
                 format:'col-md-3',
                 points:0
@@ -576,6 +576,10 @@ export class IrfIndiaNetworkController extends BaseIrfController {
     
     submitExtra() {
         this.setFindings();
+        this.checkboxGroup.updateResponses();
+    }
+    
+    saveExtra() {
         this.checkboxGroup.updateResponses();
     }
 

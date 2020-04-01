@@ -526,6 +526,8 @@ export class IrfUgandaController extends BaseIrfController {
             },
         };
         
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus driver']];
+
         for (let entry in this.details) {
             let detail = this.details[entry];
             if (detail.type === 'checkbox-group') {

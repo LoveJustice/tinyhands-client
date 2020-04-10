@@ -1,7 +1,7 @@
 /* global angular */
 /* global Image */
 import {BaseFormController} from '../baseFormController.js';
-import "clocklet/css/clocklet.css";
+import "./clocklet.less";
 import clocklet from "clocklet";
 
 export class BaseIrfController extends BaseFormController {

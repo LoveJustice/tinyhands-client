@@ -213,6 +213,10 @@ class IdManagementController {
 	        });
     }
     
+    photoUrl(photo) {
+        return new URL(photo, this.constants.BaseUrl).href;
+    }
+    
     cancelAdd() {
     	if (this.isViewing) {
     		this.showIdMgmt = false;

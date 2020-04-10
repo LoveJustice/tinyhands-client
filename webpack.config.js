@@ -65,6 +65,19 @@ module.exports = function (env) {
                 ]
             },
             {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1
+                        }
+                    },
+                    'less-loader'
+                ]
+            },
+            {
                 test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'url-loader?limit=100000&minetype=application/font-woff&publicPath=assets/&outputPath=/assets/'
             },

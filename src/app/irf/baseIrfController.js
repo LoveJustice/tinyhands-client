@@ -1,6 +1,8 @@
 /* global angular */
 /* global Image */
 import {BaseFormController} from '../baseFormController.js';
+import "clocklet/css/clocklet.css";
+import clocklet from "clocklet";
 
 export class BaseIrfController extends BaseFormController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
@@ -22,6 +24,63 @@ export class BaseIrfController extends BaseFormController {
     getIrfComplete() {
     }
     
+    dateAsUTC(inDateString) {
+        let parts = inDateString.split("-");
+        let year = Number(parts[0]);
+        let month = Number(parts[1]) - 1;
+        let date = Number(parts[2]);
+        let utcDate = new Date(Date.UTC(year, month, date, 0, 0, 0, 0));
+        return utcDate;
+    }
+    
+    dateAsString(inDate) {
+        let dateString = '';
+        dateString = inDate.getUTCFullYear() + '-';
+        if (inDate.getUTCMonth() < 9) {
+            dateString += '0';
+        }
+        dateString += (inDate.getUTCMonth()+1) + "-";
+        if (inDate.getUTCDate() < 9) {
+            dateString += '0';
+        }
+        dateString += inDate.getUTCDate();
+        return dateString;
+    }
+    
+    timeAs12Hour(inTime) {
+        let outTime = '';
+        let hour = Number(inTime.substr(0,2));
+        if (hour === 0) {
+            outTime = '12' + inTime.substr(2,3) + ' am';
+        } else if (hour === 12) {
+            outTime = inTime + ' pm';
+        } else if (hour < 12) {
+            outTime = inTime + ' am';
+        } else {
+            outTime = (hour - 12) + inTime.substr(2,3) + ' pm';
+            if (hour < 22) {
+                outTime = '0' + outTime;
+            }
+        }
+        
+        return outTime;
+    }
+    
+    timeAs24Hour(inTime) {
+        let outTime = '';
+        let hour = Number(inTime.substr(0,2));
+        if (inTime.substr(6,1) === 'a') {
+            if (hour === 12) {
+                outTime = '00' + inTime.substr(2,3);
+            } else {
+                outTime = inTime.substr(0,5);
+            }
+        } else {
+            outTime = (hour + 12) + inTime.substr(2,3);
+        }
+        return outTime;
+    }
+    
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
     		this.config = response.data;
@@ -34,6 +93,14 @@ export class BaseIrfController extends BaseFormController {
     	            });
     		    }
     		    this.getIrfComplete();
+    		    this.interceptionDate = null;
+    		    this.clock = "";
+    		    if (this.questions[4].response.value && this.questions[4].response.value.length > 9) {
+    		        this.interceptionDate = this.dateAsUTC(this.questions[4].response.value.substr(0,10));
+    		        if (this.questions[4].response.value.length > 15) {
+    		            this.clock = this.timeAs12Hour(this.questions[4].response.value.substr(11,5));
+    		        }
+    		    }
             });
     	});
     }
@@ -126,6 +193,18 @@ export class BaseIrfController extends BaseFormController {
         
     }
     
+    processInterceptionDate() {
+        let dateTime = '';
+        if (this.interceptionDate) {
+            dateTime = this.dateAsString(this.interceptionDate);
+            if (this.clock.length > 0) {
+                dateTime += ' ' + this.timeAs24Hour(this.clock);
+            }
+        }
+        
+        this.questions[4].response.value = dateTime;
+    }
+    
     // Override in subclass for implementation specific features
     saveExtra() {	
     }
@@ -136,6 +215,7 @@ export class BaseIrfController extends BaseFormController {
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.saveExtra();
+    	this.processInterceptionDate();
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
@@ -218,6 +298,7 @@ export class BaseIrfController extends BaseFormController {
     	this.response.status = this.determineSubmitStatus();
     	this.outCustomHandling();
     	this.submitExtra();
+    	this.processInterceptionDate();
     	this.errorMessages = [];
         this.warningMessages = [];
     	if (this.ignoreWarnings) {

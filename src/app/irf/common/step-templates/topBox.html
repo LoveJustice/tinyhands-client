@@ -23,19 +23,14 @@
     <div class="row">
         <br>
 		<div class="col-md-4 form-group">
-            <form-step class="col-xs-3 control-label">Date/Time: </form-step>
-            <div class="col-xs-9">
-                <div class="dropup" uib-dropdown>
-                    <a uib-dropdown-toggle role="button" href="">
-                        <div class="input-group">
-                                <input type="text" class="form-control" ng-model="$ctrl.questions[4].response.value" ng-model-options="{timezone: 'utc'}" date-time-input="MMMM D, YYYY hh:mm A "><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        </div>
-                    </a>
-                    <ul uib-dropdown-menu role="menu" aria-labelledby="dLabel">
-                        <datetimepicker ng-model="$ctrl.questions[4].response.value"/>
-                    </ul>
-                </div>
+            <form-step class="col-xs-1 control-label">Date: </form-step>
+            <div class="col-md-5">
+                 <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.interceptionDate">
             </div>
+            <form-step class="col-xs-1 control-label">Time: </form-step>
+            <div class="col-md-4">
+        		<input data-clocklet="format: hh:mm a" ng-model=$ctrl.clock>
+        	</div>
         </div>
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label"># of Suspects: </form-step>

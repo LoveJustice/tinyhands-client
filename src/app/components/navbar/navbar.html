@@ -121,10 +121,9 @@
 
         <ul class="nav navbar-nav navbar-right">
             <!-- START: USER SETTINGS -->
-            <li class="dropdown" ng-class="{open:menuOpen}">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="menuOpen=!menuOpen">Hello {{
-                    navbarCtrl.session.user.first_name + " " + navbarCtrl.session.user.last_name }}
-                    <span class="caret"></span>
+            <li class="dropdown" ng-class="{open:menuOpen}" ng-mouseleave="menuOpen = false">
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="menuOpen=!menuOpen">
+                <img ng-src="assets/images/menu-alt.png" hspace="20">
                 </a>
                 <ul class="dropdown-menu">
                     <li>
@@ -136,16 +135,8 @@
                         <a ui-sref="countries">Countries</a>
                     </li>
                     <li>
-                        <a ui-sref="address1" ng-show="navbarCtrl.session.user.permission_address2_manage">
-                            Edit Address 1</a>
-                    </li>
-                    <li>
-                        <a ui-sref="address2" ng-show="navbarCtrl.session.user.permission_address2_manage">
-                            Edit Address 2</a>
-                    </li>
-                    <li>
                         <a ui-sref="idmanagement"
-                            ng-show="navbarCtrl.session.user.permission_person_match && navbarCtrl.session.user.permission_irf_edit && navbarCtrl.session.user.permission_vif_edit">
+                            ng-show="navbarCtrl.session.user.permission_person_match && (navbarCtrl.session.checkPermission('IRF','EDIT',null, null) || navbarCtrl.session.checkPermission('CIF','EDIT',null, null) || navbarCtrl.session.checkPermission('VDF','EDIT',null, null))">
                             ID Management</a>
                     </li>
                     <li>

@@ -19,7 +19,7 @@ export default class MonthlyReportService {
             if (monthlyReport.responses[idx].question_id === 715) {
                 month = monthlyReport.responses[idx].response.value;
             }
-            if (year !== '' && month != '') {
+            if (year !== '' && month !== '') {
                 break;
             }
         }

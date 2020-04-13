@@ -1,17 +1,19 @@
 <fieldset ng-disabled="$ctrl.isViewing === true">
 	<div class="row">
 		<div class="col-md-10">
-			<i class="row col-md-12">[include any requirements included in the TMS]</i>
 		</div>
 		<div class="col-md-2">
 			<h4>Score {{$ctrl.getContextCount('Logistics & Registration');}}</h4>
 		</div>
 	</div>
-	<div ng-repeat="radQuest in [908,864,865,866,867]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+	<div ng-repeat="radQuest in $ctrl.logisticsQuestions" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
 		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
-		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='radio'" ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Logistics & Registration" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
 		</div>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='text'" class="col-md-1">
+	        <input type="text" class="form-control" ng-model="$ctrl.questions[radQuest].response.value">
+	    </div>
 	</div>
 	<br>
 	<div class="row center-vertical">

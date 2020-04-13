@@ -2,7 +2,7 @@
 /* global Image */
 import {BaseFormController} from '../baseFormController.js';
 import "./clocklet.less";
-import clocklet from "clocklet";
+import "clocklet";
 
 export class BaseIrfController extends BaseFormController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
@@ -114,6 +114,7 @@ export class BaseIrfController extends BaseFormController {
     }
     
     modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
+        /*jshint unused: false */
         if (theControllerName === 'IntercepteeModalController' && cardIndex !== null) {
             this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
         }

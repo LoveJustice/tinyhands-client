@@ -1,0 +1,30 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-10">
+		&nbsp;
+		</div>
+		<div class="col-md-2">
+			<h4>Score {{$ctrl.getContextCount('Potential Victim Care');}}</h4>
+		</div>
+	</div>
+	<div ng-repeat="radQuest in $ctrl.potentialVictimCareQuestions" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='radio'" ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Potential Victim Care" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
+		</div>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='text'" class="col-md-1">
+	        <input type="text" class="form-control" ng-model="$ctrl.questions[radQuest].response.value">
+	    </div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<div class="col-md-3">
+			<form-step type="checkbox" label="Potential Victim Care Coordinator Signature" response-value="$ctrl.questions[787].response.value"></form-step>
+		</div>
+		<div class="col-md-3">
+			<input type="text" class="form-control" placeholder="Signer Name" ng-model="$ctrl.questions[788].response.value">
+		</div>
+		
+	</div>
+	<br>
+</fieldset>

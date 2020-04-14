@@ -1,8 +1,6 @@
 /* global angular */
 /* global Image */
 import {BaseFormController} from '../baseFormController.js';
-import "./clocklet.less";
-import "clocklet";
 
 export class BaseIrfController extends BaseFormController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
@@ -48,36 +46,28 @@ export class BaseIrfController extends BaseFormController {
         return dateString;
     }
     
-    timeAs12Hour(inTime) {
-        let outTime = '';
-        let hour = Number(inTime.substr(0,2));
-        if (hour === 0) {
-            outTime = '12' + inTime.substr(2,3) + ' am';
-        } else if (hour === 12) {
-            outTime = inTime + ' pm';
-        } else if (hour < 12) {
-            outTime = inTime + ' am';
-        } else {
-            outTime = (hour - 12) + inTime.substr(2,3) + ' pm';
-            if (hour < 22) {
-                outTime = '0' + outTime;
-            }
-        }
+    timeAsUTC(inTime) {
+        let parts = inTime.split(":");
+        let outTime = new Date(0);
+        outTime.setUTCHours(Number(parts[0]));
+        outTime.setUTCMinutes(Number(parts[1]));
         
         return outTime;
     }
     
-    timeAs24Hour(inTime) {
+    timeAsString(inTime) {
         let outTime = '';
-        let hour = Number(inTime.substr(0,2));
-        if (inTime.substr(6,1) === 'a') {
-            if (hour === 12) {
-                outTime = '00' + inTime.substr(2,3);
-            } else {
-                outTime = inTime.substr(0,5);
-            }
+        let hour = inTime.getUTCHours();
+        if (hour < 10) {
+            outTime = '0' + hour + ':';
         } else {
-            outTime = (hour + 12) + inTime.substr(2,3);
+            outTime = hour + ':';
+        }
+        let minute = inTime.getUTCMinutes();
+        if (minute < 10) {
+            outTime += '0' + minute;
+        } else {
+            outTime += minute;
         }
         return outTime;
     }
@@ -102,11 +92,11 @@ export class BaseIrfController extends BaseFormController {
     		    }
     		    this.getIrfComplete();
     		    this.interceptionDate = null;
-    		    this.clock = "";
+    		    this.clock = null;
     		    if (this.questions[4].response.value && this.questions[4].response.value.length > 9) {
     		        this.interceptionDate = this.dateAsUTC(this.questions[4].response.value.substr(0,10));
     		        if (this.questions[4].response.value.length > 15) {
-    		            this.clock = this.timeAs12Hour(this.questions[4].response.value.substr(11,5));
+    		            this.clock = this.timeAsUTC(this.questions[4].response.value.substr(11));
     		        }
     		    }
     		    this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}$';
@@ -208,8 +198,8 @@ export class BaseIrfController extends BaseFormController {
         let dateTime = '';
         if (this.interceptionDate) {
             dateTime = this.dateAsString(this.interceptionDate);
-            if (this.clock.length > 0) {
-                dateTime += ' ' + this.timeAs24Hour(this.clock);
+            if (this.clock.length !== null) {
+                dateTime += ' ' + this.timeAsString(this.clock);
             }
         }
         

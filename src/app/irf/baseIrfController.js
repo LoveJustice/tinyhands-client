@@ -104,6 +104,7 @@ export class BaseIrfController extends BaseFormController {
     }
     
     modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
+        /*jshint unused: false */
         if (theControllerName === 'IntercepteeModalController' && cardIndex !== null) {
             this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
         }

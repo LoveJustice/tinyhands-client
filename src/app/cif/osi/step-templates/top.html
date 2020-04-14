@@ -3,7 +3,7 @@
         <div class="col-md-5 form-group">
             <form-step class="col-md-3 control-label">CIF Number: </form-step>
             <div class="col-md-3">
-                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="CIF Number" ng-model="$ctrl.questions[287].response.value">
+                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" ng-change="$ctrl.formNumberChange()" placeholder="CIF Number" ng-model="$ctrl.questions[287].response.value">
             </div>
             <div class="col-xs-4 alert-danger" ng-show="!$ctrl.goodFormNumber">
             	Invalid Form Number

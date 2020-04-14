@@ -1,12 +1,12 @@
 <fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing === true">
     <div class="row">
-        <div class="col-md-4 form-group">
+        <div class="col-md-5 form-group">
             <form-step class="col-xs-3 control-label">Irf Number: </form-step>
             <div class="col-xs-9">
                 <input type="text" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
             </div>
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-3 form-group">
             <form-step class="col-xs-3 control-label"># of PVOTs: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
@@ -22,17 +22,17 @@
     <hr/>
     <div class="row">
         <br>
-		<div class="col-md-4 form-group">
+		<div class="col-md-5 form-group">
             <form-step class="col-xs-1 control-label">Date: </form-step>
             <div class="col-md-5">
                  <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.interceptionDate">
             </div>
             <form-step class="col-xs-1 control-label">Time: </form-step>
             <div class="col-md-4">
-        		<input data-clocklet="format: hh:mm a" ng-model=$ctrl.clock>
+        		<input type="time" class="form-control" ng-model-options="{timezone: 'utc', timeStripZeroSeconds:true}" format="hh:mm A" step="60" ng-model="$ctrl.clock">
         	</div>
         </div>
-        <div class="col-md-4 form-group">
+        <div class="col-md-3 form-group">
             <form-step class="col-xs-3 control-label"># of Suspects: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[5].response.value">

@@ -16,6 +16,7 @@ export class BaseIrfController extends BaseFormController {
         this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
         this.intercepteeImages = {};
+        this.formNumberPattern = '';
         
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
@@ -81,6 +82,10 @@ export class BaseIrfController extends BaseFormController {
         return outTime;
     }
     
+    formNumberChange() {
+        this.goodFormNumber = (this.questions[1].response.value.match(this.formNumberPattern) !== null);
+    }
+    
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
     		this.config = response.data;
@@ -92,6 +97,9 @@ export class BaseIrfController extends BaseFormController {
     	                formNumber: this.questions[1].response.value
     	            });
     		    }
+    		    if (this.questions[1].response.value === null || this.questions[1].response.value === '') {
+    		        this.questions[1].response.value = this.response.station_code;
+    		    }
     		    this.getIrfComplete();
     		    this.interceptionDate = null;
     		    this.clock = "";
@@ -101,6 +109,8 @@ export class BaseIrfController extends BaseFormController {
     		            this.clock = this.timeAs12Hour(this.questions[4].response.value.substr(11,5));
     		        }
     		    }
+    		    this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}$';
+    		    this.formNumberChange();
             });
     	});
     }

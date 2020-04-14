@@ -2,8 +2,11 @@
     <div class="row">
         <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label">Irf Number: </form-step>
-            <div class="col-xs-9">
-                <input type="text" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value">
+            <div class="col-xs-4">
+                <input type="text" id="formNumber" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value" ng-change="$ctrl.formNumberChange()">
+            </div>
+            <div class="col-xs-5 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            	Invalid Form Number
             </div>
         </div>
         <div class="col-md-4 form-group">

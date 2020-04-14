@@ -28,19 +28,8 @@ export class BaseCifController extends BaseFormController {
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
     
-    old_number_change() {
-        let question_id = 287;
-        let cifNumber = this.questions[question_id].response.value;
-        if (this.cifNumber !== cifNumber) {
-            this.cifNumber = cifNumber;
-            if (cifNumber === '') {
-                this.associatedPersons = [];
-            } else {
-                this.service.getAssociatedPersons(this.stateParams.stationId, cifNumber).then((response) => {
-                    this.associatedPersons = response.data;
-                });
-            }
-        }
+    formNumberChange() {
+        this.goodFormNumber = (this.questions[287].response.value.match(this.formNumberPattern) !== null);
     }
     
     number_change() {
@@ -142,6 +131,11 @@ export class BaseCifController extends BaseFormController {
                         formNumber: this.questions[287].response.value
                     });
                 }
+                if (this.questions[287].response.value === null || this.questions[287].response.value === '') {
+                    this.questions[287].response.value = this.response.station_code;
+                }
+                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}(\\.[0-9]+|[A-Z])$';
+                this.formNumberChange();
             });
         });
     }

@@ -21,7 +21,7 @@ import attachmentsTemplate from '../common/step-templates/attachments/attachment
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class MonthlyReportBangladeshController extends BaseMonthlyReportController {
-    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';        
         super($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state,
                     [
@@ -37,7 +37,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
                         "Paralegal",
                         "Investigations"
                     ],
-                    SpinnerOverlayService
+                    SpinnerOverlayService, $uibModalStack
                 );
        
         this.stepTemplates = [

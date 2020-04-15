@@ -3,9 +3,9 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseIrfController extends BaseFormController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
-        super($scope, $stateParams);
+        super($scope, $stateParams, $uibModalStack);
 
         this.$uibModal = $uibModal;
         this.constants = constants;

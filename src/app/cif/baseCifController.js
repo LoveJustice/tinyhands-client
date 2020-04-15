@@ -3,9 +3,9 @@ import printCardTemplate from './common/printCardTemplate.html';
 import {IrfStubController} from './irfStub.js';
 
 export class BaseCifController extends BaseFormController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack) {
         'ngInject';
-        super($scope, $stateParams);
+        super($scope, $stateParams, $uibModalStack);
 
         this.$uibModal = $uibModal;
         this.constants = constants;

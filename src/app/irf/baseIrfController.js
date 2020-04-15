@@ -188,7 +188,7 @@ export class BaseIrfController extends BaseFormController {
         let dateTime = '';
         if (this.interceptionDate) {
             dateTime = this.dateAsString(this.interceptionDate);
-            if (this.clock.length !== null) {
+            if (this.clock !== null) {
                 dateTime += ' ' + this.timeAsString(this.clock);
             }
         }

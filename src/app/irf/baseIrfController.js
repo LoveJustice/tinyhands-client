@@ -22,6 +22,55 @@ export class BaseIrfController extends BaseFormController {
     getIrfComplete() {
     }
     
+    dateAsUTC(inDateString) {
+        let parts = inDateString.split("-");
+        let year = Number(parts[0]);
+        let month = Number(parts[1]) - 1;
+        let date = Number(parts[2]);
+        let utcDate = new Date(Date.UTC(year, month, date, 0, 0, 0, 0));
+        return utcDate;
+    }
+    
+    dateAsString(inDate) {
+        let dateString = '';
+        dateString = inDate.getUTCFullYear() + '-';
+        if (inDate.getUTCMonth() < 9) {
+            dateString += '0';
+        }
+        dateString += (inDate.getUTCMonth()+1) + "-";
+        if (inDate.getUTCDate() < 9) {
+            dateString += '0';
+        }
+        dateString += inDate.getUTCDate();
+        return dateString;
+    }
+    
+    timeAsUTC(inTime) {
+        let parts = inTime.split(":");
+        let outTime = new Date(0);
+        outTime.setUTCHours(Number(parts[0]));
+        outTime.setUTCMinutes(Number(parts[1]));
+        
+        return outTime;
+    }
+    
+    timeAsString(inTime) {
+        let outTime = '';
+        let hour = inTime.getUTCHours();
+        if (hour < 10) {
+            outTime = '0' + hour + ':';
+        } else {
+            outTime = hour + ':';
+        }
+        let minute = inTime.getUTCMinutes();
+        if (minute < 10) {
+            outTime += '0' + minute;
+        } else {
+            outTime += minute;
+        }
+        return outTime;
+    }
+    
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
     		this.config = response.data;
@@ -34,6 +83,14 @@ export class BaseIrfController extends BaseFormController {
     	            });
     		    }
     		    this.getIrfComplete();
+    		    this.interceptionDate = null;
+    		    this.clock = null;
+    		    if (this.questions[4].response.value && this.questions[4].response.value.length > 9) {
+    		        this.interceptionDate = this.dateAsUTC(this.questions[4].response.value.substr(0,10));
+    		        if (this.questions[4].response.value.length > 15) {
+    		            this.clock = this.timeAsUTC(this.questions[4].response.value.substr(11));
+    		        }
+    		    }
             });
     	});
     }
@@ -47,6 +104,7 @@ export class BaseIrfController extends BaseFormController {
     }
     
     modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
+        /*jshint unused: false */
         if (theControllerName === 'IntercepteeModalController' && cardIndex !== null) {
             this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
         }
@@ -126,6 +184,18 @@ export class BaseIrfController extends BaseFormController {
         
     }
     
+    processInterceptionDate() {
+        let dateTime = '';
+        if (this.interceptionDate) {
+            dateTime = this.dateAsString(this.interceptionDate);
+            if (this.clock !== null) {
+                dateTime += ' ' + this.timeAsString(this.clock);
+            }
+        }
+        
+        this.questions[4].response.value = dateTime;
+    }
+    
     // Override in subclass for implementation specific features
     saveExtra() {	
     }
@@ -136,6 +206,7 @@ export class BaseIrfController extends BaseFormController {
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.outCustomHandling();
     	this.saveExtra();
+    	this.processInterceptionDate();
     	this.errorMessages = [];
         this.warningMessages = [];
         this.messagesEnabled = false;
@@ -218,6 +289,7 @@ export class BaseIrfController extends BaseFormController {
     	this.response.status = this.determineSubmitStatus();
     	this.outCustomHandling();
     	this.submitExtra();
+    	this.processInterceptionDate();
     	this.errorMessages = [];
         this.warningMessages = [];
     	if (this.ignoreWarnings) {

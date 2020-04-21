@@ -7,16 +7,19 @@
 			<h4>Score {{$ctrl.getContextCount('Governance');}}</h4>
 		</div>
 	</div>
-	<div ng-repeat="radQuest in [716,717,902]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+	<div ng-repeat="radQuest in $ctrl.governanceQuestions" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
 		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
-		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='radio'" ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Governance" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
 		</div>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='text'" class="col-md-1">
+	        <input type="text" class="form-control" ng-model="$ctrl.questions[radQuest].response.value">
+	    </div>
 	</div>
 
 	<div class="row center-vertical">
 		<form-step class="col-md-2 control-label">Coordinators</form-step>
-		<div ng-repeat="chk in [718, 719, 720, 721, 722]" ng-if="$ctrl.questionFormat[chk].enabled" class={{$ctrl.questionFormat[chk].format}}>
+		<div ng-repeat="chk in $ctrl.governanceCheckboxes" ng-if="$ctrl.questionFormat[chk].enabled" class={{$ctrl.questionFormat[chk].format}}>
 			<form-step type="checkbox" label={{$ctrl.questionFormat[chk].label}} blue-flag="$ctrl.questionFormat[chk].points" flag-context="Governance" response-value="$ctrl.questions[chk].response.value"></form-step>
 		</div>
 	</div>

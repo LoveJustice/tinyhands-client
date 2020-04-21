@@ -1,0 +1,14 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>1 Person who matches a profile targeted by traffickers...</h4>
+		</div>
+	</div>
+	<div ng-repeat="quest in $ctrl.profileQuestions" ng-if="$ctrl.details[quest].enabled">
+		<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+			red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+		<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+			red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+	</div>
+	<br>
+</fieldset>

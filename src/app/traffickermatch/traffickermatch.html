@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: -51px">
+<div class="container" style="margin-top: -51px">e9e344b255a4
 	<div class="row">
 		<h1 ng-show="vm.language=='English'" class="text-center">Person Match</h1>
 		<h4 ng-show="vm.language=='English'" class="text-center">Search for suspects or victims by name or phone number</h4>
@@ -28,8 +28,8 @@
 						<input ng-show="vm.language=='Nepali'" type="search" placeholder="नाम वा फोन English मा राख्नुहोस्...." ng-model="vm.searchValue" class="form-control">
 					</div>
 					<div class="col-xs-1">
-						<button ng-show="vm.language=='English'" class="btn btn-primary" type="submit">Search</a>
-						<button ng-show="vm.language=='Nepali'" class="btn btn-primary" type="submit">खोज्नुहोस्</a>
+						<button ng-show="vm.language=='English'" class="btn btn-primary" type="submit">Search</button>
+						<button ng-show="vm.language=='Nepali'" class="btn btn-primary" type="submit">खोज्नुहोस्</button>
 					</div>
 				</div>
 			</form>
@@ -43,16 +43,14 @@
 					<th ng-if="vm.language=='English'" width="20%">Name</th>
 					<th ng-if="vm.language=='English'" width="11%">Gender</th>
 					<th ng-if="vm.language=='English'" width="8%">Age</th>
-					<th ng-if="vm.language=='English'" width="16%">Address 1</th>
-					<th ng-if="vm.language=='English'" width="16%">Address 2</th>
+					<th ng-if="vm.language=='English'" width="32%">Address</th>
 					<th ng-if="vm.language=='English'" width="16%">Phone</th>
 					<th ng-if="vm.language=='English'" width="13%">Form</th>
 					<th ng-if="vm.language=='English'" width="13%">Photo</th>
 					<th ng-if="vm.language=='Nepali'" width="20%" title="Name">नाम</th>
 					<th ng-if="vm.language=='Nepali'" width="11%" title="Gender">लिङ्ग</th>
 					<th ng-if="vm.language=='Nepali'" width="8%" title="Age">उमेर</th>
-					<th ng-if="vm.language=='Nepali'" width="16%" title="Address 1">ठेगाना १ </th>
-					<th ng-if="vm.language=='Nepali'" width="16%" title="Address 2">ठेगाना २</th>
+					<th ng-if="vm.language=='Nepali'" width="32%" title="Address">ठेगाना १ </th>
 					<th ng-if="vm.language=='Nepali'" width="16%" title="Phone">फोन</th>
 					<th ng-if="vm.language=='Nepali'" width="13%" title="Form">फारम</th>
 					<th ng-if="vm.language=='Nepali'" width="13%" title="Photo">फोटो</th>
@@ -63,8 +61,7 @@
 					<td>{{ candidate.full_name }}</td>
 					<td>{{ candidate.gender }}</td>
 					<td>{{ candidate.age }}</td>
-					<td>{{ candidate.address1.name }}</td>
-					<td>{{ candidate.address2.name }}</td>
+					<td>{{ candidate.address.address }}</td>
 					<td>{{ candidate.phone_contact }}</td>
 					<td>{{ candidate.form_number }}</td>
 					<td>

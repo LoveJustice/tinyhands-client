@@ -1,8 +1,8 @@
 import {BaseMonthlyReportController} from '../baseMonthlyReportController.js';
 import {BaseModalController} from '../../baseModalController.js';
-import './nepal.less';
+import '../common/monthlyReport.less';
 
-import templateUrl from './nepal.html';
+import templateUrl from '../common/monthlyReport.html';
 
 import governanceTemplate from '../common/step-templates/governance.html';
 import logisticsTemplate from '../common/step-templates/logisticsRegistration.html';
@@ -41,25 +41,39 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 );
        
         this.stepTemplates = [
-            governanceTemplate,
-            logisticsTemplate,
-            resourcesTemplate,
-            awarenessTemplate,
-            securityTemplate,
-            accountingTemplate,
-            victimEngagementTemplate,
-            recordsTemplate,
-            aftercareTemplate,
-            paralegalTemplate,
-            investigationsTemplate,
-            finalTemplate,
-            attachmentsTemplate
+            {template:governanceTemplate, name:"Governance"},
+            {template:logisticsTemplate, name:"Logistics & Registration"},
+            {template:resourcesTemplate, name:"Human Resources"},
+            {template:awarenessTemplate, name:"Awareness"},
+            {template:securityTemplate, name:"Security"},
+            {template:accountingTemplate, name:"Accounting"},
+            {template:victimEngagementTemplate, name:"Victim Engagement"},
+            {template:recordsTemplate, name:"Records"},
+            {template:aftercareTemplate, name:"Aftercare"},
+            {template:paralegalTemplate, name:"Paralegal"},
+            {template:investigationsTemplate, name:"Investigations"},
+            {template:finalTemplate, name:"Final"},
+            {template:attachmentsTemplate, name:"Attachments"}
         ];
+        
+        this.governanceQuestions = [716,717,902];
+        this.governanceCheckboxes = [718,719,720,721,722];
+        this.logisticsQuestions = ["IncludeTMS",864,865,866,867];
+        this.resourcesQuestions = [731,732,903,733,734,735];
+        this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745];
+        this.securityQuestions = [749,750,751,752,753,754];
+        this.accountingQuestions = [758,759,760,761];
+        this.victimEngagementQuestions = [765,904,905,868];
+        this.recordsQuestions = [769,869,770,771,772,793];
+        this.aftercareQuestions = ["Education",776,777,870,778,871,872,909,"HTMessage",779,781,782,"Shelter",873,874,875,"Interviews",783,784,785,"Followup",786];
+        this.paralegalQuestions = [790,791,876,792,877,906,907];
+        this.investigationsQuestions = ["HighValueContacts",797,798,799];
         
         this.questionFormat = {
             // Governance
             716: {
                 enabled:true,
+                type:"radio",
                 prompt: "# of subcommittee mettings",
                 promptFormat: "col-md-2 control-label",
                 options: [
@@ -71,6 +85,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             717: {
                 enabled:true,
+                type:"radio",
                 prompt: "# of times SC visted station",
                 promptFormat: "col-md-2 control-label",
                 options: [
@@ -82,6 +97,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             902: {
                 enabled:true,
+                type:"radio",
                 prompt: "3 Core Value Posters on display at station ",
                 promptFormat: "col-md-2 control-label",
                 options: [
@@ -126,8 +142,15 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             
             // Logistics & Registration
+            IncludeTMS:{
+                enabled:true,
+                type:"header",
+                prompt: "[include any requirements included in the TMS]",
+                promptFormat: "col-md-12 control-label",
+            },
             864: {
                 enabled:true,
+                type:"radio",
                 prompt: "Submitting Progress Reports to CDO",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -137,6 +160,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             865: {
                 enabled:true,
+                type:"radio",
                 prompt: "Submitting Progress Reports to Municipality and rural Municipality",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -146,6 +170,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             866: {
                 enabled:true,
+                type:"radio",
                 prompt: "Submitting Progress Reports Ward Office",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -155,6 +180,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             867: {
                 enabled:true,
+                type:"radio",
                 prompt: "Submitting Progress Reports to Police",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -167,6 +193,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             // Human Resources
             731: {
                 enabled:true,
+                type:"radio",
                 prompt: "Staff hours per week",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -178,6 +205,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             732: {
                 enabled:true,
+                type:"radio",
                 prompt: "Appointment Letter & Agreement Contract for all staff?",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -187,6 +215,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             903: {
                 enabled:true,
+                type:"radio",
                 prompt: "Mismanagement Policy Agreement Signed for all staff",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -196,6 +225,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             733: {
                 enabled:true,
+                type:"radio",
                 prompt: "Information on all staff provided to National Office",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -205,6 +235,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             734: {
                 enabled:true,
+                type:"radio",
                 prompt: "Percent of staff who have taken and passed TMS Exam",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -216,6 +247,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             }, 
             735: {
                 enabled:true,
+                type:"radio",
                 prompt: "Percent of coordinators who have passed Coordinator Exams",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -227,8 +259,21 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             }, 
             
             // Awareness
+            Materials:{
+                enabled:true,
+                type:"header",
+                prompt: "MATERIALS USED",
+                promptFormat: "col-md-12 control-label heading",
+            },
+            Special:{
+                enabled:true,
+                type:"header",
+                prompt: "SPECIAL EVENTS",
+                promptFormat: "col-md-12 control-label heading",
+            },
             739: {
                 enabled:true,
+                type:"radio",
                 prompt: "Staff awareness hours",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -240,6 +285,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             740: {
                 enabled:true,
+                type:"radio",
                 prompt: "SC awareness hours",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -251,6 +297,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             }, 
             741: {
                 enabled:true,
+                type:"radio",
                 prompt: "Phone calls from materials",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -262,6 +309,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             }, 
             742: {
                 enabled:true,
+                type:"radio",
                 prompt: "Contact Cards",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -272,6 +320,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             }, 
             743: {
                 enabled:true,
+                type:"radio",
                 prompt: "Brochures/Stickers/Posters",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -283,6 +332,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             }, 
             744: {
                 enabled:true,
+                type:"radio",
                 prompt: "Most Recent Awareness Gathering",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -295,6 +345,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             745: {
                 enabled:true,
+                type:"radio",
                 prompt: "Most Recent Transportation Workers Gathering",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -309,6 +360,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             // Security
             749: {
                 enabled:true,
+                type:"radio",
                 prompt: "Security Protocol followed when taking victims to safe house / church",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -320,6 +372,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             750: {
                 enabled:true,
+                type:"radio",
                 prompt: "Staff vary routes when traveling to the shelter / church / booth",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -331,6 +384,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             751: {
                 enabled:true,
+                type:"radio",
                 prompt: "Staff frequently rotate shifts and locations",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -340,6 +394,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             752: {
                 enabled:true,
+                type:"radio",
                 prompt: "Staff vary clothing and appearance, dress to fit-in",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -349,6 +404,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             753: {
                 enabled:true,
+                type:"radio",
                 prompt: 'Were all threats reported? (mark "yes" if no threats)',
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -358,6 +414,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             754: {
                 enabled:false,
+                type:"radio",
                 prompt: "If prior threat, staff have protection devices?",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -369,6 +426,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             // Accounting
             758: {
                 enabled:true,
+                type:"radio",
                 prompt: "Receipt & Voucher for all transactions",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -378,6 +436,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             759: {
                 enabled:true,
+                type:"radio",
                 prompt: "All Transactions Listed in Daybook",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -387,6 +446,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             760: {
                 enabled:true,
+                type:"radio",
                 prompt: "Completed most recent Quarterly Payment Record",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -396,6 +456,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             761: {
                 enabled:true,
+                type:"radio",
                 prompt: "Yearly Accounting Submitted to THN by last Shrawan 15",
                 promptFormat: "col-md-4 control-label",
                 options: [
@@ -407,6 +468,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             // Victim Engagement
             765: {
                 enabled:true,
+                type:"radio",
                 prompt: "Potential Victims questioned this month",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -418,6 +480,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             904: {
                 enabled:true,
+                type:"radio",
                 prompt: "When to intercept Posters displayed at station",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -427,6 +490,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             905: {
                 enabled:true,
+                type:"radio",
                 prompt: "Freedom of Movement & Migration Posters displayed",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -441,6 +505,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             // Records
             769: {
                 enabled:true,
+                type:"radio",
                 prompt: "Station Logbooks filled out",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -450,6 +515,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             869: {
                 enabled:true,
+                type:"radio",
                 prompt: "Shelter Logbooks filled out",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -459,6 +525,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             770: {
                 enabled:true,
+                type:"radio",
                 prompt: "IRF fully filled out and sent to TH for all intercepts",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -468,6 +535,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             771: {
                 enabled:true,
+                type:"radio",
                 prompt: "Photo percentage",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -479,6 +547,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             772: {
                 enabled:true,
+                type:"radio",
                 prompt: "VDF percentage",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -490,6 +559,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             793: {
                 enabled:true,
+                type:"radio",
                 prompt: "CIF % for Clear Evidence Cases",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -501,8 +571,39 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             
             // Aftercare
+            Education:{
+                enabled:true,
+                type:"header",
+                prompt: "EDUCATION",
+                promptFormat: "col-md-12 control-label heading",
+            },
+            HTMessage:{
+                enabled:true,
+                type:"header",
+                prompt: "H.T. MESSAGE",
+                promptFormat: "col-md-12 control-label heading",
+            },
+            Shelter:{
+                enabled:true,
+                type:"header",
+                prompt: "SHELTER",
+                promptFormat: "col-md-12 control-label heading",
+            },
+            Interviews:{
+                enabled:true,
+                type:"header",
+                prompt: "INTERVIEWS",
+                promptFormat: "col-md-12 control-label heading",
+            },
+            Followup:{
+                enabled:true,
+                type:"header",
+                prompt: "FOLLOW-UP",
+                promptFormat: "col-md-12 control-label heading",
+            },
             776: {
                 enabled:true,
+                type:"radio",
                 prompt: "Chori",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -514,6 +615,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             777: {
                 enabled:false,
+                type:"radio",
                 prompt: "TDMGD",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -525,6 +627,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             870: {
                 enabled:true,
+                type:"radio",
                 prompt: "Dhuwani",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -536,6 +639,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             778: {
                 enabled:true,
+                type:"radio",
                 prompt: "MTV Exit",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -547,6 +651,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             871: {
                 enabled:true,
+                type:"radio",
                 prompt: "Nepalese Homes video",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -558,6 +663,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             872: {
                 enabled:true,
+                type:"radio",
                 prompt: "Top Jobs for Women",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -569,6 +675,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             779: {
                 enabled:true,
+                type:"radio",
                 prompt: "Tracts Given",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -580,6 +687,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             781: {
                 enabled:true,
+                type:"radio",
                 prompt: "Messagebook Given",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -591,6 +699,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             782: {
                 enabled:true,
+                type:"radio",
                 prompt: "Redemption Movie",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -602,6 +711,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             873: {
                 enabled:true,
+                type:"radio",
                 prompt: "Only female THN staff enter the shelter",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -611,6 +721,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             874: {
                 enabled:true,
+                type:"radio",
                 prompt: "1 staff / SC in shelter at all times (only if there is victim)",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -620,6 +731,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             875: {
                 enabled:true,
+                type:"radio",
                 prompt: "Victims being tested for STDs, when appropriate",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -629,6 +741,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             783: {
                 enabled:true,
+                type:"radio",
                 prompt: "Interviews recorded w/victim's knowledge",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -638,6 +751,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             784: {
                 enabled:true,
+                type:"radio",
                 prompt: "All interviews in private room, max. 2 women",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -647,6 +761,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             785: {
                 enabled:true,
+                type:"radio",
                 prompt: "Discussion of a victims' case does not take place with anyone except TH Nepal staff, SC members, and police (if necessary)",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -656,6 +771,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             786: {
                 enabled:true,
+                type:"radio",
                 prompt: "NGO in victims’ areas contacted",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -667,6 +783,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             //Paralegal
             790: {
                 enabled:true,
+                type:"radio",
                 prompt: "FIRs filed last month",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -678,6 +795,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             791: {
                 enabled:true,
+                type:"radio",
                 prompt: "If filed case, did you scan & send copy of FIR to Regional HQ?",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -687,6 +805,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             876: {
                 enabled:true,
+                type:"radio",
                 prompt: "If active cases at Station, did you give monthly update to National Office on the progress of the case?",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -696,14 +815,27 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             792: {
                 enabled:false,
+                type:"text",
+                prompt: "# of CIFs filled out and submitted to National Office (in last month)",
+                promptFormat: "col-md-3 control-label",
                 // integer input
             },
             877: {
                 enabled:true,
+                type:"text",
+                prompt: "Arrests last month",
+                promptFormat: "col-md-3 control-label",
                 // integer input
+            },
+            906: {
+                enabled:false,
+                type:"text",
+                prompt: "GDs last month",
+                promptFormat: "col-md-3 control-label",
             },
             907: {
                 enabled:true,
+                type:"radio",
                 prompt: "When to File a Case poster displayed at station",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -713,8 +845,15 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             
             // Investigations
+            HighValueContacts:{
+                enabled:true,
+                type:"header",
+                prompt: "HIGH VALUE CONTACTS",
+                promptFormat: "col-md-12 control-label heading",
+            },
             797: {
                 enabled:true,
+                type:"radio",
                 prompt: "# of HVCs",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -725,6 +864,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             798: {
                 enabled:true,
+                type:"radio",
                 prompt: "INT from HVCs",
                 promptFormat: "col-md-3 control-label",
                 options: [
@@ -736,6 +876,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             799: {
                 enabled:true,
+                type:"radio",
                 prompt: "How many times visited hotels?",
                 promptFormat: "col-md-3 control-label",
                 options: [

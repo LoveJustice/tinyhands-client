@@ -1,0 +1,28 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>4 Moved by an illegitimate means of control.</h3>
+		</div>
+	</div>
+	<div id="vulnerability" class="col-md-6">
+		<div ng-repeat="quest in $ctrl.controlLeftQuestions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+		</div>
+	</div>
+	<div id="deceive" class="col-md-6">
+		<div ng-repeat="quest in $ctrl.controlRightQuestions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='text'" type="text" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+		</div>
+	</div>
+	<br>
+</fieldset>

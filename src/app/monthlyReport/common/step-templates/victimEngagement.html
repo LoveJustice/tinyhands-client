@@ -7,16 +7,13 @@
 			<h4>Score {{$ctrl.getContextCount('Victim Engagement');}}</h4>
 		</div>
 	</div>
-	<div ng-repeat="radQuest in [765, 904, 905]" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
+	<div ng-repeat="radQuest in $ctrl.victimEngagementQuestions" class="row center-vertical" ng-if="$ctrl.questionFormat[radQuest].enabled">
 		<form-step class={{$ctrl.questionFormat[radQuest].promptFormat}}>{{$ctrl.questionFormat[radQuest].prompt}}</form-step>
-		<div ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='radio'" ng-repeat="opt in $ctrl.questionFormat[radQuest].options" class={{opt.format}}>
 			<form-step type="radio" radio-name={{radQuest}} blue-flag="opt.points" flag-context="Victim Engagement" label={{opt.label}} response-value="$ctrl.questions[radQuest].response.value"></form-step>
 		</div>
-	</div>
-	<div class="row center-vertical" ng-if="$ctrl.questionFormat[868].enabled">
-		<form-step class="col-md-4 control-label"># of VDFs filled out and submitted to THN (in last month)</form-step>
-		<div class="col-md-1">
-	        <input type="text" class="form-control" placeholder="# VDFs" ng-model="$ctrl.questions[868].response.value">
+		<div ng-if="$ctrl.questionFormat[radQuest].type==='text'" class="col-md-1">
+	        <input type="text" class="form-control" ng-model="$ctrl.questions[radQuest].response.value">
 	    </div>
 	</div>
 	<br>

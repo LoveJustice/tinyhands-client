@@ -1,4 +1,4 @@
-<div id="borderStation" class="container-fluid padding-top-20">
+<div id="border-station" class="container-fluid padding-top-20">
     <div class="sticky">
     	<div class="row text-center">
     		<h3>Border Station: {{ $ctrl.questions[949].response.value}}({{ $ctrl.questions[950].response.value}})</h3>
@@ -11,7 +11,7 @@
         </div>
         <hr class="margin-bottom-0" />
     </div>
-    <div id="irf-content" class="padding-bottom-40">
+    <div id="border-station-content" class="padding-bottom-40">
         <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template.template" ng-hide="$ctrl.selectedStep != $index"></div>
     </div>
     <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
@@ -22,7 +22,8 @@
     </div>
     <div class="container-fluid padding-bottom-20">
         <div class="col-xs-6 text-right">
-            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.isViewing">Submit</button>
+            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()"
+            	ng-disabled="$ctrl.isViewing || !$ctrl.questions[949].response.value || !$ctrl.questions[950].response.value || !$ctrl.questions[955].response.value || !$ctrl.questions[956].response.value">Submit</button>
         </div>
     </div>
 </div>

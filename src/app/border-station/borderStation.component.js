@@ -1,5 +1,6 @@
 import {BaseFormController} from '../baseFormController.js';
 import {BaseModalController} from '../baseModalController.js';
+import './borderStation.less';
 
 import detailTemplate from './step-templates/detail.html';
 import committeeTemplate from './step-templates/committee/committee.html';
@@ -194,6 +195,7 @@ class BorderStationController extends BaseFormController  {
              this.response = response.data;
              this.responses = response.data.responses;
              this.questions = _.keyBy(this.responses, x => x.question_id);
+             this.session.getUserPermissions();  // Refreshes border station list in navbar
              this.$state.go('dashboard');
          }, (error) => {
              this.set_errors_and_warnings(error.data);

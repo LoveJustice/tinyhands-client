@@ -1,0 +1,53 @@
+<div id="committee-box-modal" class="modal-content">
+	<div class="modal-body">
+		<div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="firstName">First Name</label>
+	            <input type="text" class="form-control" placeholder="First Name"
+	                   ng-model="CommitteeModalController.questions[957].response.value">
+	          </div>
+	          <div class="col-sm-6 form-group">
+	            <label for="lastName">Last Name</label>
+	            <input type="text" class="form-control" placeholder="Last Name"
+	                   ng-model="CommitteeModalController.questions[958].response.value">
+	          </div>
+	      </div>
+	      <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="email">Email</label>
+	            <input type="text" class="form-control" placeholder="Email Address"
+	                   ng-model="CommitteeModalController.questions[959].response.value">
+	          </div>
+	          <div class="col-sm-6 form-group">
+	            <label for="phone">Phone Number</label>
+	            <input type="text" class="form-control" placeholder="Phone Number"
+	                   ng-model="CommitteeModalController.questions[960].response.value">
+	          </div>
+	      </div>
+	      <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="position">Position</label>
+	            <input type="text" class="form-control" placeholder="Position"
+	                   ng-model="CommitteeModalController.questions[961].response.value">
+	          </div>
+	          <div class="col-sm-6 checkbox">
+	            <label>
+	              <input type="checkbox"
+	                     ng-model="StaffModalController.questions[962].response.value" ng-disabled="!CommitteeModalController.questions[959].response.value"> Recieves Money Distribution Form
+	            </label>
+	          </div>
+	      </div>
+	  </div>
+	  <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="CommitteeModalController.save()" ng-if="!CommitteeModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="CommitteeModalController.delete()" ng-if="!CommitteeModalController.isAdd && !CommitteeModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="CommitteeModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>

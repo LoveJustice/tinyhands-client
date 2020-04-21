@@ -1,0 +1,66 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+  <div class="col-md-12">
+	<div class="row">
+      <div class="col-xs-12" ng-init="$ctrl.details.open = true">
+          <button class="btn"
+                  ng-class="{'btn-success':$ctrl.questions[948].response.value, 'btn-danger':!$ctrl.questions[948].response.value}"
+                  ng-click="$ctrl.changeStationStatus()">Station Status: {{$ctrl.questions[948].response.value ? "Open" : "Closed"}}</button>
+      </div>
+    </div>
+	  <div class="row">
+	      <div class="col-sm-6 form-group">
+	        <label for="stationName">Station Name</label>
+	        <input type="text" class="form-control" id="stationName" placeholder="Station Name"
+	               ng-model="$ctrl.questions[949].response.value">
+	      </div>
+	      <div class="col-sm-6 form-group">
+	        <label for="stationCode">Station Code</label>
+	        <input type="text" class="form-control" id="stationCode" placeholder="Station Code"
+	               ng-model="$ctrl.questions[950].response.value">
+	      </div>
+	  </div>
+	  <div class="row">
+	      <div class="col-sm-6 form-group">
+	        <label for="dateEstablished">Date Established</label>
+	        <input type="text" class="form-control" id="dateEstablished" placeholder="Date Established"
+	               ng-model="$ctrl.questions[951].response.value">
+	      </div>
+	      <div class="col-sm-6 checkbox" style="margin: 20px 0px">
+	        <label>
+	          <input type="checkbox" id="hasShelter"
+	                 ng-model="$ctrl.questions[952].response.value"> Has Shelter
+	        </label>
+	      </div>
+	  </div>
+	  <div class="row">
+	      <div class="col-sm-6 form-group">
+	        <label for="latitude">Latitude</label>
+	        <input type="text" class="form-control" id="latitude" placeholder="Latitude"
+	               ng-model="$ctrl.questions[953].response.value">
+	      </div>
+	      <div class="col-sm-6 form-group">
+	        <label for="longitude">Longitude</label>
+	        <input type="text" class="form-control" id="longitude" placeholder="Longitude"
+	               ng-model="$ctrl.questions[954].response.value">
+	      </div>
+	  </div>
+	  <div class="row">
+	      <div class="col-sm-6 form-group">
+	        <label for="operating_country">Operating Country</label>
+	        <select name='operating_country' class="form-control" id="operating_country"
+	                ng-options="option.id as option.name for option in $ctrl.countryOptions"
+	                ng-model="$ctrl.questions[955].response.value">
+	                <option value="">Select a country</option>
+	        </select>
+	      </div>
+	      <div class="col-sm-6 form-group">
+	        <label for="timezone">Time Zone</label>
+	        <select name='timezone' class="form-control" id="time_zone"
+	                ng-options="o as o for o in $ctrl.timeZoneOptions"
+	                ng-model="$ctrl.questions[956].response.value">
+	                <option value="">Select a time zone</option>
+	        </select>
+	      </div>
+	  </div>
+  </div>
+  </fieldset>

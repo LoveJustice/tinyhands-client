@@ -1,0 +1,14 @@
+<div class="row">
+ 	<div ng-repeat="formType in $ctrl.formTypes">
+ 		<div class="row col-md-12">
+ 		 <div class="col-md-4 form-group" ng-if="formType.name!=='BORDER_STATION'">
+ 	 		<label for="select_form">{{formType.name}}</label>
+        	<select name='select-form' class="form-control" id="select-form"
+                ng-options="option.id as option.form_name for option in $ctrl.formOptions[formType.name]"
+                ng-model="$ctrl.formSelected[formType.name]" ng-disabled="!$ctrl.setForms">
+                <option value="">Select a form</option>
+        	</select>
+        	</div>
+ 	 	</div>
+ 	</div>
+ </div>

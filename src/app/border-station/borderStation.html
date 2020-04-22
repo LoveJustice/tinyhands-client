@@ -1,41 +1,30 @@
-<div class="col-xs-12">
-	<br>
-	<form id="borderstation-form">
-
-		<h2 class="text-center" ng-if="bsCtrl.loading"><img src="/static/images/spinner.gif" width="25" height="25"> Loading Border Station Data...</h2>
-
-		<button class="btn btn-success pull-right" ui-sref="budget({borderStationId: bsCtrl.service.borderStationId})" ng-if="bsCtrl.session.checkPermission('BUDGETS','ADD',null, null) && bsCtrl.$stateParams.id">New Budget Form</button>
-
-		<br>
-		<br>
-		<br>
-
-		<div class="col-xs-12" ng-show="!bsCtrl.loading">
-
-		<fieldset ng-disabled="bsCtrl.isViewing">
-			<border-station-detail></border-station-detail>
-			<border-station-person></border-station-person>
-			<border-station-location></border-station-location>
-			<border-station-form ng-show="bsCtrl.session.checkPermission('STATIONS','SET_FORMS',null, null)"></border-station-form>
-
-			<!-- REGION: Block for error messages -->
-			<div class="text-danger well" ng-if="bsCtrl.errors.length > 0">
-				<h1>Errors</h1>
-				<div class="well well-sm" ng-repeat="error in bsCtrl.errors">
-					<h4>Field: {{error.field}}</h4>
-					<h5 ng-repeat="message in error.messages">Message: {{message}}</h5>
-				</div>
-			</div>
-			<!-- ENDREGION: Block for error messages -->
-
-			<button class="btn btn-primary pull-right col-xs-12" ng-click="bsCtrl.updateStation()" ng-hide="bsCtrl.isViewing">
-				{{bsCtrl.updateStatusText}}
-			</button>
-			<br/>
-			<br/>
-			<br/>
-		</fieldset>
-
-		</div>
-	</form>
+<div id="border-station" class="container-fluid padding-top-20">
+    <div class="sticky">
+    	<div class="row text-center">
+    		<h3>Border Station: {{ $ctrl.questions[949].response.value}}({{ $ctrl.questions[950].response.value}})</h3>
+    	</div>
+        <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
+        	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
+        		class="btn btn-default"
+        		ng-class="{active: $ctrl.selectedStep == $index}" 
+        		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
+        </div>
+        <hr class="margin-bottom-0" />
+    </div>
+    <div id="border-station-content" class="padding-bottom-40">
+        <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template.template" ng-hide="$ctrl.selectedStep != $index"></div>
+    </div>
+    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
+        <strong>Warning! {{warnings}}</strong>
+    </div>
+    <div class="alert alert-danger" ng-repeat="errors in $ctrl.getErrorMessages()">
+        <strong>Error! {{errors}}</strong>
+    </div>
+    <div class="container-fluid padding-bottom-20">
+        <div class="col-xs-6 text-right">
+            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()"
+            	ng-disabled="$ctrl.isViewing || !$ctrl.questions[949].response.value || !$ctrl.questions[950].response.value || !$ctrl.questions[955].response.value || !$ctrl.questions[956].response.value">Submit</button>
+        </div>
+    </div>
 </div>
+

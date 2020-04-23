@@ -852,7 +852,7 @@ export class MonthlyReportBangladeshController extends BaseMonthlyReportControll
             798: {
                 enabled:true,
                 type:"radio",
-                prompt: "INT from HVCs",
+                prompt: "Int from HVCs",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"None",format:"col-md-1",points:0},

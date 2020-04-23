@@ -6,7 +6,7 @@
 				ng-mousedown="showInt = !showInt" ng-mouseleave="tally.onMouseLeave(day)" ng-style="tally.changeColor(day)">
 				<h3 class="day-of-week">{{tally.getDayOfWeek(day.date)}}</h3>
 				<div ng-repeat="(station,numIntercepts) in day.interceptions">
-					<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} INT in {{station}}</h4>
+					<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} Int in {{station}}</h4>
 				</div>
 				<h4 ng-show="showInt && tally.isEmptyObject(day.interceptions)" class="animated tallyFade">No Interceptions</h4>
 			</div>

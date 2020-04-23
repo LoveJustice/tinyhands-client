@@ -2,8 +2,11 @@
     <div class="row">
         <div class="col-md-4 form-group">
             <form-step class="col-md-3 control-label">VDF Number: </form-step>
-            <div class="col-md-9">
-                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="VDF Number" ng-model="$ctrl.questions[651].response.value">
+            <div class="col-md-4">
+                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="VDF Number" ng-model="$ctrl.questions[651].response.value" ng-change="$ctrl.formNumberChange()">
+            </div>
+            <div class="col-xs-5 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            	Invalid Form Number
             </div>
         </div>
         <div class="col-md-4 form-group">

@@ -1,9 +1,9 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseVdfController extends BaseFormController {
-    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
-        super($scope, $stateParams);
+        super($scope, $stateParams, $uibModalStack);
         
         this.$uibModal = $uibModal;
         this.constants = constants;
@@ -16,6 +16,10 @@ export class BaseVdfController extends BaseFormController {
         this.associatedPersons = [];
 
         this.getVdf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
+    }
+    
+    formNumberChange() {
+        this.goodFormNumber = (this.questions[651].response.value.match(this.formNumberPattern) !== null);
     }
     
     number_change() {
@@ -45,6 +49,11 @@ export class BaseVdfController extends BaseFormController {
                         formNumber: this.questions[651].response.value
                     });
                 }
+                if (this.questions[651].response.value === null || this.questions[651].response.value === '') {
+                    this.questions[651].response.value = this.response.station_code;
+                }
+                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}[A-Z]$';
+                this.formNumberChange();
             });
         });
     }

@@ -15,9 +15,6 @@
     <div ng-class="{'collapse': mobileNavClosed, 'navbar-collapse': mobileNavClosed, 'navbar-header-collapse': mobileNavClosed}"
         ng-if="authenticated">
         <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
-            <li>
-                <a href="#" ui-sref="dashboard">Dashboard</a>
-            </li>
 
             <!-- START: BORDERSTATIONS -->
             <li class="dropdown" ng-class="{open:stationsOpen}"
@@ -64,25 +61,26 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)"
-                            ui-sref="cifList">CIFs</a>
-                    </li>
-                    <li>
                         <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
                             ui-sref="irfList">IRFs</a>
                         <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null) && !navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
                             ui-sref="irfNewList">IRFs</a>
                     </li>
                     <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)"
+                            ui-sref="cifList">CIFs</a>
+                    </li>
+                    <li>
                         <a ng-show="navbarCtrl.session.checkPermission('VDF','VIEW',null, null)"
                             ui-sref="vdfList">VDFs</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.user.permission_vif_view" ui-sref="vifList">VIFs</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
+                            ui-sref="monthlyReportList">SMRs</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
-                            ui-sref="monthlyReportList">Monthly Report</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);"
+                            ui-sref="budgetList">MDFs</a>
                     </li>
                 </ul>
             </li>
@@ -91,7 +89,7 @@
             <li class="dropdown" ng-class="{open:reportsOpen}"
             	ng-hide="!(navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)||navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null))"
                 ng-mouseleave="reportsOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="reportsOpen=!reportsOpen">Reports
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="reportsOpen=!reportsOpen">Data Summaries
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -105,17 +103,13 @@
                     </li>
                     <li>
                     	<a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
-                    		ui-sref="monthlyReportSummary">Monthly Report Summary</a>
+                    		ui-sref="monthlyReportSummary">SMR Summary</a>
                     </li>
                 </ul>
             </li>
              <!-- END: REPORTS -->
 
-            <li>
-                <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);"
-                    ui-sref="budgetList">Budget
-                    Sheets</a>
-            </li>
+            
         </ul>
         
 

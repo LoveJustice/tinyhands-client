@@ -1,9 +1,9 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseMonthlyReportController extends BaseFormController {
-    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, contexts, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, contexts, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
-        super($scope, $stateParams);
+        super($scope, $stateParams, $uibModalStack);
         
         this.$uibModal = $uibModal;
         this.constants = constants;

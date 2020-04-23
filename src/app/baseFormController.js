@@ -4,12 +4,20 @@ const DateData = require('./dateData.js');
 const PersonIdentifierChoice = require('./personIdentifierChoice.js');
 
 export class BaseFormController {
-    constructor($scope, $stateParams) {
+    constructor($scope, $stateParams, $uibModalStack) {
         'ngInject';
         this.$scope = $scope;
         this.stateParams = $stateParams;
+        this.$uibModalStack = $uibModalStack;
         this.isViewing = this.stateParams.isViewing === 'true';
         this.stationId = this.stateParams.stationId;
+        
+        $scope.$on('$destroy', function iVeBeenDismissed() {
+            let ctrl = $scope.$ctrl;
+            if (ctrl.$uibModalStack) {
+                ctrl.$uibModalStack.dismissAll();
+            }
+          });
 
         this.response = {status:'in-progress'};
         this.ignoreWarnings = false;

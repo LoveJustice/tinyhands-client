@@ -19,7 +19,7 @@ import attachmentsTemplate from '../common/step-templates/attachments/attachment
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class MonthlyReportIndiaController extends BaseMonthlyReportController {
-    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';        
         super($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state,
                     [
@@ -33,7 +33,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                         "Aftercare",
                         "Paralegal"
                     ],
-                    SpinnerOverlayService
+                    SpinnerOverlayService, $uibModalStack
                 );
        
         this.stepTemplates = [
@@ -735,7 +735,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             798: {
                 enabled:true,
                 type:"radio",
-                prompt: "INT from HVCs",
+                prompt: "Int from HVCs",
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"None",format:"col-md-1",points:0},

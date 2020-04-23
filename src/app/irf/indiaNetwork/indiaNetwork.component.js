@@ -22,9 +22,9 @@ import intercepteeModalTemplate from '../common/step-templates/interceptees/inte
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfIndiaNetworkController extends BaseIrfController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack);
         
         this.stepTemplates = [
             {template:topBoxTemplate, name:"Top"},

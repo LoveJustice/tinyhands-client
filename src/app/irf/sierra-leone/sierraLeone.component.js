@@ -266,13 +266,6 @@ export class IrfSierraLeoneController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
-            242:{
-                enabled:true,
-                label:'Missed call',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
             244:{
                 enabled:true,
                 label:'Other website:',

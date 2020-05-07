@@ -1,10 +1,10 @@
 <div id="cif-person-boxes" class="row stretch-vertical">
     <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('PersonBoxes')" ng-if="!$ctrl.printMode">
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openPersonBoxModal(card, false, $index)">
-            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionById(card.responses, 480).value}}){{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
+            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionById(card.responses, 480).value}}){{$ctrl.getResponseOfQuestionById(card.responses, 965).name.value}}</h3>
             <div class="panel-body text-center">
-                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
-                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).gender.value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 965).age.value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 965).gender.value}}</form-step>
             </div>
         </div>
     </div>

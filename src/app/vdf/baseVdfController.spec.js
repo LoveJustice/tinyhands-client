@@ -138,11 +138,26 @@ describe('VdfTestController', () => {
                                                         name: Object({  }),
                                                         age: Object({  }),
                                                         birthdate: Object({  }),
-                                                        address1: Object({ id: null, name: '' }),
-                                                        address2: Object({ id: null, name: '' }),
+                                                        address: Object({  }),
+                                                        address_notes: Object({  }),
                                                         phone: Object({  }),
                                                         nationality: Object({  }),
-                                                        identifiers: Object({ })
+                                                        identifiers: Object({ }),
+                                                        latitude: Object({  }),
+                                                        longitude: Object({  }),
+                                                        appearance: Object({  }),
+                                                        arrested: Object({  }),
+                                                        case_filed_against: Object({  }),
+                                                        education: Object({  }),
+                                                        guardian_name: Object({  }),
+                                                        guardian_phone: Object({  }),
+                                                        guardina_relationship: Object({  }),
+                                                        occupation: Object({  }),
+                                                        photo: Object({  }),
+                                                        role: Object({  }),
+                                                        social_media: Object({  }),
+                                                        interviewer_believes: Object({  }),
+                                                        pv_believes: Object({  })
                                                 }
                                         )
                                 }
@@ -218,14 +233,6 @@ describe('VdfTestController', () => {
                         "storage_id": null,
                         "name": {
                             "value": ""
-                        },
-                        "address1": {
-                            "id": null,
-                            "name": ""
-                        },
-                        "address2": {
-                            "id": null,
-                            "name": ""
                         },
                         "phone": {
                             "value": ""

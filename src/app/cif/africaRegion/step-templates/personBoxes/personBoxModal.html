@@ -6,7 +6,7 @@
                 <span class="sr-only">Close</span>
             </button>
             <div class="col-md-4">
-            	<h3 class="modal-title">{{PersonBoxModalController.questions[9].response.name.value || 'Person Box'}}</h3>
+            	<h3 class="modal-title">{{PersonBoxModalController.questions[965].response.name.value || 'Person Box'}}</h3>
             </div>
             <div class="col-md-1 margin-top-10">
 	    		<label>PB#</label>
@@ -20,7 +20,7 @@
                 <div class="col-md-5 form-group">
                     <label class="col-md-3 control-label">Gender</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="PersonBoxModalController.questions[9].response.gender.value">
+                        <select class="form-control" ng-model="PersonBoxModalController.questions[965].response.gender.value">
                             <option value="Female">Female</option>
                             <option value="Male">Male</option>
                             <option value="Unknown">Unknown</option>
@@ -30,7 +30,7 @@
                 <div class="col-md-4 form-group">
                     <label class="col-md-4 control-label">Age</label>
                     <div class="col-md-8">
-                        <input type="number" min="0" class="form-control" ng-model="PersonBoxModalController.questions[9].response.age.value">
+                        <input type="number" min="0" class="form-control" ng-model="PersonBoxModalController.questions[965].response.age.value">
                     </div>
                 </div>
             </div>
@@ -38,48 +38,48 @@
                 <div class="col-md-9 form-group">
                     <label class="col-md-2 control-label">Full Name</label>
                     <div class="col-md-10">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.name.value">
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[965].response.name.value">
                     </div>
                 </div>
                 <div class="col-md-1 form-group">
-            		<associated-person ng-model="PersonBoxModalController.questions[9].response" person-list="PersonBoxModalController.associatedPersons" 
-            				birth-date="PersonBoxModalController.dateData.questions[9]"
-            				id-choice="PersonBoxModalController.personIdentifierChoice.questions[9].radioValue"></associatedPerson>
+            		<associated-person ng-model="PersonBoxModalController.questions[965].response" person-list="PersonBoxModalController.associatedPersons" 
+            				birth-date="PersonBoxModalController.dateData.questions[965]"
+            				id-choice="PersonBoxModalController.personIdentifierChoice.questions[965].radioValue"></associatedPerson>
            		</div>
             </div>
             <div class="row">
             	<div class="col-md-6">
 		            <label class="col-md-6 control-label">Case filed against PB</label>
 	            	<div class="col-md-3">
-	            		<form-step type="radio" radio-name="case-filed" label="Yes" response-value="PersonBoxModalController.questions[417].response.value"></form-step>
+	            		<form-step type="radio" radio-name="case-filed" label="Yes" response-value="PersonBoxModalController.questions[965].response.case_filed_against.value"></form-step>
 	            	</div>
 	            	<div class="col-md-3">
-	            		<form-step type="radio" radio-name="case-filed" label="No" response-value="PersonBoxModalController.questions[417].response.value"></form-step>
+	            		<form-step type="radio" radio-name="case-filed" label="No" response-value="PersonBoxModalController.questions[965].response.case_filed_against.value"></form-step>
 	            	</div>
             	</div>
             	<div class="col-md-5">
 	            	<label class="col-md-6 control-label">Was PB arrested</label>
 	            	<div class="col-md-3">
-	            		<form-step type="radio" radio-name="arrested" label="Yes" response-value="PersonBoxModalController.questions[418].response.value"></form-step>
+	            		<form-step type="radio" radio-name="arrested" label="Yes" response-value="PersonBoxModalController.questions[965].response.arrested.value"></form-step>
 	            	</div>
 	            	<div class="col-md-3">
-	            		<form-step type="radio" radio-name="arrested" label="No" response-value="PersonBoxModalController.questions[418].response.value"></form-step>
+	            		<form-step type="radio" radio-name="arrested" label="No" response-value="PersonBoxModalController.questions[965].response.arrested.value"></form-step>
 	            	</div>
             	</div>
             </div>
             <div class="row">
             	<div class="col-md-12 margin-top-15">
 			        <label class="col-md-2 ">Address</label>
-			        <address-entry class="col-md-10" ng-model="PersonBoxModalController.questions[9].response.address"
-			        		latitude-model="PersonBoxModalController.questions[9].response.latitude.value"
-			        		longitude-model="PersonBoxModalController.questions[9].response.longitude.value"></addressEntry>
+			        <address-entry class="col-md-10" ng-model="PersonBoxModalController.questions[965].response.address.value"
+			        		latitude-model="PersonBoxModalController.questions[965].response.latitude.value"
+			        		longitude-model="PersonBoxModalController.questions[965].response.longitude.value"></addressEntry>
 		        </div>
             </div>
             <div class="row">
             	<div class="col-md-12">
 	            	<label class="col-md-2 control-label">Address Notes</label>
 	            	<div class="col-md-10">
-			        	<input class="form-control" type="text" ng-model="PersonBoxModalController.questions[9].response.address_notes.value">
+			        	<input class="form-control" type="text" ng-model="PersonBoxModalController.questions[965].response.address_notes.value">
 			        </div>
 		        </div>
             </div>
@@ -87,13 +87,13 @@
                 <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-3 control-label">Phone #</label>
                     <div class="col-md-9">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[9].response.phone.value">
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[965].response.phone.value">
                     </div>
                 </div>
                 <div class="col-md-6 form-group margin-top-15">
                     <label class="col-md-4 control-label">FB/Social ID</label>
                     <div class="col-md-8">
-                        <input class="form-control" ng-model="PersonBoxModalController.questions[419].response.value">
+                        <input class="form-control" ng-model="PersonBoxModalController.questions[965].response.social_media.value">
                     </div>
                 </div>
             </div>
@@ -102,14 +102,22 @@
 		    		<label class="col-md-4">Role</form-step>
 		    	</div>
 				<div class="col-md-10 form-group">
-					<form-step type="checkbox" class="col-md-3" label="Broker" response-value="PersonBoxModalController.questions[853].response.value"></form-step>
-			        <form-step type="checkbox" class="col-md-3" label="Companion" response-value="PersonBoxModalController.questions[854].response.value"></form-step>
-			        <form-step type="checkbox" class="col-md-3" label="Host" response-value="PersonBoxModalController.questions[855].response.value"></form-step>
-			        <form-step type="checkbox" class="col-md-3" label="Id Facilitator" response-value="PersonBoxModalController.questions[856].response.value"></form-step>
-			        <form-step type="checkbox" class="col-md-3" label="Agent" response-value="PersonBoxModalController.questions[857].response.value"></form-step>
-			        <form-step type="checkbox" class="col-md-3" label="Witness" response-value="PersonBoxModalController.questions[858].response.value"></form-step>
-			        <form-step type="checkbox" class="col-md-3" label="Complainant" response-value="PersonBoxModalController.questions[859].response.value"></form-step>
-			        <form-step type="otherCheckbox" class="col-md-6" label="Other:" response-value="PersonBoxModalController.questions[860].response.value"></form-step>
+					<form-step type="checkbox" class="col-md-3" label="Broker"
+						response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Broker']"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Companion"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Companion']"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Host"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Host']"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Id Facilitator"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Id Facilitator']"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Agent"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Agent']"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Witness"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Witness']"></form-step>
+			        <form-step type="checkbox" class="col-md-3" label="Complainant"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role']['Complainant']"></form-step>
+			        <form-step type="otherCheckbox" class="col-md-6" label="Other:"
+			        	response-value="PersonBoxModalController.checkboxGroup.questions['965-role'].internalOther"></form-step>
 		        </div>
             </div>
             <div class="row center-vertical">
@@ -117,21 +125,21 @@
                 	<label class="col-md-12">Nationality</label>
 				</div>
                 <div class="col-md-4 form-group">
-                	<input class="form-control" ng-model="PersonBoxModalController.questions[9].response.nationality.value">
+                	<input class="form-control" ng-model="PersonBoxModalController.questions[965].response.nationality.value">
 		        </div>
             </div>
             <div class="row center-vertical">
 		    	<div class="col-md-4 center-vertical">
 		            <label class="col-md-5">ID Type</label>
 		            <div class="col-md-7">
-		                <form-step type="radio" radio-name="idType" label="Citizenship" response-value="PersonBoxModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
-		                <form-step type="radio" radio-name="idType" label="Passport" response-value="PersonBoxModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
+		                <form-step type="radio" radio-name="idType" label="Citizenship" response-value="PersonBoxModalController.personIdentifierChoice.questions[965].radioValue"></form-step>
+		                <form-step type="radio" radio-name="idType" label="Passport" response-value="PersonBoxModalController.personIdentifierChoice.questions[965].radioValue"></form-step>
 		            </div>
 		        </div>
 		        <div class="col-md-4 center-vertical">
 		            <label class="col-md-3">ID #</label>
 		            <div class="col-md-9">
-		                <input type="text" class="form-control" ng-model="PersonBoxModalController.questions[9].response.identifiers[PersonBoxModalController.personIdentifierChoice.getChoice(9)].number.value">
+		                <input type="text" class="form-control" ng-model="PersonBoxModalController.questions[965].response.identifiers[PersonBoxModalController.personIdentifierChoice.getChoice(9)].number.value">
 		            </div>
 		        </div>
 		    </div>
@@ -143,8 +151,10 @@
 				<div class="col-md-10 form-group">
 			        <span ng-repeat="pvRelation in PersonBoxModalController.config.RadioItems[474]">
 			            <form-step type="radio" class="col-md-3" radio-name="relationToPv" label="{{pvRelation}}"
-			            	response-value="PersonBoxModalController.otherData.questions[474].value" other-value="PersonBoxModalController.otherData.questions[474].otherValue"></form-step>
-			            <form-step ng-if="$last" type="otherRadio" class="col-md-6" radio-name="relationToPv" label="Other:" other-value="PersonBoxModalController.otherData.questions[474].otherValue"
+			            	response-value="PersonBoxModalController.otherData.questions[474].value"
+			            	other-value="PersonBoxModalController.otherData.questions[474].otherValue"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-6" radio-name="relationToPv" label="Other:"
+			            	other-value="PersonBoxModalController.otherData.questions[474].otherValue"
 			                response-value="PersonBoxModalController.otherData.questions[474].value"></form-step>
 			        </span>
 		        </div>
@@ -167,7 +177,7 @@
             </div>
             <div class="row col-md-12">
             	<div class="row col-md-12">
-                    <textarea class="form-control" rows="3" ng-model="PersonBoxModalController.questions[421].response.value"></textarea>
+                    <textarea class="form-control" rows="3" ng-model="PersonBoxModalController.questions[965].response.appearance.value"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -175,11 +185,13 @@
 		    		<label class="col-md-12">Occupation</form-step>
 		    	</div>
 				<div class="col-md-10 form-group">
-			        <span ng-repeat="occupation in PersonBoxModalController.config.RadioItems[422]">
+			        <span ng-repeat="occupation in PersonBoxModalController.config.RadioItems['965-occupation']">
 			            <form-step type="radio" class="col-md-3" radio-name="personOccupation" label="{{occupation}}"
-			            	response-value="PersonBoxModalController.otherData.questions[422].value" other-value="PersonBoxModalController.otherData.questions[422].otherValue"></form-step>
-			            <form-step ng-if="$last" type="otherRadio" class="col-md-6" radio-name="personOccupation" label="Other:" other-value="PersonBoxModalController.otherData.questions[422].otherValue"
-			                response-value="PersonBoxModalController.otherData.questions[422].value"></form-step>
+			            	response-value="PersonBoxModalController.otherData.questions['965-occupation'].value" 
+			            	other-value="PersonBoxModalController.otherData.questions['965-occupation'].otherValue"></form-step>
+			            <form-step ng-if="$last" type="otherRadio" class="col-md-6" radio-name="personOccupation" label="Other:"
+			            	other-value="PersonBoxModalController.otherData.questions['965-occupation'].otherValue"
+			                response-value="PersonBoxModalController.otherData.questions['965-occupation'].value"></form-step>
 			        </span>
 		        </div>
             </div>
@@ -194,24 +206,32 @@
 		            </thead>
 		            <tbody>
 			            <tr>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[475].response.value"></form-step></td>
+			            	<td><input type="radio" name="interviewer_believes" value="Definitely trafficked many people" 
+			            		ng-model="PersonBoxModalController.questions[965].response.interviewer_believes.value"></td>
 			            	<td>Definitely trafficked many people</td>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[483].response.value"></form-step></td>
+			            	<td><input type="radio" name="pv_believes" value="Definitely trafficked many people" 
+			            		ng-model="PersonBoxModalController.questions[965].response.pv_believes.value"></td>
 			            </tr>
 			            <tr>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[476].response.value"></form-step></td>
+			            	<td><input type="radio" name="interviewer_believes" value="Has trafficked some people" 
+			            		ng-model="PersonBoxModalController.questions[965].response.interviewer_believes.value"></td>
 			            	<td>Has trafficked some people</td>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[484].response.value"></form-step></td>
+			            	<td><input type="radio" name="pv_believes" value="Has trafficked some people" 
+			            		ng-model="PersonBoxModalController.questions[965].response.pv_believes.value"></td>
 			            </tr>
 			            <tr>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[477].response.value"></form-step></td>
+			            	<td><input type="radio" name="interviewer_believes" value="Suspect s/he's a trafficker" 
+			            		ng-model="PersonBoxModalController.questions[965].response.interviewer_believes.value"></td>
 			            	<td>Suspect s/he's a trafficker</td>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[485].response.value"></form-step></td>
+			            	<td><input type="radio" name="pv_believes" value="Suspect s/he's a trafficker" 
+			            		ng-model="PersonBoxModalController.questions[965].response.pv_believes.value"></td>
 			            </tr>
 			            <tr>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[478].response.value"></form-step></td>
+			            	<td><input type="radio" name="interviewer_believes" value="Don't believe s/he's a trafficker" 
+			            		ng-model="PersonBoxModalController.questions[965].response.interviewer_believes.value"></td>
 			            	<td>Don't believe s/he's a trafficker</td>
-			            	<td><form-step type="checkbox" response-value="PersonBoxModalController.questions[486].response.value"></form-step></td>
+			            	<td><input type="radio" name="pv_believes" value="Don't believe s/he's a trafficker" 
+			            		ng-model="PersonBoxModalController.questions[965].response.pv_believes.value"></td>
 			            </tr>
 		            </tbody>
 	 			</table>

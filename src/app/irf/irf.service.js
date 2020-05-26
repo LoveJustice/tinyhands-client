@@ -7,7 +7,7 @@ export default class IrfService {
         this.service = BaseService;
         this.attachments = [
             {
-                questions:[7],
+                questions:[9],
                 elementName:"images",
                 includeFormNumber:true
             },
@@ -99,21 +99,34 @@ export default class IrfService {
         let cnt = startCnt;
         for (let idx=0; idx < responses.length; idx++) {
             if (questions.indexOf(responses[idx].question_id) > -1) {
-                let t = Object.prototype.toString.call(responses[idx].response.value);
+                let value = null;
+                if (responses[idx].response.hasOwnProperty('photo')) {
+                    value = responses[idx].response.photo.value;
+                } else {
+                    value = responses[idx].response.value;
+                }
+                let t = Object.prototype.toString.call(value);
                 let fileName = '';
+                let prefix = '';
                 if (formNumber !== null) {
-                    fileName = formNumber + '_';
+                    prefix = formNumber + '_';
                 }
                 if (t === '[object Blob]') {
-                    fileName = fileName + responses[idx].response.value.$ngfName;
-                    formData.append(elementName + '[' + cnt + ']', responses[idx].response.value, fileName);
-                    responses[idx].response.value = {'name': fileName};
+                    fileName = prefix + fileName + value.$ngfName;
+                    formData.append(elementName + '[' + cnt + ']', value, fileName);
                     cnt += 1;
                 } else if (t === '[object File]') {
-                    fileName = fileName + responses[idx].response.value.name;
-                    formData.append(elementName + '[' + cnt + ']', responses[idx].response.value, fileName);
-                    responses[idx].response.value = {'name': fileName};
+                    fileName = prefix + fileName + value.name;
+                    formData.append(elementName + '[' + cnt + ']', value, fileName);
                     cnt += 1;
+                }
+                
+                if (fileName !== '') {
+                    if (responses[idx].response.hasOwnProperty('photo')) {
+                        responses[idx].response.photo.value = {'name': fileName};
+                    } else {
+                        responses[idx].response.value = {'name': fileName};
+                    }
                 }
             }
         }

@@ -5,12 +5,12 @@
             <div class="panel-body text-center">
                 <div class="text-center padding-bottom-20">
                 	<canvas id="intercepteeCanvas{{$index}}" width="150" height="150" style="border:1px solid #d3d3d3;"
-                			ng-init="$ctrl.loadCanvas('intercepteeCanvas' + $index,$ctrl.getResponseOfQuestionById(card.responses, 7).value)"
-                			ng-show="$ctrl.getResponseOfQuestionById(card.responses, 7).value">
+                			ng-init="$ctrl.loadCanvas('intercepteeCanvas' + $index,$ctrl.getResponseOfQuestionById(card.responses, 9).photo.value)"
+                			ng-show="$ctrl.getResponseOfQuestionById(card.responses, 9).photo.value">
 						Your browser does not support the HTML5 canvas tag.
 					</canvas>
             	</div>
-                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 8).value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).role.value}}</form-step>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</form-step>
             </div>

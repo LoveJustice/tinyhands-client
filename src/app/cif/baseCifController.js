@@ -51,6 +51,7 @@ export class BaseCifController extends BaseFormController {
                                    id:relatedForms[idx].id
                             };
                             this.tmpIrf = new IrfStubController(this.$scope, this.$uibModal, this.constants, this.irfService, irfStateParams, this.state, this);
+                            this.getIrfComplete();
                         }
                     }
                 });
@@ -111,13 +112,12 @@ export class BaseCifController extends BaseFormController {
             if (!found) {
                 let card = this.createCard('PersonBoxes');
                 let personBoxQuestions = _.keyBy(card.responses, (x) => x.question_id);
-                personBoxQuestions[9].response = suspects[idx];
+                personBoxQuestions[965].response = _.cloneDeep(suspects[idx]);
+                personBoxQuestions[965].response.storage_id = null;
                 personBoxes.push(card);
             }
         }
-        
     }
-    
 
     getCif(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -143,6 +143,15 @@ export class BaseCifController extends BaseFormController {
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
     	let config = this.config[config_name];      
     	let starting_flag_count = the_card.flag_count;
+    	let checkboxGroupItems = [
+    	    {group:'965-role', option:'Broker'},
+            {group:'965-role', option:'Companion'},
+            {group:'965-role', option:'Host'},
+            {group:'965-role', option:'Id Facilitator'},
+            {group:'965-role', option:'Agent'},
+            {group:'965-role', option:'Witness'},
+            {group:'965-role', option:'Complainant'}
+    	];
     	this.modalActions = [];
     	this.$uibModal.open({
             bindToController: true,
@@ -155,7 +164,8 @@ export class BaseCifController extends BaseFormController {
                 modalActions: () => this.modalActions,
                 config: () => config,
                 identificationTypes: () => this.getDefaultIdentificationTypes(),
-                associatedPersons: () => this.associatedPersons
+                associatedPersons: () => this.associatedPersons,
+                checkboxGroupItems: () => checkboxGroupItems
             },
             size: 'lg',
             templateUrl: theTemplate,

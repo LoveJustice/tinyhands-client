@@ -22,15 +22,13 @@ class BaseModalController {
         
     	this.otherData = new OtherData(this.originalQuestions);
     	if (this.config.hasOwnProperty('RadioOther')) {
-    		for (let idx=0; idx < this.config.RadioOther.length; idx++) {
-    		    let dataType = 'basic';
-    		    
-    			let questionId = this.config.RadioOther[idx];
-    			if (this.config.hasOwnProperty('Person') && this.config.Person.indexOf(questionId) > -1) {
-    			    dataType = 'person';
-    			}
-    			this.otherData.setRadioButton(this.config.RadioItems[questionId], questionId, dataType=dataType);
-    		}
+    	    for (let property in this.config.RadioItems) {
+                let parts = ('' + property).split('-');
+                if (parts.length === 1 && this.config.RadioOther.indexOf(Number(property)) >= 0 ||
+                        parts.length === 2 && this.config.RadioOther.indexOf(Number(parts[0])) >= 0) {
+                    this.otherData.setRadioButton(this.config.RadioItems[property], property);
+                }
+            }
     	}
     
     	this.dateData = new DateDate(this.originalQuestions);

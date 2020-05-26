@@ -24,7 +24,7 @@
                 <div class="col-md-6 form-group">
                     <label class="col-md-3 control-label">Type</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="IntercepteeModalController.questions[8].response.value" required>
+                        <select class="form-control" ng-model="IntercepteeModalController.questions[9].response.role.value" required>
                             <option value="Suspect">Suspect</option>
                             <option value="PVOT">PVOT</option>
                         </select>
@@ -68,7 +68,7 @@
 		     	<div class="col-md-12 form-group margin-top-15">
 		        	<label class="col-md-2 control-label">Address:</label>
 		        	<div class="col-md-10 margin-top-0">
-			        	<address-entry ng-model="IntercepteeModalController.questions[9].response.address"
+			        	<address-entry ng-model="IntercepteeModalController.questions[9].response.address.value"
 			        			latitude-model="IntercepteeModalController.questions[9].response.latitude.value"
 			        			longitude-model="IntercepteeModalController.questions[9].response.longitude.value"></addressEntry>
 			        </div>
@@ -114,13 +114,12 @@
                  	<input type="checkbox" id="notPresent" ng-model="IntercepteeModalController.questions[941].response.value">
             		<label for="notPresent">Not physically present</label>
             		<div ng-show="IntercepteeModalController.questions[8].response.value!=='PVOT'">
-                    	<input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[11].response.value">
+                    	<input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[9].response.arrested.value">
                     	<label for="custody">Taken into police custody</label>
                     </div>
 				</div>
 				</div>
             </div>
-           
         </div>
         <div class="modal-footer">
             <div class="row">

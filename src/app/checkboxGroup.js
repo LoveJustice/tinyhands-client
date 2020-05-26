@@ -32,7 +32,16 @@ class CheckboxGroup {
                         this.questions[property][entry] = false;
                     }
                 }
-                let values = this.originalQuestions[property].response.value.split(';');
+                let values = [];
+                let parts = ('' + property).split('-');
+                if (parts.length === 1 && this.originalQuestions.hasOwnProperty(property)) {
+                    values = this.originalQuestions[property].response.value.split(';');
+                } else if (parts.length === 2 &&  this.originalQuestions.hasOwnProperty(parts[0])) {
+                    let v1 = this.originalQuestions[parts[0]].response[parts[1]];
+                    if (v1 && v1.value) {
+                        values = this.originalQuestions[parts[0]].response[parts[1]].value.split(';');
+                    }
+                }
                 for (let idx=0; idx < values.length; idx++) {
                     if (this.questions[property].hasOwnProperty(values[idx])) {
                         this.questions[property][values[idx]] = true;
@@ -66,7 +75,13 @@ class CheckboxGroup {
     updateResponses() {
         for (var property in this.questions) {
             if (this.questions.hasOwnProperty(property)) {
-                this.originalQuestions[property].response.value = this.getValue(property);
+                let parts = ('' + property).split('-');
+                if (parts.length === 1 && this.originalQuestions.hasOwnProperty(property)) {
+                    this.originalQuestions[property].response = {value:this.getValue(property)};
+                } else if (parts.length === 2 &&  this.originalQuestions.hasOwnProperty(parts[0]) &&
+                    this.originalQuestions[parts[0]].response.hasOwnProperty(parts[1])) {
+                    this.originalQuestions[parts[0]].response[parts[1]] = {value:this.getValue(property)};
+                }
             }
         }
     }

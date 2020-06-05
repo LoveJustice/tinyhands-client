@@ -298,8 +298,8 @@ export class BaseIrfController extends BaseFormController {
     	this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
     	this.response.status = this.determineSubmitStatus();
     	this.outCustomHandling();
-    	this.submitExtra();
     	this.processInterceptionDate();
+    	this.submitExtra();
     	this.errorMessages = [];
         this.warningMessages = [];
     	if (this.ignoreWarnings) {

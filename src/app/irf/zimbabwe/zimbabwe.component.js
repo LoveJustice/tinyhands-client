@@ -42,7 +42,7 @@ export class IrfZimbabweController extends BaseIrfController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [41,123, 915, 916, 917];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5, 924.6];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,"metLabel",243,244];
@@ -50,38 +50,47 @@ export class IrfZimbabweController extends BaseIrfController {
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = ["jobLabel",934,935,936,937,938,939,57,712,"marriedLable",24,25,26,216];
         this.details = {
-            41:{
+            968.1:{
                 enabled:true,
-                label:'1.1 Runaway',
-                type:'checkbox',
+                group:968,
+                label:'Runaway',
+                value:'Runaway',
+                type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            123:{
+            968.2:{
                 enabled:true,
-                label:'1.2 Young looking',
-                type:'checkbox',
+                group:968,
+                label:'Young looking',
+                value:'Young looking',
+                type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            915:{
+            968.3:{
                 enabled:true,
-                label:'1.4 Child(ren)',
-                type:'checkbox',
+                group:968,
+                label:'Child(ren)',
+                value:'Child(ren)',
+                type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            916:{
+            968.4:{
                 enabled:true,
-                label:'1.5 Migrant',
-                type:'checkbox',
+                group:968,
+                label:'Migrant',
+                value:'Migrant',
+                type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            917:{
+            968.5:{
                 enabled:true,
-                label:'1.6 Other:',
-                type:'other-checkbox',
+                group:968,
+                label:'Other:',
+                type:'other-checkbox-group',
                 format:'col-md-3',
                 points:0
             },
@@ -96,7 +105,7 @@ export class IrfZimbabweController extends BaseIrfController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'2.1 South Africa',
+                label:'South Africa',
                 value: 'South Africa',
                 type:'checkbox-group',
                 format:'col-md-3',
@@ -105,7 +114,7 @@ export class IrfZimbabweController extends BaseIrfController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'2.2 Mozambique',
+                label:'Mozambique',
                 value: 'Mozambique',
                 type:'checkbox-group',
                 format:'col-md-3',
@@ -114,7 +123,7 @@ export class IrfZimbabweController extends BaseIrfController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'2.3 Mining Town',
+                label:'Mining Town',
                 value: 'Mining Town',
                 type:'checkbox-group',
                 format:'col-md-3',
@@ -123,7 +132,7 @@ export class IrfZimbabweController extends BaseIrfController {
             245.4:{
                 enabled:true,
                 group:245,
-                label:'2.4 Other:',
+                label:'Other:',
                 type:'other-checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -138,7 +147,7 @@ export class IrfZimbabweController extends BaseIrfController {
             924.1:{
                 enabled:true,
                 group:924,
-                label:'2.5 Domestic work',
+                label:'Domestic work',
                 value:'Domestic work',
                 type:'checkbox-group',
                 format:'col-md-4',
@@ -147,7 +156,7 @@ export class IrfZimbabweController extends BaseIrfController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'2.6 Farm work',
+                label:'Farm work',
                 value:'Farm work',
                 type:'checkbox-group',
                 format:'col-md-4',
@@ -156,7 +165,7 @@ export class IrfZimbabweController extends BaseIrfController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'2.7 Salon',
+                label:'Salon',
                 value:'Salon',
                 type:'checkbox-group',
                 format:'col-md-4',
@@ -165,7 +174,7 @@ export class IrfZimbabweController extends BaseIrfController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'2.8 Unregistered Mine',
+                label:'Unregistered Mine',
                 value:'Unregistered Mine',
                 type:'checkbox-group',
                 format:'col-md-4',
@@ -174,7 +183,7 @@ export class IrfZimbabweController extends BaseIrfController {
             924.5:{
                 enabled:true,
                 group:924,
-                label:'2.9 Massage Parlor',
+                label:'Massage Parlor',
                 value:'Massage Parlor',
                 type:'checkbox-group',
                 format:'col-md-4',
@@ -183,7 +192,7 @@ export class IrfZimbabweController extends BaseIrfController {
             924.6:{
                 enabled:true,
                 group:924,
-                label:'2.10 Other:',
+                label:'Other:',
                 type:'other-checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -198,56 +207,56 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             246:{
                 enabled:true,
-                label:"3.1 Doesn't know destination",
+                label:"Doesn't know destination",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             502:{
                 enabled:true,
-                label:"3.2 Doesn't speak language at destination",
+                label:"Doesn't speak language at destination",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             925:{
                 enabled:true,
-                label:'3.3 Insufficient resources to live/get home',
+                label:'Insufficient resources to live/get home',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             78:{
                 enabled:true,
-                label:"3.4 Family doesn't know they are going",
+                label:"Family doesn't know they are going",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             942:{
                 enabled:true,
-                label:'3.5 Family unwilling to let them go',
+                label:'Family unwilling to let them go',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             926:{
                 enabled:true,
-                label:'3.6 Minor unaccompanied by guardian',
+                label:'Minor unaccompanied by guardian',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             280:{
                 enabled:true,
-                label:'3.7 Not speaking on their own behalf',
+                label:'Not speaking on their own behalf',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             metLabel:{
                 enabled:true,
-                label:'3.8 Is or was traveling with someone they recently met through:',
+                label:'Is or was traveling with someone they recently met through:',
                 type:'header',
                 format:'col-md-12',
                 points:0
@@ -283,63 +292,63 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             59:{
                 enabled:true,
-                label:'3.9 No bags through claim to be going for a long time',
+                label:'No bags through claim to be going for a long time',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             117:{
                 enabled:true,
-                label:'3.10 Full bags but claim to be going for a short time',
+                label:'Full bags but claim to be going for a short time',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             45:{
                 enabled:true,
-                label:'3.11 Study - no documentation/knowledge',
+                label:'Study - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             927:{
                 enabled:true,
-                label:'3.12 Treatment - no documentation/knowledge',
+                label:'Treatment - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             928:{
                 enabled:true,
-                label:'3.13 Forged or falsified documents',
+                label:'Forged or falsified documents',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             929:{
                 enabled:true,
-                label:'3.14 Called place and confirmed deception',
+                label:'Called place and confirmed deception',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             58:{
                 enabled:true,
-                label:'3.15 Could not confirm job',
+                label:'Could not confirm job',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             30:{
                 enabled:true,
-                label:'3.16 Caught in a lie',
+                label:'Caught in a lie',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
             930:{
                 enabled:true,
-                label:'3.17 Other',
+                label:'Other',
                 type:'other-checkbox',
                 format:'col-md-12',
                 points:0
@@ -354,21 +363,21 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             603:{
                 enabled:true,
-                label:'4.1 Contradiction in stories of suspect/victim',
+                label:'Contradiction in stories of suspect/victim',
                 type:'checkbox',
                 format:'col-md-12',
                 points:5
             },
             23:{
                 enabled:true,
-                label:'4.2 Travelling with someone not with them now',
+                label:'Travelling with someone not with them now',
                 type:'checkbox',
                 format:'col-md-12',
                 points:4
             },
             931:{
                 enabled:true,
-                label:'4.3 Led to other country without their knowledge',
+                label:'Led to other country without their knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -382,42 +391,42 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             932:{
                 enabled:true,
-                label:'4.4 Travelling because of a threat',
+                label:'Travelling because of a threat',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
             },
             933:{
                 enabled:true,
-                label:'4.5 Owes debt to person who recruited/paid travel',
+                label:'Owes debt to person who recruited/paid travel',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
             },
             247:{
                 enabled:true,
-                label:'4.6 Someone (not a relative) paid travel expenses',
+                label:'Someone (not a relative) paid travel expenses',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
             },
             10:{
                 enabled:true,
-                label:'4.7 Drugged or drowsy',
+                label:'Drugged or drowsy',
                 type:'checkbox',
                 format:'col-md-12',
                 points:4
             },
             55:{
                 enabled:true,
-                label:'4.8 Passport is with broker',
+                label:'Passport is with broker',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
             },
             501:{
                 enabled:true,
-                label:'4.9 Mobile phone taken away',
+                label:'Mobile phone taken away',
                 type:'checkbox',
                 format:'col-md-12',
                 points:9
@@ -431,14 +440,14 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             17:{
                 enabled:true,
-                label:'4.10 Wife/fiancee under 18',
+                label:'Wife/fiancee under 18',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
             },
             79:{
                 enabled:true,
-                label:'4.11 Under 18, Enticed without consent of family',
+                label:'Under 18, Enticed without consent of family',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -474,35 +483,35 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             937:{
                 enabled:true,
-                label:'4.12 Promised pay more than double normal pay',
+                label:'Promised pay more than double normal pay',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
             },
             938:{
                 enabled:true,
-                label:'4.13 Promised pay a little higher than normal pay',
+                label:'Promised pay a little higher than normal pay',
                 type:'checkbox',
                 format:'col-md-12',
                 points:2
             },
             939:{
                 enabled:true,
-                label:'4.14 No address/phone number',
+                label:'No address/phone number',
                 type:'checkbox',
                 format:'col-md-12',
                 points:5
             },
             57:{
                 enabled:true,
-                label:'4.15 Confirmed it is not a real job',
+                label:'Confirmed it is not a real job',
                 type:'checkbox',
                 format:'col-md-12',
                 points:9
             },
             712:{
                 enabled:true,
-                label:'4.16 Lacks relevant experience',
+                label:'Lacks relevant experience',
                 type:'checkbox',
                 format:'col-md-12',
                 points:4
@@ -516,28 +525,28 @@ export class IrfZimbabweController extends BaseIrfController {
             },
             24:{
                 enabled:true,
-                label:'4.17 Married in the past 2 weeks',
+                label:'Married in the past 2 weeks',
                 type:'checkbox',
                 format:'col-md-12',
                 points:8
             },
             25:{
                 enabled:true,
-                label:'4.18 Married within the past 2-8 weeks',
+                label:'Married within the past 2-8 weeks',
                 type:'checkbox',
                 format:'col-md-12',
                 points:4
             },
             26:{
                 enabled:true,
-                label:'4.19 Met in the past 2 weeks',
+                label:'Met in the past 2 weeks',
                 type:'checkbox',
                 format:'col-md-12',
                 points:6
             },
             216:{
                 enabled:true,
-                label:'4.20 On their way to get married',
+                label:'On their way to get married',
                 type:'checkbox',
                 format:'col-md-12',
                 points:3

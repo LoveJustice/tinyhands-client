@@ -59,14 +59,6 @@ export class BaseFormController {
                 name: {
                     value: ""
                 },
-                address1: {
-                    id: null,
-                    name: ""
-                },
-                address2: {
-                    id: null,
-                    name: ""
-                },
                 phone: {
                     value: ""
                 },
@@ -274,34 +266,26 @@ export class BaseFormController {
                         name: {},
                         age: {},
                         birthdate:{},
-                        address1: {
-                            id: null,
-                            name: ""
-                        },
-                        address2: {
-                            id: null,
-                            name: ""
-                        },
+                        address: {},
+                        address_notes: {},
                         phone: {},
                         nationality: {},
-                        identifiers: {}
-                    }
-                });
-            }
-        }
-        if (config.hasOwnProperty('Address')) {
-            for (let idx=0; idx < config.Address.length; idx++) {
-                the_card.responses.push({
-                    question_id: config.Address[idx],
-                    response: {
-                        address1: {
-                            id: null,
-                            name: ""
-                        },
-                        address2: {
-                            id: null,
-                            name: ""
-                        }
+                        identifiers: {},
+                        latitude: {},
+                        longitude: {},
+                        appearance: {},
+                        arrested: {},
+                        case_filed_against: {},
+                        education: {},
+                        guardian_name: {},
+                        guardian_phone: {},
+                        guardina_relationship: {},
+                        occupation: {},
+                        photo: {},
+                        role: {},
+                        social_media: {},
+                        interviewer_believes: {},
+                        pv_believes: {},
                     }
                 });
             }
@@ -510,13 +494,6 @@ export class BaseFormController {
                 if (this.originalQuestions[questionId].response === null) {
                     return true;
                 }
-                if (this.questions[questionId].response.address1 === null) {
-                    if (this.originalQuestions[questionId].response.address1 !== null) {
-                        return true;
-                    }
-                } else if (this.originalQuestions[questionId].response.address1 === null || this.questions[questionId].response.address1.id !== this.originalQuestions[questionId].response.address1.id) {
-                    return true;
-                }
                 if (this.questions[questionId].response.address2 === null) {
                     if (this.originalQuestions[questionId].response.address2 !== null) {
                         return true;
@@ -538,20 +515,6 @@ export class BaseFormController {
                     }
                 } 
                 if (this.originalQuestions[questionId].response === null) {
-                    return true;
-                }
-                if (this.questions[questionId].response.address1 === null) {
-                    if (this.originalQuestions[questionId].response.address1 !== null) {
-                        return true;
-                    }
-                } else if (this.originalQuestions[questionId].response.address1 === null || this.questions[questionId].response.address1.storage_id !== this.originalQuestions[questionId].response.address1.storage_id) {
-                    return true;
-                }
-                if (this.questions[questionId].address2 === null) {
-                    if (this.originalQuestions[questionId].response.address2 !== null) {
-                        return true;
-                    }
-                } else if (this.originalQuestions[questionId].response.address2 === null || this.questions[questionId].response.address2.storage_id !== this.originalQuestions[questionId].response.address2.storage_id) {
                     return true;
                 }
                 if (this.questions[questionId].response.storage_id !== this.originalQuestions[questionId].response.storage_id ||

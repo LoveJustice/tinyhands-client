@@ -207,7 +207,8 @@ describe('CifTestController', () => {
                     modalActions: jasmine.any(Function),
                     config: jasmine.any(Function),
                     identificationTypes: jasmine.any(Function),
-                    associatedPersons: jasmine.any(Function)
+                    associatedPersons: jasmine.any(Function),
+                    checkboxGroupItems: jasmine.any(Function)
                 },
                 size: 'lg',
                 templateUrl: jasmine.any(String)
@@ -232,15 +233,29 @@ describe('CifTestController', () => {
                                                         name: Object({  }),
                                                         age: Object({  }),
                                                         birthdate: Object({  }),
-                                                        address1: Object({ id: null, name: '' }),
-                                                        address2: Object({ id: null, name: '' }),
+                                                        address: Object({  }),
+                                                        address_notes: Object({  }),
                                                         phone: Object({  }),
                                                         nationality: Object({  }),
                                                         identifiers: {
                                                             TypeA: {type:{value:'TypeA'}, number:{value:''}, location:{value:''}},
                                                             TypeB: {type:{value:'TypeB'}, number:{value:''}, location:{value:''}}
-                                                        }
-
+                                                        },
+                                                        latitude: Object({  }),
+                                                        longitude: Object({  }),
+                                                        appearance: Object({  }),
+                                                        arrested: Object({  }),
+                                                        case_filed_against: Object({  }),
+                                                        education: Object({  }),
+                                                        guardian_name: Object({  }),
+                                                        guardian_phone: Object({  }),
+                                                        guardina_relationship: Object({  }),
+                                                        occupation: Object({  }),
+                                                        photo: Object({  }),
+                                                        role: Object({  }),
+                                                        social_media: Object({  }),
+                                                        interviewer_believes: Object({  }),
+                                                        pv_believes: Object({  })
                                                 }
                                         )
                                 }
@@ -316,14 +331,6 @@ describe('CifTestController', () => {
                 		"storage_id": null,
     	                "name": {
     	                    "value": ""
-    	                },
-    	                "address1": {
-    	                    "id": null,
-    	                    "name": ""
-    	                },
-    	                "address2": {
-    	                    "id": null,
-    	                    "name": ""
     	                },
     	                "phone": {
     	                    "value": ""

@@ -32,16 +32,21 @@ export default class IntercepteeModalController extends BaseModalController {
     }
     
     init() {
-        if (this.questions[this.config.ImageQuestion].response.value !== null &&
-                this.questions[this.config.ImageQuestion].response.value !== '') {
-            this.initialPhoto = this.questions[this.config.ImageQuestion].response.value;
+        if (this.questions[9].response.arrested.value === 'Yes') {
+            this.questions[9].response.arrested.value = true;
+        } else {
+            this.questions[9].response.arrested.value = false;
+        }
+        if (this.questions[9].response.photo.value !== null &&
+                this.questions[9].response.photo.value !== '') {
+            this.initialPhoto = this.questions[9].response.photo.value;
             this.photoPresent = true;
-            var t = Object.prototype.toString.call(this.questions[this.config.ImageQuestion].response.value);
+            var t = Object.prototype.toString.call(this.questions[9].response.photo.value);
             if (t !== '[object String]') {
-                this.file = this.questions[this.config.ImageQuestion].response.value;
+                this.file = this.questions[9].response.photo.value;
                 this.loadImage(this.file.$ngfBlobUrl);
             } else {
-                this.loadImage(this.getIntercepteeImage(this.questions[this.config.ImageQuestion].response.value));
+                this.loadImage(this.getIntercepteeImage(this.questions[9].response.photo.value));
             }
         } else {
             this.photoPresent = false;
@@ -63,7 +68,7 @@ export default class IntercepteeModalController extends BaseModalController {
     }
     
     loadImage(imageUrl) {
-        this.questions[this.config.ImageQuestion].response.value = '';
+        this.questions[9].response.photo.value = '';
         let img = new Image();
         img.addEventListener('load', (e)=>{/*jshint unused: false */this.resizeImage(img);});
         img.src = imageUrl;
@@ -72,7 +77,7 @@ export default class IntercepteeModalController extends BaseModalController {
     fileUpload() {
         this.photoPresent = true;
         this.loadImage(this.file.$ngfBlobUrl);
-        this.questions[this.config.ImageQuestion].response.value = '';
+        this.questions[9].response.photo.value = '';
     }
     
     getIntercepteeImage(url) {
@@ -80,10 +85,15 @@ export default class IntercepteeModalController extends BaseModalController {
     }
 
     subclassSave() {
-        if (this.file) {
-            this.originalQuestions[this.config.ImageQuestion].response.value = this.file;
+        if (this.questions[9].response.arrested.value === true) {
+            this.questions[9].response.arrested.value = 'Yes';
         } else {
-            this.originalQuestions[this.config.ImageQuestion].response.value = this.initialPhoto;
+            this.questions[9].response.arrested.value = 'No';
+        }
+        if (this.file) {
+            this.originalQuestions[9].response.photo.value = this.file;
+        } else {
+            this.originalQuestions[9].response.photo.value = this.initialPhoto;
         }
     }
 }

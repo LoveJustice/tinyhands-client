@@ -43,7 +43,7 @@
         <div class="col-md-5 form-group">
             <form-step class="col-md-4 control-label">1.6 Email/Facebook ID</form-step>
             <div class="col-md-8">
-                <input type="text" class="form-control" ng-model="$ctrl.questions[293].response.value">
+                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.social_media.value">
             </div>
         </div>
         <div class="col-md-4 form-group">
@@ -57,7 +57,7 @@
     <div class="row">
      	<div class="col-md-6 form-group">
         	<form-step class="col-md-2 margin-top-15">1.8 Address:</form-step>
-        	<address-entry class="col-md-10 margin-top-15" ng-model="$ctrl.questions[292].response.address"
+        	<address-entry class="col-md-10 margin-top-15" ng-model="$ctrl.questions[292].response.address.value"
         			latitude-model="$ctrl.questions[292].response.latitude.value"
         			longitude-model="$ctrl.questions[292].response.longitude.value"></addressEntry>
         </div>
@@ -72,7 +72,7 @@
 		<div class="col-md-4">
             <form-step class="col-md-5 control-label">1.9 Occupation</form-step>
             <div class="col-md-7">
-                <input type="text" class="form-control" ng-model="$ctrl.questions[294].response.value">
+                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.occupation.value">
             </div>
         </div>
 		<div class="col-md-8">
@@ -81,16 +81,16 @@
             </div>
             <div class="col-md-10">
 		        <div class="col-md-3">
-		            <form-step type="radio" radio-name="education" label="None/Illiterate" response-value="$ctrl.questions[295].response.value"></form-step>
+		            <form-step type="radio" radio-name="education" label="None/Illiterate" response-value="$ctrl.questions[292].response.education.value"></form-step>
 		        </div>
 		        <div class="col-md-2">
-		            <form-step type="radio" radio-name="education" label="Primary" response-value="$ctrl.questions[295].response.value"></form-step>
+		            <form-step type="radio" radio-name="education" label="Primary" response-value="$ctrl.questions[292].response.education.value"></form-step>
 		        </div>
 		        <div class="col-md-2">
-		            <form-step type="radio" radio-name="education" label="Secondary" response-value="$ctrl.questions[295].response.value"></form-step>
+		            <form-step type="radio" radio-name="education" label="Secondary" response-value="$ctrl.questions[292].response.education.value"></form-step>
 		        </div>
 		        <div class="col-md-2">
-		            <form-step type="radio" radio-name="education" label="University" response-value="$ctrl.questions[295].response.value"></form-step>
+		            <form-step type="radio" radio-name="education" label="University" response-value="$ctrl.questions[292].response.education.value"></form-step>
 		        </div>
 	        </div>
 	     </div>
@@ -100,13 +100,13 @@
     	<div class="col-md-7">
             <form-step class="col-md-4 control-label">1.11 (If Under 18) Name of Guardian</form-step>
             <div class="col-md-8">
-                <input type="text" class="form-control" ng-model="$ctrl.questions[296].response.value">
+                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.guardian_name.value">
             </div>
         </div>
 		<div class="col-md-5">
 			<form-step class="col-md-5 control-label">1.12 Guardian Phone Number</form-step>
             <div class="col-md-7">
-                <input type="text" class="form-control" ng-model="$ctrl.questions[297].response.value">
+                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.guardian_phone.value">
             </div>
 			
 	    </div>
@@ -118,16 +118,16 @@
         </div>
         <div class="col-md-7">
 	        <div class="col-md-2">
-	            <form-step type="radio" radio-name="relationship-guardian" label="Own Parent(s)" response-value="$ctrl.questions[298].response.value"></form-step>
+	            <form-step type="radio" radio-name="relationship-guardian" label="Own Parent(s)" response-value="$ctrl.questions[292].response.guardian_relationship.value"></form-step>
 	        </div>
 	        <div class="col-md-2">
-	            <form-step type="radio" radio-name="relationship-guardian" label="Other Relative" response-value="$ctrl.questions[298].response.value"></form-step>
+	            <form-step type="radio" radio-name="relationship-guardian" label="Other Relative" response-value="$ctrl.questions[292].response.guardian_relationship.value"></form-step>
 	        </div>
 	        <div class="col-md-2">
-	            <form-step type="radio" radio-name="relationship-guardian" label="Non-relative" response-value="$ctrl.questions[298].response.value"></form-step>
+	            <form-step type="radio" radio-name="relationship-guardian" label="Non-relative" response-value="$ctrl.questions[292].response.guardian_relationship.value"></form-step>
 	        </div>
 	        <div class="col-md-4">
-	            <form-step type="radio" radio-name="relationship-guardian" label="No one (I have no guardian)" response-value="$ctrl.questions[298].response.value"></form-step>
+	            <form-step type="radio" radio-name="relationship-guardian" label="No one (I have no guardian)" response-value="$ctrl.questions[292].response.guardian_relationship.value"></form-step>
 	        </div>
 	     </div>
     </div>

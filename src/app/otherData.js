@@ -7,20 +7,21 @@ class OtherData {
 	}
 	
 	setRadioButton(items, valueId, dataType='basic') {
-		if  (!(valueId in this.questions)) {
-    		this.questions[valueId] = {dataType:dataType};
-    	}
+        if  (!(valueId in this.questions)) {
+            this.questions[valueId] = {dataType:dataType};
+        }
         let flattenedItems = _.flattenDeep(items);
         let value = '';
-        if (dataType === 'basic') {
+        let parts = ('' + valueId).split('-');
+        if (parts.length === 1) {
             if (this.origQuestions[valueId] !== null && this.origQuestions[valueId].response !== null &&
-    				this.origQuestions[valueId].response.value !== null) {
-    			value = this.origQuestions[valueId].response.value;
-    		}  
-        } else if (dataType === 'person') {
-            if (this.origQuestions[valueId] && this.origQuestions[valueId].response && this.origQuestions[valueId].response.nationality &&
-                    this.origQuestions[valueId].response.nationality.value) {
-                value = this.origQuestions[valueId].response.nationality.value;
+                    this.origQuestions[valueId].response.value !== null) {
+                value = this.origQuestions[valueId].response.value;
+            }  
+        } else if (parts.length === 2) {
+            if (this.origQuestions[Number(parts[0])] && this.origQuestions[Number(parts[0])].response && this.origQuestions[Number(parts[0])].response[parts[1]] &&
+                    this.origQuestions[Number(parts[0])].response[parts[1]].value) {
+                value = this.origQuestions[Number(parts[0])].response[parts[1]].value;
             }
         }
         if (!_.includes(flattenedItems, value) && value !== '' && value !== null) {
@@ -30,7 +31,7 @@ class OtherData {
             this.questions[valueId].value = value;
             this.questions[valueId].otherValue = '';
         }
-	}
+    }
 	
 	getValue(valueId) {
 	    if (!this.questions.hasOwnProperty(valueId)) {
@@ -51,10 +52,12 @@ class OtherData {
 	        		value = this.questions[property].otherValue;
 	        	}
 	        	
-	        	if (this.questions[property].dataType === 'basic') {
+	        	let parts = ('' + property).split('-');
+	        	if (parts.length === 1) {
 	        	    this.origQuestions[property].response.value = value;
-	        	} else if (this.questions[property].dataType === 'person') {
-	        	    this.origQuestions[property].response.nationality.value = value;
+	        	} else if (parts.length === 2 && this.origQuestions.hasOwnProperty(parts[0]) &&
+	        	        this.origQuestions[parts[0]].response.hasOwnProperty(parts[1])) {
+	        	    this.origQuestions[parts[0]].response[parts[1]].value = value;
 	        	}
 		    }
 		}

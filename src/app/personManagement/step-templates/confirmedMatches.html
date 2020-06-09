@@ -1,0 +1,85 @@
+<fieldset class="form-horizontal" ng-disabled="vm.isViewing === true">
+	
+	<div class="col-md-8">
+		<div class="col-md-2"><label>Form</label></div>
+		<div class="col-md-5">
+			<select ng-model="vm.details.selectedFormId" ng-change="vm.formSelected()">
+				<option ng-repeat="form in vm.details.forms" value="{{ form.id }}">{{ form.number }} ({{ form.type }})</option>
+			</select>
+		</div>
+		<div class="col-md-12">&nbsp;</div>
+		<div class="col-md-4"><label>Name</label> {{ vm.details.selectedPerson.full_name }}</div>
+		<div class="col-md-4">
+			<div class="col-md-12"><label>Birthdate</label>{{ vm.details.selectedPerson.birthdate }}</div>
+			<div class="col-md-12"><label>Estimated Birthdate</label> {{ vm.details.selectedPerson.estimated_birthdate }}</div>
+			<div class="col-md-12"><label>Age</label> {{ vm.details.selectedPerson.age }}</div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-md-7"><label>Gender</label></div>
+			<div class="col-md-5">
+				<select ng-model="vm.details.selectedPerson.gender" disabled>
+					<option value="F">Female</option>
+					<option value="M">Male</option>
+					<option value="U">Unknown</option>
+				</select>
+			</div>
+			<div class="col-md-7"><label>Nationality</label></div>
+			<div class="col-md-5">{{ vm.details.selectedPerson.nationality }}</div>
+		</div>
+		<div class="row col-md-12">
+			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.phone_verified" disabled>
+			<div class="col-md-4"><label>Phone #:</label> {{ vm.details.selectedPerson.phone_contact }}</div>
+			<div class="col-md-3">Type: {{ vm.phoneTypeString(vm.details.selectedPerson.phone_type) }}</div>
+		</div>
+		<div class="row col-md-12">
+			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.address_verified" disabled>
+			<div class="col-md-4"><label>Address:</label> {{ vm.details.selectedPerson.address.address }}</div>
+			<div class="col-md-5">Notes: {{ vm.details.selectedPerson.address_notes }}</div>
+			<div class="col-md-2">Type: {{ vm.addressTypeString(vm.details.selectedPerson.address_type) }}</div>
+		</div>
+		<div class="row col-md-12">
+			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.social_media_verified" disabled>
+			<div class="col-md-9"><label>Social Media:</label> {{ vm.details.selectedPerson.social_media }}</div>
+			<div class="col-md-2">Type: {{ vm.socialTypeString(vm.details.selectedPerson.social_media_type) }}</div>
+		</div>
+		<div class="row col-md-12">
+			<div class="col-md-12"><label>Identification</label></div>
+			<div class="col-md-12" ng-repeat="confirmedId in vm.details.selectedPerson.personidentification_set">
+				<div class="col-md-4">{{ confirmedId.number }}</div>
+				<div class="col-md-4">Type: {{ confirmedId.type }}</div>
+				<div class="col-md-4">Location: {{ confirmedId.location }}</div>
+			</div>
+		</div>
+		<div class="row col-md-12">&nbsp;</div>
+		<div class="row col-md-12">
+			<div class="col-md-6"><label>Relation To PV:</label> {{ vm.details.selectedPerson.relation_to_pv }}</div>
+			<div class="col-md-6"><label>Role:</label> {{ vm.details.selectedPerson.role }}</div>
+		</div>
+		<div class="row col-md-12">
+			<div class="col-md-12"><label>Appearance:</label> {{ vm.details.selectedPerson.appearance }}</div>
+		</div>
+		<div class="row col-md-12">
+			<div class="col-md-6"><label>Inteviewer Believes:</label> {{ vm.details.selectedPerson.interviewer_believes }}</div>
+			<div class="col-md-6"><label>PV Believes:</label> {{ vm.details.selectedPerson.pv_believes }}</div>
+		</div>
+		<div class="row col-md-12">
+			<div class="col-md-12"><label>Match date:</label> {{ vm.details.selectedPerson.master_set_date }}</div>
+			<div class="col-md-12"><label>Matched by:</label> {{ vm.details.selectedPerson.master_set_by }}</div>
+			<div class="col-md-12"><label>Match notes:</label> {{ vm.details.selectedPerson.master_set_notes }}</div>
+		</div>
+	</div>
+	
+	<div class="col-md-4">
+		<div class="text-center">
+			<canvas id="confirmedCanvas" width="200" height="200" style="border:1px solid #d3d3d3;">
+						Your browser does not support the HTML5 canvas tag.
+			</canvas>
+        </div>
+        <div class="col-md-6"></div>
+	</div>
+	
+	<div class="row col-md-12">&nbsp;</div>
+	<div class="col-md-12 text-center">
+		<button ng-if="vm.masterPerson.person_set.length > 1" class="btn btn-warning" ng-click="vm.removePerson()">Remove from Master</button>
+	</div>
+</fieldset>

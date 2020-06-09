@@ -1,0 +1,282 @@
+<fieldset class="form-horizontal" ng-disabled="vm.isViewing === true">
+	<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="col-md-5"><label>Master Name</label></div>
+				<div class="col-md-7">
+					<input type="text" ng-model="vm.masterPerson.full_name">
+					<div ng-repeat="name in vm.details.uniqueNames">
+						<input type="text" disabled ng-model="name">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="col-md-6"><label>Birthdate</label></div>
+				<input type="date" class="col-md-6" ng-model-options="{timezone: 'utc'}" ng-model="vm.details.birthdate" ng-blur="vm.computeAge(vm.details)">
+				<div class="col-md-8"><label>Estimated</label></div>
+				<input class="col-md-4" type="checkbox" ng-model="vm.masterPerson.estimated_birthdate">
+				<div class="col-md-8"><label>Age</label></div>
+				<input class="col-md-4" disabled ng-model="vm.details.age">
+			</div>
+			<div class="col-md-4">
+				<div class="col-md-7"><label>Gender</label></div>
+				<div class="col-md-5">
+					<select ng-model="vm.masterPerson.gender">
+						<option value="F">Female</option>
+						<option value="M">Male</option>
+						<option value="U">Unknown</option>
+					</select>
+				</div>
+				<div class="col-md-7"><label>Nationality</label></div>
+				<input class="col-md-5" type="text" ng-model="vm.masterPerson.nationality">
+			</div>
+		</div>
+
+		<div class="row">
+			<label>Phone #'s</label>
+				<div class="row col-md-12" ng-repeat="personPhone in vm.details.uniquePhones">
+					<input class="col-md-1 text-left" type="checkbox" ng-model="personPhone.phone_verified" ng-change="vm.phoneChange(personPhone)">
+					<input class="col-md-3" type="text" disabled ng-model="personPhone.number">
+					<div class="col-md-1">Type</div>
+					<div class="col-md-2">
+						<select ng-model="personPhone.phone_type" ng-change="vm.phoneChange(personPhone)">
+		                          <option ng-repeat="phoneType in vm.phoneTypes" value="{{phoneType.id}}">{{phoneType.name}}</option>
+		                      </select>
+					</div>
+				</div>
+				<div class="row col-md-12" ng-repeat="mpPhone in vm.masterPerson.personphone_set">
+					<input class="col-md-1" type="checkbox" ng-model="mpPhone.phone_verified"></form-step>
+					<input class="col-md-3" type="text" ng-model="mpPhone.number">
+					<div class="col-md-1">Type</div>
+					<div class="col-md-2">
+						<select ng-model="mpPhone.phone_type">
+		                          <option ng-repeat="phoneType in vm.phoneTypes" value="{{phoneType.id}}">{{phoneType.name}}</option>
+		                      </select>
+					</div>
+					<div class="row col-md-1">
+						<button class="btn btn-warning btn-xs" ng-click="vm.removePhone($index)">
+			                <i class="fa fa-minus"></i>
+		            	</button>
+					</div>
+					<div class="row col-md-4">&nbsp;</div>
+            	</div>
+            	<div class="row col-md-12">
+					<button class="btn btn-success btn-xs" ng-click="vm.addPhone()">
+		                <i class="fa fa-plus"></i>
+		            </button>
+	            </div>
+		</div>
+		<div class="col-md-12">&nbsp;</div>
+		
+		<div class="row">
+			<label>Addresses</label>
+				<div class="row col-md-12" ng-repeat="personAddress in vm.details.uniqueAddresses">
+					<div ng-if="personAddress.address || personAddress.address_notes">
+						<div class="col-md-4">
+							<input class="col-md-2" type="checkbox" ng-model="personAddress.address_verified" ng-change="vm.addressChange(personAddress)">
+							<div class="col-md-10" disabled>
+								<address-entry ng-model="personAddress.address"
+					        			latitude-model="personAddress.address.latitude"
+					        			longitude-model="personAddress.address.longitude"></address-entry>
+				        	</div>
+						</div>
+						<div class="col-md-5">
+							<div class="col-md-2">Notes</div>
+							<input class="col-md-10" type="text" ng-model="personAddress.address_notes" ng-disabled="true"></form-step>
+						</div>
+						<div class="col-md-3">
+							<div class="col-md-2">Type</div>
+							<div class="col-md-8">
+								<select ng-model="personAddress.address_type" ng-change="vm.addressChange(personAddress)">
+			                    	<option ng-repeat="addressType in vm.addressTypes" value="{{addressType.id}}">{{addressType.name}}</option>
+			                    </select>
+			                </div>
+						</div>
+					</div>
+				</div>
+				<div class="row col-md-12" ng-repeat="mpAddress in vm.masterPerson.personaddress_set">
+					<div class="col-md-4">
+						<input class="col-md-2" type="checkbox" ng-model="mpAddress.address_verified">
+						<div class="col-md-10">
+							<address-entry ng-model="mpAddress.address"
+				        			latitude-model="mpAddress.address.latitude"
+				        			longitude-model="mpAddress.address.longitude"></address-entry>
+				        </div>
+					</div>
+					<div class="col-md-5">
+						<div class="col-md-2">Notes</div>
+						<input class="col-md-10" type="text" ng-model="mpAddress.address_notes"></form-step>
+					</div>
+					<div class="col-md-3">
+						<div class="col-md-2">Type</div>
+						<div class="col-md-8">
+								<select ng-model="mpAddress.address_type">
+			                    	<option ng-repeat="addressType in vm.addressTypes" value="{{addressType.id}}">{{addressType.name}}</option>
+			                    </select>
+			            </div>
+			            <div class="row col-md-2">
+							<button class="btn btn-warning btn-xs" ng-click="vm.removeAddress($index)">
+				                <i class="fa fa-minus"></i>
+			            	</button>
+						</div>
+					</div>
+					
+				</div>
+				<div class="col-md-12">
+					<div class="row col-md-12">
+							<button class="btn btn-success btn-xs" ng-click="vm.addAddress()">
+				                <i class="fa fa-plus"></i>
+				            </button>
+			        </div>
+		        </div>
+		</div>
+		<div class="col-md-12">&nbsp;</div>
+		
+		<div class="row">
+			<label>Social Media</label>
+			<div class="row col-md-12" ng-repeat="personSocial in vm.details.uniqueSocialMedia">
+				<div class="col-md-9">
+					<input class="col-md-1" type="checkbox" ng-model="personSocial.social_media_verified" ng-change="vm.socialChange(personSocial)">
+					<input class="col-md-11" type="text" ng-model="personSocial.social_media" ng-disabled="true"></form-step>
+				</div>
+				<div class="col-md-3">
+					<div class="col-md-2">Type</div>
+					<div class="col-md-8">
+						<select ng-model="personSocial.social_media_type" ng-change="vm.socialChange(personSocial)">
+		                          <option ng-repeat="socialType in vm.socialMediaTypes" value="{{socialType.id}}">{{socialType.name}}</option>
+		                      </select>
+					</div>
+				</div>
+			</div>
+			<div class="row col-md-12" ng-repeat="mpSocial in vm.masterPerson.personsocialmedia_set">
+				<div class="col-md-9">
+					<input class="col-md-1" type="checkbox" ng-model="mpSocial.social_media_verified">
+					<input class="col-md-11" type="text" ng-model="mpSocial.social_media"></form-step>
+				</div>
+				<div class="col-md-3">
+					<div class="col-md-2">Type</div>
+					<div class="col-md-8">
+						<select ng-model="mpSocial.social_media_type">
+	                        <option ng-repeat="socialType in vm.socialMediaTypes" value="{{socialType.id}}">{{socialType.name}}</option>
+	                    </select>
+					</div>
+					<div class="row col-md-2">
+							<button class="btn btn-warning btn-xs" ng-click="vm.removeSocialMedia($index)">
+				                <i class="fa fa-minus"></i>
+			            	</button>
+					</div>
+				</div>
+			</div>
+			<div class="row col-md-12">
+				<div class="col-md-12">
+					<button class="btn btn-success btn-xs" ng-click="vm.addSocialMedia()">
+		                <i class="fa fa-plus"></i>
+		            </button>
+	            </div>
+            </div>
+		</div>
+		<div class="col-md-12">&nbsp;</div>
+		
+		<div class="row">
+			<label>Identification</label>
+			<div class="row col-md-12" ng-repeat="personId in vm.details.uniqueId">
+				<div class="col-md-4">
+					<input class="col-md-12" type="text" ng-model="personId.number" ng-disabled="true">
+				</div>
+				<div class="col-md-4">
+					<div class="col-md-2">Type</div>
+					<input class="col-md-10" type="text" ng-model="personId.type" ng-disabled="true">
+				</div>
+				<div class="col-md-4">
+					<div class="col-md-3">Location</div>
+					<input class="col-md-9" type="text" ng-model="personId.location" ng-disabled="true">
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-4">
+		Notes:
+		<textarea class="form-control" rows="5" ng-model="vm.masterPerson.notes"></textarea>
+		<div class="col-md-12">&nbsp;</div>
+		<div class="text-center">
+			<canvas id="personCanvas" width="200" height="200" style="border:1px solid #d3d3d3;">
+						Your browser does not support the HTML5 canvas tag.
+			</canvas>
+			<div class="row col-md-12">
+				<div class="col-md-3">&nbsp</div>
+				<div class="col-md-1">
+					<button class="btn btn-xs" ng-click="vm.photoMove(-1)">
+		                <i class="fa fa-arrow-left"></i>
+		            </button>
+	            </div>
+	            <div class="col-md-4">image {{ vm.imageIndex+1 }} of {{ vm.details.photos.length }}</div>
+	            <div class="col-md-1">
+		            <button class="btn btn-xs" ng-click="vm.photoMove(1)">
+		                <i class="fa fa-arrow-right"></i>
+		            </button>
+		        </div>
+			</div>
+			<div class="col-md-12" >
+				<button class="btn btn-success btn-xs" ngf-select ng-model="vm.file" ng-change="vm.fileUpload($file)"
+	                		ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="50">
+	                <i class="fa fa-plus"></i>
+	            </button>
+	            &nbsp;
+	            <button class="btn btn-warning btn-xs" ng-show="vm.details.photos[vm.imageIndex].canRemove" ng-click="vm.removePhoto()">
+	                <i class="fa fa-minus"></i>
+	            </button>
+	        </div>
+        </div>
+        <div class="col-md-6"></div>
+	</div>
+	<div style="width:100%">
+		<div class="col-md-12">&nbsp;</div>
+		<div class="col-md-6">
+			<div class="row">
+				<div><label>Relation to PV</label></div>
+				<div class="col-md-3" ng-repeat="pvRelation in vm.pvRelations">{{pvRelation.relation}}({{pvRelation.count}})</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div><label>Roles</label></div>
+			<div class="col-md-3" ng-repeat="role in vm.details.roles">{{role.name}}({{role.count}})</div>
+		</div>
+	</div>
+	<div class="col-md-12">&nbsp;</div>
+	
+	<div class="col-md-6">
+		<div class="row">
+			<div><label>Appearance</label></div>
+			<div class="col-md-12">
+				<textarea class="form-control" rows="3" ng-model="masterPerson.appearance"></textarea>
+				<div ng-repeat="appear in vm.details.uniqueAppearance"><textarea class="form-control" rows="1" ng-model="appear" disabled></textarea></div>
+			</div>
+		</div>
+	</div>
+
+	<div  class="col-md-12">
+		<div class="col-md-12">&nbsp;</div>
+		<div class="col-md-6">
+			<table class="table table-striped">
+				<thead>
+		            <tr>
+		            	<th>Interviewer</th>
+		            	<th>What do you believe about him/her?</th>
+		            	<th>PV</th>
+		            </tr>
+	            </thead>
+	            <tbody>
+	            	 <tr ng-repeat="believe in vm.details.believes">
+	            	 	<td>{{ believe.interviewer }}</td>
+	            	 	<td>{{ believe.text }}</td>
+	            	 	<td>{{ believe.pv }} </td>
+	            	 </tr>
+	            </tbody>
+			</table>
+		</div>
+	</div>
+	<div  class="col-md-12 text-center">
+		<button class="btn btn-success" ng-click="vm.saveDetails()">Save</button>
+	</div>
+</fieldset>

@@ -9,6 +9,10 @@
 			red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
 		<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
 			red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+		<form-step ng-if="$ctrl.details[quest].type=='checkbox-group'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group][$ctrl.details[quest].value]"></form-step>
+		<form-step ng-if="$ctrl.details[quest].type=='other-checkbox-group'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group].internalOther"></form-step>
 	</div>
 	<br>
 </fieldset>

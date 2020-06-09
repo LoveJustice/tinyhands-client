@@ -60,7 +60,7 @@
 	    	<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Clear Evidence of Trafficking"></form-step>
 	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Some Evidence of Trafficking"></form-step>
 	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="High Risk of Trafficking"></form-step>
-	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)"></form-step>
+	        <form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Should not count as an Intercept"></form-step>
         </div>
 	</div>
 	<br>
@@ -111,7 +111,7 @@
 	    	<form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Clear Evidence of Trafficking"></form-step>
 	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Some Evidence of Trafficking"></form-step>
 	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="High Risk of Trafficking"></form-step>
-	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Should Not have Intercepted or Should Not have Completed IRF (because there is Not a High Risk of Trafficking)"></form-step>
+	        <form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Should not count as an Intercept"></form-step>
         </div>
 	</div>
 	<br>
@@ -126,6 +126,12 @@
     	<form-step class="col-md-2">Second Verification Date</form-step>
     	<div class="col-md-4">
 			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[821].value">
+		</div>
+	</div>
+	<hr>
+	<div class="row center-vertical">
+    	<div class="col-md-4">
+			<form-step type="checkbox" label="Champion Verification" response-value="$ctrl.questions[966].response.value">
 		</div>
 	</div>
 	<hr>

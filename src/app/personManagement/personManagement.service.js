@@ -73,6 +73,10 @@ class PersonManagementService {
         return this.service.get(`api/master-person/pv-relations/${id}/`);
     }
     
+    getMatches(id,typeId) {
+        return this.service.get(`api/master-person/match/${id}/${typeId}/`);
+    }
+    
     removePerson(masterId, personId) {
         return this.service.put(`api/master-person/remove/${masterId}/${personId}/`);
     }

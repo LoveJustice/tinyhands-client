@@ -235,7 +235,7 @@
 		<div class="col-md-6">
 			<div class="row">
 				<div><label>Relation to PV</label></div>
-				<div class="col-md-3" ng-repeat="pvRelation in vm.pvRelations">{{pvRelation.relation}}({{pvRelation.count}})</div>
+				<div class="col-md-3" ng-repeat="pvRelation in vm.details.pvRelations">{{pvRelation.relation}}({{pvRelation.count}})</div>
 			</div>
 		</div>
 		<div class="col-md-6">
@@ -249,7 +249,7 @@
 		<div class="row">
 			<div><label>Appearance</label></div>
 			<div class="col-md-12">
-				<textarea class="form-control" rows="3" ng-model="masterPerson.appearance"></textarea>
+				<textarea class="form-control" rows="3" ng-model="vm.masterPerson.appearance"></textarea>
 				<div ng-repeat="appear in vm.details.uniqueAppearance"><textarea class="form-control" rows="1" ng-model="appear" disabled></textarea></div>
 			</div>
 		</div>

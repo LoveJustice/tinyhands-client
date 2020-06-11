@@ -8,7 +8,11 @@ import suggestedMatchesTemplate from './step-templates/suggestedMatches.html';
 import confirmedNonMatchesTemplate from './step-templates/confirmedNonMatches.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
 
+import MatchModalController from './matchModal.controller';
+import matchTemplate from './step-templates/matchModal.html';
+
 import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
+import AttachmentModalController from './step-templates/attachments/attachmentModal.controller';
 
 export class PersonManagementController {
     constructor($scope, $uibModal, personManagementService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, constants) {
@@ -31,9 +35,11 @@ export class PersonManagementController {
             {template:attachmentsTemplate, name:"Attachments"},
         ];
         this.selectedStep = 0;
+        this.isViewing = false;
         
         this.masterPerson = null;
-        this.compareMasterPerson = null;
+        this.originalMasterPerson = null;
+        this.originalPhotos = null;
         
         this.phoneTypes = null;
         this.addressTypes = null;
@@ -41,6 +47,7 @@ export class PersonManagementController {
         this.documentTypes = null;
         this.photoDocumentType = null;
         this.attachmentTypes = null;
+        this.matchTypes = null;
         this.details = {
              pvRelations:[],
              uniqueNames:[],
@@ -96,6 +103,33 @@ export class PersonManagementController {
                 this.getMasterPerson(this.stateParams.id);
             }
         });
+        
+        this.service.getType('MatchType').then((response) => {
+            this.matchTypes = response.data;
+            for (let idx=0; idx < this.matchTypes.length; idx++) {
+                if (this.matchTypes[idx].name.toLowerCase() === 'possible') {
+                    this.possibleMatchType = this.matchTypes[idx].id;
+                } else if (this.matchTypes[idx].name.toLowerCase() === 'suggested') {
+                    this.suggestedMatchType = this.matchTypes[idx].id;
+                } else if (this.matchTypes[idx].name.toLowerCase() === 'non-match') {
+                    this.nonMatchType = this.matchTypes[idx].id;
+                }
+            }
+            
+            this.getMatches();
+        });
+    }
+    
+    getMatches() {
+        this.service.getMatches(this.stateParams.id, this.possibleMatchType).then((response) => {
+            this.possibleMatches = response.data;
+        });
+        this.service.getMatches(this.stateParams.id, this.suggestedMatchType).then((response) => {
+            this.suggestedMatches = response.data;
+        });
+        this.service.getMatches(this.stateParams.id, this.nonMatchType).then((response) => {
+            this.nonMatches = response.data;
+        });
     }
     
     dateAsUTC(inDateString) {
@@ -137,9 +171,12 @@ export class PersonManagementController {
     }
     
     preProcess(masterPerson, container) {
+        container.uniqueNames = [];
         container.uniquePhones = [];
         container.uniqueAddresses = [];
         container.uniqueSocialMedia = [];
+        container.uniqueAppearance = [];
+        container.uniqueId = [];
         container.roles = [];
         container.photos = [];
         container.attachments = [];
@@ -147,6 +184,8 @@ export class PersonManagementController {
         container.forms = [];
         container.selectedPerson = null;
         container.selectedFormId = null;
+        container.birthdate = null;
+        container.age = null;
         
         for (let idx=0; idx < masterPerson.person_set.length; idx++) {
             let person = masterPerson.person_set[idx];
@@ -374,17 +413,22 @@ export class PersonManagementController {
         return false;
     }
     
+    processMainMasterPersonData(theData) {
+        this.masterPerson = theData;
+        this.preProcess(this.masterPerson, this.details);
+        this.originalMasterPerson = jQuery.extend(true, {}, this.masterPerson);
+        this.originalPhotos= jQuery.extend(true, {}, this.details.photos);
+        if (this.details.photos.length > 0) {
+            this.loadImage(new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href, '#personCanvas');
+            this.imageIndex = 0;
+        } else {
+            this.imageIndex = -1;
+        }
+    }
+    
     getMasterPerson(id) {
         this.service.getMasterPerson(id).then((response) => {
-            this.masterPerson = response.data;
-            this.preProcess(this.masterPerson, this.details);
-            this.compareMasterPerson = jQuery.extend(true, {}, this.masterPerson);
-            if (this.details.photos.length > 0) {
-                this.loadImage(new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href, '#personCanvas');
-                this.imageIndex = 0;
-            } else {
-                this.imageIndex = -1;
-            }
+            this.processMainMasterPersonData(response.data);
         }, (error) => {
             alert(error.data);
         });
@@ -396,17 +440,20 @@ export class PersonManagementController {
         });
     }
     
-    computeAge(container){
-        if (container.birthdate) {
+    calculateAge(birthdate) {
+        let age = null;
+        if (birthdate) {
             let now = new Date();
-            container.age = now.getFullYear() - container.birthdate.getFullYear();
-            if (now.getMonth() < container.birthdate.getMonth() || now.getMonth()===container.birthdate.getMonth() && now.getDate() < container.birthdate.getDate()) {
-                container.age -= 1;
+            age = now.getFullYear() - birthdate.getFullYear();
+            if (now.getMonth() < birthdate.getMonth() || now.getMonth()===birthdate.getMonth() && now.getDate() < birthdate.getDate()) {
+                age -= 1;
             }
-        } else {
-            container.birthdate = null;
-            container.age = null;
         }
+        return age;
+    }
+    
+    computeAge(container){
+        container.age = this.calculateAge(container.birthdate);
     }
     
     addPhone() {
@@ -571,17 +618,13 @@ export class PersonManagementController {
             this.masterPerson.birthdate = this.dateAsString(this.details.birthdate);
         }
         
-        this.spinnerOverlayService.show('Saving details ...');
-        this.service.saveMasterPerson(this.masterPerson, this.details.photos, this.details.attachments).then((response) => {
-            this.masterPerson = response.data;
-            this.preProcess(this.masterPerson, this.details);
-            this.compareMasterPerson = jQuery.extend(true, {}, this.masterPerson);
-            if (this.details.photos.length > 0) {
-                this.loadImage(new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href, '#personCanvas');
-                this.imageIndex = 0;
-            } else {
-                this.imageIndex = -1;
-            }
+        this.save(this.masterPerson, this.details.photos, this.details.attachments, 'Saving details ...');
+    }
+    
+    save(masterPerson, photos, attachments, message) {
+        this.spinnerOverlayService.show(message);
+        this.service.saveMasterPerson(masterPerson, photos, attachments).then((response) => {
+            this.processMainMasterPersonData(response.data);
             this.spinnerOverlayService.hide();
         }, (error) => {
             this.spinnerOverlayService.hide();
@@ -610,25 +653,149 @@ export class PersonManagementController {
     }
     
     removePerson() {
-        if (this.hasBeenModified(this.masterPerson, this.compareMasterPerson) && !window.confirm("Information on the Details tab has been modified.\nContinuing with the removal this person will lose those changes.\n\nWould you like to proceed?")) {
+        if (this.hasBeenModified(this.masterPerson, this.originalMasterPerson) && !window.confirm("Information on the Details tab has been modified.\nContinuing with the removal this person will lose those changes.\n\nWould you like to proceed?")) {
             return;
         }
 
+        this.spinnerOverlayService.show('Removing person ...');
         this.service.removePerson(this.masterPerson.id, this.details.selectedPerson.id).then((response) => {
-            this.masterPerson = response.data;
-            this.preProcess(this.masterPerson, this.details);
-            this.compareMasterPerson = jQuery.extend(true, {}, this.masterPerson);
-            if (this.details.photos.length > 0) {
-                this.loadImage(new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href, '#personCanvas');
-                this.imageIndex = 0;
-            } else {
-                this.imageIndex = -1;
-            }
+            this.processMainMasterPersonData(response.data);
             this.spinnerOverlayService.hide();
         }, (error) => {
             this.spinnerOverlayService.hide();
             alert(error.data.errors);
            });
+    }
+    
+    getMatchAge(match) {
+        if (match.master_person.birthdate) {
+            return this.calculateAge(this.dateAsUTC(match.master_person.birthdate));
+        }
+        return "";
+    }
+    getMatchPhone(match) {
+        let phone = null;
+        for (let idx=0; idx < match.master_person.personphone_set.length; idx++) {
+            if (match.master_person.personphone_set[idx].number === null || match.master_person.personphone_set[idx].number === '') {
+                continue;
+            }
+            if (match.master_person.personphone_set[idx].phone_verified) {
+                return match.master_person.personphone_set[idx].number;
+            }
+            if (phone === null) {
+                phone = match.master_person.personphone_set[idx].number;
+            }
+        }
+        
+        for (let idx=0; idx < match.master_person.person_set.length; idx++) {
+            if (match.master_person.person_set[idx].phone_contact === null || match.master_person.person_set[idx].phone_contact === '') {
+                continue;
+            }
+            if (match.master_person.person_set[idx].phone_verified) {
+                return match.master_person.person_set[idx].phone_contact;
+            }
+            if (phone === null) {
+                phone = match.master_person.person_set[idx].phone_contact;
+            }
+        }
+        
+        return phone;
+    }
+    getMatchAddress(match) {
+        let address = null;
+        for (let idx=0; idx < match.master_person.personaddress_set.length; idx++) {
+            if (match.master_person.personaddress_set[idx].address === null || match.master_person.personaddress_set[idx].address === '') {
+                continue;
+            }
+            if (match.master_person.personaddress_set[idx].address_verified) {
+                return match.master_person.personaddress_set[idx].address.address;
+            }
+            if (address === null) {
+                address = match.master_person.personphone_set[idx].number;
+            }
+        }
+        
+        for (let idx=0; idx < match.master_person.person_set.length; idx++) {
+            if (match.master_person.person_set[idx].address === null || match.master_person.person_set[idx].address === '') {
+                continue;
+            }
+            if (match.master_person.person_set[idx].address_verified) {
+                return match.master_person.person_set[idx].address.address;
+            }
+            if (address === null) {
+                address = match.master_person.person_set[idx].address.address;
+            }
+        }
+        
+        return address;
+        
+    }
+    
+    compare(match, where) {
+        let compareDetails = {};
+        this.preProcess(match.master_person, compareDetails);
+        this.modalActions = [];
+        this.$uibModal.open({
+            bindToController: true,
+            controller: MatchModalController,
+            controllerAs: 'vm',
+            resolve: {
+                main: () => this.masterPerson,
+                mainDetails:() => this.details,
+                compare: () => match,
+                compareDetails: () => compareDetails,
+                modalActions: () => this.modalActions,
+                where: () => where,
+                constants: () => this.constants,
+                phoneTypes: () => this.phoneTypes,
+                addressTypes: () => this.addressTypes,
+                socialMediaTypes: () => this.socialMediaTypes,
+            },
+            size: 'lg',
+            templateUrl: matchTemplate,
+            windowClass: 'match-modal-popup',
+        }).result.then(() => {
+            
+        });
+    }
+    
+    openAttachmentModal(attachment, attachmentIndex) {
+        let isAdd = false;
+        if (attachment === null) {
+            isAdd = true;
+            attachment = {
+                    file_location:'',
+                    document_type:'',
+                    master_person_id:this.masterPerson.id, 
+                    file:null
+                };
+        }
+        this.modalActions = [];
+        this.$uibModal.open({
+            bindToController: true,
+            controller: AttachmentModalController,
+            controllerAs: 'AttachmentModalController',
+            resolve: {
+                isAdd: () => isAdd,
+                attachment: () => attachment,
+                attachmentTypes:() => this.attachmentTypes,
+                isViewing: () => this.isViewing,
+                modalActions: () => this.modalActions,
+                constants: () => this.constants,
+            },
+            size: 'lg',
+            templateUrl: attachmentTemplate,
+        }).result.then(() => {
+            if (this.modalActions.indexOf('removeCard') > -1 && attachmentIndex !== null) {
+                this.details.attachments.splice(attachmentIndex, 1);
+            } else {
+                if (isAdd) {
+                    this.details.attachments.push(attachment);
+                }
+            }
+            this.save(this.originalMasterPerson, this.originalPhotos, this.details.attachments, 'Saving attachments ...');
+        });
+        
     }
 }
 

@@ -1,0 +1,58 @@
+<div id="person-attachment-modal" class="modal-content">
+    <form name="AttachmentForm" ng-disabled="AttachmentModalController.isViewing === 'true'">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="AttachmentModalController.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-5">
+            	<h3 class="modal-title">Attachment</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+            	<div class="col-md-2 form-group">
+		    		<label>Type</label>
+		    	</div>
+		    	<div class="col-md-5 form-group">
+		            <select class="form-control" ng-model="AttachmentModalController.attachment.document_type">
+		            	<option ng-repeat="docType in AttachmentModalController.attachmentTypes" value="{{docType.id}}">{{docType.name}}</option>
+                    </select>
+	            </div>
+	        </div>
+            <div class="row center-vertical">
+	            <div class="col-md-2 form-group">
+	                <form-step>
+	                    <label>File to attach</label>
+	                </form-step>
+	            </div>
+	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.attachment.file">
+            </div>
+            <div class="row center-vertical">
+            	<div class="col-md-2 form-group">
+	            </div>
+	            <div ng-if="AttachmentModalController.file != null">
+	        		<p>{{AttachmentModalController.attachment.file.name}}</a>
+	        	</div>
+	        	<div ng-if="AttachmentModalController.attachment.file===null">
+	        		<a href="{{AttachmentModalController.getScannedFormUrl(AttachmentModalController.attachment.file_location)}}">{{AttachmentModalController.attachment.file_location.split("/")[5]}}</a>
+	        	</div>
+        	</div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="AttachmentModalController.save()" 
+                    ng-disabled="AttachmentModalController.attachment.file_location === '' && AttachmentModalController.attachment.file===null || AttachmentModalController.attachment.document_type === ''" 
+                    ng-if="!AttachmentModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="AttachmentModalController.delete()" ng-if="!AttachmentModalController.isAdd && !AttachmentModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="AttachmentModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

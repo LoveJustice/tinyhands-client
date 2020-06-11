@@ -1,20 +1,23 @@
 <div id="mp-attachments" class="row stretch-vertical">
     <div class="col-md-3 stretch-vertical" ng-repeat="card in vm.details.attachments">
-        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="vm.openAttachmentModal(card, false, $index)">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="vm.openAttachmentModal(card, $index)">
             <h3 class="panel-heading margin-top-0">{{ $index+1 }}</h3>
             <div class="panel-body text-center">
             	<select ng-model="card.document_type" disabled>
                 	<option ng-repeat="docType in vm.attachmentTypes" value="{{docType.id}}">{{docType.name}}</option>
 		        </select>
             </div>
-            <div class="panel-body text-center">
-                {{ card.file_location }}
+            <div class="panel-body text-center" ng-if="card.file_location !==''">
+                <form-step>{{ card.file_location.split("/")[5] }}</form-step>
+            </div>
+            <div class="panel-body text-center" ng-if="card.file_location ===''">
+                <form-step>{{ card.file.name }}</form-step>
             </div>
         </div>
     </div>
     <div class="col-md-3 text-center center-vertical" ng-if="!vm.isViewing">
         <div class="col-md-12">
-            <button class="btn btn-success" ng-click="$ctrl.openAttachmentModal(null, true)">
+            <button class="btn btn-success" ng-click="vm.openAttachmentModal(null, true)">
                 <i class="fa fa-plus"></i>
             </button>
         </div>

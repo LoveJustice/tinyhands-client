@@ -1,7 +1,7 @@
 <fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing === true">
     <div class="row">
         <div class="col-md-5 form-group">
-            <form-step class="col-xs-3 control-label">Irf Number: </form-step>
+            <form-step class="col-xs-3 control-label">IRF Number: </form-step>
             <div class="col-xs-4">
                 <input type="text" id="formNumber" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value" ng-change="$ctrl.formNumberChange()">
             </div>
@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-md-3 form-group">
-            <form-step class="col-xs-3 control-label"># of PVOTs: </form-step>
+            <form-step class="col-xs-3 control-label"># of PVs: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
             </div>

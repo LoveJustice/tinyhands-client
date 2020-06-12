@@ -1,35 +1,39 @@
 <div class="container">
-  <h1 class="text-left">Monthly Distribution Forms (MDFs)</h1>
-  <br/>
-  <form>
-    <div class="row">
-    	<div class="col-sm-3" >
-		    <div class="col-sm-4">
-        	<p>Countries</p>
-            <div ng-dropdown-multiselect="" options="budgetListCtrl.countryDropDown.options"
-							selected-model="budgetListCtrl.countryDropDown.selectedOptions"
-                             extra-settings="budgetListCtrl.countryDropDown.settings"
-                             translation-texts="budgetListCtrl.countryDropDown.customText"
-                             events="budgetListCtrl.countryDropDown.eventListener">
-		      	</div>
-          </div>
-        </div>
-		<div class="col-sm-4">
-        	<input type="text" class="form-control" placeholder="Search Forms" ng-model="budgetListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, null)">
-		</div>
-		<div class="col-sm-4">
-          <div class="col-sm-6">
-           <a ng-if="budgetListCtrl.hasAddPermission" class="btn btn-success" ng-click="budgetListCtrl.createBudget()">
-                Create MDF
-            </a>
-          </div>
-          <div class="col-sm-6">
-            <mdfexport></mdfexport>
-          </div>
-        </div>
-		</div>
+  
+  <div class="row">
+    <div class="col-xs-7">
+      <h1>Monthly Distribution Forms (MDFs)</h1>
+    </div>
 
-  </form>
+    <div class="pull-right"><br>
+      <mdfexport></mdfexport>
+      <a ng-if="budgetListCtrl.hasAddPermission" class="btn btn-success" ng-click="budgetListCtrl.createBudget()">
+        Input A New MDF
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3" >
+      <p>Countries</p>
+        <div ng-dropdown-multiselect="" options="budgetListCtrl.countryDropDown.options"
+          selected-model="budgetListCtrl.countryDropDown.selectedOptions"
+                          extra-settings="budgetListCtrl.countryDropDown.settings"
+                          translation-texts="budgetListCtrl.countryDropDown.customText"
+                          events="budgetListCtrl.countryDropDown.eventListener">
+        </div>
+    </div>
+    <div class="col-md-2">
+      &nbsp;
+    </div>
+    <div class="col-md-3 search-bar pull-right">
+      <input type="text" class="form-control" placeholder="Search" ng-model="budgetListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="budgetListCtrl.getBudgetList(budgetListCtrl.searchTerm, null)">
+    </div>
+  </div>
+
+  
+  
+
   <table ng-if="budgetListCtrl.listOfBudgets.length > 0" class="table table-striped table-condensed crud-datatable"
          infinite-scroll="budgetListCtrl.getNextBudgetPage()" infinite-scroll-distance="3"
          float-thead="budgetListCtrl.stickyOptions">

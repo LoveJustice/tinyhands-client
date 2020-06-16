@@ -40,6 +40,7 @@ export class PersonManagementController {
         this.masterPerson = null;
         this.originalMasterPerson = null;
         this.originalPhotos = null;
+        this.personCanvasUrl = null;
         
         this.phoneTypes = null;
         this.addressTypes = null;
@@ -332,6 +333,16 @@ export class PersonManagementController {
             }
         }
         
+        container.forms.sort((a,b) => {
+                if (a.number > b.number) { 
+                    return 1;
+                } else if (a.number < b.number) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+        
         if (masterPerson.birthdate) {
             container.birthdate = this.dateAsUTC(masterPerson.birthdate);
             this.computeAge(container);
@@ -420,6 +431,7 @@ export class PersonManagementController {
         this.originalPhotos= jQuery.extend(true, {}, this.details.photos);
         if (this.details.photos.length > 0) {
             this.loadImage(new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href, '#personCanvas');
+            this.personCanvasUrl = new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href;
             this.imageIndex = 0;
         } else {
             this.imageIndex = -1;
@@ -546,6 +558,7 @@ export class PersonManagementController {
     init() {
         if (this.details.photos.length > 0) {
             this.loadImage(new URL(this.details.photos[0], this.constants.BaseUrl).href, '#personCanvas');
+            this.personCanvasUrl = new URL(this.details.photos[0].file_location, this.constants.BaseUrl).href;
         }
     }
     
@@ -581,6 +594,8 @@ export class PersonManagementController {
         this.details.photos.push({file_location:null, document_type:this.photoDocumentType, master_person_id:this.masterPerson.id, canRemove:true, file:this.file});
         this.imageIndex = this.details.photos.length - 1;
         this.loadImage(this.file.$ngfBlobUrl, '#personCanvas');
+        this.personCanvasUrl = this.file.$ngfBlobUrl;
+        this.file = null;
     }
     
     photoMove(increment) {
@@ -594,8 +609,10 @@ export class PersonManagementController {
     photoDisplay() {
         if (this.details.photos[this.imageIndex].file_location) {
             this.loadImage(this.details.photos[this.imageIndex].file_location, '#personCanvas');
+            this.personCanvasUrl = this.details.photos[this.imageIndex].file_location;
         } else if (this.details.photos[this.imageIndex].file) {
             this.loadImage(this.details.photos[this.imageIndex].file.$ngfBlobUrl, '#personCanvas');
+            this.personCanvasUrl = this.details.photos[this.imageIndex].file.$ngfBlobUrl;
         }
     }
     
@@ -607,6 +624,7 @@ export class PersonManagementController {
             }
             if (this.imageIndex < 0) {
                 this.clearCanvas('#personCanvas');
+                this.personCanvasUrl = null;
             } else {
                 this.photoDisplay();
             }
@@ -644,8 +662,10 @@ export class PersonManagementController {
             
             if (this.details.selectedPerson && this.details.selectedPerson.photo) {
                 this.loadImage(new URL(this.details.selectedPerson.photo, this.constants.BaseUrl).href, '#confirmedCanvas');
+                this.confirmedCanvasUrl = new URL(this.details.selectedPerson.photo, this.constants.BaseUrl).href;
             } else {
                 this.clearCanvas('#confirmedCanvas');
+                this.confirmedCanvasUrl = null;
             }
         } else {
             this.clearCanvas('#confirmedCanvas');
@@ -731,10 +751,17 @@ export class PersonManagementController {
         
     }
     
+    masterPersonRef(masterPerson) {
+        let ref =  this.$state.href('personManagement', {
+            id: masterPerson.id
+        });
+        return ref;
+    }
+    
     compare(match, where) {
         let compareDetails = {};
         this.preProcess(match.master_person, compareDetails);
-        this.modalActions = [];
+        this.modalActions = {};
         this.$uibModal.open({
             bindToController: true,
             controller: MatchModalController,
@@ -750,12 +777,25 @@ export class PersonManagementController {
                 phoneTypes: () => this.phoneTypes,
                 addressTypes: () => this.addressTypes,
                 socialMediaTypes: () => this.socialMediaTypes,
+                possibleMatchType: () => this.possibleMatchType,
+                nonMatchType: () => this.nonMatchType,
             },
             size: 'lg',
             templateUrl: matchTemplate,
             windowClass: 'match-modal-popup',
         }).result.then(() => {
-            
+            if (this.modalActions.action === 'update') {
+                this.service.updateMatch(match.id, this.modalActions['match_type'], this.modalActions).then((response) => {
+                    this.getMatches();
+                });  
+            } else if (this.modalActions.action === 'merge') {
+                this.service.merge(this.masterPerson.id, match.master_person.id, this.modalActions).then((response) => {
+                    this.processMainMasterPersonData(response.data);
+                    this.getMatches();
+                }, (error) => {
+                    alert(error.data.errors);
+                    });
+            }
         });
     }
     

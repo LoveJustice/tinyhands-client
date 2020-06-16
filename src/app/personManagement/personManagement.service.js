@@ -80,6 +80,14 @@ class PersonManagementService {
     removePerson(masterId, personId) {
         return this.service.put(`api/master-person/remove/${masterId}/${personId}/`);
     }
+    
+    merge(id1, id2, data) {
+        return this.service.put(`api/master-person/merge/${id1}/${id2}/`, data);
+    }
+    
+    updateMatch(matchId, typeId, data) {
+        return this.service.put(`api/master-person/update-match/${matchId}/`, data);
+    }
 }
 
 export default PersonManagementService;

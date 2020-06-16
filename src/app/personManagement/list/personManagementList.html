@@ -11,7 +11,7 @@
 	        <div class="pull-right">
 	            <form>
 	                  <label>
-	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control">
+	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control" ng-keypress="vm.keyPress($event)">
 	                  </label>
 	                  <a class="btn btn-primary" ng-click="vm.searchKnownPersons()">Search</a>
 	            </form>
@@ -75,9 +75,4 @@
 	<div ng-show="vm.loading" class="loader-container">
 		<div class="loader">Loading...</div>
 	</div>
-    <div id="popupDiv" ng-show="vm.showPopup">
-    	<canvas id="myCanvas" width="150" height="150" style="border:1px solid #d3d3d3;">
-					Your browser does not support the HTML5 canvas tag.
-		</canvas>
-    </div>
 </div>

@@ -13,7 +13,7 @@
 	        </thead>
 	        <tbody>
 	            <tr ng-repeat="match in vm.possibleMatches">
-	                <td class="text-center">{{ match.master_person.full_name }}</td>
+	            	<td><a ng-href="{{vm.masterPersonRef(match.master_person)}}">{{ match.master_person.full_name }}</a></td>
 	                <td class="text-center">{{ match.master_person.gender }}</td>
 	                <td class="text-center">{{ vm.getMatchAge(match) }}</td>
 	                <td class="text-center">{{ vm.getMatchAddress(match) }}</td>

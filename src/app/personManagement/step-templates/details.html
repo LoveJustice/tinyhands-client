@@ -217,6 +217,9 @@
 		            </button>
 		        </div>
 			</div>
+			<div class="col-md-12 text-center" ng-show="vm.personCanvasUrl !== null">
+				<a href="{{ vm.personCanvasUrl }}" target="_blank">Full Size Image</a>
+			</div>
 			<div class="col-md-12" >
 				<button class="btn btn-success btn-xs" ngf-select ng-model="vm.file" ng-change="vm.fileUpload($file)"
 	                		ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="50">

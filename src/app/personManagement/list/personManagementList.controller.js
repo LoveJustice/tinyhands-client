@@ -46,39 +46,6 @@ class personManagementListController {
         this.getKnownPersons();
     }
     
-    resizeImage(img) {
-        let photoSquare = 150.0;
-        let temp = angular.element('#myCanvas');
-        let canvas = temp.get(0);
-        let ctx = canvas.getContext('2d');
-        if (img.width > img.height) {
-            canvas.width = photoSquare;
-            canvas.height = img.height * photoSquare/img.width;
-        } else {
-            canvas.height = photoSquare;
-            canvas.width = img.width * photoSquare/img.height;
-        }
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    }
-    
-    displayPopup(event, photo) {
-        if (photo && this.showPopup === false) {
-            var tmp = angular.element('#popupDiv');
-            var div = tmp[0];
-            //div.style.position = "absolute";
-            div.style.left = (event.currentTarget.offsetLeft + event.currentTarget.offsetParent.offsetLeft)+'px';
-            div.style.top = (event.currentTarget.offsetTop + event.currentTarget.offsetParent.offsetTop + event.currentTarget.offsetHeight) + 'px';
-            let img = new Image();
-            img.addEventListener('load', (e)=>{/*jshint unused: false */this.resizeImage(img);});
-            img.src = new URL(photo, this.constants.BaseUrl).href;
-            this.showPopup = true;
-        }
-    }
-    
-    hidePopup() {
-        this.showPopup = false;
-    }
-    
     sortIcon(column) {
         if (column === this.sortColumn) {
             switch (column) {
@@ -164,6 +131,12 @@ class personManagementListController {
             }
         }
         return url;
+    }
+    
+    keyPress(event) {
+        if(event.keyCode === 13) {
+            this.searchKnownPersons();
+        }
     }
     
     masterPerson(knownPerson) {

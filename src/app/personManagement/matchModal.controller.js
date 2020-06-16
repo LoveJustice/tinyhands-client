@@ -1,7 +1,8 @@
 /* global Image */
 import './personManagement.less';
 export default class MatchModalController {
-    constructor($uibModalInstance, $scope, personManagementService, main, mainDetails, compare, compareDetails, modalActions, where, constants, phoneTypes, addressTypes, socialMediaTypes) {
+    constructor($uibModalInstance, $scope, personManagementService, main, mainDetails, compare, compareDetails, modalActions, where, constants, phoneTypes, addressTypes,
+                socialMediaTypes, possibleMatchType, nonMatchType) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
         this.$scope = $scope;
@@ -13,6 +14,9 @@ export default class MatchModalController {
         this.modalActions = modalActions;
         this.where = where;
         this.constants = constants;
+        this.status = "compare";
+        this.possibleMatchType = possibleMatchType;
+        this.nonMatchType = nonMatchType;
         
         this.phoneTypes = {};
         for (let idx=0; idx < phoneTypes.length; idx++) {
@@ -33,11 +37,17 @@ export default class MatchModalController {
         
         if (this.mainDetails.photos.length > 0) {
             this.loadImage(new URL(this.mainDetails.photos[0].file_location, this.constants.BaseUrl).href, '#mainCanvas');
+            this.mainPhotoUrl = new URL(this.mainDetails.photos[0].file_location, this.constants.BaseUrl).href;
             this.mainImageIndex = 0;
+        } else {
+            this.mainImageIndex = -1;
         }
         if (this.compareDetails.photos.length > 0) {
             this.loadImage(new URL(this.compareDetails.photos[0].file_location, this.constants.BaseUrl).href, '#compareCanvas');
+            this.comparePhotoUrl = new URL(this.compareDetails.photos[0].file_location, this.constants.BaseUrl).href;
             this.compareImageIndex = 0;
+        } else {
+            this.compareImageIndex = -1;
         }
     }
     
@@ -132,35 +142,99 @@ export default class MatchModalController {
                 return;
             }
             this.mainImageIndex += increment;
-            this.photoDisplay(this.mainDetails.photos[this.mainImageIndex], imageTag);
+            this.photoDisplay(this.mainDetails.photos[this.mainImageIndex], imageTag, this.mainPhotoUrl);
         } else {
             if (this.compareImageIndex + increment < 0 || this.compareImageIndex + increment > this.compareDetails.photos.length - 1) {
                 return;
             }
             this.compareImageIndex += increment;
-            this.photoDisplay(this.compareDetails.photos[this.compareImageIndex], imageTag);
+            this.photoDisplay(this.compareDetails.photos[this.compareImageIndex], imageTag, this.comparePhotoUrl);
         }
         
     }
     
-    photoDisplay(photo, imageTag) {
+    photoDisplay(photo, imageTag, url) {
         if (photo.file_location) {
             this.loadImage(photo.file_location, imageTag);
+            url = photo.file_location;
         } else if (photo.file) {
             this.loadImage(photo.file.$ngfBlobUrl, imageTag);
+            url = photo.file.$ngfBlobUrl;
+            
         }
     }
     
-    confirmedMatch() {
+    setEstimatedBirthdate(value) {
+        this.modalActions.estimate_birthdate = value;
+    }
+    
+    compareElements(obj1, obj2, name, modalActions, defaultValue) {
+        let result = false;
+        modalActions[name] = defaultValue;
+        if (obj1[name] === obj2[name]) {
+            modalActions[name] = obj1[name];
+            if (name === 'birthdate') {
+                modalActions.estimated_birthdate = obj1.estimated_birthdate;
+            }
+        } else if (obj1[name] === null || obj1[name] === '') {
+            if (obj2[name] !== null && obj2[name] !== '') {
+                modalActions[name] = obj2[name];
+                if (name === 'birthdate') {
+                    modalActions.estimated_birthdate = obj2.estimated_birthdate;
+                }
+            }
+        } else if (obj2[name] === null || obj2[name] === '') {
+            modalActions[name] = obj1[name];
+            if (name === 'birthdate') {
+                modalActions.estimated_birthdate = obj1.estimated_birthdate;
+            }
+        } else {
+            result = true;
+        }
+        
+        return result;
+    }
+    
+    canProceedWithMatch() {
+        for (let prop in this.misMatch) {
+            if (this.misMatch[prop] && (this.modalActions[prop] === null || this.modalActions[prop] === '')) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    proceedWithMatch() {
         this.$uibModalInstance.close();
+    }
+    
+    confirmedMatch() {
+        this.modalActions.action = 'merge';
+        this.modalActions.estimated_birthdate = false;
+        this.modalActions.notes = this.compare.notes;
+        
+        this.misMatch = {};
+        this.misMatch.full_name = this.compareElements(this.main, this.compare.master_person, 'full_name', this.modalActions, null);
+        this.misMatch.birthdate = this.compareElements(this.main, this.compare.master_person, 'birthdate', this.modalActions, null);
+        this.misMatch.gender = this.compareElements(this.main, this.compare.master_person, 'gender', this.modalActions, '');
+        this.misMatch.nationality = this.compareElements(this.main, this.compare.master_person, 'nationality', this.modalActions, '');
+        this.status = 'match';
+        
+        this.modalActions.action = 'merge';
     }
     
     possibleMatch() {
-        this.$uibModalInstance.close();
+        this.modalActions.action = 'update';
+        this.modalActions.notes = this.compare.notes;
+        this.modalActions.match_type = this.possibleMatchType;
+        this.status = 'match';
     }
     
     confirmedNonMatch() {
-        this.$uibModalInstance.close();
+        this.modalActions.action = 'update';
+        this.modalActions.notes = this.compare.notes;
+        this.modalActions.match_type = this.nonMatchType;
+        this.status = 'match';
     }
     
     close() {

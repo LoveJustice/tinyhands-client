@@ -1,7 +1,8 @@
 <div id="matchModal" class="container">
 	<form name="AttachmentForm" ng-disabled="vm.isViewing === 'true'">
         <div class="modal-body">
-		    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" >
+        	<div ng-show="vm.status==='compare'">
+		    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
 		        <thead>
 		            <tr>
 		                <th class="text-center" width="10%"></th>
@@ -11,13 +12,15 @@
 		        </thead>
 		        <tbody>
 		        	<tr>
-		        		<td colspan=3><b>Match Date</b> {{ vm.compare.match_date }} &nbsp;&nbsp; <b>Match Notes</b> {{ vm.compare.notes }}</td>
+		        		<td colspan=3><b>Match Date</b> {{ vm.compare.match_date }} &nbsp;&nbsp;
+			        		<b>Matched By</b> {{ vm.compare.matched_by }} &nbsp;&nbsp; 
+			        		<b>Match Notes</b> {{ vm.compare.notes }}</td>
 		        	</tr>
 		            <tr>
 		            	<td><b>Master Name</b></td>
 		            	<td>
 		            		<div class="col-md-6">{{ vm.main.full_name }}</div>
-		            		<div class="col-md-6">
+		            		<div class="col-md-6" ng-show="vm.mainDetails.photos.length > 0">
 		            			<div class="col-md-12">
 			            			<canvas id="mainCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
 												Your browser does not support the HTML5 canvas tag.
@@ -34,11 +37,14 @@
 						                <i class="fa fa-arrow-right"></i>
 						            </button>
 						        </div>
+						        <div class="col-md-12" ng-show="vm.personCanvasUrl !== null">
+									<a href="{{ vm.mainPhotoUrl }}" target="_blank">Full Size Image</a>
+								</div>
 		            		</div>
 		            	</td>
 		            	<td>
 		            		<div class="col-md-6">{{ vm.compare.master_person.full_name }}</div>
-		            		<div class="col-md-6">
+		            		<div class="col-md-6" ng-show="vm.compareDetails.photos.length > 0">
 		            			<div class="col-md-12">
 			            			<canvas id="compareCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
 												Your browser does not support the HTML5 canvas tag.
@@ -55,6 +61,9 @@
 						                <i class="fa fa-arrow-right"></i>
 						            </button>
 						        </div>
+						        <div class="col-md-12" ng-show="vm.personCanvasUrl !== null">
+									<a href="{{ vm.comparePhotoUrl }}" target="_blank">Full Size Image</a>
+								</div>
 		            		</div>
 		            	</td>
 		            </tr>
@@ -263,22 +272,81 @@
 		            </tr>
 		        </tbody>
 		    </table>
+		    </div>
+		    <div ng-show="vm.status==='match'">
+		    	<div ng-show="vm.misMatch.full_name || vm.misMatch.birthdate || vm.misMatch.gender || vm.misMatch.nationality">
+		    		<b>Resolve Master Person Differences</b>
+		    		<table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
+				        <thead>
+				            <tr>
+				                <th class="text-center" width="15%"></th>
+				                <th class="text-center" width="85%"></th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				        	<tr ng-if="vm.misMatch.full_name">
+				        		<td>Use Name</td>
+				        		<td>
+					        		<input type="radio" id="name1" name="mergeName" value="{{ vm.main.full_name }}" ng-model="vm.modalActions.full_name">
+					    			<label for="name1">{{ vm.main.full_name }}</label><br>
+					    			<input type="radio" id="name2" name="mergeName" value="{{ vm.compare.master_person.full_name }}" ng-model="vm.modalActions.full_name">
+					    			<label for="name2">{{ vm.compare.master_person.full_name }}</label><br>
+				        		</td>
+				        	</tr>
+				        	<tr ng-if="vm.misMatch.birthdate">
+				        		<td>Use Birthdate</td>
+				        		<td>
+					        		<input type="radio" id="birthdate1" name="mergeBirthdate" value="{{ vm.main.birthdate }}" ng-model="vm.modalActions.birthdate"
+					        				ng-click="vm.setEstimatedBirthdate(vm.main.estimated_birthdate)">
+					    			<label for="birthdate1">{{ vm.main.birthdate }}</label><br>
+					    			<input type="radio" id="birthdate2" name="mergeBirthdate" value="{{ vm.compare.master_person.birthdate }}" ng-model="vm.modalActions.birthdate"
+					    					ng-click="vm.setEstimatedBirthdate(vm.compare.master_person.estimated_birthdate)">
+					    			<label for="birthdate2">{{ vm.compare.master_person.birthdate}}</label><br>
+				        		</td>
+				        	</tr>
+				        	<tr ng-if="vm.misMatch.gender">
+				        		<td>Use Gender</td>
+				        		<td>
+					        		<input type="radio" id="gender1" name="mergeGender" value="{{ vm.main.gender }}" ng-model="vm.modalActions.gender">
+					    			<label for="gender1">{{ vm.getGender(vm.main) }}</label><br>
+					    			<input type="radio" id="gender2" name="mergeGender" value="{{ vm.compare.master_person.gender }}" ng-model="vm.modalActions.gender">
+					    			<label for="gender2">{{ vm.getGender(vm.compare.master_person) }}</label><br>
+				        		</td>
+				        	</tr>
+				        	<tr ng-if="vm.misMatch.nationality">
+				        		<td>Use Nationality</td>
+				        		<td>
+					        		<input type="radio" id="nationality1" name="mergeNationality" value="{{ vm.main.nationality }}" ng-model="vm.modalActions.nationality">
+					    			<label for="nationality1">{{ vm.main.nationality }}</label><br>
+					    			<input type="radio" id="nationality2" name="mergeNationality" value="{{ vm.compare.master_person.nationality }}" ng-model="vm.modalActions.nationality">
+					    			<label for="nationality2">{{ vm.compare.master_person.nationality }}</label><br>
+				        		</td>
+				        	</tr>
+				        </tbody>
+				    </table>
+		    	</div>
+		    	<hr>
+		    	<b>Notes</b>
+		    	<textarea class="form-control" rows="5" ng-model="vm.modalActions.notes"></textarea>
+		    </div>
 		</div>
 		<div class="modal-footer">
             <div class="row">
                 <div class="col-xs-2">
-                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmed()" >Confirmed Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmedMatch()" ng-show="vm.status==='compare'">Confirmed Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.proceedWithMatch()" ng-show="vm.status==='match'" ng-disabled="!vm.canProceedWithMatch()">Proceed</button>
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn btn-sm btn-primary" ng-click="vm.possible()" ng-show="vm.where != 'possible'">Possible Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.possibleMatch()" ng-show="vm.where != 'possible'&& vm.status==='compare'">Possible Match</button>
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn btn-sm btn-primary" ng-click="vm.nonMatch()" ng-show="vm.where != 'non'">Non-Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmedNonMatch()" ng-show="vm.where != 'non' && vm.status==='compare'">Non-Match</button>
                 </div>
                 <div class="col-xs-2 text-center">
                 </div>
                 <div class="col-xs-4">
-                    <button class="btn btn-default" ng-click="vm.close()">Close</button>
+                    <button class="btn btn-default" ng-click="vm.close()" ng-show="vm.status==='compare'">Close</button>
+                    <button class="btn btn-default" ng-click="vm.close()" ng-show="vm.status==='match'">Cancel</button>
                 </div>
             </div>
         </div>

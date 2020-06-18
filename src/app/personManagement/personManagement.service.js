@@ -77,8 +77,8 @@ class PersonManagementService {
         return this.service.get(`api/master-person/match/${id}/${typeId}/`);
     }
     
-    removePerson(masterId, personId) {
-        return this.service.put(`api/master-person/remove/${masterId}/${personId}/`);
+    removePerson(masterId, personId, data) {
+        return this.service.put(`api/master-person/remove/${masterId}/${personId}/`, data);
     }
     
     merge(id1, id2, data) {
@@ -87,6 +87,10 @@ class PersonManagementService {
     
     updateMatch(matchId, typeId, data) {
         return this.service.put(`api/master-person/update-match/${matchId}/`, data);
+    }
+    
+    createMatch(typeId, data) {
+        return this.service.put(`api/master-person/create-match/`, data);
     }
 }
 

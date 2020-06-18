@@ -1,5 +1,3 @@
-/* global angular */
-/* global Image */
 class personManagementListController {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementListService, $uibModal, $state, $stateParams, $document, toastr, constants) {
         'ngInject';
@@ -141,7 +139,7 @@ class personManagementListController {
     
     masterPerson(knownPerson) {
         let ref =  this.state.href('personManagement', {
-            id: knownPerson.alias_group
+            id: knownPerson.master_person
         });
         return ref;
     }

@@ -1,6 +1,5 @@
 <div class="container">
 	<div>
-		<h1 class="text-center">Person Management</h1>
 	    <div class="row">
 	        <div class="col-md-2">
 	            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getKnownPersons()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
@@ -63,7 +62,7 @@
 	                <td class="text-center"><a ng-href="{{knownPerson.viewUrl}}">{{ knownPerson.form_number }}</a></td>
 	                <td class="text-center">
 	                	<center>{{ knownPerson.form_date }}</center>
-	                	<a class="btn btn-sm btn-primary" ng-href="{{vm.masterPerson(knownPerson)}}">Master Person</a>
+	                	<button class="btn btn-sm btn-primary" ng-click="vm.createCompare(knownPerson)">Compare</button>
 	                </td>
 	            </tr>
 	            <tr ng-show="vm.knownPersons.length == 0">

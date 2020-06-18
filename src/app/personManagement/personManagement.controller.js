@@ -6,7 +6,11 @@ import confirmedMatchesTemplate from './step-templates/confirmedMatches.html';
 import possibleMatchesTemplate from './step-templates/possibleMatches.html';
 import suggestedMatchesTemplate from './step-templates/suggestedMatches.html';
 import confirmedNonMatchesTemplate from './step-templates/confirmedNonMatches.html';
+import createMatchTemplate from './step-templates/createMatch.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
+
+import NotesModalController from './notesModal.controller';
+import notesTemplate from './step-templates/notesModal.html';
 
 import MatchModalController from './matchModal.controller';
 import matchTemplate from './step-templates/matchModal.html';
@@ -15,23 +19,29 @@ import attachmentTemplate from './step-templates/attachments/attachmentModal.htm
 import AttachmentModalController from './step-templates/attachments/attachmentModal.controller';
 
 export class PersonManagementController {
-    constructor($scope, $uibModal, personManagementService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, constants) {
+    constructor(StickyHeader, $scope, $uibModal, $timeout, personManagementService, personManagementListService, $stateParams, $state,
+            SpinnerOverlayService, $uibModalStack, constants, toastr) {
         'ngInject';
         
+        this.sticky = StickyHeader;
         this.$scope = $scope;
         this.$uibModal = $uibModal;
+        this.$timeout = $timeout;
         this.service = personManagementService;
+        this.personManagementListService = personManagementListService;
         this.stateParams = $stateParams;
         this.$state = $state;
         this.spinnerOverlayService = SpinnerOverlayService;
         this.$uibModalStack = $uibModalStack;
         this.constants = constants;
+        this.toastr = toastr;
         this.stepTemplates = [
             {template:detailsTemplate, name:"Details"},
             {template:confirmedMatchesTemplate, name:"Confirmed Matches"},
             {template:possibleMatchesTemplate, name:"Possible Matches"},
             {template:suggestedMatchesTemplate, name:"Suggested Matches"},
             {template:confirmedNonMatchesTemplate, name:"Confirmed Non-Matches"},
+            {template:createMatchTemplate, name:"Create Match"},
             {template:attachmentsTemplate, name:"Attachments"},
         ];
         this.selectedStep = 0;
@@ -67,8 +77,12 @@ export class PersonManagementController {
         
         this.forms = [];
         
+        this.timer = {};
+        this.stickyOptions = {top:140};
+        
         this.getTypes();
         this.getPvRelations(this.stateParams.id, this.details);
+        this.getKnownPersons();
     }
     
     getTypes() {
@@ -442,7 +456,7 @@ export class PersonManagementController {
         this.service.getMasterPerson(id).then((response) => {
             this.processMainMasterPersonData(response.data);
         }, (error) => {
-            alert(error.data);
+            this.toastr.error(error.data);
         });
     }
     
@@ -646,7 +660,7 @@ export class PersonManagementController {
             this.spinnerOverlayService.hide();
         }, (error) => {
             this.spinnerOverlayService.hide();
-            alert(error.data.errors);
+            this.toastr.error(error.data.errors);
            });
     }
     
@@ -670,21 +684,6 @@ export class PersonManagementController {
         } else {
             this.clearCanvas('#confirmedCanvas');
         }
-    }
-    
-    removePerson() {
-        if (this.hasBeenModified(this.masterPerson, this.originalMasterPerson) && !window.confirm("Information on the Details tab has been modified.\nContinuing with the removal this person will lose those changes.\n\nWould you like to proceed?")) {
-            return;
-        }
-
-        this.spinnerOverlayService.show('Removing person ...');
-        this.service.removePerson(this.masterPerson.id, this.details.selectedPerson.id).then((response) => {
-            this.processMainMasterPersonData(response.data);
-            this.spinnerOverlayService.hide();
-        }, (error) => {
-            this.spinnerOverlayService.hide();
-            alert(error.data.errors);
-           });
     }
     
     getMatchAge(match) {
@@ -779,21 +778,35 @@ export class PersonManagementController {
                 socialMediaTypes: () => this.socialMediaTypes,
                 possibleMatchType: () => this.possibleMatchType,
                 nonMatchType: () => this.nonMatchType,
+                detailsModified: () => this.hasBeenModified(this.masterPerson, this.originalMasterPerson),
             },
             size: 'lg',
             templateUrl: matchTemplate,
             windowClass: 'match-modal-popup',
         }).result.then(() => {
             if (this.modalActions.action === 'update') {
-                this.service.updateMatch(match.id, this.modalActions['match_type'], this.modalActions).then((response) => {
-                    this.getMatches();
-                });  
+                this.modalActions.master1 = this.masterPerson.id;
+                this.modalActions.master2 = match.master_person.id;
+                if (where === 'create') {
+                    this.service.createMatch(this.modalActions.match_type, this.modalActions).then(() => {
+                        this.getMatches();
+                        this.getKnownPersons();
+                    }, (error) => {
+                    this.toastr.error(error.data.errors);
+                    });
+                } else {
+                    this.service.updateMatch(match.id, this.modalActions.match_type, this.modalActions).then(() => {
+                        this.getMatches();
+                        this.getKnownPersons();
+                    });
+                }
             } else if (this.modalActions.action === 'merge') {
                 this.service.merge(this.masterPerson.id, match.master_person.id, this.modalActions).then((response) => {
                     this.processMainMasterPersonData(response.data);
                     this.getMatches();
+                    this.getKnownPersons();
                 }, (error) => {
-                    alert(error.data.errors);
+                    this.toastr.error(error.data.errors);
                     });
             }
         });
@@ -835,7 +848,140 @@ export class PersonManagementController {
             }
             this.save(this.originalMasterPerson, this.originalPhotos, this.details.attachments, 'Saving attachments ...');
         });
-        
+    }
+    removePerson() {
+        if (this.hasBeenModified(this.masterPerson, this.originalMasterPerson) && !window.confirm("Information on the Details tab has unsaved changes.\nContinuing with the removal this person will lose those detail changes.\n\nWould you like to proceed?")) {
+            return;
+        }
+        this.modalActions = {};
+        this.$uibModal.open({
+            bindToController: true,
+            controller: NotesModalController,
+            controllerAs: 'vm',
+            resolve: {
+                modalActions: () => this.modalActions,
+            },
+            size: 'lg',
+            templateUrl: notesTemplate,
+        }).result.then(() => {
+            this.spinnerOverlayService.show('Removing person ...');
+            this.service.removePerson(this.masterPerson.id, this.details.selectedPerson.id, this.modalActions).then((response) => {
+                this.processMainMasterPersonData(response.data);
+                this.spinnerOverlayService.hide();
+            }, (error) => {
+                this.spinnerOverlayService.hide();
+                this.toastr.error(error.data.errors);
+               });
+        });
+    }
+    
+    sortIcon(column) {
+        if (column === this.sortColumn) {
+            switch (column) {
+                case "age":
+                case "phone":
+                    return this.reverse ? "glyphicon-sort-by-order-alt" : "glyphicon-sort-by-order";
+                case "name":
+                case "gender":
+                case "address1":
+                case "address2":
+                    return this.reverse ? "glyphicon-sort-by-alphabet-alt" : "glyphicon-sort-by-alphabet";
+                default:
+                    return "glyphicon-sort";
+            }
+        }
+        return "glyphicon-sort";
+    }
+
+    searchKnownPersons() {
+        if (this.timer.hasOwnProperty('$$timeoutId')) {
+            this.$timeout.cancel(this.timer);
+        }
+        sessionStorage.setItem('personManagement-create', this.searchValue);
+        this.timer = this.$timeout(() => {
+            this.$state.go('.', {
+                search: this.searchValue,
+            });
+            this.getKnownPersons();
+        }, 500);
+    }
+
+    getKnownPersons() {
+        this.personManagementListService.listKnownPersons(this.getQueryParams())
+            .then((promise) => {
+                this.knownPersons = promise.data.results;
+                for (let idx in this.knownPersons) {
+                    if (this.knownPersons[idx].form_name) {
+                        this.knownPersons[idx].viewUrl = this.$state.href(this.knownPersons[idx].form_name, {id:this.knownPersons[idx].form_id, 
+                            stationId:this.knownPersons[idx].station_id, countryId:this.knownPersons[idx].country_id, isViewing:true,
+                            formName:this.knownPersons[idx].form_name});
+                    }
+                }
+                this.nextPageUrl = this.nextUrl(promise.data.next);
+                this.loading = false;
+            });
+    }
+
+    loadMoreKnownPersons() {
+        this.loading = true;
+        this.personManagementListService.loadMoreKnownPersons(this.getQueryParams(true))
+            .then((promise) => {
+                this.knownPersons = this.knownPersons.concat(promise.data.results);
+                this.nextPageUrl = this.nextUrl(promise.data.next);
+                this.loading = false;
+            });
+    }
+
+    getQueryParams(loadMore = false) {
+        var params = [];
+        params.push({ "name": "page_size", "value": this.paginateBy });
+        params.push({"name": "exclude_master_person_id", "value": this.stateParams.id});
+        if (this.nextPageUrl && loadMore) {
+            params.push({ "name": "page", "value": this.nextPageUrl });
+        }
+        if (this.searchValue) {
+            params.push({ "name": "search", "value": this.searchValue });
+        }
+        if (this.sortColumn) {
+            if (this.reverse) {
+                params.push({ "name": "ordering", "value": ("-" + this.sortColumn.replace(".", "__")) });
+            } else {
+                params.push({ "name": "ordering", "value": (this.sortColumn.replace(".", "__")) });
+            }
+        }
+        return params;
+    }
+
+    nextUrl(url) {
+        if (url) {
+            url = url.match(/page=\d+/);
+            if (url) {
+                url = url[0].match(/\d+/)[0];
+            }
+        }
+        return url;
+    }
+    
+    keyPress(event) {
+        if(event.keyCode === 13) {
+            this.searchKnownPersons();
+        }
+    }
+    
+    createCompare(knownPerson) {
+        this.service.getMasterPerson(knownPerson.master_person).then((response) => {
+            let tmpCompare = {
+                    id:null,
+                    match_type:null,
+                    match_date:null,
+                    matched_by:null,
+                    notes:null,
+                    master_person:response.data
+            };
+            this.compare(tmpCompare, 'create');
+        }, (error) => {
+            this.toastr.error(error.data);
+        });
     }
 }
 

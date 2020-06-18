@@ -2,7 +2,7 @@
 import './personManagement.less';
 export default class MatchModalController {
     constructor($uibModalInstance, $scope, personManagementService, main, mainDetails, compare, compareDetails, modalActions, where, constants, phoneTypes, addressTypes,
-                socialMediaTypes, possibleMatchType, nonMatchType) {
+                socialMediaTypes, possibleMatchType, nonMatchType, detailsModified) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
         this.$scope = $scope;
@@ -17,6 +17,7 @@ export default class MatchModalController {
         this.status = "compare";
         this.possibleMatchType = possibleMatchType;
         this.nonMatchType = nonMatchType;
+        this.detailsModified = detailsModified;
         
         this.phoneTypes = {};
         for (let idx=0; idx < phoneTypes.length; idx++) {
@@ -209,6 +210,10 @@ export default class MatchModalController {
     }
     
     confirmedMatch() {
+        if (this.detailsModified && 
+                !window.confirm("Information on the Details tab has unsaved changes.\nContinuing with the confirmation of this match will lose those changes.\n\nWould you like to proceed?")) {
+            return;
+        }
         this.modalActions.action = 'merge';
         this.modalActions.estimated_birthdate = false;
         this.modalActions.notes = this.compare.notes;

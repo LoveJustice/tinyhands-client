@@ -11,7 +11,7 @@
 		            </tr>
 		        </thead>
 		        <tbody>
-		        	<tr>
+		        	<tr ng-if="vm.compare.id">
 		        		<td colspan=3><b>Match Date</b> {{ vm.compare.match_date }} &nbsp;&nbsp;
 			        		<b>Matched By</b> {{ vm.compare.matched_by }} &nbsp;&nbsp; 
 			        		<b>Match Notes</b> {{ vm.compare.notes }}</td>
@@ -337,10 +337,10 @@
                     <button class="btn btn-sm btn-primary" ng-click="vm.proceedWithMatch()" ng-show="vm.status==='match'" ng-disabled="!vm.canProceedWithMatch()">Proceed</button>
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn btn-sm btn-primary" ng-click="vm.possibleMatch()" ng-show="vm.where != 'possible'&& vm.status==='compare'">Possible Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.possibleMatch()" ng-show="vm.where !== 'possible' && vm.status==='compare'">Possible Match</button>
                 </div>
                 <div class="col-xs-2">
-                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmedNonMatch()" ng-show="vm.where != 'non' && vm.status==='compare'">Non-Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmedNonMatch()" ng-show="vm.where !== 'non' && vm.where !== 'create' && vm.status==='compare'">Non-Match</button>
                 </div>
                 <div class="col-xs-2 text-center">
                 </div>

@@ -129,13 +129,8 @@
                         <a ui-sref="countries">Countries</a>
                     </li>
                     <li>
-                        <a ui-sref="idmanagement"
-                            ng-show="navbarCtrl.session.user.permission_person_match && (navbarCtrl.session.checkPermission('IRF','EDIT',null, null) || navbarCtrl.session.checkPermission('CIF','EDIT',null, null) || navbarCtrl.session.checkPermission('VDF','EDIT',null, null))">
-                            ID Management</a>
-                    </li>
-                    <li>
                         <a ui-sref="personManagementList"
-                            ng-show="navbarCtrl.session.user.permission_person_match && (navbarCtrl.session.checkPermission('IRF','EDIT',null, null) || navbarCtrl.session.checkPermission('CIF','EDIT',null, null) || navbarCtrl.session.checkPermission('VDF','EDIT',null, null))">
+                            ng-show="navbarCtrl.session.checkPermission('PERSON_MANAGEMENT','EDIT',null, null)">
                             Person Management</a>
                     </li>
                     <li>

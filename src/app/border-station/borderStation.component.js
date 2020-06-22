@@ -28,10 +28,10 @@ class BorderStationController extends BaseFormController  {
         this.isViewing = false;
         
         this.stepTemplates = [
-            {template:detailTemplate, name:"Detail"},
-            {template:committeeTemplate, name:"Committee"},
+            {template:detailTemplate, name:"Details"},
+            {template:committeeTemplate, name:"Subcommittee"},
             {template:staffTemplate, name:"Staff"},
-            {template:locationTemplate, name:"Location"},
+            {template:locationTemplate, name:"Locations"},
             {template:formsTemplate, name:"Forms"},
         ];
         

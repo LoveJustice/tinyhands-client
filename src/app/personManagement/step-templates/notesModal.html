@@ -1,8 +1,13 @@
-<div id="notesModal" class="container">
-	
-    	<b>Notes</b>
-    	<textarea class="form-control" rows="5" ng-model="vm.modalActions.notes"></textarea>
+<div id="notes-modal" class="modal-content">
+	<form name="NotesForm">
+		<div class="modal-header">
+			<h3 class="modal-title">Remove Person</h3>
 		</div>
+			<div class="modal-body">
+	    		<b>Notes</b>
+	    		<textarea class="col-md-12" rows="5" ng-model="vm.modalActions.notes"></textarea>
+	    		<div>&nbsp;</div>
+    	</div>
 		<div class="modal-footer">
             <div class="row">
                 <div class="col-xs-2">

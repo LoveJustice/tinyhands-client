@@ -100,26 +100,26 @@
 		            <tr>
 		            	<td><b>Phone #s</b></td>
 		            	<td>
-			            	<div class="row col-md-12" ng-repeat="personPhone in vm.mainDetails.uniquePhones">
+			            	<div ng-class="vm.getCheckedClass(personPhone.phone_verified, 'row col-md-12')" ng-repeat="personPhone in vm.mainDetails.uniquePhones">
 								<input class="col-md-1 text-left" type="checkbox" ng-model="personPhone.phone_verified" disabled>
 								<input class="col-md-3" type="text" disabled ng-model="personPhone.number">
 								<div class="col-md-2">{{ vm.phoneTypes[personPhone.phone_type] }}</div>
 							</div>
-							<div class="row col-md-12" ng-repeat="mpPhone in vm.main.personphone_set">
+							<div ng-class="vm.getCheckedClass(mpPhone.phone_verified, 'row col-md-12')" ng-repeat="mpPhone in vm.main.personphone_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpPhone.phone_verified" disabled>
 								<input class="col-md-3" type="text" ng-model="mpPhone.number" disabled>
 								<div class="col-md-2">{{ vm.phoneTypes[mpPhone.phone_type] }}</div>
 							</div>
 		            	</td>
 		            	<td>
-		            		<div class="row col-md-12" ng-repeat="personPhone in vm.compareDetails.uniquePhones">
+		            		<div ng-class="vm.getCheckedClass(personPhone.phone_verified, 'row col-md-12')" ng-repeat="personPhone in vm.compareDetails.uniquePhones">
 								<input class="col-md-1 text-left" type="checkbox" ng-model="personPhone.phone_verified" disabled>
 								<input class="col-md-3" type="text" disabled ng-model="personPhone.number">
 								<div class="col-md-2">
 									<div class="col-md-2">{{ vm.phoneTypes[personPhone.phone_type] }}</div>
 								</div>
 							</div>
-							<div class="row col-md-12" ng-repeat="mpPhone in vm.compare.master_person.personphone_set">
+							<div ng-class="vm.getCheckedClass(mpPhone.phone_verified, 'row col-md-12')" ng-repeat="mpPhone in vm.compare.master_person.personphone_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpPhone.phone_verified" disabled></form-step>
 								<input class="col-md-3" type="text" ng-model="mpPhone.number" disabled>
 								<div class="col-md-2">{{ vm.phoneTypes[mpPhone.phone_type] }}</div>
@@ -130,14 +130,14 @@
 		            	<td><b>Addresses</b></td>
 		            	<td>
 			            	<div ng-repeat="personAddress in vm.mainDetails.uniqueAddresses">
-								<div ng-if="personAddress.address || personAddress.address_notes">
+								<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row')"  ng-if="personAddress.address || personAddress.address_notes">
 									<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" disabled>
 									<input class="col-md-8" type="text" ng-model="personAddress.address.address" disabled>
 									<div class="col-md-3">{{ vm.addressTypes[personAddress.address_type] }}</div>
 									<div class="col-md-12">{{ personAddress.address_notes }}</div>
 								</div>
 							</div>
-							<div ng-repeat="mpAddress in vm.main.personaddress_set">
+							<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row')" ng-repeat="mpAddress in vm.main.personaddress_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
 								<input class="col-md-8" type="text" ng-model="mpAddress.address.address" disabled>
 								<div class="col-md-3">{{ vm.addressTypes[mpAddress.address_type] }}</div>
@@ -145,7 +145,7 @@
 							</div>
 		            	</td>
 		            	<td>
-		            		<div ng-repeat="personAddress in vm.compareDetails.uniqueAddresses">
+		            		<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row')" ng-repeat="personAddress in vm.compareDetails.uniqueAddresses">
 								<div ng-if="personAddress.address || personAddress.address_notes">
 									<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" disabled>
 									<input class="col-md-8" type="text" ng-model="personAddress.address.address" disabled>
@@ -154,7 +154,7 @@
 								</div>
 							</div>
 
-			            	<div ng-repeat="mpAddress in vm.compare.master_person.personaddress_set">
+			            	<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row')" ng-repeat="mpAddress in vm.compare.master_person.personaddress_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
 								<input class="col-md-8" type="text" ng-model="mpAddress.address.address" disabled>
 								<div class="col-md-3">{{ vm.addressTypes[mpAddress.address_type] }}</div>
@@ -165,26 +165,26 @@
 		            <tr>
 		            	<td><b>Social Media</b></td>
 		            	<td>
-		            		<div class="row col-md-12" ng-repeat="personSocial in vm.mainDetails.uniqueSocialMedia">
+		            		<div ng-class="vm.getCheckedClass(personSocial.social_media_verified, 'row col-md-12')" ng-repeat="personSocial in vm.mainDetails.uniqueSocialMedia">
 								<input class="col-md-1" type="checkbox" ng-model="personSocial.social_media_verified" disabled>
 								<input class="col-md-9" type="text" ng-model="personSocial.social_media" ng-disabled="true"></form-step>
 								<div class="col-md-2">{{ vm.socialMediaTypes[personSocial.social_media_type] }}</div>
 							</div>
 							
-							<div class="row col-md-12" ng-repeat="mpSocial in vm.main.personsocialmedia_set">
+							<div ng-class="vm.getCheckedClass(mpSocial.social_media_verified, 'row col-md-12')" ng-repeat="mpSocial in vm.main.personsocialmedia_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpSocial.social_media_verified" disabled>
 								<input class="col-md-9" type="text" ng-model="mpSocial.social_media" disabled></form-step>
 								<div class="col-md-2">{{ vm.socialMediaTypes[mpSocial.social_media_type] }}</div>
 							</div>
 		            	</td>
 		            	<td>
-		            		<div class="row col-md-12" ng-repeat="personSocial in vm.compareDetails.uniqueSocialMedia">
+		            		<div ng-class="vm.getCheckedClass(personSocial.social_media_verified, 'row col-md-12')" ng-repeat="personSocial in vm.compareDetails.uniqueSocialMedia">
 								<input class="col-md-1" type="checkbox" ng-model="personSocial.social_media_verified" disabled>
 								<input class="col-md-9" type="text" ng-model="personSocial.social_media" ng-disabled="true"></form-step>
 								<div class="col-md-2">{{ vm.socialMediaTypes[personSocial.social_media_type] }}</div>
 							</div>
 							
-							<div class="row col-md-12" ng-repeat="mpSocial in vm.compare.master_person.personsocialmedia_set">
+							<div ng-class="vm.getCheckedClass(mpSocial.social_media_verified, 'row col-md-12')" ng-repeat="mpSocial in vm.compare.master_person.personsocialmedia_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpSocial.social_media_verified" disabled>
 								<input class="col-md-9" type="text" ng-model="mpSocial.social_media" disabled></form-step>
 								<div class="col-md-2">{{ vm.socialMediaTypes[mpSocial.social_media_type] }}</div>

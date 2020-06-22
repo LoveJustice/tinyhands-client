@@ -26,18 +26,18 @@
 			<div class="col-md-7"><label>Nationality</label></div>
 			<div class="col-md-5">{{ vm.details.selectedPerson.nationality }}</div>
 		</div>
-		<div class="row col-md-12">
+		<div ng-class="vm.getCheckedClass(vm.details.selectedPerson.phone_verified, 'row col-md-12')">
 			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.phone_verified" disabled>
 			<div class="col-md-4"><label>Phone #:</label> {{ vm.details.selectedPerson.phone_contact }}</div>
 			<div class="col-md-3">Type: {{ vm.phoneTypeString(vm.details.selectedPerson.phone_type) }}</div>
 		</div>
-		<div class="row col-md-12">
+		<div ng-class="vm.getCheckedClass(vm.details.selectedPerson.address_verified, 'row col-md-12')">
 			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.address_verified" disabled>
 			<div class="col-md-4"><label>Address:</label> {{ vm.details.selectedPerson.address.address }}</div>
 			<div class="col-md-5">Notes: {{ vm.details.selectedPerson.address_notes }}</div>
 			<div class="col-md-2">Type: {{ vm.addressTypeString(vm.details.selectedPerson.address_type) }}</div>
 		</div>
-		<div class="row col-md-12">
+		<div ng-class="vm.getCheckedClass(vm.details.selectedPerson.social_media_verified, 'row col-md-12')">
 			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.social_media_verified" disabled>
 			<div class="col-md-9"><label>Social Media:</label> {{ vm.details.selectedPerson.social_media }}</div>
 			<div class="col-md-2">Type: {{ vm.socialTypeString(vm.details.selectedPerson.social_media_type) }}</div>

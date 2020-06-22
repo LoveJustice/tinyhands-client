@@ -34,7 +34,7 @@
 
 		<div class="row">
 			<label>Phone #'s</label>
-				<div class="row col-md-12" ng-repeat="personPhone in vm.details.uniquePhones">
+				<div ng-class="vm.getCheckedClass(personPhone.phone_verified, 'row col-md-12')" ng-repeat="personPhone in vm.details.uniquePhones">
 					<input class="col-md-1 text-left" type="checkbox" ng-model="personPhone.phone_verified" ng-change="vm.phoneChange(personPhone)">
 					<input class="col-md-3" type="text" disabled ng-model="personPhone.number">
 					<div class="col-md-1">Type</div>
@@ -44,7 +44,7 @@
 		                      </select>
 					</div>
 				</div>
-				<div class="row col-md-12" ng-repeat="mpPhone in vm.masterPerson.personphone_set">
+				<div ng-class="vm.getCheckedClass(mpPhone.phone_verified, 'row col-md-12')" ng-repeat="mpPhone in vm.masterPerson.personphone_set">
 					<input class="col-md-1" type="checkbox" ng-model="mpPhone.phone_verified"></form-step>
 					<input class="col-md-3" type="text" ng-model="mpPhone.number">
 					<div class="col-md-1">Type</div>
@@ -70,7 +70,7 @@
 		
 		<div class="row">
 			<label>Addresses</label>
-				<div class="row col-md-12" ng-repeat="personAddress in vm.details.uniqueAddresses">
+				<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row col-md-12')" ng-repeat="personAddress in vm.details.uniqueAddresses">
 					<div ng-if="personAddress.address || personAddress.address_notes">
 						<div class="col-md-4">
 							<input class="col-md-2" type="checkbox" ng-model="personAddress.address_verified" ng-change="vm.addressChange(personAddress)">
@@ -94,7 +94,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="row col-md-12" ng-repeat="mpAddress in vm.masterPerson.personaddress_set">
+				<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row col-md-12')" ng-repeat="mpAddress in vm.masterPerson.personaddress_set">
 					<div class="col-md-4">
 						<input class="col-md-2" type="checkbox" ng-model="mpAddress.address_verified">
 						<div class="col-md-10">
@@ -134,7 +134,7 @@
 		
 		<div class="row">
 			<label>Social Media</label>
-			<div class="row col-md-12" ng-repeat="personSocial in vm.details.uniqueSocialMedia">
+			<div ng-class="vm.getCheckedClass(personSocial.social_media_verified, 'row col-md-12')" ng-repeat="personSocial in vm.details.uniqueSocialMedia">
 				<div class="col-md-9">
 					<input class="col-md-1" type="checkbox" ng-model="personSocial.social_media_verified" ng-change="vm.socialChange(personSocial)">
 					<input class="col-md-11" type="text" ng-model="personSocial.social_media" ng-disabled="true"></form-step>
@@ -148,7 +148,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row col-md-12" ng-repeat="mpSocial in vm.masterPerson.personsocialmedia_set">
+			<div ng-class="vm.getCheckedClass(mpSocial.social_media_verified, 'row col-md-12')" ng-repeat="mpSocial in vm.masterPerson.personsocialmedia_set">
 				<div class="col-md-9">
 					<input class="col-md-1" type="checkbox" ng-model="mpSocial.social_media_verified">
 					<input class="col-md-11" type="text" ng-model="mpSocial.social_media"></form-step>

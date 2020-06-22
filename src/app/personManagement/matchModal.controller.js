@@ -110,6 +110,14 @@ export default class MatchModalController {
         return value;
     }
     
+    getCheckedClass (isChecked, otherClass) {
+        if (isChecked) {
+            return "checkedBackground " + otherClass;
+        } else {
+            return otherClass;
+        }
+    }
+    
     clearCanvas(imageTag) {
         let temp = angular.element(imageTag);
         let canvas = temp.get(0);

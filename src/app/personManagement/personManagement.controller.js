@@ -82,7 +82,6 @@ export class PersonManagementController {
         
         this.getTypes();
         this.getPvRelations(this.stateParams.id, this.details);
-        this.getKnownPersons();
     }
     
     getTypes() {
@@ -226,7 +225,7 @@ export class PersonManagementController {
                 for (let idx1=0; idx1 < container.uniquePhones.length; idx1++) {
                     let phone = container.uniquePhones[idx1];
                     if (person.phone_contact === phone.number && person.phone_verified === phone.phone_verified && person.phone_type === phone.phone_type) {
-                        phone.ids.push(phone.id);
+                        phone.ids.push(person.id);
                         found = true;
                         break;
                     }
@@ -452,9 +451,19 @@ export class PersonManagementController {
         }
     }
     
+    getCheckedClass (isChecked, otherClass) {
+        if (isChecked) {
+            return "checkedBackground " + otherClass;
+        } else {
+            return otherClass;
+        }
+    }
+    
     getMasterPerson(id) {
         this.service.getMasterPerson(id).then((response) => {
             this.processMainMasterPersonData(response.data);
+            this.searchValue = this.masterPerson.full_name;
+            this.getKnownPersons();
         }, (error) => {
             this.toastr.error(error.data);
         });

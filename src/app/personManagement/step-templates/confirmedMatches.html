@@ -33,7 +33,14 @@
 		</div>
 		<div ng-class="vm.getCheckedClass(vm.details.selectedPerson.address_verified, 'row col-md-12')">
 			<input class="col-md-1" type="checkbox" ng-model="vm.details.selectedPerson.address_verified" disabled>
-			<div class="col-md-4"><label>Address:</label> {{ vm.details.selectedPerson.address.address }}</div>
+			<div class="col-md-1">
+				<label>Address:</label> 
+			</div>
+			<div class="col-md-3">
+				<address-entry ng-model="vm.details.selectedPerson.address"
+		        			latitude-model="vm.details.selectedPerson.latitude"
+		        			longitude-model="vm.details.selectedPerson.longitude" view-only=true></address-entry>
+		    </div>
 			<div class="col-md-5">Notes: {{ vm.details.selectedPerson.address_notes }}</div>
 			<div class="col-md-2">Type: {{ vm.addressTypeString(vm.details.selectedPerson.address_type) }}</div>
 		</div>

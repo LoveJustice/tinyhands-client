@@ -71,13 +71,12 @@
 		<div class="row">
 			<label>Addresses</label>
 				<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row col-md-12')" ng-repeat="personAddress in vm.details.uniqueAddresses">
-					<div ng-if="personAddress.address || personAddress.address_notes">
 						<div class="col-md-4">
-							<input class="col-md-2" type="checkbox" ng-model="personAddress.address_verified" ng-change="vm.addressChange(personAddress)">
-							<div class="col-md-10" disabled>
+							<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" ng-change="vm.addressChange(personAddress)">
+							<div class="col-md-11">
 								<address-entry ng-model="personAddress.address"
 					        			latitude-model="personAddress.address.latitude"
-					        			longitude-model="personAddress.address.longitude"></address-entry>
+					        			longitude-model="personAddress.address.longitude" view-only=true></address-entry>
 				        	</div>
 						</div>
 						<div class="col-md-5">
@@ -92,12 +91,11 @@
 			                    </select>
 			                </div>
 						</div>
-					</div>
 				</div>
 				<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row col-md-12')" ng-repeat="mpAddress in vm.masterPerson.personaddress_set">
 					<div class="col-md-4">
-						<input class="col-md-2" type="checkbox" ng-model="mpAddress.address_verified">
-						<div class="col-md-10">
+						<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
+						<div class="col-md-11">
 							<address-entry ng-model="mpAddress.address"
 				        			latitude-model="mpAddress.address.latitude"
 				        			longitude-model="mpAddress.address.longitude"></address-entry>

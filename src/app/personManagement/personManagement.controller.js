@@ -874,6 +874,9 @@ export class PersonManagementController {
             templateUrl: notesTemplate,
         }).result.then(() => {
             this.spinnerOverlayService.show('Removing person ...');
+            if (!this.modalActions.notes) {
+                this.modalActions.notes = 'No value entered';
+            }
             this.service.removePerson(this.masterPerson.id, this.details.selectedPerson.id, this.modalActions).then((response) => {
                 this.processMainMasterPersonData(response.data);
                 this.spinnerOverlayService.hide();

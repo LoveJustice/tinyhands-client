@@ -130,33 +130,47 @@
 		            	<td><b>Addresses</b></td>
 		            	<td>
 			            	<div ng-repeat="personAddress in vm.mainDetails.uniqueAddresses">
-								<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row')"  ng-if="personAddress.address || personAddress.address_notes">
+								<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row center-vertical')"  ng-if="personAddress.address || personAddress.address_notes">
 									<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" disabled>
-									<input class="col-md-8" type="text" ng-model="personAddress.address.address" disabled>
+									<div class="col-md-8">
+										<address-entry ng-model="personAddress.address"
+						        			latitude-model="personAddress.address.latitude"
+						        			longitude-model="personAddress.address.longitude" view-only=true></address-entry>
+					        		</div>
 									<div class="col-md-3">{{ vm.addressTypes[personAddress.address_type] }}</div>
 									<div class="col-md-12">{{ personAddress.address_notes }}</div>
 								</div>
 							</div>
-							<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row')" ng-repeat="mpAddress in vm.main.personaddress_set">
+							<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row center-vertical')" ng-repeat="mpAddress in vm.main.personaddress_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
-								<input class="col-md-8" type="text" ng-model="mpAddress.address.address" disabled>
+								<div class="col-md-8">
+									<address-entry ng-model="mpAddress.address"
+					        			latitude-model="mpAddress.address.latitude"
+					        			longitude-model="mpAddress.address.longitude" view-only=true></address-entry>
+				        		</div>
 								<div class="col-md-3">{{ vm.addressTypes[mpAddress.address_type] }}</div>
 								<div class="col-md-12">{{ mpAddress.address_notes }}</div>
 							</div>
 		            	</td>
 		            	<td>
-		            		<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row')" ng-repeat="personAddress in vm.compareDetails.uniqueAddresses">
-								<div ng-if="personAddress.address || personAddress.address_notes">
+		            		<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row center-vertical')" ng-repeat="personAddress in vm.compareDetails.uniqueAddresses">
 									<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" disabled>
-									<input class="col-md-8" type="text" ng-model="personAddress.address.address" disabled>
+									<div class="col-md-8">
+										<address-entry ng-model="personAddress.address"
+						        			latitude-model="personAddress.address.latitude"
+						        			longitude-model="personAddress.address.longitude" view-only=true></address-entry>
+					        		</div>
 									<div class="col-md-3">{{ vm.addressTypes[personAddress.address_type] }}</div>
 									<div class="col-md-12">{{ personAddress.address_notes }}</div>
-								</div>
 							</div>
 
-			            	<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row')" ng-repeat="mpAddress in vm.compare.master_person.personaddress_set">
+			            	<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row center-vertical')" ng-repeat="mpAddress in vm.compare.master_person.personaddress_set">
 								<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
-								<input class="col-md-8" type="text" ng-model="mpAddress.address.address" disabled>
+								<div class="col-md-8">
+									<address-entry ng-model="mpAddress.address"
+					        			latitude-model="mpAddress.address.latitude"
+					        			longitude-model="mpAddress.address.longitude" view-only=true></address-entry>
+				        		</div>
 								<div class="col-md-3">{{ vm.addressTypes[mpAddress.address_type] }}</div>
 								<div class="col-md-12">{{ mpAddress.address_notes }}</div>
 							</div>

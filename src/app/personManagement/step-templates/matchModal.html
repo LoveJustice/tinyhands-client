@@ -1,0 +1,368 @@
+<div id="matchModal" class="container">
+	<form name="AttachmentForm" ng-disabled="vm.isViewing === 'true'">
+        <div class="modal-body">
+        	<div ng-show="vm.status==='compare'">
+		    <table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
+		        <thead>
+		            <tr>
+		                <th class="text-center" width="10%"></th>
+		                <th class="text-center" width="45%"></th>
+		                <th class="text-center" width="45%"></th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		        	<tr ng-if="vm.compare.id">
+		        		<td colspan=3><b>Match Date</b> {{ vm.compare.match_date }} &nbsp;&nbsp;
+			        		<b>Matched By</b> {{ vm.compare.matched_by }} &nbsp;&nbsp; 
+			        		<b>Match Notes</b> {{ vm.compare.notes }}</td>
+		        	</tr>
+		            <tr>
+		            	<td><b>Master Name</b></td>
+		            	<td>
+		            		<div class="col-md-6">{{ vm.main.full_name }}</div>
+		            		<div class="col-md-6" ng-show="vm.mainDetails.photos.length > 0">
+		            			<div class="col-md-12">
+			            			<canvas id="mainCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
+												Your browser does not support the HTML5 canvas tag.
+									</canvas>
+								</div>
+								<div class="col-md-1">
+									<button class="btn btn-xs" ng-click="vm.photoMove(-1,'#mainCanvas')">
+						                <i class="fa fa-arrow-left"></i>
+						            </button>
+					            </div>
+					            <div class="col-md-4">image {{ vm.mainImageIndex+1 }} of {{ vm.mainDetails.photos.length }}</div>
+					            <div class="col-md-1">
+						            <button class="btn btn-xs" ng-click="vm.photoMove(1,'#mainCanvas')">
+						                <i class="fa fa-arrow-right"></i>
+						            </button>
+						        </div>
+						        <div class="col-md-12" ng-show="vm.personCanvasUrl !== null">
+									<a href="{{ vm.mainPhotoUrl }}" target="_blank">Full Size Image</a>
+								</div>
+		            		</div>
+		            	</td>
+		            	<td>
+		            		<div class="col-md-6">{{ vm.compare.master_person.full_name }}</div>
+		            		<div class="col-md-6" ng-show="vm.compareDetails.photos.length > 0">
+		            			<div class="col-md-12">
+			            			<canvas id="compareCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
+												Your browser does not support the HTML5 canvas tag.
+									</canvas>
+								</div>
+								<div class="col-md-1">
+									<button class="btn btn-xs" ng-click="vm.photoMove(-1,'#compareCanvas')">
+						                <i class="fa fa-arrow-left"></i>
+						            </button>
+					            </div>
+					            <div class="col-md-4">image {{ vm.compareImageIndex+1 }} of {{ vm.compareDetails.photos.length }}</div>
+					            <div class="col-md-1">
+						            <button class="btn btn-xs" ng-click="vm.photoMove(1, '#compareCanvas')">
+						                <i class="fa fa-arrow-right"></i>
+						            </button>
+						        </div>
+						        <div class="col-md-12" ng-show="vm.personCanvasUrl !== null">
+									<a href="{{ vm.comparePhotoUrl }}" target="_blank">Full Size Image</a>
+								</div>
+		            		</div>
+		            	</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Form(s)</b></td>
+		            	<td>{{ vm.getForms(vm.main) }}</td>
+		            	<td>{{ vm.getForms(vm.compare.master_person) }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Name(s)</b></td>
+		            	<td>{{ vm.getNames(vm.mainDetails) }}</td>
+		            	<td>{{ vm.getNames(vm.compareDetails) }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Gender</b></td>
+		            	<td>{{ vm.getGender(vm.main) }}</td>
+		            	<td>{{ vm.getGender(vm.compare.master_person) }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Nationality</b></td>
+		            	<td>{{ vm.main.nationality }}</td>
+		            	<td>{{ vm.compare.master_person.nationality }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Birthdate</b></td>
+		            	<td>{{ vm.main.birthdate }}</td>
+		            	<td>{{ vm.compare.master_person.birthdate }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Age</b></td>
+		            	<td>{{ vm.mainDetails.age }}</td>
+		            	<td>{{ vm.compareDetails.age }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Phone #s</b></td>
+		            	<td>
+			            	<div ng-class="vm.getCheckedClass(personPhone.phone_verified, 'row col-md-12')" ng-repeat="personPhone in vm.mainDetails.uniquePhones">
+								<input class="col-md-1 text-left" type="checkbox" ng-model="personPhone.phone_verified" disabled>
+								<input class="col-md-3" type="text" disabled ng-model="personPhone.number">
+								<div class="col-md-2">{{ vm.phoneTypes[personPhone.phone_type] }}</div>
+							</div>
+							<div ng-class="vm.getCheckedClass(mpPhone.phone_verified, 'row col-md-12')" ng-repeat="mpPhone in vm.main.personphone_set">
+								<input class="col-md-1" type="checkbox" ng-model="mpPhone.phone_verified" disabled>
+								<input class="col-md-3" type="text" ng-model="mpPhone.number" disabled>
+								<div class="col-md-2">{{ vm.phoneTypes[mpPhone.phone_type] }}</div>
+							</div>
+		            	</td>
+		            	<td>
+		            		<div ng-class="vm.getCheckedClass(personPhone.phone_verified, 'row col-md-12')" ng-repeat="personPhone in vm.compareDetails.uniquePhones">
+								<input class="col-md-1 text-left" type="checkbox" ng-model="personPhone.phone_verified" disabled>
+								<input class="col-md-3" type="text" disabled ng-model="personPhone.number">
+								<div class="col-md-2">
+									<div class="col-md-2">{{ vm.phoneTypes[personPhone.phone_type] }}</div>
+								</div>
+							</div>
+							<div ng-class="vm.getCheckedClass(mpPhone.phone_verified, 'row col-md-12')" ng-repeat="mpPhone in vm.compare.master_person.personphone_set">
+								<input class="col-md-1" type="checkbox" ng-model="mpPhone.phone_verified" disabled></form-step>
+								<input class="col-md-3" type="text" ng-model="mpPhone.number" disabled>
+								<div class="col-md-2">{{ vm.phoneTypes[mpPhone.phone_type] }}</div>
+							</div>
+		            	</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Addresses</b></td>
+		            	<td>
+			            	<div ng-repeat="personAddress in vm.mainDetails.uniqueAddresses">
+								<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row center-vertical')"  ng-if="personAddress.address || personAddress.address_notes">
+									<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" disabled>
+									<div class="col-md-8">
+										<address-entry ng-model="personAddress.address"
+						        			latitude-model="personAddress.address.latitude"
+						        			longitude-model="personAddress.address.longitude" view-only=true></address-entry>
+					        		</div>
+									<div class="col-md-3">{{ vm.addressTypes[personAddress.address_type] }}</div>
+									<div class="col-md-12">{{ personAddress.address_notes }}</div>
+								</div>
+							</div>
+							<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row center-vertical')" ng-repeat="mpAddress in vm.main.personaddress_set">
+								<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
+								<div class="col-md-8">
+									<address-entry ng-model="mpAddress.address"
+					        			latitude-model="mpAddress.address.latitude"
+					        			longitude-model="mpAddress.address.longitude" view-only=true></address-entry>
+				        		</div>
+								<div class="col-md-3">{{ vm.addressTypes[mpAddress.address_type] }}</div>
+								<div class="col-md-12">{{ mpAddress.address_notes }}</div>
+							</div>
+		            	</td>
+		            	<td>
+		            		<div ng-class="vm.getCheckedClass(personAddress.address_verified, 'row center-vertical')" ng-repeat="personAddress in vm.compareDetails.uniqueAddresses">
+									<input class="col-md-1" type="checkbox" ng-model="personAddress.address_verified" disabled>
+									<div class="col-md-8">
+										<address-entry ng-model="personAddress.address"
+						        			latitude-model="personAddress.address.latitude"
+						        			longitude-model="personAddress.address.longitude" view-only=true></address-entry>
+					        		</div>
+									<div class="col-md-3">{{ vm.addressTypes[personAddress.address_type] }}</div>
+									<div class="col-md-12">{{ personAddress.address_notes }}</div>
+							</div>
+
+			            	<div ng-class="vm.getCheckedClass(mpAddress.address_verified, 'row center-vertical')" ng-repeat="mpAddress in vm.compare.master_person.personaddress_set">
+								<input class="col-md-1" type="checkbox" ng-model="mpAddress.address_verified">
+								<div class="col-md-8">
+									<address-entry ng-model="mpAddress.address"
+					        			latitude-model="mpAddress.address.latitude"
+					        			longitude-model="mpAddress.address.longitude" view-only=true></address-entry>
+				        		</div>
+								<div class="col-md-3">{{ vm.addressTypes[mpAddress.address_type] }}</div>
+								<div class="col-md-12">{{ mpAddress.address_notes }}</div>
+							</div>
+						</td>	
+		            </tr>
+		            <tr>
+		            	<td><b>Social Media</b></td>
+		            	<td>
+		            		<div ng-class="vm.getCheckedClass(personSocial.social_media_verified, 'row col-md-12')" ng-repeat="personSocial in vm.mainDetails.uniqueSocialMedia">
+								<input class="col-md-1" type="checkbox" ng-model="personSocial.social_media_verified" disabled>
+								<input class="col-md-9" type="text" ng-model="personSocial.social_media" ng-disabled="true"></form-step>
+								<div class="col-md-2">{{ vm.socialMediaTypes[personSocial.social_media_type] }}</div>
+							</div>
+							
+							<div ng-class="vm.getCheckedClass(mpSocial.social_media_verified, 'row col-md-12')" ng-repeat="mpSocial in vm.main.personsocialmedia_set">
+								<input class="col-md-1" type="checkbox" ng-model="mpSocial.social_media_verified" disabled>
+								<input class="col-md-9" type="text" ng-model="mpSocial.social_media" disabled></form-step>
+								<div class="col-md-2">{{ vm.socialMediaTypes[mpSocial.social_media_type] }}</div>
+							</div>
+		            	</td>
+		            	<td>
+		            		<div ng-class="vm.getCheckedClass(personSocial.social_media_verified, 'row col-md-12')" ng-repeat="personSocial in vm.compareDetails.uniqueSocialMedia">
+								<input class="col-md-1" type="checkbox" ng-model="personSocial.social_media_verified" disabled>
+								<input class="col-md-9" type="text" ng-model="personSocial.social_media" ng-disabled="true"></form-step>
+								<div class="col-md-2">{{ vm.socialMediaTypes[personSocial.social_media_type] }}</div>
+							</div>
+							
+							<div ng-class="vm.getCheckedClass(mpSocial.social_media_verified, 'row col-md-12')" ng-repeat="mpSocial in vm.compare.master_person.personsocialmedia_set">
+								<input class="col-md-1" type="checkbox" ng-model="mpSocial.social_media_verified" disabled>
+								<input class="col-md-9" type="text" ng-model="mpSocial.social_media" disabled></form-step>
+								<div class="col-md-2">{{ vm.socialMediaTypes[mpSocial.social_media_type] }}</div>
+							</div>
+		            	</td>
+		            </tr>
+		            <tr>
+		            	<td><b>IDs</b></td>
+		            	<td>
+		            		<div class="row col-md-12" ng-repeat="personId in vm.mainDetails.uniqueId">
+								<input class="col-md-4" type="text" ng-model="personId.number" ng-disabled="true">
+								<div class="col-md-5">{{ personId.type }}</div>
+							</div>
+		            	</td>
+		            	<td>
+		            		<div class="row col-md-12" ng-repeat="personId in vm.compareDetails.uniqueId">
+								<input class="col-md-4" type="text" ng-model="personId.number" ng-disabled="true">
+								<div class="col-md-5">{{ personId.type }}</div>
+							</div>
+		            	</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Relation to PV</b></td>
+		            	<td>{{ vm.getPvRelations(vm.mainDetails) }}</td>
+		            	<td>{{ vm.getPvRelations(vm.compareDetails) }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Role</b></td>
+		            	<td>{{ vm.getRoles(vm.mainDetails) }}</td>
+		            	<td>{{ vm.getRoles(vm.compareDetails) }}</td>
+		            </tr>
+		            <tr>
+		            	<td><b>What do PV/Staff Believe</b></td>
+		            	<td>
+		            		<table class="table table-striped">
+								<thead>
+						            <tr>
+						            	<th>Interviewer</th>
+						            	<th></th>
+						            	<th>PV</th>
+						            </tr>
+					            </thead>
+					            <tbody>
+					            	 <tr ng-repeat="believe in vm.mainDetails.believes">
+					            	 	<td>{{ believe.interviewer }}</td>
+					            	 	<td>{{ believe.text }}</td>
+					            	 	<td>{{ believe.pv }} </td>
+					            	 </tr>
+					            </tbody>
+							</table>
+		            	</td>
+		            	<td>
+		            		<table class="table table-striped">
+								<thead>
+						            <tr>
+						            	<th>Interviewer</th>
+						            	<th></th>
+						            	<th>PV</th>
+						            </tr>
+					            </thead>
+					            <tbody>
+					            	 <tr ng-repeat="believe in vm.compareDetails.believes">
+					            	 	<td>{{ believe.interviewer }}</td>
+					            	 	<td>{{ believe.text }}</td>
+					            	 	<td>{{ believe.pv }} </td>
+					            	 </tr>
+					            </tbody>
+							</table>
+						</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Appearance</b></td>
+		            	<td>
+			            	<div class="col-md-12">
+								<textarea class="form-control" rows="3" ng-model="vm.main.appearance" disabled></textarea>
+								<div ng-repeat="appear in vm.mainDetails.uniqueAppearance"><textarea class="form-control" rows="1" ng-model="appear" disabled></textarea></div>
+							</div>
+		            	</td>
+		            	<td>
+							<div class="col-md-12">
+								<textarea class="form-control" rows="3" ng-model="vm.compare.master_person.appearance" disabled></textarea>
+								<div ng-repeat="appear in vm.compareDetails.uniqueAppearance"><textarea class="form-control" rows="1" ng-model="appear" disabled></textarea></div>
+							</div>
+						</td>
+		            </tr>
+		        </tbody>
+		    </table>
+		    </div>
+		    <div ng-show="vm.status==='match'">
+		    	<div ng-show="vm.misMatch.full_name || vm.misMatch.birthdate || vm.misMatch.gender || vm.misMatch.nationality">
+		    		<b>Resolve Master Person Differences</b>
+		    		<table class="table table-striped" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;">
+				        <thead>
+				            <tr>
+				                <th class="text-center" width="15%"></th>
+				                <th class="text-center" width="85%"></th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				        	<tr ng-if="vm.misMatch.full_name">
+				        		<td>Use Name</td>
+				        		<td>
+					        		<input type="radio" id="name1" name="mergeName" value="{{ vm.main.full_name }}" ng-model="vm.modalActions.full_name">
+					    			<label for="name1">{{ vm.main.full_name }}</label><br>
+					    			<input type="radio" id="name2" name="mergeName" value="{{ vm.compare.master_person.full_name }}" ng-model="vm.modalActions.full_name">
+					    			<label for="name2">{{ vm.compare.master_person.full_name }}</label><br>
+				        		</td>
+				        	</tr>
+				        	<tr ng-if="vm.misMatch.birthdate">
+				        		<td>Use Birthdate</td>
+				        		<td>
+					        		<input type="radio" id="birthdate1" name="mergeBirthdate" value="{{ vm.main.birthdate }}" ng-model="vm.modalActions.birthdate"
+					        				ng-click="vm.setEstimatedBirthdate(vm.main.estimated_birthdate)">
+					    			<label for="birthdate1">{{ vm.main.birthdate }}</label><br>
+					    			<input type="radio" id="birthdate2" name="mergeBirthdate" value="{{ vm.compare.master_person.birthdate }}" ng-model="vm.modalActions.birthdate"
+					    					ng-click="vm.setEstimatedBirthdate(vm.compare.master_person.estimated_birthdate)">
+					    			<label for="birthdate2">{{ vm.compare.master_person.birthdate}}</label><br>
+				        		</td>
+				        	</tr>
+				        	<tr ng-if="vm.misMatch.gender">
+				        		<td>Use Gender</td>
+				        		<td>
+					        		<input type="radio" id="gender1" name="mergeGender" value="{{ vm.main.gender }}" ng-model="vm.modalActions.gender">
+					    			<label for="gender1">{{ vm.getGender(vm.main) }}</label><br>
+					    			<input type="radio" id="gender2" name="mergeGender" value="{{ vm.compare.master_person.gender }}" ng-model="vm.modalActions.gender">
+					    			<label for="gender2">{{ vm.getGender(vm.compare.master_person) }}</label><br>
+				        		</td>
+				        	</tr>
+				        	<tr ng-if="vm.misMatch.nationality">
+				        		<td>Use Nationality</td>
+				        		<td>
+					        		<input type="radio" id="nationality1" name="mergeNationality" value="{{ vm.main.nationality }}" ng-model="vm.modalActions.nationality">
+					    			<label for="nationality1">{{ vm.main.nationality }}</label><br>
+					    			<input type="radio" id="nationality2" name="mergeNationality" value="{{ vm.compare.master_person.nationality }}" ng-model="vm.modalActions.nationality">
+					    			<label for="nationality2">{{ vm.compare.master_person.nationality }}</label><br>
+				        		</td>
+				        	</tr>
+				        </tbody>
+				    </table>
+		    	</div>
+		    	<hr>
+		    	<b>Notes</b>
+		    	<textarea class="form-control" rows="5" ng-model="vm.modalActions.notes"></textarea>
+		    </div>
+		</div>
+		<div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-2">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmedMatch()" ng-show="vm.status==='compare'">Confirmed Match</button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.proceedWithMatch()" ng-show="vm.status==='match'" ng-disabled="!vm.canProceedWithMatch()">Proceed</button>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.possibleMatch()" ng-show="vm.where !== 'possible' && vm.status==='compare'">Possible Match</button>
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.confirmedNonMatch()" ng-show="vm.where !== 'non' && vm.where !== 'create' && vm.status==='compare'">Non-Match</button>
+                </div>
+                <div class="col-xs-2 text-center">
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="vm.close()" ng-show="vm.status==='compare'">Close</button>
+                    <button class="btn btn-default" ng-click="vm.close()" ng-show="vm.status==='match'">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+	<div>
+	    <div class="row">
+	        <div class="col-md-2">
+	            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getKnownPersons()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
+	        </div>
+	        <div class="col-md-3">
+	            <p style="margin-top: 5px;">Results per page</p>
+	        </div>
+	        <div class="pull-right">
+	            <form>
+	                  <label>
+	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control" ng-keypress="vm.keyPress($event)">
+	                  </label>
+	                  <a class="btn btn-primary" ng-click="vm.searchKnownPersons()">Search</a>
+	            </form>
+	        </div>
+	    </div>
+	
+	    <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" >
+	        <thead class="sticky-table-header">
+	            <tr>
+	                <th id="knownPersonNameHeader" ng-click="vm.sortColumn = 'full_name'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="12%">
+	                	Name<i class="glyphicon" ng-class="vm.sortIcon('name')"></i>
+	                </th>
+	                <th id="knownPersonGenderHeader" ng-click="vm.sortColumn = 'gender'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="8%">
+	                    Gender<i class="glyphicon" ng-class="vm.sortIcon('gender')"></i>
+	                </th>
+	                <th id="knownPersonAgeHeader" ng-click="vm.sortColumn = 'age'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="6%">
+	                    Age<i class="glyphicon" ng-class="vm.sortIcon('age')"></i>
+	                </th>
+	                <th id="knownPersonAddress1Header" ng-click="vm.sortColumn = 'address'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="22%">
+	                    Address<i class="glyphicon" ng-class="vm.sortIcon('address')"></i>
+	                </th>
+	                <th id="knownPersonPhoneHeader" ng-click="vm.sortColumn = 'phone_contact'; vm.reverse = ! vm.reverse; vm.getKnownPersons()" class="text-center" width="10%">
+	                    Phone <i class="glyphicon" ng-class="vm.sortIcon('phone')"></i>
+	                </th>
+	                <th id="knownPersonFormKindHeader" class="text-center" width="8%">
+	                    Role
+	                </th>
+	                <th id="knownPersonAliasesHeader"  class="text-center" width="15%">
+	                    Aliases
+	                </th>
+	                <th id="knownPersonFormHeader" class="text-center" width="8%">
+	                    Form
+	                </th>
+	                <th id="knownPersonFormDateHeader" class="text-center" width="10%">
+	                    Form Date
+	                </th>
+	
+	            </tr>
+	        </thead>
+	        <tbody ng-init="vm.sortColumn = 'name'">
+	            <tr ng-repeat="knownPerson in vm.knownPersons | orderBy:vm.sortColumn:vm.reverse" ng-mouseenter="knownPerson.hover = true;vm.displayPopup($event, knownPerson.form_photo)" ng-mouseleave="knownPerson.hover = false;vm.hidePopup()">
+	                <td class="text-center">{{ knownPerson.full_name }}</td>
+	                <td class="text-center">{{ knownPerson.gender }}</td>
+	                <td class="text-center">{{ knownPerson.age }}</td>
+	                <td class="text-center">{{ knownPerson.address.address }}</td>
+	                <td class="text-center">{{ knownPerson.phone_contact }}</td>
+	                <td class="text-center">{{ knownPerson.form_kind }}</td>
+	                <td class="text-center">{{ knownPerson.aliases }}</td>
+	                <td class="text-center"><a ng-href="{{knownPerson.viewUrl}}">{{ knownPerson.form_number }}</a></td>
+	                <td class="text-center">
+	                	<center>{{ knownPerson.form_date }}</center>
+	                	<button class="btn btn-sm btn-primary" ng-click="vm.createCompare(knownPerson)">Compare</button>
+	                </td>
+	            </tr>
+	            <tr ng-show="vm.knownPersons.length == 0">
+	                <td colspan="12" style="text-align:center;"><h2>Nothing Matched your search for: "{{ vm.searchValue }}"</h2></td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
+	<div class="row text-center">
+        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreKnownPersons()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
+            Load more results
+        </button>
+    </div>
+	<div ng-show="vm.loading" class="loader-container">
+		<div class="loader">Loading...</div>
+	</div>
+</div>

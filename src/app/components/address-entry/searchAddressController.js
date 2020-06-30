@@ -1,9 +1,10 @@
 import './searchAddress.less';
 
 export default class SearchAddressController {
-    constructor($uibModal, $uibModalInstance, $scope, SearchAddressService, address) {
+    constructor($uibModal, $uibModalInstance, $scope, SearchAddressService, address, viewOnly) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
+        this.viewOnly = viewOnly;
         this.scope = $scope;
         this.addressString = "";
         this.address = address;

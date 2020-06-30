@@ -1,12 +1,6 @@
 <div class="form-group">
-  <div class="row">
-  	<div class="col-md-10">
-      <input disabled="true" name="addressEntry" class="form-control" type="text" ng-model="addressEntryController.$scope.ngModel.address" />
-    </div>
-    <div class="col-md-2">
-      <button ng-click="addressEntryController.searchAddress()" type="button">
-         <i class="fa fa-plus"></i>
-      </button>
-    </div>
+  <div class="row col-md-12 center-vertical">
+     <input id="address-entry" disabled="true" name="addressEntry" type="text" ng-model="addressEntryController.$scope.ngModel.address" />
+     <img id="address-icon" class="ico" ng-src="assets/images/location-map-marker.svg" ng-click="addressEntryController.searchAddress()">
   </div>
 </div>

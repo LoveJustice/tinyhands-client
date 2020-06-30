@@ -51,10 +51,10 @@
 	</div>
 	<div class="row">
 	    <div class="col-xs-4">
-	        <button class="btn btn-success float-left" ng-click="vm.save()" ng-disabled="!vm.selectedCandidate">Save</button>
+	        <button class="btn btn-success float-left" ng-click="vm.save()" ng-disabled="!vm.selectedCandidate" ng-show="!vm.viewOnly">Save</button>
 	    </div>
 	    <div class="col-xs-4 text-center">
-	        <button class="btn btn-danger" ng-click="vm.clearAddress()">Clear Address</button>
+	        <button class="btn btn-danger" ng-click="vm.clearAddress()" ng-show="!vm.viewOnly">Clear Address</button>
 	    </div>
 	    <div class="col-xs-4">
 	        <button class="btn btn-default float-right" ng-click="vm.cancel()">Close</button>

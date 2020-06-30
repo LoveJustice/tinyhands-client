@@ -14,7 +14,8 @@ export default function AddressEntryDirective() {
             label: '=?',
             ngModel: '=',
             latitudeModel: '=',
-            longitudeModel: '='
+            longitudeModel: '=',
+            viewOnly: '=',
         }
     };
 
@@ -42,6 +43,7 @@ class AddressEntryController {
             controllerAs: 'vm',
             resolve: {
                 address: () => this.$scope.ngModel,
+                viewOnly: () => this.$scope.viewOnly,
             },
             size: 'lg',
             templateUrl: searchAddressTemplate,

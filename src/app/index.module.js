@@ -31,6 +31,7 @@ import IRFModule from './irf/irf.module';
 import photoExportModule from './components/photo-export/photo-export.module';
 import countriesModule from './countries/countries.module';
 import idmanagementModule from './idmanagement/idmanagement.module';
+import personManagementModule from './personManagement/personManagement.module';
 import traffickermatchModule from './traffickermatch/traffickermatch.module';
 import relatedFormsModule from './relatedForms/relatedForms.module';
 import helpModule from './help/help.module.js';
@@ -68,6 +69,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         photoExportModule,
         countriesModule,
         idmanagementModule,
+        personManagementModule,
         traffickermatchModule,
         relatedFormsModule,
         helpModule,

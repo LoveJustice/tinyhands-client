@@ -37,14 +37,31 @@
 	            </label>
 	          </div>
 	      </div>
+	      <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="joined">Start Date</label>
+	            <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="StaffModalController.dateData.questions[969].value">
+	          </div>
+	      </div>
+	      <div class="row" ng-if="StaffModalController.isRemove">
+	    	<div class="col-sm-6 form-group">
+	          <h3>Enter last date as member of staff</h3>
+	          <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="StaffModalController.dateData.questions[970].value">
+	        </div>
+	    </div>
 	  </div>
 	  <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="StaffModalController.save()" ng-if="!StaffModalController.isViewing">Save</button>
+                    <button class="btn btn-success float-left" ng-click="StaffModalController.save()" ng-if="!StaffModalController.isViewing"
+                    		ng-show="!StaffModalController.isRemove"
+                    		ng-disabled="StaffModalController.questions[957].response.value==='' || StaffModalController.dateData.questions[969].value===''">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
-                    <button class="btn btn-danger" ng-click="StaffModalController.delete()" ng-if="!StaffModalController.isAdd && !StaffModalController.isViewing">Delete</button>
+                    <button class="btn btn-danger" ng-click="StaffModalController.remove()"
+                    		ng-if="!StaffModalController.isAdd && !StaffModalController.isViewing && !StaffModalController.isRemove">Remove from Staff</button>
+                    <button class="btn btn-danger" ng-click="StaffModalController.save()"
+                    		ng-if="!StaffModalController.isAdd && !StaffModalController.isViewing && StaffModalController.isRemove">Proceed to Remove from Staff</button>
                 </div>
                 <div class="col-xs-4">
                     <button class="btn btn-default" ng-click="StaffModalController.dismiss()">Close</button>

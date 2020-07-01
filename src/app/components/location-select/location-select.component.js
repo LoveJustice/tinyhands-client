@@ -49,7 +49,7 @@ export class LocationSelectController {
     getLocation() {
         if (typeof this.stationId !== 'undefined') {
                 this.LocationService.getLocation(this.stationId).then((response) => {
-                    this.location = response.data.results.map((x) => x.name);
+                    this.location = response.data.map((x) => x.name);
                 });
         }
     }

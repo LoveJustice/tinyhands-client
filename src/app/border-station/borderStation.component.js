@@ -1,5 +1,6 @@
 import {BaseFormController} from '../baseFormController.js';
 import {BaseModalController} from '../baseModalController.js';
+import StationModalController from './stationModal.controller';
 import './borderStation.less';
 
 import detailTemplate from './step-templates/detail.html';
@@ -168,12 +169,12 @@ class BorderStationController extends BaseFormController  {
     }
     
     openStaffModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, BaseModalController, 'StaffModalController',
+        this.commonModal(responses, isAdd, idx, StationModalController, 'StaffModalController',
                 staffModalTemplate, 'Staff');
     }
     
     openLocationModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, BaseModalController, 'LocationModalController',
+        this.commonModal(responses, isAdd, idx, StationModalController, 'LocationModalController',
                 locationModalTemplate, 'Location');
     }
     

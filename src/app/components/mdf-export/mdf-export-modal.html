@@ -4,9 +4,16 @@
 
 <div class="modal-body">
     <div class="row">
-
+	  <div class="col-md-4">
+	    <h3>Country</h3>
+	    <select ng-change="vm.getNumberOfMdfs()" 
+                ng-model="vm.selectedCountryId"
+                class="form-control">
+          <option ng-repeat="p in vm.countries" value="{{p.id}}">{{p.name}}</option>
+        </select>
+	  </div>
       
-      <div class="col-md-6">
+      <div class="col-md-4">
         <h3>From: {{vm.fromDate | date:' MMMM d yyyy' }}</h3>
         <select ng-change="vm.getNumberOfMdfs()" 
                 ng-model="vm.selectedMonth"
@@ -15,7 +22,7 @@
       </select>
     </div>
     
-    <div class="col-md-6">
+    <div class="col-md-4">
       <h3>Year</h3>
         <input ng-model="vm.selectedYear" ng-change="vm.getNumberOfMdfs()" type="number" class="form-control" >
       </div>

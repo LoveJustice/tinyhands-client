@@ -1,29 +1,19 @@
 <div id="tally" ng-cloak>
 	<div>
-		<!--   REGION: Tally w/Larger screens    -->
-		<div class="hidden-md hidden-sm hidden-xs col-lg-10 col-lg-offset-1">
-			<div class="text-center tally-tab" ng-repeat="day in tally.days" ng-init="showInt = !tally.isEmptyObject(day.interceptions)"
-				ng-mousedown="showInt = !showInt" ng-mouseleave="tally.onMouseLeave(day)" ng-style="tally.changeColor(day)">
-				<h3 class="day-of-week">{{tally.getDayOfWeek(day.date)}}</h3>
-				<div ng-repeat="(station,numIntercepts) in day.interceptions">
-					<h4 ng-show="showInt" class="animated tallyFade">{{numIntercepts}} Int in {{station}}</h4>
+		<div class="col-md-3">&nbsp;</div>
+		<div class="col-md-2 tally-entry" ng-show="tally.tally">
+			<div class="row">
+				<div class="tally-total-label">Past 6 Month Intercepts</div>
+				<div class="tally-count">{{ tally.tally.count }}</div>
+			</div>
+			<div class="row" ng-repeat="region in tally.tally.regions" ng-click="tally.toggleShowCountry(region)">
+				<div class="tally-region-label">{{ region.name }}</div>
+				<div class="tally-region-count">{{ region.count }}</div>
+				<div class="row" ng-repeat="country in region.countries" ng-show="region.showDetail">
+					<div class="tally-country-label">{{ country.name }}</div>
+					<div class="tally-count">{{ country.count }}</div>
 				</div>
-				<h4 ng-show="showInt && tally.isEmptyObject(day.interceptions)" class="animated tallyFade">No Interceptions</h4>
-			</div>
-
-			<div class="text-center tally-tab">
-				<h3 class="day-of-week">YTD: {{ tally.ytd }}</h3>
 			</div>
 		</div>
-		<!--   ENDREGION: Tally w/Larger screens     -->
-
-		<!--   REGION: Tally w/Smaller screens    -->
-		<div class="hidden-lg tally-tab-small">
-			<div class="text-center" ng-repeat="day in tally.days" ng-style="tally.changeColor(day)" ng-mouseleave="tally.onMouseLeave(day)">
-				<h3 class="day-of-week">{{tally.getDayOfWeek(day.date).substring(0,2)}}</h3>
-				<h4>{{tally.sumNumIntercepts(day)}}</h4>
-			</div>
-		</div>
-		<!--   ENDREGION: Tally w/Smaller screens     -->
 	</div>
 </div>

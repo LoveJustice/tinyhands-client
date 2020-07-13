@@ -24,8 +24,31 @@
 			</div>
         </div>
         <!-- End dropdown -->
-        <div class="col-md-2">
-        	&nbsp;
+        <div class="col-md-6">
+			<div class="row">
+        	<div class="col-md-4">Filter by Verification Date</div>
+        	<div class="col-md-4">
+        		<select ng-model="irfNewListCtrl.queryParameters.verification_filter" class="form-control" ng-change="irfNewListCtrl.searchIrfs()">
+        			<option value="None">None</option>
+        			<option value="First Verification">First Verification</option>
+        			<option value="Second Verification">Second Verification</option>
+        		</select>
+        	</div>
+        	</div>
+        	<div class="row center-vertical" ng-show="irfNewListCtrl.queryParameters.verification_filter!='None'">
+	        	<div class="col-md-1 center-vertical">
+	        		<p>From:</p>
+	        	</div>
+	        	<div class="col-md-4">
+	        	<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="irfNewListCtrl.verification_start" ng-change="irfNewListCtrl.searchIrfs()">
+	        	</div>
+	        	<div class="col-md-1 center-vertical">
+	        		<p>To:</p>
+	        	</div>
+	        	<div class="col-md-4">
+	        		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="irfNewListCtrl.verification_end" ng-change="irfNewListCtrl.searchIrfs()">
+	        	</div>
+        	</div>
         </div>
         
         <!-- Search -->
@@ -72,9 +95,9 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('date_time_of_interception', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('date_time_of_interception', 'reverse')}"></i>
                 </th>
-                <th ng-click="irfNewListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                <th ng-click="irfNewListCtrl.updateSort('logbook_second_verification_date')" width="16%" class="hidden-xs">Date of Second Validation
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('logbook_second_verification_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('logbook_second_verification_date', 'reverse')}"></i>
                 </th>
                 <th ng-click="irfNewListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
@@ -94,7 +117,7 @@
                 <td>{{ irf.number_of_victims | number }}</td>
                 <td>{{ irf.number_of_traffickers | number }}</td>
                 <td>{{ irf.date_time_of_interception | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ irf.date_time_entered_into_system | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ irf.logbook_second_verification_date }}</td>
                 <td class="hidden-xs">{{ irf.date_time_last_updated | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.viewUrl}}">View</a></td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','EDIT',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.editUrl}}">Edit</a></td>

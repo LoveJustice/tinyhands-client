@@ -5,6 +5,6 @@ export default class LocationService {
     }
 
     getLocation(stationId) {
-        return this.service.get(`api/location/?border_station=${stationId}`);
+        return this.service.get(`api/border-station/${stationId}/location/`);
     }
 }

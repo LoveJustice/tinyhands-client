@@ -5,6 +5,6 @@ export default class StaffService {
     }
 
     getStaff(stationId) {
-        return this.service.get(`api/staff/?border_station=${stationId}`);
+        return this.service.get(`api/border-station/${stationId}/staff/`);
     }
 }

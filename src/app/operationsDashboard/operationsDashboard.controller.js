@@ -1,4 +1,3 @@
-/* global jQuery */
 import './operationsDashboard.less';
 
 class OperationsDashboardController {

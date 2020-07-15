@@ -1,0 +1,141 @@
+<div id="operationsDashboard" class="container-fluid padding-top-20">
+    <div class="row col-md-12 center-vertical">
+		<div class="col-md-1">
+			<label>Country</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.dashboardCountry" ng-change="vm.dashboardCountrySelect()">
+				<option ng-repeat="country in vm.viewCountries" value="{{country.id}}">{{ country.name}} </option>
+			</select>
+		</div>
+		<div class="col-md-2 text-right">
+	        <label>Include Closed Stations</label>
+	    </div>
+	    <div class="col-md-1">
+	        <input type="checkbox" ng-model="vm.includeClosed">
+    	</div>
+	</div>
+	<div ng-show="vm.dashboardData">
+	 <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.dashboardData">
+        <thead class="sticky-table-header">
+        	<tr>
+        		<th>Exchange Rate</th>
+        		<th>{{ vm.exchangeRate }}</th>
+        		<th colspan=18></th>
+        	</tr>
+        	<tr>
+        		<th class="boldRightBorder" colspan=5></th>
+        		<th class="boldRightBorder" colspan=6>Last 6 Months</th>
+        		<th class="boldRightBorder" colspan=4>All Time</th>
+        		<th class="rightBorder" colspan=5>Last Month {{ vm.dashboardData.month }}</th>
+        	</tr>
+            <tr>
+            	<th class="rightBorder">Station Name</th>
+            	<th class="rightBorder">
+            		<div>Station</div>
+            		<div>Code</div>
+            	</th>
+            	<th class="rightBorder">
+            		<div>Avg</div>
+            		<div>Monthly</div>
+            		<div>Report</div>
+            	</th>
+            	<th class="rightBorder">
+            		<div>Station</div>
+            		<div>Compliance</div>
+            	</th>
+            	<th class="boldRightBorder">
+            		<div>Impact</div>
+            		<div>Budget</div>
+            		<div>Ration</div>
+            	</th>
+            	<th class="rightBorder">Budget</th>
+            	<th class="rightBorder">Int</th>
+            	<th class="rightBorder">Ast</th>
+            	<th class="rightBorder">Gsp</th>
+            	<th class="rightBorder">Emp</th>
+            	<th class="boldRightBorder">CIF</th>
+            	<th class="rightBorder">Int</th>
+            	<th class="rightBorder">Ast</th>
+            	<th class="rightBorder">
+            		<div>% Leading</div>
+            		<div>to Ast</div>
+            	</th>
+            	<th class="boldRightBorder">Convictions</th>
+            	<th class="rightBorder">Budget</th>
+            	<th class="rightBorder">Int</th>
+            	<th class="rightBorder">Ast</th>
+            	<th class="rightBorder">Gsp</th>
+            	<th class="rightBorder">Emp</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr ng-repeat="entry in vm.dashboardData.entries" ng-show="entry.station_open || vm.includeClosed">
+        		<td class="rightBorder">{{ entry.station_name }}</td>
+        		<td class="rightBorder">{{ entry.station_code }}</td>
+        		<td class="rightBorder">{{ entry.monthly_report }}</td>
+        		<td class="rightBorder">{{ entry.compliance }}</td>
+        		<td class="boldRightBorder">{{ vm.computeImpact(entry).toLocaleString('en-US', vm.digits2Format) }}</td>
+        		<td class="rightBorder">{{ entry['6month_budget'].toLocaleString('en-US', vm.moneyFormat) }}</td>
+        		<td class="rightBorder">{{ entry['6month_intercepts'] }}</td>
+        		<td class="rightBorder">{{ entry['6month_arrests'] }}</td>
+        		<td class="rightBorder">{{ entry['6month_gospel'] }}</td>
+        		<td class="rightBorder">{{ entry['6month_empowerment'] }}</td>
+        		<td class="boldRightBorder">{{ entry['6month_cifs'] }}</td>
+        		<td class="rightBorder">{{ entry.to_date_intercepts }}</td>
+        		<td class="rightBorder">{{ entry.to_date_arrests }}</td>
+        		<td class="rightBorder">
+        			<div ng-if="entry.to_date_intercepts > 0">
+        				{{ (entry.to_date_arrests * 100 /entry.to_date_intercepts).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
+        		</td>
+        		<td class="boldRightBorder">{{ entry.to_date_convictions }}</td>
+        		<td class="rightBorder">{{ entry.last_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
+        		<td class="rightBorder">{{ entry.last_intercepts }}</td>
+        		<td class="rightBorder">{{ entry.last_arrests}}</td>
+        		<td class="rightBorder">{{ entry.last_gospel }}</td>
+        		<td class="rightBorder">{{ entry.last_empowerment }}</td>
+        	</tr>
+        	<tr>
+        		<td class="total rightBorder"><b>TOTAL</b></td>
+        		<td class="total rightBorder">{{ vm.entryCount() }}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.monthly_report.toLocaleString('en-US', vm.digits1Format)}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.compliance.toLocaleString('en-US', vm.digits1Format)}}</td>
+        		<td class="total boldRightBorder" ng-if="vm.dashboardData.totals['6month_arrests'] > 0">
+        			{{ (vm.dashboardData.totals['6month_budget']/vm.dashboardData.totals['6month_intercepts'] *.4).toLocaleString('en-US', vm.moneyFormat) }}
+        		</td>
+        		<td class="total boldRightBorder" ng-if="!vm.dashboardData.totals['6month_arrests'] || vm.dashboardData.totals['6month_arrests'] <= 0">
+        			{{ (vm.dashboardData.totals['6month_budget']/vm.dashboardData.totals['6month_intercepts'] *.8).toLocaleString('en-US', vm.moneyFormat) }}
+        		</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals['6month_budget'].toLocaleString('en-US', vm.moneyFormat) }}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals['6month_intercepts']}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals['6month_arrests']}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals['6month_gospel']}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals['6month_empowerment']}}</td>
+        		<td class="total boldRightBorder">{{vm.dashboardData.totals['6month_cifs']}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_intercepts}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_arrests}}</td>
+        		<td class="total rightBorder">
+        			<div ng-if="vm.dashboardData.totals.to_date_intercepts > 0">
+        				{{ (vm.dashboardData.totals.to_date_arrests * 100 /vm.dashboardData.totals.to_date_intercepts).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
+        			<div ng-if="vm.dashboardData.totals.to_date_intercepts <= 0"></div>
+        		</td>
+        		<td class="total boldRightBorder">{{vm.dashboardData.totals.to_date_convictions}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.last_budget.toLocaleString('en-US', vm.moneyFormat)}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.last_intercepts}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.last_arrests}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.last_gospel}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.last_empowerment}}</td>
+        		
+        	</tr>
+        </tbody>
+     </table>
+     </div>
+    <div class="alert alert-warning" ng-repeat="warnings in vm.getWarningMessages()">
+        <strong>Warning! {{warnings}}</strong>
+    </div>
+    <div class="alert alert-danger" ng-repeat="errors in vm.getErrorMessages()">
+        <strong>Error! {{errors}}</strong>
+    </div>
+</div>

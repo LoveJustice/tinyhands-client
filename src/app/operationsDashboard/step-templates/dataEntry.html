@@ -1,0 +1,58 @@
+<fieldset class="form-horizontal">
+	<div class="row col-md-12 form-group center-vertical">
+		<div class="col-md-1">
+			<label>Country</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.dataEntryCountry" ng-change="vm.dataEntryCountrySelect()">
+				<option ng-repeat="country in vm.editCountries" value="{{country.id}}">{{ country.name}} </option>
+			</select>
+		</div>
+	</div>
+	<div class="row col-md-12">
+		<div class="row col-md-12 center-vertical">
+			<div class="col-md-3 text center">
+				<h3>{{ vm.monthNames[vm.showMonth] }} {{ vm.showYear }}</h3>
+			</div>
+			<div class="col-md-1">
+				<button class="btn btn-xs" ng-click="vm.changeMonth(1)">
+		        	<i class="fa fa-arrow-left"></i>
+		        </button>
+			</div>
+			<div class="col-md-1">
+				<button class="btn btn-xs" ng-click="vm.changeMonth(-1)">
+		        	<i class="fa fa-arrow-right"></i>
+		        </button>
+			</div>
+		</div>
+		<table class="table table-striped" float-thead="vm.entryStickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.dataEntryData">
+	        <thead class="sticky-table-header">
+	        	<tr>
+	        		<th>Station Name</th>
+	        		<th class="boldRightBorder">Station Code</th>
+	        		<th>Budget</th>
+	        		<th>Intercepts</th>
+	        		<th>Arrests</th>
+	        		<th>Gospel</th>
+	        		<th>Empowerment</th>
+	        		<th>Convictions</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	<tr ng-repeat="entry in vm.dataEntryData">
+	        		<td>{{ entry.station_name }}</td>
+	        		<td class="boldRightBorder">{{ entry.station_code }}</td>
+	        		<td><input type="number" ng-model="entry.budget"></td>
+	        		<td><input type="number" ng-model="entry.intercepts"></td>
+	        		<td><input type="number" ng-model="entry.arrests"></td>
+	        		<td><input type="number" ng-model="entry.gospel"></td>
+	        		<td><input type="number" ng-model="entry.empowerment"></td>
+	        		<td><input type="number" ng-model="entry.convictions"></td>
+	        	</tr>
+	        </tbody>
+	     </table>
+     </div>
+     <div class="text-center">
+     	<button class="btn btn-success" ng-click="vm.save()">Save</button>
+     </div>
+</fieldset>

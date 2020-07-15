@@ -1,10 +1,14 @@
 class CountryModalController {
-    constructor($uibModalInstance, country, $scope) {
+    constructor($uibModalInstance, country, regions, $scope) {
         'ngInject';
 
         this.modalInstance = $uibModalInstance;
         this.scope = $scope;
+        this.regions = reginos;
         this.scope.country = angular.copy(country);
+        if (this.scope.country && this.scope.country.region) {
+            this.scope.country.region = '' + this.scope.country.region;
+        }
     }
 
     save() {

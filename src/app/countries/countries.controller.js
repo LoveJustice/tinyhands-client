@@ -1,6 +1,5 @@
 import EditCountryModalTemplate from './countryModal.html';
 
-
 class CountriesController {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, countriesService, $uibModal) {
         'ngInject';
@@ -15,7 +14,9 @@ class CountriesController {
         this.loading = false;
         this.countries = [];
         this.modal = $uibModal;
-
+        this.regions = [];
+        
+        this.getRegions();
         this.getCountries();
     }
 
@@ -29,6 +30,12 @@ class CountriesController {
             }
         }
         return "glyphicon-sort";
+    }
+    
+    getRegions() {
+        this.countriesService.getRegions().then((promise) => {
+            this.regions = promise.data.results;
+        });
     }
 
     getCountries() {
@@ -69,7 +76,8 @@ class CountriesController {
             resolve: {
                 country: function () {
                     return country;
-                }
+                },
+                regions:() => this.regions,
             }
         });
         modalInstance.result.then((country) => {
@@ -89,7 +97,8 @@ class CountriesController {
           resolve: {
               country: function () {
                   return country;
-              }
+              },
+              regions:() => this.regions,
           }
       });
       modalInstance.result.then((country) => {

@@ -50,7 +50,7 @@ export class StaffSelectController {
     getStaff() {
     	if (typeof this.stationId !== 'undefined') {
 	        this.StaffService.getStaff(this.stationId).then((response) => {
-	            this.staff = response.data.results.map((x) => `${x.first_name} ${x.last_name}`);
+	            this.staff = response.data.map((x) => `${x.first_name} ${x.last_name}`);
 	        });
     	}
     }

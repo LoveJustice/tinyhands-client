@@ -14,18 +14,16 @@ class MonthlyStationDataEntryController {
         this.editCountries = [];
         
         let today = new Date();
-        this.currentMonth = today.getMonth();
-        this.currentYear = today.getFullYear();
+        this.showMonth = today.getMonth();
+        this.showYear = today.getFullYear();
         if (today.getDate() < 6) {
-            this.currentMonth -= 1;
+            this.showMonth -= 1;
         }
-        if (this.currentMonth < 1) {
-            this.currentYear -= 1;
-            this.currentMonth = 12 - this.currentMonth;
+        if (this.showMonth < 1) {
+            this.showYear -= 1;
+            this.showMonth = 12 - this.showMonth;
         }
-        this.showYear = this.currentYear;
-        this.showMonth = this.currentMonth;
-        this.showDate = new Date(this.showYear, this.showMonth-1);
+        this.showMonthStr = '' + this.showMonth;
         
         let tmp = sessionStorage.getItem('station-stats-country');
         if (!tmp) {
@@ -66,13 +64,6 @@ class MonthlyStationDataEntryController {
         }
     }
     
-    changeDate() {
-        this.showMonth = this.showDate.getMonth() + 1;
-        this.showYear = this.showDate.getFullYear();
-        
-        this.dataEntryCountrySelect();
-    }
-    
     getOperationsData(countryId, year, month) {
         //this.dataEntryData = null;
         this.service.getOperationsData(countryId, year, month).then((promise) => {
@@ -80,6 +71,15 @@ class MonthlyStationDataEntryController {
             this.originalData = jQuery.extend(true, {}, promise.data);
         });
         
+    }
+    
+    setMonth() {
+        this.showMonth = parseInt(this.showMonthStr);
+        this.dataEntryCountrySelect();
+    }
+    
+    setYear() {
+        this.dataEntryCountrySelect();
     }
     
     changeMonth(increment) {
@@ -97,9 +97,9 @@ class MonthlyStationDataEntryController {
             this.showMonth = 12;
             this.showYear -= 1;
         }
-
+        this.showMonthStr = '' + this.showMonth;
+        
         this.dataEntryCountrySelect();
-        this.showDate = new Date(this.showYear, this.showMonth-1);
     }
     
     hasBeenModified() {

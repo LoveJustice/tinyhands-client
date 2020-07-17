@@ -25,6 +25,7 @@ class MonthlyStationDataEntryController {
         }
         this.showYear = this.currentYear;
         this.showMonth = this.currentMonth;
+        this.showDate = new Date(this.showYear, this.showMonth-1);
         
         let tmp = sessionStorage.getItem('station-stats-country');
         if (!tmp) {
@@ -65,6 +66,13 @@ class MonthlyStationDataEntryController {
         }
     }
     
+    changeDate() {
+        this.showMonth = this.showDate.getMonth() + 1;
+        this.showYear = this.showDate.getFullYear();
+        
+        this.dataEntryCountrySelect();
+    }
+    
     getOperationsData(countryId, year, month) {
         //this.dataEntryData = null;
         this.service.getOperationsData(countryId, year, month).then((promise) => {
@@ -91,6 +99,7 @@ class MonthlyStationDataEntryController {
         }
 
         this.dataEntryCountrySelect();
+        this.showDate = new Date(this.showYear, this.showMonth-1);
     }
     
     hasBeenModified() {

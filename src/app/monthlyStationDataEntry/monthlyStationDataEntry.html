@@ -14,6 +14,12 @@
 	    <div class="col-md-1">
 	        <input type="checkbox" ng-model="vm.includeClosed">
     	</div>
+    	<div class="col-md-1">
+	        <label>Month</label>
+    	</div>
+    	<div class="col-md-2">
+    		<input type="month" class="form-control" ng-model="vm.showDate" ng-change="vm.changeDate()">
+		</div>
 	</div>
 	<div class="row col-md-12">
 		
@@ -21,24 +27,22 @@
 	        <thead class="sticky-table-header">
 	        	<tr>
 	        		<th colspan=2>
-	        			<h3>{{ vm.monthNames[vm.showMonth] }} {{ vm.showYear }}</h3>
 	        		</th>
 	        		<th>
 	        			<button class="btn btn-xs" ng-click="vm.changeMonth(1)">
 				        	<i class="fa fa-arrow-left"></i>
 				        </button>
-	        		</th>
-	        		<th>
-	        			<button class="btn btn-xs" ng-click="vm.changeMonth(-1)">
+				        &nbsp;
+				        <button class="btn btn-xs" ng-click="vm.changeMonth(-1)">
 				        	<i class="fa fa-arrow-right"></i>
 				        </button>
 	        		</th>
-	        		<th colspan=4>
+	        		<th colspan=5>
 	        		</th>
 	        	</tr>
 	        	<tr>
-	        		<th>Station Name</th>
-	        		<th class="boldRightBorder">Station Code</th>
+	        		<th class="stationName">Station Name</th>
+	        		<th class="boldRightBorder stationCode">Station Code</th>
 	        		<th>Budget</th>
 	        		<th>Intercepts</th>
 	        		<th>Arrests</th>

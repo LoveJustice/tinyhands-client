@@ -82,7 +82,10 @@ class OperationsDashboardController {
                 if (this.dashboardData.entries[idx].station_open) {
                     this.openEntries += 1;
                 }
+                this.dashboardData.entries[idx].impact = this.computeImpact(this.dashboardData.entries[idx]);
             }
+            this.computePercentile(this.dashboardData.entries, 'impact','impactColor', ['color1','color2','color3','color4','color5']);
+            this.computePercentile(this.dashboardData.entries, 'compliance','complianceColor', ['color1','color2','color3','color4','color5']);
         });
     }
     
@@ -108,10 +111,52 @@ class OperationsDashboardController {
             percent_budget = entry['6month_budget']/this.dashboardData.totals['6month_budget'];
         }
         if (percent_budget > 0) {
-            result = (percent_intercepts + percent_arrests)/2/percent_budget;
+            result = ((percent_intercepts + percent_arrests)/2/percent_budget).toFixed(2);
         }
         
         return result;
+    }
+    
+    computePercentile(list, valueField, colorField, colorScheme) {
+        let values = [];
+        for (let idx=0; idx < list.length; idx++) {
+            let tmp = list[idx][valueField];
+            if (tmp) {
+                if (typeof tmp === 'string') {
+                    tmp = parseFloat(tmp);
+                }
+                values.push(tmp);
+            }
+        }
+        values.sort((a, b) => a - b);
+        let levels = [];
+        for (let idx=colorScheme.length-1; idx > 0; idx--) {
+            levels.push(values[Math.trunc(values.length*idx/colorScheme.length)]);
+        }
+        for (let idx=0; idx < list.length; idx++) {
+            if (list[idx][valueField]) {
+                for (let levelIdx=0; levelIdx < levels.length; levelIdx++) {
+                    let tmp = list[idx][valueField];
+                    if (typeof tmp === 'string') {
+                        tmp = parseFloat(tmp);
+                    }
+                    if (tmp >= levels[levelIdx]) {
+                        list[idx][colorField] = colorScheme[levelIdx];
+                        break;
+                    }
+                }
+                if (!list[idx][colorField]) {
+                    list[idx][colorField] = colorScheme[colorScheme.length-1];
+                }
+            }
+        }
+    }
+    
+    getClass(entryClass, baseClass) {
+        if (entryClass) {
+            return entryClass + ' ' + baseClass;
+        }
+        return baseClass;
     }
 
     save() {

@@ -1,5 +1,5 @@
 <div id="operationsDashboard" class="container-fluid padding-top-20">
-    <div class="row col-md-12 center-vertical">
+    <div class="row col-md-12 center-vertical padding-bottom-20">
 		<div class="col-md-1">
 			<label>Country</label>
 		</div>
@@ -15,13 +15,20 @@
 	        <input type="checkbox" ng-model="vm.includeClosed">
     	</div>
 	</div>
-	<div ng-show="vm.dashboardData">
+	<div id="dashboardTable" ng-show="vm.dashboardData">
 	 <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.dashboardData">
         <thead class="sticky-table-header">
         	<tr>
-        		<th>Exchange Rate</th>
+        		<th class="rightBorder">Exchange Rate</th>
         		<th>{{ vm.exchangeRate }}</th>
-        		<th colspan=18></th>
+        		<th class="topHeader" colspan=3></th>
+        		<th class="topHeader">Int to Date</th>
+        		<th class="topHeader">{{vm.dashboardData.totals.to_date_intercepts}}</th>
+        		<th class="topHeader">
+        			<div>Ast to</div><div>Date</div>
+        		</th>
+        		<th class="topHeader">{{vm.dashboardData.totals.to_date_arrests}}</th>
+        		<th class="topHeader" colspan=11></th>
         	</tr>
         	<tr>
         		<th class="boldRightBorder" colspan=5></th>
@@ -73,9 +80,9 @@
         	<tr ng-repeat="entry in vm.dashboardData.entries" ng-show="entry.station_open || vm.includeClosed">
         		<td class="rightBorder">{{ entry.station_name }}</td>
         		<td class="rightBorder">{{ entry.station_code }}</td>
-        		<td class="rightBorder">{{ entry.monthly_report }}</td>
-        		<td class="rightBorder">{{ entry.compliance }}</td>
-        		<td class="boldRightBorder">{{ vm.computeImpact(entry).toLocaleString('en-US', vm.digits2Format) }}</td>
+        		<td ng-class="vm.getClass(entry.monthlyReportColor,'rightBorder')">{{ entry.monthly_report }}</td>
+        		<td ng-class="vm.getClass(entry.complianceColor,'rightBorder')">{{ entry.compliance }}</td>
+        		<td ng-class="vm.getClass(entry.impactColor,'boldRightBorder')">{{ entry.impact.toLocaleString('en-US', vm.digits2Format) }}</td>
         		<td class="rightBorder">{{ entry['6month_budget'].toLocaleString('en-US', vm.moneyFormat) }}</td>
         		<td class="rightBorder">{{ entry['6month_intercepts'] }}</td>
         		<td class="rightBorder">{{ entry['6month_arrests'] }}</td>

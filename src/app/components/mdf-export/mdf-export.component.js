@@ -27,22 +27,33 @@ class ExportMdfsModalController {
 
         this.selectedMonth = currentDate.getMonth();
         this.selectedYear = currentDate.getFullYear();
-        this.getNumberOfMdfs();
+        this.selectedCountryId = null;
+        this.userCountries();
+    }
+    
+    userCountries() {
+        this.service.get('api/user_permission/countries/current-user/?permission_group=BUDGETS').then((promise) => {
+            this.countries = promise.data;
+            if (this.countries.length == 1) {
+                this.selectedCountryId = '' + this.countries[0].id;
+                this.getNumberOfMdfs();
+            }
+        });
     }
 
     exportPhotos() {
         if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12) {
             return;
         }
-        let url = constants.BaseUrl + `api/mdf/${this.selectedMonth}/${this.selectedYear}/pdf`;
+        let url = constants.BaseUrl + `api/mdf/${this.selectedMonth}/${this.selectedYear}/${this.selectedCountryId}/pdf`;
         this.window.open(url, '_blank');
     }
 
     getNumberOfMdfs() {
-        if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12) {
+        if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12 || this.selectedCountryId == null) {
             return;
         }
-        this.service.get(`api/mdf/${this.selectedMonth}/${this.selectedYear}/count/`).then((promise) => {
+        this.service.get(`api/mdf/${this.selectedMonth}/${this.selectedYear}/${this.selectedCountryId}/count/`).then((promise) => {
             this.numberOfMdfs = promise.data.count;
         });
     }
@@ -67,7 +78,7 @@ class ExportMdfsController {
             templateUrl: mdfExportModalTemplate,
             controller: ExportMdfsModalController,
             controllerAs: "vm",
-            size: 'md'
+            size: 'lg'
         });
     }
 }

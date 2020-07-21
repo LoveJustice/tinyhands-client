@@ -19,6 +19,10 @@ class CountriesService {
     loadMoreCountries(queryParams) {
         return this.service.get('api/country/', queryParams);
     }
+    
+    getRegions() {
+        return this.service.get('api/region/');
+    }
 
 }
 

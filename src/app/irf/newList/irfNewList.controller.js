@@ -51,6 +51,10 @@ export default class IrfNewListController {
             onDeselectAll: this.countryChange,
             ctrl: this,
         };
+        this.queryParameters.verification_filter = 'None';
+        this.verification_end = new Date();
+        this.verification_start = new Date();
+        this.verification_start.setUTCDate(1);
 
         this.oldIndex = 3;
         this.status = {};
@@ -113,6 +117,23 @@ export default class IrfNewListController {
             }
         }
         
+        let tmp = sessionStorage.getItem('irfList-verification_filter');
+        if (tmp !== null) {
+            this.queryParameters.verification_filter = tmp;
+        }
+        tmp = sessionStorage.getItem('irfList-verification_start');
+        if (tmp !== null) {
+            this.verification_start = new Date(tmp);
+        }
+        tmp = sessionStorage.getItem('irfList-verification_end');
+        if (tmp !== null) {
+            this.verification_end = new Date(tmp);
+        }
+        
+        sessionStorage.setItem('irfList-verification_filter', this.queryParameters.verification_filter);
+        sessionStorage.setItem('irfList-verification_start', this.verification_start);
+        sessionStorage.setItem('irfList-verification_end', this.verification_end);
+        
         if (this.queryParameters.status !== '') {
             this.status.selectedOptions = [];
             for (let optionIdx in this.status.options) {
@@ -125,7 +146,7 @@ export default class IrfNewListController {
         
 
         this.getUserCountries();
-        this.getIrfList();
+        this.searchIrfs();
 
         this.getUserStationsForAdd();
     }
@@ -188,14 +209,36 @@ export default class IrfNewListController {
             });
         });
     }
+    
+    dateAsString(inDate) {
+        let dateString = '';
+        dateString = inDate.getUTCFullYear() + '-';
+        if (inDate.getUTCMonth() < 9) {
+            dateString += '0';
+        }
+        dateString += (inDate.getUTCMonth()+1) + "-";
+        if (inDate.getUTCDate() < 9) {
+            dateString += '0';
+        }
+        dateString += inDate.getUTCDate();
+        return dateString;
+    }
 
     searchIrfs() {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
         }
+        
+        
         sessionStorage.setItem('irfList-search', this.queryParameters.search);
         sessionStorage.setItem('irfList-status', this.queryParameters.status);
         sessionStorage.setItem('irfList-country_ids', this.queryParameters.country_ids);
+        sessionStorage.setItem('irfList-verification_filter', this.queryParameters.verification_filter);
+        sessionStorage.setItem('irfList-verification_start', this.verification_start);
+        sessionStorage.setItem('irfList-verification_end', this.verification_end);
+        
+        this.queryParameters.verification_start = this.dateAsString(this.verification_start);
+        this.queryParameters.verification_end = this.dateAsString(this.verification_end);
         this.timer = this.timeout(() => {
             this.state.go('.', {
                 search: this.queryParameters.search,

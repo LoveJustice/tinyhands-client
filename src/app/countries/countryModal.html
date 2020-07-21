@@ -7,6 +7,12 @@
         <input type="text" id="countryName" class="form-control" ng-model="country.name"/>
     </div>
     <div class="form-group">
+        <label for="region">Region &nbsp;</label>
+        <select ng-model="country.region">
+        	<option ng-repeat="region in vm.regions"  value="{{ region.id }}">{{ region.name }}</option>
+        </select>
+    </div>
+    <div class="form-group">
         <label for="countryLatitude">Latitude</label>
         <input type="number" id="countryLatitude" class="form-control" ng-model="country.latitude"/>
     </div>

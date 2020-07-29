@@ -12,6 +12,7 @@ class MonthlyStationDataEntryController {
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         
         this.editCountries = [];
+        this.rate=112;
         
         let today = new Date();
         this.showMonth = today.getMonth();

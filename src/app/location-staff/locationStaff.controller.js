@@ -1,4 +1,3 @@
-/* global jQuery */
 import './locationStaff.less';
 class LocationStaffController {
     constructor($rootScope, SessionService, locationStaffService, SpinnerOverlayService, StickyHeader) {
@@ -196,7 +195,6 @@ class LocationStaffController {
                         work_fraction: this.work[location][staff]
                 };
                 this.workPortion.push(newValue);
-                this.saveCount++;
                 this.saveWorkFraction(newValue);
             }
         }
@@ -204,8 +202,7 @@ class LocationStaffController {
     
     saveWorkFraction(value) {
         this.saveCount +=1;
-        this.service.setWorkFraction(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 1;});
-        
+        this.service.setWorkFraction(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 10;});
     }
     
     populateWork() {
@@ -234,7 +231,7 @@ class LocationStaffController {
                 tot += value;
             }
         }
-        this.locationTotals[location] = tot;
+        this.locationTotals[location] = Math.round(tot * 100)/100;
         
         tot = 0;
         for (let idx=0; idx < this.locations.length; idx++) {
@@ -243,11 +240,11 @@ class LocationStaffController {
                 tot += value;
             }
         }
-        this.staffTotals[staff] = tot;
+        this.staffTotals[staff] = Math.round(tot * 100)/100;
     }
     
     totalColor(base, total) {
-        if (total === 1) {
+        if (total === 1.00) {
             return base + ' goodTotal';
         } else if (total > 1) {
             return base + ' badTotal';

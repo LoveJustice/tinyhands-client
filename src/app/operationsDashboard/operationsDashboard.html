@@ -19,7 +19,10 @@
 	 <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.dashboardData">
         <thead class="sticky-table-header">
         	<tr>
-        		<th class="rightBorder">Exchange Rate</th>
+        		<th class="rightBorder">
+        			<div>{{ vm.dashboardData.month }}</div>
+        			<div>Exchange Rate</div>
+        		</th>
         		<th>{{ vm.exchangeRate }}</th>
         		<th class="topHeader" colspan=3></th>
         		<th class="topHeader">Int to Date</th>
@@ -62,13 +65,13 @@
             	<th class="rightBorder">Gsp</th>
             	<th class="rightBorder">Emp</th>
             	<th class="boldRightBorder">CIF</th>
+            	<th class="rightBorder">Budget</th>
             	<th class="rightBorder">Int</th>
             	<th class="rightBorder">Ast</th>
-            	<th class="rightBorder">
+            	<th class="boldRightBorder">
             		<div>% Leading</div>
             		<div>to Ast</div>
             	</th>
-            	<th class="boldRightBorder">Convictions</th>
             	<th class="rightBorder">Budget</th>
             	<th class="rightBorder">Int</th>
             	<th class="rightBorder">Ast</th>
@@ -89,14 +92,14 @@
         		<td class="rightBorder">{{ entry['6month_gospel'] }}</td>
         		<td class="rightBorder">{{ entry['6month_empowerment'] }}</td>
         		<td class="boldRightBorder">{{ entry['6month_cifs'] }}</td>
+        		<td class="rightBorder">{{ entry['to_date_budget'] }}</td>
         		<td class="rightBorder">{{ entry.to_date_intercepts }}</td>
         		<td class="rightBorder">{{ entry.to_date_arrests }}</td>
-        		<td class="rightBorder">
+        		<td class="boldRightBorder">
         			<div ng-if="entry.to_date_intercepts > 0">
         				{{ (entry.to_date_arrests * 100 /entry.to_date_intercepts).toLocaleString('en-US', vm.digits1Format) }}%
         			</div>
         		</td>
-        		<td class="boldRightBorder">{{ entry.to_date_convictions }}</td>
         		<td class="rightBorder">{{ entry.last_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         		<td class="rightBorder">{{ entry.last_intercepts }}</td>
         		<td class="rightBorder">{{ entry.last_arrests}}</td>

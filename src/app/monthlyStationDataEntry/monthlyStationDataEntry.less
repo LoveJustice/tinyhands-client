@@ -1,20 +1,43 @@
 #montlyStationDataEntry {
 	padding-top: 50px;
 	
+	#monthyStationTable {
+		width:1240;
+		max-width:1240;
+	}
+	
 	.stationName {
-		width:250px;
-		max-width:250px;
+		width:150px;
+		max-width:150px;
+		border-right: 1px solid grey;
+		font-size: 12px;
 	}
 	.stationCode {
-		width:125px;
-		max-width:125px;
+		min-width:50px;
+		width:50px;
+		max-width:50px;
+		font-size: 12px;
+		border-right: 1px solid black;
+	}
+	.rightDiv {
+		border-right: 1px solid black;
+	}
+	.rightSep {
+		border-right: 1px solid grey;
 	}
 	.dataEntry {
 		width:100px;
 	}
+	.stat {
+		width:50px;
+		max-width:50px;
+		font-size: 12px;
+		text-align: center;
+	}
 	
 	table {
         border-collapse: separate;
+        border: 1px solid black;
         .header {
             font-size: 26px;
             font-weight: 500;
@@ -27,4 +50,10 @@
 		}
 		border-bottom: 1px solid black
     }
+    input[type="text"] {
+	     width: 100%; 
+	     box-sizing: border-box;
+	     -webkit-box-sizing:border-box;
+	     -moz-box-sizing: border-box;
+	}
 }

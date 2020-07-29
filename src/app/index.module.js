@@ -37,6 +37,7 @@ import relatedFormsModule from './relatedForms/relatedForms.module';
 import helpModule from './help/help.module.js';
 import operationsDashboardModule from './operationsDashboard/operationsDashboard.module';
 import monthlyStationDataEntryModule from './monthlyStationDataEntry/monthlyStationDataEntry.module';
+import locationDataModule from './location-data/locationData.module';
 import locationStaffModule from './location-staff/locationStaff.module';
 
 
@@ -78,7 +79,8 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         helpModule,
         operationsDashboardModule,
         monthlyStationDataEntryModule,
-        locationStaffModule
+        locationStaffModule,
+        locationDataModule,
     ])
 
     .constant('constants', constants)

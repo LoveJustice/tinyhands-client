@@ -1,0 +1,135 @@
+<div id="locationData" class="container-fluid padding-top-20">
+	<div class="row col-md-12 form-group center-vertical">
+		<div class="col-md-1">
+			<label>Country</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.country" ng-change="vm.changeCountry()">
+				<option ng-repeat="country in vm.countries" value="{{country.id}}">{{ country.name}} </option>
+			</select>
+		</div>
+		<div class="col-md-1">
+			<label>Station</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.station" ng-change="vm.changeStation()">
+				<option ng-repeat="station in vm.stations" value="{{station.id}}">{{ station.station_name}} </option>
+			</select>
+		</div>
+		<div class="col-md-3">
+    		<div class="col-md-6">
+	    		<select class="form-control"ng-model="vm.monthStr" ng-change="vm.changeMonth()">
+	    			<option ng-repeat="month in vm.monthNames" ng-if="month!==''" value="{{ $index }}">{{ month }}</option>
+	    		</select>
+	    	</div>
+	    	<div class="col-md-5">
+	    		<input type="number" class="form-control" ng-model="vm.year" ng-change="vm.changeYear()">
+			</div>
+		</div>
+		<div class="col-md-2">&nbsp</div>
+		<div class="col-md-1 saving" ng-show="vm.saveCount > 0">Saving Data</div>
+		
+	</div>
+	<div id="locationDataTable" class="tableDiv" ng-style="{'width':vm.tableDivSize}" ng-show="vm.locations.length > 0">
+		<table class="table table-striped tableBorder" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.locations">
+			<thead class="sticky-table-header">
+				<tr>
+					<th class="text-center">
+						<button class="btn btn-xs" ng-click="vm.setCurrentMonth()">Current</button>
+					</th>
+					<th>
+						<button class="btn btn-xs" ng-click="vm.scrollMonth(1)">
+				        	<i class="fa fa-arrow-left"></i>
+				        </button>
+				    </th>
+					<th>
+						<button class="btn btn-xs" ng-click="vm.scrollMonth(-1)">
+				        	<i class="fa fa-arrow-right"></i>
+				        </button>
+				    </th>
+					<th colspan="19"></th>
+				</tr>
+				<tr>
+					<th class="locationName darkBorder"></th>
+					<th class="dataGroup darkBorder" colspan="3">6 Month Totals</th>
+					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearAndMonth) }}</th>
+					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -1)) }}</th>
+					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -2)) }}</th>
+					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -3)) }}</th>
+					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -4)) }}</th>
+					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -5)) }}</th>
+				</tr>
+				<tr>
+					<th class="locationName darkBorder">Location</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+					
+					<th class="dataElement lightBorder">Staff</th>
+					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement darkBorder">Ast</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="location in vm.locations" ng-if="location.active || vm.locationTotals[location.id].staff + vm.locationTotals[location.id].intercepts + vm.locationTotals[location.id].arrests > 0">
+					<td class="locationName darkBorder">{{ location.name }}</td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].intercepts }}</td>
+					<td class="dataElement darkBorder">{{ vm.locationTotals[location.id].arrests }}</td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[0][location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[0][location.id].intercepts }}</td>
+					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[0][location.id].arrests" ng-blur="vm.changeFocus(location.id, 0)"></td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[1][location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[1][location.id].intercepts }}</td>
+					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[1][location.id].arrests" ng-blur="vm.changeFocus(location.id, 1)"></td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[2][location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[2][location.id].intercepts }}</td>
+					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[2][location.id].arrests" ng-blur="vm.changeFocus(location.id, 2)"></td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[3][location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[3][location.id].intercepts }}</td>
+					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[3][location.id].arrests" ng-blur="vm.changeFocus(location.id, 3)"></td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[4][location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[4][location.id].intercepts }}</td>
+					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[4][location.id].arrests" ng-blur="vm.changeFocus(location.id, 4)"></td>
+					
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[5][location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationDisplayData[5][location.id].intercepts }}</td>
+					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[5][location.id].arrests" ng-blur="vm.changeFocus(location.id, 5)"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div ng-show="vm.work && vm.locations.length === 0">
+		<h3>There are no locations associated with this station</h3>
+	</div>
+	<div ng-show="vm.work && vm.staff.length === 0">
+		<h3>There are no staff associated with this station</h3>
+	</div>
+</div>

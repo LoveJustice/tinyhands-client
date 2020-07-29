@@ -122,7 +122,11 @@
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','EDIT',null, null)"
-                        	ui-sref="monthlyStationDataEntry">Monthly Station Data</a>
+                        	ui-sref="monthlyStationDataEntry">Station Data</a>
+                    </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','EDIT',null, null)"
+                        	ui-sref="locationData">Location Data</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','EDIT',null, null)"

@@ -10,6 +10,7 @@ class LocationDataController {
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        this.digits2Format = {'minimumFractionDigits': 2, 'maximumFractionDigits': 2};
         
         this.countries = [];
         this.stations = null;
@@ -164,11 +165,6 @@ class LocationDataController {
     getLocations() {
         this.service.getStationLocations(this.station).then((promise) => {
             this.locations = promise.data;
-            this.locations.push({
-                id: null,
-                name: "Other",
-                active: true
-            });
             this.locationTotals = {};
             for (let idx=0; idx < this.locations.length; idx++) {
                 this.locationTotals[this.locations[idx].id] = {staff:0, intercepts:0, arrests:0};

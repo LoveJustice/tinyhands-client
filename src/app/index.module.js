@@ -36,7 +36,7 @@ import traffickermatchModule from './traffickermatch/traffickermatch.module';
 import relatedFormsModule from './relatedForms/relatedForms.module';
 import helpModule from './help/help.module.js';
 import operationsDashboardModule from './operationsDashboard/operationsDashboard.module';
-import monthlyStationDataEntryModule from './monthlyStationDataEntry/monthlyStationDataEntry.module';
+import stationDataModule from './stationData/stationData.module';
 import locationDataModule from './location-data/locationData.module';
 import locationStaffModule from './location-staff/locationStaff.module';
 
@@ -78,7 +78,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         relatedFormsModule,
         helpModule,
         operationsDashboardModule,
-        monthlyStationDataEntryModule,
+        stationDataModule,
         locationStaffModule,
         locationDataModule,
     ])

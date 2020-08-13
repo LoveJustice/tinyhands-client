@@ -6,6 +6,7 @@ class OperationsDashboardController {
         
         this.session = SessionService;
         this.service = operationsDashboardService;
+        this.spinner = SpinnerOverlayService;
         this.stickyOptions = StickyHeader.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.selectedStep = 0;
@@ -21,15 +22,14 @@ class OperationsDashboardController {
         let today = new Date();
         this.currentMonth = today.getMonth();
         this.currentYear = today.getFullYear();
-        if (today.getDate() < 6) {
-            this.currentMonth -= 1;
-        }
+        
         if (this.currentMonth < 1) {
             this.currentYear -= 1;
             this.currentMonth = 12 - this.currentMonth;
         }
         this.showYear = this.currentYear;
         this.showMonth = this.currentMonth;
+        this.yearMonth = this.currentYear * 100 + this.currentMonth;
         
         let tmp = sessionStorage.getItem('station-stats-country');
         if (!tmp) {
@@ -72,8 +72,10 @@ class OperationsDashboardController {
     
     getOperationsDashboard(countryId) {
         this.dashboardData = null;
+        this.spinner.show('Calculating dashboard values...');
         this.service.getOperationsDashboard(countryId).then((promise) => {
             this.dashboardData = promise.data;
+            this.spinner.hide();
             
             this.allEntries = 0;
             this.openEntries = 0;
@@ -86,6 +88,11 @@ class OperationsDashboardController {
             }
             this.computePercentile(this.dashboardData.entries, 'impact','impactColor', ['color1','color2','color3','color4','color5']);
             this.computePercentile(this.dashboardData.entries, 'compliance','complianceColor', ['color1','color2','color3','color4','color5']);
+        },
+        () => {this.spinner.hide();});
+        
+        this.service.getExchangeRate(countryId, this.yearMonth).then((promise) => {
+            this.exchangeRate = promise.data.exchange_rate;
         });
     }
     

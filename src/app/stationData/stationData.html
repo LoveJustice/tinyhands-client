@@ -1,0 +1,153 @@
+<div id="montlyStationDataEntry" class="container-fluid padding-top-20">
+	<div class="row col-md-12 form-group center-vertical">
+		<div class="col-md-1">
+			<label>Country</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.country" ng-change="vm.countrySelect()">
+				<option ng-repeat="country in vm.countries" value="{{country.id}}">{{ country.name}} </option>
+			</select>
+		</div>
+		<div class="col-md-2 text-right">
+	        <label>Include Closed Stations</label>
+	    </div>
+	    <div class="col-md-1">
+	        <input type="checkbox" ng-model="vm.includeClosed">
+    	</div>
+    	<div class="col-md-3">
+    		<div class="col-md-6">
+	    		<select class="form-control"ng-model="vm.monthStr" ng-change="vm.setMonth()">
+	    			<option ng-repeat="month in vm.monthNames" ng-if="month!==''" value="{{ $index }}">{{ month }}</option>
+	    		</select>
+	    	</div>
+	    	<div class="col-md-5">
+	    		<input type="number" class="form-control" ng-model="vm.year" ng-change="vm.setYear()">
+			</div>
+		</div>
+		<div class="col-md-2">&nbsp</div>
+		<div class="col-md-1 saving" ng-show="vm.saveCount > 0">Saving Data</div>
+	</div>
+	<div id="monthyStationTable" class="row col-md-12" ng-show="vm.stations">
+		
+		<table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.stations">
+	        <thead class="sticky-table-header">
+	        	<tr>
+	        		<th colspan="3" class="text-center">
+	        			<button class="btn btn-xs" ng-click="vm.setCurrentMonth()">
+				        	Current
+				        </button>
+	        		</th>
+	        		<th>
+	        			<button class="btn btn-xs" ng-click="vm.scrollMonth(1)">
+				        	<i class="fa fa-arrow-left"></i>
+				        </button>
+				    </th>
+				    <th>
+				        <button class="btn btn-xs" ng-click="vm.scrollMonth(-1)">
+				        	<i class="fa fa-arrow-right"></i>
+				        </button>
+	        		</th>
+	        		<th colspan=5>
+	        		</th>
+	        	</tr>
+	        	<tr>
+	        		<th class="text-center rightDiv" colspan="2"></th>
+	        		<th class="text-center rightDiv" colspan="6">
+	        			{{ vm.monthName(vm.yearMonth) }}
+	        		</th>
+	        		<th class="text-center rightDiv" colspan="6">
+	        			{{ vm.monthName(vm.yearMonthOffset(vm.yearMonth,-1)) }}
+	        		</th>
+	        		<th class="text-center rightDiv" colspan="6">
+	        			{{ vm.monthName(vm.yearMonthOffset(vm.yearMonth,-2)) }}
+	        		</th>
+	        	</tr>
+	        	<tr>
+	        		<th class="text-center rightDiv" colspan="2">Exchange Rate</th>
+	        		<th class="text-center rightDiv" colspan="6">
+	        			<input type="number" ng-model="vm.exchangeDisplayData[0].exchange_rate" ng-blur="vm.changeExchangeFocus(0)">
+	        		</th>
+	        		<th class="text-center rightDiv" colspan="6">
+	        			<input type="number" ng-model="vm.exchangeDisplayData[1].exchange_rate" ng-blur="vm.changeExchangeFocus(1)">
+	        		</th>
+	        		<th class="text-center rightDiv" colspan="6">
+	        			<input type="number" ng-model="vm.exchangeDisplayData[2].exchange_rate" ng-blur="vm.changeExchangeFocus(2)">
+	        		</th>
+	        	</tr>
+	        	<tr>
+	        		<th class="stationName">Station Name</th>
+	        		<th class="stationCode">Station Code</th>
+	        		
+	        		<th class="stat rightSep">Staff</th>
+	        		<th class="stat rightSep">Int</th>
+	        		<th class="stat rightSep">Ast</th>
+	        		<th class="stat rightSep">Gsp</th>
+	        		<th class="stat rightSep">Emp</th>
+	        		<th class="stat rightSep">Bgt</th>
+	        		
+	        		<th class="stat rightSep">Staff</th>
+	        		<th class="stat rightSep">Int</th>
+	        		<th class="stat rightSep">Ast</th>
+	        		<th class="stat rightSep">Gsp</th>
+	        		<th class="stat rightSep">Emp</th>
+	        		<th class="stat rightSep">Bgt</th>
+	        		
+	        		<th class="stat rightSep">Staff</th>
+	        		<th class="stat rightSep">Int</th>
+	        		<th class="stat rightSep">Ast</th>
+	        		<th class="stat rightSep">Gsp</th>
+	        		<th class="stat rightSep">Emp</th>
+	        		<th class="stat rightSep">Bgt</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	<tr ng-repeat="station in vm.stations" ng-if="station.open || vm.includeClosed">
+	        		<td class="rightSep stationName">{{ station.station_name }}</td>
+	        		<td class="boldRightBorder stationCode">{{ station.station_code }}</td>
+	        		
+	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[0][station.id].staff }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[0][station.id].staff"
+	        				ng-blur="vm.changeFocus(station.id, 'staff', 0)"></td>
+	        		<td class="stat rightSep">{{ vm.stationDisplayData[0][station.id].intercepts }}</td>
+	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[0][station.id].arrests }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[0][station.id].arrests"
+	        				ng-blur="vm.changeFocus(station.id, 'arrests', 0)"></td>
+	        		<td class="stat rightSep" ng-click="vm.contextMenu($event)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].gospel"
+	        				ng-blur="vm.changeFocus(station.id, 'gospel', 0)"></td>
+	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[0][station.id].empowerment"
+	        				ng-blur="vm.changeFocus(station.id, 'empowerment', 0)"></td>
+	        		<td class="stat rightDiv"><input type="text" ng-model="vm.stationDisplayData[0][station.id].budget"
+	        				ng-blur="vm.changeFocus(station.id, 'budget', 0)"></td>
+	        		
+	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[1][station.id].staff }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[1][station.id].staff"
+	        				ng-blur="vm.changeFocus(station.id, 'staff', 1)"></td>
+	        		<td class="stat rightSep">{{ vm.stationDisplayData[1][station.id].intercepts }}</td>
+	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[1][station.id].arrests }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[1][station.id].arrests"
+	        				ng-blur="vm.changeFocus(station.id, 'arrests', 1)"></td>
+	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[1][station.id].gospel"
+	        				ng-blur="vm.changeFocus(station.id, 'gospel', 1)"></td>
+	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[1][station.id].empowerment"
+	        				ng-blur="vm.changeFocus(station.id, 'empowerment', 1)"></td>
+	        		<td class="stat rightDiv"><input type="text" ng-model="vm.stationDisplayData[1][station.id].budget"
+	        				ng-blur="vm.changeFocus(station.id, 'budget', 1)"></td>
+	        		
+	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[2][station.id].staff }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[2][station.id].staff"
+	        				ng-blur="vm.changeFocus(station.id, 'staff', 2)"></td>
+	        		<td class="stat rightSep">{{ vm.stationDisplayData[2][station.id].intercepts }}</td>
+	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[2][station.id].arrests }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[2][station.id].arrests"
+	        				ng-blur="vm.changeFocus(station.id, 'arrests', 2)"></td>
+	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[2][station.id].gospel"
+	        				ng-blur="vm.changeFocus(station.id, 'gospel', 2)"></td>
+	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[2][station.id].empowerment"
+	        				ng-blur="vm.changeFocus(station.id, 'empowerment', 2)"></td>
+	        		<td class="stat rightDiv"><input type="text" ng-model="vm.stationDisplayData[2][station.id].budget"
+	        				ng-blur="vm.changeFocus(station.id, 'budget', 2)"></td>
+	        	</tr>
+	        </tbody>
+	     </table>
+     </div>
+</div>

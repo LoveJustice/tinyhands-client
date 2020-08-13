@@ -5,7 +5,7 @@ export default class LocationDataService {
     }
     
     getUserCountries(user_id, permissionGroup, action) {
-        return this.service.get(`api/user_permission/countries/${user_id}/?permission_group=${permissionGroup}&action=${action}`);
+        return this.service.get(`api/user_permission/countries/${user_id}/?permission_group=${permissionGroup}&action=${action}&enable_all_locations=true`);
     }
     
     getUserStations(user_id, permissionGroup, action, country_id) {

@@ -5,7 +5,7 @@ export default class LocationStaffService {
     }
     
     getUserCountries(user_id, permissionGroup, action) {
-        return this.service.get(`api/user_permission/countries/${user_id}/?permission_group=${permissionGroup}&action=${action}`);
+        return this.service.get(`api/user_permission/countries/${user_id}/?permission_group=${permissionGroup}&action=${action}&enable_all_locations=true`);
     }
     
     getUserStations(user_id, permissionGroup, action, country_id) {
@@ -13,11 +13,11 @@ export default class LocationStaffService {
     }
     
     getStationLocations(station_id) {
-        return this.service.get(`api/border-station/${station_id}/location/`);
+        return this.service.get(`api/border-station/${station_id}/location/?include_inactive=true`);
     }
     
     getStationStaff(station_id) {
-        return this.service.get(`api/border-station/${station_id}/staff/`);
+        return this.service.get(`api/border-station/${station_id}/staff/?include_inactive=true`);
     }
     
     getLocationStaff(station_id, yearAndMonth) {

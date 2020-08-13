@@ -26,11 +26,11 @@
         		<th>{{ vm.exchangeRate }}</th>
         		<th class="topHeader" colspan=3></th>
         		<th class="topHeader">Int to Date</th>
-        		<th class="topHeader">{{vm.dashboardData.totals.to_date_intercepts}}</th>
+        		<th class="topHeader">{{vm.dashboardData.to_date.intercepts}}</th>
         		<th class="topHeader">
         			<div>Ast to</div><div>Date</div>
         		</th>
-        		<th class="topHeader">{{vm.dashboardData.totals.to_date_arrests}}</th>
+        		<th class="topHeader">{{vm.dashboardData.to_date.arrests}}</th>
         		<th class="topHeader" colspan=11></th>
         	</tr>
         	<tr>
@@ -57,7 +57,7 @@
             	<th class="boldRightBorder">
             		<div>Impact</div>
             		<div>Budget</div>
-            		<div>Ration</div>
+            		<div>Ratio</div>
             	</th>
             	<th class="rightBorder">Budget</th>
             	<th class="rightBorder">Int</th>
@@ -92,7 +92,7 @@
         		<td class="rightBorder">{{ entry['6month_gospel'] }}</td>
         		<td class="rightBorder">{{ entry['6month_empowerment'] }}</td>
         		<td class="boldRightBorder">{{ entry['6month_cifs'] }}</td>
-        		<td class="rightBorder">{{ entry['to_date_budget'] }}</td>
+        		<td class="rightBorder">{{ entry.to_date_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         		<td class="rightBorder">{{ entry.to_date_intercepts }}</td>
         		<td class="rightBorder">{{ entry.to_date_arrests }}</td>
         		<td class="boldRightBorder">
@@ -123,6 +123,7 @@
         		<td class="total rightBorder">{{vm.dashboardData.totals['6month_gospel']}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals['6month_empowerment']}}</td>
         		<td class="total boldRightBorder">{{vm.dashboardData.totals['6month_cifs']}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_budget.toLocaleString('en-US', vm.moneyFormat)}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_intercepts}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_arrests}}</td>
         		<td class="total rightBorder">
@@ -131,7 +132,6 @@
         			</div>
         			<div ng-if="vm.dashboardData.totals.to_date_intercepts <= 0"></div>
         		</td>
-        		<td class="total boldRightBorder">{{vm.dashboardData.totals.to_date_convictions}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_budget.toLocaleString('en-US', vm.moneyFormat)}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_intercepts}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_arrests}}</td>

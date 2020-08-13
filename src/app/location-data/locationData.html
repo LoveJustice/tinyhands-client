@@ -92,10 +92,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="location in vm.locations" ng-if="location.active || vm.locationTotals[location.id].staff + vm.locationTotals[location.id].intercepts + vm.locationTotals[location.id].arrests > 0">
+				<tr ng-repeat="location in vm.locations" ng-if="location.active || location.name==='__Other' || vm.locationTotals[location.id].staff + vm.locationTotals[location.id].intercepts + vm.locationTotals[location.id].arrests > 0">
 					<td class="locationName darkBorder">{{ location.name }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].staff }}</td>
+					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].intercepts }}</td>
 					<td class="dataElement darkBorder">{{ vm.locationTotals[location.id].arrests }}</td>
 					

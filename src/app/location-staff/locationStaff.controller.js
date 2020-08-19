@@ -147,8 +147,14 @@ class LocationStaffController {
             this.tableWidth = 300 + 100*this.locations.length;
             let available = window.innerWidth - 304;
             let columns = Math.floor(available/120);
-            if (this.locations.length < columns) {
-                this.tableDivSize = (this.locations.length * 120 + 302) + 'px';
+            let displayed_locations = 0;
+            for (let idx=0; idx < this.locations.length; idx++) {
+                if (this.locations[idx].active || this.locationTotals[this.locations[idx].id] > 0) {
+                    displayed_locations = displayed_locations + 1;
+                }
+            }
+            if (displayed_locations < columns) {
+                this.tableDivSize = (displayed_locations * 120 + 302) + 'px';
             } else {
                 if (columns < 1) {
                     columns = 1;

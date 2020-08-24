@@ -55,7 +55,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
         
         this.governanceQuestions = [716,717,902];
         this.governanceCheckboxes = [718,719,720,721,944,945,946];
-        this.logisticsQuestions = ["IncludeTMS",864,865,866,867];
+        this.logisticsQuestions = [864,865,866,867];
         this.resourcesQuestions = [731,732,903,733,734,735];
         this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745,"HighValueContacts",797];
         this.securityQuestions = [749,750,751,752,753,754];
@@ -65,6 +65,8 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
         this.aftercareQuestions = ["Education",776,777,870,778,871,872,909,"HTMessage",779,781,782,"Shelter",873,874,875,"Interviews",783,784,785,"Followup",786];
         this.paralegalQuestions = [790,791,876,792,877,906,907];
         this.investigationsQuestions = ["HighValueContacts",797,798,799];
+        
+        this.topMessage='Note: If a question does not apply, mark "n/a"';
         
         this.questionFormat = {
             // Governance
@@ -88,7 +90,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"<10",format:"col-md-1",points:0},
                     {label:"10-20",format:"col-md-1",points:5},
-                    {label:"20-30",format:"col-md-1",points:10},
+                    {label:"21-30",format:"col-md-1",points:10},
                     {label:">30",format:"col-md-1",points:25},
                 ]
             },
@@ -234,7 +236,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             903: {
                 enabled:true,
                 type:"radio",
-                prompt: "Mismanagement Policy Agreement Signed for all staff",
+                prompt: "Mismanagement Policy Agreement Signed for all staff & SC",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},

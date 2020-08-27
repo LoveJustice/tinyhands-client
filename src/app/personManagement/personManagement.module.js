@@ -6,6 +6,8 @@ import PersonManagementController from './personManagement.controller';
 import PersonManagementService from './personManagement.service';
 import PersonManagementListController from './list/personManagementList.controller';
 import PersonManagementListService from './list/personManagementList.service';
+import PersonManagementPendingListController from './pending-list/personManagementPendingList.controller';
+import PersonManagementPendingListService from './pending-list/personManagementPendingList.service';
 
 export default angular.module('tinyhands.PersonManagement', [sharedModule])
     .config(personManagementRouteConfig)
@@ -14,4 +16,6 @@ export default angular.module('tinyhands.PersonManagement', [sharedModule])
     .service('personManagementService', PersonManagementService)
     .controller('PersonManagementListController', PersonManagementListController)
     .service('personManagementListService', PersonManagementListService)
+    .controller('PersonManagementPendingListController', PersonManagementPendingListController)
+    .service('personManagementPendingListService', PersonManagementPendingListService)
     .name;

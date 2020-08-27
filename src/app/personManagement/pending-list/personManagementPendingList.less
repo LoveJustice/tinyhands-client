@@ -1,0 +1,71 @@
+#personManagementPendingList {
+	.rightBorder {
+		border-right: 1px solid black;
+	}
+	.matchColumn {
+		min-width:12%;
+		width:12%;
+		max-width:12%;
+		text-align: center;
+		border-right: 1px solid black;
+	}
+	.nameColumn {
+		min-width:30%;
+		width:30%;
+		max-width:30%;
+		text-align: center;
+		
+	}
+	.ageColumn {
+		min-width:8%;
+		width:8%;
+		max-width:8%;
+		text-align: center;
+		border-right: 1px solid black;
+	}
+	.buttonColumn {
+		min-width:10%;
+		width:10%;
+		max-width:10%;
+		text-align: center;
+	}
+	
+	table {
+        border-collapse: separate;
+        .header {
+            font-size: 26px;
+            font-weight: 500;
+            line-height: 1.1;
+        }
+        td {
+            vertical-align: middle;
+            height: 10px;
+            padding:1px;
+		}
+	}
+}
+
+#matchModal {
+	th, td {
+	    border-right: 1px solid #eeeeef;
+	}
+	 
+	th:last-child, td:last-child {
+	    border-right: none;
+	}
+	
+	.checkedBackground {
+		border:2px solid #a3dca3;
+	}
+}
+
+.match-modal-popup{
+
+    @media (min-width: 1200px){
+
+        .modal-lg {
+            width: 1150px;
+        }
+    }
+
+}

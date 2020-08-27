@@ -1,5 +1,6 @@
 import personManagementTemplate from './personManagement.html';
 import personManagementListTemplate from './list/personManagementList.html';
+import personManagementPendingListTemplate from './pending-list/personManagementPendingList.html';
 
 function PersonManagementRoutes($stateProvider) {
     'ngInject';
@@ -11,6 +12,15 @@ function PersonManagementRoutes($stateProvider) {
       },
       templateUrl: personManagementListTemplate,
       controller: 'PersonManagementListController',
+      controllerAs: 'vm',
+    })
+    .state('personManagementPendingList', {
+      url: '/PersonManagementPendingList?search&status&country_ids',
+      params: {
+        search: { dynamic: true },
+      },
+      templateUrl: personManagementPendingListTemplate,
+      controller: 'PersonManagementPendingListController',
       controllerAs: 'vm',
     })
     .state('personManagement', {

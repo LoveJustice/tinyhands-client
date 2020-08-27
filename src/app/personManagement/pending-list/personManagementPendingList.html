@@ -1,0 +1,97 @@
+<div id="personManagementPendingList" class="container">
+	<div>
+		<h1 class="text-center">Pending Matches</h1>
+	    <div class="row">
+	    	<div class="col-md-1">
+	            <p style="margin-top: 5px;">Country</p>
+	        </div>
+	        <div class="col-md-2">
+		        <select class="form-control" ng-model="vm.countryId" ng-change="vm.searchPendingMatches()">
+		        	<option value="">All</option>
+					<option ng-repeat="country in vm.countries" value="{{country.id}}">{{ country.name}} </option>
+				</select>
+	        </div>
+	        <div class="col-md-1">
+	        </div>
+	        <div class="col-md-4">
+		        <div class="col-md-4">
+		            <p style="margin-top: 5px;">Match Type</p>
+		        </div>
+		        <div class="col-md-8">
+			        <select class="form-control" ng-model="vm.matchType" ng-change="vm.searchPendingMatches()">
+			        	<option value="">All</option>
+						<option value="Possible">Possible</option>
+						<option value="Suggested">Suggested</option>
+						<option value="Non-match">Non-match</option>
+					</select>
+		        </div>
+	        </div>
+	        <div class="pull-right">
+	            <form>
+	                  <label>
+	                      <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control" ng-keypress="vm.keyPress($event)">
+	                  </label>
+	                  <a class="btn btn-primary" ng-click="vm.searchPendingMatches()">Search</a>
+	            </form>
+	        </div>
+	    </div>
+	
+	    <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.pendingMatches">
+	        <thead class="sticky-table-header">
+	        	<tr>
+	        		<th class="matchColumn">
+	                	Match
+	                </th>
+	                <th colspan="2" class="text-center rightBorder">
+	                	Master Person 1
+	                </th>
+	                <th colspan="2" class="text-center rightBorder">
+	                	Master Person 2
+	                </th>
+	                <th class="buttonColumn">
+	                </th>
+	        	</tr>
+	            <tr>
+	                <th class="matchColumn" >
+	                	Type
+	                </th>
+	                <th ng-click="vm.sortColumn = 'person_match__master1__full_name'; vm.reverse = ! vm.reverse; vm.getPendingMatches()" class="nameColumn">
+	                    Name<i class="glyphicon" ng-class="vm.sortIcon('person_match__master1__full_name')"></i>
+	                </th>
+	                <th class="ageColumn">
+	                    Age
+	                </th>
+	                <th ng-click="vm.sortColumn = 'person_match__master2__full_name'; vm.reverse = ! vm.reverse; vm.getPendingMatches()" class="nameColumn">
+	                    Name<i class="glyphicon" ng-class="vm.sortIcon('person_match__master1__full_name')"></i>
+	                </th>
+	                <th class="ageColumn">
+	                    Age
+	                </th>
+	                <th class="buttonColumn">
+	                </th>
+	
+	            </tr>
+	        </thead>
+	        <tbody ng-init="vm.sortColumn = 'name'">
+	            <tr ng-repeat="pendingMatch in vm.pendingMatches">
+	                <td class="text-center rightBorder">{{ pendingMatch.match }}</td>
+	                <td class="text-center">{{ pendingMatch.master1_name }}</td>
+	                <td class="text-center rightBorder">{{ pendingMatch.master1_age }}</td>
+	                <td class="text-center">{{ pendingMatch.master2_name }}</td>
+	                <td class="text-center rightBorder">{{ pendingMatch.master2_age}}</td>
+	                <td class="text-center">
+	                	<button class="btn btn-sm btn-primary" ng-click="vm.compare(pendingMatch)">Compare</button>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
+	<div class="row text-center">
+        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMorePendingMatches()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
+            Load more results
+        </button>
+    </div>
+	<div ng-show="vm.loading" class="loader-container">
+		<div class="loader">Loading...</div>
+	</div>
+</div>

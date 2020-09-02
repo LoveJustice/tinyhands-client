@@ -1,26 +1,27 @@
 export class BaseMasterPersonCompare {
-    constructor(service) {
+    constructor(service, $stateParams) {
         'ngInject';
         this.service = service;
+        this.stateParams = $stateParams;
         this.getTypes();
     }
     
     getTypes() {
         this.service.getType('PhoneType').then((response) => {
             this.phoneTypes = response.data;
-            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes) {
+            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes && this.stateParams.id) {
                 this.getMasterPerson(this.stateParams.id);
             }
         });
         this.service.getType('AddressType').then((response) => {
             this.addressTypes = response.data;
-            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes) {
+            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes && this.documentTypes && this.stateParams.id) {
                 this.getMasterPerson(this.stateParams.id);
             }
         });
         this.service.getType('SocialMediaType').then((response) => {
             this.socialMediaTypes = response.data;
-            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes) {
+            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes && this.documentTypes && this.stateParams.id) {
                 this.getMasterPerson(this.stateParams.id);
             }
         });
@@ -34,7 +35,7 @@ export class BaseMasterPersonCompare {
                     this.attachmentTypes.push(this.documentTypes[idx]);
                 }
             }
-            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes) {
+            if (this.phoneTypes && this.addressTypes && this.socialMediaTypes && this.documentTypes && this.documentTypes && this.stateParams.id) {
                 this.getMasterPerson(this.stateParams.id);
             }
         });

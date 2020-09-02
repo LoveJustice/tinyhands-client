@@ -7,12 +7,11 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementPendingListService, personManagementService, SessionService, $uibModal, $state, $stateParams, $document, toastr, constants) {
         'ngInject';
 
-        super(personManagementService);
+        super(personManagementService, $stateParams);
         this.state = $state;
         this.sticky = StickyHeader;
         this.rootScope = $rootScope;
         this.scope = $scope;
-        this.stateParams = $stateParams;
         this.$uibModal = $uibModal;
         this.http = $http;
         this.timeout = $timeout;
@@ -245,7 +244,12 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
         });
     }
     
-    
+    masterPersonLink(masterId) {
+        let ref =  this.state.href('personManagement', {
+            id: masterId
+        });
+        return ref;
+    }
     
     
 }

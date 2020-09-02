@@ -24,13 +24,12 @@ export class PersonManagementController extends BaseMasterPersonCompare {
             SpinnerOverlayService, $uibModalStack, constants, toastr) {
         'ngInject';
         
-        super(personManagementService);
+        super(personManagementService, $stateParams);
         this.sticky = StickyHeader;
         this.$scope = $scope;
         this.$uibModal = $uibModal;
         this.$timeout = $timeout;
         this.personManagementListService = personManagementListService;
-        this.stateParams = $stateParams;
         this.$state = $state;
         this.spinnerOverlayService = SpinnerOverlayService;
         this.$uibModalStack = $uibModalStack;

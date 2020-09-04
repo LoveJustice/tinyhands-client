@@ -21,7 +21,7 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfSouthAfricaController extends BaseIrfController {
+export class IrfNamibiaController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack);
@@ -40,13 +40,14 @@ export class IrfSouthAfricaController extends BaseIrfController {
             {template:logbookTemplate, name:"Logbook"},
         ];
         
+        this.immigration = true;
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4,924.5,924.6];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,979,980,713];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930,74];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,977,988,713,197,186,978];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930,178,74,167];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLable",24,25,26,216];
         this.details = {
@@ -71,40 +72,13 @@ export class IrfSouthAfricaController extends BaseIrfController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'Impoverished',
-                value:'Impoverished',
+                label:'Young looking',
+                value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.4:{
-                enabled:true,
-                group:968,
-                label:'Unemployed',
-                value:'Unemployed',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
-                enabled:true,
-                group:968,
-                label:'Uneducated',
-                value:'Uneducated',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.6:{
-                enabled:true,
-                group:968,
-                label:'Single Mother',
-                value:'Single Mother',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.7:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -113,11 +87,38 @@ export class IrfSouthAfricaController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
+            968.5:{
+                enabled:true,
+                group:968,
+                label:'With a chaperone',
+                value:'With a chaperone',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
+                enabled:true,
+                group:968,
+                label:'Disoriented',
+                value:'Disoriented',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.7:{
+                enabled:true,
+                group:968,
+                label:'Passport Recently Obtained',
+                value:'Passport Recently Obtained',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
             968.8:{
                 enabled:true,
                 group:968,
-                label:'Foreigner',
-                value:'Foreigner',
+                label:'Revealing clothing',
+                value:'Revealing clothing',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -125,18 +126,17 @@ export class IrfSouthAfricaController extends BaseIrfController {
             968.9:{
                 enabled:true,
                 group:968,
-                label:'From rural area',
-                value:'From rural area',
+                label:'Signs of abuse',
+                value:'Signs of abuse',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            // Note 968.10 is the same as 968.1
             968.11:{
                 enabled:true,
                 group:968,
-                label:'From urban township',
-                value:'From urban township',
+                label:'Impoverished',
+                value:'Impoverished',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -160,8 +160,8 @@ export class IrfSouthAfricaController extends BaseIrfController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Middle East',
-                value: 'Middle East',
+                label:'Nigeria',
+                value: 'Nigeria',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -169,8 +169,8 @@ export class IrfSouthAfricaController extends BaseIrfController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Ireland',
-                value: 'Ireland',
+                label:'Turkey',
+                value: 'Turkey',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -178,8 +178,8 @@ export class IrfSouthAfricaController extends BaseIrfController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'South America',
-                value: 'South America',
+                label:'Saudi Arabia',
+                value: 'Saudi Arabia',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -187,8 +187,8 @@ export class IrfSouthAfricaController extends BaseIrfController {
             245.4:{
                 enabled:true,
                 group:245,
-                label:'North America',
-                value: 'North America',
+                label:'Qatar',
+                value: 'Qatar',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -220,40 +220,13 @@ export class IrfSouthAfricaController extends BaseIrfController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Hairdressing',
-                value:'Hairdressing',
+                label:'Massage Parlor',
+                value:'Massage Parlor',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.3:{
-                enabled:true,
-                group:924,
-                label:'Waitressing',
-                value:'Waitressing',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.4:{
-                enabled:true,
-                group:924,
-                label:'Modeling',
-                value:'Modeling',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.5:{
-                enabled:true,
-                group:924,
-                label:'Soccer',
-                value:'Soccer',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.6:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -353,18 +326,18 @@ export class IrfSouthAfricaController extends BaseIrfController {
                 format:'col-md-6',
                 points:0
             },
-            979:{
+            977:{
                 enabled:true,
-                label:'Connection to host/suspect limited or unclear',
+                label:"Doesn't speak English",
                 type:'checkbox',
-                format:'col-md-12',
+                format:'col-md-6',
                 points:0
             },
-            980:{
+            988:{
                 enabled:true,
-                label:"Doesn't have required visa/docs",
+                label:'Flight paid for in cash',
                 type:'checkbox',
-                format:'col-md-12',
+                format:'col-md-6',
                 points:0
             },
             713:{
@@ -372,6 +345,27 @@ export class IrfSouthAfricaController extends BaseIrfController {
                 label:'Job details were changed in route',
                 type:'checkbox',
                 format:'col-md-12',
+                points:0
+            },
+            197:{
+                enabled:true,
+                label:'Afraid of suspected trafficker/host',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            186:{
+                enabled:true,
+                label:'One-way ticket',
+                type:'checkbox',
+                format:'col-md-6',
+                points:0
+            },
+            978:{
+                enabled:true,
+                label:'Non-relative host paid for flight',
+                type:'checkbox',
+                format:'col-md-6',
                 points:0
             },
             
@@ -445,9 +439,23 @@ export class IrfSouthAfricaController extends BaseIrfController {
                 format:'col-md-12',
                 points:0
             },
+            178:{
+                enabled:true,
+                label:'Visa does not match nature of travel',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
             74:{
                 enabled:true,
                 label:'Minor will not give family info.',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            167:{
+                enabled:true,
+                label:'Avoiding officials',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -699,6 +707,6 @@ export class IrfSouthAfricaController extends BaseIrfController {
 
 export default {
     templateUrl,
-    controller: IrfSouthAfricaController,
+    controller: IrfNamibiaController,
 };
 

@@ -197,7 +197,7 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
             return;
         }
         let matchObj = {
-                master_person:this.match[0].masterPerson,
+                master_person:this.match[1].masterPerson,
                 notes:pendingMatch.notes
         };
         let match_str = pendingMatch.match.toLowerCase();

@@ -14,7 +14,6 @@ import victimEngagementTemplate from '../common/step-templates/victimEngagement.
 import recordsTemplate from '../common/step-templates/records.html';
 import aftercareTemplate from '../common/step-templates/aftercare.html';
 import paralegalTemplate from '../common/step-templates/paralegal.html';
-import investigationsTemplate from '../common/step-templates/investigations.html';
 import finalTemplate from '../common/step-templates/final.html';
 import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
 
@@ -34,8 +33,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                         "Victim Engagement",
                         "Records",
                         "Aftercare",
-                        "Paralegal",
-                        "Investigations"
+                        "Paralegal"
                     ],
                     SpinnerOverlayService, $uibModalStack
                 );
@@ -47,27 +45,28 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             {template:awarenessTemplate, name:"Awareness"},
             {template:securityTemplate, name:"Security"},
             {template:accountingTemplate, name:"Accounting"},
-            {template:victimEngagementTemplate, name:"Victim Engagement"},
+            {template:victimEngagementTemplate, name:"Monitoring"},
             {template:recordsTemplate, name:"Records"},
-            {template:aftercareTemplate, name:"Aftercare"},
+            {template:aftercareTemplate, name:"Potential Victim Care"},
             {template:paralegalTemplate, name:"Paralegal"},
-            {template:investigationsTemplate, name:"Investigations"},
             {template:finalTemplate, name:"Final"},
             {template:attachmentsTemplate, name:"Attachments"}
         ];
         
         this.governanceQuestions = [716,717,902];
-        this.governanceCheckboxes = [718,719,720,721,722];
-        this.logisticsQuestions = ["IncludeTMS",864,865,866,867];
+        this.governanceCheckboxes = [718,719,720,721,944,945,946];
+        this.logisticsQuestions = [864,865,866,867];
         this.resourcesQuestions = [731,732,903,733,734,735];
-        this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745];
+        this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745,"HighValueContacts",797];
         this.securityQuestions = [749,750,751,752,753,754];
         this.accountingQuestions = [758,759,760,761];
         this.victimEngagementQuestions = [765,904,905,868];
-        this.recordsQuestions = [769,869,770,771,772,793];
+        this.recordsQuestions = [769,869,770,771,772,793,947];
         this.aftercareQuestions = ["Education",776,777,870,778,871,872,909,"HTMessage",779,781,782,"Shelter",873,874,875,"Interviews",783,784,785,"Followup",786];
         this.paralegalQuestions = [790,791,876,792,877,906,907];
         this.investigationsQuestions = ["HighValueContacts",797,798,799];
+        
+        this.topMessage='Note: If a question does not apply, mark "n/a"';
         
         this.questionFormat = {
             // Governance
@@ -91,8 +90,8 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"<10",format:"col-md-1",points:0},
                     {label:"10-20",format:"col-md-1",points:5},
-                    {label:"20-30",format:"col-md-1",points:10},
-                    {label:">30",format:"col-md-1",points:20},
+                    {label:"21-30",format:"col-md-1",points:10},
+                    {label:">30",format:"col-md-1",points:25},
                 ]
             },
             902: {
@@ -102,42 +101,63 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 promptFormat: "col-md-2 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             718: {
                 enabled:true,
                 label:"Records",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             719: {
                 enabled:true,
                 label:"Security",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             720: {
                 enabled:true,
-                label:"Aftercare",
+                label:"Care",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             721: {
                 enabled:true,
                 label:"Paralegal",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             722: {
-                enabled:true,
+                enabled:false,
                 label:"Station Investigator",
                 format:"col-md-2",
-                points:10
+                points:5
+                
+            },
+            944: {
+                enabled:true,
+                label:"Awareness",
+                format:"col-md-2",
+                points:5
+                
+            },
+            945: {
+                enabled:true,
+                label:"Accounting",
+                format:"col-md-2",
+                points:5
+                
+            },
+            946: {
+                enabled:true,
+                label:"Shelter",
+                format:"col-md-2",
+                points:0
                 
             },
             
@@ -216,7 +236,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             903: {
                 enabled:true,
                 type:"radio",
-                prompt: "Mismanagement Policy Agreement Signed for all staff",
+                prompt: "Mismanagement Policy Agreement Signed for all staff & SC",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
@@ -236,7 +256,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             734: {
                 enabled:true,
                 type:"radio",
-                prompt: "Percent of staff who have taken and passed TMS Exam",
+                prompt: "Percent of staff who have taken and passed BMS Knowledge Test",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"<30%",format:"col-md-1",points:0},
@@ -278,9 +298,9 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<5",format:"col-md-1",points:0},
-                    {label:"6-25",format:"col-md-2",points:8},
-                    {label:"26-50",format:"col-md-2",points:15},
-                    {label:">50",format:"col-md-2",points:25},
+                    {label:"6-25",format:"col-md-2",points:5},
+                    {label:"26-50",format:"col-md-2",points:10},
+                    {label:">50",format:"col-md-2",points:15},
                 ]
             },
             740: {
@@ -291,8 +311,8 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"<10",format:"col-md-1",points:0},
                     {label:"10-20",format:"col-md-2",points:5},
-                    {label:"21-30",format:"col-md-2",points:10},
-                    {label:">30",format:"col-md-2",points:20},
+                    {label:"21-30",format:"col-md-2",points:8},
+                    {label:">30",format:"col-md-2",points:10},
                 ]
             }, 
             741: {
@@ -356,6 +376,23 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                     {label:"<3 months",format:"col-md-2",points:10},
                 ]
             },
+            HighValueContacts:{
+                enabled:true,
+                type:"header",
+                prompt: "HIGH VALUE CONTACTS",
+                promptFormat: "col-md-12 control-label heading",
+            },
+            797: {
+                enabled:true,
+                type:"radio",
+                prompt: "# of HVCs",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<2",format:"col-md-1",points:0},
+                    {label:"3-5",format:"col-md-2",points:15},
+                    {label:">5",format:"col-md-2",points:20},
+                ]
+            },
             
             // Security
             749: {
@@ -368,6 +405,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                     {label:"<50% of the time",format:"col-md-2",points:5},
                     {label:">50% of the time",format:"col-md-2",points:15},
                     {label:"always",format:"col-md-2",points:30},
+                    {label:"n/a",format:"col-md-2",points:30},
                 ]
             },
             750: {
@@ -380,6 +418,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                     {label:"<50% of the time",format:"col-md-2",points:5},
                     {label:">50% of the time",format:"col-md-2",points:7},
                     {label:"always",format:"col-md-2",points:15},
+                    {label:"n/a",format:"col-md-2",points:15},
                 ]
             },
             751: {
@@ -405,11 +444,12 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             753: {
                 enabled:true,
                 type:"radio",
-                prompt: 'Were all threats reported? (mark "yes" if no threats)',
+                prompt: 'Were all threats reported?',
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:30},
+                    {label:"n/a",format:"col-md-1",points:30},
                 ]
             },
             754: {
@@ -465,7 +505,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 ]
             },
             
-            // Victim Engagement
+            // Monitoring
             765: {
                 enabled:true,
                 type:"radio",
@@ -521,6 +561,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:5},
+                    {label:"n/a",format:"col-md-1",points:5},
                 ]
             },
             770: {
@@ -530,7 +571,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             771: {
@@ -553,8 +594,8 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"<60%",format:"col-md-1",points:0},
                     {label:"60-79% of the time",format:"col-md-2",points:10},
-                    {label:"80-99% of the time",format:"col-md-2",points:20},
-                    {label:"100%",format:"col-md-2",points:30},
+                    {label:"80-99% of the time",format:"col-md-2",points:15},
+                    {label:"100%",format:"col-md-2",points:20},
                 ]
             },
             793: {
@@ -566,7 +607,20 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                     {label:"<60%",format:"col-md-1",points:10},
                     {label:"60-79%",format:"col-md-2",points:15},
                     {label:"80-99%",format:"col-md-2",points:20},
-                    {label:"100%",format:"col-md-2",points:30},
+                    {label:"100%",format:"col-md-2",points:25},
+                    {label:"n/a",format:"col-md-1",points:25},
+                ]
+            },
+            947: {
+                enabled:true,
+                type:"radio",
+                prompt: '“Verified” phone numbers (victim / suspect) percentage',
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<60%",format:"col-md-1",points:5},
+                    {label:"60-79%",format:"col-md-2",points:10},
+                    {label:"80-99%",format:"col-md-2",points:15},
+                    {label:"100%",format:"col-md-2",points:20},
                 ]
             },
             
@@ -801,6 +855,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:10},
+                    {label:"n/a",format:"col-md-1",points:10},
                 ]
             },
             876: {
@@ -811,6 +866,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:40},
+                    {label:"n/a",format:"col-md-1",points:40},
                 ]
             },
             792: {
@@ -845,23 +901,6 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
             },
             
             // Investigations
-            HighValueContacts:{
-                enabled:true,
-                type:"header",
-                prompt: "HIGH VALUE CONTACTS",
-                promptFormat: "col-md-12 control-label heading",
-            },
-            797: {
-                enabled:true,
-                type:"radio",
-                prompt: "# of HVCs",
-                promptFormat: "col-md-3 control-label",
-                options: [
-                    {label:"<2",format:"col-md-1",points:0},
-                    {label:"3-5",format:"col-md-2",points:15},
-                    {label:">5",format:"col-md-2",points:35},
-                ]
-            },
             798: {
                 enabled:true,
                 type:"radio",

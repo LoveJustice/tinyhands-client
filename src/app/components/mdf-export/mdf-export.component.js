@@ -34,7 +34,7 @@ class ExportMdfsModalController {
     userCountries() {
         this.service.get('api/user_permission/countries/current-user/?permission_group=BUDGETS').then((promise) => {
             this.countries = promise.data;
-            if (this.countries.length == 1) {
+            if (this.countries.length === 1) {
                 this.selectedCountryId = '' + this.countries[0].id;
                 this.getNumberOfMdfs();
             }
@@ -50,7 +50,7 @@ class ExportMdfsModalController {
     }
 
     getNumberOfMdfs() {
-        if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12 || this.selectedCountryId == null) {
+        if (isNaN(this.selectedMonth) || this.selectedMonth < 1 || this.selectedMonth > 12 || this.selectedCountryId === null) {
             return;
         }
         this.service.get(`api/mdf/${this.selectedMonth}/${this.selectedYear}/${this.selectedCountryId}/count/`).then((promise) => {

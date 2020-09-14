@@ -143,6 +143,10 @@ class personManagementListController {
         });
         return ref;
     }
+    
+    pendingList() {
+        return this.state.href('personManagementPendingList');
+    }
 }
 
 export default personManagementListController;

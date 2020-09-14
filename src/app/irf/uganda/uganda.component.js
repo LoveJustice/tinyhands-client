@@ -81,7 +81,6 @@ export class IrfUgandaController extends BaseIrfController {
                 enabled:true,
                 value:968,
                 label:'Migrant',
-                label:'Migrant',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0

@@ -29,34 +29,25 @@
 	                <option value="shelter">shelter</option>
 	        	</select>
 	        </div>
-	        <div class="col-sm-6 form-group">
-	          <label for="first_date">Date Established</label>
-	          <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="LocationModalController.dateData.questions[969].value">
-	        </div>
-	    </div>
-	    <div class="row" ng-if="LocationModalController.isRemove">
-	    	<div class="col-sm-6 form-group">
-	          <h3>Enter last date of operation</h3>
-	          <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="LocationModalController.dateData.questions[970].value">
-	        </div>
+	        <div class="col-sm-6 checkbox">
+	          	<label>
+	              <input type="checkbox"
+	                     ng-model="LocationModalController.questions[973].response.value"> Active
+	            </label>
+	          </div>
 	    </div>
 	  </div>
-	  <div class="modal-footer">
+	  	  <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="LocationModalController.save()" ng-if="!LocationModalController.isViewing"
-                    		ng-show="!LocationModalController.isRemove"
-                    		ng-disabled="LocationModalController.questions[963].response.value===''|| LocationModalController.questions[971].response.value==='' || LocationModalController.dateData.questions[969].value===''">Save</button>
+                    <button class="btn btn-success float-left" ng-click="LocationModalController.save()" ng-if="!LocationModalController.isViewing">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
-                    <button class="btn btn-danger" ng-click="LocationModalController.remove()"
-                    		ng-if="!LocationModalController.isAdd && !LocationModalController.isViewing && !LocationModalController.isRemove">Remove Location</button>
-                    <button class="btn btn-danger" ng-click="LocationModalController.save()"
-                    		ng-if="!LocationModalController.isAdd && !LocationModalController.isViewing && LocationModalController.isRemove"
-                    		ng-disabled="LocationModalController.dateData.questions[970].value===''">Proceed to Remove Location</button>
+                    <button class="btn btn-danger" ng-click="LocationModalController.delete()" ng-if="!LocationModalController.isAdd && !LocationModalController.isViewing">Delete</button>
                 </div>
                 <div class="col-xs-4">
                     <button class="btn btn-default" ng-click="LocationModalController.dismiss()">Close</button>
                 </div>
             </div>
         </div>
+</div>

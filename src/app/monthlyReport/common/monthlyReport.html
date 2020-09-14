@@ -36,8 +36,11 @@
             	<input type="number" class="form-control" placeholder="Year" ng-model="$ctrl.questions[714].response.value">
             </div>
         </div>
-        <div class="row text-center">
+        <div class="row text-center" ng-if="!$ctrl.topMessage">
         	Note: if there are no victims at the shelter or a question does not apply, mark full points. 
+        </div>
+        <div class="row text-center" ng-if="$ctrl.topMessage">
+        	{{ $ctrl.topMessage }} 
         </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
         	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"

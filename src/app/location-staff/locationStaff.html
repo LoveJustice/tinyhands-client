@@ -1,0 +1,64 @@
+<div id="locationStaff" class="container-fluid padding-top-20">
+	<div class="row col-md-12 form-group center-vertical">
+		<div class="col-md-1">
+			<label>Country</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.country" ng-change="vm.changeCountry()">
+				<option ng-repeat="country in vm.countries" value="{{country.id}}">{{ country.name}} </option>
+			</select>
+		</div>
+		<div class="col-md-1">
+			<label>Station</label>
+		</div>
+		<div class="col-md-2">
+			<select class="form-control" ng-model="vm.station" ng-change="vm.changeStation()">
+				<option ng-repeat="station in vm.stations" value="{{station.id}}">{{ station.station_name}} </option>
+			</select>
+		</div>
+		<div class="col-md-3">
+    		<div class="col-md-6">
+	    		<select class="form-control"ng-model="vm.monthStr" ng-change="vm.changeMonth()">
+	    			<option ng-repeat="month in vm.monthNames" ng-if="month!==''" value="{{ $index }}">{{ month }}</option>
+	    		</select>
+	    	</div>
+	    	<div class="col-md-5">
+	    		<input type="number" class="form-control" ng-model="vm.year" ng-change="vm.changeYear()">
+			</div>
+		</div>
+		<div class="col-md-2">&nbsp</div>
+		<div class="col-md-1 saving" ng-show="vm.saveCount > 0">Saving Data {{ vm.saveCount }}</div>
+		
+	</div>
+	<div id="locationStaffTable" class="tableDiv" ng-style="{'width':vm.tableDivSize}" ng-show="vm.work && vm.locations.length > 0 && vm.staff.length > 0">
+		<table class="table table-striped tableBorder" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.work">
+			<thead class="sticky-table-header">
+				<tr>
+					<th class="staffName"></th>
+					<th class="total">Location</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0">{{loc.name}}</th>
+				</tr>
+				<tr>
+					<th class="staffName">Staff</th>
+					<th class="total">Totals</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0">{{vm.locationTotals[loc.id]}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="staff in vm.staff" ng-if="staff.last_date===null || vm.staffTotals[staff.id]>0">
+					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</td>
+					<th ng-class="vm.totalColor('total',vm.staffTotals[staff.id]) ">{{ vm.staffTotals[staff.id] }}</td>
+					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0">
+						<input type="number" step=".01" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)">
+					</td>
+				<tr>
+			</tbody>
+		</table>
+	</div>
+	<div ng-show="vm.work && vm.locations.length === 0">
+		<h3>There are no locations associated with this station</h3>
+	</div>
+	<div ng-show="vm.work && vm.staff.length === 0">
+		<h3>There are no staff associated with this station</h3>
+	</div>
+</div>

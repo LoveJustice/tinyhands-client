@@ -11,6 +11,49 @@
                 <hr/>
             </div>
         </div>
+        <div class="row col-md-12" ng-if="$ctrl.immigration">
+        	<table class="immigrationTable">
+        		<thead>
+        			<tr>
+        				<th class="immigrationHeader"></th>
+        				<th class="immigrationCell"></th>
+        				<th class="immigrationCell">Entry</th>
+        				<th class="immigrationCell">Transit</th>
+        				<th class="immigrationCell">Exit</th>
+        				<th class="immigrationCase">Immigration Case Number</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td rowspan="2">LJ Recommendation</td>
+        				<td>Allow</td>
+        				<td><input type="radio" name="ljEntry" value="Allow" ng-model="$ctrl.questions[981].response.value"></td>
+        				<td><input type="radio" name="ljTransit" value="Allow" ng-model="$ctrl.questions[982].response.value"></td>
+        				<td><input type="radio" name="ljExit" value="Allow" ng-model="$ctrl.questions[983].response.value"></td>
+        				<td rowspan="4"><form-step type="text" response-value="$ctrl.questions[987].response.value"></form-step></td>
+        			</tr>
+        			<tr>
+        				<td>Deny</td>
+        				<td><input type="radio" name="ljEntry" value="Deny" ng-model="$ctrl.questions[981].response.value"></td>
+        				<td><input type="radio" name="ljTransit" value="Deny" ng-model="$ctrl.questions[982].response.value"></td>
+        				<td><input type="radio" name="ljExit" value="Deny" ng-model="$ctrl.questions[983].response.value"></td>
+        			</tr>
+        			<tr>
+        				<td rowspan="2">Immigration Decision</td>
+        				<td>Allow</td>
+        				<td><input type="radio" name="immEntry" value="Allow" ng-model="$ctrl.questions[984].response.value"></td>
+        				<td><input type="radio" name="immTransit" value="Allow" ng-model="$ctrl.questions[985].response.value"></td>
+        				<td><input type="radio" name="imExit" value="Allow" ng-model="$ctrl.questions[986].response.value"></td>
+        			</tr>
+        			<tr>
+        				<td>Deny</td>
+        				<td><input type="radio" name="imEntry" value="Deny" ng-model="$ctrl.questions[984].response.value"></td>
+        				<td><input type="radio" name="imTransit" value="Deny" ng-model="$ctrl.questions[985].response.value"></td>
+        				<td><input type="radio" name="imExit" value="Deny" ng-model="$ctrl.questions[986].response.value"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
         <div class="row">
 	    	<div class="col-md-6">
 	    		<div>

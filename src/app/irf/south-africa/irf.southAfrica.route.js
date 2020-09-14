@@ -7,13 +7,6 @@ function IrfSouthAfricaRoutes($stateProvider) {
             params: {
                 id: null
             }
-        })
-        .state('irfNamibia', {
-            url: '/irf/namibia:?id&stationId&countryId&isViewing&formName',
-            component: 'irfSouthAfricaComponent',
-            params: {
-                id: null
-            }
         });
 }
 

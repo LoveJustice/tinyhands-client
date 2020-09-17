@@ -74,6 +74,15 @@ export class BaseMonthlyReportController extends BaseFormController {
         }
     }
     
+    sectionTranslation(sectionName) {
+        let translatedName = sectionName;
+        if (this.translateSectionName && this.translateSectionName.hasOwnProperty(sectionName)) {
+            translatedName = this.translateSectionName[sectionName];
+        }
+        
+        return translatedName;
+    }
+    
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
         let config = this.config[config_name];
         this.modalActions = [];

@@ -35,27 +35,6 @@ function VdfCommonRoutes($stateProvider) {
             params: {
                 id: null
             }
-        })
-        .state('vdfTanzania', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfZimbabwe', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfIndiaNetwork', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
         });
 }
 

@@ -1,0 +1,68 @@
+<fieldset class="container-fluid padding-top-20" ng-disabled="$ctrl.isViewing">
+	<div>
+		<div class="col-md-4">
+			<div class="col-md-4"><label>Form#</label></div>
+			<div class="col-md-8"><a ng-href="{{ $ctrl.auditSample.ref }}" target="_blank">{{ $ctrl.auditSample.form_number }}</a></div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-md-4"><label>Auditor</label></div>
+			<div class="col-md-8">{{ $ctrl.auditSample.auditor_name }}</div>
+		</div>
+		<div class="col-md-4">
+			<div class="col-md-6"><label>Date Audited</label></div>
+			<div class="col-md-6">{{ $ctrl.auditSample.completion_date }}</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<table class="table table-striped" float-thead="$ctrl.stickyOptions" ng-model="$ctrl.audit">
+	        <thead class="sticky-table-header">
+	            <tr>
+	                <th>Section (Tabs in Form)</th>
+	                <th># Questions</th>
+	                <th colspan="2"># Incorrect</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr ng-repeat="section in $ctrl.audit.template">
+	                <td>{{ section.name }}</td>
+	                <td>{{ section.questions }}</td>
+	                <td colspan="2"><input type="number" min="0" max="{{ section.questions }}" ng-model="$ctrl.auditSample.results[section.name]"></td>
+	            </tr>
+	            <tr>
+	            	<td>Corrected in SL?</td>
+	            	<td></td>
+	            	<td>
+	            		<form-step type="radio" radio-name="corrected" label="Yes" response-value="$ctrl.auditSample.corrected"></form-step>
+	            	</td>
+	            	<td>
+	            		<form-step type="radio" radio-name="corrected" label="No" response-value="$ctrl.auditSample.corrected"></form-step>
+	            	<td>
+	            </tr>
+	        </tbody>
+	    </table>
+    </div>
+    <div class="col-md-12">
+	    <label>Detailed Notes:</label>
+	    <textarea class="form-control" rows="2" ng-model="$ctrl.auditSample.detail_notes"></textarea>
+	    <label>High Level Notes:</label>
+	    <textarea class="form-control" rows="2" ng-model="$ctrl.auditSample.high_level_notes"></textarea>
+	    <hr>
+    </div>
+    <div class=col-md-4>
+    	<div class="col-md-3"><label>Total:</label></div>
+    	<div class="col-md-9">{{ $ctrl.getTotal() }}</div>
+    </div>
+    <div class=col-md-4>
+    	<div class="col-md-6"><label>Total Incorrect:</label></div>
+    	<div class="col-md-6">{{ $ctrl.getTotalIncorrect() }}</div>
+    </div>
+    <div class=col-md-4>
+    	<div class="col-md-4"><label>Form %:</label></div>
+    	<div class="col-md-8">{{ $ctrl.getAccuracy() }}</div>
+    </div>
+</fieldset>
+<div class="row col-md-12 padding-bottom-20 text-center">
+	<button class="btn btn-success" ng-if="$ctrl.audit.id!==null && !$ctrl.isViewing"
+		ng-disabled="$ctrl.audit.form === null || $ctrl.audit.country === null || $ctrl.start_date === null || $ctrl.end_date === null || $ctrl.audit.percent_to_sample === null || $ctrl.template.length < 1"
+		ng-click="$ctrl.submit()">Save</button>
+</div>

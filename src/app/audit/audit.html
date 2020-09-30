@@ -1,0 +1,92 @@
+<fieldset class="container-fluid padding-top-20" ng-disabled="$ctrl.isViewing">
+	<fieldset ng-disabled="$ctrl.audit.id !== null">
+		</
+		<div class="row col-md-12 center-vertical">
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<label>Form</label>
+				</div>
+				<div class="col-md-4">
+					<select ng-model="$ctrl.audit.form" , class="form-control"
+						, ng-change="$ctrl.changeForm()">
+						<option ng-repeat="form in $ctrl.forms" value="{{ form.id }}">{{
+							form.form_name }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<label>Country</label>
+				</div>
+				<div class="col-md-4">
+					<select ng-model="$ctrl.audit.country" , class="form-control">
+						<option ng-repeat="country in $ctrl.countries"
+							value="{{ country.id }}">{{ country.name }}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div class="row col-md-12 center-vertical padding-top-10">
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<label>Start Date</label>
+				</div>
+				<div class="col-md-4">
+					<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.start_date">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<label>End Date</label>
+				</div>
+				<div class="col-md-4">
+					<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.end_date">
+				</div>
+			</div>
+		</div>
+		<div class="row col-md-12 center-vertical padding-top-10">
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<label>Sample Percent</label>
+				</div>
+				<div class="col-md-4">
+					<input type="number" ng-model="$ctrl.audit.percent_to_sample">
+				</div>
+			</div>
+			<div class="col-md-6" ng-if="$ctrl.audit.author_name">
+				<div class="col-md-3">
+					<label>Author</label>
+				</div>
+				<div class="col-md-4">
+					{{ $ctrl.audit.author_name }}
+				</div>
+			</div>
+		</div>
+	</fieldset>
+	<div class="row text-center">
+		<table class="table table-striped section" cellspacing="0"
+			cellpadding="0" cellborder="0" style="border-collapse: collapse;"
+			ng-model="$ctrl.audit.template">
+			<thead>
+				<tr>
+					<th class="text-center">Section/Tab</th>
+					<th class="text-center">#Questions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="section in $ctrl.audit.template">
+					<td>{{ section.name }}</td>
+					<td><input type="number" ng-model="section.questions"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</fieldset>
+<div class="row col-md-12 padding-bottom-20 text-center">
+	<button class="btn btn-success" ng-if="$ctrl.audit.id===null"
+		ng-disabled="$ctrl.audit.form === null || $ctrl.audit.country === null || $ctrl.start_date === null || $ctrl.end_date === null || $ctrl.audit.percent_to_sample === null || $ctrl.template.length < 1"
+		ng-click="$ctrl.submit()">Create</button>
+	<button class="btn btn-success" ng-if="$ctrl.audit.id!==null && !$ctrl.isViewing"
+		ng-disabled="$ctrl.audit.form === null || $ctrl.audit.country === null || $ctrl.start_date === null || $ctrl.end_date === null || $ctrl.audit.percent_to_sample === null || $ctrl.template.length < 1"
+		ng-click="$ctrl.submit()">Save</button>
+</div>

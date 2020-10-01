@@ -170,4 +170,17 @@ export default class AuditListController {
         }
         return result;
     }
+    
+    result(audit) {
+        let result = '';
+        if (audit.samples_complete >= audit.total_samples) {
+            let percent_passed = Math.round(audit.samples_passed * 100 / audit.samples_complete);
+            if (percent_passed >= 95) {
+                result = 'Passed';
+            } else {
+                result = 'Failed';
+            }
+        }
+        return result;
+    }
 }

@@ -1,5 +1,4 @@
 import './audit.less';
-const DateData = require('../dateData.js');
 
 export default class AuditSampleController {
     constructor(AuditService, SessionService, $state, $stateParams, toastr, constants) {
@@ -38,6 +37,9 @@ export default class AuditSampleController {
                     formName:this.auditSample.form_name,
                 };
             this.auditSample.ref = this.state.href(baseRoute, params);
+            if (this.auditSample.corrected === null || this.auditSample.corrected === '') {
+                this.auditSample.corrected = 'No';
+            }
         });
     }
     
@@ -89,10 +91,10 @@ export default class AuditSampleController {
         
         
         
-        this.service.submitAuditSample(this.auditSample).then((promise) => {
+        this.service.submitAuditSample(this.auditSample).then(() => {
             this.state.go('auditSampleList', {
                 auditId: this.stateParams.auditId,
-            }, (error) => {alert(error);});
+            });
         });
     }
 }

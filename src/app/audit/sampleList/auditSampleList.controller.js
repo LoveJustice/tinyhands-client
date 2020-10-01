@@ -87,7 +87,10 @@ export default class AuditSampleListController {
     }
     
     getFormsPassed() {
-        let result = 'TBD';
+        let result = '-';
+        if (this.audit.samples_complete > 0) {
+            result = Math.round(this.audit.samples_passed * 100 / this.audit.samples_complete) + '%';
+        }
         return result;
     }
     

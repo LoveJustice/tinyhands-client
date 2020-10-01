@@ -46,7 +46,7 @@
                 <td>{{ audit.start_date }} to {{ audit.end_date }}</td> 
                 <td>{{ $ctrl.percentComplete(audit) }}</td>
                 <td>{{ $ctrl.accuracy(audit) }}</td>
-                <td>{{ audit.result }}</td>
+                <td>{{ $ctrl.result(audit) }}</td>
                 <td ng-if="$ctrl.session.checkPermission('AUDIT','VIEW',audit.country, null)">
                 	<a class="btn btn-sm btn-primary"ng-href="{{ $ctrl.getAuditUrl(audit, true) }}">View</a>
                 </td>

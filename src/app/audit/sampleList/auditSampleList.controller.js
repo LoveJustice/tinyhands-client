@@ -15,44 +15,25 @@ export default class AuditSampleListController {
         this.timeout = $timeout;
         this.toastr = toastr;
         this.constants = constants;
-        this.countries = [];
 
-        this.nextPage = "";
         this.queryParameters = {
-            "page_size": 200,
-            "reverse": true,
-            "ordering": 'date_time_of_interception',
+            "audit_id": this.stateParams.auditId,
+            "page_size": 20,
+            "reverse": false,
+            "ordering": 'form_number',
             "search": '',
-            "status": 'approved',
-            "country_ids": ''
         };
+        this.paginate = {
+            items:0,
+            pageSize:this.queryParameters.page_size,
+            currentPage:1,
+        };
+        
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
 
-        this.getAuditSampleList(this.stateParams.auditId);
+        this.showPage(1);
         this.getAudit(this.stateParams.auditId);
-    }
-
-    getAuditSampleList(auditId) {
-        this.spinnerOverlayService.show("Searching for Audit Samples...");        
-        this.service.getAuditSampleList(auditId).then( (promise) => {
-            this.auditSamples= promise.data.results;
-            this.spinnerOverlayService.hide(); 
-          //this.nextPage = this.extractPage(promise.data.next);
-            for (let idx=0; idx < this.auditSamples.length; idx++) {
-                let sample = this.auditSamples[idx];
-                sample.url = this.state.href('auditSample', {
-                    auditId: auditId,
-                    id: sample.id
-                });
-                sample.incorrect = 0;
-                for (let key in sample.results) {
-                    if (sample.results[key]) {
-                        sample.incorrect += sample.results[key];
-                    }
-                }
-            }   
-        });
     }
     
     getAccuracy(total, incorrect) {
@@ -64,7 +45,6 @@ export default class AuditSampleListController {
     }
     
     getAudit(auditId) {
-        
         this.service.getAudit(auditId).then((promise) => {
             this.audit = promise.data;
             let questions = 0;
@@ -94,15 +74,38 @@ export default class AuditSampleListController {
         return result;
     }
     
-    
-
-    showMoreAudits() {
-        let params = angular.copy(this.queryParameters);
-        params.page = this.nextPage;
-        this.service.getMoreAudits(this.transform(params)).then( (promise) => {
-            this.vdfs = this.vdfs.concat(promise.data.results);
-            this.nextPage = this.extractPage(promise.data.next);
-            this.addUrls(this.vdfs);
+    transform(queryParameters, pageNumber) {
+        var queryParams = angular.copy(queryParameters);
+        queryParams.page = pageNumber;
+        var params = [];
+        Object.keys(queryParams).forEach(name => {
+            if (queryParams[name] !== null && queryParams[name] !== '') {
+                params.push({ name: name, value: queryParams[name] });
+            }
         });
+        return params;
+    }
+    
+    showPage(pageNumber) {
+        this.spinnerOverlayService.show("Searching for Audit Samples...");        
+        this.service.getAuditSampleList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
+            this.auditSamples= promise.data.results;
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
+            this.spinnerOverlayService.hide();
+            for (let idx=0; idx < this.auditSamples.length; idx++) {
+                let sample = this.auditSamples[idx];
+                sample.url = this.state.href('auditSample', {
+                    auditId: this.queryParameters.audit_id,
+                    id: sample.id
+                });
+                sample.incorrect = 0;
+                for (let key in sample.results) {
+                    if (sample.results[key]) {
+                        sample.incorrect += sample.results[key];
+                    }
+                }
+            }   
+        }, () => {this.spinnerOverlayService.hide();});
     }
 }

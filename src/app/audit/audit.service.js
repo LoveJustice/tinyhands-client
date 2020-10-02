@@ -41,8 +41,8 @@ export default class AuditService {
         return this.service.get(`api/forms/countries/${formId}/`);
     }
     
-    getAuditSampleList(auditId) {
-        return this.service.get(`api/audit-sample/?audit_id=${auditId}&page_size=1000`);
+    getAuditSampleList(queryParams) {
+        return this.service.get(`api/audit-sample/`, queryParams);
     }
     
     getAuditSample(id) {

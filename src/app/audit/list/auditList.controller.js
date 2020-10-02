@@ -20,13 +20,18 @@ export default class AuditListController {
 
         this.nextPage = "";
         this.queryParameters = {
-            "page_size": 25,
+            "page_size": 2,
             "reverse": true,
-            "ordering": 'date_time_of_interception',
+            "ordering": 'end_date',
             "search": '',
-            "status": 'approved',
-            "country_ids": ''
         };
+        
+        this.paginate = {
+            items:0,
+            pageSize:this.queryParameters.page_size,
+            currentPage:1,
+        };
+        
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
 
@@ -39,8 +44,18 @@ export default class AuditListController {
         return this.session.checkPermission('AUDIT','ADD',null, null) === true;
     }
 
-    transform() {
+    transform(queryParameters, pageNumber) {
+        var queryParams = angular.copy(queryParameters);
+        if (queryParams.reverse) {
+            queryParams.ordering = '-' + queryParams.ordering;
+        }
+        queryParams.page = pageNumber;
         var params = [];
+        Object.keys(queryParams).forEach(name => {
+            if (queryParams[name] !== null && queryParams[name] !== '') {
+                params.push({ name: name, value: queryParams[name] });
+            }
+        });
         if (this.countryId !== null && this.countryId !== '') {
             params.push({"name": "country", "value": parseInt(this.countryId)});
         }
@@ -49,14 +64,6 @@ export default class AuditListController {
         }
         
         return params;
-    }
-
-    extractPage(url) {
-        try {
-            return url.slice(url.indexOf('page=')).split('&')[0].split('=')[1];
-        } catch (e) {
-            return 0;
-        }
     }
 
     getSortIcon(column, reverse) {
@@ -110,12 +117,15 @@ export default class AuditListController {
         });
     }
     
-
     getAuditList() {
-        this.spinnerOverlayService.show("Searching for Auditss...");        
-        this.service.getAuditList(this.transform(this.queryParameters)).then( (promise) => {
+        this.showPage(1);
+    }
+    showPage(pageNumber) {
+        this.spinnerOverlayService.show("Searching for Audits...");        
+        this.service.getAuditList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
             this.audits = promise.data.results;
-            this.nextPage = this.extractPage(promise.data.next);
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
             this.spinnerOverlayService.hide();   
             for (let idx=0; idx < this.audits.length; idx++) {
                 this.audits[idx].samplesUrl = this.state.href('auditSampleList', {
@@ -142,16 +152,6 @@ export default class AuditListController {
             isViewing:isViewing,
         });
         return ref;
-    }
-
-    showMoreAudits() {
-        let params = angular.copy(this.queryParameters);
-        params.page = this.nextPage;
-        this.service.getMoreAudits(this.transform(params)).then( (promise) => {
-            this.vdfs = this.vdfs.concat(promise.data.results);
-            this.nextPage = this.extractPage(promise.data.next);
-            this.addUrls(this.vdfs);
-        });
     }
     
     percentComplete(audit) {

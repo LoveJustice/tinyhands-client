@@ -44,9 +44,8 @@
             </tr>
         </tbody>
     </table>
-    <div class="row text-center">
-        <button ng-disabled="!$ctrl.nextPage" ng-click="$ctrl.showMoreIrfs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-            Load more results
-        </button>
+    <div class="row text-center" ng-if="$ctrl.paginate.items > 0">
+        <paginate page-control="$ctrl.paginate" controller="$ctrl">
     </div>
+    <br>
 </div>

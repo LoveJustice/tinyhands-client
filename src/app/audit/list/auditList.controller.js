@@ -20,7 +20,7 @@ export default class AuditListController {
 
         this.nextPage = "";
         this.queryParameters = {
-            "page_size": 2,
+            "page_size": 20,
             "reverse": true,
             "ordering": 'end_date',
             "search": '',

@@ -123,7 +123,7 @@ export class BaseCifController extends BaseFormController {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
             this.config = response.data;
             this.service.getCif(countryId, stationId, id).then((response) => {
-                this.processResponse(response, id);
+                this.processResponse(response);
                 this.number_change();
                 if (this.stateParams.id !== null && this.questions[287].response.value !== null) {
                     this.relatedUrl = this.state.href('relatedForms', {
@@ -330,7 +330,7 @@ export class BaseCifController extends BaseFormController {
         this.spinner.show('Auto saving CIF...');
         this.service.submitCif(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
             this.stateParams.id = response.data.storage_id;
-            this.processResponse(response, this.stateParams.id);
+            this.processResponse(response, false);
             this.number_change();
             if (this.stateParams.id !== null && this.questions[287].response.value !== null) {
                 this.relatedUrl = this.state.href('relatedForms', {

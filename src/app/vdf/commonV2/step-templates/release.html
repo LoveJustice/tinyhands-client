@@ -56,7 +56,7 @@
 	<div class="row">
 	    <form-step class="col-md-3 control-label">4.5 Where was the victim sent?</form-step>
 	    <div class="col-md-9">
-	    	<div class="col-md-3" ng-repeat="where in $ctrl.config.RadioItems[994]">
+	    	<div class="col-md-4" ng-repeat="where in $ctrl.config.RadioItems[994]">
 				<form-step type="radio" radio-name="sent" label="{{ where }}" response-value="$ctrl.questions[994].response.value" ></form-step>
 			</div>
 		</div>

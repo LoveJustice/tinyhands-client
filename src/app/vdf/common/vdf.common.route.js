@@ -8,13 +8,6 @@ function VdfCommonRoutes($stateProvider) {
                 id: null
             }
         })
-        .state('vdfIndia', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
-        })
         .state('vdfBangladesh', {
             url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonComponent',
@@ -29,21 +22,7 @@ function VdfCommonRoutes($stateProvider) {
                 id: null
             }
         })
-        .state('vdfUganda', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
-        })
         .state('vdfKenya', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfMalawi', {
             url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonComponent',
             params: {
@@ -72,13 +51,6 @@ function VdfCommonRoutes($stateProvider) {
             }
         })
         .state('vdfIndiaNetwork', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfRwanda', {
             url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonComponent',
             params: {

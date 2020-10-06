@@ -1,0 +1,67 @@
+<div class="container" id="AuditList"><br/>
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h1>Audits</h1>
+        </div>
+    </div>
+
+    <div class="row">
+    	<div class="col-md-3" >
+        	<p>Form Type</p>
+            <select ng-model="$ctrl.formTypeId", class="form-control", ng-change="$ctrl.getAuditList()">
+           		<option value="">All</option>
+            	<option ng-repeat="formType in $ctrl.formTypes" value="{{ formType.id }}">{{ formType.name }}</option>
+            </select>
+        </div>
+        <div class="col-md-3" >
+        	<p>Country</p>
+            <select ng-model="$ctrl.countryId", class="form-control", ng-change="$ctrl.getAuditList()">
+            	<option value="">All</option>
+            	<option ng-repeat="country in $ctrl.countries" value="{{ country.id }}">{{ country.name }}</option>
+            </select>
+        </div>
+        <div class="col-md-3 pull-right" ng-if="$ctrl.session.checkPermission('AUDIT','ADD',audit.country, null)">
+        	<a class="btn btn-med btn-default" ng-href="{{ $ctrl.getAuditUrl(null, false) }}">Create new Audit</a>
+        </div>
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="$ctrl.stickyOptions" ng-model="$ctrl.audits">
+        <thead class="sticky-table-header">
+            <tr>
+                <th>Form</th>
+                <th>Country</th>
+                <th>Range</th>
+                <th>% complete</th>
+                <th>Accuracy</th>
+                <th>Result</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="audit in $ctrl.audits">
+                <td><a ng-href="{{ audit.samplesUrl }}">{{ audit.form_name }}</a></td>
+                <td>{{ audit.country_name }}</td>
+                <td>{{ audit.start_date }} to {{ audit.end_date }}</td> 
+                <td>{{ $ctrl.percentComplete(audit) }}</td>
+                <td>{{ $ctrl.accuracy(audit) }}</td>
+                <td>{{ $ctrl.result(audit) }}</td>
+                <td ng-if="$ctrl.session.checkPermission('AUDIT','VIEW',audit.country, null)">
+                	<a class="btn btn-sm btn-primary"ng-href="{{ $ctrl.getAuditUrl(audit, true) }}">View</a>
+                </td>
+                <td ng-if="$ctrl.session.checkPermission('AUDIT','EDIT',audit.country, null)">
+                	<a class="btn btn-sm btn-primary" ng-href="{{ $ctrl.getAuditUrl(audit, false) }}">Edit</a>
+            	</td>
+            </tr>
+            <tr ng-show="$ctrl.irfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No IRFs Matched your search for: "{{ $ctrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="$ctrl.paginate" controller="$ctrl">
+    </div>
+    <br>
+</div>

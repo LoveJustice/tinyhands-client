@@ -39,6 +39,7 @@ import operationsDashboardModule from './operationsDashboard/operationsDashboard
 import stationDataModule from './stationData/stationData.module';
 import locationDataModule from './location-data/locationData.module';
 import locationStaffModule from './location-staff/locationStaff.module';
+import auditModule from './audit/audit.module';
 
 
 import constants from './constants.js';
@@ -54,6 +55,7 @@ import CreateButtonComponent from './components/create-budget/create-budget.comp
 import MdfExportComponent from './components/mdf-export/mdf-export.component';
 import AssociatedPersonDirective from './components/associated-person/associated-person.directive';
 import AddressEntryDirective from './components/address-entry/address-entry.directive';
+import PaginateDirective from './components/paginate/paginate.directive';
 
 angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap, 'ui.dateTimeInput', 'ui.bootstrap', 'ui.bootstrap.datetimepicker', 
         sharedModule,
@@ -81,6 +83,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         stationDataModule,
         locationStaffModule,
         locationDataModule,
+        auditModule,
     ])
 
     .constant('constants', constants)
@@ -92,6 +95,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
     .directive('csvexport', CsvExportDirective)
     .directive('navbar', NavbarDirective)
     .directive('addressEntry', AddressEntryDirective)
+    .directive('paginate', PaginateDirective)
     .directive('autocompleteAddress1', AutocompleteAddress1Directive)
     .directive('autocompleteAddress2', AutocompleteAddress2Directive)
     .directive('associatedPerson', AssociatedPersonDirective)

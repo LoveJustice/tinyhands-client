@@ -11,27 +11,17 @@ export default class IntercepteeModalController extends BaseModalController {
         this.constants = constants;
         this.options = options;
         this.photoPresent = false;
-        
-        if (options.hasOwnProperty('identificationTypes')) {
-            this.identificationTypes = options.identificationTypes;
+    }
+    
+    delayedQuestionData() {
+        if (this.options.hasOwnProperty('identificationTypes')) {
+            this.identificationTypes = this.options.identificationTypes;
             this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, this.identificationTypes);
             if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
                 this.processPersonResponses(this.questions, this.config.Person);
             }
         }
-    }
-    
-    processPersonResponses(questions, personConfigList) {
-        for (let question_id in questions) {
-            if (personConfigList.indexOf(parseInt(question_id)) > -1) {
-                if (this.personIdentifierChoice) {
-                    this.personIdentifierChoice.manage(parseInt(question_id));
-                }
-            }
-        }
-    }
-    
-    init() {
+        
         if (this.questions[9].response.arrested.value === 'Yes') {
             this.questions[9].response.arrested.value = true;
         } else {
@@ -51,6 +41,22 @@ export default class IntercepteeModalController extends BaseModalController {
         } else {
             this.photoPresent = false;
         }
+    }
+    
+    processPersonResponses(questions, personConfigList) {
+        for (let question_id in questions) {
+            if (personConfigList.indexOf(parseInt(question_id)) > -1) {
+                if (this.personIdentifierChoice) {
+                    this.personIdentifierChoice.manage(parseInt(question_id));
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    init() {
     }
     
     resizeImage(img) {

@@ -57,7 +57,7 @@ class BorderStationController extends BaseFormController  {
         this.service.getFormConfig('borderStation').then ((response) => {
             this.config = response.data;
             this.service.getBorderStation(id).then((response) => {
-                this.processResponse(response, id);
+                this.processResponse(response);
                 if (id && !this.session.checkPermission('STATIONS','EDIT',this.questions[955].response.value, null)) {
                     this.isViewing = true;
                 }

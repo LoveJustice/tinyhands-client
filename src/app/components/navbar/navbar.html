@@ -134,8 +134,10 @@
                     </li>
                 </ul>
             </li>
-
-            
+            <li>
+            	<a ng-show="navbarCtrl.session.checkPermission('AUDIT','VIEW',null, null)"
+                        	ui-sref="auditList">Audits</a>
+            </li>
         </ul>
         
 

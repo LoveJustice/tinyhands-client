@@ -42,24 +42,31 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             {template:awarenessTemplate, name:"Awareness"},
             {template:securityTemplate, name:"Security"},
             {template:accountingTemplate, name:"Accounting"},
-            {template:victimEngagementTemplate, name:"Victim Engagement"},
+            {template:victimEngagementTemplate, name:"Monitoring"},
             {template:recordsTemplate, name:"Records"},
-            {template:aftercareTemplate, name:"Aftercare"},
+            {template:aftercareTemplate, name:"Potential Victim Care"},
             {template:paralegalTemplate, name:"Paralegal"},
             {template:finalTemplate, name:"Final"},
             {template:attachmentsTemplate, name:"Attachments"}
         ];
         
+        this.translateSectionName = {
+            "Victim Engagement":"Monitoring",
+            "Aftercare":"Potential Victim Care",
+        }
+        
+        this.topMessage='Note: If a question does not apply, mark “n/a”.';
+        
         this.governanceQuestions = [716,717,902];
-        this.governanceCheckboxes = [718,719,720,721,722];
+        this.governanceCheckboxes = [718,719,720,721,944,945,722];
         this.resourcesQuestions = [731,732,903,733,734,735];
         this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745,"HighValueContacts",797];
         this.securityQuestions = [749,750,751,752,753,754];
         this.accountingQuestions = [758,759,760,761];
         this.victimEngagementQuestions = [765,904,905,868];
-        this.recordsQuestions = [769,869,770,771,772,793];
+        this.recordsQuestions = [769,869,770,771,772,793,947];
         this.aftercareQuestions = ["Education",776,777,870,778,871,872,909,"HTMessage",779,781,782,"Shelter",873,874,875,"Interviews",783,784,785,"Followup",786];
-        this.paralegalQuestions = [790,791,876,792,877,906,907];
+        this.paralegalQuestions = [790,791,876,792,877,906,907,995];
         
         this.questionFormat = {
             // Governance
@@ -102,7 +109,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 type:"checkbox",
                 label:"Records",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             719: {
@@ -110,15 +117,15 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 type:"checkbox",
                 label:"Security",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             720: {
                 enabled:true,
                 type:"checkbox",
-                label:"Aftercare",
+                label:"Care",
                 format:"col-md-2",
-                points:10
+                points:5
                 
             },
             721: {
@@ -126,7 +133,23 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 type:"checkbox",
                 label:"Paralegal",
                 format:"col-md-2",
-                points:10
+                points:5
+                
+            },
+            944: {
+                enabled:true,
+                type:"checkbox",
+                label:"Awareness",
+                format:"col-md-2",
+                points:5
+                
+            },
+            945: {
+                enabled:true,
+                type:"checkbox",
+                label:"Accounting",
+                format:"col-md-2",
+                points:5
                 
             },
             722: {
@@ -184,7 +207,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             734: {
                 enabled:true,
                 type:"radio",
-                prompt: "Percent of staff who have taken and passed TMS Exam",
+                prompt: "Percent of staff who have taken and passed TMS Knowledge Exam",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"<30%",format:"col-md-1",points:0},
@@ -353,11 +376,12 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             753: {
                 enabled:true,
                 type:"radio",
-                prompt: 'Were all threats reported? (mark "yes" if no threats)',
+                prompt: 'Were all threats reported?',
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:25},
+                    {label:"n/a",format:"col-md-2",points:25},
                 ]
             },
             754: {
@@ -367,7 +391,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes/no threats",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"n/a",format:"col-md-2",points:10},
                 ]
             },
             
@@ -465,7 +490,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             771: {
@@ -475,8 +500,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<70%",format:"col-md-1",points:0},
-                    {label:"70-89% of the time",format:"col-md-2",points:8},
-                    {label:"90-99% of the time",format:"col-md-2",points:10},
+                    {label:"70-89%",format:"col-md-2",points:8},
+                    {label:"90-99%",format:"col-md-2",points:10},
                     {label:"100%",format:"col-md-2",points:15},
                 ]
             },
@@ -487,9 +512,9 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"<70%",format:"col-md-1",points:5},
-                    {label:"70-89% of the time",format:"col-md-2",points:10},
-                    {label:"90-99% of the time",format:"col-md-2",points:20},
-                    {label:"100%",format:"col-md-2",points:30},
+                    {label:"70-89%",format:"col-md-2",points:10},
+                    {label:"90-99%",format:"col-md-2",points:15},
+                    {label:"100%",format:"col-md-2",points:20},
                 ]
             },
             793: {
@@ -501,7 +526,20 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<60%",format:"col-md-1",points:10},
                     {label:"60-79%",format:"col-md-2",points:15},
                     {label:"80-99%",format:"col-md-2",points:20},
-                    {label:"100%",format:"col-md-2",points:30},
+                    {label:"100%",format:"col-md-2",points:25},
+                    {label:"n/a",format:"col-md-2",points:25},
+                ]
+            },
+            947: {
+                enabled:true,
+                type:"radio",
+                prompt: '"Verified" phone numbers (victim / suspect) percentage',
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"<60%",format:"col-md-1",points:5},
+                    {label:"60-79%",format:"col-md-2",points:10},
+                    {label:"80-99%",format:"col-md-2",points:15},
+                    {label:"100%",format:"col-md-2",points:20},
                 ]
             },
             
@@ -670,6 +708,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:10},
+                    {label:"n/a",format:"col-md-2",points:10},
                 ]
             },
             876: {
@@ -680,6 +719,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 options: [
                     {label:"no",format:"col-md-1",points:0},
                     {label:"yes",format:"col-md-2",points:40},
+                    {label:"n/a",format:"col-md-2",points:40},
                 ]
             },
             792: {
@@ -709,7 +749,17 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:20},
+                    {label:"yes",format:"col-md-2",points:15},
+                ]
+            },
+            995: {
+                enabled:true,
+                type:"radio",
+                prompt: "A Legal Advisor has been appointed",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:5},
                 ]
             },
             

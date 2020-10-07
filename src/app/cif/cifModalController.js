@@ -7,7 +7,9 @@ class CifModalController extends BaseModalController {
         super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants);
         
         this.identificationTypes = identificationTypes;
-        
+    }
+    
+    delayedQuestionData() {
         this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, this.identificationTypes);
         if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
             this.processPersonResponses(this.questions, this.config.Person);

@@ -41,7 +41,7 @@ export class BaseVdfController extends BaseFormController {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
             this.config = response.data;
             this.service.getVdf(countryId, stationId, id).then((response) => {
-                this.processResponse(response, id);
+                this.processResponse(response);
                 this.number_change();
                 if (this.stateParams.id !== null && this.questions[651].response.value !== null) {
                     this.relatedUrl = this.state.href('relatedForms', {
@@ -176,7 +176,7 @@ export class BaseVdfController extends BaseFormController {
         this.spinner.show('Auto saving VDF...');
         this.service.submitVdf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
             this.stateParams.id = response.data.storage_id;
-            this.processResponse(response, this.stateParams.id);
+            this.processResponse(response);
             this.number_change();
             if (this.stateParams.id !== null && this.questions[651].response.value !== null) {
                 this.relatedUrl = this.state.href('relatedForms', {

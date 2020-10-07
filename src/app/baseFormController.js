@@ -141,13 +141,15 @@ export class BaseFormController {
         }
     }
 
-    processResponse(response) {
+    processResponse(response, count_flags=true) {
         this.response = response.data;
         this.responses = response.data.responses;
         this.questions = _.keyBy(this.responses, (x) => x.question_id);
-        for (let idx=0; idx < this.response.cards.length; idx++) {
-            for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
-                this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
+        if (count_flags) {
+            for (let idx=0; idx < this.response.cards.length; idx++) {
+                for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
+                    this.redFlagTotal += this.response.cards[idx].instances[idx1].flag_count;
+                }
             }
         }
         if (this.response.status === null || this.response.status === '' || this.response.status === 'pending') {

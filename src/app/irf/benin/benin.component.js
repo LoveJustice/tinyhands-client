@@ -42,11 +42,11 @@ export class IrfBeninController extends BaseIrfController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6, 968.7];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLable",24,25,26,216];
         this.details = {
@@ -62,8 +62,8 @@ export class IrfBeninController extends BaseIrfController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Young looking woman',
-                value:'Young looking woman',
+                label:'Escaping an exploitative situation',
+                value:'Escaping an exploitative situation',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -71,22 +71,13 @@ export class IrfBeninController extends BaseIrfController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'Revealing clothing',
-                value:'Revealing clothing',
+                label:'Young looking',
+                value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.4:{
-                enabled:true,
-                group:968,
-                label:'Young looking boy',
-                value:'Young looking boy',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -95,7 +86,7 @@ export class IrfBeninController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.5:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -104,7 +95,34 @@ export class IrfBeninController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
+            968.6:{
+                enabled:true,
+                group:968,
+                label:'Illiterate',
+                value:'Illiterate',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
             968.7:{
+                enabled:true,
+                group:968,
+                label:'Villager',
+                value:'Villager',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.8:{
+                enabled:true,
+                group:968,
+                label:'Adventurer',
+                value:'MigraAdventurernt',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.9:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -326,6 +344,13 @@ export class IrfBeninController extends BaseIrfController {
                 format:'col-md-12',
                 points:0
             },
+            996:{
+                enabled:true,
+                label:'Fake documentation',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
             928:{
                 enabled:true,
                 label:'Forged or falsified documents',
@@ -462,7 +487,7 @@ export class IrfBeninController extends BaseIrfController {
             },
             
             234:{
-                enabled:false,
+                enabled:true,
                 label:'Known Trafficker',
                 type:'checkbox',
                 format:'col-md-12',
@@ -568,7 +593,7 @@ export class IrfBeninController extends BaseIrfController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];

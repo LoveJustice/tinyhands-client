@@ -18,10 +18,10 @@ import attachmentsTemplate from '../common/step-templates/attachments/attachment
 import logbookTemplate from '../common/step-templates/logbook.html';
 
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteePassportModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfMalawiController extends BaseIrfController {
+export class IrfIndonesiaController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack);
@@ -42,9 +42,9 @@ export class IrfMalawiController extends BaseIrfController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5, 924.6];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
+        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
+        this.purposeQuestions = ["purposeLabel",924.1,924.2,924.3,924.4,924.5,924.6,924.7,924.8];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,"metLabel",243,244];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
@@ -80,13 +80,22 @@ export class IrfMalawiController extends BaseIrfController {
             968.4:{
                 enabled:true,
                 group:968,
-                label:'Young looking boy',
-                value:'Young looking boy',
+                label:'Revealing clothing',
+                value:'Revealing clothing',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.5:{
+                enabled:true,
+                group:968,
+                label:'Young man',
+                value:'Young man',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -95,7 +104,7 @@ export class IrfMalawiController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.7:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -104,7 +113,7 @@ export class IrfMalawiController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
-            968.7:{
+            968.8:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -123,8 +132,8 @@ export class IrfMalawiController extends BaseIrfController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'South Africa',
-                value: 'South Africa',
+                label:'Papua',
+                value: 'Papua',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -132,8 +141,8 @@ export class IrfMalawiController extends BaseIrfController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Mozambique',
-                value: 'Mozambique',
+                label:'Malaysia',
+                value: 'malaysia',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -141,22 +150,13 @@ export class IrfMalawiController extends BaseIrfController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Zambia',
-                value: 'Zambia',
+                label:'Saudi Arabia',
+                value: 'Saudi Arabia',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             245.4:{
-                enabled:true,
-                group:245,
-                label:'Blantyre',
-                value: 'Blantyre',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            245.5:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -183,8 +183,8 @@ export class IrfMalawiController extends BaseIrfController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Farm work',
-                value:'Farm work',
+                label:'Cafe',
+                value:'Cafe',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -192,8 +192,8 @@ export class IrfMalawiController extends BaseIrfController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Logging',
-                value:'Logging',
+                label:'Construction',
+                value:'Construction',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -201,8 +201,8 @@ export class IrfMalawiController extends BaseIrfController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Unregistered Mine',
-                value:'Unregistered Mine',
+                label:'Seafood processing',
+                value:'Seafood processing',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -210,13 +210,31 @@ export class IrfMalawiController extends BaseIrfController {
             924.5:{
                 enabled:true,
                 group:924,
-                label:'Cattle Herding',
-                value:'Cattle Herding',
+                label:'Fishing',
+                value:'Fishing',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.6:{
+                enabled:true,
+                group:924,
+                label:'Mining',
+                value:'Mining',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.7:{
+                enabled:true,
+                group:924,
+                label:'Plantation',
+                value:'Plantation',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.8:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -594,7 +612,7 @@ export class IrfMalawiController extends BaseIrfController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Rickshaw driver','Bus driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Boat worker','Bus driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -622,8 +640,8 @@ export class IrfMalawiController extends BaseIrfController {
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
-        this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-                intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
+    	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
+    			intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {
@@ -634,5 +652,5 @@ export class IrfMalawiController extends BaseIrfController {
 
 export default {
     templateUrl,
-    controller: IrfMalawiController,
+    controller: IrfIndonesiaController,
 };

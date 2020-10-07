@@ -1,0 +1,21 @@
+<div id="paginateDiv" class="paginateCenter" ng-if="paginateController.shouldDisplay()">
+	<div class="paginateContainer" style="max-width:{{paginateController.getDisplayWidth()}}px">
+		<div class="pageNumber">
+			<div ng-if="paginateController.shouldDisplayPrevious()" ng-click="paginateController.pageSelected(paginateController.pageControl.currentPage-1)">
+				<a>Previous</a>
+			</div>
+			<div ng-if="!paginateController.shouldDisplayPrevious()">
+				&nbsp;
+			</div>
+		</div>
+		<div class="pageNumber" ng-repeat="pageNumber in paginateController.getPageNumbers()" ng-click="paginateController.pageSelected(pageNumber)">
+			<div class="currentPage" ng-if="pageNumber === paginateController.pageControl.currentPage">{{ pageNumber }}</div>
+			<div ng-if="pageNumber !== paginateController.pageControl.currentPage">{{ pageNumber }}</div>
+		</div>
+		<div class="pageNumber">
+			<div ng-if="paginateController.shouldDisplayNext()" ng-click="paginateController.pageSelected(paginateController.pageControl.currentPage+1)">
+				<a>Next</a>
+			</div>
+		</div>
+	</div>
+</div>

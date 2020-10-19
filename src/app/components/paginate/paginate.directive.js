@@ -10,7 +10,8 @@ class PaginateController {
     }
     
     getNumberOfPages() {
-        return this.numberOfPages = Math.ceil((this.pageControl.items * 1.0) /this.pageControl.pageSize); 
+        this.numberOfPages = Math.ceil((this.pageControl.items * 1.0) /this.pageControl.pageSize); 
+        return this.numberOfPages; 
     }
     
     shouldDisplay() {

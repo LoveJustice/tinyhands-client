@@ -1,0 +1,18 @@
+<div id="vdf-attachments" class="row stretch-vertical">
+    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Suspects')">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openSuspectModal(card, false, $index)">
+            <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
+            <div class="panel-body text-center">
+	                	<form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 1010).value}}</form-step>
+	                	<form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 1012).value}}</form-step>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center center-vertical" ng-if="!$ctrl.isViewing">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="$ctrl.openSuspectModal(null, true)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>

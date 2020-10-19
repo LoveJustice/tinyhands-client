@@ -1,0 +1,93 @@
+<div class="container" id="legalCaseList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Legal Case Forms</h1>
+        </div>
+        <div class="pull-right"><br>
+            <a ng-if="lcfListCtrl.hasAddPermission" class="btn btn-success" ng-click="lcfListCtrl.createLegalCase()">
+                Input A New Legal Case
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="lcfListCtrl.countryDropDown.options"
+							selected-model="lcfListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="lcfListCtrl.countryDropDown.settings"
+                             translation-texts="lcfListCtrl.countryDropDown.customText"
+                             events="lcfListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-2 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="lcfListCtrl.searchLegalCases()" ng-model="lcfListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+            <div id="legalCaseStatus" ng-dropdown-multiselect="" options="lcfListCtrl.status.options"
+							selected-model="lcfListCtrl.status.selectedOptions"
+                             extra-settings="lcfListCtrl.status.settings"
+                             translation-texts="lcfListCtrl.status.customText"
+                             events="lcfListCtrl.status.eventListener" class="pull-right">
+			</div>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="lcfListCtrl.stickyOptions" ng-model="lcfListCtrl.vdfs">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="lcfListCtrl.updateSort('legal_case_number')" width="14%">Legal Case #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('legal_case_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('legal_case_number', 'reverse') }"></i>
+                </th>
+                <th ng-click="lcfListCtrl.updateSort('case_type')" width="14%">Case Type
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('case_type', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('case_type', 'reverse')}"></i>
+                </th>
+                <th ng-click="lcfListCtrl.updateSort('police_case')" width="14%">Police Case #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('police_case', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('police_case', 'reverse')}"></i>
+                </th>
+                <th ng-click="lcfListCtrl.updateSort('court_case')" width="14%">Court Case #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('court_case', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('court_case', 'reverse')}"></i>
+                </th>
+                <th ng-click="lcfListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="legalCase in lcfListCtrl.legalCases | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ legalCase.legal_case_number }}</td>
+                <td>{{ legalCase.case_type }}</td>
+                <td>{{ legalCase.police_case }}</td>
+                <td>{{ legalCase.court_case }}</td>
+                <td class="hidden-xs">{{ legalCase.date_time_last_updated | date:"medium" : lcfListCtrl.timeZoneDifference }}</td>
+                <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','VIEW',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.viewUrl}}">View</a></td>
+                <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','EDIT',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.editUrl}}">Edit</a></td>
+                <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','DELETE',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-danger" ng-click="lcfListCtrl.deleteLegalCase(legalCase, $index)">
+                    {{ legalCase.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="lcfListCtrl.legal_cases.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No Legal Cases Matched your search for: "{{ lcfListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="lcfListCtrl.paginate" controller="lcfListCtrl">
+    </div>
+    <br>
+</div>

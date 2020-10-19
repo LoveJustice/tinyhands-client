@@ -1,0 +1,90 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Legal Case #</form-step>
+            <div class="col-md-4">
+                <input  type="text" class="form-control" ng-blur="$ctrl.number_change()" placeholder="Legal Case Number" ng-model="$ctrl.questions[998].response.value" ng-change="$ctrl.formNumberChange()">
+            </div>
+            <div class="col-md-1">
+	            <button ng-if="$ctrl.irf" ng-click="$ctrl.copyIrfData()" title="copy IRF info">
+					<img ng-src="assets/images/document-arrow-right-icon.png">
+				</button>
+            </div>
+            <div class="col-xs-3 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            	Invalid Form Number
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-3 control-label">Status</form-step>
+            <div class="col-md-9">
+                <select ng-model="$ctrl.questions[997].response.value">
+                	<option value="active">active</option>
+                	<option value="closed">closed</option>
+                	<option value="inactive">inactive</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Police Case #</form-step>
+            <div class="col-md-4">
+                <input  type="text" class="form-control" placeholder="Police Case Number" ng-model="$ctrl.questions[999].response.value">
+            </div>
+        </div>
+    </div>
+     <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Court Case #</form-step>
+            <div class="col-md-4">
+                <input  type="text" class="form-control" placeholder="Court Case Number" ng-model="$ctrl.questions[1000].response.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+        	<form-step type="checkbox" label="Appealed" response-value="$ctrl.questions[1003].response.value"></form-step>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Charge Sheet Date</form-step>
+            <div class="col-md-4">
+                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1001].value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+        	<form-step class="col-md-5 control-label">Lawyer Name</form-step>
+            <div class="col-md-7">
+                <input  type="text" class="form-control" ng-model="$ctrl.questions[1004].response.value">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Date Last Contacted</form-step>
+            <div class="col-md-4">
+                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1002].value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+        	<form-step class="col-md-5 control-label">Lawyer Phone</form-step>
+            <div class="col-md-7">
+                <input  type="text" class="form-control" ng-model="$ctrl.questions[1005].response.value">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Case Types</form-step>
+            <div class="col-md-8">
+	            <form-step ng-repeat="caseType in $ctrl.caseTypes" type="checkbox" label="{{ caseType }}"
+							response-value="$ctrl.checkboxGroup.questions[1008][caseType]"></form-step>
+			</div>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12 form-group">
+    		<label>What is the Next Step?/Case Comments</label>
+    		<textarea class="form-control" rows="7" ng-model="$ctrl.questions[1007].response.value"></textarea>
+    	</div>
+    </div>
+</fieldset>

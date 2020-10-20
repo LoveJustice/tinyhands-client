@@ -191,6 +191,7 @@ export class BaseLegalCaseController extends BaseFormController {
 
     submit() {
         this.saved_status = this.response.status;
+        this.outCustomHandling();
         this.submitExtra();
         this.errorMessages = [];
         this.warningMessages = [];

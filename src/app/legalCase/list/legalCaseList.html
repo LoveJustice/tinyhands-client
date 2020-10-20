@@ -43,26 +43,23 @@
     <table class="table table-striped" float-thead="lcfListCtrl.stickyOptions" ng-model="lcfListCtrl.vdfs">
         <thead class="sticky-table-header">
             <tr>
-                <th ng-click="lcfListCtrl.updateSort('legal_case_number')" width="14%">Legal Case #
+                <th ng-click="lcfListCtrl.updateSort('legal_case_number')" width="10%">Case #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('legal_case_number', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('legal_case_number', 'reverse') }"></i>
                 </th>
-                <th ng-click="lcfListCtrl.updateSort('case_type')" width="14%">Case Type
+                <th>Status</th>
+                <th># V</th>
+                <th># S</th>
+                <th>CS Date</th>
+                <th ng-click="lcfListCtrl.updateSort('case_type')" width="14%">Type
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('case_type', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('case_type', 'reverse')}"></i>
                 </th>
-                <th ng-click="lcfListCtrl.updateSort('police_case')" width="14%">Police Case #
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('police_case', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('police_case', 'reverse')}"></i>
-                </th>
-                <th ng-click="lcfListCtrl.updateSort('court_case')" width="14%">Court Case #
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('court_case', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('court_case', 'reverse')}"></i>
-                </th>
-                <th ng-click="lcfListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
+                <th ng-click="lcfListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Date Last Contacted
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
                 </th>
+                <th># Arrests</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -71,10 +68,13 @@
         <tbody>
             <tr ng-repeat="legalCase in lcfListCtrl.legalCases | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ legalCase.legal_case_number }}</td>
+                <td>{{ legalCase.status }}</td>
+                <td>{{ legalCase.number_victims }}</td>
+                <td>{{ legalCase.number_suspects }}</td>
+                <td>{{ legalCase.charge_sheet_date  | date:"yyyy-mm-dd" }}</td>    
                 <td>{{ legalCase.case_type }}</td>
-                <td>{{ legalCase.police_case }}</td>
-                <td>{{ legalCase.court_case }}</td>
-                <td class="hidden-xs">{{ legalCase.date_time_last_updated | date:"medium" : lcfListCtrl.timeZoneDifference }}</td>
+                <td>{{ legalCase.date_last_contacted  | date:"yyyy-mm-dd" }}</td>
+                <td>{{ legalCase.number_arrests }}</td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','VIEW',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.viewUrl}}">View</a></td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','EDIT',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.editUrl}}">Edit</a></td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','DELETE',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-danger" ng-click="lcfListCtrl.deleteLegalCase(legalCase, $index)">

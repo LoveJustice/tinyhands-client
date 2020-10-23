@@ -43,10 +43,10 @@ export class IrfBeninController extends BaseIrfController {
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
+        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5, 245.6, 245.7];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,996,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
@@ -150,8 +150,8 @@ export class IrfBeninController extends BaseIrfController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Burkina Faso',
-                value: 'Burkina Faso',
+                label:'Ivory Coast',
+                value: 'Ivory Coast',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -159,13 +159,40 @@ export class IrfBeninController extends BaseIrfController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Gulf Country',
-                value: 'Gulf Country',
+                label:'Gabon',
+                value: 'Gabon',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             245.4:{
+                enabled:true,
+                group:245,
+                label:'Cotonou',
+                value: 'Cotonou',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.5:{
+                enabled:true,
+                group:245,
+                label:'Parakou',
+                value: 'Parakou',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.6:{
+                enabled:true,
+                group:245,
+                label:'Kuwait',
+                value: 'Kuwait',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.7:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -192,8 +219,8 @@ export class IrfBeninController extends BaseIrfController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Fishing',
-                value:'Fishing',
+                label:'Rural work',
+                value:'Rural work',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -201,8 +228,8 @@ export class IrfBeninController extends BaseIrfController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Massage Parlor',
-                value:'Massage Parlor',
+                label:'Waitress',
+                value:'Waitress',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0

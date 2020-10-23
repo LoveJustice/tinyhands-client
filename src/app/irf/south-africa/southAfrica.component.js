@@ -666,7 +666,7 @@ export class IrfSouthAfricaController extends BaseIrfController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Church Member']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Church Member', 'Freedom App']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];

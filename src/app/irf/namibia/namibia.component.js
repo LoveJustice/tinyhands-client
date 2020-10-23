@@ -49,7 +49,7 @@ export class IrfNamibiaController extends BaseIrfController {
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,977,988,713,197,186,978];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930,178,74,167];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
-        this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLable",24,25,26,216];
+        this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
                 enabled:true,
@@ -637,7 +637,7 @@ export class IrfNamibiaController extends BaseIrfController {
                 format:'col-md-12',
                 points:4
             },
-            "marriedLable":{
+            "marriedLabel":{
                 enabled:true,
                 label:'Signs of False or Forced Marriage',
                 type:'header',

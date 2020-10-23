@@ -46,7 +46,7 @@ export class IrfCambodiaController extends BaseIrfController {
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4,924.5,924.6,924.7];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,242,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,996,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {

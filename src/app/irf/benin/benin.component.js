@@ -117,7 +117,7 @@ export class IrfBeninController extends BaseIrfController {
                 enabled:true,
                 group:968,
                 label:'Adventurer',
-                value:'MigraAdventurernt',
+                value:'MigrantAdventurer',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0

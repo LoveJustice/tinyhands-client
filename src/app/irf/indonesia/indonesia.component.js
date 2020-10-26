@@ -21,7 +21,7 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfCambodiaController extends BaseIrfController {
+export class IrfIndonesiaController extends BaseIrfController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack);
@@ -42,11 +42,11 @@ export class IrfCambodiaController extends BaseIrfController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4,924.5,924.6,924.7];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,242,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,996,930];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
+        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
+        this.purposeQuestions = ["purposeLabel",924.1,924.2,924.3,924.4,924.5,924.6,924.7,924.8];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,"metLabel",243,244];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
@@ -71,8 +71,8 @@ export class IrfCambodiaController extends BaseIrfController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'Young looking',
-                value:'Young looking',
+                label:'Young looking woman',
+                value:'Young looking woman',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -80,13 +80,22 @@ export class IrfCambodiaController extends BaseIrfController {
             968.4:{
                 enabled:true,
                 group:968,
-                label:'Wearing revealing clothing',
-                value:'Wearing revealing clothing',
+                label:'Revealing clothing',
+                value:'Revealing clothing',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.5:{
+                enabled:true,
+                group:968,
+                label:'Young man',
+                value:'Young man',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -95,7 +104,7 @@ export class IrfCambodiaController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.7:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -104,7 +113,7 @@ export class IrfCambodiaController extends BaseIrfController {
                 format:'col-md-3',
                 points:0
             },
-            968.7:{
+            968.8:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -123,8 +132,8 @@ export class IrfCambodiaController extends BaseIrfController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Thailand',
-                value: 'Thailand',
+                label:'Papua',
+                value: 'Papua',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -132,8 +141,8 @@ export class IrfCambodiaController extends BaseIrfController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'China',
-                value: 'China',
+                label:'Malaysia',
+                value: 'malaysia',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -141,22 +150,13 @@ export class IrfCambodiaController extends BaseIrfController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Malaysia',
-                value: 'Malaysia',
+                label:'Saudi Arabia',
+                value: 'Saudi Arabia',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             245.4:{
-                enabled:true,
-                group:245,
-                label:'Vietnam',
-                value: 'Vietnam',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            245.5:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -183,13 +183,31 @@ export class IrfCambodiaController extends BaseIrfController {
             924.2:{
                 enabled:true,
                 group:924,
+                label:'Cafe',
+                value:'Cafe',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.3:{
+                enabled:true,
+                group:924,
                 label:'Construction',
                 value:'Construction',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
-            924.3:{
+            924.4:{
+                enabled:true,
+                group:924,
+                label:'Seafood processing',
+                value:'Seafood processing',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.5:{
                 enabled:true,
                 group:924,
                 label:'Fishing',
@@ -198,34 +216,25 @@ export class IrfCambodiaController extends BaseIrfController {
                 format:'col-md-4',
                 points:0
             },
-            924.4:{
-                enabled:true,
-                group:924,
-                label:'Logging',
-                value:'Logging',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.5:{
-                enabled:true,
-                group:924,
-                label:'Factory',
-                value:'Factory',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
             924.6:{
                 enabled:true,
                 group:924,
-                label:'Agriculture',
-                value:'Agriculture',
+                label:'Mining',
+                value:'Mining',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.7:{
+                enabled:true,
+                group:924,
+                label:'Plantation',
+                value:'Plantation',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.8:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -286,13 +295,6 @@ export class IrfCambodiaController extends BaseIrfController {
             280:{
                 enabled:true,
                 label:'Not speaking on their own behalf',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            974:{
-                enabled:true,
-                label:'First time traveling abroad',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -610,7 +612,7 @@ export class IrfCambodiaController extends BaseIrfController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Rickshaw driver','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Boat worker','Bus driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -638,8 +640,8 @@ export class IrfCambodiaController extends BaseIrfController {
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
-        this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-                intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
+    	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
+    			intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {
@@ -650,6 +652,5 @@ export class IrfCambodiaController extends BaseIrfController {
 
 export default {
     templateUrl,
-    controller: IrfCambodiaController,
+    controller: IrfIndonesiaController,
 };
-

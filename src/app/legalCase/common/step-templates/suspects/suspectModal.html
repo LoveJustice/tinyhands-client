@@ -1,0 +1,109 @@
+<div id="legal-case-suspect-modal" class="modal-content">
+    <form name="LegalCaseSuspectModal" ng-disabled="SuspectModalController.isViewing === 'true'">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="SuspectModalController.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-5">
+            	<h3 class="modal-title">Suspect</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+	            <div class="col-md-2 form-group">
+		    		<label>First & Last Name</label>
+		    	</div>
+				<div class="col-md-6 form-group">
+			        <input type="text" min="0" class="form-control" ng-model="SuspectModalController.questions[9].response.name.value">
+		        </div>
+		        <div class="col-md-4 form-group">
+		    		<form-step type="checkbox" label="Named in Charge Sheet" response-value="SuspectModalController.questions[1009].response.value"></form-step>
+		    	</div>
+            </div>
+            <div class="row center-vertical">
+            	<div class="col-md-2 form-group">
+            		<label>Arrest Status</label>
+	            </div>
+	            <div class="col-md-8 form-group">
+			        <select ng-model="SuspectModalController.questions[1010].response.value">
+			        	<option value=""></option>
+				        <option value="No">No</option>
+	                	<option value="Yes - But Has Been Released">Yes - But Has Been Released</option>
+	                	<option value="Yes - But Released on Bail">Yes - But Released on Bail</option>
+	                	<option value="Yes - In Prison">Yes - In Prison</option>
+	                	<option value="Yes - In Police Custody">Yes - In Police Custody</option>
+	                </select>
+		        </div>
+        	</div>
+        	<div class="row center-vertical">
+            	<div class="col-md-2 form-group">
+            		<label>Arrest Date</label>
+	            </div>
+	            <div class="col-md-3 form-group">
+			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1011].value">
+		        </div>
+        	</div>
+        	<div ng-if="SuspectModalController.caseStatus==='closed'">
+	        	<div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Verdict</label>
+		            </div>
+		            <div class="col-md-8 form-group">
+				        <select ng-model="SuspectModalController.questions[1012].response.value">
+				        	<option value=null></option>
+					        <option value="Acquittal">Acquittal</option>
+		                	<option value="Conviction">Conviction</option>
+		                </select>
+			        </div>
+	        	</div>
+	        	<div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Date of Verdict</label>
+		            </div>
+		            <div class="col-md-3 form-group">
+				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1013].value">
+			        </div>
+	        	</div>
+	        	<div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Imprisonment Period</label>
+		            </div>
+		            <div class="col-md-2 form-group text-center">
+		            	<label>Hours</label>
+				        <input type="number" min="0" class="form-control" ng-model="SuspectModalController.questions[1021].response.value">
+			        </div>
+			        <div class="col-md-2 form-group text-center">
+		            	<label>Months</label>
+				        <input type="number" min="0" class="form-control" ng-model="SuspectModalController.questions[1022].response.value">
+			        </div>
+			        <div class="col-md-2 form-group text-center">
+		            	<label>Days</label>
+				        <input type="number" min="0" class="form-control" ng-model="SuspectModalController.questions[1023].response.value">
+			        </div>
+	        	</div>
+	        	<div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Fine Amount</label>
+		            </div>
+		            <div class="col-md-8 form-group">
+				        <input type="text" min="0" class="form-control" ng-model="SuspectModalController.questions[1015].response.value">
+			        </div>
+	        	</div>
+        	</div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="SuspectModalController.save()" ng-disabled="!SuspectModalController.questions[9].response.name.value" ng-if="!SuspectModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="SuspectModalController.delete()" ng-if="!SuspectModalController.isAdd && !SuspectModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="SuspectModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

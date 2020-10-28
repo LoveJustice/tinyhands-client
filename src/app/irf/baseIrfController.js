@@ -3,7 +3,7 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseIrfController extends BaseFormController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $stateParams, $uibModalStack);
 
@@ -12,6 +12,7 @@ export class BaseIrfController extends BaseFormController {
         this.service = IrfService;
         this.state = $state;
         this.spinner = SpinnerOverlayService;
+        this.session = SessionService;
         this.relatedUrl = null;
         this.intercepteeImages = {};
         this.formNumberPattern = '';
@@ -278,7 +279,8 @@ export class BaseIrfController extends BaseFormController {
                 status = 'second-verification';
             }
             if (!this.questions[821].response.value) {
-                this.dateData.questions[821].value = new Date(); 
+                this.dateData.questions[821].value = new Date();
+                this.questions[1026].response.value = this.session.user.first_name + ' ' + this.session.user.last_name;
             }
             if (!this.questions[817].response.value) {
                 this.dateData.questions[817].value = this.dateData.questions[821].value;
@@ -287,6 +289,7 @@ export class BaseIrfController extends BaseFormController {
             status = 'first-verification';
             if (!this.questions[817].response.value) {
                 this.dateData.questions[817].value = new Date();
+                this.questions[1025].response.value = this.session.user.first_name + ' ' + this.session.user.last_name;
             }
         }
         return status;

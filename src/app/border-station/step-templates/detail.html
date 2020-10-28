@@ -25,17 +25,29 @@
 	        <input type="text" class="form-control" id="dateEstablished" placeholder="Date Established"
 	               ng-model="$ctrl.questions[951].response.value">
 	      </div>
-	      <div class="col-sm-3 checkbox" style="margin: 20px 0px">
+	      <div class="col-sm-2 checkbox" style="margin: 20px 0px">
 	        <label>
 	          <input type="checkbox" id="hasShelter"
 	                 ng-model="$ctrl.questions[952].response.value"> Has Shelter
 	        </label>
 	      </div>
-	      <div class="col-sm-3 checkbox" style="margin: 20px 0px">
+	      <div class="col-sm-2 checkbox" style="margin: 20px 0px">
 	        <label>
 	          <input type="checkbox" id="nonTransit"
 	                 ng-model="$ctrl.questions[972].response.value"> Non Transit Station
 	        </label>
+	      </div>
+	      <div class="col-sm-2" style="margin: 20px 0px">
+	      	<div class="col-md-6">
+	      		Auto Number
+	      	</div>
+	      	<div class="col-md-6">
+		        <select ng-model="$ctrl.questions[1024].response.value">
+		        	<option value="">None</option>
+		        	<option value="CIF">CIF</option>
+		        	<option value="IRF">IRF</option>
+		        </select>
+	        </div>
 	      </div>
 	  </div>
 	  <div class="row">

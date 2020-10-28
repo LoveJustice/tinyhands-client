@@ -4,15 +4,25 @@
 	</div>
 	<br>
 	<div class="row">
-    	<div class="col-md-3">
+		<div class="col-md-2">
+			<div class="col-md-4">Status</div>
+			<div class="col-md-8">
+				<select ng-model="$ctrl.completionStatus" ng-change="$ctrl.parameterChange()">
+					<option value="">All</option>
+					<option value="true">Completed</option>
+					<option value="false">Not Completed</option>
+				</select>
+			</div>
+		</div>
+    	<div class="col-md-2">
     		<div class="col-md-4">Total</div>
     		<div class="col-md-8">{{ $ctrl.audit.total_samples }}</div>
     	</div>
-    	<div class="col-md-3">
+    	<div class="col-md-2">
     		<div class="col-md-6">Completed</div>
     		<div class="col-md-6">{{ $ctrl.audit.samples_complete }}</div>
     	</div>
-    	<div class="col-md-3">
+    	<div class="col-md-2">
     		<div class="col-md-8">Accuracy %</div>
     		<div class="col-md-4">{{ $ctrl.getOverallAccuracy() }}</div>
     	</div>

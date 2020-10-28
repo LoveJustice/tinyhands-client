@@ -12,7 +12,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="context in $ctrl.contexts">
-						<td style="border:1px solid #000;">{{context}}</td>
+						<td style="border:1px solid #000;">{{ $ctrl.sectionTranslation(context) }}</td>
 						<td align="right" style="border:1px solid #000;">{{$ctrl.getContextCount(context)}}</td>
 					</tr>
 					<tr>

@@ -2,6 +2,7 @@ const OtherData = require('./otherData.js');
 const DateDate = require('./dateData.js');
 
 /* global _ */
+/* global setTimeout */
 
 class BaseModalController {
     constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants) {
@@ -13,39 +14,57 @@ class BaseModalController {
         this.isAdd = isAdd;
         this.card = card;
         this.originalQuestions = questions;
-        this.questions = _.cloneDeep(questions);
+        this.questions = {};
         this.isViewing = isViewing;
         this.modalActions = modalActions;
         this.redFlagTotal = 0;
         this.config = config;
         this.constants = constants;
+        this.otherData = null;
+        this.dateData = null;	
+    	
+    	this.setupFlagListener();
+    	// Delay the setting of question data.  This allows the components to be initialized
+    	// without data.  Whe flagged questions are then initialized, the flag listener will be
+    	// notified to increment the flags.
+    	setTimeout ( () => {this.baseDelayedQuestionData();}, 500 );
+    }
+    
+    // override in subclass to set additional delayed data.
+    delayedQuestionData() {
+    }
+    
+    baseDelayedQuestionData() {
+        this.questions = _.cloneDeep(this.originalQuestions);
         
-    	this.otherData = new OtherData(this.originalQuestions);
-    	if (this.config.hasOwnProperty('RadioOther')) {
-    	    for (let property in this.config.RadioItems) {
+        this.otherData = new OtherData(this.originalQuestions);
+        if (this.config.hasOwnProperty('RadioOther')) {
+            for (let property in this.config.RadioItems) {
                 let parts = ('' + property).split('-');
                 if (parts.length === 1 && this.config.RadioOther.indexOf(Number(property)) >= 0 ||
                         parts.length === 2 && this.config.RadioOther.indexOf(Number(parts[0])) >= 0) {
                     this.otherData.setRadioButton(this.config.RadioItems[property], property);
                 }
             }
-    	}
+        }
     
-    	this.dateData = new DateDate(this.originalQuestions);
-    	if (this.config.hasOwnProperty('Date')) {
-    		for (let idx=0; idx < this.config.Date.length; idx++) {
-    			let questionId = this.config.Date[idx];
-    			this.dateData.setDate(questionId,'basic');
-    		}
-    	}
-    	if (this.config.hasOwnProperty('Person')) {
-    		for (let idx=0; idx < this.config.Person.length; idx++) {
-    			let questionId = this.config.Person[idx];
-    			this.dateData.setDate(questionId,'person');
-    		}
-    	}
-    	
-    	this.setupFlagListener();
+        this.dateData = new DateDate(this.originalQuestions);
+        if (this.config.hasOwnProperty('Date')) {
+            for (let idx=0; idx < this.config.Date.length; idx++) {
+                let questionId = this.config.Date[idx];
+                this.dateData.setDate(questionId,'basic');
+            }
+        }
+        if (this.config.hasOwnProperty('Person')) {
+            for (let idx=0; idx < this.config.Person.length; idx++) {
+                let questionId = this.config.Person[idx];
+                this.dateData.setDate(questionId,'person');
+            }
+        }
+        this.delayedQuestionData();
+        
+        // Cause AngularJS to notice that the data has been updated in the modal.
+        this.$scope.$digest();
     }
     
     setupFlagListener() {

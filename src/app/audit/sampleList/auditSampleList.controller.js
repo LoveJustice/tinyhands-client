@@ -16,6 +16,7 @@ export default class AuditSampleListController {
         this.toastr = toastr;
         this.constants = constants;
 
+        this.completionStatus="";
         this.queryParameters = {
             "audit_id": this.stateParams.auditId,
             "page_size": 20,
@@ -77,6 +78,9 @@ export default class AuditSampleListController {
     transform(queryParameters, pageNumber) {
         var queryParams = angular.copy(queryParameters);
         queryParams.page = pageNumber;
+        if (this.completionStatus !== '') {
+            queryParams.completed = this.completionStatus;
+        }
         var params = [];
         Object.keys(queryParams).forEach(name => {
             if (queryParams[name] !== null && queryParams[name] !== '') {
@@ -84,6 +88,10 @@ export default class AuditSampleListController {
             }
         });
         return params;
+    }
+    
+    parameterChange() {
+        this.showPage(1)
     }
     
     showPage(pageNumber) {

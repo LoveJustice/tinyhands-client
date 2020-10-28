@@ -82,6 +82,10 @@
                         <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);"
                             ui-sref="budgetList">MDFs</a>
                     </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('LEGAL_CASE','VIEW',null, null);"
+                            ui-sref="legalCaseList">Legal Cases</a>
+                    </li>
                 </ul>
             </li>
             <!-- END: FORMS -->

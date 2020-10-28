@@ -1,18 +1,15 @@
 <div id="tally" ng-cloak>
-	<div>
-		<div class="col-md-3">&nbsp;</div>
-		<div class="col-md-2 tally-entry" ng-show="tally.tally">
-			<div class="row">
-				<div class="tally-total-label">Past 6 Month Intercepts</div>
-				<div class="tally-count">{{ tally.tally.count }}</div>
-			</div>
-			<div class="row" ng-repeat="region in tally.tally.regions" ng-click="tally.toggleShowCountry(region)">
-				<div class="tally-region-label">{{ region.name }}</div>
-				<div class="tally-region-count">{{ region.count }}</div>
-				<div class="row" ng-repeat="country in region.countries" ng-show="region.showDetail">
-					<div class="tally-country-label">{{ country.name }}</div>
-					<div class="tally-count">{{ country.count }}</div>
-				</div>
+	<div class="col-md-2 tally-entry" ng-show="tally.tally">
+		<div class="row">
+			<div class="tally-total-label">Past 6 Month Intercepts</div>
+			<div class="tally-total-count">{{ tally.tally.count }}</div>
+		</div>
+		<div class="row" ng-repeat="region in tally.tally.regions" ng-click="tally.toggleShowCountry(region)">
+			<div class="tally-region-label">{{ region.name }}</div>
+			<div class="tally-region-count">{{ region.count }}</div>
+			<div class="row" ng-repeat="country in region.countries" ng-show="region.showDetail">
+				<div class="tally-country-label">{{ country.name }}</div>
+				<div class="tally-country-count">{{ country.count }}</div>
 			</div>
 		</div>
 	</div>

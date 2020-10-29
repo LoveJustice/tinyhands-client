@@ -91,7 +91,7 @@
             <!-- END: FORMS -->
             <!-- START: REPORTS -->
             <li class="dropdown" ng-class="{open:reportsOpen}"
-            	ng-hide="!navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)||navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null))"
+            	ng-hide="!(navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)||navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null))"
                 ng-mouseleave="reportsOpen = false">
                 <a class="dropdown-toggle" data-toggle="dropdown" ng-click="reportsOpen=!reportsOpen">Data Summaries
                     <span class="caret"></span>

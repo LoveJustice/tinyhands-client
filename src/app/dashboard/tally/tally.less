@@ -5,91 +5,47 @@
   user-select: none;
   z-index: 1;
   text-align: center;
-  .tally-tab {
-    display: inline-block;
-    vertical-align: top;
-    width: 11%;
-    background-color: rgba(255,255,255,0.85);
-    border-radius: 10px;
-    cursor: default;
-    margin-left: 4px;
-    margin-right: 4px;
-    margin-top: 10px;
-    padding-left: 0;
-    padding-right: 0;
-    top: 5px;
-    * {
-      overflow: hidden;
-      text-overflow: '.';
-    }
-    .tallyFade.ng-hide-add {
-      -webkit-animation-duration: 0.4s;
-      animation-duration: 0.4s;
-      -webkit-animation-name: fadeOutUp;
-      animation-name: fadeOutUp;
-    }
-
-    .tallyFade.ng-hide-remove {
-      -webkit-animation-duration: 0.4s;
-      animation-duration: 0.4s;
-      -webkit-animation-name: fadeInDown;
-      animation-name: fadeInDown;
-    }
-    h3, h4 {
-      font-size: 15px;
-    }
-  }
-  .tally-tab-small {
-    background-color: rgba(255,255,255,0.85);
-    border-radius: 10px;
-    position: absolute;
-    display: table;
-    width: 50%;
-    left: 25%;
-    div {
-      display: table-cell;
-    }
-    h3, h4 {
-      font-size: 20px;
-    }
-  }
-  .day-of-week {
-    margin: 0;
-  }
   .tally-entry {
     border-radius: 10px;
     margin-top: 10px;
-    margin-left: 4px;
+    margin-left: 10px;
     margin-right: 4px;
-  	background-color: rgba(255,255,255,0.85);
-  }
-  .tally-count {
-  	display:inline-block;
-  	text-align: right;
-  	width: 20%;
+  	background-color: rgba(255,255,255,0.9);
   }
   .tally-total-label {
+    font-weight: bold;
     display:inline-block;
-  	text-align: left;
-  	width: 75%;
+    width: 75%;
+    text-align: left;
   }
   .tally-region-label {
-  	display:inline-block;
-  	text-align: left;
-  	padding-left: 5%;
-  	width: 70%;
-  	color: blue;
+    color: blue;
+    display:inline-block;
+    width: 75%;
+    text-align: left;
+  }
+  .tally-country-label {
+    display:inline-block;
+    width: 75%;
+    text-align: left;
+    padding-left: 5%
+  }
+  .tally-total-count {
+    display:inline-block;
+    text-align: right;
+  	width: 20%;
+    font-weight: bold;
   }
   .tally-region-count {
-  	display:inline-block;
-  	text-align: right;
+    display:inline-block;
+    text-align: right;
   	width: 20%;
   	color: blue;
   }
-  .tally-country-label {
+  .tally-country-count {
   	display:inline-block;
-  	text-align: left;
-  	padding-left: 10%;
-  	width: 55%;
+    text-align: right;
+    width: 20%;
+    padding-right: 5%;
   }
 }

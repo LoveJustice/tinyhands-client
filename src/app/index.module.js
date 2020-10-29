@@ -40,6 +40,7 @@ import stationDataModule from './stationData/stationData.module';
 import locationDataModule from './location-data/locationData.module';
 import locationStaffModule from './location-staff/locationStaff.module';
 import auditModule from './audit/audit.module';
+import legalCaseModule from './legalCase/legalCase.module';
 
 
 import constants from './constants.js';
@@ -84,6 +85,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         locationStaffModule,
         locationDataModule,
         auditModule,
+        legalCaseModule,
     ])
 
     .constant('constants', constants)

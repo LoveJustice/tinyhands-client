@@ -1,0 +1,88 @@
+<div id="legal-case-victim-modal" class="modal-content">
+    <form name="LegalCaseVictimModal" ng-disabled="VictimModalController.isViewing === 'true'">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="VictimModalController.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-5">
+            	<h3 class="modal-title">Victim</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+	            <div class="col-md-3 form-group">
+		    		<label>Victim Name</label>
+		    	</div>
+				<div class="col-md-6 form-group">
+			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions[9].response.name.value">
+		        </div>
+            </div>
+            <div class="row center-vertical">
+		    	<div class="col-md-3 form-group">
+            		<label>Phone #</label>
+	            </div>
+	            <div class="col-md-3 form-group">
+			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions[9].response.phone.value">
+		        </div>
+            </div>
+            <div class="row center-vertical">
+		    	<div class="col-md-3 form-group">
+            		<label>Alternative Phone #</label>
+	            </div>
+	            <div class="col-md-3 form-group">
+			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions[1016].response.value">
+		        </div>
+            </div>
+            <div class="row center-vertical">
+	        	<label class="col-md-3 control-label">Address:</label>
+	        	<div class="col-md-6 margin-top-0">
+		        	<address-entry ng-model="VictimModalController.questions[9].response.address.value"
+		        			latitude-model="VictimModalController.questions[9].response.latitude.value"
+		        			longitude-model="VictimModalController.questions[9].response.longitude.value" view-only="VictimModalController.isViewing"></addressEntry>
+		        </div>
+		    </div>
+		    <div class="row">
+	        	<label class="col-md-3 control-label">Address Notes:</label>
+	        	<div class="col-md-6">
+	                <input type="text" class="form-control" ng-model="VictimModalController.questions[9].response.address_notes.value">
+	            </div>
+		    </div>
+		    <div class="row center-vertical">
+            	<div class="col-md-3 form-group">
+            		<label>Date of Last Attempt</label>
+	            </div>
+	            <div class="col-md-3 form-group">
+			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="VictimModalController.dateData.questions[1017].value">
+		        </div>
+        	</div>
+        	<div class="row center-vertical">
+            	<div class="col-md-3 form-group">
+            		<label>Date of Last Contact</label>
+	            </div>
+	            <div class="col-md-3 form-group">
+			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="VictimModalController.dateData.questions[1018].value">
+		        </div>
+        	</div>
+        	<div class="row">
+	        	<label class="col-md-3 control-label">Update/Status of Victim</label>
+	        	<div class="col-md-9">
+	                <input type="text" class="form-control" ng-model="VictimModalController.questions[1019].response.value">
+	            </div>
+		    </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="VictimModalController.save()" ng-disabled="!VictimModalController.questions[9].response.name.value" ng-if="!VictimModalController.isViewing">Save</button>
+                </div>
+                <div class="col-xs-4 text-center">
+                    <button class="btn btn-danger" ng-click="VictimModalController.delete()" ng-if="!VictimModalController.isAdd && !VictimModalController.isViewing">Delete</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="VictimModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

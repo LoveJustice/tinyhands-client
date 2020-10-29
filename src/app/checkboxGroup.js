@@ -34,7 +34,7 @@ class CheckboxGroup {
                 }
                 let values = [];
                 let parts = ('' + property).split('-');
-                if (parts.length === 1 && this.originalQuestions.hasOwnProperty(property)) {
+                if (parts.length === 1 && this.originalQuestions.hasOwnProperty(property) && this.originalQuestions[property].response.value !== null) {
                     values = this.originalQuestions[property].response.value.split(';');
                 } else if (parts.length === 2 &&  this.originalQuestions.hasOwnProperty(parts[0])) {
                     let v1 = this.originalQuestions[parts[0]].response[parts[1]];

@@ -71,9 +71,9 @@
                 <td>{{ legalCase.status }}</td>
                 <td>{{ legalCase.number_victims }}</td>
                 <td>{{ legalCase.number_suspects }}</td>
-                <td>{{ legalCase.charge_sheet_date  | date:"yyyy-mm-dd" }}</td>    
+                <td>{{ legalCase.charge_sheet_date  | date:"yyyy-MM-dd" }}</td>    
                 <td>{{ legalCase.case_type }}</td>
-                <td>{{ legalCase.date_last_contacted  | date:"yyyy-mm-dd" }}</td>
+                <td>{{ legalCase.date_last_contacted  | date:"yyyy-MM-dd" }}</td>
                 <td>{{ legalCase.number_arrests }}</td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','VIEW',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.viewUrl}}">View</a></td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','EDIT',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.editUrl}}">Edit</a></td>

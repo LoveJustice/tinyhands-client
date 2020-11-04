@@ -21,6 +21,7 @@ export default class AuditController {
         this.audit = {
             id:null,
             form:null,
+            form_name:null,
             country:null,
             start_date:null,
             end_date:null,
@@ -71,6 +72,7 @@ export default class AuditController {
         for (let idx=0; idx < this.forms.length; idx++) {
             if (this.audit.form === ''+this.forms[idx].id) {
                 formName = this.forms[idx].form_name;
+                this.audit.form_name = formName;
                 break;
             }
         }
@@ -112,6 +114,6 @@ export default class AuditController {
         
         this.service.submitAudit(this.audit).then(() => {
             this.state.go('auditList');
-        });
+        }, (error)=>{alert(error);});
     }
 }

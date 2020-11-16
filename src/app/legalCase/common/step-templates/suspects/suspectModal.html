@@ -70,7 +70,7 @@
 	            		<label>Imprisonment Period</label>
 		            </div>
 		            <div class="col-md-2 form-group text-center">
-		            	<label>Hours</label>
+		            	<label>Years</label>
 				        <input type="number" min="0" class="form-control" ng-model="SuspectModalController.questions[1021].response.value">
 			        </div>
 			        <div class="col-md-2 form-group text-center">
@@ -86,8 +86,16 @@
 	            	<div class="col-md-2 form-group">
 	            		<label>Fine Amount</label>
 		            </div>
-		            <div class="col-md-8 form-group">
-				        <input type="text" min="0" class="form-control" ng-model="SuspectModalController.questions[1015].response.value">
+		            <div class="col-md-3 form-group">
+				        <input type="number" min="0" class="form-control" ng-model="SuspectModalController.questions[1015].response.value">
+			        </div>
+	        	</div>
+	        	<div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Fine Currency</label>
+		            </div>
+		            <div class="col-md-3 form-group">
+				        <input type="text" min="0" class="form-control" ng-model="SuspectModalController.questions[1027].response.value">
 			        </div>
 	        	</div>
         	</div>

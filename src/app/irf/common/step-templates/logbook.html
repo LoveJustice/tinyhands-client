@@ -87,6 +87,12 @@
 				<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[817].value">
 			</div>
 		</div>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">First Verification By</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="text" class="form-control" ng-model="$ctrl.questions[1025].response.value">
+			</div>
+		</div>
 	</div>
 	
 	<div ng-if="$ctrl.dateData.questions[817].value">
@@ -126,6 +132,12 @@
 			<form-step class="col-md-2">Second Verification Date</form-step>
 			<div class="col-md-4">
 				<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[821].value">
+			</div>
+		</div>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Second Verification By</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="text" class="form-control" ng-model="$ctrl.questions[1026].response.value">
 			</div>
 		</div>
 	</div>

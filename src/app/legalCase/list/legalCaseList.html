@@ -2,11 +2,11 @@
 
     <div class="row">
         <div class="col-xs-7">
-            <h1>Legal Case Forms</h1>
+            <h1>Legal Cases</h1>
         </div>
         <div class="pull-right"><br>
             <a ng-if="lcfListCtrl.hasAddPermission" class="btn btn-success" ng-click="lcfListCtrl.createLegalCase()">
-                Input A New Legal Case
+                Add a New Legal Case
             </a>
         </div>
     </div>
@@ -43,14 +43,14 @@
     <table class="table table-striped" float-thead="lcfListCtrl.stickyOptions" ng-model="lcfListCtrl.vdfs">
         <thead class="sticky-table-header">
             <tr>
-                <th ng-click="lcfListCtrl.updateSort('legal_case_number')" width="10%">Case #
+                <th ng-click="lcfListCtrl.updateSort('legal_case_number')" width="8%">Case #
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('legal_case_number', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('legal_case_number', 'reverse') }"></i>
                 </th>
-                <th>Status</th>
-                <th># V</th>
-                <th># S</th>
-                <th>CS Date</th>
+                <th width="8%">Status</th>
+                <th width="8%"># of Victims</th>
+                <th width="8%"># of Suspects</th>
+                <th width="8%">CS Date</th>
                 <th ng-click="lcfListCtrl.updateSort('case_type')" width="14%">Type
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('case_type', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('case_type', 'reverse')}"></i>
@@ -59,10 +59,10 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
                 </th>
-                <th># Arrests</th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th width="8%"># Arrests</th>
+                <th width="6%"></th>
+                <th width="6%"></th>
+                <th width="8%"></th>
             </tr>
         </thead>
         <tbody>
@@ -71,9 +71,9 @@
                 <td>{{ legalCase.status }}</td>
                 <td>{{ legalCase.number_victims }}</td>
                 <td>{{ legalCase.number_suspects }}</td>
-                <td>{{ legalCase.charge_sheet_date  | date:"yyyy-mm-dd" }}</td>    
+                <td>{{ legalCase.charge_sheet_date  | date:"yyyy-MM-dd" }}</td>    
                 <td>{{ legalCase.case_type }}</td>
-                <td>{{ legalCase.date_last_contacted  | date:"yyyy-mm-dd" }}</td>
+                <td>{{ legalCase.date_last_contacted  | date:"yyyy-MM-dd" }}</td>
                 <td>{{ legalCase.number_arrests }}</td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','VIEW',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.viewUrl}}">View</a></td>
                 <td ng-if="lcfListCtrl.session.checkPermission('LEGAL_CASE','EDIT',legalCase.station.operating_country.id, legalCase.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{legalCase.editUrl}}">Edit</a></td>

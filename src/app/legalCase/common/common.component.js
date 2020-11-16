@@ -52,7 +52,7 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
             'Sexual Harassment',
             'Taking Passport Abroad',
             'Cyber Crime'
-        ]
+        ];
         for (let idx=0; idx < this.caseTypes.length; idx++) {
             this.checkboxGroup.checkboxItem(1008, this.caseTypes[idx]);
         }

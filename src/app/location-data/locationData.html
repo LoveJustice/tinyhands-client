@@ -123,6 +123,37 @@
 					<td class="dataElement lightBorder">{{ vm.locationDisplayData[5][location.id].intercepts }}</td>
 					<td class="dataElement darkBorder"><input type="number" ng-model="vm.locationDisplayData[5][location.id].arrests" ng-blur="vm.changeFocus(location.id, 5)"></td>
 				</tr>
+				<tr>
+					<td class="locationName darkBorder total">Totals</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationTotals['_Total'].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationTotals['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationTotals['_Total'].arrests }}</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[0]['_Total'].staff }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[0]['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationDisplayData[0]['_Total'].arrests }}</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[1]['_Total'].staff }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[1]['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationDisplayData[1]['_Total'].arrests }}</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[2]['_Total'].staff }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[2]['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationDisplayData[2]['_Total'].arrests }}</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[3]['_Total'].staff }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[3]['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationDisplayData[3]['_Total'].arrests }}</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[4]['_Total'].staff }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[4]['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationDisplayData[4]['_Total'].arrests }}</td>
+					
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[5]['_Total'].staff }}</td>
+					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[5]['_Total'].intercepts }}</td>
+					<td class="dataElement darkBorder total">{{ vm.locationDisplayData[5]['_Total'].arrests }}</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

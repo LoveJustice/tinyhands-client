@@ -82,10 +82,6 @@
                         <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);"
                             ui-sref="budgetList">MDFs</a>
                     </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('LEGAL_CASE','VIEW',null, null);"
-                            ui-sref="legalCaseList">Legal Cases</a>
-                    </li>
                 </ul>
             </li>
             <!-- END: FORMS -->
@@ -116,7 +112,7 @@
 	         <li class="dropdown" ng-class="{open:stationStatsOpen}"
             	ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','VIEW',null, null)"
                 ng-mouseleave="stationStatsOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="stationStatsOpen=!stationStatsOpen">Station Statistics
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="stationStatsOpen=!stationStatsOpen">Station Stats
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
@@ -137,6 +133,10 @@
                         	ui-sref="locationStaff">Location Staffing</a>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <a ng-show="navbarCtrl.session.checkPermission('LEGAL_CASE','VIEW',null, null);"
+                    ui-sref="legalCaseList">Legal Cases</a>
             </li>
             <li>
             	<a ng-show="navbarCtrl.session.checkPermission('AUDIT','VIEW',null, null)"

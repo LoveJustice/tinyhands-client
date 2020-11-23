@@ -141,6 +141,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 if (this.questions[998].response.value === null || this.questions[998].response.value === '') {
                     this.questions[998].response.value = this.response.station_code;
                 }
+                this.station_name = this.response.station_name;
                 this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}';
                 this.formNumberChange();
                 if (this.goodFormNumber) {

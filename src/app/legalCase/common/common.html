@@ -1,15 +1,12 @@
 <div id="legal-case-common" class="container-fluid padding-top-20">
     <div class="sticky">
         <div class="padding-bottom-40">
-            <h1 class="form-number-header float-left padding-left-20">
-                {{$ctrl.questions[1].response.value}}
+            <h1 class="form-number-header float-left padding-left-40">
+                {{$ctrl.station_name}} - {{$ctrl.questions[998].response.value}}
             </h1>
-            <div ng-if="$ctrl.relatedUrl && $ctrl.questions[1].response.value" class="col-md-2 padding-top-25">
-            	<span>
-            		&nbsp;
-            		<a ng-href="{{$ctrl.relatedUrl}}" title="Related Forms"><img ng-src="assets/images/pages.png"></a>
-            	</span>
-            </div>
+            <h1 class="form-number-header float-right padding-right-40">
+            	{{$ctrl.questions[997].response.value}}
+            </h1>
         </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
         	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"

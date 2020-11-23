@@ -32,23 +32,15 @@
                 <input  type="text" class="form-control" placeholder="Police Case Number" ng-model="$ctrl.questions[999].response.value">
             </div>
         </div>
+        <div class="col-md-4 form-group">
+        	<form-step type="checkbox" label="Appealed" response-value="$ctrl.questions[1003].response.value"></form-step>
+        </div>
     </div>
      <div class="row">
         <div class="col-md-6 form-group">
             <form-step class="col-md-4 control-label">Court Case #</form-step>
             <div class="col-md-4">
                 <input  type="text" class="form-control" placeholder="Court Case Number" ng-model="$ctrl.questions[1000].response.value">
-            </div>
-        </div>
-        <div class="col-md-4 form-group">
-        	<form-step type="checkbox" label="Appealed" response-value="$ctrl.questions[1003].response.value"></form-step>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <form-step class="col-md-4 control-label">Charge Sheet Date</form-step>
-            <div class="col-md-4">
-                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1001].value">
             </div>
         </div>
         <div class="col-md-4 form-group">
@@ -60,9 +52,9 @@
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <form-step class="col-md-4 control-label">Date Last Contacted</form-step>
+            <form-step class="col-md-4 control-label">Charge Sheet Date</form-step>
             <div class="col-md-4">
-                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1002].value">
+                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1001].value">
             </div>
         </div>
         <div class="col-md-4 form-group">
@@ -74,11 +66,35 @@
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <form-step class="col-md-4 control-label">Case Types</form-step>
+        	<form-step class="col-md-4 control-label">Case Source</form-step>
+        	<div class="col-md-8">
+	        	<form-step type="radio" class="col-md-6" ng-repeat="caseSource in $ctrl.config.RadioItems[1028]" radio-name="caseSource" label="{{caseSource}}"
+	            	other-value="$ctrl.otherData.questions[1028].otherValue"
+	            	response-value="$ctrl.otherData.questions[1028].value"></form-step>
+	            <form-step type="otherRadio" class="col-md-12" radio-name="caseSource" label="Other"
+	            	other-value="$ctrl.otherData.questions[1028].otherValue"
+	            	response-value="$ctrl.otherData.questions[1028].value"></form-step>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <form-step class="col-md-2 control-label">Case Types</form-step>
             <div class="col-md-8">
-	            <form-step ng-repeat="caseType in $ctrl.caseTypes" type="checkbox" label="{{ caseType }}"
+	            <form-step class="col-md-3" ng-repeat="caseType in $ctrl.caseTypes" type="checkbox" label="{{ caseType }}"
 							response-value="$ctrl.checkboxGroup.questions[1008][caseType]"></form-step>
+				<form-step class="col-md-3" type="otherCheckbox" label="Other"
+							response-value="$ctrl.checkboxGroup.questions[1008].internalOther"></form-step>
 			</div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <form-step class="col-md-4 control-label">Date Last Contacted</form-step>
+            <div class="col-md-4">
+                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1002].value">
+            </div>
         </div>
     </div>
     <div class="row">

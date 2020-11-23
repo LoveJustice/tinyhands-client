@@ -17,8 +17,12 @@
 				<div class="col-md-6 form-group">
 			        <input type="text" min="0" class="form-control" ng-model="SuspectModalController.questions[9].response.name.value">
 		        </div>
-		        <div class="col-md-4 form-group">
-		    		<form-step type="checkbox" label="Named in Charge Sheet" response-value="SuspectModalController.questions[1009].response.value"></form-step>
+		        <div class="col-md-2 form-group">
+		    		<label>Named in Charge Sheet</label>
+		    	</div>
+		    	<div class="col-md-2 form-group">
+		    		<form-step type="radio" radio-name="chargeSheet" label="Yes" response-value="SuspectModalController.questions[1009].response.value"></form-step>
+		    		<form-step type="radio" radio-name="chargeSheet" label="No" response-value="SuspectModalController.questions[1009].response.value"></form-step>
 		    	</div>
             </div>
             <div class="row center-vertical">
@@ -49,12 +53,19 @@
 	            	<div class="col-md-2 form-group">
 	            		<label>Verdict</label>
 		            </div>
-		            <div class="col-md-8 form-group">
+		            <div class="col-md-6 form-group">
 				        <select ng-model="SuspectModalController.questions[1012].response.value">
 				        	<option value=null></option>
 					        <option value="Acquittal">Acquittal</option>
 		                	<option value="Conviction">Conviction</option>
 		                </select>
+			        </div>
+	            	<div class="col-md-2 form-group">
+	            		<label>Sentence mentioned in attached verdict?</label>
+		            </div>
+		            <div class="col-md-2 form-group">
+				        <form-step type="radio" radio-name="verdict" label="Yes" response-value="SuspectModalController.questions[1029].response.value"></form-step>
+		    			<form-step type="radio" radio-name="verdict" label="No" response-value="SuspectModalController.questions[1029].response.value"></form-step>
 			        </div>
 	        	</div>
 	        	<div class="row center-vertical">

@@ -684,7 +684,7 @@ export class IrfIndiaController extends BaseIrfController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Rickshaw Driver','Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];

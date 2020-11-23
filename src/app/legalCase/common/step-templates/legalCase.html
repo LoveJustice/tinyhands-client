@@ -32,6 +32,9 @@
                 <input  type="text" class="form-control" placeholder="Police Case Number" ng-model="$ctrl.questions[999].response.value">
             </div>
         </div>
+        <div class="col-md-4 form-group">
+        	<form-step type="checkbox" label="Appealed" response-value="$ctrl.questions[1003].response.value"></form-step>
+        </div>
     </div>
      <div class="row">
         <div class="col-md-6 form-group">
@@ -41,7 +44,10 @@
             </div>
         </div>
         <div class="col-md-4 form-group">
-        	<form-step type="checkbox" label="Appealed" response-value="$ctrl.questions[1003].response.value"></form-step>
+        	<form-step class="col-md-5 control-label">Lawyer Name</form-step>
+            <div class="col-md-7">
+                <input  type="text" class="form-control" ng-model="$ctrl.questions[1004].response.value">
+            </div>
         </div>
     </div>
     <div class="row">
@@ -52,9 +58,9 @@
             </div>
         </div>
         <div class="col-md-4 form-group">
-        	<form-step class="col-md-5 control-label">Lawyer Name</form-step>
+        	<form-step class="col-md-5 control-label">Lawyer Phone</form-step>
             <div class="col-md-7">
-                <input  type="text" class="form-control" ng-model="$ctrl.questions[1004].response.value">
+                <input  type="text" class="form-control" ng-model="$ctrl.questions[1005].response.value">
             </div>
         </div>
     </div>
@@ -68,12 +74,6 @@
 	            <form-step type="otherRadio" class="col-md-12" radio-name="caseSource" label="Other"
 	            	other-value="$ctrl.otherData.questions[1028].otherValue"
 	            	response-value="$ctrl.otherData.questions[1028].value"></form-step>
-            </div>
-        </div>
-        <div class="col-md-4 form-group">
-        	<form-step class="col-md-5 control-label">Lawyer Phone</form-step>
-            <div class="col-md-7">
-                <input  type="text" class="form-control" ng-model="$ctrl.questions[1005].response.value">
             </div>
         </div>
     </div>

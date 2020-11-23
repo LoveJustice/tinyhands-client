@@ -269,7 +269,33 @@ class LocationDataController {
                 }
                 this.locationTotals[location_id] = totals;
             }
+            this.updateBottomTotals();
         });
+    }
+    
+    updateBottomTotals() {
+        this.locationTotals._Total = {
+                staff:0,
+                intercepts:0,
+                arrests:0
+        };
+        for (let idx=0; idx < this.locations.length; idx++) {
+            this.locationTotals._Total.staff += this.locationTotals[this.locations[idx].id].staff;
+            this.locationTotals._Total.intercepts += this.locationTotals[this.locations[idx].id].intercepts;
+            this.locationTotals._Total.arrests += this.locationTotals[this.locations[idx].id].arrests;
+        }
+        for (let col=0; this.locationDisplayData.length; col++) {
+            this.locationDisplayData[col]._Total = {
+                    staff:0,
+                    intercepts:0,
+                    arrests:0
+            };
+            for (let idx=0; idx < this.locations.length; idx++) {
+                this.locationDisplayData[col]._Total.staff += this.locationDisplayData[col][this.locations[idx].id].staff;
+                this.locationDisplayData[col]._Total.intercepts += this.locationDisplayData[col][this.locations[idx].id].intercepts;
+                this.locationDisplayData[col]._Total.arrests += this.locationDisplayData[col][this.locations[idx].id].arrests;
+            }
+        }
     }
     
     updateTotals(location) {
@@ -281,6 +307,7 @@ class LocationDataController {
             }
         }
         this.locationTotals[location].arrests = tot;
+        this.updateBottomTotals();
     }
 }
 

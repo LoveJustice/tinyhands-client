@@ -19,28 +19,16 @@
 	 <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.dashboardData">
         <thead class="sticky-table-header">
         	<tr>
-        		<th class="rightBorder">
-        			<div>{{ vm.dashboardData.month }}</div>
-        			<div>Exchange Rate</div>
-        		</th>
-        		<th>{{ vm.exchangeRate }}</th>
-        		<th class="topHeader" colspan=3></th>
-        		<th class="topHeader">Int to Date</th>
-        		<th class="topHeader">{{vm.dashboardData.to_date.intercepts}}</th>
-        		<th class="topHeader">
-        			<div>Ast to</div><div>Date</div>
-        		</th>
-        		<th class="topHeader">{{vm.dashboardData.to_date.arrests}}</th>
-        		<th class="topHeader" colspan=11></th>
-        	</tr>
-        	<tr>
         		<th class="boldRightBorder" colspan=5></th>
         		<th class="boldRightBorder" colspan=6>Last 6 Months</th>
-        		<th class="boldRightBorder" colspan=4>All Time</th>
+        		<th class="boldRightBorder" colspan=11>All Time</th>
         		<th class="rightBorder" colspan=5>Last Month {{ vm.dashboardData.month }}</th>
         	</tr>
             <tr>
-            	<th class="rightBorder">Station Name</th>
+            	<th class="rightBorder">
+            		<div>Station</div>
+            		<div>Name</div>
+            	</th>
             	<th class="rightBorder">
             		<div>Station</div>
             		<div>Code</div>
@@ -50,33 +38,51 @@
             		<div>Monthly</div>
             		<div>Report</div>
             	</th>
-            	<th class="rightBorder">
+            	<th class="rightBorder" title="Station Compliance">
             		<div>Station</div>
-            		<div>Compliance</div>
+            		<div>Compl</div>
             	</th>
-            	<th class="boldRightBorder">
+            	<th class="boldRightBorder" title="The IBR is the ratio between:
+a) the % of the overall THN arrests and intercepts (averaged between the two), and 
+b) the % of the overall THN budget. 
+
+For example, if a station has 10% of the impact (which could be, for example, 5% of the arrests and 15% of the intercepts), and 10% of the budget, the impact-to-budget ratio would be 1.0 (exactly the same as the whole of THN).  ">
             		<div>Impact</div>
             		<div>Budget</div>
             		<div>Ratio</div>
             	</th>
             	<th class="rightBorder">Budget</th>
-            	<th class="rightBorder">Int</th>
-            	<th class="rightBorder">Ast</th>
-            	<th class="rightBorder">Gsp</th>
-            	<th class="rightBorder">Emp</th>
+            	<th class="rightBorder" title="Intercepts">Int</th>
+            	<th class="rightBorder" title="Arrests">Ast</th>
+            	<th class="rightBorder" title="Gospel">Gsp</th>
+            	<th class="rightBorder" title="$1 per day, $1.90 per day, and $3.20 per day. Our definition of empowerment is if a person crosses two “lines”. Calculation: monthly salary X 12 / 365">Emp</th>
             	<th class="boldRightBorder">CIF</th>
+            	
             	<th class="rightBorder">Budget</th>
-            	<th class="rightBorder">Int</th>
-            	<th class="rightBorder">Ast</th>
-            	<th class="boldRightBorder">
+            	<th class="rightBorder"  title="Intercepts">Int</th>
+            	<th class="rightBorder"  title="Arrests">Ast</th>
+            	<th class="rightBorder" title="Percent of intercepts leading to arrest">
             		<div>% Leading</div>
             		<div>to Ast</div>
             	</th>
+            	<th class="rightBorder" title="Gospel">Gsp</th>
+            	<th class="rightBorder">IRFs</th>
+            	<th class="rightBorder">CIFs</th>
+            	<th class="rightBorder">VDFs</th>
+            	<th class="rightBorder" title="Convictions">Conv</th>
+            	<th class="rightBorder" title="Percent of arrests resulting in conviction">
+            		<div>%</div>
+            		<div>Conv</div>
+            	</th>
+            	<th class="boldRightBorder">
+            		<div>Avg Case</div><div>Length</div>
+            	</th>
+            	
             	<th class="rightBorder">Budget</th>
-            	<th class="rightBorder">Int</th>
-            	<th class="rightBorder">Ast</th>
-            	<th class="rightBorder">Gsp</th>
-            	<th class="rightBorder">Emp</th>
+            	<th class="rightBorder" title="Intercepts">Int</th>
+            	<th class="rightBorder" title="Arrests">Ast</th>
+            	<th class="rightBorder" title="Gospel">Gsp</th>
+            	<th class="rightBorder" title="$1 per day, $1.90 per day, and $3.20 per day. Our definition of empowerment is if a person crosses two “lines”. Calculation: monthly salary X 12 / 365">Emp</th>
             </tr>
         </thead>
         <tbody>
@@ -95,11 +101,27 @@
         		<td class="rightBorder">{{ entry.to_date_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         		<td class="rightBorder">{{ entry.to_date_intercepts }}</td>
         		<td class="rightBorder">{{ entry.to_date_arrests }}</td>
-        		<td class="boldRightBorder">
+        		<td class="rightBorder">
         			<div ng-if="entry.to_date_intercepts > 0">
         				{{ (entry.to_date_arrests * 100 /entry.to_date_intercepts).toLocaleString('en-US', vm.digits1Format) }}%
         			</div>
         		</td>
+        		<td class="rightBorder">{{ entry.to_date_gospel }}</td>
+        		<td class="rightBorder">{{ entry.to_date_irfs }}</td>
+        		<td class="rightBorder">{{ entry.to_date_cifs }}</td>
+        		<td class="rightBorder">{{ entry.to_date_vdfs }}</td>
+        		<td class="rightBorder">{{ entry.to_date_conv }}</td>
+        		<td class="rightBorder">
+        			<div ng-if="entry.to_date_arrests > 0">
+        				{{ (entry.to_date_conv * 100 /entry.to_date_arrests).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
+        		</td>
+        		<td class="boldRightBorder">
+        			<div ng-if="entry.to_date_case_count > 0">
+        				{{ (entry.to_date_case_days /entry.to_date_case_count).toLocaleString('en-US', vm.digits1Format) }}
+        			</div>
+        		</td>
+        		
         		<td class="rightBorder">{{ entry.last_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         		<td class="rightBorder">{{ entry.last_intercepts }}</td>
         		<td class="rightBorder">{{ entry.last_arrests}}</td>
@@ -107,7 +129,7 @@
         		<td class="rightBorder">{{ entry.last_empowerment }}</td>
         	</tr>
         	<tr>
-        		<td class="total rightBorder"><b>TOTAL</b></td>
+        		<td class="total rightBorder"><b>SL TOTAL</b></td>
         		<td class="total rightBorder">{{ vm.entryCount() }}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.monthly_report.toLocaleString('en-US', vm.digits1Format)}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.compliance.toLocaleString('en-US', vm.digits1Format)}}</td>
@@ -123,6 +145,7 @@
         		<td class="total rightBorder">{{vm.dashboardData.totals['6month_gospel']}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals['6month_empowerment']}}</td>
         		<td class="total boldRightBorder">{{vm.dashboardData.totals['6month_cifs']}}</td>
+        		
         		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_budget.toLocaleString('en-US', vm.moneyFormat)}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_intercepts}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.to_date_arrests}}</td>
@@ -131,12 +154,62 @@
         				{{ (vm.dashboardData.totals.to_date_arrests * 100 /vm.dashboardData.totals.to_date_intercepts).toLocaleString('en-US', vm.digits1Format) }}%
         			</div>
         			<div ng-if="vm.dashboardData.totals.to_date_intercepts <= 0"></div>
+        		<td class="total rightBorder">{{ vm.dashboardData.totals.to_date_gospel }}</td>
+        		<td class="total rightBorder">{{ vm.dashboardData.totals.to_date_irfs }}</td>
+        		<td class="total rightBorder">{{ vm.dashboardData.totals.to_date_cifs }}</td>
+        		<td class="total rightBorder">{{ vm.dashboardData.totals.to_date_vdfs }}</td>
+        		<td class="total rightBorder">{{ vm.dashboardData.totals.to_date_conv }}</td>
+        		<td class="total rightBorder">
+        			<div ng-if="vm.dashboardData.totals.to_date_arrests > 0">
+        				{{ (vm.dashboardData.totals.to_date_conv * 100 /vm.dashboardData.totals.to_date_arrests).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
         		</td>
+        		<td class="total boldRightBorder">
+        			<div ng-if="vm.dashboardData.totals.to_date_case_count > 0">
+        				{{ (vm.dashboardData.totals.to_date_case_days /vm.dashboardData.totals.to_date_case_count).toLocaleString('en-US', vm.digits1Format) }}
+        			</div>
+        		</td>
+        		
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_budget.toLocaleString('en-US', vm.moneyFormat)}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_intercepts}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_arrests}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_gospel}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_empowerment}}</td>
+        		
+        	</tr>
+        	<tr>
+        		<td class="total"><b>To Date TOTAL</b></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total boldRightBorder"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total boldRightBorder"></td>
+        		<td class="total rightBorder"></td>
+        		<td class="total rightBorder">{{vm.dashboardData.to_date.intercepts}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.to_date.arrests}}</td>
+        		<td class="total rightBorder">
+        			<div ng-if="vm.dashboardData.to_date.intercepts > 0">
+        				{{ (vm.dashboardData.to_date.arrests * 100 /vm.dashboardData.to_date.intercepts).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
+        			<div ng-if="vm.dashboardData.to_date.intercepts <= 0"></div>
+        		</td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total boldRightBorder"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total"></td>
+        		<td class="total rightBorder"></td>
         		
         	</tr>
         </tbody>

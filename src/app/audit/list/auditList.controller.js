@@ -17,6 +17,7 @@ export default class AuditListController {
         this.countryId = null;
         this.formTypes = [];
         this.formTypeId = null;
+        this.digits1Format = {'minimumFractionDigits': 1, 'maximumFractionDigits': 1};
 
         this.nextPage = "";
         this.queryParameters = {
@@ -157,7 +158,7 @@ export default class AuditListController {
     percentComplete(audit) {
         let result = '-';
         if (audit.total_samples && audit.total_samples > 0) {
-            result = Math.round(audit.samples_complete * 100 /audit.total_samples) + '%';
+            result = Math.round(audit.samples_complete * 100 /audit.total_samples);
         }
         return result;
     }
@@ -166,7 +167,15 @@ export default class AuditListController {
         let result = '-';
         let total_questions = audit.question_count * audit.samples_complete;
         if (total_questions > 0) {
-            result = Math.round((total_questions - audit.total_incorrect) * 100 / total_questions)+'%';
+            result = Math.floor((total_questions - audit.total_incorrect) * 1000 / total_questions)/10;
+        }
+        return result;
+    }
+    
+    passRate(audit) {
+        let result = '-';
+        if (audit.samples_complete > 0) {
+            result = Math.floor(audit.samples_passed * 1000 / audit.samples_complete)/10;
         }
         return result;
     }
@@ -174,8 +183,10 @@ export default class AuditListController {
     result(audit) {
         let result = '';
         if (audit.samples_complete >= audit.total_samples) {
-            let percent_passed = Math.round(audit.samples_passed * 100 / audit.samples_complete);
-            if (percent_passed >= 95) {
+            let percent_passed = audit.samples_passed * 100 / audit.samples_complete;
+            let total_questions = audit.question_count * audit.samples_complete;
+            let accuracy = (total_questions - audit.total_incorrect) * 100 / total_questions;
+            if (percent_passed >= 95 && accuracy >= 98) {
                 result = 'Passed';
             } else {
                 result = 'Failed';

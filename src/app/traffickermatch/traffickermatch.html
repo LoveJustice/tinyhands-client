@@ -63,9 +63,9 @@
 					<td>{{ candidate.age }}</td>
 					<td>{{ candidate.address.address }}</td>
 					<td>{{ candidate.phone_contact }}</td>
-					<td>{{ candidate.form_number }}</td>
+					<td>{{ candidate.form.form_number }}</td>
 					<td>
-						<button class="btn btn-primary" ng-click="vm.showPictureInModal(candidate.form_photo)" ng-if="candidate.form_photo">View</button>
+						<button class="btn btn-primary" ng-click="vm.showPictureInModal(candidate.photo)" ng-if="candidate.photo">View</button>
 					</td>
 				</tr>
 				<tr ng-show="vm.matchCandidates.length == 0">

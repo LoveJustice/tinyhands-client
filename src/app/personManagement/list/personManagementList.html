@@ -61,9 +61,9 @@
 	                <td class="text-center">{{ knownPerson.age }}</td>
 	                <td class="text-center">{{ knownPerson.address.address }}</td>
 	                <td class="text-center">{{ knownPerson.phone_contact }}</td>
-	                <td class="text-center">{{ knownPerson.form_kind }}</td>
+	                <td class="text-center">{{ knownPerson.role }}</td>
 	                <td class="text-center">{{ knownPerson.aliases }}</td>
-	                <td class="text-center"><a ng-href="{{knownPerson.viewUrl}}">{{ knownPerson.form_number }}</a></td>
+	                <td class="text-center"><a ng-href="{{knownPerson.viewUrl}}">{{ knownPerson.form.form_number }}</a></td>
 	                <td class="text-center">
 	                	<center>{{ knownPerson.form_date }}</center>
 	                	<a class="btn btn-sm btn-primary" ng-href="{{vm.masterPerson(knownPerson)}}">Master Person</a>

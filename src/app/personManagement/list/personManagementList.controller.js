@@ -81,10 +81,10 @@ class personManagementListController {
             .then((promise) => {
                 this.knownPersons = promise.data.results;
                 for (let idx in this.knownPersons) {
-                    if (this.knownPersons[idx].form_name) {
-                        this.knownPersons[idx].viewUrl = this.state.href(this.knownPersons[idx].form_name, {id:this.knownPersons[idx].form_id, 
-                            stationId:this.knownPersons[idx].station_id, countryId:this.knownPersons[idx].country_id, isViewing:true,
-                            formName:this.knownPersons[idx].form_name});
+                    if (this.knownPersons[idx].form.form_name) {
+                        this.knownPersons[idx].viewUrl = this.state.href(this.knownPersons[idx].form.form_name, {id:this.knownPersons[idx].form.form_id, 
+                            stationId:this.knownPersons[idx].form.station_id, countryId:this.knownPersons[idx].form.country_id, isViewing:true,
+                            formName:this.knownPersons[idx].form.form_name});
                     }
                 }
                 this.nextPageUrl = this.nextUrl(promise.data.next);

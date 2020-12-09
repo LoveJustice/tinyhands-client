@@ -26,6 +26,8 @@ class LegalCaseModalController extends BaseModalController {
         
         if (haveValue) {
             this.originalQuestions[1014].response.value = totalDays;
+        } else {
+            this.originalQuestions[1014].response.value = null;
         }
     }
 }

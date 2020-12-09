@@ -15,7 +15,6 @@ export class BaseLegalCaseController extends BaseFormController {
         this.relatedUrl = null;
         this.irfRef = null;
         this.cifRefs = [];
-        this.isViewing = false;
 
         this.legalCaseNumber = "";
         this.associatedPersons = [];
@@ -72,6 +71,9 @@ export class BaseLegalCaseController extends BaseFormController {
                                         }) 
                                     });
                         }
+                    }
+                    if (this.irfRef === null) {
+                        this.getSubIrfComplete();
                     }
                 });
             }
@@ -134,9 +136,14 @@ export class BaseLegalCaseController extends BaseFormController {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
             this.config = response.data;
             this.service.getLegalCase(countryId, stationId, id).then((response) => {
+                this.errorMessages = [];
+                this.warningMessages = [];
                 this.processResponse(response);
                 if (this.stateParams.id === null) {
                     this.questions[997].response.value = 'active';
+                } else {
+                    this.set_errors_and_warnings(response.data);
+                    this.messagesEnabled = true;
                 }
                 if (this.questions[998].response.value === null || this.questions[998].response.value === '') {
                     this.questions[998].response.value = this.response.station_code;

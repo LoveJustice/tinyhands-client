@@ -63,7 +63,7 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
         this.victimEngagementQuestions = [765,904,905,868];
         this.recordsQuestions = [769,869,770,771,772,793,947];
         this.aftercareQuestions = ["Education",776,777,870,778,871,872,909,"HTMessage",779,781,782,"Shelter",873,874,875,"Interviews",783,784,785,"Followup",786];
-        this.paralegalQuestions = [790,791,876,792,877,906,907];
+        this.paralegalQuestions = [790,791,876,792,877,906,907,995];
         this.investigationsQuestions = ["HighValueContacts",797,798,799];
         
         this.topMessage='Note: If a question does not apply, mark "n/a"';
@@ -896,7 +896,17 @@ export class MonthlyReportNepalController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:20},
+                    {label:"yes",format:"col-md-2",points:15},
+                ]
+            },
+            995: {
+                enabled:true,
+                type:"radio",
+                prompt: "A Legal Advisor has been appointed",
+                promptFormat: "col-md-3 control-label",
+                options: [
+                    {label:"no",format:"col-md-1",points:0},
+                    {label:"yes",format:"col-md-2",points:5},
                 ]
             },
             

@@ -17,6 +17,13 @@ export default class AuditService {
         }
     }
     
+    updateNotes(audit) {
+        if (audit.id === null) {
+            return;
+        }
+        return this.service.put(`api/audit-notes/${audit.id}/`, audit);
+    }
+    
     getUserCountries(id) {
         return this.service.get(`api/user_permission/countries/${id}/?permission_group=AUDIT`);
     }

@@ -61,6 +61,24 @@
 				</div>
 			</div>
 		</div>
+		<div class="row col-md-12 center-vertical padding-top-10" ng-if="$ctrl.audit.forms_in_range">
+			<div class="col-md-6">
+				<div class="col-md-3">
+					<label># of Forms in Range</label>
+				</div>
+				<div class="col-md-4">
+					{{ $ctrl.audit.forms_in_range }}
+				</div>
+			</div>
+			<div class="col-md-6" ng-if="$ctrl.audit.author_name">
+				<div class="col-md-3">
+					<label># of Selected Forms</label>
+				</div>
+				<div class="col-md-4">
+					{{ $ctrl.audit.total_samples }}
+				</div>
+			</div>
+		</div>
 	</fieldset>
 	<div class="row text-center">
 		<table class="table table-striped section" cellspacing="0"

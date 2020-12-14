@@ -105,6 +105,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 let card = this.createCard('Victims');
                 let suspectCardQuestions = _.keyBy(card.responses, (x) => x.question_id);
                 suspectCardQuestions[9].response = _.cloneDeep(victims[idx]);
+                suspectCardQuestions[9].response.link_id = suspectCardQuestions[9].response.storage_id;
                 suspectCardQuestions[9].response.storage_id = null;
                 victimCards.push(card);
             }
@@ -124,6 +125,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 let card = this.createCard('Suspects');
                 let suspectCardQuestions = _.keyBy(card.responses, (x) => x.question_id);
                 suspectCardQuestions[9].response = _.cloneDeep(suspects[idx]);
+                suspectCardQuestions[9].response.link_id = suspectCardQuestions[9].response.storage_id;
                 suspectCardQuestions[9].response.storage_id = null;
                 suspectCards.push(card);
             }

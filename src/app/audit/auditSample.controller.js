@@ -9,6 +9,7 @@ export default class AuditSampleController {
         this.state = $state;
         this.toastr = toastr;
         this.constants = constants;
+        this.digits1Format = {'minimumFractionDigits': 1, 'maximumFractionDigits': 1};
         
         this.audit = null;
         this.auditSample = null;
@@ -65,7 +66,7 @@ export default class AuditSampleController {
         let result = '-';
         let questions = this.getTotal();
         if (questions > 0) {
-            result = Math.round((questions - this.getTotalIncorrect()) * 100 / questions);
+            result = Math.floor((questions - this.getTotalIncorrect()) * 1000 / questions)/10;
         }
         return result;
     }

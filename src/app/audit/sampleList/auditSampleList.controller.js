@@ -15,6 +15,8 @@ export default class AuditSampleListController {
         this.timeout = $timeout;
         this.toastr = toastr;
         this.constants = constants;
+        this.isViewing = true;
+        this.digits1Format = {'minimumFractionDigits': 1, 'maximumFractionDigits': 1};
 
         this.completionStatus="";
         this.queryParameters = {
@@ -40,7 +42,7 @@ export default class AuditSampleListController {
     getAccuracy(total, incorrect) {
         let result = '-';
         if (total && total > 0) {
-            result = Math.round((total - incorrect) * 100 / total);
+            result = Math.floor((total - incorrect) * 1000 / total)/10;
         }
         return result;
     }
@@ -55,6 +57,7 @@ export default class AuditSampleListController {
                 }
             }
             this.audit.question_count = questions;
+            this.isViewing = !this.session.checkPermission('AUDIT','SUBMIT_SAMPLE', this.audit.country, null);
         });
     }
     
@@ -62,7 +65,7 @@ export default class AuditSampleListController {
         let result = '-';
         let totalQuestions = this.audit.samples_complete * this.audit.question_count;
         if (totalQuestions > 0) {
-            result = Math.round((totalQuestions - this.audit.total_incorrect) * 100 / totalQuestions) + '%';
+            result = Math.floor((totalQuestions - this.audit.total_incorrect) * 1000 / totalQuestions)/10;
         }
         return result;
     }
@@ -70,7 +73,7 @@ export default class AuditSampleListController {
     getFormsPassed() {
         let result = '-';
         if (this.audit.samples_complete > 0) {
-            result = Math.round(this.audit.samples_passed * 100 / this.audit.samples_complete) + '%';
+            result = Math.floor(this.audit.samples_passed * 1000 / this.audit.samples_complete)/10;
         }
         return result;
     }
@@ -115,5 +118,10 @@ export default class AuditSampleListController {
                 }
             }   
         }, () => {this.spinnerOverlayService.hide();});
+    }
+    
+    updateNotes() {
+        this.service.updateNotes(this.audit).then(() => {
+        }, (error)=>{alert(error);});
     }
 }

@@ -1,6 +1,18 @@
 <div class="container" id="AuditSampleList"><br/>
 	<div class="row text-center">
-		<h3>{{ $ctrl.audit.form_type_name }} Audit {{ $ctrl.audit.country_name }}</h3>({{ $ctrl.audit.start_date }} to {{ $ctrl.audit.end_date }})
+		<h3>{{ $ctrl.audit.country_name }} {{ $ctrl.audit.form_type_name }} Audit Overview</h3>({{ $ctrl.audit.start_date }} to {{ $ctrl.audit.end_date }})
+	</div>
+	<br>
+	<div class="row">
+		<div class="text-center">
+			<b>Overall Audit Notes</b>
+		</div>
+		<div class="col-md-11">
+			<textarea class="form-control" rows="2" ng-model="$ctrl.audit.notes" ng-disabled="$ctrl.isViewing"></textarea>
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-primary" ng-if="!$ctrl.isViewing" ng-click="$ctrl.updateNotes()">Update Notes</button>
+		</div>
 	</div>
 	<br>
 	<div class="row">
@@ -14,6 +26,7 @@
 				</select>
 			</div>
 		</div>
+		
     	<div class="col-md-2">
     		<div class="col-md-4">Total</div>
     		<div class="col-md-8">{{ $ctrl.audit.total_samples }}</div>
@@ -22,13 +35,13 @@
     		<div class="col-md-6">Completed</div>
     		<div class="col-md-6">{{ $ctrl.audit.samples_complete }}</div>
     	</div>
-    	<div class="col-md-2">
-    		<div class="col-md-8">Accuracy %</div>
-    		<div class="col-md-4">{{ $ctrl.getOverallAccuracy() }}</div>
-    	</div>
     	<div class="col-md-3">
-    		<div class="col-md-8">Forms Passed %</div>
-    		<div class="col-md-4">{{ $ctrl.getFormsPassed() }}</div>
+    		<div class="col-md-8">Overall Accuracy Rate</div>
+    		<div class="col-md-4">{{ $ctrl.getOverallAccuracy().toLocaleString('en-US', $ctrl.digits1Format) }}%</div>
+    	</div>
+    	<div class="col-md-2">
+    		<div class="col-md-8">Pass Rate</div>
+    		<div class="col-md-4">{{ $ctrl.getFormsPassed().toLocaleString('en-US', $ctrl.digits1Format) }}%</div>
     	</div>
     	<hr>
     </div>
@@ -37,7 +50,7 @@
             <tr>
                 <th>Form#</th>
                 <th># Incorrect</th>
-                <th>Correct/Total Fields</th>
+                <th>Form Accuracy Rate</th>
                 <th>High Level Notes</th>
                 <th>Corrected in SL?</th>
             </tr>
@@ -47,7 +60,7 @@
                 <td><a ng-href="{{ sample.url }}">{{ sample.form_number }}</a></td>
                 <td ng-if="sample.completion_date">{{  sample.incorrect }}</td>
                 <td ng-if="!sample.completion_date">-</td>
-                <td ng-if="sample.completion_date">{{ $ctrl.getAccuracy($ctrl.audit.question_count, sample.incorrect) }}%</td> 
+                <td ng-if="sample.completion_date">{{ $ctrl.getAccuracy($ctrl.audit.question_count, sample.incorrect).toLocaleString('en-US', $ctrl.digits1Format) }}%</td> 
                 <td ng-if="!sample.completion_date">-</td>
                 <td>{{ sample.high_level_notes }}</td>
                 <td>{{ sample.corrected }}</td>

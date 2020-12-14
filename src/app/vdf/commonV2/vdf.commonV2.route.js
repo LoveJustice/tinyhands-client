@@ -1,6 +1,13 @@
 function VdfCommonV2Routes($stateProvider) {
     'ngInject';
     $stateProvider
+        .state('vdfBangladesh', {
+            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV2Component',
+            params: {
+                id: null
+            }
+        })
         .state('vdfIndia', {
             url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV2Component',
@@ -16,6 +23,13 @@ function VdfCommonV2Routes($stateProvider) {
             }
         })
         .state('vdfMalawi', {
+            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV2Component',
+            params: {
+                id: null
+            }
+        })
+        .state('vdfNamibia', {
             url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV2Component',
             params: {

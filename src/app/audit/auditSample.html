@@ -42,25 +42,28 @@
 	    </table>
     </div>
     <div class="col-md-12">
-	    <label>Detailed Notes:</label>
+	    <label>Auditor Notes:</label>
 	    <textarea class="form-control" rows="2" ng-model="$ctrl.auditSample.detail_notes"></textarea>
+	    <label>Notes for Monitors:</label>
+	    <textarea class="form-control" rows="2" ng-model="$ctrl.auditSample.monitor_notes"></textarea>
 	    <label>High Level Notes:</label>
 	    <textarea class="form-control" rows="2" ng-model="$ctrl.auditSample.high_level_notes"></textarea>
 	    <hr>
     </div>
-    <div class=col-md-4>
+    <div class=col-md-3>
     	<div class="col-md-3"><label>Total:</label></div>
     	<div class="col-md-9">{{ $ctrl.getTotal() }}</div>
     </div>
-    <div class=col-md-4>
+    <div class=col-md-3>
     	<div class="col-md-6"><label>Total Incorrect:</label></div>
     	<div class="col-md-6">{{ $ctrl.getTotalIncorrect() }}</div>
     </div>
-    <div class=col-md-4>
-    	<div class="col-md-4"><label>Form %:</label></div>
-    	<div class="col-md-8">{{ $ctrl.getAccuracy() }}</div>
+    <div class=col-md-6>
+    	<div class="col-md-4"><label>Form Accuracy Rate:</label></div>
+    	<div class="col-md-8">{{ $ctrl.getAccuracy().toLocaleString('en-US', $ctrl.digits1Format) }}%</div>
     </div>
 </fieldset>
+<br>
 <div class="row col-md-12 padding-bottom-20 text-center">
 	<button class="btn btn-success" ng-if="$ctrl.audit.id!==null && !$ctrl.isViewing"
 		ng-disabled="$ctrl.audit.form === null || $ctrl.audit.country === null || $ctrl.start_date === null || $ctrl.end_date === null || $ctrl.audit.percent_to_sample === null || $ctrl.template.length < 1"

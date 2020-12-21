@@ -1,0 +1,99 @@
+<fieldset class="col-md-12 padding-top-20" ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+    	<div class="col-md-3">
+    		<label>VDF #</label>
+    	</div>
+    	<div class="col-md-3">
+    		<a ng-href="{{$ctrl.vdfUrl}}" target="_blank">{{ $ctrl.vdfQuestions[651].response.value }}</a>
+    	</div>
+    	
+    	<div class="col-md-3">
+    		<label>Date on VDF</label>
+    	</div>
+    	<div class="col-md-3">
+    		{{ $ctrl.vdfQuestions[288].response.value }}
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-3">
+    		<label>Victim Name</label>
+    	</div>
+    	<div class="col-md-3">
+    		{{ $ctrl.vdfQuestions[653].response.name.value }}
+    	</div>
+    	
+    	<div class="col-md-3">
+    		<label>Interviewer</label>
+    	</div>
+    	<div class="col-md-3">
+    		{{ $ctrl.vdfQuestions[6].response.value }}
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-3">
+    		<label>Had you ever heard the message before?</label>
+    	</div>
+    	<div class="col-md-3">
+    		{{ $ctrl.vdfQuestions[675].response.value }}
+    	</div>
+
+    	<div class="col-md-3">
+    		<label>What do you believe now?</label>
+    	</div>
+    	<div class="col-md-3">
+    		{{ $ctrl.vdfQuestions[676].response.value }}
+    	</div>
+    </div>
+    <hr>
+    <div class="row">
+    	<div class="col-md-3">
+    		<label>Does victim profess to accept Christ?</label>
+    	</div>
+    	<form-step class="col-md-2" type="radio" radio-name="acceptChrist" label="Yes" response-value="$ctrl.questions[1030].response.value"></form-step>
+    	<form-step class="col-md-2" type="radio" radio-name="acceptChrist" label="No" response-value="$ctrl.questions[1030].response.value"></form-step>
+    </div>
+    <div class="row">
+    	<div class="col-md-3">
+    		<label>If yes, survey complete?</label>
+    	</div>
+    	<form-step class="col-md-2" type="radio" radio-name="survey" label="Yes" response-value="$ctrl.questions[1031].response.value"></form-step>
+    	<form-step class="col-md-2" type="radio" radio-name="survey" label="No" response-value="$ctrl.questions[1031].response.value"></form-step>
+    </div>
+    <div class="row">
+    	<div class="col-md-3">
+    		<label>If no, SL Edited</label>
+    	</div>
+    	<form-step class="col-md-2" type="radio" radio-name="edited" label="Yes" response-value="$ctrl.questions[1032].response.value"></form-step>
+    	<form-step class="col-md-2" type="radio" radio-name="edited" label="No" response-value="$ctrl.questions[1032].response.value"></form-step>
+    </div>
+    <hr>
+    <div class="row">
+	    <div class="col-md-6" ng-if="$ctrl.questions[1033].response.value">
+	    	<div class="col-md-3">
+	    		<label>Verification date</label>
+	    	</div>
+	    	{{ $ctrl.questions[1033].response.value }}
+	    </div>
+	    <div class="col-md-6" ng-if="$ctrl.questions[1034].response.value">
+	    	<div class="col-md-3">
+	    		<label>Verified by</label>
+	    	</div>
+	    	{{ $ctrl.questions[1034].response.value }}
+	    </div>
+    </div>
+    <br>
+
+    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
+        <strong>Warning! {{warnings}}</strong>
+    </div>
+    <div class="alert alert-danger" ng-repeat="errors in $ctrl.getErrorMessages()">
+        <strong>Error! {{errors}}</strong>
+    </div>
+    <div class="container-fluid padding-bottom-20">
+        <div class="col-xs-6 text-right">
+            <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox() && $ctrl.stateParams.isViewing !== 'true'" ng-model="$ctrl.ignoreWarnings">
+            <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox() && $ctrl.stateParams.isViewing !== 'true'">Ignore warnings</label>
+            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true'">Submit</button>
+        </div>
+    </div>
+</fieldset>

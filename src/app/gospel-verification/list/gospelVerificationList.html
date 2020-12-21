@@ -1,0 +1,93 @@
+<div class="container" id="gospelVerificationList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Gospel Verification</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="gospelVerificationListCtrl.countryDropDown.options"
+							selected-model="gospelVerificationListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="gospelVerificationListCtrl.countryDropDown.settings"
+                             translation-texts="gospelVerificationListCtrl.countryDropDown.customText"
+                             events="gospelVerificationListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+        <div class="col-md-4 text-center">
+        	<p>Filter</p>
+        	<select ng-model="gospelVerificationListCtrl.filter" ng-change="gospelVerificationListCtrl.searchGospelVerifications()">
+        		<option value="">All</option>
+        		<option value="profess_to_accept_christ:Yes">Has accepted Christ</option>
+        		<option value="profess_to_accept_christ:No">Has not accepted Christ</option>
+        		<option value="date_of_followup__isnull:False">Follow-up completed</option>
+        		<option value="date_of_followup__isnull:True">Follow-up needed</option>
+        	</select>
+        </div>
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+        	<p></p>
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="gospelVerificationListCtrl.searchGospelVerifications()" ng-model="gospelVerificationListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="gospelVerificationListCtrl.stickyOptions" ng-model="gospelVerificationListCtrl.vdfs">
+        <thead class="sticky-table-header">
+            <tr>
+                <th class="text-center" ng-click="gospelVerificationListCtrl.updateSort('vdf__vdf_number')" width="8%">VDF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gospelVerificationListCtrl.getSortIcon('vdf__vdf_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gospelVerificationListCtrl.getSortIcon('vdf__vdf_number', 'reverse') }"></i>
+                </th>
+                <th class="text-center" ng-click="gospelVerificationListCtrl.updateSort('vdf__victim__full_name')" width="15%">PV Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gospelVerificationListCtrl.getSortIcon('vdf__victim__full_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gospelVerificationListCtrl.getSortIcon('vdf__victim__full_name', 'reverse')}"></i>
+                </th>
+                <th class="text-center" ng-click="gospelVerificationListCtrl.updateSort('vdf__interview_date')" width="16%">VDF Date
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-order': gospelVerificationListCtrl.getSortIcon('vdf__interview_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-order-alt': gospelVerificationListCtrl.getSortIcon('vdf__interview_date', 'reverse')}"></i>
+                </th>
+                <th class="text-center" ng-click="gospelVerificationListCtrl.updateSort('date_of_followup')" width="16%" class="hidden-xs">
+                	<div>Follow Up</div>
+                	<div>
+                	 Completion Date
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-order': gospelVerificationListCtrl.getSortIcon('date_of_followup', '!reverse'),
+                    'glyphicon glyphicon-sort-by-order-alt': gospelVerificationListCtrl.getSortIcon('date_of_followup', 'reverse')}"></i>
+                    </div>
+                </th>
+                <th class="text-center" ng-click="gospelVerificationListCtrl.updateSort('profess_to_accept_christ')" width="16%" class="hidden-xs">PV Accepted Christ
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gospelVerificationListCtrl.getSortIcon('profess_to_accept_christ', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gospelVerificationListCtrl.getSortIcon('profess_to_accept_christ', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="followUp in gospelVerificationListCtrl.followUps | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td class="text-center">{{ followUp.vdf_number }}</td>
+                <td class="text-center">{{ followUp.pv_name }}</td>
+                <td class="text-center">{{ followUp.vdf_date }}</td>
+                <td class="text-center">{{ followUp.date_of_followup }}</td>
+                <td class="text-center">{{ followUp.profess_to_accept_christ }}</td>
+                <td class="text-center" ng-if="gospelVerificationListCtrl.session.checkPermission('VDF','VIEW',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{followUp.viewUrl}}">View</a></td>
+                <td class="text-center" ng-if="gospelVerificationListCtrl.session.checkPermission('VDF','EDIT',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{followUp.editUrl}}">Edit</a></td>
+            </tr>
+            <tr ng-show="gospelVerificationListCtrl.vdfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No Gospel Verifications matched your search for: "{{ gospelVerificationListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="gospelVerificationListCtrl.paginate" controller="gospelVerificationListCtrl">
+    </div>
+</div>

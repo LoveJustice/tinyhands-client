@@ -7,21 +7,24 @@ const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from './common.html';
 import legalCaseTemplate from './step-templates/legalCase.html';
+import timelineTemplate from './step-templates/timeline/timeline.html';
 import suspectsTemplate from './step-templates/suspects/suspect.html';
 import victimsTemplate from './step-templates/victims/victim.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
 
+import timelineEntryTemplate from './step-templates/timeline/timelineModal.html';
 import suspectTemplate from './step-templates/suspects/suspectModal.html';
 import victimTemplate from './step-templates/victims/victimModal.html';
 import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
 export class LegalCaseCommonController extends BaseLegalCaseController {
-    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService) {
+    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService) {
         'ngInject';        
-        super($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService);
+        super($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService);
        
         this.stepTemplates = [
             legalCaseTemplate,
+            timelineTemplate,
             suspectsTemplate,
             suspectsTemplate,
             attachmentsTemplate
@@ -29,6 +32,7 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         
         this.stepTemplates = [
             {template:legalCaseTemplate, name:"Legal Case"},
+            {template:timelineTemplate, name:"Timeline"},
             {template:suspectsTemplate, name:"Suspects"},
             {template:victimsTemplate, name:"Victims"},
             {template:attachmentsTemplate, name:"Attachments"},
@@ -64,6 +68,11 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
     
     submitExtra() {
         this.checkboxGroup.updateResponses();
+    }
+    
+    openTimelineModal(responses = [], isAdd = false, idx=null) {
+        this.commonModal(responses, isAdd, idx, LegalCaseModalController, 'TimelineModalController',
+                timelineEntryTemplate, 'Timeline');
     }
     
     openSuspectModal(responses = [], isAdd = false, idx=null) {

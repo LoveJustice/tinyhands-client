@@ -1,0 +1,21 @@
+<div id="legal-case-timeline" class="row stretch-vertical">
+	<table class="table table-striped" float-thead="$ctrl.stickyOptions">
+        <thead class="sticky-table-header">
+            <tr>
+            	<th class="text-center" width="10%">Date</th>
+            	<th class="text-center" width="80%">What is Next Step? / Case Comments</th>
+            	<th width="10%">
+	            	<button class="btn btn-success" ng-click="$ctrl.openTimelineModal(null, true)">
+		                <i class="fa fa-plus"></i>
+		            </button>
+            	</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr ng-repeat="card in $ctrl.getCardInstances('Timeline')"  ng-click="$ctrl.openTimelineModal(card, false, $index)" ng-if="!$ctrl.getResponseOfQuestionById(card.responses, 1039).value"]>
+        		<td>{{$ctrl.getResponseOfQuestionById(card.responses, 1035).value}}</td>
+        		<td colspan=2><textarea class="form-control" rows="2" ng-model="$ctrl.getResponseOfQuestionById(card.responses, 1036).value" readonly></textarea><td>
+        	</tr>
+        </tbody>
+	</table>
+</div>

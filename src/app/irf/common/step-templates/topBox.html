@@ -1,15 +1,15 @@
 <fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing === true">
     <div class="row">
-        <div class="col-md-5 form-group">
-            <form-step class="col-xs-2 control-label">IRF Number: </form-step>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-4 control-label">IRF Number: </form-step>
             <div class="col-xs-4">
                 <input type="text" id="formNumber" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value" ng-change="$ctrl.formNumberChange()">
             </div>
-            <div class="col-xs-5 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            <div class="col-xs-4 alert-danger" ng-show="!$ctrl.goodFormNumber">
             	Invalid Form Number
             </div>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-4 form-group">
             <form-step class="col-xs-3 control-label"># of PVs: </form-step>
             <div class="col-xs-9">
                 <input type="number" class="form-control" min="0" ng-model="$ctrl.questions[2].response.value">
@@ -25,15 +25,15 @@
     <hr/>
     <div class="row">
         <br>
-		<div class="col-md-5 form-group">
-            <form-step class="col-xs-1 control-label">Date: </form-step>
-            <div class="col-md-5">
+		<div class="col-md-4 form-group">
+            <form-step class="col-xs-4 control-label">Date: </form-step>
+            <div class="col-xs-4">
                  <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.interceptionDate">
             </div>
         </div>
-        <div class="col-md-3 form-group">
-            <form-step class="col-xs-1 control-label">Time: </form-step>
-            <div class="col-md-4">
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Time: </form-step>
+            <div class="col-md-9">
         		<input type="time" class="form-control" ng-model-options="{timezone: 'utc', timeStripZeroSeconds:true}" format="hh:mm A" step="60" ng-model="$ctrl.clock">
         	</div>
         </div>

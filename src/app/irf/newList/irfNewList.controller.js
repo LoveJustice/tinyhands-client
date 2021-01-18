@@ -168,7 +168,7 @@ export default class IrfNewListController {
             queryParams.ordering = '-' + queryParams.ordering;
         }
         queryParams.page = pageNumber;
-        delete queryParameters.reverse;
+        delete queryParams.reverse;
         var params = [];
         Object.keys(queryParams).forEach(name => {
             if (queryParams[name] !== null && queryParams[name] !== '') {

@@ -129,6 +129,8 @@ export default class SessionService {
     clearSession() {
         localStorage.removeItem('token');
         this.user = {};
+        this.userPermissions = [];
+        this.permissions = [];
         this.root.authenticated = false; // Set authenticated to false
     }
 }

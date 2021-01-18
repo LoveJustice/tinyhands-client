@@ -131,8 +131,7 @@
     </table>
 
     <div class="row text-center">
-        <button ng-disabled="!irfNewListCtrl.nextPage" ng-click="irfNewListCtrl.showMoreIrfs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-            Load more results
-        </button>
+        <paginate page-control="irfNewListCtrl.paginate" controller="irfNewListCtrl">
     </div>
+    <br>
 </div>

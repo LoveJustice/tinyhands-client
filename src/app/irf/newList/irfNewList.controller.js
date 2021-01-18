@@ -25,13 +25,20 @@ export default class IrfNewListController {
         this.nextPage = '';
         this.timeZoneDifference = '+0545';
         this.queryParameters = {
-            page_size: 25,
+            page_size: 20,
             reverse: true,
             ordering: 'date_time_of_interception',
             search: '',
             status: '!invalid',
             country_ids: '',
         };
+        
+        this.paginate = {
+            items:0,
+            pageSize:this.queryParameters.page_size,
+            currentPage:1,
+        };
+        
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
 
@@ -155,16 +162,17 @@ export default class IrfNewListController {
         return this.session.checkPermission('IRF', 'ADD', null, null) === true;
     }
 
-    transform(queryParams) {
-        var queryParameters = angular.copy(queryParams);
-        if (queryParameters.reverse) {
-            queryParameters.ordering = '-' + queryParameters.ordering;
+    transform(queryParameters, pageNumber) {
+        var queryParams = angular.copy(queryParameters);
+        if (queryParams.reverse) {
+            queryParams.ordering = '-' + queryParams.ordering;
         }
+        queryParams.page = pageNumber;
         delete queryParameters.reverse;
         var params = [];
-        Object.keys(queryParameters).forEach(name => {
-            if (queryParameters[name] !== null && queryParameters[name] !== '') {
-                params.push({ name: name, value: queryParameters[name] });
+        Object.keys(queryParams).forEach(name => {
+            if (queryParams[name] !== null && queryParams[name] !== '') {
+                params.push({ name: name, value: queryParams[name] });
             }
         });
         return params;
@@ -379,22 +387,17 @@ export default class IrfNewListController {
     }
 
     getIrfList() {
-        this.spinnerOverlayService.show('Searching for IRFs...');
-        this.service.getIrfList(this.transform(this.queryParameters)).then(promise => {
-            this.irfs = promise.data.results;
-            this.addUrls(this.irfs);
-            this.nextPage = this.extractPage(promise.data.next);
-            this.spinnerOverlayService.hide();
-        });
+        this.showPage(1);
     }
-
-    showMoreIrfs() {
-        let params = angular.copy(this.queryParameters);
-        params.page = this.nextPage;
-        this.service.getMoreIrfs(this.transform(params)).then(promise => {
-            this.irfs = this.irfs.concat(promise.data.results);
-            this.addUrls(this.irfs);
-            this.nextPage = this.extractPage(promise.data.next);
+    
+    showPage(pageNumber) {
+        this.spinnerOverlayService.show("Searching for IRFs...");        
+        this.service.getIrfList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
+            this.irfs = promise.data.results;
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
+            this.spinnerOverlayService.hide();
+            this.addUrls(this.irfs)
         });
     }
 

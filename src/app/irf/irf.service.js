@@ -180,4 +180,8 @@ export default class IrfService {
     	let url=`api/forms/config/${formName}/`;
     	return this.service.get(url);
     }
+    
+    getLocation(stationId) {
+        return this.service.get(`api/border-station/${stationId}/location/`);
+    }
 }

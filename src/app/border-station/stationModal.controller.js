@@ -7,6 +7,12 @@ export default class StationModalController extends BaseModalController {
         this.isRemove = false;
     }
     
+    delayedQuestionData() {
+        if (this.isAdd) {
+            this.questions[973].response.value = true;
+        }
+    }
+    
     remove() {
         this.isRemove = true;
     }

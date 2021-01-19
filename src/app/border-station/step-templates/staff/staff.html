@@ -1,7 +1,6 @@
 <div id="staff-boxes" class="row stretch-vertical">
-    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Staff')">
-        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openStaffModal(card, false, $index)"
-        		ng-if="!$ctrl.getResponseOfQuestionById(card.responses, 970).value">
+    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Staff')" ng-if="!$ctrl.getResponseOfQuestionById(card.responses, 970).value">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openStaffModal(card, false, $index)">
             <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 957).value}} {{$ctrl.getResponseOfQuestionById(card.responses, 958).value}}</h3>
             <div class="panel-body col-md-12">
            		<form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 959).value}}</form-step>

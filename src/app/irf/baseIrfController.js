@@ -16,6 +16,7 @@ export class BaseIrfController extends BaseFormController {
         this.relatedUrl = null;
         this.intercepteeImages = {};
         this.formNumberPattern = '';
+        this.locations = [];
         
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
@@ -77,6 +78,13 @@ export class BaseIrfController extends BaseFormController {
         this.goodFormNumber = (this.questions[1].response.value.match(this.formNumberPattern) !== null);
     }
     
+    getLocations(stationId) {
+        this.service.getLocation(stationId).then ((response) => {
+            this.locations = response.data.map((x) => x.name);
+            this.otherData.setRadioButton(this.locations, 3);
+        });
+    }
+    
     getIrf(countryId, stationId, id) {
     	this.service.getFormConfig(this.stateParams.formName).then ((response) => {
     		this.config = response.data;
@@ -102,6 +110,7 @@ export class BaseIrfController extends BaseFormController {
     		    }
     		    this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}$';
     		    this.formNumberChange();
+    	            this.getLocations(this.stationId);
             });
     	});
     }

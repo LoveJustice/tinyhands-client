@@ -2,7 +2,7 @@ import {BaseFormController} from '../baseFormController.js';
 import {IrfStubController} from '../cif/irfStub.js';
 
 export class BaseLegalCaseController extends BaseFormController {
-    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService) {
+    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService) {
         'ngInject';
         super($scope, $stateParams, $uibModalStack);
         
@@ -10,6 +10,7 @@ export class BaseLegalCaseController extends BaseFormController {
         this.constants = constants;
         this.service = LegalCaseService;
         this.irfService = IrfService;
+        this.session = SessionService;
         this.state = $state;
         this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
@@ -141,6 +142,8 @@ export class BaseLegalCaseController extends BaseFormController {
                 this.errorMessages = [];
                 this.warningMessages = [];
                 this.processResponse(response);
+                let timelineCards = this.getCardInstances('Timeline');
+                timelineCards.sort(BaseLegalCaseController.compareTimelineEntries);
                 if (this.stateParams.id === null) {
                     this.questions[997].response.value = 'active';
                 } else {
@@ -177,6 +180,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 modalActions: () => this.modalActions,
                 config: () => config,
                 caseStatus: () => this.questions[997].response.value,
+                userName: () => this.session.user.first_name + ' ' + this.session.user.last_name,
             },
             size: 'lg',
             templateUrl: theTemplate,
@@ -189,9 +193,39 @@ export class BaseLegalCaseController extends BaseFormController {
                 this.redFlagTotal = this.redFlagTotal + the_card.flag_count - starting_flag_count;
                 if (isAdd) {
                     cards.push(the_card);
+                    cards.sort(BaseLegalCaseController.compareTimelineEntries);
                 }
             }
         });
+    }
+    
+    static getTimelineResponseValue(entry, question_id) {
+        for (let idx=0; idx < entry.responses.length; idx++) {
+            if (entry.responses[idx].question_id === question_id) {
+                return entry.responses[idx].response.value;
+            }
+        }
+        return null;
+    }
+    
+    static compareTimelineEntries(a,b) {
+        let aValue = BaseLegalCaseController.getTimelineResponseValue(a, 1035);
+        let bValue = BaseLegalCaseController.getTimelineResponseValue(b, 1035);
+        if (aValue < bValue) {
+            return 1;
+        } else if (aValue > bValue) {
+            return -1;
+        } else {
+            if (a.storage_id) {
+                if (b.storage_id) {
+                    return b.storage_id - a.storage_id;
+                } else {
+                    return 1;
+                }
+            } else {
+                return -1;
+            }
+        }
     }
 
     

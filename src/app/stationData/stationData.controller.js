@@ -20,19 +20,7 @@ class StationDataController {
         this.exchangeDisplayData = [null, null, null];
         this.saveCount = 0;
         
-        let today = new Date();
-        this.month = today.getMonth();
-        this.year = today.getFullYear();
-        if (today.getDate() < 6) {
-            this.month -= 1;
-        }
-        if (this.month < 1) {
-            this.year -= 1;
-            this.month = 12 - this.month;
-        }
-        this.monthStr = '' + this.month;
-        
-        this.yearMonth = 100 * this.year + this.month;
+        this.setCurrentMonth();
         
         let tmp = sessionStorage.getItem('station-stats-country');
         if (!tmp) {
@@ -48,16 +36,15 @@ class StationDataController {
     setCurrentMonth() {
         let today = new Date();
         this.month = today.getMonth();
-        this.monthStr = '' + this.month;
+        this.year = today.getFullYear();
         if (this.month < 1) {
             this.year -= 1;
             this.month = 12;
         }
         this.monthStr = '' + this.month;
-        this.year = today.getFullYear();
         this.yearMonth = this.year * 100 + this.month;
         
-        if (this.stations !== null) {
+        if (this.locations !== null) {
             this.reloadData();
         }
     }

@@ -39,13 +39,12 @@ class LocationDataController {
     setCurrentMonth() {
         let today = new Date();
         this.month = today.getMonth();
-        this.monthStr = '' + this.month;
+        this.year = today.getFullYear();
         if (this.month < 1) {
             this.year -= 1;
             this.month = 12;
         }
         this.monthStr = '' + this.month;
-        this.year = today.getFullYear();
         this.yearAndMonth = this.year * 100 + this.month;
         
         if (this.locations !== null) {

@@ -33,8 +33,12 @@ export default class IntercepteeModalController extends BaseModalController {
             this.photoPresent = true;
             var t = Object.prototype.toString.call(this.questions[9].response.photo.value);
             if (t !== '[object String]') {
-                this.file = this.questions[9].response.photo.value;
-                this.loadImage(this.file.$ngfBlobUrl);
+                if (this.questions[9].response.photo.value) {
+                    this.file = this.questions[9].response.photo.value;
+                    this.loadImage(this.file.$ngfBlobUrl);
+                } else {
+                	this.photoPresent = false;
+                }
             } else {
                 this.loadImage(this.getIntercepteeImage(this.questions[9].response.photo.value));
             }

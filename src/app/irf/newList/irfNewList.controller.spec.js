@@ -144,12 +144,14 @@ describe('IRF List Controller',() => {
             transformedQueryParameters = [
                 {"name": "page_size", "value": 50},
                 {"name": "ordering", "value": "-irf_num"},
-                {"name": "search", "value": "BHD"}
+                {"name": "search", "value": "BHD"},
+                {"name": "page", "value": 1}
             ];
         }));
 
         it('expect it to create an array of key value pairs for the parameters', () => {
-            var val = vm.transform(queryParameters);
+            var val = vm.transform(queryParameters, 1);
+            alert(val);
             expect(angular.equals(val, transformedQueryParameters)).toBe(true);
         });
 
@@ -162,13 +164,13 @@ describe('IRF List Controller',() => {
         });
 
         it('expect the ordering field to have a "-" before the name', () => {
-            var val = vm.transform(queryParameters);
+            var val = vm.transform(queryParameters, 1);
             expect(val[1].value.slice(0,1)).toBe('-');
         });
 
         it('expect the ordering field to not have a "-" before the name', () => {
             queryParameters.reverse = false;
-            var val = vm.transform(queryParameters);
+            var val = vm.transform(queryParameters, 1);
             expect(val[1].value.slice(0,1)).not.toEqual('-');
         });
     });

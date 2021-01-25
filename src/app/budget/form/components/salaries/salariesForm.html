@@ -1,8 +1,8 @@
 <div class="col-md-offset-3 col-md-6">
-  <h2 class="text-center">Staff Salaries</h2>
+  <h2 class="text-center">Salaries & Benefits</h2>
   <hr>
   <div class="row">
-    <div class="row" ng-repeat="staff in budgetCtrl.form.staff | orderBy:'first_name'" ng-init="budgetCtrl.salariesTotal()">
+    <div class="row" ng-repeat="staff in budgetCtrl.form.staff | orderBy:'first_name'" ng-init="budgetCtrl.salariesTotal()" ng-if="staff.last_name.indexOf('general_staff') === -1">
       <div class="col-md-6">
         <span>{{ staff.first_name + ' ' + staff.last_name }}</span>
       </div>
@@ -34,7 +34,7 @@
     <hr>
     <div class="row text-center">
       <div class="col-md-4 col-md-offset-4">
-        <label>Staff Total</label>
+        <label>Salaries & Benefits Total</label>
         <input class="form-control text-center" ng-value="budgetCtrl.salariesTotal() | currency:budgetCtrl.currency" disabled="disabled" />
       </div>
     </div>

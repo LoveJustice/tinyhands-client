@@ -8,9 +8,9 @@
           <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_chair_with_bike" ng-disabled="budgetCtrl.isViewing"/>
         </label>
       </div>
-      <div class="col-md-6 calc-form-input-no-width">
+      <div class="col-md-8 calc-form-input-no-width">
         <input class="form-control text-right" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_chair_with_bike_amount" ng-disabled="!budgetCtrl.form.travel_chair_with_bike || budgetCtrl.isViewing"/>
-        <small>for chair</small>
+        <small>Subcommittee Chairperson Travel</small>
       </div>
     </div>
     <div class="col-md-6">
@@ -19,59 +19,13 @@
           <input class="col-md-3" type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_manager_with_bike" ng-disabled="budgetCtrl.isViewing"/>
         </label>
       </div>
-      <div class="col-md-6 calc-form-input-no-width">
+      <div class="col-md-8 calc-form-input-no-width">
         <input class="form-control text-right" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_manager_with_bike_amount" ng-disabled="!budgetCtrl.form.travel_manager_with_bike || budgetCtrl.isViewing"/>
-        <small>for manager</small>
+        <small>Station Manager Travel</small>
       </div>
     </div>
   </div>
   <hr>
-  <div class="row">
-    <div class="col-md-4 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_number_of_staff_using_bikes" ng-disabled="budgetCtrl.isViewing"/>
-      <small># of staff using bikes</small>
-    </div>
-    <operator>*</operator>
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_number_of_staff_using_bikes_multiplier" ng-disabled="budgetCtrl.isViewing"/>
-    </div>
-    <operator>=</operator>
-    <div class="col-md-3 input-group">
-      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-      <input class="form-control text-center" ng-value="budgetCtrl.travelNumberOfStaffUsingBikesTotal() | number"
-      disabled="disabled" />
-    </div>
-  </div>
-  <hr>
-  <div class="row form-inline text-center">
-    <div class="calc-form-input-no-width">
-      <strong>Last month's expense for sending PVs home</strong>
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_last_months_expense_for_sending_girls_home" ng-disabled="budgetCtrl.isViewing"/>
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-1 text-center checkbox">
-      <label>
-        <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_motorbike" ng-disabled="budgetCtrl.isViewing"/>
-      </label>
-    </div>
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_motorbike_amount" ng-disabled="!budgetCtrl.form.travel_motorbike || budgetCtrl.isViewing"/>
-      <small>Motorbike</small>
-    </div>
-    <operator>+</operator>
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_plus_other" ng-disabled="budgetCtrl.isViewing"/>
-      <small>Other</small>
-    </div>
-    <operator>=</operator>
-    <div class="col-md-3 input-group">
-      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-      <input class="form-control text-center" ng-value="budgetCtrl.travelMotorbikeOtherTotal() | number" disabled="disabled"/>
-    </div>
-  </div>
-  <hr/>
   <div class="row">
     <div ng-repeat="otherTravelItem in budgetCtrl.form.other.Travel">
       <div class="col-md-4 col-md-offset-1">
@@ -93,7 +47,7 @@
   <hr>
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
-      <label>Total Travel</label>
+      <label>Travel Total</label>
       <input class="form-control text-center" ng-value="budgetCtrl.travelTotal() | currency:budgetCtrl.currency" disabled="disabled"/>
     </div>
   </div>

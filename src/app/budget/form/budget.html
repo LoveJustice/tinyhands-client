@@ -1,7 +1,7 @@
 <form id="budget-calc-form" name="budgetForm" class="container-fluid col-xs-12">
     
   <h2 class="text-center form-inline">
-    {{ budgetCtrl.form.station_name }} Budget Form For 
+    {{ budgetCtrl.form.station_name }} Budget Calculation Form 
 
     <span ng-if="budgetCtrl.isCreating">
       <select ng-change="budgetCtrl.newBudgetForm()" 
@@ -13,7 +13,7 @@
     </span>
 
     <span ng-if="!budgetCtrl.isCreating">
-      <span>{{ budgetCtrl.getMonthName() }} {{ budgetCtrl.year }}</span>
+      <span>({{ budgetCtrl.getMonthName() }} {{ budgetCtrl.year }})</span>
     </span>
   </h2>
 
@@ -22,30 +22,14 @@
     <table class="table table-striped table-bordered table-hover text-center">
       <thead>
         <tr>
-          <th></th>
-          <th class="text-center">Interceptions</th>
-          <th class="text-center">{{budgetCtrl.currency}}/Interceptions</th>
+          <th class="text-center"># of PVs(last month)</th>
+          <th class="text-center"># of Staff</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Last Month</td>
           <td>{{ budgetCtrl.form.previousData.last_month }}</td>
-          <td>{{ budgetCtrl.form.previousData.last_months_int_cost | currency: budgetCtrl.currency }}</td>
-        </tr>
-        <tr>
-          <td>Last 3 Months</td>
-          <td>{{ budgetCtrl.form.previousData.last_3_months }}</td>
-          <td>{{ budgetCtrl.form.previousData.last_3_months_int_cost | currency:budgetCtrl.currency }}</td>
-        </tr>
-        <tr>
-          <td>All Time</td>
-          <td>{{ budgetCtrl.form.previousData.all }}</td>
-          <td>{{ budgetCtrl.form.previousData.all_int_cost | currency:budgetCtrl.currency }}</td>
-        </tr>
-        <tr>
-          <td># of Staff</td>
-          <td colspan="2">{{ budgetCtrl.form.previousData.staff_count }}</td>
+          <td>{{ budgetCtrl.form.previousData.staff_count }}</td>
         </tr>
       </tbody>
     </table>
@@ -103,62 +87,27 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <th colspan="3" class="text-center">Transit Monitoring Station</th>
+          <th colspan="2" class="text-center">Transit Monitoring Station</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.borderMonitoringStation">
-          <td>{{section | capitalize}}</td>
+          <td>{{ budgetCtrl.formatSection(section) | capitalize}}</td>
           <td width="25%">
             <p class="text-right">{{total | currency:budgetCtrl.currency}}</p>
           </td>
-          <td class="active" width="25%"></td>
-        </tr>
-        <tr>
-          <td class="text-right"><b>TOTAL</b></td>
-          <td colspan="2">
-            <p class="text-right">{{budgetCtrl.borderMonitoringStationTotal | currency:budgetCtrl.currency}}</p>
-          </td>
         </tr>
       </tbody>
-      <!--Safe Houses-->
-      <thead>
-        <tr class="warning">
-          <th colspan="3" class="text-center">Safe Houses</th>
-        </tr>
-      </thead>
       <tbody>
-        <tr ng-repeat="(section, total) in budgetCtrl.form.totals.safeHouse">
-          <td class="warning">{{section == 'foodAndGas' ? 'Food And Gas' : section.charAt(0).toUpperCase() + section.substr(1)}}</td>
-          <td class="warning">
-            <p class="text-right">{{total | currency:budgetCtrl.currency}}</p>
-          </td>
-          <td class="active"></td>
-        </tr>
-        <tr class="warning">
-          <td class="text-right"><b>TOTAL</b></td>
-          <td colspan="2">
-            <p class="text-right">{{budgetCtrl.safeHouseTotal | currency:budgetCtrl.currency}}</p>
-          </td>
-        </tr>
-      </tbody>
-      <!--End Safe Houses-->
-      <tbody>
-        <tr ng-repeat="(section, total) in budgetCtrl.form.totals.other">
-          <td class="text-center"><b>{{section | capitalize}}</b></td>
-          <td colspan="2">
-            <p class="text-right">{{total | currency:budgetCtrl.currency}}</p>
+        <tr>
+          <td class="text-left text-large"><b>TOTAL</b></td>
+          <td>
+            <p class="text-right text-large"><b>{{budgetCtrl.total | currency:budgetCtrl.currency}}</b></p>
           </td>
         </tr>
         <tr>
-          <td class="text-center"><b>STATION TOTAL</b></td>
-          <td colspan="2">
-            <p class="text-right">{{budgetCtrl.total | currency:budgetCtrl.currency}}</p>
-          </td>
-        </tr>
-        <tr>
-          <td class="text-center">Last month's TOTAL</td>
-          <td class="text-right" colspan="2">{{ budgetCtrl.form.previousData.last_months_cost | currency:budgetCtrl.currency}}</td>
+          <td class="text-left active text-small">Last month's TOTAL</td>
+          <td class="text-right active text-small">{{ budgetCtrl.form.previousData.last_months_cost | currency:budgetCtrl.currency}}</td>
         </tr>
       </tbody>
     </table>

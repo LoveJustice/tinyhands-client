@@ -4,12 +4,9 @@ import salariesForm from './components/salaries/salariesForm.html';
 import communicationForm from './components/communication/communicationForm.html';
 import travelForm from './components/travel/travelForm.html';
 import administrationForm from './components/administration/administrationForm.html';
-import medicalForm from './components/medical/medicalForm.html';
 import miscellaneousForm from './components/miscellaneous/miscellaneousForm.html';
-import shelterForm from './components/shelter/shelterForm.html';
-import foodAndGasForm from './components/foodAndGas/foodAndGasForm.html';
+import potentialVictimCareForm from './components/potentialVictimCare/potentialVictimCareForm.html';
 import awarenessForm from './components/awareness/awarenessForm.html';
-import suppliesForm from './components/supplies/suppliesForm.html';
 
 export default class BudgetController {
     constructor($state, $stateParams, BudgetService, UtilService, toastr) {
@@ -24,16 +21,13 @@ export default class BudgetController {
 
         this.sections = {
             allSections: [
-                { name: 'Salaries', templateUrl: salariesForm },
+                { name: 'Salaries & Benefits', templateUrl: salariesForm },
                 { name: 'Communication', templateUrl: communicationForm },
                 { name: 'Travel', templateUrl: travelForm },
                 { name: 'Administration', templateUrl: administrationForm },
-                { name: 'Medical', templateUrl: medicalForm },
-                { name: 'Miscellaneous', templateUrl: miscellaneousForm },
-                { name: 'Shelter', templateUrl: shelterForm },
-                { name: 'Food And Gas', templateUrl: foodAndGasForm },
+                { name: 'Potential Victim Care', templateUrl: potentialVictimCareForm },
                 { name: 'Awareness', templateUrl: awarenessForm },
-                { name: 'Supplies', templateUrl: suppliesForm },
+                { name: 'Miscellaneous', templateUrl: miscellaneousForm },
             ],
         };
 
@@ -114,6 +108,11 @@ export default class BudgetController {
             this.$state.go('budgetList');
         }
     }
+    
+    formatSection(section) {
+    	let result = section.replace(/_/g, ' ');
+    	return result;
+    }
 
     // REGION: Administration
     adminStationaryTotal() {
@@ -132,8 +131,8 @@ export default class BudgetController {
         if (this.form.administration_booth) {
             amount += this.validAmount(this.form.administration_booth_amount);
         }
-        if (this.form.administration_registration) {
-            amount += this.validAmount(this.form.administration_registration_amount);
+        if (this.form.administration_office) {
+            amount += this.validAmount(this.form.administration_office_amount);
         }
         return amount;
     }
@@ -158,7 +157,7 @@ export default class BudgetController {
             amount += this.validAmount(this.form.awareness_sign_boards);
         }
         amount += this.getOtherCost(this.form.other.Awareness);
-        this.form.totals.other.awareness = amount;
+        this.form.totals.borderMonitoringStation.awareness = amount;
         return amount;
     }
     // ENDREGION: Awareness
@@ -216,7 +215,6 @@ export default class BudgetController {
     // REGION: Medical
     medicalTotal() {
         let total = this.form.medical_last_months_expense + this.getOtherCost(this.form.other.Medical);
-        this.form.totals.borderMonitoringStation.medical = total;
         return this.form.medical_last_months_expense + total;
     }
     // ENDREGION: Medical
@@ -241,7 +239,7 @@ export default class BudgetController {
         }
         amount += this.getOtherCost(this.form.other.Salaries);
 
-        this.form.totals.borderMonitoringStation.salaries = amount;
+        this.form.totals.borderMonitoringStation.salaries_And_Benefits = amount;
 
         return amount;
     }
@@ -249,18 +247,17 @@ export default class BudgetController {
 
     // REGION: Shelter
     shelterUtilTotal() {
-        return this.validAmount(this.form.shelter_rent) + this.validAmount(this.form.shelter_water) + this.validAmount(this.form.shelter_electricity);
-    }
-
-    shelterCheckboxTotal() {
-        var totalAmount = 0;
-        if (this.form.shelter_shelter_startup) {
-            totalAmount += this.validAmount(this.form.shelter_shelter_startup_amount);
-        }
-        if (this.form.shelter_shelter_two) {
-            totalAmount += this.validAmount(this.form.shelter_shelter_two_amount);
-        }
-        return totalAmount;
+    	let total = 0;
+    	if (this.form.shelter_rent) {
+    		total += this.validAmount(this.form.shelter_rent_amount);
+    	}
+    	if (this.form.shelter_water) {
+    		total += this.validAmount(this.form.shelter_water_amount);
+    	}
+    	if (this.form.shelter_electricity) {
+    		total += this.validAmount(this.form.shelter_electricity_amount);
+    	}
+        return total;
     }
 
     shelterTotal() {
@@ -270,28 +267,16 @@ export default class BudgetController {
         this.form.totals.safeHouse.shelter = amount;
         return amount;
     }
-    // ENDREGION: Shelter
-
-    // REGION: Supplies
-    suppliesTotal() {
-        var amount = 0;
-        if (this.form.supplies_walkie_talkies_boolean) {
-            amount += this.validAmount(this.form.supplies_walkie_talkies_amount);
-        }
-        if (this.form.supplies_recorders_boolean) {
-            amount += this.validAmount(this.form.supplies_recorders_amount);
-        }
-        if (this.form.supplies_binoculars_boolean) {
-            amount += this.validAmount(this.form.supplies_binoculars_amount);
-        }
-        if (this.form.supplies_flashlights_boolean) {
-            amount += this.validAmount(this.form.supplies_flashlights_amount);
-        }
-        amount += this.getOtherCost(this.form.other.Supplies);
-        this.form.totals.other.supplies = amount;
-        return amount;
+    
+    potentialVictimCareTotal() {
+    	let amount = 0;
+    	amount += this.shelterUtilTotal();
+    	amount += this.foodAndGasTotal();
+    	this.form.totals.borderMonitoringStation.potential_Victim_Care = amount;
+    	
+    	return amount;
     }
-    // ENDREGION: Supplies
+    // ENDREGION: Shelter
 
     // REGION: Travel
     travelMotorbikeOtherTotal() {
@@ -327,7 +312,7 @@ export default class BudgetController {
 
     // REGION: Functions that handle totals
     setBorderMonitoringStationTotals() {
-        let amount = this.adminTotal() + this.communicationTotal() + this.medicalTotal() + this.miscellaneousTotal() + this.salariesTotal() + this.travelTotal();
+        let amount = this.adminTotal() + this.awarenessTotal() + this.communicationTotal() + this.miscellaneousTotal() + this.potentialVictimCareTotal() + this.salariesTotal() + this.travelTotal();
         this.borderMonitoringStationTotal = amount;
         return amount;
     }
@@ -339,7 +324,7 @@ export default class BudgetController {
     }
 
     setTotals() {
-        let amount = this.setBorderMonitoringStationTotals() + this.setSafeHouseTotals() + this.awarenessTotal() + this.suppliesTotal();
+        let amount = this.setBorderMonitoringStationTotals();
         this.total = amount;
     }
     // ENDREGION: Functions that handle totals

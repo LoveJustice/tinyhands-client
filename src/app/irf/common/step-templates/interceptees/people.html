@@ -1,0 +1,27 @@
+<div id="irf-nepal-people" class="row stretch-vertical">
+    <div class="col-md-4 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('People')">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card, false, $index)">
+            <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
+            <div class="panel-body text-center">
+                <div class="text-center padding-bottom-20">
+                	<canvas id="intercepteeCanvas{{$index}}" width="150" height="150" style="border:1px solid #d3d3d3;"
+                			ng-init="$ctrl.loadCanvas('intercepteeCanvas' + $index,$ctrl.getResponseOfQuestionById(card.responses, 9).photo.value)"
+                			ng-show="$ctrl.getResponseOfQuestionById(card.responses, 9).photo.value">
+						Your browser does not support the HTML5 canvas tag.
+					</canvas>
+            	</div>
+                <form-step ng-if="$ctrl.getResponseOfQuestionById(card.responses, 9).role.value !== 'PVOT'">{{$ctrl.getResponseOfQuestionById(card.responses, 9).role.value}}</form-step>
+                <form-step ng-if="$ctrl.getResponseOfQuestionById(card.responses, 9).role.value === 'PVOT'">PV</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</form-step>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center center-vertical">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="$ctrl.openIntercepteeModal(null, true)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>

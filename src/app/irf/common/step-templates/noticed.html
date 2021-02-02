@@ -1,5 +1,30 @@
 <fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
     <div class="container-fluid">
+	    <div class="row center-vertical">
+	        <div class="col-md-4">
+	            <div class="margin-top-40 margin-bottom-10">
+	                <form-step>5.2 Which family member did you talk to?</form-step>
+	            </div>
+	        </div>
+	        <div class="col-md-8">
+	            <div class="row">
+	                <div class="col-md-6" ng-repeat="families in $ctrl.config.RadioItems[82]">
+	                    <form-step type="radio" radio-name="familyRadio" ng-repeat="family in families" label="{{family}}" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
+	                    <form-step ng-if="$first" type="otherRadio" label="Other:" radio-name="familyRadio" other-value="$ctrl.otherData.questions[82].otherValue" response-value="$ctrl.otherData.questions[82].value"></form-step>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	    <hr>
+	    <div class="row center-vertical">
+			<div class="col-md-12">
+				<form-step>5.3  Please give any additional information about the interception, how it occurred, the reason you decided to intercept the potential victim(s), etc.</form-step>
+					<form-step>
+	                <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value"></textarea>
+	            </form-step>
+	        </div>
+	    </div>
+	    <hr>
         <div class="row">
             <div>Either fill out the first or second section (not both), depending on whether the potential victim was first noticed by
                 staff, or came from a contact. </div>

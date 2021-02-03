@@ -154,7 +154,7 @@ export class BaseLegalCaseController extends BaseFormController {
                     this.questions[998].response.value = this.response.station_code;
                 }
                 this.station_name = this.response.station_name;
-                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}';
+                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}[A-Z]{0,1}$';
                 this.formNumberChange();
                 if (this.goodFormNumber) {
                     this.number_change();

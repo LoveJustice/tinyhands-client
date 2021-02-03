@@ -43,7 +43,7 @@ export class CifNepalController extends BaseCifController {
             {template:vbsTemplate, name:"Vehicle Boxes"},
             {template:finalTemplate, name:"Final"},
             {template:attachmentsTemplate, name:"Attachments"},
-            {template:logbookTemplate, name:"Logbook"},
+            {template:logbookTemplate, name:"Compliance"},
         ];
     }
     

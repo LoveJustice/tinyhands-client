@@ -51,6 +51,12 @@
 				<div class="col-md-4">
 					<input type="number" ng-model="$ctrl.audit.percent_to_sample">
 				</div>
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2" ng-if="!$ctrl.audit.id">
+					<button class="btn btn-success" ng-disabled="$ctrl.audit.form === null || $ctrl.audit.country === null || $ctrl.start_date === null || $ctrl.end_date === null || $ctrl.audit.percent_to_sample === null" 
+						ng-click="$ctrl.sampleSize()">Check Sample Size</button>
+				</div>
 			</div>
 			<div class="col-md-6" ng-if="$ctrl.audit.author_name">
 				<div class="col-md-3">
@@ -70,7 +76,7 @@
 					{{ $ctrl.audit.forms_in_range }}
 				</div>
 			</div>
-			<div class="col-md-6" ng-if="$ctrl.audit.author_name">
+			<div class="col-md-6" ng-if="$ctrl.audit.total_samples">
 				<div class="col-md-3">
 					<label># of Selected Forms</label>
 				</div>

@@ -31,7 +31,7 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         ];
         
         this.stepTemplates = [
-            {template:legalCaseTemplate, name:"Legal Case"},
+            {template:legalCaseTemplate, name:"Basic Case Details"},
             {template:timelineTemplate, name:"Timeline"},
             {template:suspectsTemplate, name:"Suspects"},
             {template:victimsTemplate, name:"Victims"},

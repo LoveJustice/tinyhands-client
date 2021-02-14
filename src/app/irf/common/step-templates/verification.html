@@ -1,0 +1,94 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+	<div class="row col-md-12">
+	 	<h3>First Verification</h3>
+	</div>
+	<div class="row"></div>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Verification</form-step>
+			<div class="col-md-8">
+				<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Clear Evidence of Trafficking"></form-step>
+				<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Some Evidence of Trafficking"></form-step>
+				<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="High Risk of Trafficking"></form-step>
+				<form-step type="radio" radio-name="firstEvidenceRadio" response-value="$ctrl.questions[814].response.value" label="Should not count as an Intercept"></form-step>
+			</div>
+		</div>
+		<br>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Reason</form-step>
+			<div class="col-md-8">
+				<textarea class="form-control" placeholder="Reason" rows="3" ng-model="$ctrl.questions[815].response.value"></textarea>
+			</div>
+		</div>
+		<br>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Follow-up call completed</form-step>
+			<div class="col-md-1">
+				<form-step type="radio" radio-name="followup" response-value="$ctrl.questions[816].response.value" label="No"></form-step>
+			</div>
+			<div class="col-md-1">
+				<form-step type="radio" radio-name="followup" response-value="$ctrl.questions[816].response.value" label="Yes"></form-step>
+			</div>
+		</div>
+		<br>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">First Verification Date</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[817].value">
+			</div>
+		</div>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">First Verification By</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="text" class="form-control" ng-model="$ctrl.questions[1025].response.value">
+			</div>
+		</div>
+	</div>
+	
+	<div ng-if="$ctrl.dateData.questions[817].value">
+		<hr>
+		<div class="row col-md-12">
+			<h3>Second Verification</h3>
+		</div>
+		<div class="row"></div>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Verification</form-step>
+			<div class="col-md-4">
+				<form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Clear Evidence of Trafficking"></form-step>
+				<form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Some Evidence of Trafficking"></form-step>
+				<form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="High Risk of Trafficking"></form-step>
+				<form-step type="radio" radio-name="secondEvidenceRadio" response-value="$ctrl.questions[819].response.value" label="Should not count as an Intercept"></form-step>
+			</div>
+			<div class="col-md-4 center-vertical">
+				<label class="alert-success" ng-if="$ctrl.questions[819].response.value && $ctrl.questions[819].response.value === $ctrl.questions[814].response.value">Agree with First Verification</label>
+				<label class="alert-warning" ng-if="$ctrl.questions[819].response.value && $ctrl.questions[819].response.value !== $ctrl.questions[814].response.value">Disagree with First Verification</label>
+			</div>
+		</div>
+		<br>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Reason</form-step>
+			<div class="col-md-8">
+				<textarea class="form-control" placeholder="Reason" rows="3" ng-model="$ctrl.questions[820].response.value"></textarea>
+			</div>
+		</div>
+		<br>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Second Verification Date</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[821].value">
+			</div>
+		</div>
+		<div class="row center-vertical">
+			<form-step class="col-md-2">Second Verification By</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="text" class="form-control" ng-model="$ctrl.questions[1026].response.value">
+			</div>
+		</div>
+	</div>
+	
+	<hr>
+	<div class="row center-vertical">
+		<div class="col-md-4">
+			<form-step type="checkbox" label="Champion Verification" response-value="$ctrl.questions[966].response.value">
+		</div>
+	</div>
+</fieldset>

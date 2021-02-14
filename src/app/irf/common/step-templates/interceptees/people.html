@@ -10,7 +10,8 @@
 						Your browser does not support the HTML5 canvas tag.
 					</canvas>
             	</div>
-                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).role.value}}</form-step>
+                <form-step ng-if="$ctrl.getResponseOfQuestionById(card.responses, 9).role.value !== 'PVOT'">{{$ctrl.getResponseOfQuestionById(card.responses, 9).role.value}}</form-step>
+                <form-step ng-if="$ctrl.getResponseOfQuestionById(card.responses, 9).role.value === 'PVOT'">PV</form-step>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).age.value}}</form-step>
                 <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</form-step>
             </div>

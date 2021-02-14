@@ -17,6 +17,10 @@ export default class AuditService {
         }
     }
     
+    getSampleSize(country_id, form_id, start_date, end_date, percent) {
+    	return this.service.get(`api/audit/sample-size/?country=${country_id}&form=${form_id}&start=${start_date}&end=${end_date}&percent=${percent}`);
+    }
+    
     updateNotes(audit) {
         if (audit.id === null) {
             return;

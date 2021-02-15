@@ -14,19 +14,19 @@
 	            <div class="col-md-2 form-group">
 		    		<label>Entered By</label>
 		    	</div>
-				<div class="col-md-6 form-group">
+				<div class="col-md-4 form-group">
 			        <input type="text" min="0" class="form-control" ng-model="TimelineModalController.questions[1037].response.value" disabled>
 		        </div>
 		        <div class="col-md-2 form-group">
 		    		<label>Date Entered</label>
 		    	</div>
-		    	<div class="col-md-2 form-group">
+		    	<div class="col-md-4 form-group">
 		    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions[1038].value" disabled>
 		    	</div>
             </div>
             <div class="row">
 	            <div class="col-md-2 form-group">
-		    		<label>Comment Date</label>
+		    		<label>Date of Incident</label>
 		    	</div>
 		    	<div class="col-md-4 form-group">
 		    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions[1035].value"
@@ -34,7 +34,7 @@
 		    	</div>
             </div>
             <div class="row col-md-12">
-            	<label>What is Next Step? / Case Comments</label>
+            	<label>Next Step / Case Comments</label>
             </div>
             <div class="row col-md-12">
             	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions[1036].response.value" ng-disabled="TimelineModalController.isAdd !== true"></textarea>

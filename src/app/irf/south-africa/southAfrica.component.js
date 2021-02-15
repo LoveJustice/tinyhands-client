@@ -1,44 +1,16 @@
-import {BaseIrfController} from '../baseIrfController.js';
+import {BaseIrfCommonController} from '../baseIrfCommonController.js';
 import {BaseModalController} from '../../baseModalController.js';
-import '../common/irf.less';
-
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
-import topBoxTemplate from '../common/step-templates/topBox.html';
-import profileTemplate from '../common/step-templates/profile.html';
-import areaIndustryTemplate from '../common/step-templates/areaIndustry.html';
-import resourceSafetyTemplate from '../common/step-templates/resourceSafety.html';
-import controlTemplate from '../common/step-templates/control.html';
-import familyTemplate from '../common/step-templates/family.html';
-import noticedTemplate from '../common/step-templates/noticed.html';
-import intercepteesTemplate from '../common/step-templates/interceptees/interceptees.html';
-import finalProceduresTemplate from '../common/step-templates/finalProcedures.html';
-import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
-import logbookTemplate from '../common/step-templates/logbook.html';
-
 import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfSouthAfricaController extends BaseIrfController {
+export class IrfSouthAfricaController extends BaseIrfCommonController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
-        
-        this.stepTemplates = [
-            {template:topBoxTemplate, name:"Top"},
-            {template:profileTemplate, name:"Profile"},
-            {template:areaIndustryTemplate, name:"Area/Industry"},
-            {template:resourceSafetyTemplate, name:"Resources/Safety"},
-            {template:controlTemplate, name:"Illegitimate Control"},
-            {template:familyTemplate, name:"Family"},
-            {template:noticedTemplate, name:"Noticed"},
-            {template:intercepteesTemplate, name:"Interceptees"},
-            {template:finalProceduresTemplate, name:"Final Procedures"},
-            {template:attachmentsTemplate, name:"Attachments"},
-            {template:logbookTemplate, name:"Logbook"},
-        ];
         
         this.checkboxGroup = new CheckboxGroup();
         
@@ -695,7 +667,7 @@ export class IrfSouthAfricaController extends BaseIrfController {
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
         this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-                intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
+                intercepteeModalTemplate, 'People', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

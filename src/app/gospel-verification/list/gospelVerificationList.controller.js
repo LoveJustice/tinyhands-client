@@ -130,7 +130,7 @@ export default class GospelVerificationListController {
             sep = ',';
         }
         ctrl.queryParameters.country_ids = selectedCountries;
-        ctrl.searchVdfFollowUps();
+        ctrl.searchGospelVerifications();
     }
     
     getSortIcon(column, reverse) {

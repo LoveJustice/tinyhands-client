@@ -236,35 +236,33 @@ class StationDataController {
     }
     
     changeFocus (stationId, element, position) {
-        if (this.stationDisplayData[position][stationId][element]) {
-            if (this.stationData[position]) {
-                let oldStation = null;
-                for (let idx=0; idx < this.stationData[position].length; idx++) {
-                    if (this.stationData[position][idx].station === stationId) {
-                        oldStation = this.stationData[position][idx];
-                        break;
-                    }
+        if (this.stationData[position]) {
+            let oldStation = null;
+            for (let idx=0; idx < this.stationData[position].length; idx++) {
+                if (this.stationData[position][idx].station === stationId) {
+                    oldStation = this.stationData[position][idx];
+                    break;
                 }
-                if (oldStation === null) {
-                    oldStation = {
-                            station:stationId,
-                            year_month:this.yearMonthOffset(this.yearMonth, -position),
-                            staff:null,
-                            intercepts:null,
-                            arrests:null,
-                            gospel:null,
-                            empowerment:null,
-                            budget:null
-                            
-                    };
-                    this.stationData[position].push(oldStation);
-                }
-                oldStation[element] = this.stationDisplayData[position][stationId][element];
-                this.saveCount += 1;
-                this.service.updateStationData(oldStation).then (() => {
-                    this.saveCount -= 1;
-                });
             }
+            if (oldStation === null) {
+                oldStation = {
+                        station:stationId,
+                        year_month:this.yearMonthOffset(this.yearMonth, -position),
+                        staff:null,
+                        intercepts:null,
+                        arrests:null,
+                        gospel:null,
+                        empowerment:null,
+                        budget:null
+                        
+                };
+                this.stationData[position].push(oldStation);
+            }
+            oldStation[element] = this.stationDisplayData[position][stationId][element];
+            this.saveCount += 1;
+            this.service.updateStationData(oldStation).then (() => {
+                this.saveCount -= 1;
+            });
         }
     }
 }

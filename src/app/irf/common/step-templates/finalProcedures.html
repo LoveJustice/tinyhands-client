@@ -1,16 +1,5 @@
 <fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
     <div class="container-fluid">
-        <div class="row center-vertical">
-            <div class="col-md-12">
-				<form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
-				label="5.1 Reported Total Red Flag Points"></form-step>
-				<form-step>5.3  Please give any additional information about the interception, how it occurred, the reason you decided to intercept the victim(s), etc.</form-step>
-				<form-step>
-                    <textarea class="form-control" rows="5" ng-model="$ctrl.questions[146].response.value"></textarea>
-                </form-step>
-                <hr/>
-            </div>
-        </div>
         <div class="row col-md-12" ng-if="$ctrl.immigration">
         	<table class="immigrationTable">
         		<thead>

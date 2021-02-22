@@ -15,6 +15,13 @@ function VdfCommonV2Routes($stateProvider) {
                 id: null
             }
         })
+        .state('vdfKenya', {
+            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV2Component',
+            params: {
+                id: null
+            }
+        })
         .state('vdfUganda', {
             url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV2Component',

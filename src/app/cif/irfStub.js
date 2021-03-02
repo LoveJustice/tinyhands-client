@@ -16,7 +16,7 @@ export class IrfStubController extends BaseIrfController {
     
     getIntercepteeCards(intercepteeType) {
         let intercepteeList = [];
-        let interceptees = this.getCardInstances('Interceptees');
+        let interceptees = this.getCardInstances('People');
         for (let idx=0; idx < interceptees.length; idx++) {
             let cardQuestions = _.keyBy(interceptees[idx].responses, (x) => x.question_id);
             if (cardQuestions[9].response.role.value === intercepteeType) {

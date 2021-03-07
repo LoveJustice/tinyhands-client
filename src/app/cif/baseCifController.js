@@ -78,6 +78,8 @@ export class BaseCifController extends BaseFormController {
         
         if (this.associatedPersons.length === 1) {
             let personCopy = _.cloneDeep(this.associatedPersons[0]);
+            personCopy.link_id = personCopy.storage_id;
+            personCopy.storage_id = null;
             for (let key in this.questions[292].response.identifiers) {
                 if (!(key in personCopy.identifiers)) {
                     personCopy.identifiers[key] =  this.questions[292].response.identifiers[key];
@@ -219,7 +221,10 @@ export class BaseCifController extends BaseFormController {
             if (!found) {
                 let card = this.createCard('OtherPotentialVictims');
                 let otherPvQuestions = _.keyBy(card.responses, (x) => x.question_id);
-                otherPvQuestions[300].response = this.associatedPersons[idx];
+                let personCopy = _.cloneDeep(this.associatedPersons[idx]);
+                personCopy.link_id = personCopy.storage_id;
+                personCopy.storage_id = null;
+                otherPvQuestions[300].response = personCopy;
                 otherPvs.push(card);
             } 
         }

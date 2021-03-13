@@ -7,7 +7,7 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfTanzaniaController extends BaseIrfCommonController {
+export class IrfLesothoController extends BaseIrfCommonController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
@@ -15,9 +15,9 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6];
-        this.purposeQuestions = ["purposeLabel",924.1,924.2,924.3,924.4,924.5,924.6];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,277,251];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,1042];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
@@ -52,8 +52,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             968.4:{
                 enabled:true,
                 group:968,
-                label:'Extremely poor',
-                value:'Extremely poor',
+                label:'Disoriented',
+                value:'Disoriented',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -61,8 +61,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             968.5:{
                 enabled:true,
                 group:968,
-                label:'Young looking',
-                value:'Young looking',
+                label:'Signs of abuse',
+                value:'Signs of abuse',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -70,8 +70,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             968.6:{
                 enabled:true,
                 group:968,
-                label:'Child(ren)',
-                value:'Child(ren)',
+                label:'Impoverished',
+                value:'Impoverished',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -79,8 +79,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             968.7:{
                 enabled:true,
                 group:968,
-                label:'Albino',
-                value:'Albino',
+                label:'Young looking',
+                value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -113,8 +113,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Dar es Salaam',
-                value: 'Dar es Salaam',
+                label:'Johannesburg',
+                value: 'Johannesburg',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -122,8 +122,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Zanzibar',
-                value: 'Zanzibar',
+                label:'Cape Town',
+                value: 'Cape Town',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -131,8 +131,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Johannesburg, SA',
-                value: 'Johannesburg, SA',
+                label:'Durban',
+                value: 'Durban',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -140,22 +140,13 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.4:{
                 enabled:true,
                 group:245,
-                label:'Oman',
-                value: 'Oman',
+                label:'Bloemfontein',
+                value: 'Bloemfontein',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             245.5:{
-                enabled:true,
-                group:245,
-                label:'UAE',
-                value: 'UAE',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            245.6:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -182,8 +173,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Plantation',
-                value:'Plantation',
+                label:'Retail',
+                value:'Retail',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -191,8 +182,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Fishing',
-                value:'Fishing',
+                label:'Modeling',
+                value:'Modeling',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -200,8 +191,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Mining',
-                value:'Mining',
+                label:'Construction',
+                value:'Construction',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -209,13 +200,22 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             924.5:{
                 enabled:true,
                 group:924,
-                label:'Sex industry',
-                value:'Sex industry',
+                label:'Soccer',
+                value:'Soccer',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.6:{
+                enabled:true,
+                group:924,
+                label:'Farm work',
+                value:'Farm work',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.7:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -315,16 +315,9 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
                 format:'col-md-6',
                 points:0
             },
-            277:{
+            1042:{
                 enabled:true,
-                label:'Met on their way',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            251:{
-                enabled:true,
-                label:"Meeting someone at destination who they don't know at all or don’t know well",
+                label:'Friend/Family arranged travel/job/studies',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -654,6 +647,6 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
 
 export default {
     templateUrl,
-    controller: IrfTanzaniaController,
+    controller: IrfLesothoController,
 };
 

@@ -10,9 +10,14 @@ class AssociatedPersonModalController extends CifModalController {
         this.constants = constants; 
         this.associatedPersons = associatedPersons;
         this.checkboxGroup = new CheckboxGroup();
+        this.checkboxGroupItems = checkboxGroupItems;
         
-        for (let idx=0; idx < checkboxGroupItems.length; idx++) {
-            this.checkboxGroup.checkboxItem(checkboxGroupItems[idx].group, checkboxGroupItems[idx].option);
+       
+    }
+    
+    childDelayedQuestionData() {
+    	for (let idx=0; idx < this.checkboxGroupItems.length; idx++) {
+            this.checkboxGroup.checkboxItem(this.checkboxGroupItems[idx].group, this.checkboxGroupItems[idx].option);
         }
         
         this.checkboxGroup.initOriginalValues(this.questions);

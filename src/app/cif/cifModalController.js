@@ -9,11 +9,15 @@ class CifModalController extends BaseModalController {
         this.identificationTypes = identificationTypes;
     }
     
+    childDelayedQuestionData() {
+    }
+    
     delayedQuestionData() {
         this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, this.identificationTypes);
         if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
             this.processPersonResponses(this.questions, this.config.Person);
         }
+        this.childDelayedQuestionData();
     }
     
     processPersonResponses(questions, personConfigList) {

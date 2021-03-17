@@ -1,51 +1,23 @@
-import {BaseIrfController} from '../baseIrfController.js';
+import {BaseIrfCommonController} from '../baseIrfCommonController.js';
 import {BaseModalController} from '../../baseModalController.js';
-import '../common/irf.less';
-
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
-import topBoxTemplate from '../common/step-templates/topBox.html';
-import profileTemplate from '../common/step-templates/profile.html';
-import areaIndustryTemplate from '../common/step-templates/areaIndustry.html';
-import resourceSafetyTemplate from '../common/step-templates/resourceSafety.html';
-import controlTemplate from '../common/step-templates/control.html';
-import familyTemplate from '../common/step-templates/family.html';
-import noticedTemplate from '../common/step-templates/noticed.html';
-import intercepteesTemplate from '../common/step-templates/interceptees/interceptees.html';
-import finalProceduresTemplate from '../common/step-templates/finalProcedures.html';
-import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
-import logbookTemplate from '../common/step-templates/logbook.html';
-
 import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfKenyaController extends BaseIrfController {
+export class IrfKenyaController extends BaseIrfCommonController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
-        
-        this.stepTemplates = [
-            {template:topBoxTemplate, name:"Top"},
-            {template:profileTemplate, name:"Profile"},
-            {template:areaIndustryTemplate, name:"Area/Industry"},
-            {template:resourceSafetyTemplate, name:"Resources/Safety"},
-            {template:controlTemplate, name:"Illegitimate Control"},
-            {template:familyTemplate, name:"Family"},
-            {template:noticedTemplate, name:"Noticed"},
-            {template:intercepteesTemplate, name:"Interceptees"},
-            {template:finalProceduresTemplate, name:"Final Procedures"},
-            {template:attachmentsTemplate, name:"Attachments"},
-            {template:logbookTemplate, name:"Logbook"},
-        ];
         
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,"metLabel",243,244,156,713];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,156,713];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930,74];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
@@ -259,6 +231,13 @@ export class IrfKenyaController extends BaseIrfController {
             280:{
                 enabled:true,
                 label:'Not speaking on their own behalf',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            974:{
+                enabled:true,
+                label:'First time traveling abroad',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -626,7 +605,7 @@ export class IrfKenyaController extends BaseIrfController {
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
     	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-    			intercepteeModalTemplate, 'Interceptees', {identificationTypes:this.getDefaultIdentificationTypes()});
+    			intercepteeModalTemplate, 'People', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

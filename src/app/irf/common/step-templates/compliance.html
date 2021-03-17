@@ -4,7 +4,7 @@
 	</div>
 	<div class="row"></div>
 	<div class="row center-vertical">
-		<form-step class="col-md-4">Date CIF Received</form-step>
+		<form-step class="col-md-4">Date IRF Received</form-step>
 		<div class="col-md-4">
 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[861].value">
 		</div>
@@ -42,14 +42,9 @@
 	</div>
 	<div class="row">&nbsp;</div>
 	<div class="row center-vertical">
-		<form-step class="col-md-4">Date CIF Submitted</form-step>
+		<form-step class="col-md-4">Date IRF Submitted</form-step>
 		<div class="col-md-4">
 			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[862].value">
 		</div>
 	</div>
-	<div>&nbsp;</div>
-	<div class="row">
-	 	<form-step class="col-md-6"><h4>Form Initially Entered by:  {{ $ctrl.response.form_entered_by }}</h4></form-step>
-	</div>
-	<div>&nbsp;</div>
 </fieldset>

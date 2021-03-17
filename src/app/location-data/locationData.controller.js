@@ -283,7 +283,7 @@ class LocationDataController {
             this.locationTotals._Total.intercepts += this.locationTotals[this.locations[idx].id].intercepts;
             this.locationTotals._Total.arrests += this.locationTotals[this.locations[idx].id].arrests;
         }
-        for (let col=0; this.locationDisplayData.length; col++) {
+        for (let col=0; col < this.locationDisplayData.length; col++) {
             this.locationDisplayData[col]._Total = {
                     staff:0,
                     intercepts:0,

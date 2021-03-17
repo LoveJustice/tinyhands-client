@@ -106,6 +106,16 @@ export default class AuditController {
         });
     }
     
+    sampleSize() {
+    	let dateData = new DateData([]);
+        let start_date = dateData.dateToString(this.start_date);
+        let end_date = dateData.dateToString(this.end_date);
+    	this.service.getSampleSize(this.audit.country, this.audit.form, start_date, end_date, this.audit.percent_to_sample).then((promise) => {
+    		this.audit.forms_in_range = promise.data.candidates;
+    		this.audit.total_samples = promise.data.sample_size;
+    	});
+    }
+    
     submit() {
         let dateData = new DateData([]);
         this.audit.start_date = dateData.dateToString(this.start_date);

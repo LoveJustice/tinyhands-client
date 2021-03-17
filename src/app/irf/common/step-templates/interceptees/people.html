@@ -1,5 +1,5 @@
-<div id="irf-nepal-interceptees" class="row stretch-vertical">
-    <div class="col-md-4 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Interceptees')">
+<div id="irf-nepal-people" class="row stretch-vertical">
+    <div class="col-md-4 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('People')">
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openIntercepteeModal(card, false, $index)">
             <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 9).name.value}}</h3>
             <div class="panel-body text-center">

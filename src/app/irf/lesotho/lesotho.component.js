@@ -7,20 +7,20 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfIndiaController extends BaseIrfCommonController {
+export class IrfLesothoController extends BaseIrfCommonController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12,968.13,968.14,968.15,968.16,968.17];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5, 245.6];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4,924.5,924.6,924.7];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,242,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,1042];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
-        this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLable",24,25,26,216];
+        this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
                 enabled:true,
@@ -34,8 +34,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Young looking',
-                value:'Young looking',
+                label:'Escaping an exploitative situation',
+                value:'Escaping an exploitative situation',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -43,8 +43,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'girl from Nepal',
-                value:'girl from Nepal',
+                label:'Unemployed',
+                value:'Unemployed',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -52,8 +52,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.4:{
                 enabled:true,
                 group:968,
-                label:'girl from Bangladesh',
-                value:'girl from Bangladesh',
+                label:'Disoriented',
+                value:'Disoriented',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -61,8 +61,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.5:{
                 enabled:true,
                 group:968,
-                label:'Eloping',
-                value:'Eloping',
+                label:'Signs of abuse',
+                value:'Signs of abuse',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -70,8 +70,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.6:{
                 enabled:true,
                 group:968,
-                label:'Wearing revealing clothing',
-                value:'Wearing revealing clothing',
+                label:'Impoverished',
+                value:'Impoverished',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -79,8 +79,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.7:{
                 enabled:true,
                 group:968,
-                label:'Child(ren)',
-                value:'Child(ren)',
+                label:'Young looking',
+                value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -88,76 +88,13 @@ export class IrfIndiaController extends BaseIrfCommonController {
             968.8:{
                 enabled:true,
                 group:968,
-                label:'Village dress',
-                value:'Village dress',
+                label:'Migrant',
+                value:'Migrant',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.9:{
-                enabled:true,
-                group:968,
-                label:'Caste Difference',
-                value:'Caste Difference',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.11:{
-                enabled:true,
-                group:968,
-                label:'Typical village look',
-                value:'Typical village look',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.12:{
-                enabled:true,
-                group:968,
-                label:'Carrying a baby',
-                value:'Carrying a baby',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.13:{
-                enabled:true,
-                group:968,
-                label:'Foreign looking',
-                value:'Foreign looking',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.14:{
-                enabled:true,
-                group:968,
-                label:'New clothes',
-                value:'New clothes',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.15:{
-                enabled:true,
-                group:968,
-                label:'Dirty clothes',
-                value:'Dirty clothes',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.16:{
-                enabled:true,
-                group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.17:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -176,8 +113,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Delhi',
-                value: 'Delhi',
+                label:'Johannesburg',
+                value: 'Johannesburg',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -185,8 +122,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Mumbai',
-                value: 'Mumbai',
+                label:'Cape Town',
+                value: 'Cape Town',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -194,8 +131,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Kolkata',
-                value: 'Kolkata',
+                label:'Durban',
+                value: 'Durban',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -203,22 +140,13 @@ export class IrfIndiaController extends BaseIrfCommonController {
             245.4:{
                 enabled:true,
                 group:245,
-                label:'Pune',
-                value: 'Pune',
+                label:'Bloemfontein',
+                value: 'Bloemfontein',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             245.5:{
-                enabled:true,
-                group:245,
-                label:'Gulf Country',
-                value: 'Gulf Country',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            245.6:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -245,8 +173,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Brick Kiln',
-                value:'Brick Kiln',
+                label:'Retail',
+                value:'Retail',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -254,8 +182,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Dance Bar',
-                value:'Dance Bar',
+                label:'Modeling',
+                value:'Modeling',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -263,8 +191,8 @@ export class IrfIndiaController extends BaseIrfCommonController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Child Labour',
-                value:'Child Labour',
+                label:'Construction',
+                value:'Construction',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -272,13 +200,22 @@ export class IrfIndiaController extends BaseIrfCommonController {
             924.5:{
                 enabled:true,
                 group:924,
-                label:'Bonded Labour',
-                value:'Bonded Labour',
+                label:'Soccer',
+                value:'Soccer',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.6:{
+                enabled:true,
+                group:924,
+                label:'Farm work',
+                value:'Farm work',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.7:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -378,6 +315,13 @@ export class IrfIndiaController extends BaseIrfCommonController {
                 format:'col-md-6',
                 points:0
             },
+            1042:{
+                enabled:true,
+                label:'Friend/Family arranged travel/job/studies',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
             
             "deceiveLabel":{
                 enabled:true,
@@ -410,6 +354,13 @@ export class IrfIndiaController extends BaseIrfCommonController {
             927:{
                 enabled:true,
                 label:'Treatment - no documentation/knowledge',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            996:{
+                enabled:true,
+                label:'Fake documentation',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -619,7 +570,7 @@ export class IrfIndiaController extends BaseIrfCommonController {
                 format:'col-md-12',
                 points:4
             },
-            "marriedLable":{
+            "marriedLabel":{
                 enabled:true,
                 label:'Signs of False or Forced Marriage',
                 type:'header',
@@ -656,7 +607,7 @@ export class IrfIndiaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Rickshaw Driver','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -696,6 +647,6 @@ export class IrfIndiaController extends BaseIrfCommonController {
 
 export default {
     templateUrl,
-    controller: IrfIndiaController,
+    controller: IrfLesothoController,
 };
 

@@ -260,7 +260,7 @@ export class BaseIrfController extends BaseFormController {
     }
     
     setFindings() {
-        if (this.questions[814].response.value || !this.questions[4].response.value || this.questions[4].response.value.length < 10) {
+        if ((this.questions[814].response.value && this.questions[607].response.value) || !this.questions[4].response.value || this.questions[4].response.value.length < 10) {
             return;
         }
         let irfDate = new Date(this.questions[4].response.value);

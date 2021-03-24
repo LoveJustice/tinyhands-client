@@ -269,7 +269,7 @@ export class BaseIrfController extends BaseFormController {
             return;
         }
         if (this.redFlagTotal >= 10) {
-            this.questions[607].response.value = "Clear Evidence of Trafficking";
+            this.questions[607].response.value = "Evidence of Trafficking";
         } else {
             this.questions[607].response.value = "High Risk of Trafficking";
         }

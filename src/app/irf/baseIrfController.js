@@ -216,6 +216,38 @@ export class BaseIrfController extends BaseFormController {
         this.questions[4].response.value = dateTime;
     }
     
+    processFailedResponse(response, location) {
+    	if (response.data.errors) {
+            if (response.data.errors instanceof Array) {
+                this.errorMessages = response.data.errors;
+            } else {
+                this.errorMessages = [response.data.errors];
+            }
+        } else {
+            this.errorMessages = [];
+        }
+        if (response.data.warnings) {
+            if (response.data.warnings instanceof Array) {
+                this.warningMessages = response.data.warnings;
+            } else {
+                this.warningMessages = [response.data.warnings];
+            }
+        } else {
+            this.warningMessages = [];
+        }
+    	if (this.errorMessages.length === 0 && this.warningMessages.length === 0) {
+    		let diagnostic = JSON.stringify(response, null, 0).replace(/\\n/g,'');
+    		
+    		this.errorMessages = ['Unexpected Error:', diagnostic];
+    		let diagnosticStructure = {
+    			user_name:this.session.user.first_name + ' ' + this.session.user.last_name,
+    			location:location,
+    			diagnostic_data:diagnostic
+    		};
+    		this.service.sendDiagnostic(diagnosticStructure);
+    	}
+    }
+    
     // Override in subclass for implementation specific features
     saveExtra() {	
     }
@@ -240,7 +272,7 @@ export class BaseIrfController extends BaseFormController {
             }
             this.state.go('irfNewList');
         }, (error) => {
-        	this.set_errors_and_warnings(error.data);
+        	this.processFailedResponse(error, 'baseIrfController.save');
            });
     	 this.messagesEnabled = false;
     }
@@ -329,7 +361,7 @@ export class BaseIrfController extends BaseFormController {
              }
              this.state.go('irfNewList');
          }, (error) => {
-        	 this.set_errors_and_warnings(error.data);
+        	 this.processFailedResponse(error, 'baseIrfController.submit');
         	 this.response.status = this.saved_status;
             });
     	
@@ -369,7 +401,7 @@ export class BaseIrfController extends BaseFormController {
             }
             this.spinner.hide();
         }, (error) => {
-                this.set_errors_and_warnings(error.data);
+                this.processFailedResponse(error, 'baseIrfController.doAutoSave');
                 this.spinner.hide();
            });
          this.messagesEnabled = false;

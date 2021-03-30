@@ -184,4 +184,8 @@ export default class IrfService {
     getLocation(stationId) {
         return this.service.get(`api/border-station/${stationId}/location/`);
     }
+    
+    sendDiagnostic(data) {
+    	return this.service.post('api/diagnostic/', data);
+    }
 }

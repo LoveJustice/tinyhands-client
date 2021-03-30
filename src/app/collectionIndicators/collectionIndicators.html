@@ -118,25 +118,17 @@
 	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('med-grey','vdf-light', $index)">{{ indicator.vdf_lag }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td rowspan="9" ng-class="collectionIndicators.getHeadClass('bold dark-grey center')">Verification</td>
+	        		<td rowspan="7" ng-class="collectionIndicators.getHeadClass('bold dark-grey center')">Verification</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('dark-grey')">Total# of Verified Forms</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('dark-grey', 'comp-light', $index)">{{ indicator.verified_forms }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('clear-dark')">Clear Evidence</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('clear-dark', 'clear-light', $index)">{{ indicator.clear_evidence_count }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('clear-dark')">Evidence of Trafficking</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('clear-dark', 'clear-light', $index)">{{ indicator.evidence_count }}</td>
 	        	</tr>
 	        	<tr>
 	        		<td ng-class="collectionIndicators.getHeadClass('clear-dark')">%</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('clear-dark', 'clear-light', $index)">{{ collectionIndicators.displayPercent(indicator.clear_evidence_percent) }}</td>
-	        	</tr>
-	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('some-dark')">Some Evidence</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('some-dark', 'some-light', $index)">{{ indicator.some_evidence_count }}</td>
-	        	</tr>
-	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('some-dark')">%</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('some-dark', 'some-light', $index)">{{ collectionIndicators.displayPercent(indicator.some_evidence_percent) }}</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('clear-dark', 'clear-light', $index)">{{ collectionIndicators.displayPercent(indicator.evidence_percent) }}</td>
 	        	</tr>
 	        	<tr>
 	        		<td ng-class="collectionIndicators.getHeadClass('invalid-dark')">Invalid Intercept</td>
@@ -172,8 +164,8 @@
 	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.collection_lag_time) }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('')">Clear Cases with CIF%</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.clear_case_cif_percent) }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('')">Evidence Cases with CIF%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.evidence_cif_percent) }}</td>
 	        	</tr>
 	        	<tr>
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Valid Intercepts</td>

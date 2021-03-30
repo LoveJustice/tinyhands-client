@@ -58,10 +58,10 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
         this.topMessage='Note: If a question does not apply, mark “n/a”.';
         
         this.governanceQuestions = [716,717,902];
-        this.governanceCheckboxes = [718,719,720,721,944,945,722];
+        this.governanceCheckboxes = [718,719,720,721,944,945];
         this.resourcesQuestions = [731,732,903,733,734,735];
         this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745,"HighValueContacts",797];
-        this.securityQuestions = [749,750,751,752,753,754];
+        this.securityQuestions = [749,750,751,752,753];
         this.accountingQuestions = [758,759,760,761];
         this.victimEngagementQuestions = [765,904,905,868];
         this.recordsQuestions = [769,869,770,771,772,793,947];
@@ -91,7 +91,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<10",format:"col-md-1",points:0},
                     {label:"10-20",format:"col-md-1",points:5},
                     {label:"20-30",format:"col-md-1",points:10},
-                    {label:">30",format:"col-md-1",points:20},
+                    {label:">30",format:"col-md-1",points:25},
                 ]
             },
             902: {
@@ -101,7 +101,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-2 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             718: {
@@ -207,7 +207,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             734: {
                 enabled:true,
                 type:"radio",
-                prompt: "Percent of staff who have taken and passed TMS Knowledge Exam",
+                prompt: "Percent of staff who have taken and passed TM Knowledge Test and the Scenario Test",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"<30%",format:"col-md-1",points:0},
@@ -219,7 +219,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
             735: {
                 enabled:true,
                 type:"radio",
-                prompt: "Percent of Assistants who have passed Coordinator Exams",
+                prompt: "Percent of Assistants who have passed Asistant Tests",
                 promptFormat: "col-md-4 control-label",
                 options: [
                     {label:"<30%",format:"col-md-1",points:0},
@@ -338,7 +338,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"never",format:"col-md-1",points:0},
                     {label:"<50% of the time",format:"col-md-2",points:5},
                     {label:">50% of the time",format:"col-md-2",points:15},
-                    {label:"always",format:"col-md-2",points:25},
+                    {label:"always",format:"col-md-2",points:30},
+                    {label:"n/a",format:"col-md-2",points:30},
                 ]
             },
             750: {
@@ -351,6 +352,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"<50% of the time",format:"col-md-2",points:5},
                     {label:">50% of the time",format:"col-md-2",points:10},
                     {label:"always",format:"col-md-2",points:15},
+                    {label:"n/a",format:"col-md-2",points:15},
                 ]
             },
             751: {
@@ -360,7 +362,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             752: {
@@ -370,7 +372,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             753: {
@@ -380,8 +382,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:25},
-                    {label:"n/a",format:"col-md-2",points:25},
+                    {label:"yes",format:"col-md-2",points:30},
+                    {label:"n/a",format:"col-md-2",points:30},
                 ]
             },
             754: {
@@ -480,7 +482,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:5},
                 ]
             },
             770: {
@@ -490,7 +492,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             771: {
@@ -511,9 +513,9 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 prompt: "VDF percentage",
                 promptFormat: "col-md-3 control-label",
                 options: [
-                    {label:"<70%",format:"col-md-1",points:5},
-                    {label:"70-89%",format:"col-md-2",points:10},
-                    {label:"90-99%",format:"col-md-2",points:15},
+                    {label:"<60%",format:"col-md-1",points:0},
+                    {label:"60-79%",format:"col-md-2",points:10},
+                    {label:"80-99%",format:"col-md-2",points:15},
                     {label:"100%",format:"col-md-2",points:20},
                 ]
             },

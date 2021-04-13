@@ -111,4 +111,8 @@ export default class LegalCaseService {
     getRelatedForms(stationId, formNumber) {
         return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
     }
+    
+    getLocation(stationId) {
+        return this.service.get(`api/border-station/${stationId}/location/`);
+    }
 }

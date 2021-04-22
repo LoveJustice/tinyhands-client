@@ -1,5 +1,6 @@
 import profileForm from './components/profileForm.html';
 import permissionForm from './components/permissionForm.html';
+import {encodeGroup} from  '../../../encodeGroup.js';
 
 class PermDropDown {
     constructor(validOptions, currentOptions, settings, customText, eventListener) {
@@ -10,6 +11,7 @@ class PermDropDown {
         this.customText = customText;
         this.settings = settings;
         this.eventListener = eventListener;
+        this.eventListener.activeDropDown = this;
     }
 
     removeAllOptions() {
@@ -42,6 +44,41 @@ class PermDropDown {
             }
         }
     }
+    
+    setOption(label) {
+    	let theOption = null;
+    	for (let idx=0; idx < this.options.length; idx++) {
+    		if (this.options[idx].label === label) {
+    			theOption = this.options[idx];
+    		}
+    	}
+    	
+    	if (!theOption) {
+    		return null;
+    	}
+    	
+    	for (let idx=0; idx < this.selectedOptions.length; idx++) {
+    		if (this.selectedOptions[idx].label === label) {
+    			// already set
+    			return null;
+    		}
+    	}
+    	
+    	this.selectedOptions.push(theOption);
+    	return theOption;
+    }
+    
+    clearOption(label) {
+    	let theOption = null;
+    	for (let idx=0; idx < this.selectedOptions.length; idx++) {
+    		if (this.selectedOptions[idx].label === label) {
+    			theOption = this.selectedOptions[idx];
+    			this.selectedOptions.splice(idx,1);
+    		}
+    	}
+    	
+    	return theOption;
+    }
 
     isSelected() {
         return this.selectedOptions.length > 0;
@@ -49,11 +86,13 @@ class PermDropDown {
 }
 
 export class PermDropDownGroup {
-    constructor(permission, managePermission, allCountries, allStations, allCurrentPermissions, accountId) {
+    constructor(permission, managePermission, allCountries, allStations, allCurrentPermissions, accountId, editController, position) {
         this.permissionId = permission.id;
         this.permissionName = permission.action;
         this.minLevel = permission.min_level;
         this.accountId = accountId;
+        this.editController = editController;
+        this.position = position;
 
         var idx = 0;
         var idx1 = 0;
@@ -84,14 +123,22 @@ export class PermDropDownGroup {
                         id: filteredStations[idx].id,
                         label: filteredStations[idx].station_name,
                         country: filteredCountries[idx1].name,
+                        encoded:encodeGroup(filteredCountries[idx1].name),
                         disabled: toDisable});
                     break;
                 }
             }
         }
-        this.stationSettings = {smartButtonMaxItems:1, showCheckAll: false, showUncheckAll: hasGlobal, groupByTextProvider(groupValue) { return groupValue; }, groupBy: 'country', scrollableHeight: '250px', scrollable: true, };
+        this.stationSettings = {smartButtonMaxItems:1, showCheckAll: false, showUncheckAll: hasGlobal, groupByTextProvider(groupValue) { return encodeGroup(groupValue); }, groupBy: 'encoded', scrollableHeight: '250px', scrollable: true, };
         this.stationCustomTexts = {buttonDefaultText: 'None'};
-        this.stationEventListeners = {};
+        this.stationEventListeners = {
+        	onItemSelect: this.stationSelect,
+            onItemDeselect: this.stationDeselect,
+            onSelectAll: this.stationSelectAll,
+            onDeselectAll: this.stationDeselectAll,
+            editController: this.editController,
+            position: this.position,
+        };
 
         var selectedOptions = [];
         for (idx=0; idx < currentPermissions.length; idx++) {
@@ -127,6 +174,8 @@ export class PermDropDownGroup {
                 onSelectAll: this.countrySelectAll,
                 onDeselectAll: this.countryDeselectAll,
                 stationDropDown: this.stationDropDown,
+                editController: this.editController,
+                position: this.position,
         };
 
         selectedOptions = [];
@@ -161,6 +210,8 @@ export class PermDropDownGroup {
                 onDeselectAll: this.globalDeselect,
                 countryDropDown: this.countryDropDown,
                 stationDropDown: this.stationDropDown,
+                editController: this.editController,
+                position: this.position,
         };
 
         selectedOptions = [];
@@ -331,24 +382,105 @@ export class PermDropDownGroup {
     globalSelect() {
         this.countryDropDown.removeAllOptions();
         this.stationDropDown.removeAllOptions();
+        this.editController.globalSelect(this.position);
     }
 
     globalDeselect() {
         this.countryDropDown.restoreAllOptions();
         this.stationDropDown.restoreAllOptions();
+        this.editController.globalDeselect(this.position);
+    }
+    
+    setGlobal() {
+    	this.globalDropDown.setOption('Global');
+    	this.globalSelect();
+    }
+    
+    clearGlobal() {
+    	this.globalDropDown.clearOption('Global');
+    	this.globalDeselect();
     }
 
     countrySelect(property) {
         this.stationDropDown.removeGroupOptions(property.label);
+        this.editController.countrySelect(property.label, this.position);
     }
     countryDeselect(property) {
         this.stationDropDown.restoreGroupOptions(property.label);
+        this.editController.countryDeselect(property.label, this.position);
     }
     countrySelectAll() {
         this.stationDropDown.removeAllOptions();
+        let selected = this.activeDropDown.selectedOptions;
+        for (let idx=0; idx < selected.length; idx++) {
+        	this.editController.countrySelect(selected[idx].label, this.position);
+        }
     }
     countryDeselectAll() {
         this.stationDropDown.restoreAllOptions();
+        let cleared = this.activeDropDown.options;
+        for (let idx=0; idx < cleared.length; idx++) {
+        	this.editController.countryDeselect(cleared[idx].label, this.position);
+        }
+    }
+    
+    setCountry(label) {
+    	let property = this.countryDropDown.setOption(label);
+    	if (property) {
+    		this.countrySelect(property);
+    	}
+    }
+    
+    clearCountry(label) {
+    	let property = this.countryDropDown.clearOption(label);
+    	if (property) {
+    		this.countryDeselect(property);
+    	}
+    }
+    
+    stationSelect(property) {
+    	this.editController.stationSelect(property.label, this.position);
+    }
+    stationDeselect(property) {
+    	this.editController.stationDeselect(property.label, this.position);
+    }
+    stationSelectAll() {
+        let selected = this.activeDropDown.selectedOptions;
+        for (let idx=0; idx < selected.length; idx++) {
+        	this.editController.stationSelect(selected[idx].label, this.position);
+        }
+    }
+    stationDeselectAll() {
+        let cleared = this.activeDropDown.options;
+        for (let idx=0; idx < cleared.length; idx++) {
+        	this.editController.stationDeselect(cleared[idx].label, this.position);
+        }
+    }
+    
+    setStation(label) {
+    	this.stationDropDown.setOption(label);
+    }
+    
+    clearStation(label) {
+    	this.stationDropDown.clearOption(label);
+    }
+    
+    getSelectedCountryLabels() {
+    	let labels = [];
+    	let selected = this.countryDropDown.selectedOptions;
+    	for (let idx=0; idx < selected.length; idx++) {
+        	labels.push(selected[idx].label);
+        }
+        return labels;
+    }
+    
+    getSelectedStationLabels() {
+    	let labels = [];
+    	let selected = this.stationDropDown.selectedOptions;
+    	for (let idx=0; idx < selected.length; idx++) {
+        	labels.push(selected[idx].label);
+        }
+        return labels;
     }
 
     getSelectedPermissions() {
@@ -419,6 +551,8 @@ export default class AccountEditController {
         this.maxPermissionsPerGroup = 0;
         this.fill = [];
         this.errorText = '';
+        this.unlinked = true;
+        this.updating = false;
 
         this.saveButtonClicked = false;
 
@@ -517,9 +651,13 @@ export default class AccountEditController {
 
             var grp = this.permissionGroups[this.active];
             this.permdd = [];
+            this.unlinked = false;
 
             for (var idx=0; idx < this.permissions.length; idx++) {
                 if (this.permissions[idx].permission_group === grp) {
+                	if (this.permissions[idx].display_order < 0) {
+                		this.unlinked = true;
+                	}
                     var userPerm = [];
                     for (var idx1=0; idx1 < this.existingUserPermissions.length; idx1++) {
                         if (this.existingUserPermissions[idx1].permission === this.permissions[idx].id) {
@@ -532,7 +670,9 @@ export default class AccountEditController {
                             this.countries,
                             this.stations,
                             userPerm,
-                            this.accountId);
+                            this.accountId,
+                            this,
+                            this.permdd.length);
                     this.permdd.push(p);
                 }
             }
@@ -641,5 +781,92 @@ export default class AccountEditController {
 
     resetErrors() {
         this.emailError = '';
+    }
+    
+    stationSelect(label, position) {
+    	if (this.unlinked || this.updating) {
+    		return;
+    	}
+    	this.updating = true;
+    	for (let idx=position-1; idx >= 0; idx--) {
+    		this.permdd[idx].setStation(label);
+    	}
+    	this.updating = false;
+    }
+    stationDeselect(label, position) {
+    	if (this.unlinked || this.updating) {
+    		return;
+    	}
+    	this.updating = true;
+    	for (let idx=position+1; idx < this.permdd.length; idx++) {
+    		this.permdd[idx].clearStation(label);
+    	}
+    	this.updating = false;
+    }
+    countrySelect(label, position) {
+    	if (this.unlinked || this.updating) {
+    		return;
+    	}
+    	this.updating = true;
+    	for (let idx=position-1; idx >= 0; idx--) {
+    		this.permdd[idx].setCountry(label);
+    	}
+    	this.updating = false;
+    }
+    countryDeselect(label, position) {
+    	if (this.unlinked || this.updating) {
+    		return;
+    	}
+    	this.updating = true;
+    	for (let idx=position+1; idx < this.permdd.length; idx++) {
+    		this.permdd[idx].clearCountry(label);
+    	}
+    	
+    	for (let permIdx=this.permdd.length-1; permIdx > position; permIdx--) {
+	    	let labels = this.permdd[permIdx].getSelectedStationLabels();
+	    	for (let idx=permIdx-1; idx >= 0; idx--) {
+	    		for (let labelIdx=0; labelIdx < labels.length; labelIdx++) {
+	    			this.permdd[idx].setStation(labels[labelIdx]);
+	    		}
+	    	}
+	    }
+    	this.updating = false;
+    }
+    globalSelect(position) {
+    	if (this.unlinked || this.updating) {
+    		return;
+    	}
+    	this.updating = true;
+    	for (let idx=position-1; idx >= 0; idx--) {
+    		this.permdd[idx].setGlobal();
+    	}
+    	this.updating = false;
+    }
+    globalDeselect(position) {
+    	if (this.unlinked || this.updating) {
+    		return;
+    	}
+    	this.updating = true;
+    	for (let idx=position+1; idx < this.permdd.length; idx++) {
+    		this.permdd[idx].clearGlobal();
+    	}
+    	for (let permIdx=this.permdd.length-1; permIdx > position; permIdx--) {
+	    	let labels = this.permdd[permIdx].getSelectedCountryLabels();
+	    	for (let idx=permIdx-1; idx >= 0; idx--) {
+	    		for (let labelIdx=0; labelIdx < labels.length; labelIdx++) {
+	    			this.permdd[idx].setCountry(labels[labelIdx]);
+	    		}
+	    	}
+	    }
+    	
+    	for (let permIdx=this.permdd.length-1; permIdx > position; permIdx--) {
+	    	let labels = this.permdd[permIdx].getSelectedStationLabels();
+	    	for (let idx=permIdx-1; idx >= 0; idx--) {
+	    		for (let labelIdx=0; labelIdx < labels.length; labelIdx++) {
+	    			this.permdd[idx].setStation(labels[labelIdx]);
+	    		}
+	    	}
+	    }
+    	this.updating = false;
     }
 }

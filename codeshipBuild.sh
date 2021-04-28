@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$CI_BRANCH" = "develop" ] 
+if [ "$CI_BRANCH" = "staging" ] 
 then
     npm run stage
 elif [ "$CI_BRANCH" = "master" ]

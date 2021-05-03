@@ -16,11 +16,13 @@ export class BaseLegalCaseController extends BaseFormController {
         this.relatedUrl = null;
         this.irfRef = null;
         this.cifRefs = [];
+        this.locations = [];
 
         this.legalCaseNumber = "";
         this.associatedPersons = [];
 
         this.getLegalCase(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
+        
     }
     
     formNumberChange() {
@@ -134,6 +136,13 @@ export class BaseLegalCaseController extends BaseFormController {
             }
         }
     }
+    
+    getLocations(stationId) {
+        this.service.getLocation(stationId).then ((response) => {
+            this.locations = response.data.map((x) => x.name);
+            this.otherData.setRadioButton(this.locations, 3);
+        });
+    }
 
     getLegalCase(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -159,7 +168,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 if (this.goodFormNumber) {
                     this.number_change();
                 }
-                
+                this.getLocations(this.stateParams.stationId);
             });
         });
     }

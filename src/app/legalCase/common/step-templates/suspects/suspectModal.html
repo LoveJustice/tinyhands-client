@@ -45,7 +45,14 @@
             		<label>Arrest Date</label>
 	            </div>
 	            <div class="col-md-3 form-group">
-			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1011].value">
+			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1011].value"
+			        		ng-disabled="SuspectModalController.dateData.questions[1044].value">
+		        </div>
+		        <div class="col-md-2 form-group" ng-show="SuspectModalController.dateData.questions[1044].value">
+            		<label>Submitted</label>
+	            </div>
+	            <div class="col-md-3 form-group" ng-show="SuspectModalController.dateData.questions[1044].value">
+			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1044].value" disabled>
 		        </div>
         	</div>
         	<div ng-if="SuspectModalController.caseStatus==='closed'">
@@ -73,7 +80,14 @@
 	            		<label>Date of Verdict</label>
 		            </div>
 		            <div class="col-md-3 form-group">
-				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1013].value">
+				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1013].value"
+				        		ng-disabled="SuspectModalController.dateData.questions[1044].value">
+			        </div>
+			        <div class="col-md-2 form-group" ng-show="SuspectModalController.dateData.questions[1043].value">
+            		<label>Submitted</label>
+		            </div>
+		            <div class="col-md-3 form-group" ng-show="SuspectModalController.dateData.questions[1043].value">
+				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1043].value" disabled>
 			        </div>
 	        	</div>
 	        	<div class="row center-vertical">

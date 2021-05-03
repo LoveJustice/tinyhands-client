@@ -248,6 +248,18 @@ export class BaseLegalCaseController extends BaseFormController {
         this.submitExtra();
         this.errorMessages = [];
         this.warningMessages = [];
+        let submission_date = this.dateData.dateToString(new Date());
+        let suspectCards = this.getCardInstances('Suspects');
+        for (let card=0; card < suspectCards.length; card++) {
+        	let cardQuestions = _.keyBy(suspectCards[card].responses, (x) => x.question_id);
+        	
+        	if (cardQuestions[1013].response.value && !cardQuestions[1043].response.value) {
+        		cardQuestions[1043].response.value = submission_date;
+        	}
+        	if (cardQuestions[1011].response.value && !cardQuestions[1044].response.value) {
+        		cardQuestions[1044].response.value = submission_date;
+        	}
+        }
         if (this.ignoreWarnings) {
             this.response.ignore_warnings = 'True';
         } else {

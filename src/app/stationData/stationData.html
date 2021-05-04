@@ -105,7 +105,7 @@
 	        		<td class="rightSep stationName">{{ station.station_name }}</td>
 	        		<td class="boldRightBorder stationCode">{{ station.station_code }}</td>
 	        		
-	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[0][station.id].staff }}</td>
+	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[0][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
 	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[0][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 0)"></td>
 	        		<td class="stat rightSep">{{ vm.stationDisplayData[0][station.id].intercepts }}</td>
@@ -117,7 +117,7 @@
 	        		<td class="stat rightDiv"><input type="text" ng-model="vm.stationDisplayData[0][station.id].budget"
 	        				ng-blur="vm.changeFocus(station.id, 'budget', 0)"></td>
 	        		
-	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[1][station.id].staff }}</td>
+	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[1][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
 	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[1][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 1)"></td>
 	        		<td class="stat rightSep">{{ vm.stationDisplayData[1][station.id].intercepts }}</td>
@@ -129,7 +129,7 @@
 	        		<td class="stat rightDiv"><input type="text" ng-model="vm.stationDisplayData[1][station.id].budget"
 	        				ng-blur="vm.changeFocus(station.id, 'budget', 1)"></td>
 	        		
-	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[2][station.id].staff }}</td>
+	        		<td class="stat rightSep" ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[2][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
 	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[2][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 2)"></td>
 	        		<td class="stat rightSep">{{ vm.stationDisplayData[2][station.id].intercepts }}</td>

@@ -92,7 +92,13 @@
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <form-step type="checkbox" label="Human Trafficking Narrative" response-value="$ctrl.questions[1041].response.value"></form-step>
+            <form-step class="col-md-4 control-label">Human Trafficking Narrative</form-step>
+            <div class="col-md-8">
+	        	<form-step type="radio" class="col-md-6" radio-name="human-trafficking" label="Yes"
+	            	response-value="$ctrl.questions[1041].response.value"></form-step>
+	           <form-step type="radio" class="col-md-6" radio-name="human-trafficking" label="No"
+	            	response-value="$ctrl.questions[1041].response.value"></form-step>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -102,6 +108,15 @@
     	 		<textarea class="form-control" rows="2" ng-model="$ctrl.questions[1040].response.value"></textarea>
     	 	</div>
     	 </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-12 form-group center-vertical">
+	    		<form-step class="col-md-2 control-label">Location:</form-step>
+	    	<div class="col-md-10">
+	    		<form-step class="col-md-3" type="radio" radio-name="locationRadio" ng-repeat="location in $ctrl.locations" label="{{location}}" other-value="$ctrl.otherData.questions[3].otherValue" response-value="$ctrl.otherData.questions[3].value"></form-step>
+	        	<form-step class="col-md-3" type="otherRadio" label="Other:" radio-name="locationRadio" other-value="$ctrl.otherData.questions[3].otherValue" response-value="$ctrl.otherData.questions[3].value"></form-step>
+	        </div>
+	     </div>
     </div>
     <hr>
     <div class="row">

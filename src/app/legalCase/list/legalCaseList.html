@@ -50,17 +50,23 @@
                 <th width="8%">Status</th>
                 <th width="8%"># of Potential Victims</th>
                 <th width="8%"># of Suspects</th>
-                <th width="8%">CS Date</th>
+                <th ng-click="lcfListCtrl.updateSort('charge_sheet_date')" width="8%">CS Date
+                	<i ng-class="{ 'glyphicon glyphicon-sort-by-attributes': lcfListCtrl.getSortIcon('charge_sheet_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-attributes-alt': lcfListCtrl.getSortIcon('charge_sheet_date', 'reverse')}"></i>
+                </th>
                 <th ng-click="lcfListCtrl.updateSort('case_type')" width="14%">Type
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('case_type', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('case_type', 'reverse')}"></i>
                 </th>
-                <th ng-click="lcfListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Date Last Contacted
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
+                <th ng-click="lcfListCtrl.updateSort('date_last_contacted')" width="16%" class="hidden-xs">Date Last Contacted
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-attributes': lcfListCtrl.getSortIcon('date_last_contacted', '!reverse'),
+                    'glyphicon glyphicon-sort-by-attributes-alt': lcfListCtrl.getSortIcon('date_last_contacted', 'reverse')}"></i>
                 </th>
                 <th width="8%"># Arrests</th>
-                 <th width="8%"> Missing Details (#)</th>
+                 <th ng-click="lcfListCtrl.updateSort('missing_data_count')" width="8%"> Missing Details (#)
+                 	<i ng-class="{ 'glyphicon glyphicon-sort-by-order': lcfListCtrl.getSortIcon('missing_data_count', '!reverse'),
+                    'glyphicon glyphicon-sort-by-order-alt': lcfListCtrl.getSortIcon('missing_data_count', 'reverse')}"></i>
+                 </th>
                 <th width="6%"></th>
                 <th width="6%"></th>
                 <th width="8%"></th>

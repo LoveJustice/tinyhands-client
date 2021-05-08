@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 if [ "$CI_BRANCH" = "staging" ] 
 then
     npm run stage

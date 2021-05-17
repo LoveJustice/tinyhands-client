@@ -120,6 +120,7 @@ export default class BudgetController {
     
     formatSection(section) {
     	let result = section.replace(/_/g, ' ');
+        result = result.replace(/\b\w/g, first => first.toLocaleUpperCase());
     	return result;
     }
 
@@ -265,7 +266,7 @@ export default class BudgetController {
         
         amount += this.getOtherCost(this.form.other.Salaries);
 
-        this.form.totals.borderMonitoringStation.salaries_And_Benefits = amount;
+        this.form.totals.borderMonitoringStation.salaries_and_benefits = amount;
 
         return amount;
     }
@@ -290,7 +291,7 @@ export default class BudgetController {
     	let amount = 0;
     	amount += this.shelterUtilTotal();
     	amount += this.foodAndGasTotal();
-    	this.form.totals.borderMonitoringStation.potential_Victim_Care = amount;
+    	this.form.totals.borderMonitoringStation.potential_victim_care = amount;
     	
     	return amount;
     }
@@ -314,7 +315,7 @@ export default class BudgetController {
 
     // REGION: Functions that handle totals
     setBorderMonitoringStationTotals() {
-        let amount = this.adminTotal() + this.awarenessTotal() + this.communicationTotal() + this.miscellaneousTotal() + this.potentialVictimCareTotal() + this.salariesAndBenefitsTotal() + this.travelTotal();
+        let amount = this.salariesAndBenefitsTotal() + this.communicationTotal() + this.travelTotal() + this.adminTotal() + this.potentialVictimCareTotal() + this.awarenessTotal() + this.miscellaneousTotal();
         this.borderMonitoringStationTotal = amount;
         return amount;
     }

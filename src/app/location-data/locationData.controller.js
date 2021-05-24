@@ -181,47 +181,6 @@ class LocationDataController {
         this.populateLocationData(this.yearMonthOffset(this.yearAndMonth, -5), 5);
     }
     
-    changeFocus(location, position) {
-        this.updateTotals(location);
-        let oldCell = null;
-        if (this.locationData[position]) {
-            for (let idx=0; idx < this.locationData[position].length; idx++) {
-                if (this.locationData[position][idx] && this.locationData[position][idx].location === location) {
-                    oldCell = this.locationData[position][idx];
-                    break;
-                }
-            }
-        }
-        if (oldCell) {
-            let arrests = null;
-            if (this.locationDisplayData[position][location].arrests && !isNaN(this.locationDisplayData[position][location].arrests)) {
-                arrests = this.locationDisplayData[position][location].arrests;
-            }
-            if (oldCell.arrests !== arrests) {
-                oldCell.arrests = arrests;
-                this.saveLocationStatistics(oldCell);
-            }
-        } else {
-            if (this.locationDisplayData[position][location].arrests!==null && !isNaN(this.locationDisplayData[position][location].arrests)) {
-                let newValue = {
-                        year_month: this.yearMonthOffset(this.yearAndMonth, -position),
-                        location: location,
-                        station: this.station
-                };
- 
-                newValue.arrests = this.locationDisplayData[position][location].arrests;
-                this.locationData[position].push(newValue);
-                this.saveLocationStatistics(newValue);
-            }
-        }
-    }
-    
-    saveLocationStatistics(value) {
-        this.saveCount +=1;
-        this.service.setLocationStatistics(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 1;});
-        
-    }
-    
     populateLocationData(yearMonth, position) {
         if (!this.locations) {
             return;

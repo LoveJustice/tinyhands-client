@@ -20,7 +20,7 @@
 
 				<div class="row panel panel-default panel-body">
 					<p>Est. {{ ctrl.station.dateEstablished ? ctrl.station.dateEstablished : 'N/A' }}</p>
-					<p># of Shelters: {{ ctrl.station.shelterCount }}</p>
+					<p>Has shelter: {{ ctrl.station.hasShelter ? 'Yes' : 'No' }}</p>
 					<p>Interceptions: {{ ctrl.station.interceptions }}</p>
 					<p>YTD Interceptions: {{ ctrl.station.ytdInterceptions}}</p>
 					<p># of Staff: {{ ctrl.station.numberOfStaff }}</p>

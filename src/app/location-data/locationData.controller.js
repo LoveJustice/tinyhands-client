@@ -10,7 +10,7 @@ class LocationDataController {
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this.digits2Format = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
+        this.digits2Format = {'minimumFractionDigits': 2, 'maximumFractionDigits': 2};
         
         this.countries = [];
         this.stations = null;

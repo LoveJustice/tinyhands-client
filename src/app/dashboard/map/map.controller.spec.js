@@ -20,35 +20,7 @@ describe('MapController', () => {
         ytd_interceptions: 6,
         number_of_staff: 3,
         country_name: 'Nepal',
-        location_set: [
-            {
-                "id": 390,
-                "name": "Blantyre",
-                "latitude": null,
-                "longitude": null,
-                "location_type": "office",
-                "active": true,
-                "border_station": 87
-            },
-            {
-                "id": 391,
-                "name": "Machinga",
-                "latitude": null,
-                "longitude": null,
-                "location_type": "shelter",
-                "active": true,
-                "border_station": 87
-            },
-            {
-                "id": 392,
-                "name": "Thyolo",
-                "latitude": null,
-                "longitude": null,
-                "location_type": "monitoring",
-                "active": true,
-                "border_station": 87
-            }
-        ]
+        location_set: []
     };
 
     let expectedMappedStation = {
@@ -58,7 +30,7 @@ describe('MapController', () => {
         stationCode: 'FOO',
         position: [10, 12],
         dateEstablished: '2017-1-1',
-        shelterCount: 1,
+        hasShelter: true,
         interceptions: 10,
         ytdInterceptions: 6,
         numberOfStaff: 3

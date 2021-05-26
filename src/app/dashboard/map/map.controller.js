@@ -124,7 +124,7 @@ class MapController {
             stationCode: borderStation.station_code,
             position: [borderStation.latitude, borderStation.longitude],
             dateEstablished: borderStation.date_established,
-            shelterCount: this.countShelters(borderStation),
+            hasShelter: borderStation.has_shelter,
             interceptions: borderStation.number_of_interceptions,
             ytdInterceptions: borderStation.ytd_interceptions,
             numberOfStaff: borderStation.number_of_staff
@@ -146,16 +146,6 @@ class MapController {
         this.hideInfoWindows();
         this.location = location;
         this.map.showInfoWindow(this.locationInfoWindowId, location.markerId);
-    }
-    
-    countShelters(station) {
-        let shelterCount = 0;
-        for (let idx=0; idx < station.location_set.length; idx++) {
-            if (station.location_set[idx].location_type === 'shelter') {
-                shelterCount += 1;
-            }
-        }
-        return shelterCount;
     }
 }
 

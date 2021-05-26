@@ -13,7 +13,7 @@ export default class LocationDataService {
     }
     
     getStationLocations(station_id) {
-        return this.service.get(`api/border-station/${station_id}/location/?include_inactive=true&location_type=monitoring`);
+        return this.service.get(`api/border-station/${station_id}/location/?include_inactive=true`);
     }
     
     getLocationData(station_id, yearAndMonth) {

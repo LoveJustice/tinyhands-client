@@ -135,8 +135,6 @@ export class BaseLegalCaseController extends BaseFormController {
                 suspectCards.push(card);
             }
         }
-        
-        this.otherData.setRadioButton(this.locations, 3, 'basic', this.irf.questions[3].response.value);
     }
     
     getLocations(stationId) {

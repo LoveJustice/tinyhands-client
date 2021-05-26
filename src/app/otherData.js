@@ -6,7 +6,7 @@ class OtherData {
 		this.questions = {};
 	}
 	
-	setRadioButton(items, valueId, dataType='basic', setValue=null) {
+	setRadioButton(items, valueId, dataType='basic') {
         if  (!(valueId in this.questions)) {
             this.questions[valueId] = {dataType:dataType};
         }
@@ -14,16 +14,12 @@ class OtherData {
         let value = '';
         let parts = ('' + valueId).split('-');
         if (parts.length === 1) {
-            if (setValue !== null) {
-                value = setValue;
-            } else if (this.origQuestions[valueId] !== null && this.origQuestions[valueId].response !== null &&
+            if (this.origQuestions[valueId] !== null && this.origQuestions[valueId].response !== null &&
                     this.origQuestions[valueId].response.value !== null) {
                 value = this.origQuestions[valueId].response.value;
             }  
         } else if (parts.length === 2) {
-            if (setValue !== null) {
-                value = setValue;
-            } else if (this.origQuestions[Number(parts[0])] && this.origQuestions[Number(parts[0])].response && this.origQuestions[Number(parts[0])].response[parts[1]] &&
+            if (this.origQuestions[Number(parts[0])] && this.origQuestions[Number(parts[0])].response && this.origQuestions[Number(parts[0])].response[parts[1]] &&
                     this.origQuestions[Number(parts[0])].response[parts[1]].value) {
                 value = this.origQuestions[Number(parts[0])].response[parts[1]].value;
             }

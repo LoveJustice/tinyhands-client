@@ -15,7 +15,7 @@ import locationModalTemplate from './step-templates/location/locationModal.html'
 import templateUrl from './borderStation.html';
 
 class BorderStationController extends BaseFormController  { 
-    constructor($scope, $state, $stateParams, $timeout, $uibModal, BorderStationService, SessionService, toastr) {
+    constructor($scope, $state, $stateParams, $timeout, $uibModal, BorderStationService, SessionService, toastr, SpinnerOverlayService) {
         'ngInject';
         super($scope, $stateParams);
         this.$scope = $scope;
@@ -26,7 +26,9 @@ class BorderStationController extends BaseFormController  {
         this.service = BorderStationService;
         this.session = SessionService;
         this.toastr = toastr;
+        this.spinner = SpinnerOverlayService;
         this.isViewing = false;
+        this.stationId = $stateParams.id;
         
         this.stepTemplates = [
             {template:detailTemplate, name:"Details"},
@@ -38,11 +40,15 @@ class BorderStationController extends BaseFormController  {
         
         this.setForms = this.session.checkPermission('STATIONS','SET_FORMS',null, null);
         
+        this.detailsQuestions = [948,949,950,951,953,954,955,956,972];
+        this.originalDetailValues = {};
+        
         this.timeZoneOptions = [];
         this.countryOptions = [];
         this.formTypes = [];
         this.formOptions = {};
         this.formSelected = {};
+        this.formSelectedOriginal = {};
         this.borderStationPresent = false;
         this.availableFormsPresent = false;
         this.loading = false;
@@ -53,11 +59,35 @@ class BorderStationController extends BaseFormController  {
         this.getFormTypes();
     }
     
+    changeTab(tabIndex) {
+        if (this.selectedStep === 0 && !this.response.storage_id) {
+            this.toastr.error('Details must be entered and saved before switching to a new tab');
+            return;
+        }
+        if (this.selectedStep === 0 && this.haveDetailValuesChanged()) {
+            if (window.confirm("Details information has been changed.\nSelect Ok to save changes.\nSelect Cancel to discard changes.")) {
+                this.submit();
+            } else {
+                this.restoreDetailValues();
+            }
+        }
+        
+        if (this.selectedStep === 4 && this.haveFormsChanged()) {
+            if (window.confirm("Forms information has been changed.\nSelect Ok to save changes.\nSelect Cancel to discard changes.")) {
+                this.submit();
+            } else {
+                this.restoreForms();
+            }
+        }
+        this.selectedStep = tabIndex;
+    }
+    
     getBorderStation(id) {
         this.service.getFormConfig('borderStation').then ((response) => {
             this.config = response.data;
             this.service.getBorderStation(id).then((response) => {
                 this.processResponse(response);
+                this.saveDetailValues();
                 if (id && !this.session.checkPermission('STATIONS','EDIT',this.questions[955].response.value, null)) {
                     this.isViewing = true;
                 }
@@ -69,9 +99,33 @@ class BorderStationController extends BaseFormController  {
         });
     }
     
+    saveDetailValues() {
+        for (let idx=0; idx < this.detailsQuestions.length; idx++) {
+            let question = this.detailsQuestions[idx];
+            this.originalDetailValues[question] = this.questions[question].response.value;
+        }
+    }
+    
+    haveDetailValuesChanged() {
+        for (let idx=0; idx < this.detailsQuestions.length; idx++) {
+            let question = this.detailsQuestions[idx];
+            if (this.originalDetailValues[question] != this.questions[question].response.value) {
+                return true
+            }
+        }
+        return false;
+    }
+    
+    restoreDetailValues() {
+        for (let idx=0; idx < this.detailsQuestions.length; idx++) {
+            let question = this.detailsQuestions[idx];
+            this.questions[question].response.value = this.originalDetailValues[question];
+        }
+    }
+    
     getAllCountries() {
         this.service.getAllCountries().then((response) => {
-            if (this.$stateParams.id !== null) {
+            if (this.stationId !== null) {
                 this.countryOptions = response.data.results;
             } else{
                 var tmpCountry = response.data.results;
@@ -115,6 +169,8 @@ class BorderStationController extends BaseFormController  {
     }
 
     getCurrentForms() {
+        this.formSelected = {};
+        this.formSelectedOriginal = {};
         for (let idx=0; idx < this.questions[964].response.value.length; idx++) {
             let formId = this.questions[964].response.value[idx];
             for (let property in this.formOptions) {
@@ -122,10 +178,37 @@ class BorderStationController extends BaseFormController  {
                     let optionFormId = this.formOptions[property][idx2].id;
                     if (optionFormId === formId) {
                         this.formSelected[property] = optionFormId;
+                        this.formSelectedOriginal[property] = optionFormId;
                     }
                 }
             }
         }
+    }
+    
+    haveFormsChanged() {
+        for (let property in this.formOptions) {
+            if (property in this.formSelected) {
+                if (property in this.formSelectedOriginal && this.formSelected[property] === this.formSelectedOriginal[property]) {
+                    // matching values
+                } else {
+                    return true;
+                }
+            } else if (property in this.formSelectedOriginal) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    restoreForms() {
+        this.formSelected = {}
+        for (let property in this.formOptions) {
+            if (property in this.formSelectedOriginal) {
+                this.formSelected[property] = this.formSelectedOriginal[property];
+            }
+        }
+        
     }
     
     changeStationStatus() {
@@ -152,13 +235,17 @@ class BorderStationController extends BaseFormController  {
         }).result.then(() => {
             let cards = this.getCardInstances(config_name);
             if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
-                cards.splice(cardIndex, 1);
-                this.redFlagTotal = this.redFlagTotal - starting_flag_count;
+                if (window.confirm("Confirm that you wish to remove this entry")) {
+                    cards.splice(cardIndex, 1);
+                    this.redFlagTotal = this.redFlagTotal - starting_flag_count;
+                    this.submit();
+                }
             } else {
                 this.redFlagTotal = this.redFlagTotal + the_card.flag_count - starting_flag_count;
                 if (isAdd) {
                     cards.push(the_card);
                 }
+                this.submit();
             }
         });
     }
@@ -192,13 +279,19 @@ class BorderStationController extends BaseFormController  {
         this.errorMessages = [];
         this.warningMessages = [];
         this.prepareForms();
-        this.service.submitBorderStation(this.stateParams.id, this.response).then((response) => {
-             this.response = response.data;
-             this.responses = response.data.responses;
-             this.questions = _.keyBy(this.responses, x => x.question_id);
+        this.spinner.show('Saving changes...');
+        this.service.submitBorderStation(this.stationId, this.response).then((response) => {
+             this.spinner.hide();
+             this.processResponse(response);
+             this.stationId = response.data.storage_id;
+             this.saveDetailValues();
+             if (this.availableFormsPresent) {
+                 this.getCurrentForms();
+             }
              this.session.getUserPermissions();  // Refreshes border station list in navbar
-             this.$state.go('dashboard');
+             this.toastr.success('Changes saved');
          }, (error) => {
+             this.spinner.hide();
              this.set_errors_and_warnings(error.data);
              this.response.status = this.saved_status;
             });

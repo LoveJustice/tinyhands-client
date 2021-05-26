@@ -19,4 +19,8 @@ export default class LocationDataService {
     getLocationData(station_id, yearAndMonth) {
         return this.service.get(`api/location-statistics/${station_id}/${yearAndMonth}/`);
     }
+    
+    setLocationStatistics(theValue) {
+        return this.service.put(`api/location-statistics/`, theValue);
+    }
 }

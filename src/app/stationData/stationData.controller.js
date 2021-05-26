@@ -116,9 +116,6 @@ class StationDataController {
     }
     
     getStationData(yearMonth, position) {
-    	if (!this.country) {
-    		return;
-    	}
         this.service.getExchangeRate(this.country, yearMonth).then ((promise) => {
             this.exchangeData[position] = promise.data;
             this.exchangeDisplayData[position] = jQuery.extend(true, {}, this.exchangeData[position]);

@@ -9,63 +9,44 @@
           ng-disabled="budgetCtrl.isViewing" />
         </label>
       </div>
-      <div class="col-md-6 calc-form-input-no-width">
+      <div class="col-md-8 calc-form-input-no-width">
         <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_chair_amount" ng-disabled="!budgetCtrl.form.communication_chair"
         ng-change="budgetCtrl.setTotals()" />
-        <small>for chair</small>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="checkbox col-md-3 col-md-offset-1">
-        <label>
-          <input type="checkbox" ng-model="budgetCtrl.form.communication_manager" ng-change="budgetCtrl.setTotals()"
-          ng-disabled="budgetCtrl.isViewing" />
-        </label>
-      </div>
-      <div class="col-md-6 calc-form-input-no-width">
-        <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_manager_amount" ng-disabled="!budgetCtrl.form.communication_manager"
-        ng-change="budgetCtrl.setTotals()" />
-        <small>for manager</small>
+        <small>Subcommittee Chairperson Communication</small>
       </div>
     </div>
   </div>
   <hr>
-  <div class="row">
-    <div class="col-md-4 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies"
-      ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing" />
-      <small># of staff with walkie-talkies</small>
-    </div>
-    <operator>*</operator>
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_number_of_staff_with_walkie_talkies_multiplier"
-      ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing" />
-    </div>
-    <operator>=</operator>
-    <div class="col-md-3 input-group">
-      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-      <input class="form-control text-center" ng-value="budgetCtrl.communicationNumberOfStaffTotal() | number" disabled="disabled"
-      />
-    </div>
-  </div>
-  <hr>
-  <div class="row">
-    <div class="col-md-4 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff" ng-change="budgetCtrl.setTotals()"
-      ng-disabled="budgetCtrl.isViewing" />
-      <small>Each Staff</small>
-    </div>
-    <operator>*</operator>
-    <div class="col-md-3 calc-form-input-no-width">
-      <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.communication_each_staff_multiplier" ng-change="budgetCtrl.setTotals()"
-      ng-disabled="budgetCtrl.isViewing" />
-    </div>
-    <operator>=</operator>
-    <div class="col-md-3 input-group">
-      <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-      <input class="form-control text-center" ng-value="budgetCtrl.communicationEachStaffTotal() | number" disabled="disabled"
-      />
-    </div>
+  <div class="row text-center">
+  	<table class="fixed table-striped staff-item-table" ng-model="budgetCtrl.form.staff">
+  	 	<thead>
+	  	 	<tr>
+	  	 		<th class="name-col text-center">Name</th>
+	  	 		<th class="position-col text-center">Position</th>
+	  	 		<th class="salary-col text-center">Communication</th>
+	  	 		<th class="image-col text-center"></th>
+	  	 	</tr>
+  	 	</thead>
+  	 	<tbody>
+  	 		<tr ng-repeat="staff in budgetCtrl.form.staff.sortedStaff" ng-if="budgetCtrl.form.staff[staff.staffKey].last_name.indexOf('general_staff') === -1">
+  	 			<td>{{ budgetCtrl.form.staff[staff.staffKey].first_name + ' ' + budgetCtrl.form.staff[staff.staffKey].last_name }}</td>
+  	 			<td>{{ budgetCtrl.form.staff[staff.staffKey].position }}</td>
+  	 			<td>
+  	 				<input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.staff[staff.staffKey].items['Communication'].cost" ng-disabled="budgetCtrl.isViewing"/>
+				</td>
+				<td ng-click="budgetCtrl.enterDetail(staff.staffKey, 'Communication')">
+            			<i class="fa fa-comment-o" ng-if="!budgetCtrl.form.staff[staff.staffKey].items['Communication'].description"></i>
+            			<i class="fa fa-commenting" ng-if="budgetCtrl.form.staff[staff.staffKey].items['Communication'].description"></i>
+					</td>
+  	 		</tr>
+  	 		<tr>
+  	 			<td colspan=2><b>Total</b></td>
+  	 			<td>
+  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff['Total'].items['Communication'].cost" disabled="disabled" />
+  	 			</td>
+  	 		</tr>
+  	 	</tbody>
+  	 </table>
   </div>
   <hr>
   <div class="row">
@@ -90,7 +71,7 @@
   <hr>
   <div class="row center text-center">
     <div class="col-md-4 col-md-offset-4">
-      <label>Total Communication</label>
+      <label>Communication Total</label>
       <input class="form-control text-center" ng-value="budgetCtrl.communicationTotal() | currency:budgetCtrl.currency" disabled="disabled" />
     </div>
   </div>

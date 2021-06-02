@@ -11,8 +11,7 @@ class AssociatedPersonModalController extends CifModalController {
         this.associatedPersons = associatedPersons;
         this.checkboxGroupItems = checkboxGroupItems;
         this.checkboxGroup = new CheckboxGroup();
-        
-        
+        this.checkboxGroupItems = checkboxGroupItems;
     }
     
     subclassDelayedQuestionData() {

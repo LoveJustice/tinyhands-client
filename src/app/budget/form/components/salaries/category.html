@@ -1,0 +1,23 @@
+<div id="category-modal" class="modal-content">
+	<form name="CategoryForm">
+		<div class="modal-header">
+			<h3 class="modal-title">Add Category</h3>
+		</div>
+			<div class="modal-body">
+	    		<div class="col-md-2"><label>Category Name</label></div>
+	    		<input type="text" ng-model="vm.modalActions.categoryName">
+    	</div>
+		<div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-2">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.add()">Add</button>
+                </div>
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="vm.close()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

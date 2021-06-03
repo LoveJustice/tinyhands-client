@@ -60,7 +60,7 @@ class BorderStationController extends BaseFormController  {
     }
     
     changeTab(tabIndex) {
-        if (this.selectedStep === 0 && !this.response.storage_id) {
+        if (this.selectedStep === 0 && !this.response.storage_id && this.response.storage_id !== 0) {
             this.toastr.error('Details must be entered and saved before switching to a new tab');
             return;
         }

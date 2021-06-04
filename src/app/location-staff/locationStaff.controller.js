@@ -138,7 +138,18 @@ class LocationStaffController {
     
     getLocationsAndStaff() {
         this.service.getStationLocations(this.station).then((promise) => {
-            this.locations = promise.data;
+        	let tmpLocations = promise.data;
+        	this.locations = [];
+        	for (let idx=0; idx < tmpLocations.length; idx++) {
+        		if (tmpLocations[idx].location_type === 'monitoring') {
+        			this.locations.push(tmpLocations[idx]);
+        		}
+        	}
+        	for (let idx=0; idx < tmpLocations.length; idx++) {
+        		if (tmpLocations[idx].location_type !== 'monitoring') {
+        			this.locations.push(tmpLocations[idx]);
+        		}
+        	}
             this.locationTotals = {};
             for (let idx=0; idx < this.locations.length; idx++) {
                 this.locationTotals[this.locations[idx].id] = 0;

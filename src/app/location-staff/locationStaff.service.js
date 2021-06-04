@@ -13,7 +13,7 @@ export default class LocationStaffService {
     }
     
     getStationLocations(station_id) {
-        return this.service.get(`api/border-station/${station_id}/location/?include_inactive=true&location_type=monitoring`);
+        return this.service.get(`api/border-station/${station_id}/location/?include_inactive=true`);
     }
     
     getStationStaff(station_id) {

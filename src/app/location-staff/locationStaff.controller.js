@@ -161,6 +161,10 @@ class LocationStaffController {
                 }
                 this.tableDivSize = (columns * 120 + 302) + 'px';
             }
+            this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+	            this.workPortion = promise.data;
+	            this.populateWork();
+	        });
         });
         this.service.getStationStaff(this.station).then((promise) => {
             this.staff = promise.data;
@@ -170,10 +174,7 @@ class LocationStaffController {
             }
             this.populateWork();
         });
-        this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
-            this.workPortion = promise.data;
-            this.populateWork();
-        });
+        
     }
     
     changeFocus(location, staff) {
@@ -207,8 +208,10 @@ class LocationStaffController {
     }
     
     saveWorkFraction(value) {
+    	let newValue = jQuery.extend(true, {}, value);
+    	newValue.work_fraction /= 100;
         this.saveCount +=1;
-        this.service.setWorkFraction(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 10;});
+        this.service.setWorkFraction(newValue).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 10;});
     }
     
     populateWork() {
@@ -224,8 +227,10 @@ class LocationStaffController {
         }
         for (let idx=0; idx < this.workPortion.length; idx++) {
             let tmp = this.workPortion[idx];
-            this.work[tmp.location][tmp.staff] = tmp.work_fraction;
-            this.updateTotals(tmp.location, tmp.staff);
+            if (tmp.location in this.work) {
+	            this.work[tmp.location][tmp.staff] = tmp.work_fraction * 100;
+	            this.updateTotals(tmp.location, tmp.staff);
+            }
         }
     }
     
@@ -250,9 +255,9 @@ class LocationStaffController {
     }
     
     totalColor(base, total) {
-        if (total === 1.00) {
+        if (total === 100) {
             return base + ' goodTotal';
-        } else if (total > 1) {
+        } else if (total > 100) {
             return base + ' badTotal';
         } else {
             return base;

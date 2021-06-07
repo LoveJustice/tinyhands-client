@@ -109,7 +109,9 @@
 	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[0][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 0)"></td>
 	        		<td class="stat rightSep">{{ vm.stationDisplayData[0][station.id].intercepts }}</td>
-	        		<td class="stat rightSep">{{ vm.stationDisplayData[0][station.id].arrests }}</td>
+	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[0][station.id].arrests }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[0][station.id].arrests"
+	        				ng-blur="vm.changeFocus(station.id, 'arrests', 0)"></td>
 	        		<td class="stat rightSep" ng-click="vm.contextMenu($event)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].gospel"
 	        				ng-blur="vm.changeFocus(station.id, 'gospel', 0)"></td>
 	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[0][station.id].empowerment"
@@ -121,7 +123,9 @@
 	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[1][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 1)"></td>
 	        		<td class="stat rightSep">{{ vm.stationDisplayData[1][station.id].intercepts }}</td>
-	        		<td class="stat rightSep">{{ vm.stationDisplayData[1][station.id].arrests }}</td>
+	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[1][station.id].arrests }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[1][station.id].arrests"
+	        				ng-blur="vm.changeFocus(station.id, 'arrests', 1)"></td>
 	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[1][station.id].gospel"
 	        				ng-blur="vm.changeFocus(station.id, 'gospel', 1)"></td>
 	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[1][station.id].empowerment"
@@ -133,7 +137,9 @@
 	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[2][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 2)"></td>
 	        		<td class="stat rightSep">{{ vm.stationDisplayData[2][station.id].intercepts }}</td>
-	        		<td class="stat rightSep">{{ vm.stationDisplayData[2][station.id].arrests }}</td>
+	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations">{{ vm.stationDisplayData[2][station.id].arrests }}</td>
+	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations"><input type="text" ng-model="vm.stationDisplayData[2][station.id].arrests"
+	        				ng-blur="vm.changeFocus(station.id, 'arrests', 2)"></td>
 	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[2][station.id].gospel"
 	        				ng-blur="vm.changeFocus(station.id, 'gospel', 2)"></td>
 	        		<td class="stat rightSep"><input type="text" ng-model="vm.stationDisplayData[2][station.id].empowerment"

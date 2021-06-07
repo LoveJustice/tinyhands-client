@@ -11,7 +11,7 @@ class StationDataController {
         this.stickyOptions.zIndex = 1;
         this.stickyOptions.top = 50;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this.digits2Format = {'minimumFractionDigits': 2, 'maximumFractionDigits': 2};
+        this.digits2Format = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
         
         this.countries = [];
         this.stations = null;
@@ -116,9 +116,6 @@ class StationDataController {
     }
     
     getStationData(yearMonth, position) {
-    	if (!this.country) {
-    		return;
-    	}
         this.service.getExchangeRate(this.country, yearMonth).then ((promise) => {
             this.exchangeData[position] = promise.data;
             this.exchangeDisplayData[position] = jQuery.extend(true, {}, this.exchangeData[position]);

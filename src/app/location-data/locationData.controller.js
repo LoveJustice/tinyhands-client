@@ -10,7 +10,7 @@ class LocationDataController {
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this.digits2Format = {'minimumFractionDigits': 2, 'maximumFractionDigits': 2};
+        this.digits2Format = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
         
         this.countries = [];
         this.stations = null;
@@ -163,7 +163,18 @@ class LocationDataController {
             
     getLocations() {
         this.service.getStationLocations(this.station).then((promise) => {
-            this.locations = promise.data;
+        	let tmpLocations = promise.data;
+        	this.locations = [];
+        	for (let idx=0; idx < tmpLocations.length; idx++) {
+        		if (tmpLocations[idx].location_type === 'monitoring') {
+        			this.locations.push(tmpLocations[idx]);
+        		}
+        	}
+        	for (let idx=0; idx < tmpLocations.length; idx++) {
+        		if (tmpLocations[idx].location_type !== 'monitoring') {
+        			this.locations.push(tmpLocations[idx]);
+        		}
+        	}
             this.locationTotals = {};
             for (let idx=0; idx < this.locations.length; idx++) {
                 this.locationTotals[this.locations[idx].id] = {staff:0, intercepts:0, arrests:0};
@@ -179,6 +190,47 @@ class LocationDataController {
         this.populateLocationData(this.yearMonthOffset(this.yearAndMonth, -3), 3);
         this.populateLocationData(this.yearMonthOffset(this.yearAndMonth, -4), 4);
         this.populateLocationData(this.yearMonthOffset(this.yearAndMonth, -5), 5);
+    }
+    
+    changeFocus(location, position) {
+        this.updateTotals(location);
+        let oldCell = null;
+        if (this.locationData[position]) {
+            for (let idx=0; idx < this.locationData[position].length; idx++) {
+                if (this.locationData[position][idx] && this.locationData[position][idx].location === location) {
+                    oldCell = this.locationData[position][idx];
+                    break;
+                }
+            }
+        }
+        if (oldCell) {
+            let arrests = null;
+            if (this.locationDisplayData[position][location].arrests && !isNaN(this.locationDisplayData[position][location].arrests)) {
+                arrests = this.locationDisplayData[position][location].arrests;
+            }
+            if (oldCell.arrests !== arrests) {
+                oldCell.arrests = arrests;
+                this.saveLocationStatistics(oldCell);
+            }
+        } else {
+            if (this.locationDisplayData[position][location].arrests!==null && !isNaN(this.locationDisplayData[position][location].arrests)) {
+                let newValue = {
+                        year_month: this.yearMonthOffset(this.yearAndMonth, -position),
+                        location: location,
+                        station: this.station
+                };
+ 
+                newValue.arrests = this.locationDisplayData[position][location].arrests;
+                this.locationData[position].push(newValue);
+                this.saveLocationStatistics(newValue);
+            }
+        }
+    }
+    
+    saveLocationStatistics(value) {
+        this.saveCount +=1;
+        this.service.setLocationStatistics(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 1;});
+        
     }
     
     populateLocationData(yearMonth, position) {

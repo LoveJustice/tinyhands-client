@@ -1,0 +1,24 @@
+<div id="detail-modal" class="modal-content">
+	<form name="DetailForm">
+		<div class="modal-header">
+			<h3 class="modal-title">Item Detail</h3>
+		</div>
+			<div class="modal-body">
+	    		<b>Details</b>
+	    		<textarea class="col-md-12" rows="5" ng-model="vm.modalActions.detail"></textarea>
+	    		<div>&nbsp;</div>
+    	</div>
+		<div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-2">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.save()">Save</button>
+                </div>
+                <div class="col-xs-6">
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="vm.close()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

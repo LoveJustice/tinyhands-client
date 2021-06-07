@@ -32,15 +32,26 @@ export default class BudgetService {
     createOtherItem(budgetId, otherItem) {
         return this.service.post(`api/budget/${budgetId}/item/`, otherItem);
     }
-
+    
     /**
-     * Function to create salary information for a staff member.
+     * Function to create item information for a staff member.
      *
-     * @param {Object} salaryData Object containing salary information
+     * @param {Object} staffItemData Object containing salary information
      * @returns Promise that provides the status and data of the request.
      */
-    createSalary(salaryData) {
-        return this.service.post('api/budget/staff_salary/', salaryData);
+    createStaffItem(itemData) {
+        return this.service.post('api/budget/staff_item/', itemData);
+    }
+    
+     /**
+     * Function to delete an staff item.
+     *
+     * @param {number} budgetId The id of the target budget.
+     * @param {Object} otherItem The data to delete.
+     * @returns Promise that provides the status and data of the request.
+     */
+    deleteStaffItem(budgetId, itemData) {
+        return this.service.delete(`api/budget/${budgetId}/staff_item/${itemData.id}/`);
     }
 
     /**
@@ -112,15 +123,19 @@ export default class BudgetService {
             return this.service.get(`api/staff/?border_station=${borderStationId}`);
         }
     }
-
+    
     /**
-     * Function that gets salary information for staff at a particular border station.
+     * Function that gets budget item information for staff at a particular border station.
      *
      * @param {number} borderStationId The id of the border station.
      * @returns Promise that provides the status and data of the request.
      */
-    getStaffSalaries(budgetId) {
-        return this.service.get(`api/budget/${budgetId}/staff_salary/`);
+    getStaffItems(budgetId) {
+        return this.service.get(`api/budget/${budgetId}/staff_item/`);
+    }
+    
+    getCountry(country_id) {
+        return this.service.get(`api/country/${country_id}/`);
     }
 
     /**
@@ -144,15 +159,15 @@ export default class BudgetService {
     updateOtherItem(budgetId, otherItem) {
         return this.service.put(`api/budget/${budgetId}/item/${otherItem.id}/`, otherItem);
     }
-
+    
     /**
-     * Function that updates the salary information for a particular salary object that is linked to a staff member.
+     * Function that updates the staff item information for a particular salary object that is linked to a staff member.
      *
      * @param {number} budgetId The id of the budget form being updated.
      * @param {Object} salaryData The object that contains the updated salary information.
      * @returns Promise that provides the status and data of the request.
      */
-    updateSalary(budgetId, salaryData) {
-        return this.service.put(`api/budget/${budgetId}/staff_salary/${salaryData.id}/`, salaryData);
+    updateStaffItem(budgetId, itemData) {
+        return this.service.put(`api/budget/${budgetId}/staff_item/${itemData.id}/`, itemData);
     }
 }

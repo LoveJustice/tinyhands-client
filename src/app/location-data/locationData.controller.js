@@ -1,12 +1,14 @@
 /* global jQuery */
 import './locationData.less';
 class LocationDataController {
-    constructor($rootScope, SessionService, locationDataService, SpinnerOverlayService, StickyHeader) {
+    constructor($rootScope, SessionService, locationDataService, SpinnerOverlayService, StickyHeader, toastr) {
         'ngInject';
         
         this.session = SessionService;
         this.service = locationDataService;
         this.sticky = StickyHeader;
+        this.toastr = toastr;
+        this.toastr.options.timeout = 5000;
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -22,8 +24,8 @@ class LocationDataController {
         
         this.country = null;
         this.station = null;
-        this.setCurrentMonth();
         this.tableDivSize = '1460px';
+        this.inputArrests = true;
         
         let tmp = sessionStorage.getItem('station-stats-country');
         if (!tmp) {
@@ -33,23 +35,21 @@ class LocationDataController {
             }
         }
         
-        this.getCountries();
-    }
-    
-    setCurrentMonth() {
-        let today = new Date();
-        this.month = today.getMonth();
-        this.year = today.getFullYear();
-        if (this.month < 1) {
-            this.year -= 1;
-            this.month = 12;
+        tmp = sessionStorage.getItem('station-stats-yearmonth');
+        if (tmp && tmp.length === 6) {
+        	this.yearAndMonth = parseInt(tmp);
+        	this.month = this.yearAndMonth % 100;
+        	this.year = Math.floor(this.yearAndMonth / 100);
+        	this.monthStr = '' + this.month;
+        } else {
+	        let today = new Date();
+	        this.month = today.getMonth() + 1;
+	        this.monthStr = '' + this.month;
+	        this.year = today.getFullYear();
+	        this.yearAndMonth = this.year * 100 + this.month;
         }
-        this.monthStr = '' + this.month;
-        this.yearAndMonth = this.year * 100 + this.month;
         
-        if (this.locations !== null) {
-            this.reloadData();
-        }
+        this.getCountries();
     }
     
     yearMonthOffset(start, offset) {
@@ -99,6 +99,11 @@ class LocationDataController {
         for (let idx=0; idx < this.countries.length; idx++) {
             if (('' + this.countries[idx].id) === this.country) {
                 sessionStorage.setItem('station-stats-country', this.countries[idx].name);
+                if (this.countries[idx].options && 'legal_arrest_and_conviction' in this.countries[idx].options) {
+                	this.inputArrests = !this.countries[idx].options['legal_arrest_and_conviction'];
+                } else {
+                	this.inputArrests = true;
+                }
                 break;
             }
         }
@@ -120,8 +125,9 @@ class LocationDataController {
     }
     
     changeMonth() {
-        this.month = parseInt(this.monthStr);
+    	this.month = parseInt(this.monthStr);
         this.yearAndMonth = this.year * 100 + this.month;
+        sessionStorage.setItem('station-stats-yearmonth', '' + this.yearAndMonth);
         this.reloadData();
     }
     
@@ -205,12 +211,14 @@ class LocationDataController {
         }
         if (oldCell) {
             let arrests = null;
-            if (this.locationDisplayData[position][location].arrests && !isNaN(this.locationDisplayData[position][location].arrests)) {
+            if (typeof(this.locationDisplayData[position][location].arrests) !== "undefined" && 
+            		this.locationDisplayData[position][location].arrests !== null &&
+            		!isNaN(this.locationDisplayData[position][location].arrests)) {
                 arrests = this.locationDisplayData[position][location].arrests;
             }
             if (oldCell.arrests !== arrests) {
                 oldCell.arrests = arrests;
-                this.saveLocationStatistics(oldCell);
+                this.saveLocationStatistics(oldCell, location, position);
             }
         } else {
             if (this.locationDisplayData[position][location].arrests!==null && !isNaN(this.locationDisplayData[position][location].arrests)) {
@@ -222,14 +230,27 @@ class LocationDataController {
  
                 newValue.arrests = this.locationDisplayData[position][location].arrests;
                 this.locationData[position].push(newValue);
-                this.saveLocationStatistics(newValue);
+                this.saveLocationStatistics(newValue, location, position);
             }
         }
     }
     
-    saveLocationStatistics(value) {
+    saveLocationStatistics(value, location, position) {
         this.saveCount +=1;
-        this.service.setLocationStatistics(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 1;});
+        this.service.setLocationStatistics(value).then (() =>{
+	        	this.saveCount -= 1;
+	        }, ()=>{
+	        	let locationName = "Unknown";
+	        	let monthName = this.monthName(this.yearMonthOffset(this.yearAndMonth, -position))
+	        	for (let idx=0; idx < this.locations.length; idx++) {
+	        		if (this.locations[idx].id === location) {
+	        			locationName = this.locations[idx].name;
+	        		}
+	        	}
+	        	this.saveCount -= 1;
+	        	alert("Failed to update data for location:" + locationName + " and month:" + monthName + '\nReloading page');
+	        	window.location.reload();
+	        });
         
     }
     

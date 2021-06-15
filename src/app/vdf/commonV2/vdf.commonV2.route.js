@@ -29,20 +29,6 @@ function VdfCommonV2Routes($stateProvider) {
                 id: null
             }
         })
-        .state('vdfMalawi', {
-            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonV2Component',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfNamibia', {
-            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonV2Component',
-            params: {
-                id: null
-            }
-        })
         .state('vdfRwanda', {
             url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV2Component',
@@ -78,21 +64,7 @@ function VdfCommonV2Routes($stateProvider) {
                 id: null
             }
         })
-        .state('vdfMozambique', {
-            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonV2Component',
-            params: {
-                id: null
-            }
-        })
         .state('vdfSierraLeone', {
-            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonV2Component',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfLesotho', {
             url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV2Component',
             params: {

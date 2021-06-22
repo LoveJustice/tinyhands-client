@@ -1,0 +1,47 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row col-md-12">
+    	<label class="col-md-12 control-label">5. POTENTIAL VICTIM CONSENT</label>
+    	<div class="col-md-12">
+			At Tiny Hands/Love Justice we have dedicated our lives to serving and protecting local men, women and children, including
+			preventing human trafficking. We would like to collect your information, including your photo, which will be
+			important to help us better understand and fight human trafficking. The information in this form will be used
+			only for research or investigation and will be stored in a secure, password-protected database which can only be
+			accessed by Tiny Hands and its partner staff. Your personal data will not be shared with any others, unless it is
+			required by law or to further police investigation. We may share information for academic or awareness purposes,
+			but we would remove any data that could identify you. Allowing us to collect your data is voluntary. You have the
+			right to access, modify, or delete your data by contacting THI at +91-973-575-6785.
+		</div>
+		<br>&nbsp;<br>
+	</div>
+	
+	<div class="row col-md-12">
+        <form-step class="col-md-4 control-label">Do you consent to us using your information this way?</form-step>
+        <form-step class="col-md-1" type="radio" radio-name="consent_info" label="No" response-value="$ctrl.questions[689].response.value"></form-step>
+        <form-step class="col-md-1" type="radio" radio-name="consent_info" label="Yes" response-value="$ctrl.questions[689].response.value"></form-step>
+    </div>
+    <div class="row col-md-12">
+        <form-step class="col-md-4 control-label">Do you consent to us using your photo this way?</form-step>
+        <form-step class="col-md-1" type="radio" radio-name="consent_photo" label="No" response-value="$ctrl.questions[993].response.value"></form-step>
+        <form-step class="col-md-1" type="radio" radio-name="consent_photo" label="Yes" response-value="$ctrl.questions[993].response.value"></form-step>
+        <br>&nbsp;<br>
+    </div>
+  	
+    <div class="row">
+        <div class="col-md-3">
+        	<form-step type="checkbox" label="Potential Victim Signature" response-value="$ctrl.questions[690].response.value"></form-step>
+        </div>
+        <div class="col-md-3">
+        	<form-step type="checkbox" label="Guardian Signature" response-value="$ctrl.questions[691].response.value"></form-step>
+        </div>
+        
+    </div>
+    <br>&nbsp;<br>
+    <div class="row col-md-12">
+    	<label class="col-md-12 control-label">6. Staff Assessment / Other Relevant Notes</label>
+    </div>
+    <div class="row col-md-12">
+    	<div class="row col-md-12">
+            <textarea class="form-control" rows="3" ng-model="$ctrl.questions[146].response.value"></textarea>
+        </div>
+    </div>
+</fieldset>

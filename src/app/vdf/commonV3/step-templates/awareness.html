@@ -1,0 +1,57 @@
+<fieldset ng-disabled="$ctrl.isViewing">
+	
+	<h4>POTENTIAL victim - The following questions are asked directly to the potential victim.</h4>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.1 Migration can be rewarding, but also risky if unprepared or uninformed. Were you aware before being intercepted that migrants can be deceived and end up in exploitative situations?</form-step>
+        <div class="col-md-5">
+            <form-step type="radio" radio-name="exploitive" label="Was aware, but did not know how bad until intercepted by LJ" response-value="$ctrl.questions[674].response.value"></form-step>
+            <form-step type="radio" radio-name="exploitive" label="Was aware, but didn’t think it was happening to them" response-value="$ctrl.questions[674].response.value"></form-step>
+            <form-step type="radio" radio-name="exploitive" label="Was not aware" response-value="$ctrl.questions[674].response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.2 Had you ever heard the message before?</form-step>
+        <div class="col-md-8">
+            <form-step type="radio" radio-name="heardGospel" label="No" response-value="$ctrl.questions[675].response.value"></form-step>
+            <form-step type="radio" radio-name="heardGospel" label="Yes" response-value="$ctrl.questions[675].response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.3 What do you believe now?</form-step>
+        <div class="col-md-8">
+            <form-step type="radio" radio-name="believe" label="Does not believe Jesus is the one true God" response-value="$ctrl.questions[676].response.value"></form-step>
+            <form-step type="radio" radio-name="believe" label="Already believes Jesus is the one true God" response-value="$ctrl.questions[676].response.value"></form-step>
+            <form-step type="radio" radio-name="believe" label="Came to believe that Jesus is the one true God" response-value="$ctrl.questions[676].response.value"></form-step>
+        </div>
+    </div>
+    <h4>STAFF - The following questions are asked of the transit staff (not potential victim).</h4>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">3.4 Did the staff share the gospel with the potential victim?</form-step>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="sharedGospel" label="No" response-value="$ctrl.questions[667].response.value"></form-step>
+	        <form-step type="radio" radio-name="sharedGospel" label="Yes" response-value="$ctrl.questions[667].response.value"></form-step> 
+	    </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">If yes, how? (check all that apply)</form-step>
+	    <div class="col-md-8">
+	            <form-step type="checkbox" label="Film" response-value="$ctrl.questions[668].response.value"></form-step>
+	            <form-step type="checkbox" label="Tract/Pamphlet" response-value="$ctrl.questions[669].response.value"></form-step>
+	            <form-step type="checkbox" label="Oral Preaching" response-value="$ctrl.questions[670].response.value"></form-step>
+	            <form-step type="checkbox" label="Shared Personal Testimony" response-value="$ctrl.questions[671].response.value"></form-step>
+	            <form-step type="checkbox" label="Bible" response-value="$ctrl.questions[672].response.value"></form-step>
+	            <form-step type="otherCheckbox" label="Other:" response-value="$ctrl.questions[673].response.value"></form-step>
+	    </div>
+    </div>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">If no, why?</form-step>
+		<div class="col-md-6">
+		    <div class="row col-md-12">
+	            <textarea class="form-control" rows="3" ng-model="$ctrl.questions[1047].response.value"></textarea>
+	        </div>
+        </div>
+    </div>
+</fieldset>

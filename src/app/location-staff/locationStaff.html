@@ -36,20 +36,20 @@
 				<tr>
 					<th class="staffName"></th>
 					<th class="total">Location</th>
-					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0">{{loc.name}}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0 || loc.name === 'Leave'">{{loc.name}}</th>
 				</tr>
 				<tr>
 					<th class="staffName">Staff</th>
 					<th class="total">Totals</th>
-					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0">{{vm.locationTotals[loc.id]}}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0 || loc.name === 'Leave'">{{vm.locationTotals[loc.id]/100}}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="staff in vm.staff" ng-if="staff.last_date===null || vm.staffTotals[staff.id]>0">
-					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</td>
-					<th ng-class="vm.totalColor('total',vm.staffTotals[staff.id]) ">{{ vm.staffTotals[staff.id] }}</td>
-					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0">
-						<input type="number" step=".01" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)">
+					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</th>
+					<th ng-class="vm.totalColor('total',vm.staffTotals[staff.id]) ">{{ vm.staffTotals[staff.id]/100 }}</th>
+					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0 || loc.name === 'Leave'">
+						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 					</td>
 				<tr>
 			</tbody>

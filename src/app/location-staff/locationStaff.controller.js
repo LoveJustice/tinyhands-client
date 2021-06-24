@@ -1,6 +1,6 @@
 import './locationStaff.less';
 class LocationStaffController {
-    constructor($rootScope, SessionService, locationStaffService, SpinnerOverlayService, StickyHeader) {
+    constructor($rootScope, SessionService, locationStaffService, StickyHeader) {
         'ngInject';
         
         this.session = SessionService;
@@ -22,11 +22,6 @@ class LocationStaffController {
         
         this.country = null;
         this.station = null;
-        let today = new Date();
-        this.month = today.getMonth() + 1;
-        this.monthStr = '' + this.month;
-        this.year = today.getFullYear();
-        this.yearAndMonth = this.year * 100 + this.month;
         this.tableDivSize = '102px';
         
         let tmp = sessionStorage.getItem('station-stats-country');
@@ -35,6 +30,20 @@ class LocationStaffController {
             if (tmp) {
                 sessionStorage.setItem('station-stats-country', tmp);
             }
+        }
+        
+        tmp = sessionStorage.getItem('station-stats-yearmonth');
+        if (tmp && tmp.length === 6) {
+        	this.yearAndMonth = parseInt(tmp);
+        	this.month = this.yearAndMonth % 100;
+        	this.year = Math.floor(this.yearAndMonth / 100);
+        	this.monthStr = '' + this.month;
+        } else {
+	        let today = new Date();
+	        this.month = today.getMonth() + 1;
+	        this.monthStr = '' + this.month;
+	        this.year = today.getFullYear();
+	        this.yearAndMonth = this.year * 100 + this.month;
         }
         
         this.getCountries();
@@ -105,6 +114,7 @@ class LocationStaffController {
     changeMonth() {
         this.month = parseInt(this.monthStr);
         this.yearAndMonth = this.year * 100 + this.month;
+        sessionStorage.setItem('station-stats-yearmonth', '' + this.yearAndMonth);
         this.workPortion = null;
         this.work = null;
         this.resetTotals();
@@ -172,6 +182,10 @@ class LocationStaffController {
                 }
                 this.tableDivSize = (columns * 120 + 302) + 'px';
             }
+            this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+	            this.workPortion = promise.data;
+	            this.populateWork();
+	        });
         });
         this.service.getStationStaff(this.station).then((promise) => {
             this.staff = promise.data;
@@ -181,10 +195,7 @@ class LocationStaffController {
             }
             this.populateWork();
         });
-        this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
-            this.workPortion = promise.data;
-            this.populateWork();
-        });
+        
     }
     
     changeFocus(location, staff) {
@@ -198,11 +209,14 @@ class LocationStaffController {
         }
         if (oldValue) {
             if (isNaN(this.work[location][staff])) {
-                oldValue.work_fraction = 0.0;
-            } else {
-                oldValue.work_fraction = this.work[location][staff];
+            	this.toastr.error('Invalid number format ');
+            	this.work[location][staff] = oldValue.work_fraction * 100;
+            	return;
+            }  
+            if (oldValue.work_fraction*100 !== this.work[location][staff]){
+                oldValue.work_fraction = this.work[location][staff] / 100;
+                this.saveWorkFraction(oldValue, location, staff);
             }
-            this.saveWorkFraction(oldValue);
         } else {
             if (this.work[location][staff]!==null && !isNaN(this.work[location][staff])) {
                 let newValue = {
@@ -212,14 +226,35 @@ class LocationStaffController {
                         work_fraction: this.work[location][staff]
                 };
                 this.workPortion.push(newValue);
-                this.saveWorkFraction(newValue);
+                this.saveWorkFraction(newValue, location, staff);
             }
         }
     }
     
-    saveWorkFraction(value) {
+    saveWorkFraction(value, location, staff, oldWorkFraction) {
+    	let newValue = jQuery.extend(true, {}, value);
         this.saveCount +=1;
-        this.service.setWorkFraction(value).then (() =>{this.saveCount -= 1;}, ()=>{this.saveCount -= 10;});
+        this.service.setWorkFraction(newValue).then (() =>{
+	        	this.saveCount -= 1;
+	        }, ()=>{
+	        	this.saveCount -= 1;
+	        	let locationName = 'Unknown';
+	        	let staffName = 'Unknown';
+	        	for (let idx=0; idx < this.locations.length; idx++) {
+	        		if (this.locations[idx].id === location) {
+	        			locationName = this.locations[idx].name;
+	        		}
+        		}
+        		for (let idx=0; idx < this.staff.length; idx++) {
+		            if (this.staff[idx].id === staff) {
+		            	staffName = this.staff[idx].first_name + ' ' + this.staff[idx].last_name;
+		            }
+		        }
+		        
+		        alert('Failed to update data for location:' + locationName + " and staff:" + staffName + '\nReloading page');
+		        window.location.reload();
+		        
+        	});
     }
     
     populateWork() {
@@ -235,8 +270,10 @@ class LocationStaffController {
         }
         for (let idx=0; idx < this.workPortion.length; idx++) {
             let tmp = this.workPortion[idx];
-            this.work[tmp.location][tmp.staff] = tmp.work_fraction;
-            this.updateTotals(tmp.location, tmp.staff);
+            if (tmp.location in this.work) {
+	            this.work[tmp.location][tmp.staff] = tmp.work_fraction * 100;
+	            this.updateTotals(tmp.location, tmp.staff);
+            }
         }
     }
     
@@ -261,9 +298,9 @@ class LocationStaffController {
     }
     
     totalColor(base, total) {
-        if (total === 1.00) {
+        if (total === 100) {
             return base + ' goodTotal';
-        } else if (total > 1) {
+        } else if (total > 100) {
             return base + ' badTotal';
         } else {
             return base;

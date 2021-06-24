@@ -1,12 +1,14 @@
 /* global jQuery */
 import './stationData.less';
 class StationDataController {
-    constructor($rootScope, SessionService, stationDataService, SpinnerOverlayService, StickyHeader) {
+    constructor($rootScope, SessionService, stationDataService, SpinnerOverlayService, StickyHeader, toastr) {
         'ngInject';
         
         this.session = SessionService;
         this.service = stationDataService;
         this.spinner = SpinnerOverlayService;
+        this.toastr = toastr;
+        this.toastr.options.timeout = 5000;
         this.stickyOptions = StickyHeader.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.stickyOptions.top = 50;
@@ -116,6 +118,9 @@ class StationDataController {
     }
     
     getStationData(yearMonth, position) {
+    	if (typeof this.country === "undefined" || this.country === null) {
+    		return;
+    	}
         this.service.getExchangeRate(this.country, yearMonth).then ((promise) => {
             this.exchangeData[position] = promise.data;
             this.exchangeDisplayData[position] = jQuery.extend(true, {}, this.exchangeData[position]);
@@ -263,6 +268,16 @@ class StationDataController {
             this.saveCount += 1;
             this.service.updateStationData(oldStation).then (() => {
                 this.saveCount -= 1;
+            }, ()=>{
+            	let stationName = 'Unknown';
+            	let monthName = this.monthName(this.yearMonthOffset(this.yearMonth, -position));
+            	for (let idx=0; idx < this.stations.length; idx++) {
+            		if (this.stations[idx].id === stationId) {
+            			stationName = this.stations[idx].station_name;
+            		}
+            	}
+            	alert("Failed to update data for station:" + stationName + " and month:" + monthName + '\nReloading page');
+	        	window.location.reload();
             });
         }
     }

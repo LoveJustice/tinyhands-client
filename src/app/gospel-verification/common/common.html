@@ -1,85 +1,170 @@
 <fieldset class="col-md-12 padding-top-20" ng-disabled="$ctrl.isViewing === true">
+	<div class="row>
+		<div class-md-12">
+			<div class-md-12">
+				<h3>Gospel Verification <b>{{ $ctrl.vdfQuestions[651].response.value }}</b></h3>
+			</div>
+		</div>
+	</div>
     <div class="row">
-    	<div class="col-md-3">
-    		<label>VDF #</label>
-    	</div>
-    	<div class="col-md-3">
-    		<a ng-href="{{$ctrl.vdfUrl}}" target="_blank">{{ $ctrl.vdfQuestions[651].response.value }}</a>
-    	</div>
-    	
-    	<div class="col-md-3">
-    		<label>Date on VDF</label>
-    	</div>
-    	<div class="col-md-3">
-    		{{ $ctrl.vdfQuestions[288].response.value }}
-    	</div>
+    	<div class=col-md-3>
+	    	<div class="col-md-5">
+	    		<label>Date</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[288].response.value }}
+	    	</div>
+	    </div>
+	    <div class=col-md-9>
+	    	<div class="col-md-1">
+	    		<label>Interviewer</label>
+	    	</div>
+	    	<div class="col-md-9">
+	    		{{ $ctrl.vdfQuestions[6].response.value }}
+	    	</div>
+	    </div>
+	</div>
+	<div class="row">
+		<div class=col-md-3>
+	    	<div class="col-md-5">
+	    		<label>Name</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[653].response.name.value }}
+	    	</div>
+	    </div>
+	    <div class=col-md-3>
+	    	<div class="col-md-5">
+	    		<label>Phone #</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[653].response.phone.value }}
+	    	</div>
+	    </div>
+	    <div class=col-md-6>
+	    	<div class="col-md-5">
+	    		<label>Social Media ID</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[653].response.social_media.value }}
+	    	</div>
+	    </div>
     </div>
     <div class="row">
-    	<div class="col-md-3">
-    		<label>Potential Victim Name</label>
-    	</div>
-    	<div class="col-md-3">
-    		{{ $ctrl.vdfQuestions[653].response.name.value }}
-    	</div>
-    	
-    	<div class="col-md-3">
-    		<label>Interviewer</label>
-    	</div>
-    	<div class="col-md-3">
-    		{{ $ctrl.vdfQuestions[6].response.value }}
-    	</div>
+		<div class=col-md-3>
+	    	<div class="col-md-5">
+	    		<label>Guardian Name</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[653].response.guardian_name.value }}
+	    	</div>
+	    </div>
+	    <div class=col-md-3>
+	    	<div class="col-md-5">
+	    		<label>Guardian Phone#</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[653].response.guardian_phone.value }}
+	    	</div>
+	    </div>
+	    <div class=col-md-6>
+	    	<div class="col-md-5">
+	    		<label>Relationship to Guardian</label>
+	    	</div>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[653].response.guardian_relationship.value }}
+	    	</div>
+	    </div>
     </div>
     <div class="row">
-    	<div class="col-md-3">
-    		<label>Had you ever heard the message before?</label>
-    	</div>
-    	<div class="col-md-3">
-    		{{ $ctrl.vdfQuestions[675].response.value }}
-    	</div>
-
-    	<div class="col-md-3">
-    		<label>What do you believe now?</label>
-    	</div>
-    	<div class="col-md-3">
-    		{{ $ctrl.vdfQuestions[676].response.value }}
-    	</div>
+		<div class=col-md-3>
+	    	<div class="col-md-12">
+	    		<label>3.2 Had you ever heard the message before?</label>
+	    	</div>
+	    </div>
+	    <div class=col-md-3>
+	    	<div class="col-md-7">
+	    		{{ $ctrl.vdfQuestions[675].response.value }}
+	    	</div>
+	    </div>
     </div>
     <hr>
-    <div class="row">
+    <div class="row center-vertical" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'">
     	<div class="col-md-3">
-    		<label>Does potential victim profess to accept Christ?</label>
+    		<label>3.3 What do you now believe?</label>
     	</div>
-    	<form-step class="col-md-2" type="radio" radio-name="acceptChrist" label="Yes" response-value="$ctrl.questions[1030].response.value"></form-step>
-    	<form-step class="col-md-2" type="radio" radio-name="acceptChrist" label="No" response-value="$ctrl.questions[1030].response.value"></form-step>
-    </div>
-    <div class="row">
     	<div class="col-md-3">
-    		<label>If yes, survey complete?</label>
+    		<input id="believeA" type="radio" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'" 
+    			name="believe" value="Does not believe Jesus is the one true God" 
+    			ng-model="$ctrl.vdfQuestions[676].response.value"></input>
+    		<label for="believeA">Does not believe Jesus is the one true God</label><br>
+            <input id="believeB" type="radio" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'" 
+            	name="believe" value="Already believes Jesus is the one true God"
+            	ng-model="$ctrl.vdfQuestions[676].response.value"></input>
+            <label for="believeB">Already believes Jesus is the one true God</label><br>
+            <input id="believeC" type="radio" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'"
+            	name="believe" value="Came to believe that Jesus is the one true God"
+            	ng-model="$ctrl.vdfQuestions[676].response.value"></input>
+            <label for="believeC">Came to believe that Jesus is the one true God</label><br>
     	</div>
-    	<form-step class="col-md-2" type="radio" radio-name="survey" label="Yes" response-value="$ctrl.questions[1031].response.value"></form-step>
-    	<form-step class="col-md-2" type="radio" radio-name="survey" label="No" response-value="$ctrl.questions[1031].response.value"></form-step>
     </div>
-    <div class="row">
+    <br>
+    <div class="row center-vertical">
     	<div class="col-md-3">
-    		<label>If no, SL Edited</label>
+    		<label>Is a change required to the original answer?</label>
     	</div>
-    	<form-step class="col-md-2" type="radio" radio-name="edited" label="Yes" response-value="$ctrl.questions[1032].response.value"></form-step>
-    	<form-step class="col-md-2" type="radio" radio-name="edited" label="No" response-value="$ctrl.questions[1032].response.value"></form-step>
+    	<div class="col-md-3">
+	    	<input id="changeYes" type="radio" name="changesRequired" value="Yes" ng-model="$ctrl.questions[1060].response.value"\
+	    		ng-change="$ctrl.updateChangeRequired()"></input>
+	    	<label for="changeYes">Yes</label><br>
+	    	<input id="changeNo" type="radio" name="changesRequired" value="No" ng-model="$ctrl.questions[1060].response.value"
+	    		ng-change="$ctrl.updateChangeRequired()"></input>
+	    	<label for="changeNo">No</label>
+    	</div>
     </div>
-    <hr>
-    <div class="row">
-	    <div class="col-md-6" ng-if="$ctrl.questions[1033].response.value">
+    <br>
+    <div class="row col-md-12" ng-if="$ctrl.questions[1060].response.value==='Yes'">
+    	<div>
+    		<label>This is a change from what was marked on the original VDF.  Please explain why there is a change</label>
+    		<textarea class="form-control" rows="3" ng-model="$ctrl.questions[1061].response.value"></textarea>
+    	</div>
+    </div>
+    <div ng-if="$ctrl.questions[1060].response.value==='No'">
+    	<div class="row">
 	    	<div class="col-md-3">
-	    		<label>Verification date</label>
+	    		<label>LJ Station Staff that shared the gospel</label>
 	    	</div>
-	    	{{ $ctrl.questions[1033].response.value }}
-	    </div>
-	    <div class="col-md-6" ng-if="$ctrl.questions[1034].response.value">
 	    	<div class="col-md-3">
-	    		<label>Verified by</label>
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1062].response.value"">
 	    	</div>
-	    	{{ $ctrl.questions[1034].response.value }}
-	    </div>
+    	</div>
+    	<br>
+    	<div class="row">
+	    	<div class="col-md-4">
+	    		<label>Describe how the potential victim professed to accept the gospel</label>
+	    	</div>
+	    	<div class="col-md-8">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1063].response.value"">
+	    	</div>
+    	</div>
+    	<br>
+    	<div class="row">
+	    	<div class="col-md-4">
+	    		<label>What resources were shared with them and how was it helpful?</label>
+	    	</div>
+	    	<div class="col-md-8">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1064].response.value"">
+	    	</div>
+    	</div>
+    	<br>
+    	<div class="row">
+	    	<div class="col-md-4">
+	    		<label>Please note any efforts to connect with a local church body nearby potential victim's home</label>
+	    	</div>
+	    	<div class="col-md-8">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1065].response.value"">
+	    	</div>
+    	</div>
     </div>
     <br>
 
@@ -93,7 +178,7 @@
         <div class="col-xs-6 text-right">
             <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox() && $ctrl.stateParams.isViewing !== 'true'" ng-model="$ctrl.ignoreWarnings">
             <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox() && $ctrl.stateParams.isViewing !== 'true'">Ignore warnings</label>
-            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true'">Submit</button>
+            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true' || $ctrl.questions[1060].response.value===null">Submit</button>
         </div>
     </div>
 </fieldset>

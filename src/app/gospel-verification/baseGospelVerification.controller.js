@@ -1,3 +1,4 @@
+/* global alert */
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseGospelVerificationController extends BaseFormController {
@@ -26,7 +27,12 @@ export class BaseGospelVerificationController extends BaseFormController {
 
     getVdf(countryId, stationId, id) {
         this.service.getVdf(countryId, stationId, id).then((response) => {
+            this.vdf = response.data;
             this.vdfQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
+            this.origVdf = {
+                   675:this.vdfQuestions[675].response.value,
+                   676:this.vdfQuestions[676].response.value
+            };
             this.vdfUrl = this.state.href(response.data.form_name, 
                     {   id:response.data.storage_id, 
                         stationId:response.data.station_id, 
@@ -35,12 +41,31 @@ export class BaseGospelVerificationController extends BaseFormController {
                         formName: response.data.form_name});
         });
     }
+    
+    updateChangeRequired() {
+        if (this.questions[1060].response.value === 'Yes') {
+            this.questions[1062].response.value = null;
+            this.questions[1063].response.value = null;
+            this.questions[1064].response.value = null;
+            this.questions[1065].response.value = null;
+        } else if (this.questions[1060].response.value === 'No') {
+            this.questions[1061].response.value = null;
+            this.vdfQuestions[676].response.value = 'Came to believe that Jesus is the one true God';
+        }
+    }
 
     // Override in subclass for implementation specific features
     submitExtra() {
     }
 
     submit() {
+        if (this.origVdf[676] !== this.vdfQuestions[676].response.value) {
+            this.service.updateGospelVdf(this.stateParams.vdf_id, this.vdfQuestions[676].response.value).then(
+                    () => {
+                    }, ()=>{
+                        alert("Failed to update VDF");
+                    }); 
+        }
         if (!this.questions[1034].response.value) {
             this.questions[1034].response.value = this.session.user.first_name + ' ' + this.session.user.last_name;
         }

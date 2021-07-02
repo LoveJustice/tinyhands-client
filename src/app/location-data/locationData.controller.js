@@ -170,16 +170,24 @@ class LocationDataController {
     getLocations() {
         this.service.getStationLocations(this.station).then((promise) => {
         	let tmpLocations = promise.data;
+        	let leave = null;
         	this.locations = [];
         	for (let idx=0; idx < tmpLocations.length; idx++) {
         		if (tmpLocations[idx].location_type === 'monitoring') {
-        			this.locations.push(tmpLocations[idx]);
+        		    if (tmpLocations[idx].name === 'Leave') {
+        		        leave = tmpLocations[idx];
+        		    } else {
+        		        this.locations.push(tmpLocations[idx]);
+        		    }
         		}
         	}
         	for (let idx=0; idx < tmpLocations.length; idx++) {
         		if (tmpLocations[idx].location_type !== 'monitoring') {
         			this.locations.push(tmpLocations[idx]);
         		}
+        	}
+        	if (leave !== null) {
+        	    this.locations.push(leave);
         	}
             this.locationTotals = {};
             for (let idx=0; idx < this.locations.length; idx++) {

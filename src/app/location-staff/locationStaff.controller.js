@@ -45,6 +45,12 @@ class LocationStaffController {
 	        this.year = today.getFullYear();
 	        this.yearAndMonth = this.year * 100 + this.month;
         }
+        this.firstOfMonth = new Date(this.year, this.month-1, 1);
+        if (this.month > 10) {
+            this.firstOfNextMonth = new Date(this.year+1, 0, 1);
+        } else {
+            this.firstOfNextMonth = new Date(this.year, this.month, 1);
+        }
         
         this.getCountries();
     }
@@ -114,6 +120,13 @@ class LocationStaffController {
     changeMonth() {
         this.month = parseInt(this.monthStr);
         this.yearAndMonth = this.year * 100 + this.month;
+        this.firstOfMonth = new Date(this.year, this.month-1, 1);
+        if (this.month > 10) {
+            this.firstOfNextMonth = new Date(this.year+1, 0, 1);
+        } else {
+            this.firstOfNextMonth = new Date(this.year, this.month, 1);
+        }
+        this.filterStaff();
         sessionStorage.setItem('station-stats-yearmonth', '' + this.yearAndMonth);
         this.workPortion = null;
         this.work = null;
@@ -126,6 +139,13 @@ class LocationStaffController {
     
     changeYear() {
         this.yearAndMonth = this.year * 100 + this.month;
+        this.firstOfMonth = new Date(this.year, this.month-1, 1);
+        if (this.month > 10) {
+            this.firstOfNextMonth = new Date(this.year+1, 0, 1);
+        } else {
+            this.firstOfNextMonth = new Date(this.year, this.month, 1);
+        }
+        this.filterStaff();
         this.workPortion = null;
         this.work = null;
         this.resetTotals();
@@ -188,13 +208,35 @@ class LocationStaffController {
 	        });
         });
         this.service.getStationStaff(this.station).then((promise) => {
-            this.staff = promise.data;
+            this.allStaff = promise.data;
+            this.filterStaff();
             this.staffTotals = {};
             for (let idx=0; idx < this.staff.length; idx++) {
                 this.staffTotals[this.staff[idx].id] = 0;
             }
             this.populateWork();
         });
+        
+    }
+    
+    filterStaff() {
+        this.staff = [];
+        for (let idx=0; idx < this.allStaff.length; idx++) {
+            if (this.allStaff[idx].first_date !== null) {
+                let firstDate = new Date(this.allStaff[idx].first_date);
+                if (firstDate >= this.firstOfNextMonth) {
+                    continue;
+                }
+            }
+            if (this.allStaff[idx].last_date !== null) {
+                let lastDate = new Date(this.allStaff[idx].last_date);
+                if (lastDate < this.firstOfMonth) {
+                    continue;
+                }
+            }
+            
+            this.staff.push(this.allStaff[idx]);
+        }
         
     }
     
@@ -223,7 +265,7 @@ class LocationStaffController {
                         year_month: this.yearAndMonth,
                         location: location,
                         staff: staff,
-                        work_fraction: this.work[location][staff]
+                        work_fraction: this.work[location][staff]/100
                 };
                 this.workPortion.push(newValue);
                 this.saveWorkFraction(newValue, location, staff);

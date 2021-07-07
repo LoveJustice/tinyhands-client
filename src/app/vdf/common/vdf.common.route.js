@@ -14,13 +14,6 @@ function VdfCommonRoutes($stateProvider) {
             params: {
                 id: null
             }
-        })
-        .state('vdfSouthAfrica', {
-            url: '/vdf/common:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonComponent',
-            params: {
-                id: null
-            }
         });
 }
 

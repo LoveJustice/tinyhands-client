@@ -28,6 +28,27 @@ function VdfCommonV3Routes($stateProvider) {
             params: {
                 id: null
             }
+        })
+        .state('vdfSierraLeone', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
+        .state('vdfSouthAfrica', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
+        .state('vdfZimbabwe', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
         });
 }
 

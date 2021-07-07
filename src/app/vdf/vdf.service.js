@@ -107,4 +107,9 @@ export default class VdfService {
         let url = `api/person/associated/${station_id}/${vdf_number}/`;
         return this.service.get(url);
     }
+    
+    getGospelVerification(station_id, vdf_number) {
+        let url = `api/gospel-verification/vdf-number/${station_id}/${vdf_number}/`;
+        return this.service.get(url);
+    }
 }

@@ -190,7 +190,7 @@ export default class GospelVerificationListController {
             this.paginate.currentPage = pageNumber;
             this.spinnerOverlayService.hide(); 
             this.addUrls(this.followUps);    
-        }, (error) => {
+        }, () => {
             this.spinnerOverlayService.hide(); 
         });
     }

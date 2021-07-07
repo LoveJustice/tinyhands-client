@@ -4,6 +4,7 @@ let Constants = {
         Administration: 10,
         Communication: 7,
         FoodAndGas: 6,
+        Limbo: 12,
         Medical: 9,
         Miscellaneous: 2,
         PastMonth: 11,

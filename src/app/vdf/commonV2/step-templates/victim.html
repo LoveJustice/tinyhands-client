@@ -27,7 +27,7 @@
         <div class="col-md-3">
             <form-step class="col-md-5 control-label" style="float:left">DOB</form-step>
             <div class="col-md-7">
-                <input type="date" class="form-control" ng-model="$ctrl.questions[653].response.birthdate.value">
+                <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[653].value">
             </div>
         </div>
     </div>

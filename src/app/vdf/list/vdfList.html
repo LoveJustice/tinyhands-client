@@ -58,7 +58,7 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('interview_date', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('interview_date', 'reverse')}"></i>
                 </th>
-                <th ng-click="vdfListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
+                <th ng-click="vdfListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Date Entered
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': vdfListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': vdfListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
                 </th>
@@ -76,9 +76,9 @@
                 <td>{{ vdf.vdf_number }}</td>
                 <td><a ng-href="{{vdf.relatedUrl}}"><img ng-src="assets/images/pages.png" title="Related Forms"></a></td>
                 <td>{{ vdf.staff_name }}</td>
-                <td>{{ vdf.date_of_interview | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ vdf.date_time_entered_into_system | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ vdf.date_time_last_updated | date:"medium" : vdfListCtrl.timeZoneDifference }}</td>
+                <td>{{ vdf.date_of_interview }}</td>
+                <td class="hidden-xs">{{ vdf.date_time_entered_into_system }}</td>
+                <td class="hidden-xs">{{ vdf.date_time_last_updated }}</td>
                 <td ng-if="vdfListCtrl.session.checkPermission('VDF','VIEW',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{vdf.viewUrl}}">View</a></td>
                 <td ng-if="vdfListCtrl.session.checkPermission('VDF','EDIT',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{vdf.editUrl}}">Edit</a></td>
                 <td ng-if="vdfListCtrl.session.checkPermission('VDF','DELETE',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-danger" ng-click="vdfListCtrl.deleteVdf(vdf, $index)">

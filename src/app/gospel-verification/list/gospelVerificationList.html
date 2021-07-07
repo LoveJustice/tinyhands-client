@@ -21,8 +21,8 @@
         	<p>Filter</p>
         	<select ng-model="gospelVerificationListCtrl.filter" ng-change="gospelVerificationListCtrl.searchGospelVerifications()">
         		<option value="">All</option>
-        		<option value="profess_to_accept_christ:Yes">Has accepted Christ</option>
-        		<option value="profess_to_accept_christ:No">Has not accepted Christ</option>
+        		<option value="vdf__what_victim_believes_now:Came to believe that Jesus is the one true God">Has accepted Christ</option>
+        		<option value="vdf__what_victim_believes_now:Does not believe Jesus is the one true God">Has not accepted Christ</option>
         		<option value="date_of_followup__isnull:False">Follow-up completed</option>
         		<option value="date_of_followup__isnull:True">Follow-up needed</option>
         	</select>
@@ -63,10 +63,7 @@
                     'glyphicon glyphicon-sort-by-order-alt': gospelVerificationListCtrl.getSortIcon('date_of_followup', 'reverse')}"></i>
                     </div>
                 </th>
-                <th class="text-center" ng-click="gospelVerificationListCtrl.updateSort('profess_to_accept_christ')" width="16%" class="hidden-xs">PV Accepted Christ
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gospelVerificationListCtrl.getSortIcon('profess_to_accept_christ', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': gospelVerificationListCtrl.getSortIcon('profess_to_accept_christ', 'reverse')}"></i>
-                </th>
+                <th class="text-center" width="16%" class="hidden-xs">PV Accepted Christ</th>
                 <th></th>
                 <th></th>
             </tr>

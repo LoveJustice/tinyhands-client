@@ -33,6 +33,10 @@ export class BaseVdfController extends BaseFormController {
                 this.service.getAssociatedPersons(this.stateParams.stationId, vdfNumber).then((response) => {
                     this.associatedPersons = response.data;
                 });
+                this.gospelQuestions = null;
+                this.service.getGospelVerification(this.stateParams.stationId, vdfNumber).then((response) => {
+                    this.gospelQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
+                });
             }
         }
     }

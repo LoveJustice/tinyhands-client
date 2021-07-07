@@ -117,6 +117,19 @@ class StationDataController {
         this.getStationData(this.yearMonthOffset(this.yearMonth, -2), 2);
     }
     
+    totalColumn(position, element) {
+        for (let element in this.stationDisplayData[position].total) {
+            this.stationDisplayData[position].total[element] = 0;
+            for (let idx in this.stationDisplayData[position]) {
+                if (idx !== 'total' && this.stationDisplayData[position][idx][element] &&
+                        !isNaN(this.stationDisplayData[position][idx][element])) {
+                    this.stationDisplayData[position].total[element] += (this.stationDisplayData[position][idx][element] * 1);
+                }
+            }
+        }
+       
+    }
+    
     getStationData(yearMonth, position) {
     	if (typeof this.country === "undefined" || this.country === null) {
     		return;
@@ -138,10 +151,19 @@ class StationDataController {
                     budget:null
                 };
             }
+            displayData.total = {
+                    staff:0,
+                    intercepts:0,
+                    arrests:0,
+                    gospel:0,
+                    empowerment:0,
+                    budget:0
+            };
             for (let idx=0; idx < this.stationData[position].length; idx++) {
                 displayData[this.stationData[position][idx].station] = jQuery.extend(true, {}, this.stationData[position][idx]);
             }
             this.stationDisplayData[position] = displayData;
+            this.totalColumn(position);
             this.loadCount -= 1;
             if (this.loadCount < 1) {
                 this.spinner.hide();
@@ -279,6 +301,7 @@ class StationDataController {
             	alert("Failed to update data for station:" + stationName + " and month:" + monthName + '\nReloading page');
 	        	window.location.reload();
             });
+            this.totalColumn(position);
         }
     }
 }

@@ -11,10 +11,11 @@
 		<div class="col-md-1">
 			<label>Station</label>
 		</div>
-		<div class="col-md-2">
-			<select class="form-control" ng-model="vm.station" ng-change="vm.changeStation()">
-				<option ng-repeat="station in vm.stations" value="{{station.id}}">{{ station.station_name}} </option>
-			</select>
+		<div class="col-md-2" ng-dropdown-multiselect="" options="vm.stationDropDown.options"
+							selected-model="vm.stationDropDown.selectedOptions"
+                            extra-settings="vm.stationDropDown.settings"
+                            translation-texts="vm.stationDropDown.customText"
+                            events="vm.stationDropDown.eventListener">
 		</div>
 		<div class="col-md-3">
     		<div class="col-md-6">
@@ -51,7 +52,7 @@
 				</tr>
 				<tr>
 					<th class="locationName darkBorder"></th>
-					<th class="dataGroup darkBorder" colspan="3">6 Month Totals</th>
+					<th class="dataGroup darkBorder" colspan="4">6 Month Totals</th>
 					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearAndMonth) }}</th>
 					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -1)) }}</th>
 					<th class="dataGroup darkBorder" colspan="3">{{ vm.monthName(vm.yearMonthOffset(vm.yearAndMonth, -2)) }}</th>
@@ -64,6 +65,7 @@
 					
 					<th class="dataElement lightBorder">Staff</th>
 					<th class="dataElement lightBorder">Int</th>
+					<th class="dataElement lightBorder">Ratio</th>
 					<th class="dataElement darkBorder">Ast</th>
 					
 					<th class="dataElement lightBorder">Staff</th>
@@ -97,6 +99,8 @@
 					
 					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].intercepts }}</td>
+					<td class="dataElement lightBorder" ng-if="vm.locationTotals[location.id].intercepts > 0 || vm.locationTotals[location.id].staff > 0">{{ (vm.locationTotals[location.id].intercepts/vm.locationTotals[location.id].staff).toLocaleString('en-US', vm.digits2Format) }}</td>
+					<td class="dataElement lightBorder" ng-if="vm.locationTotals[location.id].intercepts === 0 && vm.locationTotals[location.id].staff === 0"></td>
 					<td class="dataElement darkBorder">{{ vm.locationTotals[location.id].arrests }}</td>
 					
 					<td class="dataElement lightBorder">{{ vm.locationDisplayData[0][location.id].staff }}</td>
@@ -140,6 +144,8 @@
 					
 					<td class="dataElement lightBorder total">{{ vm.locationTotals['_Total'].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td class="dataElement lightBorder total">{{ vm.locationTotals['_Total'].intercepts }}</td>
+					<td class="dataElement lightBorder total" ng-if="vm.locationTotals['_Total'].intercepts > 0 || vm.locationTotals['_Total'].staff > 0">{{ (vm.locationTotals['_Total'].intercepts/vm.locationTotals['_Total'].staff).toLocaleString('en-US', vm.digits2Format) }}</td>
+					<td class="dataElement lightBorder total" ng-if="vm.locationTotals['_Total'].intercepts === 0 && vm.locationTotals['_Total'].staff === 0"></td>
 					<td class="dataElement darkBorder total">{{ vm.locationTotals['_Total'].arrests }}</td>
 					
 					<td class="dataElement lightBorder total">{{ vm.locationDisplayData[0]['_Total'].staff.toLocaleString('en-US', vm.digits2Format) }}</td>

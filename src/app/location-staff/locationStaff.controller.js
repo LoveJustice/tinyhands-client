@@ -10,6 +10,17 @@ class LocationStaffController {
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         
+        this.stationDropDown = {};
+        this.stationDropDown.options = [];
+        this.stationDropDown.selectedOptions = [];
+        this.stationDropDown.settings = {smartButtonMaxItems:1, showCheckAll: false, showUncheckAll: false, selectionLimit:1,
+                groupBy:'type', closeOnSelect: true, scrollableHeight: '250px', scrollable: true,};
+        //this.stationDropDown.customText = {};
+        this.stationDropDown.eventListener = {
+                onItemSelect: this.stationChangeEvent,
+                ctrl: this,
+        };
+        
         this.countries = [];
         this.stations = null;
         this.locations = null;
@@ -21,7 +32,6 @@ class LocationStaffController {
         this.saveCount = 0;
         
         this.country = null;
-        this.station = null;
         this.tableDivSize = '102px';
         
         let tmp = sessionStorage.getItem('station-stats-country');
@@ -73,11 +83,19 @@ class LocationStaffController {
         let selectedStationName = sessionStorage.getItem('station-stats-station');
         this.service.getUserStations(this.session.user.id, 'STATION_STATISTICS', 'EDIT', this.country).then((promise) => {
             this.stations = promise.data;
-            for (let idx=0; idx < this.stations.length; idx++) {
+            this.stationDropDown.options = [];
+            for (var idx=0; idx < this.stations.length; idx++) {
+                let type='';
+                if (this.stations[idx].non_transit) {
+                    type = 'non-transit';
+                } else {
+                    type = 'transit';
+                }
+                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
+                this.stationDropDown.options.push(option);
                 if (this.stations[idx].station_name === selectedStationName) {
-                    this.station = '' + this.stations[idx].id;
+                    this.stationDropDown.selectedOptions = [option];
                     this.changeStation();
-                    break;
                 }
             }
         });
@@ -101,13 +119,12 @@ class LocationStaffController {
         this.getStations();
     }
     
+    stationChangeEvent() {
+        this.ctrl.changeStation();
+    }
+    
     changeStation() {
-        for (let idx=0; idx < this.stations.length; idx++) {
-            if (('' + this.stations[idx].id) === this.station) {
-                sessionStorage.setItem('station-stats-station', this.stations[idx].station_name);
-                break;
-            }
-        }
+        sessionStorage.setItem('station-stats-station', this.stationDropDown.selectedOptions[0].label);
         this.locations = null;
         this.locationTotals = null;
         this.staff = null;
@@ -131,7 +148,7 @@ class LocationStaffController {
         this.workPortion = null;
         this.work = null;
         this.resetTotals();
-        this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+        this.service.getLocationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
             this.workPortion = promise.data;
             this.populateWork();
         });
@@ -149,7 +166,7 @@ class LocationStaffController {
         this.workPortion = null;
         this.work = null;
         this.resetTotals();
-        this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+        this.service.getLocationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
             this.workPortion = promise.data;
             this.populateWork();
         });
@@ -167,7 +184,7 @@ class LocationStaffController {
     }
     
     getLocationsAndStaff() {
-        this.service.getStationLocations(this.station).then((promise) => {
+        this.service.getStationLocations(this.stationDropDown.selectedOptions[0].id).then((promise) => {
         	let tmpLocations = promise.data;
         	this.locations = [];
         	for (let idx=0; idx < tmpLocations.length; idx++) {
@@ -202,12 +219,13 @@ class LocationStaffController {
                 }
                 this.tableDivSize = (columns * 120 + 302) + 'px';
             }
-            this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+            this.service.getLocationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
 	            this.workPortion = promise.data;
 	            this.populateWork();
 	        });
         });
-        this.service.getStationStaff(this.station).then((promise) => {
+        
+        this.service.getStationStaff(this.stationDropDown.selectedOptions[0].id).then((promise) => {
             this.allStaff = promise.data;
             this.filterStaff();
             this.staffTotals = {};

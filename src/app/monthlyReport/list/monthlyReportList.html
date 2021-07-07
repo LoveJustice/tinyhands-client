@@ -54,7 +54,7 @@
                 </th>
                 <th width="16%">Station Code
                 </th>
-                <th ng-click="monthlyReportListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Time Entered Into System
+                <th ng-click="monthlyReportListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Date Entered
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': monthlyReportListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': monthlyReportListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
                 </th>
@@ -72,8 +72,8 @@
                 <td>{{ monthlyReport.year }}</td>
                 <td>{{ monthlyReport.month }}</td>
                 <td>{{ monthlyReport.station.station_code }}</td>
-                <td class="hidden-xs">{{ monthlyReport.date_time_entered_into_system | date:"medium" : monthlyReportListCtrl.timeZoneDifference }}</td>
-                <td class="hidden-xs">{{ monthlyReport.date_time_last_updated | date:"medium" : monthlyReportListCtrl.timeZoneDifference }}</td>
+                <td class="hidden-xs">{{ monthlyReport.date_time_entered_into_system }}</td>
+                <td class="hidden-xs">{{ monthlyReport.date_time_last_updated  }}</td>
                 <td ng-if="monthlyReportListCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',monthlyReport.station.operating_country.id, monthlyReport.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{monthlyReport.viewUrl}}">View</a></td>
                 <td ng-if="monthlyReportListCtrl.session.checkPermission('MONTHLY_REPORT','EDIT',monthlyReport.station.operating_country.id, monthlyReport.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{monthlyReport.editUrl}}">Edit</a></td>
                 <td ng-if="monthlyReportListCtrl.session.checkPermission('MONTHLY_REPORT','DELETE',monthlyReport.station.operating_country.id, monthlyReport.station.id)"><a class="btn btn-sm btn-danger" ng-click="monthlyReportListCtrl.deleteMonthlyReport(monthlyReport, $index)">

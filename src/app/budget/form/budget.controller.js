@@ -164,9 +164,6 @@ export default class BudgetController {
         if (this.form.awareness_awareness_party_boolean) {
             amount += this.validAmount(this.form.awareness_awareness_party);
         }
-        if (this.form.awareness_sign_boards_boolean) {
-            amount += this.validAmount(this.form.awareness_sign_boards);
-        }
         amount += this.getOtherCost(this.form.other.Awareness);
         this.form.totals.borderMonitoringStation.awareness = amount;
         return amount;
@@ -205,7 +202,7 @@ export default class BudgetController {
     }
 
     foodGasLimboGirls() {
-        return this.validAmount(this.form.food_and_gas_limbo_girls_multiplier * this.form.food_and_gas_number_of_limbo_girls * this.form.food_and_gas_number_of_days);
+        return this.validAmount(this.form.food_and_gas_limbo_girls_multiplier * this.getOtherCost(this.form.other.Limbo));
     }
 
     foodAndGasTotal() {

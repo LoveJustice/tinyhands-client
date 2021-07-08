@@ -87,9 +87,9 @@ class LocationStaffController {
             for (var idx=0; idx < this.stations.length; idx++) {
                 let type='';
                 if (this.stations[idx].non_transit) {
-                    type = 'non-transit';
+                    type = 'Non-Transit';
                 } else {
-                    type = 'transit';
+                    type = 'Transit';
                 }
                 let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
                 this.stationDropDown.options.push(option);

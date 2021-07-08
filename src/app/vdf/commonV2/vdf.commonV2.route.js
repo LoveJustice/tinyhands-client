@@ -56,20 +56,6 @@ function VdfCommonV2Routes($stateProvider) {
             params: {
                 id: null
             }
-        })
-        .state('vdfZimbabwe', {
-            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonV2Component',
-            params: {
-                id: null
-            }
-        })
-        .state('vdfSierraLeone', {
-            url: '/vdf/commonV2:?id&stationId&countryId&isViewing&formName',
-            component: 'vdfCommonV2Component',
-            params: {
-                id: null
-            }
         });
 }
 

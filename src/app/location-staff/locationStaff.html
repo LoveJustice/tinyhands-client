@@ -11,10 +11,11 @@
 		<div class="col-md-1">
 			<label>Station</label>
 		</div>
-		<div class="col-md-2">
-			<select class="form-control" ng-model="vm.station" ng-change="vm.changeStation()">
-				<option ng-repeat="station in vm.stations" value="{{station.id}}">{{ station.station_name}} </option>
-			</select>
+		<div class="col-md-2" ng-dropdown-multiselect="" options="vm.stationDropDown.options"
+							selected-model="vm.stationDropDown.selectedOptions"
+                            extra-settings="vm.stationDropDown.settings"
+                            translation-texts="vm.stationDropDown.customText"
+                            events="vm.stationDropDown.eventListener">
 		</div>
 		<div class="col-md-3">
     		<div class="col-md-6">
@@ -36,20 +37,25 @@
 				<tr>
 					<th class="staffName"></th>
 					<th class="total">Location</th>
-					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0 || loc.name === 'Leave'">{{loc.name}}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave'">{{loc.name}}</th>
+					<th class="fraction">Leave</th>
 				</tr>
 				<tr>
 					<th class="staffName">Staff</th>
 					<th class="total">Totals</th>
-					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0 || loc.name === 'Leave'">{{vm.locationTotals[loc.id]/100}}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave'">{{vm.locationTotals[loc.id]/100}}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'">{{vm.locationTotals[loc.id]/100}}</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="staff in vm.staff" ng-if="staff.last_date===null || vm.staffTotals[staff.id]>0">
+				<tr ng-repeat="staff in vm.staff">
 					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</th>
-					<th ng-class="vm.totalColor('total',vm.staffTotals[staff.id]) ">{{ vm.staffTotals[staff.id]/100 }}</th>
-					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.active || vm.locationTotals[loc.id] > 0 || loc.name === 'Leave'">
-						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					<th ng-class="vm.totalColor('total',vm.staffTotals[staff.id]) ">{{ vm.staffTotals[staff.id] }}%</th>
+					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave'">
+						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57">%
+					</td>
+					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'">
+						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57">%
 					</td>
 				<tr>
 			</tbody>

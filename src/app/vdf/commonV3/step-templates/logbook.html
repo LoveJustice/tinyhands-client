@@ -3,6 +3,12 @@
 	 	<h3>Compliance</h3>
 	</div>
 	<div class="row"></div>
+	<div class="row" ng-if="$ctrl.gospelQuestions && $ctrl.gospelQuestions[1060].response.value==='Yes'">
+		<Form-step class="col-md-12">Gospel Verification Changes</form-step>
+		<div class=col-md-12>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.gospelQuestions[1061].response.value"></textarea>
+		</div>
+	</div>
 	<div class="row center-vertical">
 		<form-step class="col-md-4">Date VDF Received</form-step>
 		<div class="col-md-4">

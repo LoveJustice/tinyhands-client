@@ -10,7 +10,8 @@
          $uibModal,
          budgetService,
          utils,
-         toastr;
+         toastr,
+         tmp;
 
      beforeEach(inject(($http) => {
          utils = jasmine.createSpyObj('mockUtilService', ['handleErrors', 'validId']);
@@ -250,8 +251,6 @@
              vm.form.awareness_contact_cards_amount = 1;
              vm.form.awareness_awareness_party_boolean = false;
              vm.form.awareness_awareness_party = 1;
-             vm.form.awareness_sign_boards_boolean = false;
-             vm.form.awareness_sign_boards = 1;
          });
 
          it(`when awareness_contact_cards is true it should return 1`, () => {
@@ -262,12 +261,6 @@
 
          it(`when awareness_awareness_party_boolean is true it should return 1`, () => {
              vm.form.awareness_awareness_party_boolean = true;
-             let result = vm.awarenessTotal();
-             expect(result).toEqual(1);
-         });
-
-         it(`when awareness_sign_boards_boolean is true it should return 1`, () => {
-             vm.form.awareness_sign_boards_boolean = true;
              let result = vm.awarenessTotal();
              expect(result).toEqual(1);
          });
@@ -344,10 +337,11 @@
      });
 
      describe(`function foodGasLimboGirls`, () => {
-         it(`should multiply food_and_gas_limbo_girls_multiplier with food_and_gas_number_of_limbo_girls and food_and_gas_number_of_days then return 8`, () => {
+         it(`should multiply food_and_gas_limbo_girls_multiplier with this.getOtherCost(this.form.other.Limbo) then return 8`, () => {
              vm.form.food_and_gas_limbo_girls_multiplier = 2;
-             vm.form.food_and_gas_number_of_limbo_girls = 2;
-             vm.form.food_and_gas_number_of_days = 2;
+             vm.form.other.Limbo = [
+                     { cost:2 },
+                     { cost:2 }];
              let result = vm.foodGasLimboGirls();
              expect(result).toEqual(8);
          });
@@ -359,8 +353,9 @@
              vm.form.food_and_gas_number_of_intercepted_girls = 2;
              vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = 2;
              vm.form.food_and_gas_limbo_girls_multiplier = 2;
-             vm.form.food_and_gas_number_of_limbo_girls = 2;
-             vm.form.food_and_gas_number_of_days = 2;
+             vm.form.other.Limbo = [
+                 { cost:2 },
+                 { cost:2 }];
          });
 
          it(`should have called foodGasInterceptedGirls`, () => {

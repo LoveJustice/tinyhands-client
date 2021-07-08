@@ -1,3 +1,4 @@
+/*global FormData */
 // Common service used for all Gospel Verification forms
 export default class GospelVerificationService {
     constructor(BaseService) {
@@ -21,6 +22,14 @@ export default class GospelVerificationService {
         if (id !== null) {
             return this.service.get(`api/vdf/${stationId}/${id}`);
         }
+    }
+    
+    submitVdf(stationId, id, vdf) {
+        return this.putVdf(stationId, id, vdf);
+    }
+    
+    updateGospelVdf(id, believesNow) {
+        return this.service.put(`api/gospel-vdf-update/${id}/`, {'believesNow':believesNow});
     }
     
     getFormConfig(formName) {

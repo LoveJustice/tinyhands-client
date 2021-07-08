@@ -10,6 +10,17 @@ class LocationStaffController {
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         
+        this.stationDropDown = {};
+        this.stationDropDown.options = [];
+        this.stationDropDown.selectedOptions = [];
+        this.stationDropDown.settings = {smartButtonMaxItems:1, showCheckAll: false, showUncheckAll: false, selectionLimit:1,
+                groupBy:'type', closeOnSelect: true, scrollableHeight: '250px', scrollable: true,};
+        //this.stationDropDown.customText = {};
+        this.stationDropDown.eventListener = {
+                onItemSelect: this.stationChangeEvent,
+                ctrl: this,
+        };
+        
         this.countries = [];
         this.stations = null;
         this.locations = null;
@@ -21,7 +32,6 @@ class LocationStaffController {
         this.saveCount = 0;
         
         this.country = null;
-        this.station = null;
         this.tableDivSize = '102px';
         
         let tmp = sessionStorage.getItem('station-stats-country');
@@ -45,6 +55,12 @@ class LocationStaffController {
 	        this.year = today.getFullYear();
 	        this.yearAndMonth = this.year * 100 + this.month;
         }
+        this.firstOfMonth = new Date(this.year, this.month-1, 1);
+        if (this.month > 10) {
+            this.firstOfNextMonth = new Date(this.year+1, 0, 1);
+        } else {
+            this.firstOfNextMonth = new Date(this.year, this.month, 1);
+        }
         
         this.getCountries();
     }
@@ -67,11 +83,19 @@ class LocationStaffController {
         let selectedStationName = sessionStorage.getItem('station-stats-station');
         this.service.getUserStations(this.session.user.id, 'STATION_STATISTICS', 'EDIT', this.country).then((promise) => {
             this.stations = promise.data;
-            for (let idx=0; idx < this.stations.length; idx++) {
+            this.stationDropDown.options = [];
+            for (var idx=0; idx < this.stations.length; idx++) {
+                let type='';
+                if (this.stations[idx].non_transit) {
+                    type = 'non-transit';
+                } else {
+                    type = 'transit';
+                }
+                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
+                this.stationDropDown.options.push(option);
                 if (this.stations[idx].station_name === selectedStationName) {
-                    this.station = '' + this.stations[idx].id;
+                    this.stationDropDown.selectedOptions = [option];
                     this.changeStation();
-                    break;
                 }
             }
         });
@@ -95,13 +119,12 @@ class LocationStaffController {
         this.getStations();
     }
     
+    stationChangeEvent() {
+        this.ctrl.changeStation();
+    }
+    
     changeStation() {
-        for (let idx=0; idx < this.stations.length; idx++) {
-            if (('' + this.stations[idx].id) === this.station) {
-                sessionStorage.setItem('station-stats-station', this.stations[idx].station_name);
-                break;
-            }
-        }
+        sessionStorage.setItem('station-stats-station', this.stationDropDown.selectedOptions[0].label);
         this.locations = null;
         this.locationTotals = null;
         this.staff = null;
@@ -114,11 +137,18 @@ class LocationStaffController {
     changeMonth() {
         this.month = parseInt(this.monthStr);
         this.yearAndMonth = this.year * 100 + this.month;
+        this.firstOfMonth = new Date(this.year, this.month-1, 1);
+        if (this.month > 10) {
+            this.firstOfNextMonth = new Date(this.year+1, 0, 1);
+        } else {
+            this.firstOfNextMonth = new Date(this.year, this.month, 1);
+        }
+        this.filterStaff();
         sessionStorage.setItem('station-stats-yearmonth', '' + this.yearAndMonth);
         this.workPortion = null;
         this.work = null;
         this.resetTotals();
-        this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+        this.service.getLocationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
             this.workPortion = promise.data;
             this.populateWork();
         });
@@ -126,10 +156,17 @@ class LocationStaffController {
     
     changeYear() {
         this.yearAndMonth = this.year * 100 + this.month;
+        this.firstOfMonth = new Date(this.year, this.month-1, 1);
+        if (this.month > 10) {
+            this.firstOfNextMonth = new Date(this.year+1, 0, 1);
+        } else {
+            this.firstOfNextMonth = new Date(this.year, this.month, 1);
+        }
+        this.filterStaff();
         this.workPortion = null;
         this.work = null;
         this.resetTotals();
-        this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+        this.service.getLocationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
             this.workPortion = promise.data;
             this.populateWork();
         });
@@ -147,7 +184,7 @@ class LocationStaffController {
     }
     
     getLocationsAndStaff() {
-        this.service.getStationLocations(this.station).then((promise) => {
+        this.service.getStationLocations(this.stationDropDown.selectedOptions[0].id).then((promise) => {
         	let tmpLocations = promise.data;
         	this.locations = [];
         	for (let idx=0; idx < tmpLocations.length; idx++) {
@@ -182,19 +219,42 @@ class LocationStaffController {
                 }
                 this.tableDivSize = (columns * 120 + 302) + 'px';
             }
-            this.service.getLocationStaff(this.station, this.yearAndMonth).then((promise) => {
+            this.service.getLocationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
 	            this.workPortion = promise.data;
 	            this.populateWork();
 	        });
         });
-        this.service.getStationStaff(this.station).then((promise) => {
-            this.staff = promise.data;
+        
+        this.service.getStationStaff(this.stationDropDown.selectedOptions[0].id).then((promise) => {
+            this.allStaff = promise.data;
+            this.filterStaff();
             this.staffTotals = {};
             for (let idx=0; idx < this.staff.length; idx++) {
                 this.staffTotals[this.staff[idx].id] = 0;
             }
             this.populateWork();
         });
+        
+    }
+    
+    filterStaff() {
+        this.staff = [];
+        for (let idx=0; idx < this.allStaff.length; idx++) {
+            if (this.allStaff[idx].first_date !== null) {
+                let firstDate = new Date(this.allStaff[idx].first_date);
+                if (firstDate >= this.firstOfNextMonth) {
+                    continue;
+                }
+            }
+            if (this.allStaff[idx].last_date !== null) {
+                let lastDate = new Date(this.allStaff[idx].last_date);
+                if (lastDate < this.firstOfMonth) {
+                    continue;
+                }
+            }
+            
+            this.staff.push(this.allStaff[idx]);
+        }
         
     }
     
@@ -223,7 +283,7 @@ class LocationStaffController {
                         year_month: this.yearAndMonth,
                         location: location,
                         staff: staff,
-                        work_fraction: this.work[location][staff]
+                        work_fraction: this.work[location][staff]/100
                 };
                 this.workPortion.push(newValue);
                 this.saveWorkFraction(newValue, location, staff);

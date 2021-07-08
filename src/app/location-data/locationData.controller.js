@@ -14,6 +14,17 @@ class LocationDataController {
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         this.digits2Format = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
         
+        this.stationDropDown = {};
+        this.stationDropDown.options = [];
+        this.stationDropDown.selectedOptions = [];
+        this.stationDropDown.settings = {smartButtonMaxItems:1, showCheckAll: false, showUncheckAll: false, selectionLimit:1,
+                groupBy:'type', closeOnSelect: true, scrollableHeight: '250px', scrollable: true,};
+        //this.stationDropDown.customText = {};
+        this.stationDropDown.eventListener = {
+                onItemSelect: this.stationChangeEvent,
+                ctrl: this,
+        };
+        
         this.countries = [];
         this.stations = null;
         this.locations = null;
@@ -23,7 +34,6 @@ class LocationDataController {
         this.locationDisplayData = [null, null, null, null, null, null];
         
         this.country = null;
-        this.station = null;
         this.tableDivSize = '1460px';
         this.inputArrests = true;
         
@@ -85,16 +95,24 @@ class LocationDataController {
         let selectedStationName = sessionStorage.getItem('station-stats-station');
         this.service.getUserStations(this.session.user.id, 'STATION_STATISTICS', 'EDIT', this.country).then((promise) => {
             this.stations = promise.data;
-            for (let idx=0; idx < this.stations.length; idx++) {
+            this.stationDropDown.options = [];
+            for (var idx=0; idx < this.stations.length; idx++) {
+                let type='';
+                if (this.stations[idx].non_transit) {
+                    type = 'non-transit';
+                } else {
+                    type = 'transit';
+                }
+                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
+                this.stationDropDown.options.push(option);
                 if (this.stations[idx].station_name === selectedStationName) {
-                    this.station = '' + this.stations[idx].id;
+                    this.stationDropDown.selectedOptions = [option];
                     this.changeStation();
-                    break;
                 }
             }
         });
     }
-    
+       
     changeCountry() {
         for (let idx=0; idx < this.countries.length; idx++) {
             if (('' + this.countries[idx].id) === this.country) {
@@ -113,13 +131,12 @@ class LocationDataController {
         this.getStations();
     }
     
+    stationChangeEvent() {
+        this.ctrl.changeStation();
+    }
+    
     changeStation() {
-        for (let idx=0; idx < this.stations.length; idx++) {
-            if (('' + this.stations[idx].id) === this.station) {
-                sessionStorage.setItem('station-stats-station', this.stations[idx].station_name);
-                break;
-            }
-        }
+        sessionStorage.setItem('station-stats-station', this.stationDropDown.selectedOptions[0].label);
         this.locations = null;
         this.getLocations();
     }
@@ -168,18 +185,26 @@ class LocationDataController {
     }
             
     getLocations() {
-        this.service.getStationLocations(this.station).then((promise) => {
+        this.service.getStationLocations(this.stationDropDown.selectedOptions[0].id).then((promise) => {
         	let tmpLocations = promise.data;
+        	let leave = null;
         	this.locations = [];
         	for (let idx=0; idx < tmpLocations.length; idx++) {
         		if (tmpLocations[idx].location_type === 'monitoring') {
-        			this.locations.push(tmpLocations[idx]);
+        		    if (tmpLocations[idx].name === 'Leave') {
+        		        leave = tmpLocations[idx];
+        		    } else {
+        		        this.locations.push(tmpLocations[idx]);
+        		    }
         		}
         	}
         	for (let idx=0; idx < tmpLocations.length; idx++) {
         		if (tmpLocations[idx].location_type !== 'monitoring') {
         			this.locations.push(tmpLocations[idx]);
         		}
+        	}
+        	if (leave !== null) {
+        	    this.locations.push(leave);
         	}
             this.locationTotals = {};
             for (let idx=0; idx < this.locations.length; idx++) {
@@ -225,7 +250,7 @@ class LocationDataController {
                 let newValue = {
                         year_month: this.yearMonthOffset(this.yearAndMonth, -position),
                         location: location,
-                        station: this.station
+                        station: this.stationDropDown.selectedOptions[0].id
                 };
  
                 newValue.arrests = this.locationDisplayData[position][location].arrests;
@@ -258,7 +283,7 @@ class LocationDataController {
         if (!this.locations) {
             return;
         }
-        this.service.getLocationData(this.station, yearMonth).then((promise) => {
+        this.service.getLocationData(this.stationDropDown.selectedOptions[0].id, yearMonth).then((promise) => {
             this.locationData.splice(position, 1, promise.data);
             let displayData = {};
             for (let idx=0; idx < this.locations.length; idx++) {

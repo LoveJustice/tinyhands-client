@@ -13,7 +13,7 @@ export default class ActivateAccountController {
     activateAccount() {
         if (this.$state.params.activation_key !== null) {
             this.AccountService.activateAccount(this.$state.params.activation_key).then((response) => {
-                if (response.data === "account_already_active/invalid_key") {
+                if (response.data === "invalid_key") {
                     this.invalidAccount = true;
                     this.account = null;
                 }
@@ -30,11 +30,17 @@ export default class ActivateAccountController {
 
     update() {
         this.AccountService.activateAccountPassword(this.$state.params.activation_key, this.account).then((response) => {
+        	this.nonMatchingPasswords = false;
+        	this.alreadyActive = false;
+        	this.passwordTooShort = false;
             if (response.data === "unmatching_passwords") {
                 this.nonMatchingPasswords = true;
             }
-            else if (response.data === "account_already_active/invalid_key") {
-                this.invalidAccount = true;
+            else if (response.data === "account_already_active") {
+                this.alreadyActive = true;
+            }
+            else if (response.data === "password_too_short") {
+            	this.passwordTooShort = true;
             }
             else if (response.data === "account_saved") {
                 this.session.attemptLogin(this.account.email, this.account.password1).then(() => {

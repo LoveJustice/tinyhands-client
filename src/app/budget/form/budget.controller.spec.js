@@ -125,9 +125,9 @@
 
      describe(`function getOtherCost`, () => {
          it(`should iterate though an array of objects, add up the values, and return 5`, () => {
-             let otherItems = [{ cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }];
+             let otherItems = [{ cost: "1.00" }, { cost: "1" }, { cost: "1.00" }, { cost: "1" }, { cost: "1.00" }];
              let amount = vm.getOtherCost(otherItems);
-             expect(amount).toEqual(5);
+             expect(amount).toEqual(500);
          });
      });
 
@@ -157,62 +157,60 @@
      describe(`function adminStationaryTotal`, () => {
          it(`should multiply administration_number_of_intercepts_last_month with administration_number_of_intercepts_last_month_multiplier, add that result withadministration_number_of_intercepts_last_month_adder, and return 6`, () => {
              vm.form.administration_number_of_intercepts_last_month = 2;
-             vm.form.administration_number_of_intercepts_last_month_multiplier = 2;
-             vm.form.administration_number_of_intercepts_last_month_adder = 2;
-             let total = (vm.form.administration_number_of_intercepts_last_month * vm.form.administration_number_of_intercepts_last_month_multiplier) + vm.form.administration_number_of_intercepts_last_month_adder;
+             vm.form.administration_number_of_intercepts_last_month_multiplier = "2";
+             vm.form.administration_number_of_intercepts_last_month_adder = "2";
              let result = vm.adminStationaryTotal();
-             expect(result).toEqual(total);
+             expect(result).toEqual(600);
          });
      });
 
      describe(`function adminMeetingsTotal`, () => {
          it(`should multiply administration_number_of_meetings_per_month with administration_number_of_meetings_per_month_multiplier and return 4`, () => {
              vm.form.administration_number_of_meetings_per_month = 2;
-             vm.form.administration_number_of_meetings_per_month_multiplier = 2;
-             let total = vm.form.administration_number_of_meetings_per_month * vm.form.administration_number_of_meetings_per_month_multiplier;
+             vm.form.administration_number_of_meetings_per_month_multiplier = "2";
              let result = vm.adminMeetingsTotal();
-             expect(result).toEqual(total);
+             expect(result).toEqual(400);
          });
      });
 
      describe(`function adminBoothRentalTotal`, () => {
          beforeEach(() => {
              vm.form.administration_booth = true;
-             vm.form.administration_booth_amount = 2;
+             vm.form.administration_booth_amount = "2";
              vm.form.administration_office = false;
-             vm.form.administration_office_amount = 3;
+             vm.form.administration_office_amount = "3";
          });
 
-         it(`when administration_booth is true and administration_office is false it should return 2`, () => {
+         it(`when administration_booth is true and administration_office is false it should return 200`, () => {
              let result = vm.adminBoothRentalTotal();
-             expect(result).toEqual(2);
+             expect(result).toEqual(200);
          });
 
-         it(`when administration_booth is false and administration_office is true it should return 3 `, () => {
+         it(`when administration_booth is false and administration_office is true it should return 300 `, () => {
              vm.form.administration_booth = false;
              vm.form.administration_office = true;
              let result = vm.adminBoothRentalTotal();
-             expect(result).toEqual(3);
+             expect(result).toEqual(300);
          });
 
-         it(`when administration_booth is true and administration_office is true it should return 5`, () => {
+         it(`when administration_booth is true and administration_office is true it should return 500`, () => {
              vm.form.administration_office = true;
              let result = vm.adminBoothRentalTotal();
-             expect(result).toEqual(5);
+             expect(result).toEqual(500);
          });
      });
 
      describe(`function adminTotal`, () => {
          beforeEach(() => {
              vm.form.administration_number_of_intercepts_last_month = 2;
-             vm.form.administration_number_of_intercepts_last_month_multiplier = 2;
-             vm.form.administration_number_of_intercepts_last_month_adder = 2;
+             vm.form.administration_number_of_intercepts_last_month_multiplier = "2";
+             vm.form.administration_number_of_intercepts_last_month_adder = "2";
              vm.form.administration_number_of_meetings_per_month = 2;
-             vm.form.administration_number_of_meetings_per_month_multiplier = 2;
+             vm.form.administration_number_of_meetings_per_month_multiplier = "2";
              vm.form.administration_booth = true;
-             vm.form.administration_booth_amount = 2;
+             vm.form.administration_booth_amount = "2";
              vm.form.administration_office = true;
-             vm.form.administration_office_amount = 3;
+             vm.form.administration_office_amount = "3";
              vm.form.totals.borderMonitoringStation.administration = 0;
          });
 
@@ -234,47 +232,47 @@
              expect(vm.adminBoothRentalTotal).toHaveBeenCalled();
          });
 
-         it(`should set bMS_administration to 15 `, () => {
+         it(`should set bMS_administration to 15.00 `, () => {
              vm.adminTotal();
-             expect(vm.form.totals.borderMonitoringStation.administration).toEqual(15);
+             expect(vm.form.totals.borderMonitoringStation.administration).toEqual("15.00");
          });
 
          it(`should return 15`, () => {
              let result = vm.adminTotal();
-             expect(result).toEqual(15);
+             expect(result).toEqual(1500);
          });
      });
 
      describe(`function awarenessTotal`, () => {
          beforeEach(() => {
              vm.form.awareness_contact_cards = false;
-             vm.form.awareness_contact_cards_amount = 1;
+             vm.form.awareness_contact_cards_amount = "1";
              vm.form.awareness_awareness_party_boolean = false;
-             vm.form.awareness_awareness_party = 1;
+             vm.form.awareness_awareness_party = "1";
          });
 
          it(`when awareness_contact_cards is true it should return 1`, () => {
              vm.form.awareness_contact_cards = true;
              let result = vm.awarenessTotal();
-             expect(result).toEqual(1);
+             expect(result).toEqual(100);
          });
 
          it(`when awareness_awareness_party_boolean is true it should return 1`, () => {
              vm.form.awareness_awareness_party_boolean = true;
              let result = vm.awarenessTotal();
-             expect(result).toEqual(1);
+             expect(result).toEqual(100);
          });
      });
 
      describe(`function communicationManagerTotal`, () => {
          beforeEach(() => {
              vm.form.communication_chair = true;
-             vm.form.communication_chair_amount = 2;
+             vm.form.communication_chair_amount = "2";
          });
 
          it(`when communication_chair is true it should return 2`, () => {
              let result = vm.communicationManagerTotal();
-             expect(result).toEqual(2);
+             expect(result).toEqual(200);
          });
 
          it(`when communication_chair is false it should return 0`, () => {
@@ -328,34 +326,34 @@
 
      describe(`function foodGasInterceptedGirls`, () => {
          it(`should mulitply food_and_gas_number_of_intercepted_girls_multiplier_before with food_and_gas_number_of_intercepted_girls and food_and_gas_number_of_intercepted_girls_multiplier_after then return 8`, () => {
-             vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = 2;
+             vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = "2";
              vm.form.food_and_gas_number_of_intercepted_girls = 2;
              vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = 2;
              let result = vm.foodGasInterceptedGirls();
-             expect(result).toEqual(8);
+             expect(result).toEqual(800);
          });
      });
 
      describe(`function foodGasLimboGirls`, () => {
          it(`should multiply food_and_gas_limbo_girls_multiplier with this.getOtherCost(this.form.other.Limbo) then return 8`, () => {
-             vm.form.food_and_gas_limbo_girls_multiplier = 2;
+             vm.form.food_and_gas_limbo_girls_multiplier = "2";
              vm.form.other.Limbo = [
-                     { cost:2 },
-                     { cost:2 }];
+                     { cost:"2" },
+                     { cost:"2" }];
              let result = vm.foodGasLimboGirls();
-             expect(result).toEqual(8);
+             expect(result).toEqual(800);
          });
      });
 
      describe(`function foodAndGasTotal`, () => {
          beforeEach(() => {
-             vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = 2;
+             vm.form.food_and_gas_number_of_intercepted_girls_multiplier_before = "2";
              vm.form.food_and_gas_number_of_intercepted_girls = 2;
-             vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = 2;
-             vm.form.food_and_gas_limbo_girls_multiplier = 2;
+             vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = "2";
+             vm.form.food_and_gas_limbo_girls_multiplier = "2";
              vm.form.other.Limbo = [
-                 { cost:2 },
-                 { cost:2 }];
+                 { cost:"2" },
+                 { cost:"2" }];
          });
 
          it(`should have called foodGasInterceptedGirls`, () => {
@@ -372,18 +370,18 @@
 
          it(`should set safeHouse.foodAndGas to 16 `, () => {
              vm.foodAndGasTotal();
-             expect(vm.form.totals.safeHouse.foodAndGas).toEqual(16);
+             expect(vm.form.totals.safeHouse.foodAndGas).toEqual("16.00");
          });
 
          it(`should return 16`, () => {
              let result = vm.foodAndGasTotal();
-             expect(result).toEqual(16);
+             expect(result).toEqual(1600);
          });
      });
 
      describe(`function miscellaneousTotal`, () => {
          beforeEach(() => {
-             vm.form.other.Miscellaneous = [{ cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }];
+             vm.form.other.Miscellaneous = [{ cost: "1" }, { cost: "1" }, { cost: "1" }, { cost: "1" }];
          });
 
          it(`should have called getOtherCost `, () => {
@@ -394,12 +392,12 @@
 
          it(`should set borderMonitoringStation.miscellaneous to 4`, () => {
              vm.miscellaneousTotal();
-             expect(vm.form.totals.borderMonitoringStation.miscellaneous).toEqual(4);
+             expect(vm.form.totals.borderMonitoringStation.miscellaneous).toEqual("4.00");
          });
 
          it(`should return 4`, () => {
              let result = vm.miscellaneousTotal();
-             expect(result).toEqual(4);
+             expect(result).toEqual(400);
          });
      });
 
@@ -434,38 +432,38 @@
      describe(`function shelterUtilTotal`, () => {
          it('should add shelter_rent, shelter_water, shelter_electricity then return 6', () => {
              vm.form.shelter_rent = true;
-             vm.form.shelter_rent_amount = 1;
+             vm.form.shelter_rent_amount = "1.00";
              vm.form.shelter_water = true;
-             vm.form.shelter_water_amount = 2;
+             vm.form.shelter_water_amount = "2.00";
              vm.form.shelter_electricity = true;
-             vm.form.shelter_electricity_amount = 3;
-             expect(vm.shelterUtilTotal()).toEqual(6);
+             vm.form.shelter_electricity_amount = "3.00";
+             expect(vm.shelterUtilTotal()).toEqual(600);
          });
      });
 
      describe(`function travelTotal`, () => {
          beforeEach(() => {
              vm.form.travel_chair_with_bike = false;
-             vm.form.travel_chair_with_bike_amount = 2;
+             vm.form.travel_chair_with_bike_amount = "2";
              vm.form.travel_plus_other = 2;
-             vm.form.other.Travel = [{ cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }, { cost: 1 }];
+             vm.form.other.Travel = [{ cost: "1" }, { cost: "1" }, { cost: "1" }, { cost: "1" }, { cost: "1" }];
          });
 
          it(`when travel_chair_with_bike is true it should return 7`, () => {
              vm.form.travel_chair_with_bike = true;
              let result = vm.travelTotal();
-             expect(result).toEqual(7);
+             expect(result).toEqual(700);
          });
 
          it(`when travel_chair_with_bike is false and other.Travel values are 0 it should return 0`, () => {
-             vm.form.other.Travel = [{ cost: 0 }, { cost: 0 }, { cost: 0 }, { cost: 0 }, { cost: 0 }];
+             vm.form.other.Travel = [{ cost: "0" }, { cost: "0" }, { cost: "0" }, { cost: "0" }, { cost: "0" }];
              let result = vm.travelTotal();
              expect(result).toEqual(0);
          });
 
          it(`should set borderMonitoringStation.travel to 5`, () => {
              vm.travelTotal();
-             expect(vm.form.totals.borderMonitoringStation.travel).toEqual(5);
+             expect(vm.form.totals.borderMonitoringStation.travel).toEqual("5.00");
          });
      });
 

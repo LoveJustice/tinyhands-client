@@ -1,5 +1,6 @@
 import {BaseFormController} from '../baseFormController.js';
 import {IrfStubController} from '../cif/irfStub.js';
+const CheckboxGroup = require('../checkboxGroup.js');
 
 export class BaseLegalCaseController extends BaseFormController {
     constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService) {
@@ -20,8 +21,28 @@ export class BaseLegalCaseController extends BaseFormController {
 
         this.legalCaseNumber = "";
         this.associatedPersons = [];
+        
+        this.countryCharges = {
+                1:[ //Nepal
+                    {'name':'Human Trafficking and Transportation (Control) Act (2064)', 'format':'col-md-6'},
+                    {'name':'Civil Criminal Procedure Code 2074', 'format':'col-md-6'},
+                    {'name':'Domestic Violence and Punishment Act 2066', 'format':'col-md-6'},
+                    {'name':'Foreign Employment Act 2064', 'format':'col-md-6'},
+                ],  
+           };
+        
+        this.charges = [];
+        this.checkboxGroup = new CheckboxGroup();
+        if (this.stateParams.countryId in this.countryCharges) {
+            this.charges = this.countryCharges[this.stateParams.countryId];
+        }
+        for (let idx=0; idx < this.charges.length; idx++) {
+            this.checkboxGroup.checkboxItem(1040, this.charges[idx].name);
+        }
 
         this.getLegalCase(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
+        
+        
         
     }
     

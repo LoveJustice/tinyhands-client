@@ -105,8 +105,12 @@
     	 <div class="col-md-12 form-group center-vertical">
     	 	<form-step class="col-md-2 control-label">Specific country code/law</form-step>
     	 	<div class="col-md-10">
-    	 		<textarea class="form-control" rows="2" ng-model="$ctrl.questions[1040].response.value"></textarea>
-    	 	</div>
+	    	 	<form-step type="checkbox" ng-repeat="charge in $ctrl.charges" class={{charge.format}}
+					label="{{charge.name}}" response-value="$ctrl.checkboxGroup.questions[1040][charge.name]"></form-step>
+				<form-step type="otherCheckbox" class="col-md-6"
+					label="Other" response-value="$ctrl.checkboxGroup.questions[1040].internalOther"></form-step>
+			</div>
+	</div>
     	 </div>
     </div>
     <div class="row">

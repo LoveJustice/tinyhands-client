@@ -1,11 +1,15 @@
 <div class="container" ng-cloak="">
         <h1>Set Your Password</h1>
         <div ng-show="activateAcctCtrl.invalidAccount">
-            <p>This password has already been set or your activation key is invalid.  Please contact your administrator.</p>
+            <p>Your activation key is invalid.  Please contact your administrator.</p>
         </div>
-        <div id="leftDiv" class="col-xs-4 col-md-4 col-lg-4" ng-hide="activateAcctCtrl.invalidAccount">
-            <p ng-hide="activateAcctCtrl.nonMatchingPasswords"> All you need to do now is enter a password.</p>
-            <p ng-show="activateAcctCtrl.nonMatchingPasswords" class="text-danger">Passwords do not match. Try again.</p>
+        <div ng-show="activateAcctCtrl.alreadyActive">
+            <p>The password has already been set for this account.  Please contact your administrator.</p>
+        </div>
+        <div id="leftDiv" class="col-xs-4 col-md-4 col-lg-4" ng-hide="activateAcctCtrl.invalidAccount || activateAcctCtrl.alreadyActive">
+            <div ng-if="!activateAcctCtrl.nonMatchingPasswords && !activateAcctCtrl.passwordTooShort"><p> All you need to do now is enter a password.</p></div>
+            <div ng-if="activateAcctCtrl.nonMatchingPasswords" class="text-danger"><p>Passwords do not match. Try again.</p></div>
+            <div ng-if="activateAcctCtrl.passwordTooShort" class="text-danger"><p>Passwords must be at least 8 characters in length. Try again.</p></div>
             <div class="row">
                 <div class="col-md-12 form-group" ng-class="{'has-error': activateAcctCtrl.nonMatchingPasswords}">
                     <label>Password</label>

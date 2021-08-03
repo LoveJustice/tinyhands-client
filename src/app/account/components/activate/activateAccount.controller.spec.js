@@ -29,7 +29,7 @@ describe('activateAccount Controller', () => {
             expect(accountService.activateAccount).toHaveBeenCalled();
         });
         it(`invalidAccount should be true`, () => {
-            let response = { data: "account_already_active/invalid_key" };
+            let response = { data: "invalid_key" };
             accountService.activateAccount = () => { return { then: (f) => { f(response) } } };
             vm.constructor($scope, $state, accountService, session);
             expect(vm.invalidAccount).toEqual(true);
@@ -52,11 +52,11 @@ describe('activateAccount Controller', () => {
             vm.update();
             expect(vm.nonMatchingPasswords).toEqual(true);
         });
-        it(`invalidAccount should be true`, () => {
-            let response = { data: "account_already_active/invalid_key" };
+        it(`alreadyActive should be true`, () => {
+            let response = { data: "account_already_active" };
             accountService.activateAccountPassword = () => { return { then: (f) => { f(response) } } };
             vm.update();
-            expect(vm.invalidAccount).toEqual(true);
+            expect(vm.alreadyActive).toEqual(true);
         });
         it(`session.attemptLogin should be called`, () => {
             let response = { data: "account_saved" };

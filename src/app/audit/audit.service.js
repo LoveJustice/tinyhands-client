@@ -17,8 +17,12 @@ export default class AuditService {
         }
     }
     
-    getSampleSize(country_id, form_id, start_date, end_date, percent) {
-    	return this.service.get(`api/audit/sample-size/?country=${country_id}&form=${form_id}&start=${start_date}&end=${end_date}&percent=${percent}`);
+    getSampleSize(country_id, form_id, start_date, end_date, percent, form_version) {
+        let url = `api/audit/sample-size/?country=${country_id}&form=${form_id}&start=${start_date}&end=${end_date}&percent=${percent}`;
+        if (form_version) {
+            url += `&form_version=${form_version}`;
+        }
+    	return this.service.get(url);
     }
     
     updateNotes(audit) {
@@ -62,5 +66,9 @@ export default class AuditService {
     
     submitAuditSample(auditSample) {
         return this.service.put(`api/audit-sample/${auditSample.id}/`, auditSample);
+    }
+    
+    getFormVersions(formId, countryId) {
+        return this.service.get(`api/forms/versions/${formId}/${countryId}/`);
     }
 }

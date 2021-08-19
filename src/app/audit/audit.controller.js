@@ -62,8 +62,31 @@ export default class AuditController {
             this.countries = promise.data;
             if (this.audit.country === null && this.countries.length === 1) {
                 this.audit.country = ''+this.countries[0].id;
+                this.getFormVersions();
             }
         });
+    }
+    
+    getFormVersions() {
+        this.formVersions = [];
+        if (this.audit.form === null || this.audit.country === null) {
+            return
+        }
+        
+        this.service.getFormVersions(this.audit.form, this.audit.country).then((promise) => {
+            this.formVersions = promise.data;
+            let found = false;
+            if (this.audit.form_version) {
+                for (let idx=0; idx < this.formVersions.length; idx++) {
+                    if (this.formVersions[idx] === this.audit.form_version) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    this.audit.form_version = null;
+                }
+            }
+        }, (error) => {alert(error);});
     }
     
     changeForm() {
@@ -88,6 +111,11 @@ export default class AuditController {
                 }
             });
         }
+        this.getFormVersions();
+    }
+    
+    changeCountry() {
+        this.getFormVersions();
     }
     
     getAudit() {
@@ -110,7 +138,8 @@ export default class AuditController {
     	let dateData = new DateData([]);
         let start_date = dateData.dateToString(this.start_date);
         let end_date = dateData.dateToString(this.end_date);
-    	this.service.getSampleSize(this.audit.country, this.audit.form, start_date, end_date, this.audit.percent_to_sample).then((promise) => {
+    	this.service.getSampleSize(this.audit.country, this.audit.form, start_date, end_date, this.audit.percent_to_sample,
+    	        this.audit.form_version).then((promise) => {
     		this.audit.forms_in_range = promise.data.candidates;
     		this.audit.total_samples = promise.data.sample_size;
     	});

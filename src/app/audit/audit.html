@@ -1,24 +1,25 @@
 <fieldset class="container-fluid padding-top-20" ng-disabled="$ctrl.isViewing">
 	<fieldset ng-disabled="$ctrl.audit.id !== null">
 		<div class="row col-md-12 center-vertical">
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="col-md-3">
 					<label>Form</label>
 				</div>
 				<div class="col-md-4">
 					<select ng-model="$ctrl.audit.form" , class="form-control"
-						, ng-change="$ctrl.changeForm()">
+							ng-change="$ctrl.changeForm()">
 						<option ng-repeat="form in $ctrl.forms" value="{{ form.id }}">{{
 							form.form_name }}</option>
 					</select>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="col-md-3">
 					<label>Country</label>
 				</div>
 				<div class="col-md-4">
-					<select ng-model="$ctrl.audit.country" , class="form-control">
+					<select ng-model="$ctrl.audit.country" , class="form-control"
+							ng-change="$ctrl.changeCountry()">
 						<option ng-repeat="country in $ctrl.countries"
 							value="{{ country.id }}">{{ country.name }}</option>
 					</select>
@@ -26,7 +27,19 @@
 			</div>
 		</div>
 		<div class="row col-md-12 center-vertical padding-top-10">
-			<div class="col-md-6">
+			<div class="col-md-4">
+				<div class="col-md-3">
+					<label>Form Version</label>
+				</div>
+				<div class="col-md-4">
+					<select ng-model="$ctrl.audit.form_version" , class="form-control">
+						<option value="">ALL</option>
+						<option ng-repeat="formVersion in $ctrl.formVersions" value="{{ formVersion}}">{{
+							formVersion }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-4">
 				<div class="col-md-3">
 					<label>Start Date</label>
 				</div>
@@ -34,7 +47,7 @@
 					<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.start_date">
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
 				<div class="col-md-3">
 					<label>End Date</label>
 				</div>

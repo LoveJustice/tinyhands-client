@@ -338,8 +338,8 @@
          it(`should multiply food_and_gas_limbo_girls_multiplier with this.getOtherCost(this.form.other.Limbo) then return 8`, () => {
              vm.form.food_and_gas_limbo_girls_multiplier = "2";
              vm.form.other.Limbo = [
-                     { cost:"2" },
-                     { cost:"2" }];
+                     { cost:"200" },
+                     { cost:"200" }];
              let result = vm.foodGasLimboGirls();
              expect(result).toEqual(800);
          });
@@ -352,8 +352,8 @@
              vm.form.food_and_gas_number_of_intercepted_girls_multiplier_after = "2";
              vm.form.food_and_gas_limbo_girls_multiplier = "2";
              vm.form.other.Limbo = [
-                 { cost:"2" },
-                 { cost:"2" }];
+                 { cost:"200" },
+                 { cost:"200" }];
          });
 
          it(`should have called foodGasInterceptedGirls`, () => {

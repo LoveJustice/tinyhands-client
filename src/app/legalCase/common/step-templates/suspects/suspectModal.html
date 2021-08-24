@@ -30,7 +30,7 @@
             		<label>Arrest Status</label>
 	            </div>
 	            <div class="col-md-8 form-group">
-			        <select ng-model="SuspectModalController.questions[1010].response.value">
+			        <select ng-model="SuspectModalController.questions[1010].response.value" ng-disabled="SuspectModalController.dateData.questions[1044].value">
 			        	<option value=""></option>
 				        <option value="No">No</option>
 	                	<option value="Yes - But Has Been Released">Yes - But Has Been Released</option>
@@ -46,7 +46,7 @@
 	            </div>
 	            <div class="col-md-3 form-group">
 			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1011].value"
-			        		ng-disabled="SuspectModalController.dateData.questions[1044].value">
+			        		ng-disabled="SuspectModalController.dateData.questions[1011].value && SuspectModalController.dateData.questions[1044].value">
 		        </div>
 		        <div class="col-md-2 form-group" ng-show="SuspectModalController.dateData.questions[1044].value">
             		<label>Submitted</label>
@@ -61,7 +61,7 @@
 	            		<label>Verdict</label>
 		            </div>
 		            <div class="col-md-6 form-group">
-				        <select ng-model="SuspectModalController.questions[1012].response.value">
+				        <select ng-model="SuspectModalController.questions[1012].response.value" ng-disabled="SuspectModalController.dateData.questions[1043].value">
 				        	<option value=null></option>
 					        <option value="Acquittal">Acquittal</option>
 		                	<option value="Conviction">Conviction</option>
@@ -81,7 +81,7 @@
 		            </div>
 		            <div class="col-md-3 form-group">
 				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions[1013].value"
-				        		ng-disabled="SuspectModalController.dateData.questions[1044].value">
+				        		ng-disabled="SuspectModalController.dateData.questions[1013].value && SuspectModalController.dateData.questions[1043].value">
 			        </div>
 			        <div class="col-md-2 form-group" ng-show="SuspectModalController.dateData.questions[1043].value">
             		<label>Submitted</label>

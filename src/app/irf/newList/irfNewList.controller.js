@@ -27,7 +27,7 @@ export default class IrfNewListController {
         this.queryParameters = {
             page_size: 20,
             reverse: true,
-            ordering: 'date_time_of_interception',
+            ordering: 'date_of_interception,time_of_interception',
             search: '',
             status: '!invalid',
             country_ids: '',
@@ -58,10 +58,10 @@ export default class IrfNewListController {
             onDeselectAll: this.countryChange,
             ctrl: this,
         };
-        this.queryParameters.verification_filter = 'None';
-        this.verification_end = new Date();
-        this.verification_start = new Date();
-        this.verification_start.setUTCDate(1);
+        this.queryParameters.date_filter = 'None';
+        this.date_end = new Date();
+        this.date_start = new Date();
+        this.date_start.setUTCDate(1);
 
         this.oldIndex = 3;
         this.status = {};
@@ -124,22 +124,22 @@ export default class IrfNewListController {
             }
         }
         
-        let tmp = sessionStorage.getItem('irfList-verification_filter');
+        let tmp = sessionStorage.getItem('irfList-date_filter');
         if (tmp !== null) {
-            this.queryParameters.verification_filter = tmp;
+            this.queryParameters.date_filter = tmp;
         }
-        tmp = sessionStorage.getItem('irfList-verification_start');
+        tmp = sessionStorage.getItem('irfList-date_start');
         if (tmp !== null) {
-            this.verification_start = new Date(tmp);
+            this.date_start = new Date(tmp);
         }
-        tmp = sessionStorage.getItem('irfList-verification_end');
+        tmp = sessionStorage.getItem('irfList-date_end');
         if (tmp !== null) {
-            this.verification_end = new Date(tmp);
+            this.date_end = new Date(tmp);
         }
         
-        sessionStorage.setItem('irfList-verification_filter', this.queryParameters.verification_filter);
-        sessionStorage.setItem('irfList-verification_start', this.verification_start);
-        sessionStorage.setItem('irfList-verification_end', this.verification_end);
+        sessionStorage.setItem('irfList-date_filter', this.queryParameters.date_filter);
+        sessionStorage.setItem('irfList-date_start', this.date_start);
+        sessionStorage.setItem('irfList-date_end', this.date_end);
         
         if (this.queryParameters.status !== '') {
             this.status.selectedOptions = [];
@@ -151,7 +151,6 @@ export default class IrfNewListController {
             }
         }
         
-
         this.getUserCountries();
         this.searchIrfs();
 
@@ -165,7 +164,14 @@ export default class IrfNewListController {
     transform(queryParameters, pageNumber) {
         var queryParams = angular.copy(queryParameters);
         if (queryParams.reverse) {
-            queryParams.ordering = '-' + queryParams.ordering;
+            let parts = queryParams.ordering.split(',');
+            queryParams.ordering = "";
+            for (let idx=0; idx < parts.length; idx++) {
+                if (queryParams.ordering.length > 0) {
+                    queryParams.ordering += ',';
+                }
+                queryParams.ordering += '-' + parts[idx];
+            }
         }
         queryParams.page = pageNumber;
         delete queryParams.reverse;
@@ -241,12 +247,12 @@ export default class IrfNewListController {
         sessionStorage.setItem('irfList-search', this.queryParameters.search);
         sessionStorage.setItem('irfList-status', this.queryParameters.status);
         sessionStorage.setItem('irfList-country_ids', this.queryParameters.country_ids);
-        sessionStorage.setItem('irfList-verification_filter', this.queryParameters.verification_filter);
-        sessionStorage.setItem('irfList-verification_start', this.verification_start);
-        sessionStorage.setItem('irfList-verification_end', this.verification_end);
+        sessionStorage.setItem('irfList-date_filter', this.queryParameters.date_filter);
+        sessionStorage.setItem('irfList-date_start', this.date_start);
+        sessionStorage.setItem('irfList-date_end', this.date_end);
         
-        this.queryParameters.verification_start = this.dateAsString(this.verification_start);
-        this.queryParameters.verification_end = this.dateAsString(this.verification_end);
+        this.queryParameters.date_start = this.dateAsString(this.date_start);
+        this.queryParameters.date_end = this.dateAsString(this.date_end);
         this.timer = this.timeout(() => {
             this.state.go('.', {
                 search: this.queryParameters.search,

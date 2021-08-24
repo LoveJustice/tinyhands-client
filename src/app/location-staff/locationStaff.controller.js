@@ -1,3 +1,5 @@
+/* global jQuery */
+/* global alert */
 import './locationStaff.less';
 class LocationStaffController {
     constructor($rootScope, SessionService, locationStaffService, StickyHeader) {
@@ -291,8 +293,9 @@ class LocationStaffController {
         }
     }
     
-    saveWorkFraction(value, location, staff, oldWorkFraction) {
-    	let newValue = jQuery.extend(true, {}, value);
+    saveWorkFraction(value, location, staff, ignoreOldWorkFraction) {
+    	let newValue = ignoreOldWorkFraction;
+    	newValue = jQuery.extend(true, {}, value);
         this.saveCount +=1;
         this.service.setWorkFraction(newValue).then (() =>{
 	        	this.saveCount -= 1;

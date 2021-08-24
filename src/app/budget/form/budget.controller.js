@@ -89,11 +89,45 @@ export default class BudgetController {
             this.getBudgetForm();
         }
     }
+    
+    strToPennies(strValue) {
+        let cents = 0;
+        let dollars = 0;
+        let pennies = 0;
+        if (strValue) {
+            let pos = strValue.indexOf(".");
+            if (pos < 0) {
+                dollars = parseInt(strValue);
+            } else {
+                dollars= parseInt(strValue.substring(0,pos));
+                let decimalDigits = strValue.length - (pos+1);
+                if (decimalDigits === 1) {
+                    cents = parseInt(strValue.substring(pos+1));
+                    cents *= 10;
+                } else if (decimalDigits === 2) {
+                    cents = parseInt(strValue.substring(pos+1));
+                }
+            }
+            pennies = dollars * 100 + cents;
+        }
+        return pennies;
+    }
+    
+    penniesToStr(pennies) {
+        let dollars = Math.floor(pennies / 100);
+        let cents = pennies - dollars * 100;
+        let str = cents + '';
+        if (cents < 10) {
+            str = '0' + str;
+        }
+        str = dollars + '.' + str;
+        return str;
+    }
 
     getOtherCost(otherItems) {
         let amount = 0;
         for (let i in otherItems) {
-            amount += this.validAmount(otherItems[i].cost);
+            amount += this.strToPennies(otherItems[i].cost);
         }
         return amount;
     }
@@ -128,30 +162,48 @@ export default class BudgetController {
     // REGION: Administration
     adminStationaryTotal() {
         return (
-            this.validAmount(this.form.administration_number_of_intercepts_last_month * this.form.administration_number_of_intercepts_last_month_multiplier) +
-            this.validAmount(this.form.administration_number_of_intercepts_last_month_adder)
+            this.validAmount(this.form.administration_number_of_intercepts_last_month) *
+                this.strToPennies(this.form.administration_number_of_intercepts_last_month_multiplier) +
+                this.strToPennies(this.form.administration_number_of_intercepts_last_month_adder)
         );
+    }
+    
+    adminStationaryTotalDisplay() {
+        return this.penniesToStr(this.adminStationaryTotal());
     }
 
     adminMeetingsTotal() {
-        return this.validAmount(this.form.administration_number_of_meetings_per_month * this.form.administration_number_of_meetings_per_month_multiplier);
+        return this.validAmount(this.form.administration_number_of_meetings_per_month) * this.strToPennies(this.form.administration_number_of_meetings_per_month_multiplier);
+    }
+    
+    adminMeetingsTotalDisplay() {
+        return this.penniesToStr(this.adminMeetingsTotal());
     }
 
     adminBoothRentalTotal() {
         var amount = 0;
         if (this.form.administration_booth) {
-            amount += this.validAmount(this.form.administration_booth_amount);
+            amount += this.strToPennies(this.form.administration_booth_amount);
         }
         if (this.form.administration_office) {
-            amount += this.validAmount(this.form.administration_office_amount);
+            amount += this.strToPennies(this.form.administration_office_amount);
         }
         return amount;
+    }
+    
+    adminBoothRentalTotalDisplay() {
+        return this.penniesToStr(this.adminBoothRentalTotal());
     }
 
     adminTotal() {
         let amount = this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal() + this.getOtherCost(this.form.other.Administration);
-        this.form.totals.borderMonitoringStation.administration = amount;
+        this.form.totals.borderMonitoringStation.administration = this.penniesToStr(amount);
         return amount;
+    }
+    
+    adminTotalDisplay() {
+        this.adminTotal();
+        return this.form.totals.borderMonitoringStation.administration;
     }
     // ENDREGION: Administration
 
@@ -159,14 +211,19 @@ export default class BudgetController {
     awarenessTotal() {
         var amount = 0;
         if (this.form.awareness_contact_cards) {
-            amount += this.validAmount(this.form.awareness_contact_cards_amount);
+            amount += this.strToPennies(this.form.awareness_contact_cards_amount);
         }
         if (this.form.awareness_awareness_party_boolean) {
-            amount += this.validAmount(this.form.awareness_awareness_party);
+            amount += this.strToPennies(this.form.awareness_awareness_party);
         }
         amount += this.getOtherCost(this.form.other.Awareness);
-        this.form.totals.borderMonitoringStation.awareness = amount;
+        this.form.totals.borderMonitoringStation.awareness = this.penniesToStr(amount);
         return amount;
+    }
+    
+    awarenessTotalDisplay() {
+        this.awarenessTotal();
+        return this.form.totals.borderMonitoringStation.awareness;
     }
     // ENDREGION: Awareness
 
@@ -175,7 +232,7 @@ export default class BudgetController {
         var amount = 0;
 
         if (this.form.communication_chair) {
-            amount += this.validAmount(this.form.communication_chair_amount);
+            amount += this.strToPennies(this.form.communication_chair_amount);
         }
         return amount;
     }
@@ -184,53 +241,67 @@ export default class BudgetController {
     	this.staffItemsTotal();
         let amount = this.communicationManagerTotal();
         if (this.form.staff) {
-          amount += this.form.staff.Total.items.Communication.cost;
+          amount += this.strToPennies(this.form.staff.Total.items.Communication.cost);
         }
         amount += this.getOtherCost(this.form.other.Communication);
-        this.form.totals.borderMonitoringStation.communication = amount;
+        this.form.totals.borderMonitoringStation.communication = this.penniesToStr(amount);
         return amount;
+    }
+    
+    communicationTotalDisplay() {
+        this.communicationTotal();
+        return this.form.totals.borderMonitoringStation.communication;
     }
     // ENDREGION: Communication
 
     // REGION: Food And Gas
     foodGasInterceptedGirls() {
         return this.validAmount(
-            this.form.food_and_gas_number_of_intercepted_girls_multiplier_before *
+            this.strToPennies(this.form.food_and_gas_number_of_intercepted_girls_multiplier_before) *
                 this.form.food_and_gas_number_of_intercepted_girls *
                 this.form.food_and_gas_number_of_intercepted_girls_multiplier_after
         );
     }
+    
+    foodGasInterceptedGirlsDisplay() {
+        return this.penniesToStr(this.foodGasInterceptedGirls());
+    }
 
     foodGasLimboGirls() {
-        return this.validAmount(this.form.food_and_gas_limbo_girls_multiplier * this.getOtherCost(this.form.other.Limbo));
+        return this.validAmount(parseInt(this.form.food_and_gas_limbo_girls_multiplier) * this.getOtherCost(this.form.other.Limbo)/100);
     }
 
     foodAndGasTotal() {
         let amount = this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
         amount += this.getOtherCost(this.form.other.FoodAndGas);
-        this.form.totals.safeHouse.foodAndGas = amount;
+        this.form.totals.safeHouse.foodAndGas = this.penniesToStr(amount);
         return amount;
     }
     // ENDREGION: Food And Gas
 
     // REGION: Medical
     medicalTotal() {
-        let total = this.form.medical_last_months_expense + this.getOtherCost(this.form.other.Medical);
-        return this.form.medical_last_months_expense + total;
+        let total = this.strToPennies(this.form.medical_last_months_expense) + this.getOtherCost(this.form.other.Medical);
+        return total;
     }
     // ENDREGION: Medical
 
     // REGION: Miscellaneous
     miscellaneousTotal() {
         let amount = this.getOtherCost(this.form.other.Miscellaneous);
-        this.form.totals.borderMonitoringStation.miscellaneous = amount;
+        this.form.totals.borderMonitoringStation.miscellaneous = this.penniesToStr(amount);
         return amount;
+    }
+    
+    miscellaneousTotalDisplay() {
+        this.miscellaneousTotal();
+        return this.form.totals.borderMonitoringStation.miscellaneous;
     }
     // ENDREGION: Miscellaneous
     
     pastMonthMoneySentTotal() {
         let amount = this.getOtherCost(this.form.other.PastMonth); 
-        return amount;
+        return this.penniesToStr(amount);
     }
     
     staffItemsTotal() {
@@ -245,12 +316,12 @@ export default class BudgetController {
     		let total = 0;
     		this.form.staff.sortedStaff.forEach(staff => {
     			let staffEntry = this.form.staff[staff.staffKey];
-    			let cost = staffEntry.items[itemType].cost;
+    			let cost = this.strToPennies(staffEntry.items[itemType].cost);
     			if (!Number.isNaN(cost)) {
     				total += Number(cost);
     			}
     		});
-    		this.form.staff.Total.items[itemType] = {cost:total};
+    		this.form.staff.Total.items[itemType] = {cost:this.penniesToStr(total)};
     	});
     }
 
@@ -262,14 +333,14 @@ export default class BudgetController {
         if (this.form.staff && this.form.staff.itemTypes) {
 	        this.form.staff.itemTypes.forEach(itemType => {
 	        	if (itemType !== 'Communication' && itemType !== 'Travel') {
-	        		amount += this.form.staff.Total.items[itemType].cost;
+	        		amount += this.strToPennies(this.form.staff.Total.items[itemType].cost);
 	        	}
 	        });
 	    }
         
         amount += this.getOtherCost(this.form.other.Salaries);
 
-        this.form.totals.borderMonitoringStation.salaries_And_Benefits = amount;
+        this.form.totals.borderMonitoringStation.salaries_And_Benefits = this.penniesToStr(amount);
 
         return amount;
     }
@@ -279,24 +350,33 @@ export default class BudgetController {
     shelterUtilTotal() {
     	let total = 0;
     	if (this.form.shelter_rent) {
-    		total += this.validAmount(this.form.shelter_rent_amount);
+    		total += this.strToPennies(this.form.shelter_rent_amount);
     	}
     	if (this.form.shelter_water) {
-    		total += this.validAmount(this.form.shelter_water_amount);
+    		total += this.strToPennies(this.form.shelter_water_amount);
     	}
     	if (this.form.shelter_electricity) {
-    		total += this.validAmount(this.form.shelter_electricity_amount);
+    		total += this.strToPennies(this.form.shelter_electricity_amount);
     	}
         return total;
+    }
+    
+    shelterUtilTotalDisplay() {
+        return this.penniesToStr(this.shelterUtilTotal());
     }
     
     potentialVictimCareTotal() {
     	let amount = 0;
     	amount += this.shelterUtilTotal();
     	amount += this.foodAndGasTotal();
-    	this.form.totals.borderMonitoringStation.potential_Victim_Care = amount;
+    	amount += this.getOtherCost(this.form.other.Shelter);
+    	this.form.totals.borderMonitoringStation.potential_Victim_Care = this.penniesToStr(amount);
     	
     	return amount;
+    }
+    
+    potentialVictimCareTotalDisplay() {
+        return this.form.totals.borderMonitoringStation.potential_Victim_Care;
     }
     // ENDREGION: Shelter
 
@@ -305,27 +385,37 @@ export default class BudgetController {
     	this.staffItemsTotal();
         var amount = 0;
         if (this.form.travel_chair_with_bike) {
-            amount += this.form.travel_chair_with_bike_amount;
+            amount += this.strToPennies(this.form.travel_chair_with_bike_amount);
         }
         if (this.form.staff) {
-        	 amount += this.form.staff.Total.items.Travel.cost;
+        	 amount += this.strToPennies(this.form.staff.Total.items.Travel.cost);
         }
         amount += this.getOtherCost(this.form.other.Travel);
-        this.form.totals.borderMonitoringStation.travel = amount;
+        this.form.totals.borderMonitoringStation.travel = this.penniesToStr(amount);
         return amount;
+    }
+    
+    travelTotalDisplay() {
+        this.travelTotal();
+        return this.form.totals.borderMonitoringStation.travel;
     }
     // ENDREGION: Travel
 
     // REGION: Functions that handle totals
     setBorderMonitoringStationTotals() {
         let amount = this.salariesAndBenefitsTotal() + this.communicationTotal() + this.travelTotal() + this.adminTotal() + this.potentialVictimCareTotal() + this.awarenessTotal() + this.miscellaneousTotal();
-        this.borderMonitoringStationTotal = amount;
+        this.borderMonitoringStationTotal = this.penniesToStr(amount);
         return amount;
     }
 
     setTotals() {
         let amount = this.setBorderMonitoringStationTotals();
-        this.total = amount;
+        this.total = this.penniesToStr(amount);
+    }
+    
+    displayTotal() {
+        this.setTotals();
+        return this.total;
     }
     // ENDREGION: Functions that handle totals
 
@@ -453,6 +543,14 @@ export default class BudgetController {
         this.form.other[key] = items.filter(item => {
             return item.form_section === Constants.FormSections[key];
         });
+        if (key === 'Limbo') {
+            for (let idx=0; idx < this.form.other.Limbo.length; idx++) {
+                let pos = this.form.other.Limbo[idx].cost.indexOf(".");
+                if (pos >= 0) {
+                    this.form.other.Limbo[idx].cost = this.form.other.Limbo[idx].cost.substring(0,pos);
+                }
+            }
+        }
     }
 
     getStaff() {

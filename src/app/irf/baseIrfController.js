@@ -102,11 +102,8 @@ export class BaseIrfController extends BaseFormController {
     		    this.getIrfComplete();
     		    this.interceptionDate = null;
     		    this.clock = null;
-    		    if (this.questions[4].response.value && this.questions[4].response.value.length > 9) {
-    		        this.interceptionDate = this.dateAsUTC(this.questions[4].response.value.substr(0,10));
-    		        if (this.questions[4].response.value.length > 15) {
-    		            this.clock = this.timeAsUTC(this.questions[4].response.value.substr(11));
-    		        }
+    		    if (this.questions[1067].response.value && this.questions[1067].response.value.length > 4) {
+    		        this.clock = this.timeAsUTC(this.questions[1067].response.value);
     		    }
     		    this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}$';
     		    this.formNumberChange();
@@ -205,15 +202,12 @@ export class BaseIrfController extends BaseFormController {
     }
     
     processInterceptionDate() {
-        let dateTime = '';
-        if (this.interceptionDate) {
-            dateTime = this.dateAsString(this.interceptionDate);
-            if (this.clock !== null) {
-                dateTime += ' ' + this.timeAsString(this.clock);
-            }
+        let theTime = null;
+        if (this.clock !== null) {
+            theTime = this.timeAsString(this.clock);
         }
         
-        this.questions[4].response.value = dateTime;
+        this.questions[1067].response.value = theTime;
     }
     
     processFailedResponse(response, location) {
@@ -292,10 +286,10 @@ export class BaseIrfController extends BaseFormController {
     }
     
     setFindings() {
-        if ((this.questions[814].response.value && this.questions[607].response.value) || !this.questions[4].response.value || this.questions[4].response.value.length < 10) {
+        if ((this.questions[814].response.value && this.questions[607].response.value) || !this.questions[1066].response.value || this.questions[1066].response.value.length < 10) {
             return;
         }
-        let irfDate = new Date(this.questions[4].response.value);
+        let irfDate = new Date(this.questions[1066].response.value);
         let cutoff = new Date(2020,2,1);
         if (irfDate < cutoff) {
             return;
@@ -374,7 +368,7 @@ export class BaseIrfController extends BaseFormController {
 
     autoSaveHasMinimumData() {
         if (this.questions[1].response.value === null || this.questions[1].response.value === '' ||
-                this.questions[4].response.value === null || this.questions[4].response.value === '') {
+                this.questions[1066].response.value === null || this.questions[1066].response.value === '') {
             return false;
         }
         return true;

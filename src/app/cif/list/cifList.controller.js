@@ -24,7 +24,7 @@ export default class CifListController {
         this.nextPage = "";
         this.timeZoneDifference ="+0545";
         this.queryParameters = {
-            "page_size": 25,
+            "page_size": 20,
             "reverse": true,
             "ordering": 'date_time_of_interception',
             "search": '',
@@ -33,6 +33,12 @@ export default class CifListController {
         };
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
+        
+        this.paginate = {
+            items:0,
+            pageSize:this.queryParameters.page_size,
+            currentPage:1,
+        };
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -105,11 +111,12 @@ export default class CifListController {
         return this.session.checkPermission('CIF','ADD',null, null) === true;
     }
 
-    transform(queryParams) {
+    transform(queryParams, pageNumber) {
         var queryParameters = angular.copy(queryParams);
         if (queryParameters.reverse) {
             queryParameters.ordering = '-' + queryParameters.ordering;
         }
+        queryParameters.page = pageNumber;
         delete queryParameters.reverse;
         var params = [];
         Object.keys(queryParameters).forEach( (name) => {
@@ -118,14 +125,6 @@ export default class CifListController {
         	}
         });
         return params;
-    }
-
-    extractPage(url) {
-        try {
-            return url.slice(url.indexOf('page=')).split('&')[0].split('=')[1];
-        } catch (e) {
-            return 0;
-        }
     }
     
     createCif() {
@@ -251,22 +250,17 @@ export default class CifListController {
     }
 
     getCifList() {
-        this.spinnerOverlayService.show("Searching for CIFs...");        
-        this.service.getCifList(this.transform(this.queryParameters)).then( (promise) => {
-            this.cifs = promise.data.results;
-            this.addUrls(this.cifs);
-            this.nextPage = this.extractPage(promise.data.next);
-            this.spinnerOverlayService.hide();        
-        });
+        this.showPage(1);
     }
-
-    showMoreCifs() {
-        let params = angular.copy(this.queryParameters);
-        params.page = this.nextPage;
-        this.service.getMoreCifs(this.transform(params)).then( (promise) => {
-            this.cifs = this.cifs.concat(promise.data.results);
-            this.nextPage = this.extractPage(promise.data.next);
-            this.addUrls(this.cifs);
+    
+    showPage(pageNumber) {
+        this.spinnerOverlayService.show("Searching for CIFs...");        
+        this.service.getCifList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
+            this.cifs = promise.data.results;
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
+            this.spinnerOverlayService.hide();
+            this.addUrls(this.cifs)
         });
     }
 

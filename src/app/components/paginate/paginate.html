@@ -1,4 +1,8 @@
 <div id="paginateDiv" class="paginateCenter" ng-if="paginateController.shouldDisplay()">
+	<div style="max-width=200px">
+		Items: {{ paginateController.pageControl.items }}
+		Pages: {{ paginateController.numberOfPages }}
+	</div>
 	<div class="paginateContainer" style="max-width:{{paginateController.getDisplayWidth()}}px">
 		<div class="pageNumber">
 			<div ng-if="paginateController.shouldDisplayPrevious()" ng-click="paginateController.pageSelected(paginateController.pageControl.currentPage-1)">

@@ -33,6 +33,12 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
         this.timer = {};
         this.addSearchValue = "";
         
+        this.paginate = {
+            items:0,
+            pageSize:this.paginateBy,
+            currentPage:1,
+        };
+        
         this.showIdMgmt = true;
         this.showAddAlias = false;
         this.showRemoveAlias = false;
@@ -105,13 +111,18 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
     }
 
     getPendingMatches() {
+        this.showPage(1);
+    }
+    
+    showPage(pageNumber) {
         this.loading = true;
-        this.personManagementPendingListService.listPendingMatches(this.getQueryParams())
+        this.personManagementPendingListService.listPendingMatches(this.getQueryParams(pageNumber))
             .then((promise) => {
                 this.pendingMatches = promise.data.results;
-                this.nextPageUrl = this.nextUrl(promise.data.next);
+                this.paginate.items = promise.data.count;
+                this.paginate.currentPage = pageNumber;
                 this.loading = false;
-            });
+            }); 
     }
 
     loadMorePendingMatches() {
@@ -124,12 +135,10 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
             });
     }
 
-    getQueryParams(loadMore = false) {
+    getQueryParams(pageNumber) {
         var params = [];
-        params.push({ "name": "page_size", "value": this.paginateBy });
-        if (this.nextPageUrl && loadMore) {
-            params.push({ "name": "page", "value": this.nextPageUrl });
-        }
+        params.push({ "name": "page_size", "value": this.paginate.pageSize });
+        params.push({ "name": "page", "value": pageNumber });
         if (this.searchValue) {
             params.push({ "name": "search", "value": this.searchValue });
         }

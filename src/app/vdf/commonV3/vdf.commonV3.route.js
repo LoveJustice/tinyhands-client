@@ -1,6 +1,20 @@
 function VdfCommonV3Routes($stateProvider) {
     'ngInject';
     $stateProvider
+        .state('vdfIndiaNetwork', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
+        .state('vdfKenya', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
     	.state('vdfLesotho', {
             url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV3Component',
@@ -15,6 +29,13 @@ function VdfCommonV3Routes($stateProvider) {
                 id: null
             }
         })
+        .state('vdfNepal', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
         .state('vdfMozambique', {
             url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV3Component',
@@ -23,6 +44,13 @@ function VdfCommonV3Routes($stateProvider) {
             }
         })
         .state('vdfNamibia', {
+            url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
+        .state('vdfRwanda', {
             url: '/vdf/commonV3:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV3Component',
             params: {

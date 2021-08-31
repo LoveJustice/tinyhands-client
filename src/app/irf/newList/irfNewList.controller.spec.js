@@ -188,12 +188,12 @@ describe('IRF List Controller',() => {
 
     describe('function getSortIcon', () => {
         it('expect it to return false when column is equal, but not reverse is not true', () => {
-            var val = vm.getSortIcon('date_time_of_interception', '!reverse');
+            var val = vm.getSortIcon('date_of_interception,time_of_interception', '!reverse');
             expect(val).toBe(false);
         });
 
         it('expect it to return true when column is equal and reverse is true', () => {
-            var val = vm.getSortIcon('date_time_of_interception', 'reverse');
+            var val = vm.getSortIcon('date_of_interception,time_of_interception', 'reverse');
             expect(val).toBe(true);
         });
 

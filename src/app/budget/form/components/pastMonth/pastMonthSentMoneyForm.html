@@ -8,7 +8,11 @@
         <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherPastMonthItem.name" ng-disabled="budgetCtrl.isViewing" required/>
       </div>
       <div class="col-md-4">
-        <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()" ng-model="otherPastMonthItem.cost" ng-disabled="budgetCtrl.isViewing" required/>
+        <input class="text-right form-control" type="text" 
+        		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+        		ng-change="budgetCtrl.setTotals()" 
+        		ng-model="otherPastMonthItem.cost" 
+        		ng-disabled="budgetCtrl.isViewing" required/>
       </div>
       <div class="col-md-2">
         <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.PastMonth, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>

@@ -1,4 +1,5 @@
 /* global jQuery */
+/* global alert */
 import './locationData.less';
 class LocationDataController {
     constructor($rootScope, SessionService, locationDataService, SpinnerOverlayService, StickyHeader, toastr) {
@@ -118,7 +119,7 @@ class LocationDataController {
             if (('' + this.countries[idx].id) === this.country) {
                 sessionStorage.setItem('station-stats-country', this.countries[idx].name);
                 if (this.countries[idx].options && 'legal_arrest_and_conviction' in this.countries[idx].options) {
-                	this.inputArrests = !this.countries[idx].options['legal_arrest_and_conviction'];
+                	this.inputArrests = !this.countries[idx].options.legal_arrest_and_conviction;
                 } else {
                 	this.inputArrests = true;
                 }
@@ -266,7 +267,7 @@ class LocationDataController {
 	        	this.saveCount -= 1;
 	        }, ()=>{
 	        	let locationName = "Unknown";
-	        	let monthName = this.monthName(this.yearMonthOffset(this.yearAndMonth, -position))
+	        	let monthName = this.monthName(this.yearMonthOffset(this.yearAndMonth, -position));
 	        	for (let idx=0; idx < this.locations.length; idx++) {
 	        		if (this.locations[idx].id === location) {
 	        			locationName = this.locations[idx].name;

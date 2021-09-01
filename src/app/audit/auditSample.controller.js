@@ -30,14 +30,18 @@ export default class AuditSampleController {
         this.service.getAuditSample(this.stateParams.id).then((promise) => {
             this.auditSample = promise.data;
             let baseRoute = this.auditSample.form_name;
-            let params = {
-                    id: this.auditSample.form_id,
-                    stationId:this.auditSample.station_id,
-                    countryId:this.auditSample.country_id,
-                    isViewing:this.isViewing,
-                    formName:this.auditSample.form_name,
-                };
-            this.auditSample.ref = this.state.href(baseRoute, params);
+            if (this.auditSample.station_id) {
+                let params = {
+                        id: this.auditSample.form_id,
+                        stationId:this.auditSample.station_id,
+                        countryId:this.auditSample.country_id,
+                        isViewing:this.isViewing,
+                        formName:this.auditSample.form_name,
+                    };
+                this.auditSample.ref = this.state.href(baseRoute, params);
+            } else {
+                this.auditSample.ref = null;
+            }
             if (this.auditSample.corrected === null || this.auditSample.corrected === '') {
                 this.auditSample.corrected = 'No';
             }

@@ -76,10 +76,9 @@
 	    </table>
 	</div>
 	<div class="row text-center">
-        <button ng-disabled="!vm.nextPageUrl" ng-click="vm.loadMoreKnownPersons()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-            Load more results
-        </button>
+        <paginate page-control="vm.paginate" controller="vm">
     </div>
+    <br>
 	<div ng-show="vm.loading" class="loader-container">
 		<div class="loader">Loading...</div>
 	</div>

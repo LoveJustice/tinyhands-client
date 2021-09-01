@@ -86,9 +86,8 @@
     </table>
 
     <div class="row text-center">
-        <button ng-disabled="!monthlyReportListCtrl.nextPage" ng-click="monthlyReportListCtrl.showMoreMonthlyReports()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-            Load more results
-        </button>
+        <paginate page-control="monthlyReportListCtrl.paginate" controller="monthlyReportListCtrl">
     </div>
+    <br>
 </div>
                 

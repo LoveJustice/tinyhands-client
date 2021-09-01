@@ -6,6 +6,7 @@ describe('budgetList Controller', () => {
         MockSessionService,
         MockStickyHeader,
         mockToastr,
+        MockSpinnerOverlayService,
         $state,
         $stateParams,
         $timeout,
@@ -25,10 +26,11 @@ describe('budgetList Controller', () => {
             return [{account:10, country: null, station: null, permission:23}];
         });
         MockStickyHeader = jasmine.createSpyObj('StickyHeader', ['stickyOptions']);
+        MockSpinnerOverlayService = jasmine.createSpyObj('SpinnerOverlayService', ['show', 'hide']);
         mockToastr = jasmine.createSpyObj('toastr', ['success', 'error']);
 
         let service = new BudgetListService($http);
-        vm = new BudgetListController(service, MockSessionService, MockStickyHeader, mockToastr, $state, $uibModal, $stateParams, $timeout);
+        vm = new BudgetListController(service, MockSessionService, MockStickyHeader, mockToastr, $state, $uibModal, $stateParams, $timeout, MockSpinnerOverlayService);
     }));
 
     /*No tests verifying $rootScope, $scope, etc (constructor pass ins) because they are
@@ -38,7 +40,7 @@ describe('budgetList Controller', () => {
         it('expect getUserCountries to be called', () => {
             spyOn(vm, 'getUserCountries');
             let service = new BudgetListService(http);
-            vm.constructor(service, {}, {stickyOptions:{}}, {}, $state, $uibModal, $stateParams, $timeout);
+            vm.constructor(service, {}, {stickyOptions:{}}, {}, $state, $uibModal, $stateParams, $timeout, MockSpinnerOverlayService);
             expect(vm.getUserCountries).toHaveBeenCalled();
         });
     });
@@ -70,11 +72,6 @@ describe('budgetList Controller', () => {
                     vm.getBudgetList();
                     expect(vm.listOfBudgets).toEqual(response.data.results);
                 });
-
-                it('nextBudgetPage should be the tested response[next]', () => {
-                    vm.getBudgetList();
-                    expect(vm.nextBudgetPage).toEqual('2');
-                });
             });
 
             describe('tests all possible combinations of sortValue', () => {
@@ -102,41 +99,6 @@ describe('budgetList Controller', () => {
                     expect(vm.sortValue).toBe('-border_station__station_name');
                 });
             });
-        });
-
-        describe('function getNextBudgetPage', () => {
-
-            beforeEach(() => {
-
-                vm.service.getBudgetList = () => {
-                    return {
-                        then: (f) => {
-                            f(response);
-                        }
-                    };
-                };
-                vm.getBudgetList();
-
-                vm.service.getNextBudgetPage = () => {
-                    return {
-                        then: (f) => {
-                            f(response);
-                        }
-                    };
-                };
-
-                vm.nextBudgetPage = true;
-                vm.getNextBudgetPage();
-            });
-
-            it('nextBudgetPage should be the tested response[next]', () => {
-                expect(vm.nextBudgetPage).toEqual('2'); 
-            });
-
-            it('size of listOfBudgets after the function is called should equal 80 based on the tests', () => {
-                expect(vm.listOfBudgets.length).toEqual(10);
-            });
-
         });
 
         describe('function removeBudget', () => {

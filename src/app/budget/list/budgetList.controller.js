@@ -13,7 +13,7 @@ export default class BudgetList {
      * @param BudgetListService (set of functions that controls data flow from front-end to back-end)
      * @param session (user session data)
      */
-    constructor(BudgetListService, SessionService, StickyHeader, toastr, $state, $uibModal, $stateParams, $timeout) {
+    constructor(BudgetListService, SessionService, StickyHeader, toastr, $state, $uibModal, $stateParams, $timeout, SpinnerOverlayService) {
         'ngInject';
         this.service = BudgetListService;
         this.session = SessionService;
@@ -23,6 +23,7 @@ export default class BudgetList {
         this.modal = $uibModal;
         this.stateParams = $stateParams;
         this.timeout = $timeout;
+        this.spinnerOverlayService = SpinnerOverlayService;
         
         this.timer = {};
 
@@ -34,6 +35,12 @@ export default class BudgetList {
 
         this.hasAddPermission = true;
         this.listOfBudgets = [];
+        
+        this.paginate = {
+            items:0,
+            pageSize:25,
+            currentPage:1,
+        };
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -53,8 +60,12 @@ export default class BudgetList {
         };
         
         if ($stateParams) {
-            this.searchTerm = $stateParams.search;
-            this.countryIds = $stateParams.countryIds;
+            if ($stateParams.search) {
+                this.searchTerm = $stateParams.search;
+            }
+            if ($stateParams.countryIds) {
+                this.countryIds = $stateParams.countryIds;
+            }
         }
         
         this.getUserCountries();
@@ -73,9 +84,16 @@ export default class BudgetList {
     }
     
     getBudgetListInternal() {
-        this.service.getBudgetList(this.searchTerm, this.sortValue, this.countryIds, null).then((response) => {
-            this.listOfBudgets = response.data.results;
-            this.nextBudgetPage = this.extractPage(response.data.next);
+        this.showPage(1);
+    }
+    
+    showPage(pageNumber) {
+        this.spinnerOverlayService.show("Searching for MDFs...");        
+        this.service.getBudgetList(this.searchTerm, this.sortValue, this.countryIds, pageNumber).then( (promise) => {
+            this.listOfBudgets = promise.data.results;
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
+            this.spinnerOverlayService.hide();
         });
     }
 

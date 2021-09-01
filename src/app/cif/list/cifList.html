@@ -103,8 +103,7 @@
     </table>
 
     <div class="row text-center">
-        <button ng-disabled="!cifListCtrl.nextPage" ng-click="cifListCtrl.showMoreCifs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-            Load more results
-        </button>
+        <paginate page-control="cifListCtrl.paginate" controller="cifListCtrl">
     </div>
+    <br>
 </div>

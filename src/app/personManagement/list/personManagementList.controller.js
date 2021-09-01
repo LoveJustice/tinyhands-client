@@ -25,6 +25,12 @@ class personManagementListController {
         this.timer = {};
         this.addSearchValue = "";
         
+        this.paginate = {
+            items:0,
+            pageSize:this.paginateBy,
+            currentPage:1,
+        };
+        
         this.showIdMgmt = true;
         this.showAddAlias = false;
         this.showRemoveAlias = false;
@@ -76,20 +82,26 @@ class personManagementListController {
     }
 
     getKnownPersons() {
+        this.showPage(1);
+    }
+    
+    showPage(pageNumber) {
         this.loading = true;
-        this.personManagementListService.listKnownPersons(this.getQueryParams())
-            .then((promise) => {
-                this.knownPersons = promise.data.results;
-                for (let idx in this.knownPersons) {
-                    if (this.knownPersons[idx].form.form_name) {
-                        this.knownPersons[idx].viewUrl = this.state.href(this.knownPersons[idx].form.form_name, {id:this.knownPersons[idx].form.form_id, 
-                            stationId:this.knownPersons[idx].form.station_id, countryId:this.knownPersons[idx].form.country_id, isViewing:true,
-                            formName:this.knownPersons[idx].form.form_name});
-                    }
+        this.personManagementListService.listKnownPersons(this.getQueryParams(pageNumber))
+        .then((promise) => {
+            this.knownPersons = promise.data.results;
+            for (let idx in this.knownPersons) {
+                if (this.knownPersons[idx].form.form_name) {
+                    this.knownPersons[idx].viewUrl = this.state.href(this.knownPersons[idx].form.form_name, {id:this.knownPersons[idx].form.form_id, 
+                        stationId:this.knownPersons[idx].form.station_id, countryId:this.knownPersons[idx].form.country_id, isViewing:true,
+                        formName:this.knownPersons[idx].form.form_name});
                 }
-                this.nextPageUrl = this.nextUrl(promise.data.next);
-                this.loading = false;
-            });
+            }
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
+            this.loading = false;
+        });
+        
     }
 
     loadMoreKnownPersons() {
@@ -102,12 +114,10 @@ class personManagementListController {
             });
     }
 
-    getQueryParams(loadMore = false) {
+    getQueryParams(pageNumber) {
         var params = [];
-        params.push({ "name": "page_size", "value": this.paginateBy });
-        if (this.nextPageUrl && loadMore) {
-            params.push({ "name": "page", "value": this.nextPageUrl });
-        }
+        params.push({ "name": "page_size", "value": this.paginate.pageSize });
+        params.push({ "name": "page", "value": pageNumber });
         if (this.searchValue) {
             params.push({ "name": "search", "value": this.searchValue });
         }

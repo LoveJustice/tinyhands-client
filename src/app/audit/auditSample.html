@@ -2,7 +2,8 @@
 	<div>
 		<div class="col-md-4">
 			<div class="col-md-4"><label>Form#</label></div>
-			<div class="col-md-8"><a ng-href="{{ $ctrl.auditSample.ref }}" target="_blank">{{ $ctrl.auditSample.form_number }}</a></div>
+			<div ng-if="$ctrl.auditSample.ref !== null" class="col-md-8"><a ng-href="{{ $ctrl.auditSample.ref }}" target="_blank">{{ $ctrl.auditSample.form_number }}</a></div>
+			<div ng-if="$ctrl.auditSample.ref === null" class="col-md-8">{{ $ctrl.auditSample.form_number }} <b> [deleted]</b></div>
 		</div>
 		<div class="col-md-4">
 			<div class="col-md-4"><label>Auditor</label></div>

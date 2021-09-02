@@ -91,8 +91,7 @@
     </table>
 
     <div class="row text-center">
-        <button ng-disabled="!vdfListCtrl.nextPage" ng-click="vdfListCtrl.showMoreVdfs()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-            Load more results
-        </button>
+        <paginate page-control="vdfListCtrl.paginate" controller="vdfListCtrl">
     </div>
+    <br>
 </div>

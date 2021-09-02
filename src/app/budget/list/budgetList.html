@@ -89,8 +89,7 @@
     <h4>Go to a Border Station Form to create one.</h4>
   </div>
   <div class="row text-center">
-    <button ng-disabled="!budgetListCtrl.nextBudgetPage" ng-click="budgetListCtrl.getNextBudgetPage()" class="btn btn-primary" style="width: 90%; margin-bottom:50px;">
-        Load more results
-    </button>
-  </div>
+        <paginate page-control="budgetListCtrl.paginate" controller="budgetListCtrl">
+   </div>
+   <br>
 </div>

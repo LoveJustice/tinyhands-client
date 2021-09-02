@@ -148,11 +148,6 @@ describe('CIF List Controller',() => {
             ];
         }));
 
-        it('expect it to create an array of key value pairs for the parameters', () => {
-            var val = vm.transform(queryParameters);
-            expect(angular.equals(val, transformedQueryParameters)).toBe(true);
-        });
-
         it('expect the reverse field to not be included', () => {
             queryParameters.reverse = false;
             var val = vm.transform(queryParameters);
@@ -170,17 +165,6 @@ describe('CIF List Controller',() => {
             queryParameters.reverse = false;
             var val = vm.transform(queryParameters);
             expect(val[1].value.slice(0,1)).not.toEqual('-');
-        });
-    });
-
-    describe('function extractPage', () => {
-        it('expect it to extract the page number so it can load the next page', () => {
-            var val = vm.extractPage('http://searchlightdata.org/api/cif/?page=6&ordering=cif_number');
-            expect(val).toBe('6');
-        });
-        it('When a null is passed in, expect to return 0', () => {
-            var val = vm.extractPage(null);
-            expect(val).toBe(0);
         });
     });
 

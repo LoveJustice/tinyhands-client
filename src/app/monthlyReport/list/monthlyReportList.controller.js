@@ -24,7 +24,7 @@ export default class MonthlyReportListController {
         this.nextPage = "";
         this.timeZoneDifference ="+0545";
         this.queryParameters = {
-            "page_size": 25,
+            "page_size": 20,
             "reverse": true,
             "ordering": 'year, -month',
             "search": '',
@@ -33,6 +33,12 @@ export default class MonthlyReportListController {
         };
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
+        
+        this.paginate = {
+            items:0,
+            pageSize:this.queryParameters.page_size,
+            currentPage:1,
+        };
         
         this.countryDropDown = {};
         this.countryDropDown.options = [];
@@ -105,11 +111,12 @@ export default class MonthlyReportListController {
         return this.session.checkPermission('MONTHLY_REPORT','ADD',null, null) === true;
     }
 
-    transform(queryParams) {
+    transform(queryParams, pageNumber) {
         var queryParameters = angular.copy(queryParams);
         if (queryParameters.reverse) {
             queryParameters.ordering = '-' + queryParameters.ordering;
         }
+        queryParameters.page = pageNumber;
         delete queryParameters.reverse;
         var params = [];
         Object.keys(queryParameters).forEach( (name) => {
@@ -250,21 +257,16 @@ export default class MonthlyReportListController {
     }
 
     getMonthlyReportList() {
-        this.spinnerOverlayService.show("Searching for Monthly Reports...");        
-        this.service.getMonthlyReportList(this.transform(this.queryParameters)).then( (promise) => {
-            this.monthlyReports = promise.data.results;
-            this.addUrls(this.monthlyReports);
-            this.nextPage = this.extractPage(promise.data.next);
-            this.spinnerOverlayService.hide();        
-        });
+        this.showPage(1);
     }
-
-    showMoreMonthlyReports() {
-        let params = angular.copy(this.queryParameters);
-        params.page = this.nextPage;
-        this.service.getMoreMonthlyReports(this.transform(params)).then( (promise) => {
-            this.monthlyReports = this.monthlyReports.concat(promise.data.results);
-            this.nextPage = this.extractPage(promise.data.next);
+    
+    showPage(pageNumber) {
+        this.spinnerOverlayService.show("Searching for SMRs...");        
+        this.service.getMonthlyReportList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
+            this.monthlyReports = promise.data.results;
+            this.paginate.items = promise.data.count;
+            this.paginate.currentPage = pageNumber;
+            this.spinnerOverlayService.hide();
             this.addUrls(this.monthlyReports);
         });
     }

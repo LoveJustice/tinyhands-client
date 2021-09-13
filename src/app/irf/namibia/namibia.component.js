@@ -353,7 +353,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             988:{
                 enabled:true,
-                label:'Flight paid for in cash pre=paid credit card',
+                label:'Flight paid for in cash pre-paid credit card',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0

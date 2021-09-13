@@ -1,8 +1,8 @@
 import {BaseVdfController} from '../baseVdfController.js';
 import {BaseModalController} from '../../baseModalController.js';
-import './commonV3.less';
+import './commonV2021_6.less';
 
-import templateUrl from './commonV3.html';
+import templateUrl from './commonV2021_6.html';
 import topTemplate from './step-templates/top.html';
 import victimTemplate from './step-templates/victim.html';
 import homeAssessmentTemplate from './step-templates/homeAssessment.html';

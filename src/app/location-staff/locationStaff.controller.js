@@ -272,10 +272,10 @@ class LocationStaffController {
         if (oldValue) {
             if (isNaN(this.work[location][staff])) {
             	this.toastr.error('Invalid number format ');
-            	this.work[location][staff] = oldValue.work_fraction * 100;
+            	this.work[location][staff] = Math.round(oldValue.work_fraction * 100);
             	return;
             }  
-            if (oldValue.work_fraction*100 !== this.work[location][staff]){
+            if (Math.round(oldValue.work_fraction*100) !== this.work[location][staff]){
                 oldValue.work_fraction = this.work[location][staff] / 100;
                 this.saveWorkFraction(oldValue, location, staff);
             }
@@ -334,7 +334,7 @@ class LocationStaffController {
         for (let idx=0; idx < this.workPortion.length; idx++) {
             let tmp = this.workPortion[idx];
             if (tmp.location in this.work) {
-	            this.work[tmp.location][tmp.staff] = tmp.work_fraction * 100;
+	            this.work[tmp.location][tmp.staff] = Math.round(tmp.work_fraction * 100);
 	            this.updateTotals(tmp.location, tmp.staff);
             }
         }

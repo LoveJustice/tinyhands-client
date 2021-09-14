@@ -61,7 +61,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
         this.governanceCheckboxes = [718,719,720,721,944,945];
         this.resourcesQuestions = [731,732,903,733,734,735];
         this.awareQuestions = [739,740,741,"Materials",742,743,"Special",744,745,"HighValueContacts",797];
-        this.securityQuestions = [749,750,751,752,753];
+        this.securityQuestions = [749,750,751,752,753, 754];
         this.accountingQuestions = [758,759,760,761];
         this.victimEngagementQuestions = [765,904,905,868];
         this.recordsQuestions = [769,869,770,771,772,793,947];
@@ -338,8 +338,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                     {label:"never",format:"col-md-1",points:0},
                     {label:"<50% of the time",format:"col-md-2",points:5},
                     {label:">50% of the time",format:"col-md-2",points:15},
-                    {label:"always",format:"col-md-2",points:30},
-                    {label:"n/a",format:"col-md-2",points:30},
+                    {label:"always",format:"col-md-2",points:25},
+                    {label:"n/a",format:"col-md-2",points:25},
                 ]
             },
             750: {
@@ -362,7 +362,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:10},
+                    {label:"yes",format:"col-md-2",points:15},
                 ]
             },
             752: {
@@ -372,7 +372,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             753: {
@@ -382,8 +382,8 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:30},
-                    {label:"n/a",format:"col-md-2",points:30},
+                    {label:"yes",format:"col-md-2",points:25},
+                    {label:"n/a",format:"col-md-2",points:25},
                 ]
             },
             754: {
@@ -482,7 +482,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:5},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             770: {
@@ -492,7 +492,7 @@ export class MonthlyReportIndiaController extends BaseMonthlyReportController {
                 promptFormat: "col-md-3 control-label",
                 options: [
                     {label:"no",format:"col-md-1",points:0},
-                    {label:"yes",format:"col-md-2",points:15},
+                    {label:"yes",format:"col-md-2",points:10},
                 ]
             },
             771: {

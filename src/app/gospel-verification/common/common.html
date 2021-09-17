@@ -89,6 +89,20 @@
 	    </div>
     </div>
     <hr>
+    <div class="row center-vertical">
+    	<div class="col-md-3">
+    		<label>Is a change required to the original answer from the VDF below?</label>
+    	</div>
+    	<div class="col-md-3">
+	    	<input id="changeYes" type="radio" name="changesRequired" value="Yes" ng-model="$ctrl.questions[1060].response.value"\
+	    		ng-change="$ctrl.updateChangeRequired()"></input>
+	    	<label for="changeYes">Yes</label><br>
+	    	<input id="changeNo" type="radio" name="changesRequired" value="No" ng-model="$ctrl.questions[1060].response.value"
+	    		ng-change="$ctrl.updateChangeRequired()"></input>
+	    	<label for="changeNo">No</label>
+    	</div>
+    </div>
+    <br>
     <div class="row center-vertical" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'">
     	<div class="col-md-3">
     		<label>3.3 What do you now believe?</label>
@@ -109,42 +123,28 @@
     	</div>
     </div>
     <br>
-    <div class="row center-vertical">
-    	<div class="col-md-3">
-    		<label>Is a change required to the original answer?</label>
-    	</div>
-    	<div class="col-md-3">
-	    	<input id="changeYes" type="radio" name="changesRequired" value="Yes" ng-model="$ctrl.questions[1060].response.value"\
-	    		ng-change="$ctrl.updateChangeRequired()"></input>
-	    	<label for="changeYes">Yes</label><br>
-	    	<input id="changeNo" type="radio" name="changesRequired" value="No" ng-model="$ctrl.questions[1060].response.value"
-	    		ng-change="$ctrl.updateChangeRequired()"></input>
-	    	<label for="changeNo">No</label>
-    	</div>
-    </div>
-    <br>
     <div class="row col-md-12" ng-if="$ctrl.questions[1060].response.value==='Yes'">
     	<div>
-    		<label>This is a change from what was marked on the original VDF.  Please explain why there is a change</label>
+    		<label>This is a change from what was marked on the original VDF. Please explain why there is a change.</label>
     		<textarea class="form-control" rows="3" ng-model="$ctrl.questions[1061].response.value"></textarea>
     	</div>
     </div>
     <div ng-if="$ctrl.questions[1060].response.value==='No'">
     	<div class="row">
 	    	<div class="col-md-3">
-	    		<label>LJ Station Staff that shared the gospel</label>
+	    		<label>LJ Station Staff that shared the gospel:</label>
 	    	</div>
 	    	<div class="col-md-3">
-	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1062].response.value"">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1062].response.value">
 	    	</div>
     	</div>
     	<br>
     	<div class="row">
 	    	<div class="col-md-4">
-	    		<label>Describe how the potential victim professed to accept the gospel</label>
+	    		<label>Describe how the potential victim professed to accept the gospel.</label>
 	    	</div>
 	    	<div class="col-md-8">
-	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1063].response.value"">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1063].response.value">
 	    	</div>
     	</div>
     	<br>
@@ -153,16 +153,16 @@
 	    		<label>What resources were shared with them and how was it helpful?</label>
 	    	</div>
 	    	<div class="col-md-8">
-	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1064].response.value"">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1064].response.value">
 	    	</div>
     	</div>
     	<br>
     	<div class="row">
 	    	<div class="col-md-4">
-	    		<label>Please note any efforts to connect with a local church body nearby potential victim's home</label>
+	    		<label>Please note any efforts to connect with a local church body nearby potential victim's home.</label>
 	    	</div>
 	    	<div class="col-md-8">
-	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1065].response.value"">
+	    		<input  type="text" class="form-control" ng-model="$ctrl.questions[1065].response.value">
 	    	</div>
     	</div>
     </div>

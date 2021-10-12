@@ -60,6 +60,23 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         for (let idx=0; idx < this.caseTypes.length; idx++) {
             this.checkboxGroup.checkboxItem(1008, this.caseTypes[idx]);
         }
+        
+        this.countryCharges = {
+                1:[ //Nepal
+                    {'name':'Human Trafficking and Transportation (Control) Act (2064)', 'format':'col-md-6'},
+                    {'name':'Civil Criminal Procedure Code 2074', 'format':'col-md-6'},
+                    {'name':'Domestic Violence and Punishment Act 2066', 'format':'col-md-6'},
+                    {'name':'Foreign Employment Act 2064', 'format':'col-md-6'},
+                ],  
+           };
+        
+        this.charges = [];
+        if (this.stateParams.countryId in this.countryCharges) {
+            this.charges = this.countryCharges[this.stateParams.countryId];
+        }
+        for (let idx=0; idx < this.charges.length; idx++) {
+            this.checkboxGroup.checkboxItem(1040, this.charges[idx].name);
+        }
     }
     
     getSubIrfComplete() {

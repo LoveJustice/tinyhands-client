@@ -50,7 +50,7 @@ class StationDataController {
         
         this.editYearMonth = [
             this.yearMonth,
-            this.yearMonthOffset(this.yearMonth, -1)
+            this.yearMonthOffset(this.yearMonth, 1)
         ];
         
         if (this.locations !== null) {

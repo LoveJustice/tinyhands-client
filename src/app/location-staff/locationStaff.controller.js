@@ -46,14 +46,18 @@ class LocationStaffController {
         }
         
         let today = new Date();
-        this.month = today.getMonth() + 1;
-        this.monthStr = '' + this.month;
+        this.month = today.getMonth();
         this.year = today.getFullYear();
+        if (this.month < 1) {
+            this.year -= 1;
+            this.month = 12;
+        }
+        this.monthStr = '' + this.month;
         this.yearAndMonth = this.year * 100 + this.month;
         
         this.editYearMonth = [
             this.yearAndMonth,
-            this.yearMonthOffset(this.yearAndMonth, -1)
+            this.yearMonthOffset(this.yearAndMonth, 1)
         ];
         
         tmp = sessionStorage.getItem('station-stats-yearmonth');

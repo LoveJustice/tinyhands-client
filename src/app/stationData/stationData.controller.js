@@ -22,6 +22,7 @@ class StationDataController {
         this.exchangeData = [null, null, null];
         this.exchangeDisplayData = [null, null, null];
         this.saveCount = 0;
+        this.editAll = this.session.checkPermission('STATION_STATISTICS','EDIT_ALL',null, null);
         
         this.setCurrentMonth();
         
@@ -46,6 +47,11 @@ class StationDataController {
         }
         this.monthStr = '' + this.month;
         this.yearMonth = this.year * 100 + this.month;
+        
+        this.editYearMonth = [
+            this.yearMonth,
+            this.yearMonthOffset(this.yearMonth, -1)
+        ];
         
         if (this.locations !== null) {
             this.reloadData();
@@ -303,6 +309,14 @@ class StationDataController {
             });
             this.totalColumn(position);
         }
+    }
+    
+    mayEdit(columnIndex) {
+        if (this.editAll) {
+            return true;
+        }
+        let checkYearMonth = this.yearMonthOffset(this.yearMonth,-columnIndex);
+        return this.editYearMonth.includes(checkYearMonth);
     }
 }
 

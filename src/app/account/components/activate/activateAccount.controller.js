@@ -15,9 +15,9 @@ export default class ActivateAccountController {
             this.alreadyActive = false;
             this.invalidAccount = false;
             this.AccountService.activateAccount(this.$state.params.activation_key).then((response) => {
-                if (typeof response.data === 'string' && response.data.includes("account_already_active")) {
+                if (response.data && typeof response.data === 'string' && response.data.indexOf("account_already_active") !== -1) {
                     this.alreadyActive = true;
-                } else if (typeof response.data === 'string' && response.data.includes("invalid_key")) {
+                } else if (response.data && typeof response.data === 'string' && response.data.indexOf("invalid_key") !== -1) {
                     this.invalidAccount = true;
                     this.account = null;
                 } else {

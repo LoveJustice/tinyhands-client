@@ -63,7 +63,7 @@
                 	<a class="btn btn-sm btn-primary"ng-href="{{ $ctrl.getAuditUrl(audit, true) }}">Details</a>
                 </td>
                 <td ng-if="$ctrl.session.checkPermission('AUDIT','EDIT',audit.country, null)">
-                	<a class="btn btn-sm btn-primary"ng-href="{{ $ctrl.getAuditUrl(audit, false) }}">Details</a>
+                	<a class="btn btn-sm btn-primary"ng-href="{{ $ctrl.getAuditUrl(audit, false) }}">Details</a> 
                 </td>
                 <td>
                 	<a class="btn btn-sm btn-primary" ng-href="{{ audit.samplesUrl }}">Audit</a>

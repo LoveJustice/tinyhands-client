@@ -89,8 +89,10 @@
 		            </tr>
 		            <tr>
 		            	<td><b>Birthdate</b></td>
-		            	<td>{{ vm.main.birthdate }}</td>
-		            	<td>{{ vm.compare.master_person.birthdate }}</td>
+		            	<td ng-if="!vm.main.estimated_birthdate">{{ vm.main.birthdate }}</td>
+		            	<td ng-if="vm.main.estimated_birthdate">{{ vm.main.birthdate }} estimated</td>
+		            	<td ng-if="!vm.compare.master_person.estimated_birthdate">{{ vm.compare.master_person.birthdate }}</td>
+		            	<td ng-if="vm.compare.master_person.estimated_birthdate">{{ vm.compare.master_person.birthdate }} estimated</td>
 		            </tr>
 		            <tr>
 		            	<td><b>Age</b></td>

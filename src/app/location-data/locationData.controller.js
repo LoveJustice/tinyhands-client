@@ -37,6 +37,7 @@ class LocationDataController {
         this.country = null;
         this.tableDivSize = '1460px';
         this.inputArrests = true;
+        this.editAll = this.session.checkPermission('STATION_STATISTICS','EDIT_ALL',null, null);
         
         let tmp = sessionStorage.getItem('station-stats-country');
         if (!tmp) {
@@ -46,21 +47,37 @@ class LocationDataController {
             }
         }
         
+        this.setCurrentMonth();
         tmp = sessionStorage.getItem('station-stats-yearmonth');
         if (tmp && tmp.length === 6) {
         	this.yearAndMonth = parseInt(tmp);
         	this.month = this.yearAndMonth % 100;
         	this.year = Math.floor(this.yearAndMonth / 100);
         	this.monthStr = '' + this.month;
-        } else {
-	        let today = new Date();
-	        this.month = today.getMonth() + 1;
-	        this.monthStr = '' + this.month;
-	        this.year = today.getFullYear();
-	        this.yearAndMonth = this.year * 100 + this.month;
         }
         
         this.getCountries();
+    }
+    
+    setCurrentMonth() {
+        let today = new Date();
+        this.month = today.getMonth();
+        this.year = today.getFullYear();
+        if (this.month < 1) {
+            this.year -= 1;
+            this.month = 12;
+        }
+        this.monthStr = '' + this.month;
+        this.yearAndMonth = this.year * 100 + this.month;
+        
+        this.editYearMonth = [
+            this.yearAndMonth,
+            this.yearMonthOffset(this.yearAndMonth, 1)
+        ];
+        
+        if (this.locations !== null) {
+            this.reloadData();
+        }
     }
     
     yearMonthOffset(start, offset) {
@@ -365,6 +382,14 @@ class LocationDataController {
         }
         this.locationTotals[location].arrests = tot;
         this.updateBottomTotals();
+    }
+    
+    mayEdit(columnIndex) {
+        if (this.editAll) {
+            return true;
+        }
+        let checkYearMonth = this.yearMonthOffset(this.yearAndMonth,-columnIndex);
+        return this.editYearMonth.includes(checkYearMonth);
     }
 }
 

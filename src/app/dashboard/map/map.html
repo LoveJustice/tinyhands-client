@@ -59,12 +59,5 @@
 				icon="assets/images/Map-Marker-Marker-Outside-Chartreuse-icon.png"
 				on-click="ctrl.showStationInfoWindow(station)"/>
 
-		<marker ng-repeat="location in ctrl.inCountryLocations"
-				visible="{{ctrl.showBorderStationLocations}}"
-				id='{{location.markerId}}'
-				position="{{location.position}}"
-				icon="assets/images/location-map-marker.svg"
-				on-click="ctrl.showLocationInfoWindow(location)"/>
-
 	</ng-map>
 </div>

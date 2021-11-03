@@ -1,5 +1,4 @@
 import {BaseModalController} from '../baseModalController.js';
-const PersonIdentifierChoice = require('../personIdentifierChoice.js');
 
 class CifModalController extends BaseModalController {
     constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, identificationTypes) {
@@ -13,10 +12,9 @@ class CifModalController extends BaseModalController {
     }
     
     delayedQuestionData() {
-        this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, this.identificationTypes);
-        if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
-            this.processPersonResponses(this.questions, this.config.Person);
-        }
+        //if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
+           //this.processPersonResponses(this.questions, this.config.Person);
+        //}
         
         this.subclassDelayedQuestionData();
     }

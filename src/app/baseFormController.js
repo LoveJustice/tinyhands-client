@@ -1,7 +1,6 @@
 /* global jQuery */
 const OtherData = require('./otherData.js');
 const DateData = require('./dateData.js');
-const PersonIdentifierChoice = require('./personIdentifierChoice.js');
 
 export class BaseFormController {
     constructor($scope, $stateParams, $uibModalStack) {
@@ -90,15 +89,6 @@ export class BaseFormController {
     }
     
     processPersonIdentificationOut (question) {
-        let toDelete = [];
-        for (let theKey in question.response.identifiers) {
-            if (question.response.identifiers[theKey].number.value === '' || question.response.identifiers[theKey].type.value === '') {
-                toDelete.push(theKey);
-            }
-        }
-        for (let idx in toDelete) {
-            delete question.response.identifiers[toDelete[idx]];
-        }
     }
     
     processPersonResponses(responses, personConfigList, phase, mainForm) {
@@ -106,9 +96,6 @@ export class BaseFormController {
             if (personConfigList.indexOf(responses[idx].question_id) > -1) {
                 if (phase === 'In') {
                     this.processPersonIdentificationIn(responses[idx]);
-                    if (mainForm && this.personIdentifierChoice) {
-                        this.personIdentifierChoice.manage(responses[idx].question_id);
-                    }
                 } else if (phase === 'Out') {
                     this.processPersonIdentificationOut(responses[idx]);
                 }
@@ -117,14 +104,6 @@ export class BaseFormController {
     }
     
     processPersons(phase) {
-        let identificationTypes = this.getDefaultIdentificationTypes();
-        if (identificationTypes.length > 0) {
-            if (phase === 'In') {
-                this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, identificationTypes);
-            }
-        } else {
-            this.personIdentifierChoice = null;
-        }
         // Main form
         if (this.config.hasOwnProperty('Person')) {
             this.processPersonResponses(this.responses, this.config.Person, phase, true);

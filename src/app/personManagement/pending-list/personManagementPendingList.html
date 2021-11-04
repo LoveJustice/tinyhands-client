@@ -11,8 +11,6 @@
 					<option ng-repeat="country in vm.countries" value="{{country.id}}">{{ country.name}} </option>
 				</select>
 	        </div>
-	        <div class="col-md-1">
-	        </div>
 	        <div class="col-md-4">
 		        <div class="col-md-4">
 		            <p style="margin-top: 5px;">Match Type</p>
@@ -23,6 +21,18 @@
 						<option value="Possible">Possible</option>
 						<option value="Suggested">Suggested</option>
 						<option value="Non-match">Non-match</option>
+					</select>
+		        </div>
+	        </div>
+	        <div class="col-md-2">
+	        	<div class="col-md-3">
+		            <p style="margin-top: 5px;">Role</p>
+		        </div>
+		        <div class="col-md-9">
+			        <select class="form-control" ng-model="vm.matchRole" ng-change="vm.searchPendingMatches()">
+			        	<option value="">All</option>
+						<option value="PV">PV</option>
+						<option value="NON-PV">Non PV</option>
 					</select>
 		        </div>
 	        </div>

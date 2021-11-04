@@ -22,6 +22,7 @@ class LocationStaffController {
                 onItemSelect: this.stationChangeEvent,
                 ctrl: this,
         };
+        this.editAll = this.session.checkPermission('STATION_STATISTICS','EDIT_ALL',null, null);
         
         this.countries = [];
         this.stations = null;
@@ -44,19 +45,29 @@ class LocationStaffController {
             }
         }
         
+        let today = new Date();
+        this.month = today.getMonth();
+        this.year = today.getFullYear();
+        if (this.month < 1) {
+            this.year -= 1;
+            this.month = 12;
+        }
+        this.monthStr = '' + this.month;
+        this.yearAndMonth = this.year * 100 + this.month;
+        
+        this.editYearMonth = [
+            this.yearAndMonth,
+            this.yearMonthOffset(this.yearAndMonth, 1)
+        ];
+        
         tmp = sessionStorage.getItem('station-stats-yearmonth');
         if (tmp && tmp.length === 6) {
         	this.yearAndMonth = parseInt(tmp);
         	this.month = this.yearAndMonth % 100;
         	this.year = Math.floor(this.yearAndMonth / 100);
         	this.monthStr = '' + this.month;
-        } else {
-	        let today = new Date();
-	        this.month = today.getMonth() + 1;
-	        this.monthStr = '' + this.month;
-	        this.year = today.getFullYear();
-	        this.yearAndMonth = this.year * 100 + this.month;
-        }
+        } 
+        
         this.firstOfMonth = new Date(this.year, this.month-1, 1);
         if (this.month > 10) {
             this.firstOfNextMonth = new Date(this.year+1, 0, 1);
@@ -65,6 +76,21 @@ class LocationStaffController {
         }
         
         this.getCountries();
+    }
+    
+    yearMonthOffset(start, offset) {
+        let year = Math.floor(start/100);
+        let month = start % 100;
+        month += offset;
+        while (month < 1) {
+            year -= 1;
+            month += 12;
+        }
+        while (month > 12) {
+            year += 1;
+            month -= 12;
+        }
+        return year * 100 + month;
     }
     
     getCountries() {
@@ -321,6 +347,7 @@ class LocationStaffController {
     }
     
     populateWork() {
+        this.editOkay = this.editYearMonth.includes(this.yearAndMonth);
         if (!this.locations || !this.staff || !this.workPortion) {
             return;
         }
@@ -368,6 +395,13 @@ class LocationStaffController {
         } else {
             return base;
         }
+    }
+    
+    mayEdit() {
+        if (this.editAll) {
+            return true;
+        }
+        return this.editOkay;
     }
 }
 

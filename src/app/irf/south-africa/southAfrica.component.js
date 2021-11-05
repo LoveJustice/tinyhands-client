@@ -649,7 +649,7 @@ export class IrfSouthAfricaController extends BaseIrfCommonController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'ID#'];
+        return ['Passport', 'Other ID#'];
     }
     
     getIrfComplete() {

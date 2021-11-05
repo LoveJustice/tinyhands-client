@@ -603,7 +603,7 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'ID#'];
+        return ['Passport', 'Other ID#'];
     }
     
     getIrfComplete() {

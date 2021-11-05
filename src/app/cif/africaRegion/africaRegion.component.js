@@ -48,7 +48,7 @@ export class CifAfricaRegionController extends BaseCifController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'Citizenship'];
+        return ['Passport', 'Other ID#'];
     }
     
     openPotentialVictimModal(responses = [], isAdd = false, idx=null) {

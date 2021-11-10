@@ -24,6 +24,8 @@ export class BaseCifController extends BaseFormController {
         this.irf = null;
         this.tmpIrf = null;
         this.config = {};
+        
+        this.identificationTypes = this.getDefaultIdentificationTypes();
 
         this.getCif(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
@@ -71,9 +73,8 @@ export class BaseCifController extends BaseFormController {
         this.questions[5].response = this.irf.questions[5].response;
         this.otherData.questions[289].value = 'Intercept';
         this.otherData.questions[289].otherValue = '';
-        if (this.irf.questions[4].response.value) {
-            let dateParts = this.irf.questions[4].response.value.split(' ');
-            this.dateData.questions[479] = {dateType:'basic', value:this.dateData.dateAsUTC(dateParts[0])};
+        if (this.irf.questions[1066].response.value) {
+            this.dateData.questions[479] = this.irf.questions[1066].response.value;
         }
         
         if (this.associatedPersons.length === 1) {
@@ -93,12 +94,6 @@ export class BaseCifController extends BaseFormController {
                 dateValue = new Date(personCopy.birthdate.value);
             }
             this.dateData.questions[292] = {dateType:'person', value:dateValue};
-            if (this.personIdentifierChoice.questions[292].radioValue) {
-                for (let key in this.associatedPersons[0].identifiers) {
-                    this.personIdentifierChoice.questions[292].radioValue =  key;
-                    break;
-                }
-            }
         }
         
         let suspects = this.irf.getIntercepteePersons('Suspect');
@@ -107,7 +102,7 @@ export class BaseCifController extends BaseFormController {
             let found = false;
             for (let idx1=0; idx1 < personBoxes.length; idx1++) {
                 let cardQuestions = _.keyBy(personBoxes[idx1].responses, (x) => x.question_id);
-                if (suspects[idx].name.value === cardQuestions[9].response.name.value) {
+                if (suspects[idx].name.value === cardQuestions[965].response.name.value) {
                     found = true;
                 }
             }

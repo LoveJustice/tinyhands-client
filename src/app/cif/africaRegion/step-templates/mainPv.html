@@ -7,7 +7,7 @@
             </div>
             <div class="col-md-1">
 	            <associated-person ng-model="$ctrl.questions[292].response" person-list="$ctrl.associatedPersons" birth-date="$ctrl.dateData.questions[292]"
-	            		id-choice="$ctrl.personIdentifierChoice.questions[292].radioValue" associated-controller="$ctrl"></associatedPerson>
+	            		associated-controller="$ctrl"></associatedPerson>
             </div>
         </div>
         <div class="col-md-3 form-group">
@@ -132,21 +132,28 @@
 	     </div>
     </div>
     <br>
-    <div class="row center-vertical">
-    	<div class="col-md-4 center-vertical">
-            <form-step class="control-label col-md-5">ID Type</form-step>
-            <div class="col-md-7">
-                <form-step type="radio" radio-name="idType" label="Citizenship" response-value="$ctrl.personIdentifierChoice.questions[292].radioValue"></form-step>
-                <form-step type="radio" radio-name="idType" label="Passport" response-value="$ctrl.personIdentifierChoice.questions[292].radioValue"></form-step>
-            </div>
-        </div>
-        <div class="col-md-4 center-vertical">
-            <form-step class="control-label col-md-4">1.14 ID #</form-step>
-            <div class="col-md-7">
-                <input type="text" class="form-control" ng-model="$ctrl.questions[292].response.identifiers[$ctrl.personIdentifierChoice.getChoice(292)].number.value">
-            </div>
-        </div>
-    </div>
+    <div class="row col-md-12">
+    	<div class="row center-vertical col-md-12">
+    		<div class="col-md-7 center-vertical">
+    			<table class="table">
+    				<thead>
+          					<tr>
+              					<th>ID Type</th>
+              					<th>ID Number</th>
+              				</tr>
+              			</thead>
+              			<tbody>
+          					<tr ng-repeat="idType in $ctrl.identificationTypes">
+          						<td>{{ idType }}</td>
+          						<td>
+          							<input type="text" class="form-control" ng-model="$ctrl.questions[292].response.identifiers[idType].number.value">
+          						</td>
+          					</tr>
+          				</tbody>
+    			</table>
+    		</div>
+		</div>
+	</div>
     <div class="row">
     	<br>
  		<div class="col-md-4">

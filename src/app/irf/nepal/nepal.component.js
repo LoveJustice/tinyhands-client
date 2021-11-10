@@ -620,7 +620,7 @@ export class IrfNepalController extends BaseIrfCommonController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'ID#'];
+        return ['Passport', 'Other ID#'];
     }
     
     getIrfComplete() {

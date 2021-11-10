@@ -647,7 +647,7 @@ export class IrfBangladeshController extends BaseIrfCommonController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'ID#'];
+        return ['Passport', 'Other ID#'];
     }
     
     getIrfComplete() {

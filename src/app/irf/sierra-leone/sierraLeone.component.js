@@ -566,7 +566,7 @@ export class IrfSierraLeoneController extends BaseIrfCommonController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'ID#'];
+        return ['Passport', 'Other ID#'];
     }
     
     getIrfComplete() {

@@ -18,6 +18,8 @@ export class BaseIrfController extends BaseFormController {
         this.formNumberPattern = '';
         this.locations = [];
         
+        this.includeQuestion = {};
+        
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
     

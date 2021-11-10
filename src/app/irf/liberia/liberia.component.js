@@ -625,6 +625,8 @@ export class IrfLiberiaController extends BaseIrfCommonController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+        
+        this.includeQuestion[1077] = true;
     }
     
     getDefaultIdentificationTypes() {

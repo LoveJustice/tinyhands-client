@@ -45,6 +45,7 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
         this.isViewing = false;
         this.countryId = "";
         this.matchType="";
+        this.matchRole="";
         
         let tmp = sessionStorage.getItem('personManagement-search');
         if (tmp !== null) {
@@ -154,6 +155,9 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
         }
         if (this.matchType) {
             params.push({"name": "match", "value": this.matchType});
+        }
+        if (this.matchRole) {
+            params.push({"name": "role", "value": this.matchRole});
         }
         return params;
     }

@@ -72,6 +72,7 @@
 	                <form-step type="checkbox" label="Family convinced or forced (if under 18 years) to stop" response-value="$ctrl.questions[148].response.value"></form-step>
 	                <form-step type="text" class="col-md-12" label="Family Phone #" response-value="$ctrl.questions[940].response.value"></form-step>
 	                <form-step type="checkbox" label="Police/immigration official convinced or forced to stop" response-value="$ctrl.questions[150].response.value"></form-step> 
+	                <form-step ng-if="$ctrl.includeQuestion[1077]" type="checkbox" label="PV decided to stop on their own prior to interception and needed resources to return home" response-value="$ctrl.questions[1077].response.value"></form-step>
 	            </div>
 	    	</div>
 

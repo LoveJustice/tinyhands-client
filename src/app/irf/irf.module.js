@@ -19,6 +19,8 @@ import IrfUsaModule from './usa/irf.usa.module';
 import IrfIndonesiaModule from './indonesia/irf.indonesia.module';
 import IrfLesothoModule from './lesotho/irf.lesotho.module';
 import IrfMozambiqueModule from './mozambique/irf.mozambique.module';
+import IrfLiberiaModule from './liberia/irf.liberia.module';
+import IrfBurkinaFasoModule from './burkinaFaso/irf.burkinaFaso.module';
 
 import IrfRoutes from './irf.route';
 import IrfService from './irf.service';
@@ -38,7 +40,7 @@ export default angular.module('tinyhands.IRF', [IrfIndiaModule, IrfNepalModule, 
     IrfBangladeshModule, IrfMalawiModule, IrfBeninModule, IrfUgandaModule, IrfKenyaModule, 
     IrfTanzaniaModule, IrfGhanaModule, IrfSierraLeoneModule, IrfCambodiaModule, IrfZimbabweModule, IrfRwandaModule, 
     IrfNamibiaModule, IrfIndiaNetworkModule, IrfUsaModule, IrfIndonesiaModule, IrfLesothoModule, IrfMozambiqueModule,
-    sharedModule])
+    IrfLiberiaModule, IrfBurkinaFasoModule, sharedModule])
     .config(IrfRoutes)
     .controller('IrfListController', IrfListController)
     .service('IrfListService', IrfListService)

@@ -24,7 +24,8 @@
                 <div class="col-md-6 form-group">
                     <label class="col-md-3 control-label">Type</label>
                     <div class="col-md-9">
-                        <select class="form-control" ng-model="IntercepteeModalController.questions[9].response.role.value" required>
+                        <select class="form-control" ng-model="IntercepteeModalController.questions[9].response.role.value" 
+                        		ng-disabled="IntercepteeModalController.options['restrictChanges']" required>
                             <option value="Suspect">Suspect</option>
                             <option value="PVOT">PV</option>
                         </select>
@@ -100,29 +101,35 @@
                 </div>
             </div>
             <div class="row">
-            	<div class="row center-vertical">
-		    		<div class="col-md-3 center-vertical">
-		            	<label class="col-md-5">ID Type</label>
-		            	<div class="col-md-7">
-		                	<form-step type="radio" radio-name="idType" label="Passport" response-value="IntercepteeModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
-		                	<form-step type="radio" radio-name="idType" label="ID#" response-value="IntercepteeModalController.personIdentifierChoice.questions[9].radioValue"></form-step>
-		            	</div>
-		        	</div>
-		        	<div class="col-md-4 center-vertical">
-		            	<div class="col-md-12">
-		                	<input type="text" class="form-control" ng-model="IntercepteeModalController.questions[9].response.identifiers[IntercepteeModalController.personIdentifierChoice.getChoice(9)].number.value">
-		            	</div>
-		        	</div>
-                 <div class="col-md-4 form-group margin-top-15" >
-                 	<input type="checkbox" id="notPresent" ng-model="IntercepteeModalController.questions[941].response.value">
-            		<label for="notPresent">Not physically present</label>
-            		<div ng-show="IntercepteeModalController.questions[9].response.role.value!=='PVOT'">
-                    	<input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[9].response.arrested.value">
-                    	<label for="custody">Taken into police custody</label>
-                    </div>
+            	<div class="row center-vertical col-md-12">
+		    		<div class="col-md-7 center-vertical">
+		    			<table class="table">
+		    				<thead>
+            					<tr>
+                					<th>ID Type</th>
+                					<th>ID Number</th>
+                				</tr>
+                			</thead>
+                			<tbody>
+            					<tr ng-repeat="idType in IntercepteeModalController.identificationTypes">
+            						<td>{{ idType }}</td>
+            						<td>
+            							<input type="text" class="form-control" ng-model="IntercepteeModalController.questions[9].response.identifiers[idType].number.value">
+            						</td>
+            					</tr>
+            				</tbody>
+		    			</table>
+		    		</div>
+			    	<div class="col-md-5 form-group margin-top-15" >
+	                 	<input type="checkbox" id="notPresent" ng-model="IntercepteeModalController.questions[941].response.value">
+	            		<label for="notPresent">Not physically present</label>
+	            		<div ng-show="IntercepteeModalController.questions[9].response.role.value!=='PVOT'">
+	                    	<input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[9].response.arrested.value">
+	                    	<label for="custody">Taken into police custody</label>
+	                    </div>
+					</div>
 				</div>
-				</div>
-            </div>
+		    </div>
             <div class="row">
             	<div class="row center-vertical col-md-12">
            			<div class="col-md-6"><label>Do you consent to us using your photo this way?</label></div>
@@ -142,7 +149,7 @@
                     <button class="btn btn-success float-left" ng-click="IntercepteeModalController.save()" ng-disabled="intercepteeForm.$invalid" ng-if="!IntercepteeModalController.isViewing">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
-                    <button class="btn btn-danger" ng-click="IntercepteeModalController.delete()" ng-if="!IntercepteeModalController.isAdd && !IntercepteeModalController.isViewing">Delete</button>
+                    <button class="btn btn-danger" ng-click="IntercepteeModalController.delete()" ng-if="!IntercepteeModalController.isAdd && !IntercepteeModalController.isViewing && !IntercepteeModalController.options['restrictChanges']">Delete</button>
                 </div>
                 <div class="col-xs-4">
                     <button class="btn btn-default" ng-click="IntercepteeModalController.dismiss()" formnovalidate>Close</button>

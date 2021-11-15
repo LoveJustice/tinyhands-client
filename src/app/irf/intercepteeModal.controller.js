@@ -1,7 +1,6 @@
 /* global angular */
 /* global Image */
 import {BaseModalController} from '../baseModalController.js';
-const PersonIdentifierChoice = require('../personIdentifierChoice.js');
 
 export default class IntercepteeModalController extends BaseModalController {
     constructor($uibModalInstance, constants, $scope, isAdd, card, isViewing, modalActions, config, options) {
@@ -16,10 +15,6 @@ export default class IntercepteeModalController extends BaseModalController {
     delayedQuestionData() {
         if (this.options.hasOwnProperty('identificationTypes')) {
             this.identificationTypes = this.options.identificationTypes;
-            this.personIdentifierChoice = new PersonIdentifierChoice(this.questions, this.identificationTypes);
-            if (this.identificationTypes.length > 0 && this.config.hasOwnProperty('Person')) {
-                this.processPersonResponses(this.questions, this.config.Person);
-            }
         }
         
         if (this.questions[9].response.arrested.value === 'Yes') {
@@ -45,19 +40,6 @@ export default class IntercepteeModalController extends BaseModalController {
         } else {
             this.photoPresent = false;
         }
-    }
-    
-    processPersonResponses(questions, personConfigList) {
-        for (let question_id in questions) {
-            if (personConfigList.indexOf(parseInt(question_id)) > -1) {
-                if (this.personIdentifierChoice) {
-                    this.personIdentifierChoice.manage(parseInt(question_id));
-                }
-            }
-        }
-        
-        
-        
     }
     
     init() {

@@ -563,10 +563,12 @@ export class IrfSierraLeoneController extends BaseIrfCommonController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+        
+        this.includeQuestion[1077] = true;
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'ID#'];
+        return ['Passport', 'Other ID#'];
     }
     
     getIrfComplete() {

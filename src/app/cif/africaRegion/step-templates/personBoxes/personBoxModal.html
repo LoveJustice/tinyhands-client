@@ -43,8 +43,7 @@
                 </div>
                 <div class="col-md-1 form-group">
             		<associated-person ng-model="PersonBoxModalController.questions[965].response" person-list="PersonBoxModalController.associatedPersons" 
-            				birth-date="PersonBoxModalController.dateData.questions[965]"
-            				id-choice="PersonBoxModalController.personIdentifierChoice.questions[965].radioValue"></associatedPerson>
+            				birth-date="PersonBoxModalController.dateData.questions[965]"></associatedPerson>
            		</div>
             </div>
             <div class="row">
@@ -128,21 +127,28 @@
                 	<input class="form-control" ng-model="PersonBoxModalController.questions[965].response.nationality.value">
 		        </div>
             </div>
-            <div class="row center-vertical">
-		    	<div class="col-md-4 center-vertical">
-		            <label class="col-md-5">ID Type</label>
-		            <div class="col-md-7">
-		                <form-step type="radio" radio-name="idType" label="Citizenship" response-value="PersonBoxModalController.personIdentifierChoice.questions[965].radioValue"></form-step>
-		                <form-step type="radio" radio-name="idType" label="Passport" response-value="PersonBoxModalController.personIdentifierChoice.questions[965].radioValue"></form-step>
-		            </div>
-		        </div>
-		        <div class="col-md-4 center-vertical">
-		            <label class="col-md-3">ID #</label>
-		            <div class="col-md-9">
-		                <input type="text" class="form-control" ng-model="PersonBoxModalController.questions[965].response.identifiers[PersonBoxModalController.personIdentifierChoice.getChoice(9)].number.value">
-		            </div>
-		        </div>
-		    </div>
+            <div class="row col-md-12">
+		    	<div class="row center-vertical col-md-12">
+		    		<div class="col-md-7 center-vertical">
+		    			<table class="table">
+		    				<thead>
+		          					<tr>
+		              					<th>ID Type</th>
+		              					<th>ID Number</th>
+		              				</tr>
+		              			</thead>
+		              			<tbody>
+		          					<tr ng-repeat="idType in PersonBoxModalController.identificationTypes">
+		          						<td>{{ idType }}</td>
+		          						<td>
+		          							<input type="text" class="form-control" ng-model="PersonBoxModalController.questions[965].response.identifiers[idType].number.value">
+		          						</td>
+		          					</tr>
+		          				</tbody>
+		    			</table>
+		    		</div>
+				</div>
+			</div>
 		    <br>
             <div class="row">
 	            <div class="col-md-2 form-group">

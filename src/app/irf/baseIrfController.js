@@ -17,6 +17,9 @@ export class BaseIrfController extends BaseFormController {
         this.intercepteeImages = {};
         this.formNumberPattern = '';
         this.locations = [];
+        this.restrictChanges = false;
+        
+        this.includeQuestion = {};
         
         this.getIrf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
@@ -90,6 +93,7 @@ export class BaseIrfController extends BaseFormController {
     		this.config = response.data;
     		this.service.getIrf(countryId, stationId, id).then((response) => {
     		    this.processResponse(response, id);
+    		    this.restrictChanges = this.response.status == 'second-verification' || this.response.status === 'approved' && !this.questions[607].response.value;
     		    if (this.stateParams.id !== null && this.questions[1].response.value !== null) {
     		        this.relatedUrl = this.state.href('relatedForms', {
     	                stationId: this.stateParams.stationId,
@@ -132,6 +136,7 @@ export class BaseIrfController extends BaseFormController {
 
     	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
+    	options['restrictChanges']  = this.restrictChanges;
     	this.$uibModal.open({
             bindToController: true,
             controller: theController,

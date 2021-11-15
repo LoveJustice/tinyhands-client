@@ -48,7 +48,7 @@ export class CifBangladeshController extends BaseCifController {
     }
     
     getDefaultIdentificationTypes() {
-        return ['Citizenship', 'Passport'];
+        return ['Passport', 'Other ID#'];
     }
     
     openPotentialVictimModal(responses = [], isAdd = false, idx=null) {

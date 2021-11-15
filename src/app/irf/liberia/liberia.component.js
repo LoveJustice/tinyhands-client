@@ -3,24 +3,23 @@ import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
-
 import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfIndonesiaController extends BaseIrfCommonController {
+export class IrfLiberiaController extends BaseIrfCommonController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
-        this.purposeQuestions = ["purposeLabel",924.1,924.2,924.3,924.4,924.5,924.6,924.7,924.8];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,1076,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -44,31 +43,13 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'Young looking woman',
-                value:'Young looking woman',
+                label:'Young looking',
+                value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.4:{
-                enabled:true,
-                group:968,
-                label:'Revealing clothing',
-                value:'Revealing clothing',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
-                enabled:true,
-                group:968,
-                label:'Young man',
-                value:'Young man',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.6:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -77,7 +58,16 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.7:{
+            968.5:{
+                enabled:true,
+                group:968,
+                label:'From a rural area',
+                value:'From a rural area',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -86,7 +76,7 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.8:{
+            968.7:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -105,31 +95,58 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Papua',
-                value: 'Papua',
+                label:'Monrovia',
+                value: 'Monrovia',
                 type:'checkbox-group',
-                format:'col-md-3',
+                format:'col-md-6',
                 points:0
             },
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Malaysia',
-                value: 'malaysia',
+                label:'Freetown',
+                value: 'Freetown',
                 type:'checkbox-group',
-                format:'col-md-3',
+                format:'col-md-6',
                 points:0
             },
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Saudi Arabia',
-                value: 'Saudi Arabia',
+                label:'Conakry',
+                value: 'Conakry',
                 type:'checkbox-group',
-                format:'col-md-3',
+                format:'col-md-6',
                 points:0
             },
             245.4:{
+                enabled:true,
+                group:245,
+                label:'Kuwait',
+                value: 'Kuwait',
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.5:{
+                enabled:true,
+                group:245,
+                label:'Yamoussoukro',
+                value: 'Yamoussoukro',
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.6:{
+                enabled:true,
+                group:245,
+                label:'Abidjan',
+                value: 'Abidjan',
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.7:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -156,8 +173,8 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Cafe',
-                value:'Cafe',
+                label:'Diamond mine',
+                value:'Diamond mine',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -165,8 +182,8 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Construction',
-                value:'Construction',
+                label:'Rubber plantation',
+                value:'Rubber plantation',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -174,40 +191,13 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Seafood processing',
-                value:'Seafood processing',
+                label:'Begging',
+                value:'Begging',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.5:{
-                enabled:true,
-                group:924,
-                label:'Fishing',
-                value:'Fishing',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.6:{
-                enabled:true,
-                group:924,
-                label:'Mining',
-                value:'Mining',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.7:{
-                enabled:true,
-                group:924,
-                label:'Plantation',
-                value:'Plantation',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.8:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -274,7 +264,7 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             },
             974:{
                 enabled:true,
-                label:'First time traveling abroad',
+                label:'First time travelling abroad',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -305,6 +295,34 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
                 label:'Other website:',
                 type:'other-checkbox',
                 format:'col-md-6',
+                points:0
+            },
+            1070:{
+                enabled:true,
+                label:'Does not have any form of ID',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            1071:{
+                enabled:true,
+                label:'Bus driver expecting payment for travel at destination',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            1072:{
+                enabled:true,
+                label:'Travelling to city from rural area for first time',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            1073:{
+                enabled:true,
+                label:'Does not own mobile phone',
+                type:'checkbox',
+                format:'col-md-12',
                 points:0
             },
             
@@ -338,7 +356,7 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             },
             927:{
                 enabled:true,
-                label:'Treatment - no documentation/knowledge',
+                label:'Medical treatment - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -462,6 +480,13 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
                 type:'checkbox',
                 format:'col-md-12',
                 points:9
+            },
+            1076:{
+                enabled:true,
+                label:'Abducted',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
             },
             "minorSeparated":{
                 enabled:true,
@@ -592,7 +617,7 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Boat worker','Bus driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -600,10 +625,12 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+        
+        this.includeQuestion[1077] = true;
     }
     
     getDefaultIdentificationTypes() {
-        return ['Passport', 'Other ID#'];
+        return ['Passport', 'ID#'];
     }
     
     getIrfComplete() {
@@ -620,8 +647,8 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
     }
 
     openIntercepteeModal(card, isAdd = false, idx = null) {
-    	this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
-    			intercepteeModalTemplate, 'People', {identificationTypes:this.getDefaultIdentificationTypes()});
+        this.commonModal(card, isAdd, idx, IntercepteeModalController,'IntercepteeModalController',
+                intercepteeModalTemplate, 'People', {identificationTypes:this.getDefaultIdentificationTypes()});
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {
@@ -632,5 +659,6 @@ export class IrfIndonesiaController extends BaseIrfCommonController {
 
 export default {
     templateUrl,
-    controller: IrfIndonesiaController,
+    controller: IrfLiberiaController,
 };
+

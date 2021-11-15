@@ -130,51 +130,6 @@ describe('CifTestController', () => {
             });
         });    
     });
-    
-    describe('function processPersonIdentificationOut', () => {
-        it('should remove all identifiers from person when the are all empty', () => {
-            let question = {
-                    response: {
-                        storage_id: null,
-                        name: {value:'test name'},
-                        phone:{value:''},
-                        age:{value:''},
-                        birthdate:{value:''},
-                        nationality:{value:''},
-                        identifiers: {
-                            TypeA: {type:{value:'TypeA'}, number:{value:''}, location:{value:'ALocation'}},
-                            TypeC: {type:{value:''}, number:{value:'CNumber'}, location:{value:'CLocation'}},
-                        }
-                    }
-            };
-
-            vm.processPersonIdentificationOut(question);
-
-            expect(question.response.identifiers).toEqual({});
-        });
-        
-        it('hould remove empty identifiers from person', () => {
-            let question = {
-                    response: {
-                        storage_id: null,
-                        name: {value:'test name'},
-                        phone:{value:''},
-                        age:{value:''},
-                        birthdate:{value:''},
-                        nationality:{value:''},
-                        identifiers: {
-                            TypeA: {type:{value:'TypeA'}, number:{value:'ANumber'}, location:{value:'ALocation'}},
-                            TypeC: {type:{value:'TypeC'}, number:{value:''}, location:{value:'CLocation'}}
-                        }
-                    }
-            };
-
-            vm.processPersonIdentificationOut(question);
-            expect(question.response.identifiers).toEqual({
-                TypeA: {type:{value:'TypeA'}, number:{value:'ANumber'}, location:{value:'ALocation'}}
-            });
-        });    
-    });
 
 
     describe('function openCommonModal', () => {

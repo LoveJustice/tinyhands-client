@@ -12,15 +12,21 @@
 		        </thead>
 		        <tbody>
 		        	<tr ng-if="vm.compare.id">
-		        		<td colspan=3><b>Match Date</b> {{ vm.compare.match_date }} &nbsp;&nbsp;
-			        		<b>Matched By</b> {{ vm.compare.matched_by }} &nbsp;&nbsp; 
-			        		<b>Match Notes</b> {{ vm.compare.notes }}</td>
+		        		<td colspan=12><b>Match Date</b> {{ vm.compare.match_date }} &nbsp;&nbsp;
+			        		<b>Matched By</b> {{ vm.compare.matched_by }} &nbsp;&nbsp;
+			        		<b>Match Prob</b> {{ vm.compare.match_results['Match_Prob'] }}</td>
+		        	</tr>
+		        	<tr>
+		        		<td><b>Match Notes</b></td>
+		        		<td colspan=11>
+		        			<textarea class="form-control" rows="2" ng-model="vm.compare.notes" disabled></textarea>
+		        		</td>
 		        	</tr>
 		            <tr>
 		            	<td><b>Master Name</b></td>
 		            	<td>
 		            		<div class="col-md-6">{{ vm.main.full_name }}</div>
-		            		<div class="col-md-6" ng-show="vm.mainDetails.photos.length > 0">
+		            		<div class="col-md-6" ng-show="vm.mainDetamils.photos.length > 0">
 		            			<div class="col-md-12">
 			            			<canvas id="mainCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
 												Your browser does not support the HTML5 canvas tag.

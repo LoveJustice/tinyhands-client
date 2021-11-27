@@ -56,7 +56,7 @@ describe('AccessControlController', () => {
         mockToastr = jasmine.createSpyObj('mockToastr', ['error']);
         mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'getAllCountries', 'getBorderStations', 'getUserPermissionsList']);
         
-        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}, {id:2, permission_group:'VIF', action:'ADD', min_level: 'STATION'}]}};
+        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}]}};
         mockUserPermissionsService.getPermissions.and.callFake(() => {
             return $q.resolve(userPermissionsGetPermissionsResponse);
         });
@@ -67,7 +67,7 @@ describe('AccessControlController', () => {
         });
         
         getUserPermissionsGlobalResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}]}]};
-        getUserPermissionsCountryResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}, {id:2, level:'C'}]}]};
+        getUserPermissionsCountryResponse = {data:[{account_id: 10022, name: 'Sup Test', permissions:[{id:1, level:'G'}]}]};
         mockUserPermissionsService.getUserPermissionsList.and.callFake((countryId, stationId) => {
             if (countryId!==null) {
                 return $q.resolve(getUserPermissionsCountryResponse);
@@ -143,7 +143,7 @@ describe('AccessControlController', () => {
             controller.getPermissions();
             rootScope.$apply();
 
-            var globalAccts = [{ id: 10022, name: 'Sup Test', permissions: {0:'G', 1:'X' }}];
+            var globalAccts = [{ id: 10022, name: 'Sup Test', permissions: {0:'G' }}];
             expect(controller.accounts).toEqual(globalAccts);
         });
         
@@ -153,7 +153,7 @@ describe('AccessControlController', () => {
             controller.getAccounts(1,null);
             rootScope.$apply();
 
-            var globalAccts = [{ id: 10022, name: 'Sup Test', permissions: {0:'G', 1:'C' }}];
+            var globalAccts = [{ id: 10022, name: 'Sup Test', permissions: {0:'G'}}];
             expect(controller.accounts).toEqual(globalAccts);
         });
     });

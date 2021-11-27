@@ -61,9 +61,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a ng-show="navbarCtrl.session.user.permission_irf_view && navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
-                            ui-sref="irfList">IRFs</a>
-                        <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null) && !navbarCtrl.session.checkPermission('FORMS','CLASSIC',null, null)"
+                        <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null)"
                             ui-sref="irfNewList">IRFs</a>
                     </li>
                     <li>

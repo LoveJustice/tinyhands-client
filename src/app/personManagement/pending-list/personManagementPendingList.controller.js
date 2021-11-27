@@ -188,7 +188,7 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
         this.service.getPvRelations(id).then((response) => {
             let details = {
                 pvRelations:response.data
-            }
+            };
             this.getMasterPerson(id, position, pendingMatch, details);
         });
     }
@@ -214,9 +214,8 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
             match_date:pendingMatch.match_date,
             matched_by:pendingMatch.matched_by,
             notes:pendingMatch.notes,
-
-            master_person:this.match[1].masterPerson,
-            notes:pendingMatch.notes
+            match_results:pendingMatch.match_results,
+            master_person:this.match[1].masterPerson
         };
         let match_str = pendingMatch.match.toLowerCase();
         if (match_str === 'non-match') {

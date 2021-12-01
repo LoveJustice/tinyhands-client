@@ -155,6 +155,10 @@
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">V Photos %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.photo_percent) }}</td>
 	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">S Photos %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.suspect_photo_percent) }}</td>
+	        	</tr>
 				<tr>
 	        		<td ng-class="collectionIndicators.getHeadClass('')">Compliance %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.compliance_percent) }}</td>

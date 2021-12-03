@@ -48,8 +48,20 @@
 	                <td ng-class="indicators.getCellClass(entry, indicator[entry.key], $index)" ng-repeat="indicator in indicators.history">{{ indicator[entry.key] }}</td>
 	            </tr>
 	            <tr>
-	            	<td><b>Date of Newest Form Entered:</b></td>
+	            	<td><b>Date of Newest Form Entered</b></td>
 	            	<td class="col2-data" colspan="2">{{ indicators.indicatorsData.latest.latestDate }}</td>
+	            </tr>
+	            <tr>
+	            	<td><b>{{ indicators.indicatorsData.audit.IRF.label }}</b></td>
+	            	<td class="col2-data" colspan="2">{{ indicators.indicatorsData.audit.IRF.value }}</td>
+	            </tr>
+	            <tr>
+	            	<td><b>{{ indicators.indicatorsData.audit.CIF.label }}</b></td>
+	            	<td class="col2-data" colspan="2">{{ indicators.indicatorsData.audit.CIF.value }}</td>
+	            </tr>
+	            <tr>
+	            	<td><b>{{ indicators.indicatorsData.audit.VDF.label }}</b></td>
+	            	<td class="col2-data" colspan="2">{{ indicators.indicatorsData.audit.VDF.value }}</td>
 	            </tr>
 	   		</tbody>
 	    </table>

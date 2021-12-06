@@ -8,6 +8,7 @@ class IndicatorsController {
         this.spinnerOverlayService = SpinnerOverlayService;
         this.sticky = StickyHeader;
         this.stickyOptions = this.sticky.stickyOptions;
+        this.stickyOptions.zIndex = 1;
         this.indicatorsData = null;
         this.highlight = null;
         this.displayHistory = 10;

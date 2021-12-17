@@ -15,10 +15,10 @@ export class IrfUsaController extends BaseIrfCommonController {
         this.immigration = false;
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.8];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4, 924.5,924.6];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,186,978,988];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4, 924.5,924.6,924.7];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,1078,1079,978,988];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930,178,74,167];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
@@ -44,13 +44,22 @@ export class IrfUsaController extends BaseIrfCommonController {
             968.3:{
                 enabled:true,
                 group:968,
+                label:'Escaping abuse',
+                value:'Escaping abuse',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.4:{
+                enabled:true,
+                group:968,
                 label:'Young woman',
                 value:'Young woman',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            968.4:{
+            968.5:{
                 enabled:true,
                 group:968,
                 label:'Young man',
@@ -59,29 +68,11 @@ export class IrfUsaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.5:{
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
                 value:'Child(ren)',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.6:{
-                enabled:true,
-                group:968,
-                label:'Clothing inappropriate for climate',
-                value:'Clothing inappropriate for climate',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.7:{
-                enabled:true,
-                group:968,
-                label:'Clothing used to conceal signs of abuse',
-                value:'Clothing used to conceal signs of abuse',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -148,8 +139,8 @@ export class IrfUsaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Hotel',
-                value:'Hotel',
+                label:'Modeling',
+                value:'Modeling',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -157,13 +148,22 @@ export class IrfUsaController extends BaseIrfCommonController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Agriculture',
-                value:'Agriculture',
+                label:'Hotel',
+                value:'Hotel',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.5:{
+                enabled:true,
+                group:924,
+                label:'Fishing',
+                value:'Fishing',
+                type:'checkbox-group',
+                format:'col-md-4',
+                points:0
+            },
+            924.6:{
                 enabled:true,
                 group:924,
                 label:'Restaurant',
@@ -172,7 +172,7 @@ export class IrfUsaController extends BaseIrfCommonController {
                 format:'col-md-4',
                 points:0
             },
-            924.6:{
+            924.7:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -272,16 +272,23 @@ export class IrfUsaController extends BaseIrfCommonController {
                 format:'col-md-6',
                 points:0
             },
-            988:{
+            1078:{
                 enabled:true,
-                label:'Flight paid for with cash or pre-paid credit card',
+                label:'Going to meet someone they met online',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
-            186:{
+            1079:{
                 enabled:true,
-                label:'Traveling on one-way ticket',
+                label:'Transportation arranged by someone else',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            988:{
+                enabled:true,
+                label:'Flight paid for with cash or pre-paid credit card',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0

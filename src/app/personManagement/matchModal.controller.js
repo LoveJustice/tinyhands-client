@@ -18,6 +18,7 @@ export default class MatchModalController {
         this.possibleMatchType = possibleMatchType;
         this.nonMatchType = nonMatchType;
         this.detailsModified = detailsModified;
+        this.photoSize = 250.0;
         
         this.phoneTypes = {};
         for (let idx=0; idx < phoneTypes.length; idx++) {
@@ -130,11 +131,11 @@ export default class MatchModalController {
         let canvas = temp.get(0);
         let ctx = canvas.getContext('2d');
         if (img.width > img.height) {
-            canvas.width = 100;
-            canvas.height = img.height * 100/img.width;
+            canvas.width = 250;
+            canvas.height = img.height * this.photoSize/img.width;
         } else {
-            canvas.height = 100;
-            canvas.width = img.width * 100.0/img.height;
+            canvas.height = this.photoSize;
+            canvas.width = img.width * this.photoSize/img.height;
         }
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     }

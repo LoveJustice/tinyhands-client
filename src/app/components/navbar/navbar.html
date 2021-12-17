@@ -18,17 +18,17 @@
 
             <!-- START: BORDERSTATIONS -->
             <li class="dropdown" ng-class="{open:stationsOpen}"
-                ng-show="navbarCtrl.session.checkPermission('STATIONS','VIEW',null, null);"
+                ng-show="navbarCtrl.session.checkPermission('PROJECTS','VIEW',null, null);"
                 ng-mouseleave="stationsOpen = false">
                 <a class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
-                    ng-click="stationsOpen=!stationsOpen">Stations
+                    ng-click="stationsOpen=!stationsOpen">Projects
                     <b class="caret"></b>
                 </a>
                 <ul id="border-station-dropdown" class="dropdown-menu">
                     <li>
                         <a ui-sref="border-station({id: null})"
-                            ng-show="navbarCtrl.session.checkPermission('STATIONS','ADD',null, null);">
-                            Create Station
+                            ng-show="navbarCtrl.session.checkPermission('PROJECTS','ADD',null, null);">
+                            Create Project
                         </a>
                     </li>
                     <hr style="margin: 4px" />
@@ -38,15 +38,24 @@
                             <i ng-class="{'glyphicon-menu-right': isCollapsed, 'glyphicon-menu-down': !isCollapsed }"
                                 class="glyphicon icon"></i>
                         </div>
-                        <div class="border-station">
-                            <p ng-repeat="station in navbarCtrl.borderStationMap[country]" ng-if="station.open"
-                                uib-collapse="isCollapsed">
-                                <a ui-sref="border-station({id: station.id, countryId: station.operating_country})">
-                                    {{ station.station_name }}
-                                </a>
-                            </p>
-
-                        </div>
+                        <div ng-repeat="category in navbarCtrl.categoryNames">
+	                        <div class="project-category" ng-if="navbarCtrl.countryCategoryMap[country + ':' + category]"
+	                        		ng-click="navbarCtrl.collapse[country + ':' + category] = !navbarCtrl.collapse[country + ':' + category]">
+	                        	<p uib-collapse="isCollapsed">
+	                                <i>{{ category }}</i>
+	                                <i ng-class="{'glyphicon-menu-right': navbarCtrl.collapse[country + ':' + category], 'glyphicon-menu-down': !navbarCtrl.collapse[country + ':' + category] }"
+                                		class="glyphicon icon"></i>
+	                        	</p>
+	                        </div>
+	                        <div class="border-station">
+	                            <p ng-repeat="station in navbarCtrl.countryCategoryMap[country + ':' + category]" ng-if="station.open"
+	                                uib-collapse="isCollapsed || navbarCtrl.collapse[country + ':' + category]">
+	                                <a ui-sref="border-station({id: station.id, countryId: station.operating_country})">
+	                                    {{ station.station_name }}
+	                                </a>
+	                            </p>
+	                        </div>
+	                	</div>
                     </li>
                 </ul>
             </li>
@@ -108,26 +117,26 @@
              <!-- END: REPORTS -->
              
 	         <li class="dropdown" ng-class="{open:stationStatsOpen}"
-            	ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','VIEW',null, null)"
+            	ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
                 ng-mouseleave="stationStatsOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="stationStatsOpen=!stationStatsOpen">Station Stats
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="stationStatsOpen=!stationStatsOpen">Project Stats
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
                 	<li>
-                        <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','VIEW',null, null)"
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
                         	ui-sref="operationsDashboard">Dashboard</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','EDIT',null, null)"
-                        	ui-sref="stationData">Station Data</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','EDIT',null, null)"
+                        	ui-sref="stationData">Project Data</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','EDIT',null, null)"
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','EDIT',null, null)"
                         	ui-sref="locationData">Location Data</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('STATION_STATISTICS','EDIT',null, null)"
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','EDIT',null, null)"
                         	ui-sref="locationStaff">Location Staffing</a>
                     </li>
                 </ul>

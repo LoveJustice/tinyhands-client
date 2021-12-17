@@ -4,17 +4,17 @@
       <div class="col-xs-12" ng-init="$ctrl.details.open = true">
           <button class="btn"
                   ng-class="{'btn-success':$ctrl.questions[948].response.value, 'btn-danger':!$ctrl.questions[948].response.value}"
-                  ng-click="$ctrl.changeStationStatus()">Station Status: {{$ctrl.questions[948].response.value ? "Open" : "Closed"}}</button>
+                  ng-click="$ctrl.changeStationStatus()">Project Status: {{$ctrl.questions[948].response.value ? "Open" : "Closed"}}</button>
       </div>
     </div>
 	  <div class="row">
 	      <div class="col-sm-6 form-group">
-	        <label for="stationName">Station Name</label>
+	        <label for="stationName">Project Name</label>
 	        <input type="text" class="form-control" id="stationName" placeholder="Station Name"
 	               ng-model="$ctrl.questions[949].response.value">
 	      </div>
 	      <div class="col-sm-6 form-group">
-	        <label for="stationCode">Station Code</label>
+	        <label for="stationCode">Project Code</label>
 	        <input type="text" class="form-control" id="stationCode" placeholder="Station Code"
 	               ng-model="$ctrl.questions[950].response.value">
 	      </div>
@@ -24,12 +24,6 @@
 	        <label for="dateEstablished">Date Established</label>
 	        <input type="text" class="form-control" id="dateEstablished" placeholder="Date Established"
 	               ng-model="$ctrl.questions[951].response.value">
-	      </div>
-	      <div class="col-sm-3 checkbox" style="margin: 20px 0px">
-	        <label>
-	          <input type="checkbox" id="nonTransit"
-	                 ng-model="$ctrl.questions[972].response.value"> Non Transit Station
-	        </label>
 	      </div>
 	  </div>
 	  <div class="row">
@@ -61,6 +55,26 @@
 	                <option value="">Select a time zone</option>
 	        </select>
 	      </div>
+	  </div>
+	  <div class="row">
+	  	<div class="col-sm-6 form-group">
+	        <label for="projectCategory">Category</label>
+	        <select name='projectCategory' class="form-control" id="projectCategory"
+	                ng-options="option.id as option.name for option in $ctrl.projectCategoryOptions"
+	                ng-model="$ctrl.questions[1080].response.value">
+	                <option value="">Select a category</option>
+	        </select>
+	      </div>
+	  </div>
+	  <div class="row">
+	  	<div class="col-md-12">
+	        <label>Features:</label>
+	    </div>
+	    <div class="col-md-3" ng-repeat="feature in $ctrl.featureList">
+	    	<input type="checkbox" ng-model="$ctrl.checkboxGroup.questions[$ctrl.checkboxGroupQuestion][feature]" ng-class="col-md-3" id="id_{{feature}}"
+	    			ng-change="$ctrl.checkFeatures(feature)">
+	        <label for="id_{{feature}}">{{feature}}</label>
+	    </div>
 	  </div>
   </div>
   <div class="container-fluid padding-bottom-20">

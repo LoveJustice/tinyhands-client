@@ -16,13 +16,15 @@ class StationDataController {
         this.digits2Format = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
         
         this.countries = [];
+        this.projectCategories = null;
         this.stations = null;
+        this.sortedStations = null;
         this.stationData = [null, null, null];
         this.stationDisplayData = [null, null, null];
         this.exchangeData = [null, null, null];
         this.exchangeDisplayData = [null, null, null];
         this.saveCount = 0;
-        this.editAll = this.session.checkPermission('STATION_STATISTICS','EDIT_ALL',null, null);
+        this.editAll = this.session.checkPermission('PROJECT_STATISTICS','EDIT_ALL',null, null);
         
         this.setCurrentMonth();
         
@@ -34,6 +36,7 @@ class StationDataController {
             }
         }
         
+        this.getCategories();
         this.getCountries();
     }
     
@@ -78,9 +81,19 @@ class StationDataController {
         }
     }
     
+    getCategories() {
+        this.service.getProjectCategories().then((promise) => {
+            this.projectCategories = promise.data;
+        });
+        
+        if (this.stations !== null && this.projectCategories !== null) {
+            this.sortStations();
+        }
+    }
+    
     getCountries() {
         let selectedCountryName = sessionStorage.getItem('station-stats-country');
-        this.service.getUserCountries(this.session.user.id, 'STATION_STATISTICS', 'EDIT').then((promise) => {
+        this.service.getUserCountries(this.session.user.id, 'PROJECT_STATISTICS', 'EDIT').then((promise) => {
             this.countries = promise.data;
             this.country = null;
             for (let idx=0; idx < this.countries.length; idx++) {
@@ -101,15 +114,29 @@ class StationDataController {
             this.stationDisplayData = [{}, {}, {}];
             this.exchangeData = [{}, {}, {}];
             this.exchangeDisplayData = [{}, {}, {}];
-            this.service.getUserStations(this.session.user.id, 'STATION_STATISTICS', 'EDIT', this.country).then ((promise) => {
+            this.service.getUserStations(this.session.user.id, 'PROJECT_STATISTICS', 'EDIT', this.country).then ((promise) => {
                 this.stations = promise.data;
                 this.reloadData();
+                if (this.stations !== null && this.projectCategories !== null) {
+                    this.sortStations();
+                }
             });
             for (let idx=0; idx < this.countries.length; idx++) {
                 if (('' + this.countries[idx].id) === this.country) {
                     this.selectedCountry = this.countries[idx];
                     sessionStorage.setItem('station-stats-country', this.countries[idx].name);
                     break;
+                }
+            }
+        }
+    }
+    
+    sortStations() {
+        this.sortedStations = [];
+        for (let idx=0; idx < this.projectCategories.length; idx++) {
+            for (let idx1=0; idx1 < this.stations.length; idx1++) {
+                if (this.stations[idx1].project_category_name === this.projectCategories[idx].name) {
+                    this.sortedStations.push(this.stations[idx1]);
                 }
             }
         }
@@ -123,7 +150,7 @@ class StationDataController {
         this.getStationData(this.yearMonthOffset(this.yearMonth, -2), 2);
     }
     
-    totalColumn(position, element) {
+    totalColumn(position) {
         for (let element in this.stationDisplayData[position].total) {
             this.stationDisplayData[position].total[element] = 0;
             for (let idx in this.stationDisplayData[position]) {

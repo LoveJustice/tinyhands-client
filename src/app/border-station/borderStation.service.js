@@ -41,6 +41,10 @@ export default class BorderStationService {
         }
     }
     
+    getAllProjectCategories() {
+        return this.service.get(`api/border_station/category/`);
+    }
+    
     submitBorderStation(id, borderStation) {
         if (id === null) {
             return this.postBorderStation(borderStation);

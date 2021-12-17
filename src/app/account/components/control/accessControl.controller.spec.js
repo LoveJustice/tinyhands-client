@@ -56,7 +56,7 @@ describe('AccessControlController', () => {
         mockToastr = jasmine.createSpyObj('mockToastr', ['error']);
         mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'getAllCountries', 'getBorderStations', 'getUserPermissionsList']);
         
-        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}]}};
+        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'PROJECT'}]}};
         mockUserPermissionsService.getPermissions.and.callFake(() => {
             return $q.resolve(userPermissionsGetPermissionsResponse);
         });

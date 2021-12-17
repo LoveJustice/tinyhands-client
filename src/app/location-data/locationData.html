@@ -9,7 +9,7 @@
 			</select>
 		</div>
 		<div class="col-md-1">
-			<label>Station</label>
+			<label>Project</label>
 		</div>
 		<div class="col-md-2" ng-dropdown-multiselect="" options="vm.stationDropDown.options"
 							selected-model="vm.stationDropDown.selectedOptions"
@@ -176,9 +176,9 @@
 		</table>
 	</div>
 	<div ng-show="vm.work && vm.locations.length === 0">
-		<h3>There are no locations associated with this station</h3>
+		<h3>There are no locations associated with this project</h3>
 	</div>
 	<div ng-show="vm.work && vm.staff.length === 0">
-		<h3>There are no staff associated with this station</h3>
+		<h3>There are no staff associated with this project</h3>
 	</div>
 </div>

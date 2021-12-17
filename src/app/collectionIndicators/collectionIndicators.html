@@ -155,25 +155,29 @@
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">V Photos %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.photo_percent) }}</td>
 	        	</tr>
+	        	<tr>
+	        		<td ng-class="collectionIndicators.getHeadClass('')">S Photos %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.suspect_photo_percent) }}</td>
+	        	</tr>
 				<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('')">Compliance %</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.compliance_percent) }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.compliance_percent) }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Collection Lag Time</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.collection_lag_time) }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('')">Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.collection_lag_time) }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('')">Evidence Cases with CIF%</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.evidence_cif_percent) }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Evidence Cases with CIF%</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.evidence_cif_percent) }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Valid Intercepts</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.valid_intercept_percent) }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('')">% of Valid Intercepts</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.valid_intercept_percent) }}</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('')">% Phone Numbers Verified</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.phone_verified_percent) }}</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% Phone Numbers Verified</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators" ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)">{{ collectionIndicators.displayPercent(indicator.phone_verified_percent) }}</td>
 	        	</tr>
 	        	<tr>
 	        		<td ng-class="collectionIndicators.getHeadClass('bold black right')"><b>Total</b></td>

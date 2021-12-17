@@ -22,13 +22,12 @@
 		        			<textarea class="form-control" rows="2" ng-model="vm.compare.notes" disabled></textarea>
 		        		</td>
 		        	</tr>
-		            <tr>
-		            	<td><b>Master Name</b></td>
+		        	<tr ng-if="vm.mainDetails.photos.length > 0 || vm.compareDetails.photos.length > 0">
+		            	<td><b>Photos</b></td>
 		            	<td>
-		            		<div class="col-md-6">{{ vm.main.full_name }}</div>
-		            		<div class="col-md-6" ng-show="vm.mainDetails.photos.length > 0">
+		            		<div class="col-md-12" ng-show="vm.mainDetails.photos.length > 0">
 		            			<div class="col-md-12">
-			            			<canvas id="mainCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
+			            			<canvas id="mainCanvas" width="vm.photoSize" height="vm.photoSize" style="border:1px solid #d3d3d3;">
 												Your browser does not support the HTML5 canvas tag.
 									</canvas>
 								</div>
@@ -49,10 +48,9 @@
 		            		</div>
 		            	</td>
 		            	<td>
-		            		<div class="col-md-6">{{ vm.compare.master_person.full_name }}</div>
-		            		<div class="col-md-6" ng-show="vm.compareDetails.photos.length > 0">
+		            		<div class="col-md-12" ng-show="vm.compareDetails.photos.length > 0">
 		            			<div class="col-md-12">
-			            			<canvas id="compareCanvas" width="100" height="100" style="border:1px solid #d3d3d3;">
+			            			<canvas id="compareCanvas" width="vm.photoSize" height="vm.photoSize" style="border:1px solid #d3d3d3;">
 												Your browser does not support the HTML5 canvas tag.
 									</canvas>
 								</div>
@@ -72,6 +70,11 @@
 								</div>
 		            		</div>
 		            	</td>
+		            </tr>
+		            <tr>
+		            	<td><b>Master Name</b></td>
+		            	<td>{{ vm.main.full_name }}</td>
+		            	<td>{{ vm.compare.master_person.full_name }}</td>
 		            </tr>
 		            <tr>
 		            	<td><b>Form(s)</b></td>

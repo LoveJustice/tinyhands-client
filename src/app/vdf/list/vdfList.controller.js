@@ -253,7 +253,7 @@ export default class VdfListController {
     }
     
     showPage(pageNumber) {
-        this.spinnerOverlayService.show("Searching for CIFs...");        
+        this.spinnerOverlayService.show("Searching for VDFs...");        
         this.service.getVdfList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
             this.vdfs = promise.data.results;
             this.paginate.items = promise.data.count;

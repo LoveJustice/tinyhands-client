@@ -8,6 +8,7 @@ class IndicatorsController {
         this.spinnerOverlayService = SpinnerOverlayService;
         this.sticky = StickyHeader;
         this.stickyOptions = this.sticky.stickyOptions;
+        this.stickyOptions.zIndex = 1;
         this.indicatorsData = null;
         this.highlight = null;
         this.displayHistory = 10;
@@ -60,6 +61,7 @@ class IndicatorsController {
             {'key':'v2Lag', 'name':'Step 2: Verification Lag time', 'color':true},
             {'key':'v2Count', 'name':'Step 2: Verifications Completed', 'color':false},
             {'key':'v2Backlog', 'name':'Step 2: Verification Backlog', 'color':true},
+            {'key':'v2ChangeCount', 'name':'Verification Change', 'color':false},
         ];
         
         this.startDate = '';

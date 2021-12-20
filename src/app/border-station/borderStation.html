@@ -6,9 +6,14 @@
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
         	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
         		class="btn btn-default"
-        		ng-disabled="$ctrl.inactiveTab(stepTemplate.name)"
+        		ng-show="!$ctrl.inactiveTab(stepTemplate.name)"
         		ng-class="{active: $ctrl.selectedStep == $index}" 
         		ng-click="$ctrl.changeTab($index,$ctrl.inactiveTab(stepTemplate.name));">{{stepTemplate.name}}</a>
+        	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
+        		class="btn btn-default"
+        		ng-show="$ctrl.inactiveTab(stepTemplate.name)"
+        		disabled=true
+        		ng-class="{active: $ctrl.selectedStep == $index}"></a>
         </div>
         <hr class="margin-bottom-0" />
     </div>

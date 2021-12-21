@@ -1,10 +1,14 @@
 <div id="location-box-modal" class="modal-content">
 	<div class="modal-body">
 		<div class="row">
-	        <div class="col-sm-12 form-group">
+	        <div class="col-sm-8 form-group">
 	          <label for="locationName">Name</label>
 	          <input type="text" class="form-control" placeholder="Location Name"
-	                 ng-model="LocationModalController.questions[963].response.value" ng-disabled="LocationModalController.questions[963].storage_id">
+	                 ng-model="LocationModalController.questions[963].response.value" ng-disabled="LocationModalController.questions[963].storage_id"
+	                 ng-change="LocationModalController.checkLocationName()">
+	        </div>
+	        <div class="col-sm-4 form-group" ng-if="LocationModalController.isDuplicate">
+	        	<label class="alert-danger">Duplicate Name</label>
 	        </div>
 	    </div>
 	    <div class="row">
@@ -41,7 +45,7 @@
 	  	  <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="LocationModalController.save()" ng-if="!LocationModalController.isViewing">Save</button>
+                    <button class="btn btn-success float-left" ng-click="LocationModalController.save()" ng-if="!LocationModalController.isViewing" ng-disabled="LocationModalController.isDuplicate">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
                     <button class="btn btn-danger" ng-click="LocationModalController.delete()" ng-if="!LocationModalController.isAdd && !LocationModalController.isViewing">Delete</button>

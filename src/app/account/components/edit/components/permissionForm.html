@@ -41,14 +41,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td><label>Station</label>
+				<td><label>Project</label>
 				<td ng-repeat="permd in accountEditCtrl.permdd">
 					<div ng-dropdown-multiselect="" options="permd.stationDropDown.options"
 							selected-model="permd.stationDropDown.selectedOptions"
                              extra-settings="permd.stationDropDown.settings"
                              translation-texts="permd.stationDropDown.customText"
                              events="permd.stationDropDown.eventListener"
-                             ng-class="permd.stationDropDown.isSelected() ? 'btn btn-success' : 'btn btn-danger'" ng-show="permd.minLevel == 'STATION'">
+                             ng-class="permd.stationDropDown.isSelected() ? 'btn btn-success' : 'btn btn-danger'" ng-show="permd.minLevel == 'PROJECT'">
 					</div>
 				</td>
 			</tr>

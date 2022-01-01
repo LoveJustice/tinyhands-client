@@ -22,7 +22,7 @@ class LocationStaffController {
                 onItemSelect: this.stationChangeEvent,
                 ctrl: this,
         };
-        this.editAll = this.session.checkPermission('STATION_STATISTICS','EDIT_ALL',null, null);
+        this.editAll = this.session.checkPermission('PROJECT_STATISTICS','EDIT_ALL',null, null);
         
         this.countries = [];
         this.stations = null;
@@ -95,7 +95,7 @@ class LocationStaffController {
     
     getCountries() {
         let selectedCountryName = sessionStorage.getItem('station-stats-country');
-        this.service.getUserCountries(this.session.user.id, 'STATION_STATISTICS', 'EDIT').then((promise) => {
+        this.service.getUserCountries(this.session.user.id, 'PROJECT_STATISTICS', 'EDIT').then((promise) => {
             this.countries = promise.data;
             for (let idx=0; idx < this.countries.length; idx++) {
                 if (this.countries[idx].name === selectedCountryName) {
@@ -109,16 +109,11 @@ class LocationStaffController {
     
     getStations() {
         let selectedStationName = sessionStorage.getItem('station-stats-station');
-        this.service.getUserStations(this.session.user.id, 'STATION_STATISTICS', 'EDIT', this.country).then((promise) => {
+        this.service.getUserStations(this.session.user.id, 'PROJECT_STATISTICS', 'EDIT', this.country).then((promise) => {
             this.stations = promise.data;
             this.stationDropDown.options = [];
             for (var idx=0; idx < this.stations.length; idx++) {
-                let type='';
-                if (this.stations[idx].non_transit) {
-                    type = 'Non-Transit';
-                } else {
-                    type = 'Transit';
-                }
+                let type=this.stations[idx].project_category_name;
                 let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
                 this.stationDropDown.options.push(option);
                 if (this.stations[idx].station_name === selectedStationName) {

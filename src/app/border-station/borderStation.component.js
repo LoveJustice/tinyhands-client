@@ -2,6 +2,7 @@ import {BaseFormController} from '../baseFormController.js';
 import {BaseModalController} from '../baseModalController.js';
 import StationModalController from './stationModal.controller';
 import './borderStation.less';
+const CheckboxGroup = require('../checkboxGroup.js');
 
 import detailTemplate from './step-templates/detail.html';
 import committeeTemplate from './step-templates/committee/committee.html';
@@ -29,6 +30,15 @@ class BorderStationController extends BaseFormController  {
         this.spinner = SpinnerOverlayService;
         this.isViewing = false;
         this.stationId = $stateParams.id;
+        this.checkboxGroup = new CheckboxGroup();
+        this.checkboxGroupQuestion = 1081;
+        this.featureList = [
+            "hasStaff","hasSubcommittee","hasProjectStats",
+            "hasLocations","hasLocationStaffing","hasForms"
+        ];
+        for (let idx=0; idx < this.featureList.length; idx++) {
+            this.checkboxGroup.checkboxItem(this.checkboxGroupQuestion, this.featureList[idx]);
+        }
         
         this.stepTemplates = [
             {template:detailTemplate, name:"Details"},
@@ -38,13 +48,14 @@ class BorderStationController extends BaseFormController  {
             {template:formsTemplate, name:"Forms"},
         ];
         
-        this.setForms = this.session.checkPermission('STATIONS','SET_FORMS',null, null);
+        this.setForms = this.session.checkPermission('PROJECTS','SET_FORMS',null, null);
         
-        this.detailsQuestions = [948,949,950,951,953,954,955,956,972];
+        this.detailsQuestions = [948,949,950,951,953,954,955,956,1080,1081];
         this.originalDetailValues = {};
         
         this.timeZoneOptions = [];
         this.countryOptions = [];
+        this.projectCategoryOptions = [];
         this.formTypes = [];
         this.formOptions = {};
         this.formSelected = {};
@@ -53,13 +64,17 @@ class BorderStationController extends BaseFormController  {
         this.availableFormsPresent = false;
         this.loading = false;
         
+        this.getAllCategories();
         this.getAllCountries();
         this.getAllTimeZones();
         this.getBorderStation($stateParams.id);
         this.getFormTypes();
     }
     
-    changeTab(tabIndex) {
+    changeTab(tabIndex, isDisabled) {
+        if (isDisabled) {
+            return;
+        }
         if (this.selectedStep === 0 && !this.response.storage_id && this.response.storage_id !== 0) {
             this.toastr.error('Details must be entered and saved before switching to a new tab');
             return;
@@ -82,19 +97,38 @@ class BorderStationController extends BaseFormController  {
         this.selectedStep = tabIndex;
     }
     
+    inactiveTab(tabName) {
+        let result = false;
+        if (tabName ==='Subcommittee' && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasSubcommittee) {
+            result = true;
+        }
+        if (tabName ==='Staff' && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasStaff) {
+            result = true;
+        }
+        if (tabName === 'Locations' && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocations) {
+            result = true;
+        }
+        if (tabName === 'Forms' && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasForms) {
+            result = true;
+        }
+        
+        return result;
+    }
+    
     getBorderStation(id) {
         this.service.getFormConfig('borderStation').then ((response) => {
             this.config = response.data;
             this.service.getBorderStation(id).then((response) => {
                 this.processResponse(response);
                 this.saveDetailValues();
-                if (id && !this.session.checkPermission('STATIONS','EDIT',this.questions[955].response.value, null)) {
+                if (id && !this.session.checkPermission('PROJECTS','EDIT',this.questions[955].response.value, null)) {
                     this.isViewing = true;
                 }
                 this.borderStationPresent = true;
                 if (this.availableFormsPresent) {
                     this.getCurrentForms();
                 }
+                this.checkboxGroup.initOriginalValues(this.questions);
             });
         });
     }
@@ -107,10 +141,11 @@ class BorderStationController extends BaseFormController  {
     }
     
     haveDetailValuesChanged() {
+        this.questions[this.checkboxGroupQuestion].response.value = this.checkboxGroup.getValue(this.checkboxGroupQuestion);
         for (let idx=0; idx < this.detailsQuestions.length; idx++) {
             let question = this.detailsQuestions[idx];
-            if (this.originalDetailValues[question] != this.questions[question].response.value) {
-                return true
+            if (this.originalDetailValues[question] !== this.questions[question].response.value) {
+                return true;
             }
         }
         return false;
@@ -121,6 +156,7 @@ class BorderStationController extends BaseFormController  {
             let question = this.detailsQuestions[idx];
             this.questions[question].response.value = this.originalDetailValues[question];
         }
+        this.checkboxGroup.initOriginalValues(this.questions);
     }
     
     getAllCountries() {
@@ -131,10 +167,20 @@ class BorderStationController extends BaseFormController  {
                 var tmpCountry = response.data.results;
                 this.countryOptions = [];
                 for (var idx=0; idx < tmpCountry.length; idx++) {
-                    if (this.session.checkPermission('STATIONS','ADD',tmpCountry[idx].id, null)) {
+                    if (this.session.checkPermission('PROJECTS','ADD',tmpCountry[idx].id, null)) {
                         this.countryOptions.push(tmpCountry[idx]);
                     }
                 }
+            }
+        });
+      }
+    
+    getAllCategories() {
+        this.service.getAllProjectCategories().then((response) => {
+            var tmpCategories = response.data;
+            this.projectCategoryOptions = [];
+            for (var idx=0; idx < tmpCategories.length; idx++) {
+                this.projectCategoryOptions.push(tmpCategories[idx]);
             }
         });
       }
@@ -171,14 +217,16 @@ class BorderStationController extends BaseFormController  {
     getCurrentForms() {
         this.formSelected = {};
         this.formSelectedOriginal = {};
-        for (let idx=0; idx < this.questions[964].response.value.length; idx++) {
-            let formId = this.questions[964].response.value[idx];
-            for (let property in this.formOptions) {
-                for (let idx2=0; idx2 < this.formOptions[property].length; idx2++) {
-                    let optionFormId = this.formOptions[property][idx2].id;
-                    if (optionFormId === formId) {
-                        this.formSelected[property] = optionFormId;
-                        this.formSelectedOriginal[property] = optionFormId;
+        if (this.questions[964].response.value) {
+            for (let idx=0; idx < this.questions[964].response.value.length; idx++) {
+                let formId = this.questions[964].response.value[idx];
+                for (let property in this.formOptions) {
+                    for (let idx2=0; idx2 < this.formOptions[property].length; idx2++) {
+                        let optionFormId = this.formOptions[property][idx2].id;
+                        if (optionFormId === formId) {
+                            this.formSelected[property] = optionFormId;
+                            this.formSelectedOriginal[property] = optionFormId;
+                        }
                     }
                 }
             }
@@ -202,7 +250,7 @@ class BorderStationController extends BaseFormController  {
     }
     
     restoreForms() {
-        this.formSelected = {}
+        this.formSelected = {};
         for (let property in this.formOptions) {
             if (property in this.formSelectedOriginal) {
                 this.formSelected[property] = this.formSelectedOriginal[property];
@@ -213,6 +261,71 @@ class BorderStationController extends BaseFormController  {
     
     changeStationStatus() {
         this.questions[948].response.value = !this.questions[948].response.value;
+    }
+    
+    checkFeatures(modifiedFeature) {
+        let idx=0;
+        let cards = this.getCardInstances('Commitee Members');
+        let activeSubcommittee = cards.length > 0;
+        cards = this.getCardInstances('Staff');
+        let activeStaff = false;
+        for (idx=0; idx < cards.length; idx++) {
+            if (!this.getResponseOfQuestionById(cards[idx].responses, 970).value) {
+                activeStaff = true;
+                break;
+            }
+        }
+        cards = this.getCardInstances('Location');
+        let activeLocations = false;
+        for (idx=0; idx < cards.length; idx++) {
+            if (this.getResponseOfQuestionById(cards[idx].responses, 973).value) {
+                activeLocations = true;
+                break;
+            }
+        }
+        
+        let activeForms = false;
+        for (idx=0; idx < this.formTypes.length; idx++) {
+            if (this.formSelected[this.formTypes[idx].name]) {
+                activeForms = true;
+            }
+        }
+        
+        if (activeSubcommittee && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasSubcommittee) {
+            this.checkboxGroup.questions[this.checkboxGroupQuestion].hasSubcommittee = true;
+            this.toastr.error('hasSubcommittee cannot be disabled with active subcommittee members');
+        }
+        
+        if (activeStaff && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasStaff) {
+            this.checkboxGroup.questions[this.checkboxGroupQuestion].hasStaff = true;
+            this.toastr.error('hasStaff cannot be disabled with active staff members');
+        }
+        
+        if (activeLocations && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocations) {
+            this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocations = true;
+            this.toastr.error('hasLocations cannot be disabled with active locations');
+        }
+        
+        if (activeForms && !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasForms) {
+            this.checkboxGroup.questions[this.checkboxGroupQuestion].hasForms = true;
+            this.toastr.error('hasForms cannot be disabled with configured forms');
+        }
+        
+        if (this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocationStaffing) {
+            if (!this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocations ||
+                    !this.checkboxGroup.questions[this.checkboxGroupQuestion].hasStaff) {
+                if (modifiedFeature === 'hasLocationStaffing') {
+                    this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocationStaffing = false;
+                    this.toastr.error('hasLocationStaffing can only be enabled when both hasStaff and hasLocations are enabled');
+                } else if (modifiedFeature === 'hasLocations') {
+                    this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocations = true;
+                    this.toastr.error('hasLocations cannot be disabled when hasLocationStaffing is enabled');
+                } else if (modifiedFeature === 'hasStaff') {
+                    this.checkboxGroup.questions[this.checkboxGroupQuestion].hasLocations = true;
+                    this.toastr.error('hasStaff cannot be disabled when hasLocationStaffing is enabled');
+                }
+            }
+        }
     }
     
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
@@ -279,6 +392,7 @@ class BorderStationController extends BaseFormController  {
         this.errorMessages = [];
         this.warningMessages = [];
         this.prepareForms();
+        this.checkboxGroup.updateResponses();
         this.spinner.show('Saving changes...');
         this.service.submitBorderStation(this.stationId, this.response).then((response) => {
              this.spinner.hide();

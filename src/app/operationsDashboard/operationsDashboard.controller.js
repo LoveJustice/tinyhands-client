@@ -44,7 +44,7 @@ class OperationsDashboardController {
     
     getCountries() {
         let selectedCountryName = sessionStorage.getItem('station-stats-country');
-        this.service.getUserCountries(this.session.user.id, 'STATION_STATISTICS', 'VIEW').then((promise) => {
+        this.service.getUserCountries(this.session.user.id, 'PROJECT_STATISTICS', 'VIEW').then((promise) => {
             this.viewCountries = promise.data;
             this.dashboardCountry = null;
             for (let idx=0; idx < this.viewCountries.length; idx++) {

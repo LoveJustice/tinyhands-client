@@ -5,11 +5,11 @@ class DashboardService {
     }
 
     getUserCountries(id) {
-        return this.service.get(`api/user_permission/countries/${id}/?permission_group=STATIONS`);
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=PROJECTS`);
     }
     
     getUserStations(id) {
-        return this.service.get(`api/user_permission/stations/${id}/?permission_group=STATIONS`);
+        return this.service.get(`api/user_permission/stations/${id}/?permission_group=PROJECTS`);
     }
     
     getMapKey() {

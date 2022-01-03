@@ -61,7 +61,8 @@
 	        <label for="projectCategory">Category</label>
 	        <select name='projectCategory' class="form-control" id="projectCategory"
 	                ng-options="option.id as option.name for option in $ctrl.projectCategoryOptions"
-	                ng-model="$ctrl.questions[1080].response.value">
+	                ng-model="$ctrl.questions[1080].response.value"
+	                ng-disabled="!$ctrl.setFeatures">
 	                <option value="">Select a category</option>
 	        </select>
 	      </div>
@@ -72,7 +73,7 @@
 	    </div>
 	    <div class="col-md-3" ng-repeat="feature in $ctrl.featureList">
 	    	<input type="checkbox" ng-model="$ctrl.checkboxGroup.questions[$ctrl.checkboxGroupQuestion][feature]" ng-class="col-md-3" id="id_{{feature}}"
-	    			ng-change="$ctrl.checkFeatures(feature)">
+	    			ng-change="$ctrl.checkFeatures(feature)" ng-disabled="!$ctrl.setFeatures">
 	        <label for="id_{{feature}}">{{feature}}</label>
 	    </div>
 	  </div>

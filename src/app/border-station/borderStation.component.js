@@ -328,7 +328,51 @@ class BorderStationController extends BaseFormController  {
         }
     }
     
-    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
+    getOtherLocationNames() {
+        let nameList = [];
+        let cards = this.getCardInstances('Location');
+        for (let cardIdx in cards) {
+            nameList.push(this.getResponseOfQuestionById(cards[cardIdx].responses, 963).value);
+        }
+        
+        return nameList;
+    }
+    
+    sortedLocationCards() {
+        // shallow copy array of cards
+        let cards = this.getCardInstances('Location').concat();
+        cards.sort((a,b) => {
+            let aName = this.getResponseOfQuestionById(a.responses, 963).value;
+            let bName = this.getResponseOfQuestionById(b.responses, 963).value;
+            if (aName > bName) {
+                return 1;
+            }
+            if (bName > aName) {
+                return -1;
+            }
+            return 0;
+        });
+        return cards;
+    }
+    
+    sortedPersonCards(inCards) {
+        // shallow copy array of cards
+        let cards = inCards.concat();
+        cards.sort((a,b) => {
+            let aName = this.getResponseOfQuestionById(a.responses, 957).value + ' ' + this.getResponseOfQuestionById(a.responses, 958).value;
+            let bName = this.getResponseOfQuestionById(b.responses, 957).value + ' ' + this.getResponseOfQuestionById(b.responses, 958).value;
+            if (aName > bName) {
+                return 1;
+            }
+            if (bName > aName) {
+                return -1;
+            }
+            return 0;
+        });
+        return cards;
+    }
+    
+    openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, restrictNameList=null) {
         let config = this.config[config_name];      
         let starting_flag_count = the_card.flag_count;
         this.modalActions = [];
@@ -342,6 +386,8 @@ class BorderStationController extends BaseFormController  {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                constants: () => null,
+                restrictNameList: () => restrictNameList,
             },
             size: 'lg',
             templateUrl: theTemplate,
@@ -363,19 +409,19 @@ class BorderStationController extends BaseFormController  {
         });
     }
     
-    openCommitteeModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, BaseModalController, 'CommitteeModalController',
+    openCommitteeModal(card=null, isAdd = false, idx=null) {
+        this.commonModal(card, isAdd, idx, BaseModalController, 'CommitteeModalController',
                 committeeModalTemplate, 'Commitee Members');
     }
     
-    openStaffModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, StationModalController, 'StaffModalController',
+    openStaffModal(card=null, isAdd = false, idx=null) {
+        this.commonModal(card, isAdd, idx, StationModalController, 'StaffModalController',
                 staffModalTemplate, 'Staff');
     }
     
-    openLocationModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, StationModalController, 'LocationModalController',
-                locationModalTemplate, 'Location');
+    openLocationModal(card=null, isAdd = false, idx=null) {
+        this.commonModal(card, isAdd, idx, StationModalController, 'LocationModalController',
+                locationModalTemplate, 'Location', this.getOtherLocationNames());
     }
     
     prepareForms() {

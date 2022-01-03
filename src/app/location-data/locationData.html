@@ -99,7 +99,7 @@
 					
 					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].intercepts }}</td>
-					<td class="dataElement lightBorder" ng-if="vm.locationTotals[location.id].intercepts > 0 || vm.locationTotals[location.id].staff > 0">{{ (vm.locationTotals[location.id].intercepts/vm.locationTotals[location.id].staff).toLocaleString('en-US', vm.digits2Format) }}</td>
+					<td ng-class="vm.colorRatio('dataElement lightBorder',vm.locationTotals[location.id].staff, vm.locationTotals[location.id].intercepts) " ng-if="vm.locationTotals[location.id].intercepts > 0 || vm.locationTotals[location.id].staff > 0">{{ (vm.locationTotals[location.id].intercepts/vm.locationTotals[location.id].staff).toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td class="dataElement lightBorder" ng-if="vm.locationTotals[location.id].intercepts === 0 && vm.locationTotals[location.id].staff === 0"></td>
 					<td class="dataElement darkBorder">{{ vm.locationTotals[location.id].arrests }}</td>
 					

@@ -346,12 +346,16 @@ class LocationDataController {
         this.locationTotals._Total = {
                 staff:0,
                 intercepts:0,
-                arrests:0
+                arrests:0,
+                ratio:null
         };
         for (let idx=0; idx < this.locations.length; idx++) {
             this.locationTotals._Total.staff += this.locationTotals[this.locations[idx].id].staff;
             this.locationTotals._Total.intercepts += this.locationTotals[this.locations[idx].id].intercepts;
             this.locationTotals._Total.arrests += this.locationTotals[this.locations[idx].id].arrests;
+        }
+        if (this.locationTotals._Total.staff > 0 && this.locationTotals._Total.intercepts >= 0) {
+            this.locationTotals._Total.ratio = this.locationTotals._Total.intercepts / this.locationTotals._Total.staff;
         }
         for (let col=0; col < this.locationDisplayData.length; col++) {
             this.locationDisplayData[col]._Total = {
@@ -365,6 +369,31 @@ class LocationDataController {
                 this.locationDisplayData[col]._Total.arrests += this.locationDisplayData[col][this.locations[idx].id].arrests;
             }
         }
+    }
+    
+    colorRatio(baseClass, staff, intercepts) {
+        let fullClass = baseClass;
+        if (staff > 0) {
+            if (intercepts >= 0) {
+                let ratio = intercepts/staff;
+                if (this.locationTotals._Total.ratio !== null) {
+                    if (ratio >= this.locationTotals._Total.ratio * 1.5) {
+                        fullClass += ' veryGoodRatio';
+                    } else if (ratio >= this.locationTotals._Total.ratio) {
+                        fullClass += ' goodRatio';
+                    } else if (ratio >= this.locationTotals._Total.ratio * 0.5) {
+                        fullClass += ' poorRatio';
+                    } else {
+                        fullClass += ' veryPoorRatio';
+                    }
+                } 
+            }
+            
+        } else if (intercepts > 0) {
+            fullClass += ' warningRatio';
+        }
+        
+        return fullClass;
     }
     
     updateTotals(location) {

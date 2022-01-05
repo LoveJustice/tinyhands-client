@@ -259,7 +259,7 @@ export default class VdfListController {
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
             this.spinnerOverlayService.hide();
-            this.addUrls(this.vdfs)
+            this.addUrls(this.vdfs);
         });
     }
 

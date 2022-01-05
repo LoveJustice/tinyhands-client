@@ -188,4 +188,8 @@ export default class IrfService {
     sendDiagnostic(data) {
     	return this.service.post('api/diagnostic/', data);
     }
+    
+    getRelatedForms(stationId, formNumber) {
+        return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
+    }
 }

@@ -19,6 +19,7 @@ export class BaseFormController {
           });
 
         this.response = {status:'in-progress'};
+        this.relatedForms = {};
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.redFlagTotal = 0;
@@ -297,6 +298,65 @@ export class BaseFormController {
             }
         }
         return the_card;
+    }
+    
+    getRelatedFormsComplete() {
+    }
+    
+    getRelatedForms(service, session, stationId, formNumber) {
+        this.service.getRelatedForms(stationId, formNumber).then((response) => {
+            let relatedForms = response.data;
+            this.relatedForms = {};
+            for (let idx in relatedForms) {
+                let url = null;
+                if (this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
+                    url = this.state.href(relatedForms[idx].form_name, {
+                        id: relatedForms[idx].id,
+                        stationId: relatedForms[idx].station_id,
+                        countryId: relatedForms[idx].country_id,
+                        isViewing: false,
+                        formName: relatedForms[idx].form_name,
+                    });
+                } else if (this.session.checkPermission(relatedForms[idx].form_type,'VIEW',relatedForms[idx].country_id, stationId)) {
+                    url = this.state.href(relatedForms[idx].form_name, {
+                        id: relatedForms[idx].id,
+                        stationId: relatedForms[idx].station_id,
+                        countryId: relatedForms[idx].country_id,
+                        isViewing: true,
+                        formName: relatedForms[idx].form_name,
+                    });
+                } else {
+                    continue;
+                }
+                if (!this.relatedForms[relatedForms[idx].form_type]) {
+                    this.relatedForms[relatedForms[idx].form_type] = []; 
+                }
+                this.relatedForms[relatedForms[idx].form_type].push(
+                        {
+                            countryId:relatedForms[idx].country_id,
+                            stationId:relatedForms[idx].station_id,
+                            formName:relatedForms[idx].form_name,
+                            id:relatedForms[idx].id,
+                            formNumber: relatedForms[idx].form_number,
+                            url: url
+                        }
+                );
+            }
+            this.getRelatedFormsComplete();
+        });
+    }
+    
+    excludeRelatedForm(formType, formNumber) {
+        if (this.relatedForms[formType]) {
+            for (let idx=0; idx < this.relatedForms[formType].length; idx++) {
+                if (formNumber === this.relatedForms[formType][idx].formNumber) {
+                    this.relatedForms[formType].splice(idx,1);
+                }
+            }
+            if (this.relatedForms[formType].length < 1) {
+                delete this.relatedForms[formType];
+            }
+        }
     }
     
     // Override in subclass for implementation specific features

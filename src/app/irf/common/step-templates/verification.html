@@ -1,4 +1,4 @@
-<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing || $ctrl.restrictChanges">
 	<div class="row col-md-12">
 	 	<h3>First Verification</h3>
 	</div>
@@ -82,7 +82,8 @@
 			</div>
 		</div>
 	</div>
-	
+</fieldset>
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">	
 	<hr>
 	<div class="row center-vertical">
 		<div class="col-md-4">

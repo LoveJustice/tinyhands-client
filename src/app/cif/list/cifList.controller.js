@@ -260,7 +260,7 @@ export default class CifListController {
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
             this.spinnerOverlayService.hide();
-            this.addUrls(this.cifs)
+            this.addUrls(this.cifs);
         });
     }
 

@@ -403,7 +403,7 @@ export default class IrfNewListController {
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
             this.spinnerOverlayService.hide();
-            this.addUrls(this.irfs)
+            this.addUrls(this.irfs);
         });
     }
 

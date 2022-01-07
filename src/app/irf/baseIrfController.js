@@ -79,6 +79,13 @@ export class BaseIrfController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[1].response.value.match(this.formNumberPattern) !== null);
+        if (this.goodFormNumber) {
+            this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.questions[1].response.value);
+        }
+    }
+    
+    getRelatedFormsComplete() {
+        this.excludeRelatedForm('IRF', this.questions[1].response.value);
     }
     
     getLocations(stationId) {
@@ -93,7 +100,7 @@ export class BaseIrfController extends BaseFormController {
     		this.config = response.data;
     		this.service.getIrf(countryId, stationId, id).then((response) => {
     		    this.processResponse(response, id);
-    		    this.restrictChanges = this.response.status == 'second-verification' || this.response.status === 'approved' && !this.questions[607].response.value;
+    		    this.restrictChanges = this.response.status === 'second-verification' || this.response.status === 'approved' && !this.questions[607].response.value;
     		    if (this.stateParams.id !== null && this.questions[1].response.value !== null) {
     		        this.relatedUrl = this.state.href('relatedForms', {
     	                stationId: this.stateParams.stationId,
@@ -136,7 +143,7 @@ export class BaseIrfController extends BaseFormController {
 
     	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
-    	options['restrictChanges']  = this.restrictChanges;
+    	options.restrictChanges  = this.restrictChanges;
     	this.$uibModal.open({
             bindToController: true,
             controller: theController,

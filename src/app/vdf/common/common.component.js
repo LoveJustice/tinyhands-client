@@ -15,9 +15,9 @@ import logbookTemplate from './step-templates/logbook.html';
 import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
 export class VdfCommonController extends BaseVdfController {
-    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
+    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';        
-        super($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack);
+        super($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
        
         this.stepTemplates = [
             topTemplate,

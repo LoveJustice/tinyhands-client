@@ -20,6 +20,42 @@
         		ng-class="{active: $ctrl.selectedStep == $index}" 
         		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
         </div>
+        <div class="row padding-bottom">
+			<div class="col-md-1">
+			</div>
+			<div class="col-md-2">
+		 		<div ng-if="$ctrl.relatedForms['IRF']">
+		 			<div class="col-md-4">IRF</div>
+		 			<div class="col-md-8">
+		 				<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
+		 			</div>
+		 		</div>
+		 	</div>
+		 	<div class="col-md-3">
+		 		<div ng-if="$ctrl.relatedForms['CIF']">
+		 			<div class="col-md-2">CIFs</div>
+		 			<div class="col-md-3" ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
+		 				<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
+		 			</div>
+		 		</div>
+		 	</div>
+		 	<div class="col-md-3">
+		 		<div ng-if="$ctrl.relatedForms['VDF']">
+		 			<div class="col-md-2">VDFs</div>
+		 			<div class="col-md-3" ng-repeat="vdfRef in $ctrl.relatedForms['VDF']">
+		 				<a ng-href="{{vdfRef.url}}">{{ vdfRef.formNumber }}</a>
+		 			</div>
+		 		</div>
+		 	</div>
+		 	<div class="col-md-3">
+		 		<div ng-if="$ctrl.relatedForms['LEGAL_CASE']">
+		 			<div class="col-md-2">Legal</div>
+		 			<div class="col-md-3" ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
+		 				<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
+		 			</div>
+		 		</div>
+		 	</div>
+		</div>
         <hr class="margin-bottom-0" />
     </div>
     <div id="cif-africaRegion-content" class="padding-bottom-40"  ng-show="!$ctrl.printMode">

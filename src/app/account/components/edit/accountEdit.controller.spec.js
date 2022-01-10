@@ -9,7 +9,7 @@ describe ('PermDropDownGroup', () => {
         let permission = {
                 id:32,
                 action:'VIEW',
-                min_level:'STATION'
+                min_level:'PROJECT'
         };
         
         let managePermissions = [];
@@ -361,7 +361,7 @@ describe('AccountEditController', () => {
             return true;
         });
 
-        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'STATION'}]}};
+        userPermissionsGetPermissionsResponse = { data:{ results: [{id:1, permission_group:'IRF', action:'VIEW', min_level:'PROJECT'}]}};
         mockUserPermissionsService = jasmine.createSpyObj('UserPermissionsService',['getPermissions', 'getUserPermissions', 'setUserPermissions', 'getAllCountries', 'getBorderStations']);
         mockUserPermissionsService.getPermissions.and.callFake(() => {
                 return $q.resolve(userPermissionsGetPermissionsResponse);

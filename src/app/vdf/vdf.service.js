@@ -112,4 +112,8 @@ export default class VdfService {
         let url = `api/gospel-verification/vdf-number/${station_id}/${vdf_number}/`;
         return this.service.get(url);
     }
+    
+    getRelatedForms(stationId, formNumber) {
+        return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
+    }
 }

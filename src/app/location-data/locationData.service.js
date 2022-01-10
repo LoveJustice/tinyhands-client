@@ -9,7 +9,7 @@ export default class LocationDataService {
     }
     
     getUserStations(user_id, permissionGroup, action, country_id) {
-        return this.service.get(`api/user_permission/stations/${user_id}/?permission_group=${permissionGroup}&action=${action}&country_id=${country_id}`);
+        return this.service.get(`api/user_permission/stations/${user_id}/?permission_group=${permissionGroup}&action=${action}&country_id=${country_id}&feature=hasLocations`);
     }
     
     getStationLocations(station_id) {

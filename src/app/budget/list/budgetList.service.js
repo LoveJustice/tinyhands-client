@@ -36,7 +36,7 @@ export default class BudgetListService {
     }
     
     getUserStationsForAdd(id) {
-        return this.service.get(`api/user_permission/stations/${id}/?permission_group=BUDGETS&action=ADD`);
+        return this.service.get(`api/user_permission/stations/${id}/?permission_group=BUDGETS&form_type=MDF&form_present=true&action=ADD`);
     }
 
 }

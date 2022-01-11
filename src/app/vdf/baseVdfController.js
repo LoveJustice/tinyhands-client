@@ -77,6 +77,7 @@ export class BaseVdfController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 associatedPersons: () => this.associatedPersons
             },
             size: 'lg',
@@ -95,6 +96,10 @@ export class BaseVdfController extends BaseFormController {
             this.autoSaveModified = true;
             this.autoSave();
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [692];
     }
     
     // Override in subclass for implementation specific features

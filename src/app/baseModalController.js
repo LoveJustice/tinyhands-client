@@ -5,7 +5,7 @@ const DateDate = require('./dateData.js');
 /* global setTimeout */
 
 class BaseModalController {
-    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants) {
+    constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants, parentController) {
         'ngInject';
         let questions =  _.keyBy(card.responses, (x) => x.question_id);
         this.$uibModalInstance = $uibModalInstance;
@@ -20,6 +20,7 @@ class BaseModalController {
         this.redFlagTotal = 0;
         this.config = config;
         this.constants = constants;
+        this.parentController = parentController;
         this.otherData = null;
         this.dateData = null;	
     	
@@ -72,6 +73,19 @@ class BaseModalController {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
+    
+    checkUploadSize(response) {
+        if (this.parentController.doesUploadFileExceedLimit(response.value)) {
+            alert('The size of this photo/attachment is is greater than the maximum allowed size');
+            response.value = null;
+        } else if (this.parentController.willUploadExceedLimit(response.value)){
+            alert ('Adding this photo/attachment to those photos and attachments already being added would exceed the upload limit.  ' +
+                    'Please save or submit the form to upload the photos and attachments that were already added.  ' +
+                    'Then you may reopen the form to add the photo/attachment.');
+            response.value = null;
+        }
+    }
+
     
     close() {
         this.$uibModalInstance.close();

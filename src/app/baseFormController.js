@@ -26,6 +26,8 @@ export class BaseFormController {
         this.selectedStep = 0;
         this.autoSaveModified = false;
         this.lastAutoSave = null;
+        this.maximumUploadSize = 99 * 1024 * 1024;
+        this.maximumFileSize = 20 * 1024 * 1024;
        
         this.errorMessages = [];
         this.warningMessages = [];
@@ -90,6 +92,7 @@ export class BaseFormController {
     
     processPersonIdentificationOut (question) {
     }
+
     
     processPersonResponses(responses, personConfigList, phase, mainForm) {
         for (let idx in responses) {
@@ -378,6 +381,65 @@ export class BaseFormController {
         }
 
         return [];
+    }
+    
+    // Overridden in subclass
+    getUploadFileQuestions() {
+        return [];
+    }
+    
+    getResponseSize(response) {
+        let imageObject = null;
+        if (response.hasOwnProperty('photo')) {
+            imageObject = response.photo.value;
+        } else {
+            imageObject = response.value;
+        }
+        
+        return this.getUploadFileSize(imageObject);
+    }
+    
+    gitUploadFilesSize(responses, startingSize) {
+        let totalSize = startingSize;
+        let fileQuestions = this.getUploadFileQuestions();
+        for (let idx=0; idx < responses.length; idx++) {
+            if (fileQuestions.indexOf(responses[idx].question_id) !== -1) {
+                totalSize += this.getResponseSize(responses[idx].response);
+            }
+        }
+        return totalSize;
+    }
+    
+    getCurrentTotalUploadSize() {
+        let totalSize = this.gitUploadFilesSize(this.response.responses, 0);
+        for (let card in this.response.cards) {
+            for (let instance in this.response.cards[card].instances) {
+                totalSize = this.gitUploadFilesSize(this.response.cards[card].instances[instance].responses, totalSize);
+            }
+        }
+        return totalSize;
+    }
+    
+    getUploadFileSize(uploadObject) { 
+        let t = Object.prototype.toString.call(uploadObject);
+        let totalSize = 0;
+        if (t === '[object Blob]') {
+            totalSize += uploadObject.$ngfSize;
+        } else if (t === '[object File]') {
+            totalSize += uploadObject.size;
+        }
+        
+        return totalSize;
+    }
+    
+    willUploadExceedLimit(uploadObject) {
+        let totalSize = this.getCurrentTotalUploadSize() + this.getUploadFileSize(uploadObject);
+        return totalSize > this.maximumUploadSize;
+    }
+    
+    doesUploadFileExceedLimit(uploadObject) {
+        let totalSize = this.getUploadFileSize(uploadObject);
+        return totalSize > this.maximumFileSize;
     }
 
     // Override in subclass and set to non-zero value to enable auto-save

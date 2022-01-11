@@ -193,6 +193,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: ()=> this,
                 caseStatus: () => this.questions[997].response.value,
                 userName: () => this.session.user.first_name + ' ' + this.session.user.last_name,
             },
@@ -211,6 +212,10 @@ export class BaseLegalCaseController extends BaseFormController {
                 }
             }
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [1020];
     }
     
     static getTimelineResponseValue(entry, question_id) {

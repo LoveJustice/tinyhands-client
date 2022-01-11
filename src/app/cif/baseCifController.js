@@ -160,6 +160,7 @@ export class BaseCifController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 identificationTypes: () => this.getDefaultIdentificationTypes(),
                 associatedPersons: () => this.associatedPersons,
                 checkboxGroupItems: () => checkboxGroupItems
@@ -180,6 +181,10 @@ export class BaseCifController extends BaseFormController {
             this.autoSaveModified = true;
             this.autoSave();
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [612];
     }
     
     associatedPersonChange(person) {

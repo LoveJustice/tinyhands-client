@@ -127,7 +127,7 @@ export class BaseIrfController extends BaseFormController {
     modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
         /*jshint unused: false */
         if (theControllerName === 'IntercepteeModalController' && cardIndex !== null) {
-            this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
+            this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 9).photo.value);
         }
     }
     
@@ -147,6 +147,7 @@ export class BaseIrfController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 options: () => options,
             },
             size: 'lg',
@@ -180,7 +181,9 @@ export class BaseIrfController extends BaseFormController {
             canvas.height = maxSize;
             canvas.width = img.width * maxSize/img.height;
         }
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        if (canvas.width && canvas.height) {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
     }
     
     loadCanvas (canvasName,  questionValue){
@@ -196,14 +199,19 @@ export class BaseIrfController extends BaseFormController {
         }
         
         let img = new Image();
-        img.src = imageUrl;
         this.intercepteeImages[canvasName] = img;
         img.addEventListener('load', (e)=>{/*jshint unused: false */
                 for (let canvas in this.intercepteeImages) {
                     this.resizeImage(canvas, this.intercepteeImages[canvas]);
                 }
             });
+        img.src = imageUrl;
+       
         
+    }
+    
+    getUploadFileQuestions() {
+        return [9, 641];
     }
     
     processInterceptionDate() {

@@ -161,6 +161,7 @@ describe('CifTestController', () => {
                     isViewing: jasmine.any(Function),
                     modalActions: jasmine.any(Function),
                     config: jasmine.any(Function),
+                    parentController: jasmine.any(Function),
                     identificationTypes: jasmine.any(Function),
                     associatedPersons: jasmine.any(Function),
                     checkboxGroupItems: jasmine.any(Function)

@@ -2,9 +2,9 @@ import {BaseModalController} from '../baseModalController.js';
 
 // Only addition is to get the case status from the legal case into the suspect modal
 class LegalCaseModalController extends BaseModalController {
-    constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, caseStatus, userName) {
+    constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, parentController, caseStatus, userName) {
         'ngInject';
-        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants);
+        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants, parentController);
         this.caseStatus = caseStatus;
         this.userName = userName;
     }

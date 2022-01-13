@@ -3,13 +3,14 @@
 import {BaseModalController} from '../baseModalController.js';
 
 export default class IntercepteeModalController extends BaseModalController {
-    constructor($uibModalInstance, constants, $scope, isAdd, card, isViewing, modalActions, config, options) {
+    constructor($uibModalInstance, constants, $scope, isAdd, card, isViewing, modalActions, config, parentController, options) {
         'ngInject';
-        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants);
+        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants, parentController);
         
         this.constants = constants;
         this.options = options;
         this.photoPresent = false;
+        this.initialPhoto = null;
     }
     
     delayedQuestionData() {
@@ -67,6 +68,15 @@ export default class IntercepteeModalController extends BaseModalController {
     }
     
     fileUpload() {
+        if (this.parentController.doesUploadFileExceedLimit(this.file)) {
+            alert('The size of this photo is greater than the maximum allowed size');
+            this.file = this.initialPhoto;
+        } else if (this.parentController.willUploadExceedLimit(this.file)){
+            alert ('Adding this photo to those photos and attachments already being added would exceed the upload limit.  ' +
+                    'Please save or submit the form to upload the photos and attachments that were already added.  ' +
+                    'Then you may reopen the form to add the photo.');
+            this.file = this.initialPhoto;
+        }
         this.photoPresent = true;
         this.loadImage(this.file.$ngfBlobUrl);
         this.questions[9].response.photo.value = '';

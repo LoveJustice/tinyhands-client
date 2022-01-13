@@ -19,7 +19,7 @@ export class IrfUsaController extends BaseIrfCommonController {
         this.destinationQuestions = ["destinationLabel",245.1, 245.2];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4, 924.5,924.6,924.7];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,1078,1079,978,988];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930,178,74,167];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
@@ -336,13 +336,6 @@ export class IrfUsaController extends BaseIrfCommonController {
                 format:'col-md-12',
                 points:0
             },
-            996:{
-                enabled:true,
-                label:'Fake documentation',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
             928:{
                 enabled:true,
                 label:'Forged or falsified documents',
@@ -375,27 +368,6 @@ export class IrfUsaController extends BaseIrfCommonController {
                 enabled:true,
                 label:'Other',
                 type:'other-checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            178:{
-                enabled:true,
-                label:'Visa does not match nature of travel',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            74:{
-                enabled:true,
-                label:'Minor will not give family info.',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            167:{
-                enabled:true,
-                label:'Avoiding officials',
-                type:'checkbox',
                 format:'col-md-12',
                 points:0
             },

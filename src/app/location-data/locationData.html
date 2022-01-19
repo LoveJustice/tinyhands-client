@@ -97,47 +97,47 @@
 				<tr ng-repeat="location in vm.locations" ng-if="location.active || (location.name==='__Other' && vm.inputArrests) || vm.locationTotals[location.id].staff + vm.locationTotals[location.id].intercepts + vm.locationTotals[location.id].arrests > 0">
 					<td class="locationName darkBorder">{{ location.name }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationTotals[location.id].intercepts }}</td>
-					<td ng-class="vm.colorRatio('dataElement lightBorder',vm.locationTotals[location.id].staff, vm.locationTotals[location.id].intercepts) " ng-if="vm.locationTotals[location.id].intercepts > 0 || vm.locationTotals[location.id].staff > 0">{{ (vm.locationTotals[location.id].intercepts/vm.locationTotals[location.id].staff).toLocaleString('en-US', vm.digits2Format) }}</td>
-					<td class="dataElement lightBorder" ng-if="vm.locationTotals[location.id].intercepts === 0 && vm.locationTotals[location.id].staff === 0"></td>
-					<td class="dataElement darkBorder">{{ vm.locationTotals[location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationTotals[location.id].staff)">{{ vm.locationTotals[location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationTotals[location.id].intercepts)">{{ vm.locationTotals[location.id].intercepts }}</td>
+					<td ng-class="vm.colorRatio('dataElement lightBorder',vm.locationTotals[location.id].staff, vm.locationTotals[location.id].intercepts)" ng-if="(vm.locationTotals[location.id].intercepts > 0 || vm.locationTotals[location.id].staff) > 0 && vm.hasLocationStaffing">{{ (vm.locationTotals[location.id].intercepts/vm.locationTotals[location.id].staff).toLocaleString('en-US', vm.digits2Format) }}</td>
+					<td class="dataElement lightBorder" ng-if="!vm.hasLocationStaffing || vm.locationTotals[location.id].intercepts === 0 && vm.locationTotals[location.id].staff === 0"></td>
+					<td  ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationTotals[location.id].arrests)">{{ vm.locationTotals[location.id].arrests }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[0][location.id].staff }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[0][location.id].intercepts }}</td>
-					<td class="dataElement darkBorder" ng-if="vm.inputArrests && vm.mayEdit(0)"><input type="number" ng-model="vm.locationDisplayData[0][location.id].arrests"
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[0][location.id].staff)">{{ vm.locationDisplayData[0][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[0][location.id].intercepts)">{{ vm.locationDisplayData[0][location.id].intercepts }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[0][location.id].arrests)" ng-if="vm.inputArrests && vm.mayEdit(0)"><input type="number" ng-model="vm.locationDisplayData[0][location.id].arrests"
 							ng-blur="vm.changeFocus(location.id, 0)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-					<td class="dataElement darkBorder" ng-if="!vm.inputArrests || !vm.mayEdit(0)">{{ vm.locationDisplayData[0][location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[0][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(0)">{{ vm.locationDisplayData[0][location.id].arrests }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[1][location.id].staff }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[1][location.id].intercepts }}</td>
-					<td class="dataElement darkBorder" ng-if="vm.inputArrests && vm.mayEdit(1)"><input type="number" ng-model="vm.locationDisplayData[1][location.id].arrests"
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[1][location.id].staff)">{{ vm.locationDisplayData[1][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[1][location.id].intercepts)">{{ vm.locationDisplayData[1][location.id].intercepts }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[1][location.id].arrests)" ng-if="vm.inputArrests && vm.mayEdit(1)"><input type="number" ng-model="vm.locationDisplayData[1][location.id].arrests"
 							ng-blur="vm.changeFocus(location.id, 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-					<td class="dataElement darkBorder" ng-if="!vm.inputArrests || !vm.mayEdit(1)">{{ vm.locationDisplayData[1][location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[1][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(1)">{{ vm.locationDisplayData[1][location.id].arrests }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[2][location.id].staff }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[2][location.id].intercepts }}</td>
-					<td class="dataElement darkBorder" ng-if="vm.inputArrests && vm.mayEdit(2)"><input type="number" ng-model="vm.locationDisplayData[2][location.id].arrests"
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[2][location.id].staff)">{{ vm.locationDisplayData[2][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[2][location.id].intercepts)">{{ vm.locationDisplayData[2][location.id].intercepts }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[2][location.id].arrests)" ng-if="vm.inputArrests && vm.mayEdit(2)"><input type="number" ng-model="vm.locationDisplayData[2][location.id].arrests"
 							ng-blur="vm.changeFocus(location.id, 2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-					<td class="dataElement darkBorder" ng-if="!vm.inputArrests || !vm.mayEdit(2)">{{ vm.locationDisplayData[2][location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[2][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(2)">{{ vm.locationDisplayData[2][location.id].arrests }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[3][location.id].staff }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[3][location.id].intercepts }}</td>
-					<td class="dataElement darkBorder" ng-if="vm.inputArrests && vm.mayEdit(3)"><input type="number" ng-model="vm.locationDisplayData[3][location.id].arrests"
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[3][location.id].staff)">{{ vm.locationDisplayData[3][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[3][location.id].intercepts)">{{ vm.locationDisplayData[3][location.id].intercepts }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[3][location.id].arrests)" ng-if="vm.inputArrests && vm.mayEdit(3)"><input type="number" ng-model="vm.locationDisplayData[3][location.id].arrests"
 							ng-blur="vm.changeFocus(location.id, 3)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-					<td class="dataElement darkBorder" ng-if="!vm.inputArrests || !vm.mayEdit(3)">{{ vm.locationDisplayData[3][location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[3][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(3)">{{ vm.locationDisplayData[3][location.id].arrests }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[4][location.id].staff }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[4][location.id].intercepts }}</td>
-					<td class="dataElement darkBorder" ng-if="vm.inputArrests && vm.mayEdit(4)"><input type="number" ng-model="vm.locationDisplayData[4][location.id].arrests"
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[4][location.id].staff)">{{ vm.locationDisplayData[4][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[4][location.id].intercepts)">{{ vm.locationDisplayData[4][location.id].intercepts }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[4][location.id].arrests)" ng-if="vm.inputArrests && vm.mayEdit(4)"><input type="number" ng-model="vm.locationDisplayData[4][location.id].arrests"
 							ng-blur="vm.changeFocus(location.id, 4)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-					<td class="dataElement darkBorder" ng-if="!vm.inputArrests || !vm.mayEdit(4)">{{ vm.locationDisplayData[4][location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[4][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(4)">{{ vm.locationDisplayData[4][location.id].arrests }}</td>
 					
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[5][location.id].staff }}</td>
-					<td class="dataElement lightBorder">{{ vm.locationDisplayData[5][location.id].intercepts }}</td>
-					<td class="dataElement darkBorder" ng-if="vm.inputArrests && vm.mayEdit(5)"><input type="number" ng-model="vm.locationDisplayData[5][location.id].arrests"
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[5][location.id].staff)">{{ vm.locationDisplayData[5][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[5][location.id].intercepts)">{{ vm.locationDisplayData[5][location.id].intercepts }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[5][location.id].arrests)" ng-if="vm.inputArrests && vm.mayEdit(5)"><input type="number" ng-model="vm.locationDisplayData[5][location.id].arrests"
 							ng-blur="vm.changeFocus(location.id, 5)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-					<td class="dataElement darkBorder" ng-if="!vm.inputArrests || !vm.mayEdit(5)">{{ vm.locationDisplayData[5][location.id].arrests }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[5][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(5)">{{ vm.locationDisplayData[5][location.id].arrests }}</td>
 				</tr>
 				<tr>
 					<td class="locationName darkBorder total">Totals</td>

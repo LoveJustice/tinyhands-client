@@ -345,6 +345,15 @@ class StationDataController {
         let checkYearMonth = this.yearMonthOffset(this.yearMonth,-columnIndex);
         return this.editYearMonth.includes(checkYearMonth);
     }
+    
+    deemphasizeZero(baseClass, value) {
+        let fullClass = baseClass
+        if (value === 0) {
+            fullClass += ' deemphasizeZero';
+        }
+        
+        return fullClass;
+    }
 }
 
 export default StationDataController;

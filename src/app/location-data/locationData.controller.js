@@ -25,6 +25,7 @@ class LocationDataController {
                 onItemSelect: this.stationChangeEvent,
                 ctrl: this,
         };
+        this.hasLocationStaffing = false;
         
         this.countries = [];
         this.stations = null;
@@ -116,11 +117,13 @@ class LocationDataController {
             this.stationDropDown.options = [];
             for (var idx=0; idx < this.stations.length; idx++) {
                 let type=this.stations[idx].project_category_name;
-                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
+                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type,
+                        "hasLocationStaffing": this.stations[idx].features.indexOf('hasLocationStaffing') >= 0};
                 this.stationDropDown.options.push(option);
                 if (this.stations[idx].station_name === selectedStationName) {
                     this.stationDropDown.selectedOptions = [option];
                     this.changeStation();
+                    this.hasLocationStaffing = this.stations[idx].features.indexOf('hasLocationStaffing') >= 0;
                 }
             }
         });
@@ -150,6 +153,7 @@ class LocationDataController {
     
     changeStation() {
         sessionStorage.setItem('station-stats-station', this.stationDropDown.selectedOptions[0].label);
+        this.hasLocationStaffing =  this.stationDropDown.selectedOptions[0].hasLocationStaffing;
         this.locations = null;
         this.getLocations();
     }
@@ -371,26 +375,38 @@ class LocationDataController {
         }
     }
     
+    deemphasizeZero(baseClass, value) {
+        let fullClass = baseClass
+        if (value === 0) {
+            fullClass += ' deemphasizeZero';
+        }
+        
+        return fullClass;
+    }
+    
     colorRatio(baseClass, staff, intercepts) {
         let fullClass = baseClass;
-        if (staff > 0) {
-            if (intercepts >= 0) {
-                let ratio = intercepts/staff;
-                if (this.locationTotals._Total.ratio !== null) {
-                    if (ratio >= this.locationTotals._Total.ratio * 1.5) {
-                        fullClass += ' veryGoodRatio';
-                    } else if (ratio >= this.locationTotals._Total.ratio) {
-                        fullClass += ' goodRatio';
-                    } else if (ratio >= this.locationTotals._Total.ratio * 0.5) {
-                        fullClass += ' poorRatio';
-                    } else {
-                        fullClass += ' veryPoorRatio';
-                    }
-                } 
+        if (this.hasLocationStaffing) {
+            if (staff > 0) {
+                if (intercepts >= 0) {
+                    let ratio = intercepts/staff;
+                    if (this.locationTotals._Total.ratio !== null) {
+                        if (ratio >= this.locationTotals._Total.ratio * 1.5) {
+                            fullClass += ' veryGoodRatio';
+                        } else if (ratio >= this.locationTotals._Total.ratio) {
+                            fullClass += ' goodRatio';
+                        } else if (ratio >= this.locationTotals._Total.ratio * 0.5) {
+                            fullClass += ' poorRatio';
+                        } else {
+                            fullClass += ' veryPoorRatio';
+                        }
+                    } 
+                }
+            } else if (intercepts > 0) {
+                fullClass += ' warningRatio';
             }
-            
-        } else if (intercepts > 0) {
-            fullClass += ' warningRatio';
+        } else if (intercepts === 0) {
+            fullClass = this.deemphasizeZero(baseClass, 0);
         }
         
         return fullClass;

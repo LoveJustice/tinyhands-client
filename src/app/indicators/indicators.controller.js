@@ -61,7 +61,8 @@ class IndicatorsController {
             {'key':'v2Lag', 'name':'Step 2: Verification Lag time', 'color':true},
             {'key':'v2Count', 'name':'Step 2: Verifications Completed', 'color':false},
             {'key':'v2Backlog', 'name':'Step 2: Verification Backlog', 'color':true},
-            {'key':'v2ChangeCount', 'name':'Verification Change', 'color':false},
+           // {'key':'v2ChangeCount', 'name':'Verification Change', 'color':false},
+            {'key':'v2ConflictPercent', 'name':'Conflict %', 'color':false},
         ];
         
         this.startDate = '';
@@ -186,6 +187,21 @@ class IndicatorsController {
         this.spinnerOverlayService.show('Calculating Indicators...');
         this.indicatorsService.calculate(this.countryDropDown.selectedOptions[0].id).then(promise => {
             this.indicatorsData = promise.data;
+            
+            // Value on server is the number of conflicts between the validations.  Compute the percentage
+            // of conflicting validations.
+            if (!this.indicatorsData.latest.v2Count || isNaN(this.indicatorsData.latest.v2ChangeCount)) {
+                this.indicatorsData.latest.v2ConflictPercent = null;
+            } else {
+                this.indicatorsData.latest.v2ConflictPercent = +((this.indicatorsData.latest.v2ChangeCount * 100  / this.indicatorsData.latest.v2Count).toFixed(2)); 
+            }
+            for (let idx in this.indicatorsData.history) {
+                if (!this.indicatorsData.history[idx].v2Count || isNaN(this.indicatorsData.history[idx].v2ChangeCount)) {
+                    this.indicatorsData.history[idx].v2ConflictPercent = null;
+                } else {
+                    this.indicatorsData.history[idx].v2ConflictPercent = +((this.indicatorsData.history[idx].v2ChangeCount * 100  / this.indicatorsData.history[idx].v2Count).toFixed(2)); 
+                }
+            }
             this.scrollHistory(0);
             this.spinnerOverlayService.hide();
         });

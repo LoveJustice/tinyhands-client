@@ -128,6 +128,8 @@ class StationDataController {
                     break;
                 }
             }
+        } else {
+            this.spinner.hide();
         }
     }
     

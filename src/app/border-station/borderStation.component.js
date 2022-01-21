@@ -49,6 +49,7 @@ class BorderStationController extends BaseFormController  {
         ];
         
         this.setForms = this.session.checkPermission('PROJECTS','SET_FORMS',null, null);
+        this.setFeatures = this.session.checkPermission('PROJECTS','SET_FEATURES',null, null);
         
         this.detailsQuestions = [948,949,950,951,953,954,955,956,1080,1081];
         this.originalDetailValues = {};

@@ -17,7 +17,7 @@ export class IrfKenyaController extends BaseIrfCommonController {
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,156,713];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,977,713];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930,74];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
@@ -270,7 +270,7 @@ export class IrfKenyaController extends BaseIrfCommonController {
                 format:'col-md-6',
                 points:0
             },
-            156:{
+            977:{
                 enabled:true,
                 label:"Doesn't speak English",
                 type:'checkbox',

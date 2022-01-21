@@ -107,6 +107,7 @@ describe('IrfTestController', () => {
                     isViewing: jasmine.any(Function),
                     modalActions: jasmine.any(Function),
                     config: jasmine.any(Function),
+                    parentController: jasmine.any(Function),
                     options: jasmine.any(Function),
                 },
                 size: 'lg',

@@ -19,6 +19,7 @@ export class BaseFormController {
           });
 
         this.response = {status:'in-progress'};
+        this.relatedForms = {};
         this.ignoreWarnings = false;
         this.messagesEnabled = false;
         this.redFlagTotal = 0;
@@ -26,6 +27,8 @@ export class BaseFormController {
         this.selectedStep = 0;
         this.autoSaveModified = false;
         this.lastAutoSave = null;
+        this.maximumUploadSize = 99 * 1024 * 1024;
+        this.maximumFileSize = 20 * 1024 * 1024;
        
         this.errorMessages = [];
         this.warningMessages = [];
@@ -90,6 +93,7 @@ export class BaseFormController {
     
     processPersonIdentificationOut (question) {
     }
+
     
     processPersonResponses(responses, personConfigList, phase, mainForm) {
         for (let idx in responses) {
@@ -299,6 +303,65 @@ export class BaseFormController {
         return the_card;
     }
     
+    getRelatedFormsComplete() {
+    }
+    
+    getRelatedForms(service, session, stationId, formNumber) {
+        this.service.getRelatedForms(stationId, formNumber).then((response) => {
+            let relatedForms = response.data;
+            this.relatedForms = {};
+            for (let idx in relatedForms) {
+                let url = null;
+                if (this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
+                    url = this.state.href(relatedForms[idx].form_name, {
+                        id: relatedForms[idx].id,
+                        stationId: relatedForms[idx].station_id,
+                        countryId: relatedForms[idx].country_id,
+                        isViewing: false,
+                        formName: relatedForms[idx].form_name,
+                    });
+                } else if (this.session.checkPermission(relatedForms[idx].form_type,'VIEW',relatedForms[idx].country_id, stationId)) {
+                    url = this.state.href(relatedForms[idx].form_name, {
+                        id: relatedForms[idx].id,
+                        stationId: relatedForms[idx].station_id,
+                        countryId: relatedForms[idx].country_id,
+                        isViewing: true,
+                        formName: relatedForms[idx].form_name,
+                    });
+                } else {
+                    continue;
+                }
+                if (!this.relatedForms[relatedForms[idx].form_type]) {
+                    this.relatedForms[relatedForms[idx].form_type] = []; 
+                }
+                this.relatedForms[relatedForms[idx].form_type].push(
+                        {
+                            countryId:relatedForms[idx].country_id,
+                            stationId:relatedForms[idx].station_id,
+                            formName:relatedForms[idx].form_name,
+                            id:relatedForms[idx].id,
+                            formNumber: relatedForms[idx].form_number,
+                            url: url
+                        }
+                );
+            }
+            this.getRelatedFormsComplete();
+        });
+    }
+    
+    excludeRelatedForm(formType, formNumber) {
+        if (this.relatedForms[formType]) {
+            for (let idx=0; idx < this.relatedForms[formType].length; idx++) {
+                if (formNumber === this.relatedForms[formType][idx].formNumber) {
+                    this.relatedForms[formType].splice(idx,1);
+                }
+            }
+            if (this.relatedForms[formType].length < 1) {
+                delete this.relatedForms[formType];
+            }
+        }
+    }
+    
     // Override in subclass for implementation specific features
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
         /*jshint unused: false */
@@ -378,6 +441,65 @@ export class BaseFormController {
         }
 
         return [];
+    }
+    
+    // Overridden in subclass
+    getUploadFileQuestions() {
+        return [];
+    }
+    
+    getResponseSize(response) {
+        let imageObject = null;
+        if (response.hasOwnProperty('photo')) {
+            imageObject = response.photo.value;
+        } else {
+            imageObject = response.value;
+        }
+        
+        return this.getUploadFileSize(imageObject);
+    }
+    
+    gitUploadFilesSize(responses, startingSize) {
+        let totalSize = startingSize;
+        let fileQuestions = this.getUploadFileQuestions();
+        for (let idx=0; idx < responses.length; idx++) {
+            if (fileQuestions.indexOf(responses[idx].question_id) !== -1) {
+                totalSize += this.getResponseSize(responses[idx].response);
+            }
+        }
+        return totalSize;
+    }
+    
+    getCurrentTotalUploadSize() {
+        let totalSize = this.gitUploadFilesSize(this.response.responses, 0);
+        for (let card in this.response.cards) {
+            for (let instance in this.response.cards[card].instances) {
+                totalSize = this.gitUploadFilesSize(this.response.cards[card].instances[instance].responses, totalSize);
+            }
+        }
+        return totalSize;
+    }
+    
+    getUploadFileSize(uploadObject) { 
+        let t = Object.prototype.toString.call(uploadObject);
+        let totalSize = 0;
+        if (t === '[object Blob]') {
+            totalSize += uploadObject.$ngfSize;
+        } else if (t === '[object File]') {
+            totalSize += uploadObject.size;
+        }
+        
+        return totalSize;
+    }
+    
+    willUploadExceedLimit(uploadObject) {
+        let totalSize = this.getCurrentTotalUploadSize() + this.getUploadFileSize(uploadObject);
+        return totalSize > this.maximumUploadSize;
+    }
+    
+    doesUploadFileExceedLimit(uploadObject) {
+        let totalSize = this.getUploadFileSize(uploadObject);
+        return totalSize > this.maximumFileSize;
     }
 
     // Override in subclass and set to non-zero value to enable auto-save

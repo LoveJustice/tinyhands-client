@@ -96,6 +96,7 @@ export class BaseMonthlyReportController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 identificationTypes: () => this.getDefaultIdentificationTypes(),
                 associatedPersons: () => this.associatedPersons
             },
@@ -113,6 +114,10 @@ export class BaseMonthlyReportController extends BaseFormController {
             this.autoSaveModified = true;
             this.autoSave();
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [910];
     }
     
     // Override in subclass for implementation specific features

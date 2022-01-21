@@ -1,9 +1,9 @@
 import {BaseModalController} from '../baseModalController.js';
 
 class CifModalController extends BaseModalController {
-    constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, identificationTypes) {
+    constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, parentController, identificationTypes) {
         'ngInject';
-        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants);
+        super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants, parentController);
         
         this.identificationTypes = identificationTypes;
     }

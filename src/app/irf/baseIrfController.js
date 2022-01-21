@@ -79,6 +79,13 @@ export class BaseIrfController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[1].response.value.match(this.formNumberPattern) !== null);
+        if (this.goodFormNumber) {
+            this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.questions[1].response.value);
+        }
+    }
+    
+    getRelatedFormsComplete() {
+        this.excludeRelatedForm('IRF', this.questions[1].response.value);
     }
     
     getLocations(stationId) {
@@ -93,7 +100,7 @@ export class BaseIrfController extends BaseFormController {
     		this.config = response.data;
     		this.service.getIrf(countryId, stationId, id).then((response) => {
     		    this.processResponse(response, id);
-    		    this.restrictChanges = this.response.status == 'second-verification' || this.response.status === 'approved' && !this.questions[607].response.value;
+    		    this.restrictChanges = this.response.status === 'second-verification' || this.response.status === 'approved' && !this.questions[607].response.value;
     		    if (this.stateParams.id !== null && this.questions[1].response.value !== null) {
     		        this.relatedUrl = this.state.href('relatedForms', {
     	                stationId: this.stateParams.stationId,
@@ -127,7 +134,7 @@ export class BaseIrfController extends BaseFormController {
     modalSave(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options) {
         /*jshint unused: false */
         if (theControllerName === 'IntercepteeModalController' && cardIndex !== null) {
-            this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 7).value);
+            this.loadCanvas('intercepteeCanvas' + cardIndex, this.getResponseOfQuestionById(the_card.responses, 9).photo.value);
         }
     }
     
@@ -136,7 +143,7 @@ export class BaseIrfController extends BaseFormController {
 
     	let starting_flag_count = the_card.flag_count;
     	this.modalActions = [];
-    	options['restrictChanges']  = this.restrictChanges;
+    	options.restrictChanges  = this.restrictChanges;
     	this.$uibModal.open({
             bindToController: true,
             controller: theController,
@@ -147,6 +154,7 @@ export class BaseIrfController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 options: () => options,
             },
             size: 'lg',
@@ -180,7 +188,9 @@ export class BaseIrfController extends BaseFormController {
             canvas.height = maxSize;
             canvas.width = img.width * maxSize/img.height;
         }
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        if (canvas.width && canvas.height) {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
     }
     
     loadCanvas (canvasName,  questionValue){
@@ -196,14 +206,19 @@ export class BaseIrfController extends BaseFormController {
         }
         
         let img = new Image();
-        img.src = imageUrl;
         this.intercepteeImages[canvasName] = img;
         img.addEventListener('load', (e)=>{/*jshint unused: false */
                 for (let canvas in this.intercepteeImages) {
                     this.resizeImage(canvas, this.intercepteeImages[canvas]);
                 }
             });
+        img.src = imageUrl;
+       
         
+    }
+    
+    getUploadFileQuestions() {
+        return [9, 641];
     }
     
     processInterceptionDate() {

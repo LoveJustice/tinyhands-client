@@ -3,7 +3,7 @@ import printCardTemplate from './common/printCardTemplate.html';
 import {IrfStubController} from './irfStub.js';
 
 export class BaseCifController extends BaseFormController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack) {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $stateParams, $uibModalStack);
 
@@ -15,6 +15,7 @@ export class BaseCifController extends BaseFormController {
         this.timeout = $timeout;
         this.relatedUrl = null;
         this.spinner = SpinnerOverlayService;
+        this.session = SessionService;
        
         this.cifNumber = "";
         this.associatedPersons = [];
@@ -32,6 +33,13 @@ export class BaseCifController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[287].response.value.match(this.formNumberPattern) !== null);
+        if (this.goodFormNumber) {
+            this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.questions[287].response.value);
+        }
+    }
+    
+    getRelatedFormsComplete() {
+        this.excludeRelatedForm('CIF', this.questions[287].response.value);
     }
     
     number_change() {
@@ -160,6 +168,7 @@ export class BaseCifController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 identificationTypes: () => this.getDefaultIdentificationTypes(),
                 associatedPersons: () => this.associatedPersons,
                 checkboxGroupItems: () => checkboxGroupItems
@@ -180,6 +189,10 @@ export class BaseCifController extends BaseFormController {
             this.autoSaveModified = true;
             this.autoSave();
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [612];
     }
     
     associatedPersonChange(person) {

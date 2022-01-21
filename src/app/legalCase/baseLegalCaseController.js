@@ -41,48 +41,25 @@ export class BaseLegalCaseController extends BaseFormController {
             this.tmpIrf = null;
             this.irfRef = null;
             this.cifRefs = [];
-            if (legalCaseNumber !== '') {
-                this.service.getRelatedForms(this.stateParams.stationId, legalCaseNumber).then((response) => {
-                    let relatedForms = response.data;
-                    for (let idx in relatedForms) {
-                        if (relatedForms[idx].form_type === 'IRF') {
-                            this.irfRef = {
-                                    formNumber: relatedForms[idx].form_number,
-                                    url: this.state.href(relatedForms[idx].form_name, {
-                                        id: relatedForms[idx].id,
-                                        stationId: relatedForms[idx].station_id,
-                                        countryId: null,
-                                        isViewing: false,
-                                        formName: relatedForms[idx].form_name,
-                                    })
-                            };
-                            let irfStateParams = {
-                                   countryId:null,
-                                   stationId:relatedForms[idx].station_id,
-                                   formName:relatedForms[idx].form_name,
-                                   id:relatedForms[idx].id
-                            };
-                            this.tmpIrf = new IrfStubController(this.$scope, this.$uibModal, this.constants, this.irfService, irfStateParams, this.state, this);
-                            this.getIrfComplete();
-                        } else if (relatedForms[idx].form_type === 'CIF') {
-                            this.cifRefs.push(
-                                    {
-                                        formNumber: relatedForms[idx].form_number,
-                                        url: this.state.href(relatedForms[idx].form_name, {
-                                            id: relatedForms[idx].id,
-                                            stationId: relatedForms[idx].station_id,
-                                            countryId: null,
-                                            isViewing: false,
-                                            formName: relatedForms[idx].form_name,
-                                        }) 
-                                    });
-                        }
-                    }
-                    if (this.irfRef === null) {
-                        this.getSubIrfComplete();
-                    }
-                });
+            if (this.goodFormNumber) {
+                this.getRelatedForms(this.service, this.session, this.stateParams.stationId, legalCaseNumber);
             }
+        }
+    }
+    
+    getRelatedFormsComplete() {
+        this.excludeRelatedForm('LEGAL_CASE', this.questions[998].response.value);
+        if (this.relatedForms.IRF) {
+            let irfStateParams = {
+                    countryId:this.relatedForms.IRF[0].countryId,
+                    stationId:this.relatedForms.IRF[0].stationId,
+                    formName:this.relatedForms.IRF[0].formName,
+                    id:this.relatedForms.IRF[0].id
+             };
+            this.tmpIrf = new IrfStubController(this.$scope, this.$uibModal, this.constants, this.irfService, irfStateParams, this.state, this);
+            this.getIrfComplete();
+        } else {
+            this.getSubIrfComplete();
         }
     }
     
@@ -193,6 +170,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: ()=> this,
                 caseStatus: () => this.questions[997].response.value,
                 userName: () => this.session.user.first_name + ' ' + this.session.user.last_name,
             },
@@ -211,6 +189,10 @@ export class BaseLegalCaseController extends BaseFormController {
                 }
             }
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [1020];
     }
     
     static getTimelineResponseValue(entry, question_id) {

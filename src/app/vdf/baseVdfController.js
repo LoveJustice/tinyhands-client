@@ -1,7 +1,7 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseVdfController extends BaseFormController {
-    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {
+    constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $stateParams, $uibModalStack);
         
@@ -11,6 +11,7 @@ export class BaseVdfController extends BaseFormController {
         this.state = $state;
         this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
+        this.session = SessionService;
 
         this.vdfNumber = "";
         this.associatedPersons = [];
@@ -20,6 +21,13 @@ export class BaseVdfController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[651].response.value.match(this.formNumberPattern) !== null);
+        if (this.goodFormNumber) {
+            this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.questions[651].response.value);
+        }
+    }
+    
+    getRelatedFormsComplete() {
+        this.excludeRelatedForm('VDF', this.questions[651].response.value);
     }
     
     number_change() {
@@ -77,6 +85,7 @@ export class BaseVdfController extends BaseFormController {
                 isViewing: () => this.isViewing,
                 modalActions: () => this.modalActions,
                 config: () => config,
+                parentController: () => this,
                 associatedPersons: () => this.associatedPersons
             },
             size: 'lg',
@@ -95,6 +104,10 @@ export class BaseVdfController extends BaseFormController {
             this.autoSaveModified = true;
             this.autoSave();
         });
+    }
+    
+    getUploadFileQuestions() {
+        return [692];
     }
     
     // Override in subclass for implementation specific features

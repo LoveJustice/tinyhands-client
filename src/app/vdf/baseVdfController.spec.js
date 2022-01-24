@@ -113,6 +113,7 @@ describe('VdfTestController', () => {
                     isViewing: jasmine.any(Function),
                     modalActions: jasmine.any(Function),
                     config: jasmine.any(Function),
+                    parentController: jasmine.any(Function),
                     associatedPersons: jasmine.any(Function)
                 },
                 size: 'lg',

@@ -108,55 +108,49 @@
 	        		<td class="rightSep stationName">{{ station.station_name }}</td>
 	        		<td class="boldRightBorder stationCode">{{ station.station_code }}</td>
 	        		
-	        		<td class="stat rightSep" ng-if="station.features.indexOf('hasStaff') < 0 || station.features.indexOf('hasLocationStaff') > -1 || !vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
-	        		<td class="stat rightSep" ng-if="station.features.indexOf('hasStaff') > -1 && station.features.indexOf('hasLocationStaff') < 0 && vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].staff"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep',vm.stationDisplayData[0][station.id].staff)" ng-if="station.features.indexOf('hasStaff') < 0 || station.features.indexOf('hasLocationStaff') > -1 || !vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep',vm.stationDisplayData[0][station.id].staff)" ng-if="station.features.indexOf('hasStaff') > -1 && station.features.indexOf('hasLocationStaff') < 0 && vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 0)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep">{{ vm.stationDisplayData[0][station.id].intercepts }}</td>
-	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations || !vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].arrests }}</td>
-	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations && vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].arrests"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep intFmt',vm.stationDisplayData[0][station.id].intercepts)">{{ vm.stationDisplayData[0][station.id].intercepts }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep astFmt',vm.stationDisplayData[0][station.id].arrests)"  ng-if="vm.selectedCountry.enable_all_locations || !vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].arrests }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep astFmt',vm.stationDisplayData[0][station.id].arrests)" ng-if="!vm.selectedCountry.enable_all_locations && vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].arrests"
 	        				ng-blur="vm.changeFocus(station.id, 'arrests', 0)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep" ng-if="!vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].gospel }}</td>
-	        		<td class="stat rightSep" ng-if="vm.mayEdit(0)" ng-click="vm.contextMenu($event)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].gospel"
-	        				ng-blur="vm.changeFocus(station.id, 'gospel', 0)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep" ng-if="!vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].empowerment }}</td>
-	        		<td class="stat rightSep" ng-if="vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].empowerment"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep gspFmt',vm.stationDisplayData[0][station.id].gospel)">{{ vm.stationDisplayData[0][station.id].gospel }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep empFmt',vm.stationDisplayData[0][station.id].empowerment)" ng-if="!vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].empowerment }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep empFmt',vm.stationDisplayData[0][station.id].empowerment)" ng-if="vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].empowerment"
 	        				ng-blur="vm.changeFocus(station.id, 'empowerment', 0)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightDiv" ng-if="!vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].budget }}</td>
-	        		<td class="stat rightDiv" ng-if="vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].budget"
+	        		<td ng-class="vm.deemphasizeZero('stat rightDiv',vm.stationDisplayData[0][station.id].budget)" ng-if="!vm.mayEdit(0)">{{ vm.stationDisplayData[0][station.id].budget }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightDiv',vm.stationDisplayData[0][station.id].budget)" ng-if="vm.mayEdit(0)"><input type="text" ng-model="vm.stationDisplayData[0][station.id].budget"
 	        				ng-blur="vm.changeFocus(station.id, 'budget', 0)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
 	        		
-	        		<td class="stat rightSep" ng-if="station.features.indexOf('hasStaff') < 0 || station.features.indexOf('hasLocationStaff') > -1 || !vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
-	        		<td class="stat rightSep" ng-if="!station.features.indexOf('hasStaff') > -1 && station.features.indexOf('hasLocationStaff') < 0 && vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].staff"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep',vm.stationDisplayData[1][station.id].staff)" ng-if="station.features.indexOf('hasStaff') < 0 || station.features.indexOf('hasLocationStaff') > -1 || !vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep',vm.stationDisplayData[1][station.id].staff)" ng-if="!station.features.indexOf('hasStaff') > -1 && station.features.indexOf('hasLocationStaff') < 0 && vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep">{{ vm.stationDisplayData[1][station.id].intercepts }}</td>
-	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations || !vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].arrests }}</td>
-	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations && vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].arrests"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep intFmt',vm.stationDisplayData[1][station.id].intercepts)">{{ vm.stationDisplayData[1][station.id].intercepts }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep astFmt',vm.stationDisplayData[1][station.id].arrests)"  ng-if="vm.selectedCountry.enable_all_locations || !vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].arrests }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep astFmt',vm.stationDisplayData[1][station.id].arrests)" ng-if="!vm.selectedCountry.enable_all_locations && vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].arrests"
 	        				ng-blur="vm.changeFocus(station.id, 'arrests', 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep" ng-if="!vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].gospel }}</td>
-	        		<td class="stat rightSep" ng-if="vm.mayEdit(1)" ng-click="vm.contextMenu($event)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].gospel"
-	        				ng-blur="vm.changeFocus(station.id, 'gospel', 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep" ng-if="!vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].empowerment }}</td>
-	        		<td class="stat rightSep" ng-if="vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].empowerment"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep gspFmt',vm.stationDisplayData[1][station.id].gospel)">{{ vm.stationDisplayData[1][station.id].gospel }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep empFmt',vm.stationDisplayData[1][station.id].empowerment)" ng-if="!vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].empowerment }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep empFmt',vm.stationDisplayData[1][station.id].empowerment)" ng-if="vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].empowerment"
 	        				ng-blur="vm.changeFocus(station.id, 'empowerment', 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightDiv" ng-if="!vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].budget }}</td>
-	        		<td class="stat rightDiv" ng-if="vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].budget"
+	        		<td ng-class="vm.deemphasizeZero('stat rightDiv',vm.stationDisplayData[1][station.id].budget)" ng-if="!vm.mayEdit(1)">{{ vm.stationDisplayData[1][station.id].budget }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightDiv',vm.stationDisplayData[1][station.id].budget)" ng-if="vm.mayEdit(1)"><input type="text" ng-model="vm.stationDisplayData[1][station.id].budget"
 	        				ng-blur="vm.changeFocus(station.id, 'budget', 1)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
 	        		
-	        		<td class="stat rightSep" ng-if="station.features.indexOf('hasStaff') < 0 || station.features.indexOf('hasLocationStaff') > -1 || !vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
-	        		<td class="stat rightSep" ng-if="station.features.indexOf('hasStaff') > -1 && station.features.indexOf('hasLocationStaff') < 0 && vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].staff"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep',vm.stationDisplayData[2][station.id].staff)" ng-if="station.features.indexOf('hasStaff') < 0 || station.features.indexOf('hasLocationStaff') > -1 || !vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep',vm.stationDisplayData[2][station.id].staff)" ng-if="station.features.indexOf('hasStaff') > -1 && station.features.indexOf('hasLocationStaff') < 0 && vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].staff"
 	        				ng-blur="vm.changeFocus(station.id, 'staff', 2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep">{{ vm.stationDisplayData[2][station.id].intercepts }}</td>
-	        		<td class="stat rightSep"  ng-if="vm.selectedCountry.enable_all_locations || !vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].arrests }}</td>
-	        		<td class="stat rightSep" ng-if="!vm.selectedCountry.enable_all_locations && vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].arrests"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep intFmt',vm.stationDisplayData[2][station.id].intercepts)">{{ vm.stationDisplayData[2][station.id].intercepts }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep astFmt',vm.stationDisplayData[2][station.id].arrests)"  ng-if="vm.selectedCountry.enable_all_locations || !vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].arrests }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep astFmt',vm.stationDisplayData[2][station.id].arrests)" ng-if="!vm.selectedCountry.enable_all_locations && vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].arrests"
 	        				ng-blur="vm.changeFocus(station.id, 'arrests', 2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep" ng-if="!vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].gospel }}</td>
-	        		<td class="stat rightSep" ng-if="vm.mayEdit(2)" ng-click="vm.contextMenu($event)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].gospel"
-	        				ng-blur="vm.changeFocus(station.id, 'gospel', 2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightSep" ng-if="!vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].empowerment }}</td>
-	        		<td class="stat rightSep" ng-if="vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].empowerment"
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep gspFmt',vm.stationDisplayData[2][station.id].gospel)">{{ vm.stationDisplayData[2][station.id].gospel }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep empFmt',vm.stationDisplayData[2][station.id].empowerment)" ng-if="!vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].empowerment }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightSep empFmt',vm.stationDisplayData[2][station.id].empowerment)" ng-if="vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].empowerment"
 	        				ng-blur="vm.changeFocus(station.id, 'empowerment', 2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
-	        		<td class="stat rightDiv" ng-if="!vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].budget }}</td>
-	        		<td class="stat rightDiv" ng-if="vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].budget"
+	        		<td ng-class="vm.deemphasizeZero('stat rightDiv',vm.stationDisplayData[2][station.id].budget)" ng-if="!vm.mayEdit(2)">{{ vm.stationDisplayData[2][station.id].budget }}</td>
+	        		<td ng-class="vm.deemphasizeZero('stat rightDiv',vm.stationDisplayData[2][station.id].budget)" ng-if="vm.mayEdit(2)"><input type="text" ng-model="vm.stationDisplayData[2][station.id].budget"
 	        				ng-blur="vm.changeFocus(station.id, 'budget', 2)" onkeypress="return event.charCode >= 48 && event.charCode <= 57"></td>
 	        	</tr>
 	        	<tr>
@@ -164,24 +158,24 @@
 	        		<td class="boldRightBorder total stationCode"></td>
 	        		
 	        		<td class="stat total rightSep">{{ vm.stationDisplayData[0].total.staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[0].total.intercepts }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[0].total.arrests }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[0].total.gospel }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[0].total.empowerment }}</td>
+	        		<td class="stat total rightSep intFmt">{{ vm.stationDisplayData[0].total.intercepts }}</td>
+	        		<td class="stat total rightSep astFmt">{{ vm.stationDisplayData[0].total.arrests }}</td>
+	        		<td class="stat total rightSep gspFmt">{{ vm.stationDisplayData[0].total.gospel }}</td>
+	        		<td class="stat total rightSep empFmt">{{ vm.stationDisplayData[0].total.empowerment }}</td>
 	        		<td class="stat total rightDiv">{{ vm.stationDisplayData[0].total.budget }}</td>
 	        		
 	        		<td class="stat total rightSep">{{ vm.stationDisplayData[1].total.staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[1].total.intercepts }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[1].total.arrests }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[1].total.gospel }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[1].total.empowerment }}</td>
+	        		<td class="stat total rightSep intFmt">{{ vm.stationDisplayData[1].total.intercepts }}</td>
+	        		<td class="stat total rightSep astFmt">{{ vm.stationDisplayData[1].total.arrests }}</td>
+	        		<td class="stat total rightSep gspFmt">{{ vm.stationDisplayData[1].total.gospel }}</td>
+	        		<td class="stat total rightSep empFmt">{{ vm.stationDisplayData[1].total.empowerment }}</td>
 	        		<td class="stat total rightDiv">{{ vm.stationDisplayData[1].total.budget }}</td>
 	        		
 	        		<td class="stat total rightSep">{{ vm.stationDisplayData[2].total.staff.toLocaleString('en-US', vm.digits2Format)  }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[2].total.intercepts }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[2].total.arrests }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[2].total.gospel }}</td>
-	        		<td class="stat total rightSep">{{ vm.stationDisplayData[2].total.empowerment }}</td>
+	        		<td class="stat total rightSep intFmt">{{ vm.stationDisplayData[2].total.intercepts }}</td>
+	        		<td class="stat total rightSep astFmt">{{ vm.stationDisplayData[2].total.arrests }}</td>
+	        		<td class="stat total rightSep gspFmt">{{ vm.stationDisplayData[2].total.gospel }}</td>
+	        		<td class="stat total rightSep empFmt">{{ vm.stationDisplayData[2].total.empowerment }}</td>
 	        		<td class="stat total rightDiv">{{ vm.stationDisplayData[2].total.budget }}</td>
 	        	</tr>
 	        </tbody>

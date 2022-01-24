@@ -41,7 +41,8 @@
 	                    <label>File to attach</label>
 	                </form-step>
 	            </div>
-	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.questions[1020].response.value">
+	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.questions[1020].response.value"
+	            	ng-change="AttachmentModalController.checkUploadSize(AttachmentModalController.questions[1020].response)">
             </div>
             <div class="row center-vertical">
             	<div class="col-md-2 form-group">

@@ -25,6 +25,7 @@ class LocationDataController {
                 onItemSelect: this.stationChangeEvent,
                 ctrl: this,
         };
+        this.hasLocationStaffing = false;
         
         this.countries = [];
         this.stations = null;
@@ -116,11 +117,13 @@ class LocationDataController {
             this.stationDropDown.options = [];
             for (var idx=0; idx < this.stations.length; idx++) {
                 let type=this.stations[idx].project_category_name;
-                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type};
+                let option = {"id":this.stations[idx].id, "label":this.stations[idx].station_name,"type":type,
+                        "hasLocationStaffing": this.stations[idx].features.indexOf('hasLocationStaffing') >= 0};
                 this.stationDropDown.options.push(option);
                 if (this.stations[idx].station_name === selectedStationName) {
                     this.stationDropDown.selectedOptions = [option];
                     this.changeStation();
+                    this.hasLocationStaffing = this.stations[idx].features.indexOf('hasLocationStaffing') >= 0;
                 }
             }
         });
@@ -150,6 +153,7 @@ class LocationDataController {
     
     changeStation() {
         sessionStorage.setItem('station-stats-station', this.stationDropDown.selectedOptions[0].label);
+        this.hasLocationStaffing =  this.stationDropDown.selectedOptions[0].hasLocationStaffing;
         this.locations = null;
         this.getLocations();
     }
@@ -346,12 +350,16 @@ class LocationDataController {
         this.locationTotals._Total = {
                 staff:0,
                 intercepts:0,
-                arrests:0
+                arrests:0,
+                ratio:null
         };
         for (let idx=0; idx < this.locations.length; idx++) {
             this.locationTotals._Total.staff += this.locationTotals[this.locations[idx].id].staff;
             this.locationTotals._Total.intercepts += this.locationTotals[this.locations[idx].id].intercepts;
             this.locationTotals._Total.arrests += this.locationTotals[this.locations[idx].id].arrests;
+        }
+        if (this.locationTotals._Total.staff > 0 && this.locationTotals._Total.intercepts >= 0) {
+            this.locationTotals._Total.ratio = this.locationTotals._Total.intercepts / this.locationTotals._Total.staff;
         }
         for (let col=0; col < this.locationDisplayData.length; col++) {
             this.locationDisplayData[col]._Total = {
@@ -365,6 +373,43 @@ class LocationDataController {
                 this.locationDisplayData[col]._Total.arrests += this.locationDisplayData[col][this.locations[idx].id].arrests;
             }
         }
+    }
+    
+    deemphasizeZero(baseClass, value) {
+        let fullClass = baseClass
+        if (value === 0) {
+            fullClass += ' deemphasizeZero';
+        }
+        
+        return fullClass;
+    }
+    
+    colorRatio(baseClass, staff, intercepts) {
+        let fullClass = baseClass;
+        if (this.hasLocationStaffing) {
+            if (staff > 0) {
+                if (intercepts >= 0) {
+                    let ratio = intercepts/staff;
+                    if (this.locationTotals._Total.ratio !== null) {
+                        if (ratio >= this.locationTotals._Total.ratio * 1.5) {
+                            fullClass += ' veryGoodRatio';
+                        } else if (ratio >= this.locationTotals._Total.ratio) {
+                            fullClass += ' goodRatio';
+                        } else if (ratio >= this.locationTotals._Total.ratio * 0.5) {
+                            fullClass += ' poorRatio';
+                        } else {
+                            fullClass += ' veryPoorRatio';
+                        }
+                    } 
+                }
+            } else if (intercepts > 0) {
+                fullClass += ' warningRatio';
+            }
+        } else if (intercepts === 0) {
+            fullClass = this.deemphasizeZero(baseClass, 0);
+        }
+        
+        return fullClass;
     }
     
     updateTotals(location) {

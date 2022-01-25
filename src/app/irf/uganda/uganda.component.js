@@ -544,6 +544,8 @@ export class IrfUgandaController extends BaseIrfCommonController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+
+        this.includeQuestion[1077] = true
     }
     
     getDefaultIdentificationTypes() {

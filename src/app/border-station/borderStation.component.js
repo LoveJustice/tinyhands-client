@@ -411,7 +411,7 @@ class BorderStationController extends BaseFormController  {
     }
     
     openCommitteeModal(card=null, isAdd = false, idx=null) {
-        this.commonModal(card, isAdd, idx, BaseModalController, 'CommitteeModalController',
+        this.commonModal(card, isAdd, idx, StationModalController, 'CommitteeModalController',
                 committeeModalTemplate, 'Commitee Members');
     }
     

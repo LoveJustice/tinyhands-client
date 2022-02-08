@@ -131,7 +131,7 @@
                     <button class="btn btn-success float-left" ng-click="SuspectModalController.save()" ng-disabled="!SuspectModalController.questions[9].response.name.value" ng-if="!SuspectModalController.isViewing">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
-                    <button class="btn btn-danger" ng-click="SuspectModalController.delete()" ng-if="!SuspectModalController.isAdd && !SuspectModalController.isViewing">Delete</button>
+                    <button class="btn btn-danger" ng-click="SuspectModalController.delete()" ng-if="!SuspectModalController.isAdd && !SuspectModalController.isViewing && (!SuspectModalController.questions[1010].response.value || SuspectModalController.questions[1010].response.value.substring(0,3)!=='Yes')">Delete</button>
                 </div>
                 <div class="col-xs-4">
                     <button class="btn btn-default" ng-click="SuspectModalController.dismiss()">Close</button>

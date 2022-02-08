@@ -78,15 +78,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 form-group">
-            <form-step class="col-md-4 control-label">Case Type</form-step>
+        <div class="col-md-12 form-group">
+            <form-step class="col-md-2 control-label">Case Types</form-step>
             <div class="col-md-8">
-	        	<form-step type="radio" class="col-md-6" ng-repeat="caseSource in $ctrl.config.RadioItems[1008]" radio-name="casetype" label="{{caseSource}}"
-	            	other-value="$ctrl.otherData.questions[1008].otherValue"
-	            	response-value="$ctrl.otherData.questions[1008].value"></form-step>
-	            <form-step type="otherRadio" class="col-md-12" radio-name="casetype" label="Other"
-	            	other-value="$ctrl.otherData.questions[1008].otherValue"
-	            	response-value="$ctrl.otherData.questions[1008].value"></form-step>
+	        	<form-step class="col-md-3" ng-repeat="caseType in $ctrl.caseTypes" type="checkbox" label="{{ caseType }}"
+							response-value="$ctrl.checkboxGroup.questions[1008][caseType]"></form-step>
+				<form-step class="col-md-3" type="otherCheckbox" label="Other"
+							response-value="$ctrl.checkboxGroup.questions[1008].internalOther"></form-step>
             </div>
         </div>
     </div>

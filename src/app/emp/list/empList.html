@@ -2,12 +2,12 @@
 
     <div class="row">
         <div class="col-xs-7">
-            <h1>Empowerment (EMPs)</h1>
+            <h1>Empowerment (Emps)</h1>
         </div>
 
         <div class="pull-right"><br>
             <a ng-if="empListCtrl.hasAddPermission" class="btn btn-success" ng-click="empListCtrl.createEmp()">
-                Input A New EMP
+                Input A New Emp
             </a>
         </div>
     </div>
@@ -73,7 +73,7 @@
                 <td ng-if="empListCtrl.session.checkPermission('EMP','EDIT',emp.station.operating_country.id, emp.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{emp.editUrl}}">Edit</a></td>
             </tr>
             <tr ng-show="empListCtrl.emps.length == 0">
-                <td colspan="12" style="text-align:center;"><h2>No EMPs Matched your search for: "{{ empListCtrl.queryParameters.search }}"</h2></td>
+                <td colspan="12" style="text-align:center;"><h2>No Emps Matched your search for: "{{ empListCtrl.queryParameters.search }}"</h2></td>
             </tr>
         </tbody>
     </table>

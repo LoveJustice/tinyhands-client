@@ -246,7 +246,7 @@ export default class EmpListController {
     }
     
     showPage(pageNumber) {
-        this.spinnerOverlayService.show("Searching for EMPs...");        
+        this.spinnerOverlayService.show("Searching for Emps...");        
         this.service.getEmpList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
             this.emps = promise.data.results;
             this.paginate.items = promise.data.count;

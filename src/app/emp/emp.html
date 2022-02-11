@@ -1,0 +1,115 @@
+<fieldset ng-disabled="vm.isViewing === true" id="empForm">
+    <div>
+    	<div class="col-md-12 padding-top-10"></div>
+	    	<div class="col-md-8 row">
+		    	<p class="col-md-12"><b>Instructions:</b>
+		    		The following form is to be completed to record empowerments.   
+		    		The form should only be completed in instances where the impact of our work caused a person to be empowered. 
+		    		Our definition of an empowerment is the following:</p>
+	    	</div>
+	    	<div class="col-md-12 row">
+	    		<p class="col-md-12">These are the four lines:</p>
+	    	</div>
+	    	<div class="col-md-12 row" ng-repeat="lvl in [1,2,3,4]">
+	    		<div class="col-md-12">
+	    			{{ lvl }}. &nbsp; ${{ vm.emp.levels[lvl-1].toLocaleString('en-US', vm.digits2Format) }} per day
+	    			(${{ vm.monthlyLevels[lvl-1].toLocaleString('en-US', vm.digits2Format) }} per month)
+	    		</div>
+	    	</div>
+	    	<div class="col-md-12 row">&nbsp;</div>
+	    	<div class="col-md-8 row">
+	    		<p class="col-md-12">Our definition of empowerment is if a person crosses two "lines". To calculate the “per day” income: monthly income X 12 / 365. 
+	    		If they meet this definition for a time span of 3 months, they have been empowered.
+				A new and separate entry should be created for each person who is empowered.</p>
+	    	</div>
+    	</div>
+    	<div class="col-md-12 row">&nbsp;</div>
+    	<div class="col-md-12 row">
+    		<div class="col-md-1"><label>Project</label></div>
+    		<div class="col-md-3">{{ vm.emp.station_name }}</div>
+    	</div>
+    	<div class="col-md-12 row">&nbsp;</div>
+    	<div class="col-md-12 row">
+   			<label class="col-md-12">Basic Details</label>
+   			<div class="padding-left-10">
+    			<div class="col-md-12 row">
+		    		<label class="col-md-1">Name</label>
+		    		<input lass="col-md-3" type='text' ng-model='vm.emp.full_name'>
+	    		</div>
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-1">Age</label>
+		    		<input class="col-md-1" type='number' ng-model='vm.emp.age'>
+		    	</div>
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-1">Gender</label>
+		    		<select class="col-md-2" class="form-control" ng-model="vm.emp.gender">
+		                <option value="F">Female</option>
+		                <option value="M">Male</option>
+		                <option value="U">Unkown</option>
+		            </select>
+		    	</div>
+		    </div>
+		</div>
+
+    	<div class="col-md-12 row padding-top-20">
+    		<label class="col-md-12">Empowerment Details</label>
+    		<div class="padding-left-10">
+    			<div class="col-md-12 row">
+	    			<label class="col-md-6">In USD ($), what was this person's average monthly income <span class="bold red">before</span> our intervention?</label>
+	    			<input class="col-md-1" type='number' ng-model='vm.emp.pre_emp_usd' ng-disabled="vm.stateParams.id" ng-change="vm.computeLevels()"
+	    					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
+    			</div>
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-6">In local currency, what was this person's average monthly income <span class="bold red">before</span> our intervention?</label>
+					<input class="col-md-3" type='text' ng-model='vm.emp.pre_emp_local'>
+		    	</div>
+    			<div class="col-md-12 row padding-top-5">
+    				<label class="col-md-6">In USD ($), what was this person's average monthly income <span class="bold red">after</span> our intervention?</label>
+    				<input class="col-md-1" type='number' ng-model='vm.emp.post_emp_usd' ng-disabled="vm.stateParams.id" ng-change="vm.computeLevels()" 
+    						onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 46">
+    			</div>
+    			<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-6">In local currency, what was this person's average monthly income <span class="bold red">after</span> our intervention?</label>
+		    		<input class="col-md-3" type='text' ng-model='vm.emp.post_emp_local'>
+		    	</div>
+		    	<div class="col-md-12 row padding-top-5" ng-if="vm.emp.lines_crossed">
+		    		<div class="padding-left-40"><label>Lines Crossed:</label> {{ vm.emp.lines_crossed }}</div>
+		    	</div>
+		    	<div class="col-md-12 row padding-top-5" ng-if="vm.emp.lines_crossed>=2">
+		    		<label class="col-md-5">Did this person maintain this higher level of income for <span class="bold red">at least 3 months</span>?</label>
+		    		<div class="col-md-1">
+			    		<select class="form-control" ng-model="vm.threeMonths" ng-disabled="vm.stateParams.id">>
+			                <option value="Yes">Yes</option>
+			                <option value="No">No</option>
+			                <option value="No">Don't know</option>
+			            </select>
+			        </div>
+		    	</div>
+    		</div>
+    	</div>
+    	
+    	<div  class="col-md-12 row alert alert-warning" ng-if="vm.emp.lines_crossed !==null && vm.emp.lines_crossed < 2">
+    		<strong class="col-md-8">Based on the amounts entered above, this person does not meet our definition of empowerment 
+    		since they did not cross "2 lines". See empowerment definition above for more information.</strong>
+    	</div>
+    	
+    	<div  class="col-md-12 row alert alert-warning" ng-if="vm.threeMonths === 'No' && vm.emp.lines_crossed>=2">
+    		<strong class="col-md-8">If we have not verified that a person has been economically empowered (according to our definition above) for at 
+    		least 3 continuous months we do not count this as an empowerment.</Strong>
+    	</div>
+    	<div class="col-md-12 row" ng-if="vm.threeMonths==='Yes' && vm.emp.lines_crossed>=2">
+    		<div class="col-md-12">
+    			<label>Explain how Love Justice empowered this person:</label>
+    		</div>
+			<div class="col-md-8">
+    			<textarea class="form-control" rows="4" ng-model="vm.emp.notes"></textarea>
+			</div>
+    	</div>
+		<div class="container-fluid padding-bottom-20">
+			<div class=" col-md-8 row text-center padding-top-10" ng-if="vm.threeMonths==='Yes' && vm.emp.lines_crossed>=2 && vm.emp.full_name">
+				<button class="btn btn-success" ng-click="vm.submit()">Submit</button>
+			</div>
+		</div>
+    </div>
+    
+</fieldset>

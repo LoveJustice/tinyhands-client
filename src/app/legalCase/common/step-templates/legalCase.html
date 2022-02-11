@@ -81,10 +81,10 @@
         <div class="col-md-6 form-group">
             <form-step class="col-md-4 control-label">Case Type</form-step>
             <div class="col-md-8">
-	        	<form-step type="radio" class="col-md-6" ng-repeat="caseSource in $ctrl.config.RadioItems[1008]" radio-name="casetype" label="{{caseSource}}"
+	        	<form-step type="radio" class="col-md-6" ng-repeat="caseType in $ctrl.config.RadioItems[1008]" radio-name="caseType" label="{{caseType}}"
 	            	other-value="$ctrl.otherData.questions[1008].otherValue"
 	            	response-value="$ctrl.otherData.questions[1008].value"></form-step>
-	            <form-step type="otherRadio" class="col-md-12" radio-name="casetype" label="Other"
+	            <form-step type="otherRadio" class="col-md-12" radio-name="caseType" label="Other"
 	            	other-value="$ctrl.otherData.questions[1008].otherValue"
 	            	response-value="$ctrl.otherData.questions[1008].value"></form-step>
             </div>

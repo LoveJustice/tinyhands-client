@@ -8,6 +8,7 @@ import miscellaneousForm from './components/miscellaneous/miscellaneousForm.html
 import potentialVictimCareForm from './components/potentialVictimCare/potentialVictimCareForm.html';
 import awarenessForm from './components/awareness/awarenessForm.html';
 import pastMonth from './components/pastMonth/pastMonthSentMoneyForm.html';
+import moneyNotSpentForm from './components/moneyNotSpent/moneyNotSpent.html';
 
 import categoryTemplate from './components/salaries/category.html';
 import detailTemplate from './detail.html';
@@ -31,14 +32,18 @@ export default class BudgetController {
 
         this.sections = {
             allSections: [
-                { name: 'Salaries & Benefits', templateUrl: salariesForm },
-                { name: 'Communication', templateUrl: communicationForm },
-                { name: 'Travel', templateUrl: travelForm },
-                { name: 'Administration', templateUrl: administrationForm },
-                { name: 'Potential Victim Care', templateUrl: potentialVictimCareForm },
-                { name: 'Awareness', templateUrl: awarenessForm },
-                { name: 'Miscellaneous', templateUrl: miscellaneousForm },
+                { name: 'Salaries & Benefits', templateUrl: salariesForm, value: Constants.FormSections.Salaries },
+                { name: 'Communication', templateUrl: communicationForm, value: Constants.FormSections.Communication },
+                { name: 'Travel', templateUrl: travelForm, value: Constants.FormSections.Travel },
+                { name: 'Administration', templateUrl: administrationForm, value: Constants.FormSections.Administration },
+                { name: 'Potential Victim Care', templateUrl: potentialVictimCareForm, value: Constants.FormSections.Potential_Victim_Care },
+                { name: 'Awareness', templateUrl: awarenessForm, value: Constants.FormSections.Awareness },
+                { name: 'Miscellaneous', templateUrl: miscellaneousForm, value: Constants.FormSections.Miscellaneous }
             ],
+            excludeFromDropDown: [
+                'Past Month Sent Money',
+                'Money Not Spent',
+            ]
         };
 
         this.months = [
@@ -156,6 +161,9 @@ export default class BudgetController {
     formatSection(section) {
     	let result = section.replace(/_/g, ' ');
         result = result.replace(/\b\w/g, first => first.toLocaleUpperCase());
+        if (result === 'Money Not Spent To Deduct') {
+            result = 'Money Not Spent (To Deduct)';
+        }
     	return result;
     }
 
@@ -332,7 +340,9 @@ export default class BudgetController {
         this.staffItemsTotal();
         if (this.form.staff && this.form.staff.itemTypes) {
 	        this.form.staff.itemTypes.forEach(itemType => {
-	        	if (itemType !== 'Communication' && itemType !== 'Travel') {
+	            if (itemType === 'Deductions') {
+	                amount -= this.strToPennies(this.form.staff.Total.items[itemType].cost);
+	            } else if (itemType !== 'Communication' && itemType !== 'Travel') {
 	        		amount += this.strToPennies(this.form.staff.Total.items[itemType].cost);
 	        	}
 	        });
@@ -400,10 +410,47 @@ export default class BudgetController {
         return this.form.totals.borderMonitoringStation.travel;
     }
     // ENDREGION: Travel
+    
+    deductedNotSpentTotal() {
+        let deductAmount = 0;
+        let notDeductAmount = 0;
+        for (let idx in this.form.other.MoneyNotSpent) {
+            if (this.form.other.MoneyNotSpent[idx].cost) {
+                if (this.form.other.MoneyNotSpent[idx].deduct === 'Yes') {
+                    deductAmount += this.form.other.MoneyNotSpent[idx].cost * 100;
+                } else {
+                    notDeductAmount += this.form.other.MoneyNotSpent[idx].cost * 100;
+                }
+            }
+        }
+        this.form.totals.borderMonitoringStation.Money_Not_Spent_To_Deduct = this.penniesToStr(deductAmount);
+        if (!this.totals) {
+            this.totals = {};
+        }
+        this.totals.notDeductableNotSpent = this.penniesToStr(notDeductAmount);
+        this.totals.MoneyNotSpentTotal = this.penniesToStr(deductAmount + notDeductAmount);
+        return deductAmount;
+    }
+    
+    deductedNotSpentTotalDisplay() {
+        return this.penniesToStr(this.deductedNotSpentTotal());
+    }
+    
+    notDeductedNotSpentTotalDisplay() {
+        this.deductedNotSpentTotal();
+        return this.totals.notDeductableNotSpent;
+    }
+    
+    notSpentTotalDisplay() {
+        this.deductedNotSpentTotal();
+        return this.totals.MoneyNotSpentTotal;
+    }
+    
 
     // REGION: Functions that handle totals
     setBorderMonitoringStationTotals() {
-        let amount = this.salariesAndBenefitsTotal() + this.communicationTotal() + this.travelTotal() + this.adminTotal() + this.potentialVictimCareTotal() + this.awarenessTotal() + this.miscellaneousTotal();
+        let amount = (this.salariesAndBenefitsTotal() + this.communicationTotal() + this.travelTotal() + this.adminTotal() + 
+                this.potentialVictimCareTotal() + this.awarenessTotal() + this.miscellaneousTotal() - this.deductedNotSpentTotal());
         this.borderMonitoringStationTotal = this.penniesToStr(amount);
         return amount;
     }
@@ -433,6 +480,12 @@ export default class BudgetController {
             this.service.deleteStaffItem(this.budgetId, this.form.staff.deleteStaffItems[i]);
         }
     }
+    
+    deleteNotSpentItems() {
+        for (let i in this.deletedNotSpentItems) {
+            this.service.deleteNotSpentItem(this.budgetId, this.deletedNotSpentItems[i]);
+        }
+    }
 
     // REGION: GET Calls
     getAllData() {
@@ -449,8 +502,9 @@ export default class BudgetController {
             this.service.getCountry(response.data.operating_country).then(response => {
                 let options = response.data.options;
                 if ('pastMonthSent' in options && options.pastMonthSent) {
-                    this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth });
+                    this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth });
                 }
+                this.sections.allSections.push({ name: 'Money Not Spent', templateUrl: moneyNotSpentForm, value: 9999 });
             });
         });
     }
@@ -551,6 +605,11 @@ export default class BudgetController {
                 }
             }
         }
+        for (let idx=0; idx < this.form.other[key].length; idx++) {
+            if (this.form.other[key][idx].associated_section) {
+                this.form.other[key][idx].associated_string = '' + this.form.other[key][idx].associated_section;
+            }
+        }
     }
 
     getStaff() {
@@ -574,7 +633,7 @@ export default class BudgetController {
 
     extractStaffFromStaffItems(staffItems) {
         this.form.staff = {
-        	itemTypes:['Salary', 'Communication', 'Travel'],
+        	itemTypes:['Salary', 'Deductions', 'Communication', 'Travel'],
         	sortedStaff:[],
         	deleteStaffItems:[],
         };
@@ -774,6 +833,12 @@ export default class BudgetController {
         for (let section in this.form.other) {
             for (let i in this.form.other[section]) {
                 let item = this.form.other[section][i];
+                if (item.associated_string) {
+                    let num = parseInt(item.associated_string);
+                    if (!Number.isNaN(num)) {
+                        item.associated_section = num;
+                    }
+                }
                 if (item.id) {
                     this.updateOtherItem(item);
                 } else {

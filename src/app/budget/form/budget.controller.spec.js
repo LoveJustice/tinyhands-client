@@ -27,13 +27,17 @@
              let budgetFormPath = 'budget/form/components/';
              let sections = {
                  allSections: [
-                    { name: 'Salaries & Benefits', templateUrl: `${budgetFormPath}salaries/salariesForm.html` },
-	                { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html` },
-	                { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html` },
-	                { name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html` },
-	                { name: 'Potential Victim Care', templateUrl: `${budgetFormPath}potentialVictimCare/potentialVictimCareForm.html` },
-	                { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html` },
-	                { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html` },
+                    { name: 'Salaries & Benefits', templateUrl: `${budgetFormPath}salaries/salariesForm.html`, value: Constants.FormSections.Salaries },
+	                { name: 'Communication', templateUrl: `${budgetFormPath}communication/communicationForm.html`, value: Constants.FormSections.Communication },
+	                { name: 'Travel', templateUrl: `${budgetFormPath}travel/travelForm.html`, value: Constants.FormSections.Travel },
+	                { name: 'Administration', templateUrl: `${budgetFormPath}administration/administrationForm.html`, value: Constants.FormSections.Administration },
+	                { name: 'Potential Victim Care', templateUrl: `${budgetFormPath}potentialVictimCare/potentialVictimCareForm.html`, value: Constants.FormSections.Potential_Victim_Care },
+	                { name: 'Awareness', templateUrl: `${budgetFormPath}awareness/awarenessForm.html`, value: Constants.FormSections.Awareness },
+	                { name: 'Miscellaneous', templateUrl: `${budgetFormPath}miscellaneous/miscellaneousForm.html`, value: Constants.FormSections.Miscellaneous },
+                 ],
+                 excludeFromDropDown: [
+                     'Past Month Sent Money',
+                     'Money Not Spent',
                  ]
              };
              expect(vm.sections).toEqual(sections);

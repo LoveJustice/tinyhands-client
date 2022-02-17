@@ -1,0 +1,75 @@
+<fieldset ng-disabled="vm.isViewing === true" id="gspForm">
+    <div>
+    	<div class="col-md-12 padding-top-10"></div>
+	    	<div class="col-md-8 row">
+		    	<p class="col-md-12"><b>Instructions:</b>
+		    		The following form is to be completed to record gospel professions for non-Potential Victims 
+		    		(i.e., gospel professions for potential victims are recorded using the VDF). The form should 
+		    		only be completed in instances where the impact of our work caused a person to profess to accept Christ. 
+		    		A new entry should be created for each non-PV that professes to accept Christ.</p>
+	    	</div>
+    	<div class="col-md-12 row">
+    		<div class="col-md-1"><label>Project</label></div>
+    		<div class="col-md-3">{{ vm.gsp.station_name }}</div>
+    	</div>
+    	<div class="col-md-12 row">&nbsp;</div>
+    	<div class="col-md-12 row">
+   			<label class="col-md-12">Basic Details</label>
+   			<div class="padding-left-10">
+    			<div class="col-md-12 row">
+		    		<label class="col-md-1">Name</label>
+		    		<input lass="col-md-3" type='text' ng-model='vm.gsp.full_name'>
+	    		</div>
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-1">Age</label>
+		    		<input class="col-md-1" type='number' ng-model='vm.gsp.age'>
+		    	</div>
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-1">Gender</label>
+		    		<select class="col-md-2" class="form-control" ng-model="vm.gsp.gender">
+		                <option value="F">Female</option>
+		                <option value="M">Male</option>
+		                <option value="U">Unkown</option>
+		            </select>
+		    	</div>
+		    </div>
+		</div>
+
+    	<div class="col-md-12 row padding-top-20">
+    		<div class="padding-left-10">
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-4">Did this person profess to accept Christ?</label>
+		    		<div class="col-md-1">
+		    			<select ng-model="vm.accepted" ng-disabled="vm.gsp.id">
+		    				<option value="Yes">Yes</option>
+		    				<option value="No">No</option>
+		    			</select>
+			        </div>
+		    	</div>
+    		</div>
+    	</div>
+    	
+    	<div class="col-md-12 row" ng-if="vm.accepted==='Yes'">
+    	<div class="padding-left-10">
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-4">Which Love Justice staff shared the gospel with this person?</label>
+		    		<div class="col-md-3">
+			    		<staff-select selected-staff="vm.gsp.staff_name" station-id="vm.stateParams.stationId"></staff-select>
+			        </div>
+		    	</div>
+    		</div>
+    		<div class="col-md-12">
+    			<label>Explain the context that led to their profession:</label>
+    		</div>
+			<div class="col-md-8">
+    			<textarea class="form-control" rows="4" ng-model="vm.gsp.notes"></textarea>
+			</div>
+    	</div>
+		<div class="container-fluid padding-bottom-20">
+			<div class=" col-md-8 row text-center padding-top-10" ng-if="vm.accepted==='Yes' && vm.gsp.full_name">
+				<button class="btn btn-success" ng-click="vm.submit()">Submit</button>
+			</div>
+		</div>
+    </div>
+    
+</fieldset>

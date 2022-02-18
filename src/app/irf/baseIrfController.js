@@ -44,7 +44,7 @@ export class BaseIrfController extends BaseFormController {
             dateString += '0';
         }
         dateString += (inDate.getUTCMonth()+1) + "-";
-        if (inDate.getUTCDate() < 9) {
+        if (inDate.getUTCDate() <= 9) {
             dateString += '0';
         }
         dateString += inDate.getUTCDate();

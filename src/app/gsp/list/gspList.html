@@ -1,0 +1,80 @@
+<div class="container" id="gspList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Gospel Professions (Gsps)</h1>
+        </div>
+
+        <div class="pull-right"><br>
+            <a ng-if="gspListCtrl.hasAddPermission && gspListCtrl.stationsForAddReady" class="btn btn-success" ng-click="gspListCtrl.createGsp()">
+                Input A New Gsp
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="gspListCtrl.countryDropDown.options"
+							selected-model="gspListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="gspListCtrl.countryDropDown.settings"
+                             translation-texts="gspListCtrl.countryDropDown.customText"
+                             events="gspListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="gspListCtrl.searchGsps()" ng-model="gspListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="gspListCtrl.stickyOptions" ng-model="gspListCtrl.gsps">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="gspListCtrl.updateSort('station__operating_country__name')" width="10%">Country
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('station__operating_country__name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('station__operating_country__name', 'reverse') }"></i>
+                </th>
+                <th ng-click="gspListCtrl.updateSort('station__station_name')" width="20%">Project
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('station__station_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('station__station_name', 'reverse')}"></i>
+                </th>
+                <th ng-click="gspListCtrl.updateSort('date_time_entered_into_system')" width="20%"> Entry Date
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                </th>
+                <th ng-click="gspListCtrl.updateSort('date_time_entered_into_system')" width="20%" class="hidden-xs">Project Stats Month
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="gsp in gspListCtrl.gsps | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ gsp.country_name }}</td>
+                <td>{{ gsp.station_name }}</td>
+                <td>{{ gsp.date_time_entered_into_system.substring(0,10)}}</td>
+                <td>{{ gsp.date_time_entered_into_system.substring(0,7)}}</td>
+                <td ng-if="gspListCtrl.session.checkPermission('GSP','VIEW',gsp.station.operating_country.id, gsp.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.viewUrl}}">View</a></td>
+                <td ng-if="gspListCtrl.session.checkPermission('GSP','EDIT',gsp.station.operating_country.id, gsp.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.editUrl}}">Edit</a></td>
+            </tr>
+            <tr ng-show="gspListCtrl.gsps.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No Gsps Matched your search for: "{{ gspListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="gspListCtrl.paginate" controller="gspListCtrl">
+    </div>
+    <br>
+</div>

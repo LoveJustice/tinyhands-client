@@ -87,7 +87,7 @@ export default class AuditSampleController {
                 dateString += '0';
             }
             dateString += (dt.getMonth()+1) + "-";
-            if (dt.getDate() < 9) {
+            if (dt.getDate() <= 9) {
                 dateString += '0';
             }
             dateString += dt.getDate();

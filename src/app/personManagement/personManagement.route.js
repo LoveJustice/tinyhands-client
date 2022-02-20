@@ -15,7 +15,7 @@ function PersonManagementRoutes($stateProvider) {
       controllerAs: 'vm',
     })
     .state('personManagementPendingList', {
-      url: '/PersonManagementPendingList?search&status&country_ids',
+      url: '/PersonManagementPendingList?search&status&country_ids&pending',
       params: {
         search: { dynamic: true },
       },

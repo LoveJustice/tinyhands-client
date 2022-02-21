@@ -42,7 +42,7 @@ class DateData {
                 dateString += '0';
             }
             dateString += (dt.getUTCMonth()+1) + "-";
-            if (dt.getUTCDate() < 9) {
+            if (dt.getUTCDate() <= 9) {
                 dateString += '0';
             }
             dateString += dt.getUTCDate();

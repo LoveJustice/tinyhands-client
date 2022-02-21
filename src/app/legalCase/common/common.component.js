@@ -39,27 +39,6 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         ];
         
         this.checkboxGroup = new CheckboxGroup();
-        this.caseTypes = [
-            'Human Trafficking',
-            'Rape',
-            'Public Case',
-            'Foreign Employment',
-            'Assault',
-            'Child Marriage',
-            'Domestic Violence',
-            'Forced Labor',
-            'Forgery',
-            'Gang Rape',
-            'Illegal Detention',
-            'Kidnapping',
-            'Multiple Marriage',
-            'Sexual Harassment',
-            'Taking Passport Abroad',
-            'Cyber Crime'
-        ];
-        for (let idx=0; idx < this.caseTypes.length; idx++) {
-            this.checkboxGroup.checkboxItem(1008, this.caseTypes[idx]);
-        }
         
         this.countryCharges = {
                 1:[ //Nepal

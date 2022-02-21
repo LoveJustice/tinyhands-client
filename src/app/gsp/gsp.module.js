@@ -11,7 +11,7 @@ import GspController from './gsp.controller';
 
 /* global angular */
 
-export default angular.module('tinyhands.EMP', [sharedModule])
+export default angular.module('tinyhands.GSP', [sharedModule])
     .config(GspRoutes)
     .controller('GspListController', GspListController)
     .controller('GspController', GspController)

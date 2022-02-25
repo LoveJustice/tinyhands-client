@@ -353,7 +353,7 @@ export class IrfZambiaController extends BaseIrfCommonController {
             },
             59:{
                 enabled:true,
-                label:'No bags through claim to be going for a long time',
+                label:'No bags though claim to be going for a long time',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -431,7 +431,7 @@ export class IrfZambiaController extends BaseIrfCommonController {
             },
             603:{
                 enabled:true,
-                label:'Contradiction in stories of suspect/victim',
+                label:'Contradiction between stories of suspect/PV',
                 type:'checkbox',
                 format:'col-md-12',
                 points:5

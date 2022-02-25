@@ -1,4 +1,6 @@
 import './gsp.less';
+const DateData = require('../dateData.js');
+
 export default class GspController {
     constructor($scope, $uibModal, constants, GspService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
@@ -13,6 +15,7 @@ export default class GspController {
         this.relatedUrl = null;
         this.session = SessionService;
         this.isViewing = this.stateParams.isViewing === 'true';
+        this.professionDate = null;
         
         this.digits2Format = {'minimumFractionDigits': 2, 'maximumFractionDigits': 2};
         
@@ -26,21 +29,18 @@ export default class GspController {
     getGsp(stationId, id) {
         this.service.getGsp(id, stationId).then((response) => {
             this.gsp = response.data;
-            if (this.gsp.pre_gsp_usd !== null && this.gsp.pre_gsp_usd !== '') {
-                this.gsp.pre_gsp_usd = +(this.gsp.pre_gsp_usd)
-            }
-            if (this.gsp.post_gsp_usd !== null && this.gsp.post_gsp_usd !== '') {
-                this.gsp.post_gsp_usd = +(this.gsp.post_gsp_usd)
-            }
-            
-            this.monthlyLevels = [];
-            for (let idx in this.gsp.levels) {
-                this.monthlyLevels[idx] = this.gsp.levels[idx] * 365/12.0;
+            if (this.gsp.profession_date) {
+                let dateData = new DateData([]);
+                this.professionDate = dateData.dateAsUTC(this.gsp.profession_date);
             }
         }, (error) => {alert(error);});
     }
     
     submit() {
+        if (this.professionDate) {
+            let dateData = new DateData([]);
+            this.gsp.profession_date = dateData.dateToString(this.professionDate);
+        }
         this.service.submitGsp(this.stateParams.stationId, this.stateParams.id, this.gsp).then((response) => {
              this.gsp = response.data;
              this.state.go('gspList');

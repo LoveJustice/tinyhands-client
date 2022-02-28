@@ -21,6 +21,7 @@ export class BaseLegalCaseController extends BaseFormController {
 
         this.legalCaseNumber = "";
         this.associatedPersons = [];
+        this.tableDivSize = (window.innerWidth - 50) + 'px';
 
         this.getLegalCase(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         

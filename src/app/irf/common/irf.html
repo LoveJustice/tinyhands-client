@@ -1,69 +1,54 @@
 <div id="irf" class="container-fluid padding-top-20">
     <div class="sticky">
-        <div class="padding-bottom-40">
-        	<div class="col-md-4">
-	            <h1 class="form-number-header float-left padding-left-20">
+        <div class="padding-bottom-30">
+        	<span class="col-md-3">
+	            <h3 class="form-number-header float-left padding-left-20">
 	                {{$ctrl.questions[1].response.value}}
-	            </h1>
-	            <div ng-if="$ctrl.relatedUrl && $ctrl.questions[1].response.value" class="col-md-2 padding-top-25">
-	            	<span>
-	            		&nbsp;
-	            		<a ng-href="{{$ctrl.relatedUrl}}" title="Related Forms"><img ng-src="assets/images/pages.png"></a>
-	            	</span>
-	            </div>
-            </div>
-            <div class="col-md-4 text-center">
-	            <h1 class="" ng-show="$ctrl.questions[819].response.value">
+	            </h3>
+            </span>
+            <div class="col-md-6 text-center">
+	            <h3 class="" ng-show="$ctrl.questions[819].response.value">
 	            	{{ $ctrl.questions[819].response.value }}
-	            </h1>
+	            </h3>
             </div>
-            <div class="col-md-4">
-            <h1 class="text-danger float-right padding-right-20">
-                Total Red Flags: {{$ctrl.redFlagTotal}}
-            </h1>
+            <div class="col-md-3">
+	            <h3 class="text-danger float-right padding-right-20">
+	                Red Flags: {{$ctrl.redFlagTotal}}
+	            </h3>
             </div>
         </div>
-        <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
+        <div class="btn-group btn-group-justified padding-bottom-10 padding-horizontal-40" role="group">
         	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
         		class="btn btn-default"
         		ng-class="{active: $ctrl.selectedStep == $index}" 
         		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
         </div>
-        <div class="row padding-bottom">
-			<div class="col-md-1">
-			</div>
-			<div class="col-md-2">
-		 		<div ng-if="$ctrl.relatedForms['IRF']">
-		 			<div class="col-md-4">IRF</div>
-		 			<div class="col-md-8">
-		 				<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
-		 			</div>
-		 		</div>
-		 	</div>
-		 	<div class="col-md-3">
-		 		<div ng-if="$ctrl.relatedForms['CIF']">
-		 			<div class="col-md-2">CIFs</div>
-		 			<div class="col-md-3" ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
-		 				<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
-		 			</div>
-		 		</div>
-		 	</div>
-		 	<div class="col-md-3">
-		 		<div ng-if="$ctrl.relatedForms['VDF']">
-		 			<div class="col-md-2">VDFs</div>
-		 			<div class="col-md-3" ng-repeat="vdfRef in $ctrl.relatedForms['VDF']">
-		 				<a ng-href="{{vdfRef.url}}">{{ vdfRef.formNumber }}</a>
-		 			</div>
-		 		</div>
-		 	</div>
-		 	<div class="col-md-3">
-		 		<div ng-if="$ctrl.relatedForms['LEGAL_CASE']">
-		 			<div class="col-md-2">Legal</div>
-		 			<div class="col-md-3" ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
-		 				<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
-		 			</div>
-		 		</div>
-		 	</div>
+        <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
+        	<span >
+		 		<span ng-if="$ctrl.relatedForms['IRF']">
+		 			&nbsp;&nbsp;<b>IRF</b>
+		 			&nbsp;<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['CIF']">
+		 			&nbsp;&nbsp;<b>CIFs</b>
+		 			<span ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
+		 				&nbsp;<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['VDF']">
+		 			&nbsp;&nbsp;<b>VDFs</b>
+		 			<span ng-repeat="vdfRef in $ctrl.relatedForms['VDF']">
+		 				&nbsp;<a ng-href="{{vdfRef.url}}">{{ vdfRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['LEGAL_CASE']">
+		 			&nbsp;&nbsp;<b>Legal</b>
+		 			<span ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
+		 				&nbsp;<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		&nbsp;&nbsp;
+		 	</span>
 		</div>
         <hr class="margin-bottom-0" />
     </div>

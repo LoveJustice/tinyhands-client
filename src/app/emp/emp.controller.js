@@ -41,7 +41,7 @@ export default class EmpController {
     }
     
     computeLevels() {
-        if (this.emp.pre_emp_usd && this.emp.post_emp_usd) {
+        if (this.emp.pre_emp_usd !== null && this.emp.post_emp_usd !== null) {
             let lines = 0;
             for (let idx in this.monthlyLevels) {
                 if (this.emp.pre_emp_usd < this.monthlyLevels[idx] && this.emp.post_emp_usd >= this.monthlyLevels[idx]) {

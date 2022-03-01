@@ -25,6 +25,7 @@ export class BaseCifController extends BaseFormController {
         this.irf = null;
         this.tmpIrf = null;
         this.config = {};
+        this.tableDivSize = (window.innerWidth - 50) + 'px';
         
         this.identificationTypes = this.getDefaultIdentificationTypes();
 

@@ -18,6 +18,7 @@ export class BaseIrfController extends BaseFormController {
         this.formNumberPattern = '';
         this.locations = [];
         this.restrictChanges = false;
+        this.tableDivSize = (window.innerWidth - 50) + 'px';
         
         this.includeQuestion = {};
         

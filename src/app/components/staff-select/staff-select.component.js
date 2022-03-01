@@ -25,7 +25,7 @@ export class StaffSelectController {
 
     setDisplay() {
         this.display = '';
-        if (this.selectedStaff !== undefined) {
+        if (this.selectedStaff !== undefined && this.selectedStaff !== null) {
             let selectedOptions = this.selectedStaff.split(';');
             this.display = selectedOptions.join(', ');
         } 

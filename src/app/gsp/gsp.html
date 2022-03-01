@@ -50,7 +50,15 @@
     	</div>
     	
     	<div class="col-md-12 row" ng-if="vm.accepted==='Yes'">
-    	<div class="padding-left-10">
+    		<div class="padding-left-10">
+		    	<div class="col-md-12 row padding-top-5">
+		    		<label class="col-md-4">Date of profession</label>
+		    		<div class="col-md-3">
+			    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.professionDate">
+			        </div>
+		    	</div>
+    		</div>
+    		<div class="padding-left-10">
 		    	<div class="col-md-12 row padding-top-5">
 		    		<label class="col-md-4">Which Love Justice staff shared the gospel with this person?</label>
 		    		<div class="col-md-3">

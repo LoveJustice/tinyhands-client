@@ -52,10 +52,10 @@
 	            </tr>
 	            <tr>
 	        		<th ng-class="collectionIndicators.getHeadClass('victims-light')"></th>
-	        		<th ng-class="collectionIndicators.getHeadClass('victims-light')"># of Victims</th>
+	        		<th ng-class="collectionIndicators.getHeadClass('victims-light')"># PVs</th>
 	        		<th ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('victims-dark', 'victims-light',  $index)"
-	        				ng-click="collectionIndicators.getDetail('# of Victims', indicator)">
+	        				ng-click="collectionIndicators.getDetail('# PVs', indicator)">
 	        			{{ indicator.victim_count }}
 	        		</th>
 	        	</tr>
@@ -137,10 +137,10 @@
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('cif-dark')"># of CIFs with "Evidence"</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('cif-dark')">CIFs with Evidence #</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('med-grey', 'cif-light', $index)"
-	        				ng-click="collectionIndicators.getDetail('# of CIFs with &quot;Evidence&quot;', indicator)">
+	        				ng-click="collectionIndicators.getDetail('CIFs with Evidence #', indicator)">
 	        			{{ indicator.cif_with_evidence_count }}
 	        		</td>
 	        	</tr>
@@ -179,10 +179,10 @@
 	        	</tr>
 	        	<tr>
 	        		<td rowspan="7" ng-class="collectionIndicators.getHeadClass('bold dark-grey center')">Verification</td>
-	        		<td ng-class="collectionIndicators.getHeadClass('dark-grey')">Total# of Verified Forms</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('dark-grey')">Total # Verified Forms</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('dark-grey', 'comp-light', $index)"
-	        				ng-click="collectionIndicators.getDetail('Total# of Verified Forms', indicator)">
+	        				ng-click="collectionIndicators.getDetail('Total # Verified Forms', indicator)">
 	        			{{ indicator.verified_forms }}
 	        		</td>
 	        	</tr>
@@ -244,10 +244,10 @@
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">V Photos %</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">PV Photos %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
-	        				ng-click="collectionIndicators.getDetail('V Photos %', indicator)">
+	        				ng-click="collectionIndicators.getDetail('PV Photos %', indicator)">
 	        			{{ collectionIndicators.displayPercent(indicator.photo_percent) }}
 	        		</td>
 	        	</tr>
@@ -276,10 +276,10 @@
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Evidence Cases with CIF%</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Evidence Cases with CIF</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
-	        				ng-click="collectionIndicators.getDetail('Evidence Cases with CIF%', indicator)">
+	        				ng-click="collectionIndicators.getDetail('% of Evidence Cases with CIF', indicator)">
 	        			{{ collectionIndicators.displayPercent(indicator.evidence_cif_percent) }}
 	        		</td>
 	        	</tr>
@@ -292,10 +292,10 @@
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% Phone Numbers Verified</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Phone Numbers Verified</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
-	        				ng-click="collectionIndicators.getDetail('% Phone Numbers Verified', indicator)">
+	        				ng-click="collectionIndicators.getDetail('% of Phone Numbers Verified', indicator)">
 	        			{{ collectionIndicators.displayPercent(indicator.phone_verified_percent) }}
 	        		</td>
 	        	</tr>

@@ -251,42 +251,42 @@ class IndicatorsController {
         };
         switch (type) {
             case"IRFs in Compliance %":
-                detailData.text.push ("IRFs in Compliance # * 100 / IRFs");
-                detailData.text.push (indicator.irf_compliance_count + ' * 100 /' + indicator.irf_count + ' = ' + indicator.irf_compliance_percent);
+                detailData.text.push ("# IRFs in Compliance / # IRFs");
+                detailData.text.push (indicator.irf_compliance_count + ' / ' + indicator.irf_count + ' = ' + indicator.irf_compliance_percent + '%');
                 break;
             case "CIF %":
-                detailData.text.push ("CIFs * 100 / # of Victims");
-                detailData.text.push (indicator.cif_count + ' * 100 /' + indicator.victim_count + ' = ' + indicator.cif_percent);
+                detailData.text.push ("# CIFs / # PVs");
+                detailData.text.push (indicator.cif_count + ' / ' + indicator.victim_count + ' = ' + indicator.cif_percent + '%');
                 break;
             case "CIFs in Compliance %":
-                detailData.text.push ("CIFs in Compliance # * 100 / CIFs");
-                detailData.text.push (indicator.cif_compliance_count + ' * 100 /' + indicator.cif_count + ' = ' + indicator.cif_compliance_percent);
+                detailData.text.push ("# CIFs in Compliance / # CIFs");
+                detailData.text.push (indicator.cif_compliance_count + ' / ' + indicator.cif_count + ' = ' + indicator.cif_compliance_percent + '%');
                 break;
             case "VDFs in Compliance %":
-                detailData.text.push ("VDFs Compliance # * 100 / VDFs");
-                detailData.text.push (indicator.vdf_compliance_count + ' * 100 /' + indicator.vdf_count + ' = ' + indicator.vdf_compliance_percent);
+                detailData.text.push ("# VDFs Compliance / # VDFs");
+                detailData.text.push (indicator.vdf_compliance_count + ' / ' + indicator.vdf_count + ' = ' + indicator.vdf_compliance_percent + '%');
                 break;
             case "Evidence of Trafficking %":
-                detailData.text.push ("Evidence of Trafficking * 100 / Total# of Verified Forms");
-                detailData.text.push (indicator.evidence_count + " * 100 / " + indicator.verified_forms + " = " + indicator.evidence_percent);
+                detailData.text.push ("Evidence of Trafficking / Total # Verified Forms");
+                detailData.text.push (indicator.evidence_count + " / " + indicator.verified_forms + " = " + indicator.evidence_percent + '%');
                 break;
             case "Invalid Intercept %":
-                detailData.text.push ("Invalid Intercept * 100 / Total# of Verified Forms");
-                detailData.text.push (indicator.invalid_intercept_count + " * 100 / " + indicator.verified_forms + " = " + indicator.invalid_intercept_percent);
+                detailData.text.push ("Invalid Intercept / Total #  Verified Forms");
+                detailData.text.push (indicator.invalid_intercept_count + " / " + indicator.verified_forms + " = " + indicator.invalid_intercept_percent + '%');
                 break;
             case "High Risk of Trafficking %":
-                detailData.text.push ("High Risk of Trafficking * 100 / Total# of Verified Forms");
-                detailData.text.push (indicator.high_risk_count + " * 100 / " + indicator.verified_forms + " = " + indicator.high_risk_percent);
+                detailData.text.push ("High Risk of Trafficking / Total # Verified Forms");
+                detailData.text.push (indicator.high_risk_count + " / " + indicator.verified_forms + " = " + indicator.high_risk_percent + '%');
                 break;
             case "VDF %":
-                detailData.text.push ("VDFs * 100 / # of Victims");
-                detailData.text.push (indicator.vdf_count + " * 100 / " + indicator.victim_count + " = " + indicator.vdf_percent);
+                detailData.text.push ("# VDFs / # PVs");
+                detailData.text.push (indicator.vdf_count + " / " + indicator.victim_count + " = " + indicator.vdf_percent + '%');
                 break;
             case "Compliance %":
-                detailData.text.push ("(IRFs in Compliance # + CIFs in Compliance # + VDFs in Compliance #) * 100 / (IRFs + CIFs + Vdfs)");
+                detailData.text.push ("(# IRFs in Compliance + # CIFs in Compliance + # VDFs in Compliance) / (IRFs + CIFs + VDFs)");
                 detailData.text.push ('(' + indicator.irf_compliance_count + ' + ' + indicator.cif_compliance_count + ' + ' + 
-                        indicator.vdf_compliance_count + ') * 100 / (' +
-                        indicator.irf_count + ' + ' + indicator.cif_count + ' + ' + indicator.vdf_count + ') = ' + indicator.compliance_percent);
+                        indicator.vdf_compliance_count + ') / (' +
+                        indicator.irf_count + ' + ' + indicator.cif_count + ' + ' + indicator.vdf_count + ') = ' + indicator.compliance_percent + '%');
                 break;
             case 'Collection Lag Time':
                 let lag_formula = '(';
@@ -331,17 +331,17 @@ class IndicatorsController {
                     }
                 }
                 break;
-            case "Evidence Cases with CIF%":
-                detailData.text.push ('# of CIFs with "Evidence" * 100 / # of Victims with "Evidence"');
-                detailData.text.push (indicator.cif_with_evidence_count + ' * 100 /' + indicator.victim_evidence_count + ' = ' + indicator.evidence_cif_percent);
+            case "% of Evidence Cases with CIF":
+                detailData.text.push ('# CIFs from Evidence IRFs / # PVs from Evidence IRFs');
+                detailData.text.push (indicator.cif_with_evidence_count + ' / ' + indicator.victim_evidence_count + ' = ' + indicator.evidence_cif_percent + '%');
                 break;
             case "% of Valid Intercepts":
-                detailData.text.push ('(Evidence of Trafficking + High Risk of Trafficking) * 100 / Total# of Verified Forms');
-                detailData.text.push ('(' + indicator.evidence_count + ' + ' + indicator.high_risk_count + ') * 100 / ' + indicator.verified_forms + ' = ' + indicator.valid_intercept_percent);
+                detailData.text.push ('(Evidence of Trafficking + High Risk of Trafficking) / Total # Verified Forms');
+                detailData.text.push ('(' + indicator.evidence_count + ' + ' + indicator.high_risk_count + ') / ' + indicator.verified_forms + ' = ' + indicator.valid_intercept_percent + '%');
                 break;
-            case "% Phone Numbers Verified":
-                detailData.text.push ('# Phone Numbers Verified * 100 / # Phone Numbers');
-                detailData.text.push (indicator.phone_verified_count + ' * 100 /' + indicator.phone_count + ' = ' + indicator.phone_verified_percent);
+            case "% of Phone Numbers Verified":
+                detailData.text.push ('# Phone Numbers Verified / # Phone Numbers');
+                detailData.text.push (indicator.phone_verified_count + ' / ' + indicator.phone_count + ' = ' + indicator.phone_verified_percent + '%');
                 break;
             case "Total":
                 break;
@@ -370,7 +370,7 @@ class IndicatorsController {
         }
         let localProcessing = ';IRFs in Compliance %;CIF %;CIFs in Compliance %;VDFs in Compliance %;' +
                 'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;' +
-                'Compliance %;Collection Lag Time;Evidence Cases with CIF%;% of Valid Intercepts;% Phone Numbers Verified;Total;';
+                'Compliance %;Collection Lag Time;% of Evidence Cases with CIF;% of Valid Intercepts;% of Phone Numbers Verified;Total;';
         if (localProcessing.indexOf(';' + type + ';') >= 0) {
             this.localDetail(type, indicator);
         } else {

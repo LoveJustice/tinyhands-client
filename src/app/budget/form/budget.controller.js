@@ -1,14 +1,14 @@
 import Constants from './constants.js';
 
 import salariesForm from './components/salaries/salariesForm.html';
-import communicationForm from './components/communication/communicationForm.html';
 import travelForm from './components/travel/travelForm.html';
 import administrationForm from './components/administration/administrationForm.html';
-import miscellaneousForm from './components/miscellaneous/miscellaneousForm.html';
 import potentialVictimCareForm from './components/potentialVictimCare/potentialVictimCareForm.html';
-import awarenessForm from './components/awareness/awarenessForm.html';
+import suppliesAwarenessForm from './components/suppliesAwareness/suppliesAwarenessForm.html';
 import pastMonth from './components/pastMonth/pastMonthSentMoneyForm.html';
 import moneyNotSpentForm from './components/moneyNotSpent/moneyNotSpent.html';
+import impactMultiplyingForm from './components/impactMultiplying/impactMultiplying.html';
+import rentUtilitiesForm from './components/rentUtilities/rentUtilities.html';
 
 import categoryTemplate from './components/salaries/category.html';
 import detailTemplate from './detail.html';
@@ -33,12 +33,12 @@ export default class BudgetController {
         this.sections = {
             allSections: [
                 { name: 'Salaries & Benefits', templateUrl: salariesForm, value: Constants.FormSections.Salaries },
-                { name: 'Communication', templateUrl: communicationForm, value: Constants.FormSections.Communication },
-                { name: 'Travel', templateUrl: travelForm, value: Constants.FormSections.Travel },
+                { name: 'Rent & Utilities', templateUrl: rentUtilitiesForm, value: Constants.FormSections.RentUtilities },
                 { name: 'Administration', templateUrl: administrationForm, value: Constants.FormSections.Administration },
-                { name: 'Potential Victim Care', templateUrl: potentialVictimCareForm, value: Constants.FormSections.Potential_Victim_Care },
-                { name: 'Awareness', templateUrl: awarenessForm, value: Constants.FormSections.Awareness },
-                { name: 'Miscellaneous', templateUrl: miscellaneousForm, value: Constants.FormSections.Miscellaneous }
+                { name: 'Supplies & Awareness', templateUrl: suppliesAwarenessForm, value: Constants.FormSections.Awareness },
+                { name: 'Staff Travel', templateUrl: travelForm, value: Constants.FormSections.Travel },
+                { name: 'PV Care', templateUrl: potentialVictimCareForm, value: Constants.FormSections.PotentialVictimCare },
+                { name: 'Impact Multiplying', templateUrl: impactMultiplyingForm, value: Constants.FormSections.ImpactMultiplying },
             ],
             excludeFromDropDown: [
                 'Past Month Sent Money',
@@ -85,6 +85,7 @@ export default class BudgetController {
         this.sectionTemplateUrl = null;
         this.safeHouseTotal = 0;
         this.total = 0;
+        this.projectTotal = {};
 
         this.validRoute();
 
@@ -129,10 +130,12 @@ export default class BudgetController {
         return str;
     }
 
-    getOtherCost(otherItems) {
+    getOtherCost(otherItems, project = null) {
         let amount = 0;
         for (let i in otherItems) {
-            amount += this.strToPennies(otherItems[i].cost);
+            if (project === null || project === otherItems[i].work_project + '') {
+                amount += this.strToPennies(otherItems[i].cost);
+            }
         }
         return amount;
     }
@@ -168,43 +171,60 @@ export default class BudgetController {
     }
 
     // REGION: Administration
-    adminStationaryTotal() {
+    stationaryTotal() {
         return (
-            this.validAmount(this.form.administration_number_of_intercepts_last_month) *
-                this.strToPennies(this.form.administration_number_of_intercepts_last_month_multiplier) +
-                this.strToPennies(this.form.administration_number_of_intercepts_last_month_adder)
+            this.validAmount(this.form.number_of_intercepts_last_month) *
+                this.strToPennies(this.form.number_of_intercepts_last_month_multiplier) +
+                this.strToPennies(this.form.number_of_intercepts_last_month_adder)
         );
     }
     
-    adminStationaryTotalDisplay() {
-        return this.penniesToStr(this.adminStationaryTotal());
+    stationaryTotalDisplay() {
+        return this.penniesToStr(this.stationaryTotal());
     }
 
-    adminMeetingsTotal() {
-        return this.validAmount(this.form.administration_number_of_meetings_per_month) * this.strToPennies(this.form.administration_number_of_meetings_per_month_multiplier);
+    meetingsTotal() {
+        return this.validAmount(this.form.number_of_meetings_per_month) * this.strToPennies(this.form.number_of_meetings_per_month_multiplier);
     }
     
-    adminMeetingsTotalDisplay() {
-        return this.penniesToStr(this.adminMeetingsTotal());
+    meetingsTotalDisplay() {
+        return this.penniesToStr(this.meetingsTotal());
     }
 
-    adminBoothRentalTotal() {
+    boothTotal() {
         var amount = 0;
-        if (this.form.administration_booth) {
-            amount += this.strToPennies(this.form.administration_booth_amount);
+        if (this.form.booth) {
+            amount += this.strToPennies(this.form.booth_amount);
         }
-        if (this.form.administration_office) {
-            amount += this.strToPennies(this.form.administration_office_amount);
-        }
+        
         return amount;
     }
     
-    adminBoothRentalTotalDisplay() {
-        return this.penniesToStr(this.adminBoothRentalTotal());
+    boothTotalDisplay() {
+        return this.penniesToStr(this.boothTotal());
+    }
+    
+    officeTotal() {
+        var amount = 0;
+        if (this.form.office) {
+            amount += this.strToPennies(this.form.office_amount);
+        }
+        
+        return amount;
+    }
+    
+    officeTotalDisplay() {
+        return this.penniesToStr(this.officeTotal());
     }
 
     adminTotal() {
-        let amount = this.adminStationaryTotal() + this.adminMeetingsTotal() + this.adminBoothRentalTotal() + this.getOtherCost(this.form.other.Administration);
+        let amount = this.meetingsTotal() + this.getOtherCost(this.form.other.Administration);
+        if (this.form.communication_chair) {
+            amount += this.strToPennies(this.form.communication_chair_amount);
+        }
+        if (this.form.travel_chair) {
+            amount += this.strToPennies(this.form.travel_chair_amount);
+        }
         this.form.totals.borderMonitoringStation.administration = this.penniesToStr(amount);
         return amount;
     }
@@ -218,56 +238,28 @@ export default class BudgetController {
     // REGION: Awareness
     awarenessTotal() {
         var amount = 0;
-        if (this.form.awareness_contact_cards) {
-            amount += this.strToPennies(this.form.awareness_contact_cards_amount);
+        if (this.form.contact_cards) {
+            amount += this.strToPennies(this.form.contact_cards_amount);
         }
-        if (this.form.awareness_awareness_party_boolean) {
-            amount += this.strToPennies(this.form.awareness_awareness_party);
+        if (this.form.awareness_party_boolean) {
+            amount += this.strToPennies(this.form.awareness_party);
         }
-        amount += this.getOtherCost(this.form.other.Awareness);
-        this.form.totals.borderMonitoringStation.awareness = this.penniesToStr(amount);
+        amount += this.stationaryTotal() + this.getOtherCost(this.form.other.Awareness);
+        this.form.totals.borderMonitoringStation.supplies_and_Awareness = this.penniesToStr(amount);
         return amount;
     }
     
     awarenessTotalDisplay() {
-        this.awarenessTotal();
-        return this.form.totals.borderMonitoringStation.awareness;
+        return this.penniesToStr(this.awarenessTotal());
     }
     // ENDREGION: Awareness
-
-    // REGION: Communication
-    communicationManagerTotal() {
-        var amount = 0;
-
-        if (this.form.communication_chair) {
-            amount += this.strToPennies(this.form.communication_chair_amount);
-        }
-        return amount;
-    }
-
-    communicationTotal() {
-    	this.staffItemsTotal();
-        let amount = this.communicationManagerTotal();
-        if (this.form.staff) {
-          amount += this.strToPennies(this.form.staff.Total.items.Communication.cost);
-        }
-        amount += this.getOtherCost(this.form.other.Communication);
-        this.form.totals.borderMonitoringStation.communication = this.penniesToStr(amount);
-        return amount;
-    }
-    
-    communicationTotalDisplay() {
-        this.communicationTotal();
-        return this.form.totals.borderMonitoringStation.communication;
-    }
-    // ENDREGION: Communication
 
     // REGION: Food And Gas
     foodGasInterceptedGirls() {
         return this.validAmount(
-            this.strToPennies(this.form.food_and_gas_number_of_intercepted_girls_multiplier_before) *
-                this.form.food_and_gas_number_of_intercepted_girls *
-                this.form.food_and_gas_number_of_intercepted_girls_multiplier_after
+            this.strToPennies(this.form.food_per_pv_amount) *
+                this.form.number_of_intercepted_pvs *
+                this.form.number_of_pv_days
         );
     }
     
@@ -276,36 +268,24 @@ export default class BudgetController {
     }
 
     foodGasLimboGirls() {
-        return this.validAmount(parseInt(this.form.food_and_gas_limbo_girls_multiplier) * this.getOtherCost(this.form.other.Limbo)/100);
+        return this.validAmount(parseInt(this.form.limbo_girls_multiplier) * this.getOtherCost(this.form.other.Limbo));
     }
-
-    foodAndGasTotal() {
-        let amount = this.foodGasInterceptedGirls() + this.foodGasLimboGirls();
-        amount += this.getOtherCost(this.form.other.FoodAndGas);
-        this.form.totals.safeHouse.foodAndGas = this.penniesToStr(amount);
-        return amount;
+    
+    foodGasLimboGirlsDisplay() {
+        return this.penniesToStr(this.foodGasLimboGirls());
     }
     // ENDREGION: Food And Gas
-
-    // REGION: Medical
-    medicalTotal() {
-        let total = this.strToPennies(this.form.medical_last_months_expense) + this.getOtherCost(this.form.other.Medical);
-        return total;
-    }
-    // ENDREGION: Medical
-
-    // REGION: Miscellaneous
-    miscellaneousTotal() {
-        let amount = this.getOtherCost(this.form.other.Miscellaneous);
-        this.form.totals.borderMonitoringStation.miscellaneous = this.penniesToStr(amount);
+    
+    impactMultiplyingTotal(project) {
+        let amount = this.getOtherCost(this.form.other.ImpactMultiplying, project);
+        this.form.totals.borderMonitoringStation.impactMultiplying = this.penniesToStr(amount);
         return amount;
     }
     
-    miscellaneousTotalDisplay() {
-        this.miscellaneousTotal();
-        return this.form.totals.borderMonitoringStation.miscellaneous;
+    impactMultiplyingTotalDisplay(project) {
+        this.impactMultiplyingTotal(project);
+        return this.form.totals.borderMonitoringStation.impactMultiplying;
     }
-    // ENDREGION: Miscellaneous
     
     pastMonthMoneySentTotal() {
         let amount = this.getOtherCost(this.form.other.PastMonth); 
@@ -313,48 +293,95 @@ export default class BudgetController {
     }
     
     staffItemsTotal() {
-    	if (!this.form.staff || !this.form.staff.sortedStaff) {
+    	if (!this.form.staff || !this.impactMultiplying) {
     		return;
     	}
     	
     	this.form.staff.Total = {};
-    	this.form.staff.Total.items = {};
-    	
-    	this.form.staff.itemTypes.forEach(itemType => {
-    		let total = 0;
-    		this.form.staff.sortedStaff.forEach(staff => {
-    			let staffEntry = this.form.staff[staff.staffKey];
-    			let cost = this.strToPennies(staffEntry.items[itemType].cost);
-    			if (!Number.isNaN(cost)) {
-    				total += Number(cost);
-    			}
-    		});
-    		this.form.staff.Total.items[itemType] = {cost:this.penniesToStr(total)};
+    	this.staffItemsTotalForProject(this.borderStationId + '');
+    	this.impactMultiplying.forEach(multiplying => {
+    	    this.staffItemsTotalForProject(multiplying.id + '');
     	});
+    }
+    
+    staffItemsTotalForProject(project) {
+        if (!this.form.staffByProject[project] || this.form.salaryProjects.indexOf(project) < 0) {
+            return;
+        }
+        
+        this.form.staff.Total[project] = {};
+        this.form.staff.Total[project].items = {};
+        this.form.staff.itemTypes.forEach(itemType => {
+            let total = 0;
+            this.form.staffByProject[project].sortedStaff.forEach(staffKey => {
+                let staffEntry = this.form.staff[staffKey];
+                let cost = this.strToPennies(staffEntry.items[itemType].cost);
+                if (!Number.isNaN(cost)) {
+                    total += Number(cost);
+                }
+            });
+            this.form.staff.Total[project].items[itemType] = {cost:this.penniesToStr(total)};
+        });
     }
 
     // REGION: Salaries
-    salariesAndBenefitsTotal() {
-        var amount = 0;
-        
+    salariesAndBenefitsTotal(project=null) {
+        let amount = 0;
         this.staffItemsTotal();
-        if (this.form.staff && this.form.staff.itemTypes) {
-	        this.form.staff.itemTypes.forEach(itemType => {
-	            if (itemType === 'Deductions') {
-	                amount -= this.strToPennies(this.form.staff.Total.items[itemType].cost);
-	            } else if (itemType !== 'Communication' && itemType !== 'Travel') {
-	        		amount += this.strToPennies(this.form.staff.Total.items[itemType].cost);
-	        	}
-	        });
-	    }
+        if (!this.form.staff || !this.impactMultiplying) {
+            return 0;
+        }
         
-        amount += this.getOtherCost(this.form.other.Salaries);
+        this.form.totals.borderMonitoringStation.salaries_And_Benefits = {};
+        
+        let tmp = this.salariesAndBenefitsTotalByProject(this.borderStationId + '');
+        if (project === this.borderStationId + '') {
+            amount = tmp;
+        }
+        this.impactMultiplying.forEach(multiplying => {
+            tmp = this.salariesAndBenefitsTotalByProject(multiplying.id + '');
+            if (project === multiplying.id + '') {
+                amount = tmp;
+            }
+        });
+       
+        return amount;
+    }
+    
+    salariesAndBenefitsTotalByProject(project) {
+        var amount = 0;
+        if (!this.form.salaryProjects || this.form.salaryProjects.indexOf(project) < 0) {
+            return 0;
+        }
+        
+        if (this.form.staff && this.form.staff.itemTypes) {
+            this.form.staff.itemTypes.forEach(itemType => {
+                if (itemType === 'Deductions') {
+                    amount -= this.strToPennies(this.form.staff.Total[project].items[itemType].cost);
+                } else if (itemType !== 'Travel') {
+                    amount += this.strToPennies(this.form.staff.Total[project].items[itemType].cost);
+                }
+            });
+        }
+        
+        amount += this.getOtherCost(this.form.other.Salaries, project);
 
-        this.form.totals.borderMonitoringStation.salaries_And_Benefits = this.penniesToStr(amount);
+        this.form.totals.borderMonitoringStation.salaries_And_Benefits[project] = this.penniesToStr(amount);
 
         return amount;
     }
     // ENDREGION: Salaries
+    
+    rentAndUtilitiesTotal() {
+        let amount = 0;
+        amount = this.boothTotal() + this.officeTotal() + this.getOtherCost(this.form.other.RentUtilities);
+        this.form.totals.borderMonitoringStation.rent_and_utilities = this.penniesToStr(amount);
+        return amount;
+    }
+    
+    rentAndUtilitiesTotalDisplay() {
+        return this.penniesToStr(this.rentAndUtilitiesTotal());
+    }
 
     // REGION: Shelter
     shelterUtilTotal() {
@@ -378,15 +405,14 @@ export default class BudgetController {
     potentialVictimCareTotal() {
     	let amount = 0;
     	amount += this.shelterUtilTotal();
-    	amount += this.foodAndGasTotal();
-    	amount += this.getOtherCost(this.form.other.Shelter);
-    	this.form.totals.borderMonitoringStation.potential_Victim_Care = this.penniesToStr(amount);
+    	amount += this.getOtherCost(this.form.other.PotentialVictimCare);
+    	this.form.totals.borderMonitoringStation.PotentialVictimCare = this.penniesToStr(amount);
     	
     	return amount;
     }
     
     potentialVictimCareTotalDisplay() {
-        return this.form.totals.borderMonitoringStation.potential_Victim_Care;
+        return this.form.totals.borderMonitoringStation.PotentialVictimCare;
     }
     // ENDREGION: Shelter
 
@@ -394,20 +420,20 @@ export default class BudgetController {
     travelTotal() {
     	this.staffItemsTotal();
         var amount = 0;
-        if (this.form.travel_chair_with_bike) {
-            amount += this.strToPennies(this.form.travel_chair_with_bike_amount);
+        if (this.form.travel_chair) {
+            amount += this.strToPennies(this.form.travel_chair_amount);
         }
         if (this.form.staff) {
-        	 amount += this.strToPennies(this.form.staff.Total.items.Travel.cost);
+        	 //amount += this.strToPennies(this.form.staff.Total.items.Travel.cost);
         }
         amount += this.getOtherCost(this.form.other.Travel);
-        this.form.totals.borderMonitoringStation.travel = this.penniesToStr(amount);
+        this.form.totals.borderMonitoringStation.staff_travel = this.penniesToStr(amount);
         return amount;
     }
     
     travelTotalDisplay() {
         this.travelTotal();
-        return this.form.totals.borderMonitoringStation.travel;
+        return this.form.totals.borderMonitoringStation.staff_travel;
     }
     // ENDREGION: Travel
     
@@ -448,11 +474,35 @@ export default class BudgetController {
     
 
     // REGION: Functions that handle totals
-    setBorderMonitoringStationTotals() {
-        let amount = (this.salariesAndBenefitsTotal() + this.communicationTotal() + this.travelTotal() + this.adminTotal() + 
-                this.potentialVictimCareTotal() + this.awarenessTotal() + this.miscellaneousTotal() - this.deductedNotSpentTotal());
+    setBorderMonitoringStationTotals(project=null) {
+        let amount = (this.salariesAndBenefitsTotal(project) + this.rentAndUtilitiesTotal() + this.adminTotal() + 
+                this.awarenessTotal() + this.travelTotal() + this.potentialVictimCareTotal() - this.deductedNotSpentTotal());
         this.borderMonitoringStationTotal = this.penniesToStr(amount);
         return amount;
+    }
+    
+    setProjectTotal(project) {
+        let amount = this.salariesAndBenefitsTotalByProject(project);
+        if (project === this.borderStationId + '') {
+            amount += (this.rentAndUtilitiesTotal() + this.adminTotal() + 
+                    this.awarenessTotal() + this.travelTotal() + this.potentialVictimCareTotal() - this.deductedNotSpentTotal());
+        } else {
+            amount += this.impactMultiplyingTotal(project);
+        }
+        this.projectTotal[project] = this.penniesToStr(amount);
+        return amount;
+    }
+    
+    displayProjectTotal(project = null) {
+        let useProject = project;
+        if (useProject === null) {
+            if (!this.borderStationId) {
+                return null;
+            }
+            useProject = this.borderStationId + '';
+        }
+        this.setProjectTotal(useProject);
+        return this.projectTotal[useProject];
     }
 
     setTotals() {
@@ -460,8 +510,8 @@ export default class BudgetController {
         this.total = this.penniesToStr(amount);
     }
     
-    displayTotal() {
-        this.setTotals();
+    displayTotal(project) {
+        this.setTotals(project);
         return this.total;
     }
     // ENDREGION: Functions that handle totals
@@ -500,12 +550,28 @@ export default class BudgetController {
             this.form.station_name = response.data.station_name;
             this.currency = decodeURI(response.data.country_currency);
             this.service.getCountry(response.data.operating_country).then(response => {
+                this.countryId = response.data.id;
+                this.countryName = response.data.name;
+                this.getImpactMultiplyingProjects();
                 let options = response.data.options;
                 if ('pastMonthSent' in options && options.pastMonthSent) {
                     this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth });
                 }
                 this.sections.allSections.push({ name: 'Money Not Spent', templateUrl: moneyNotSpentForm, value: 9999 });
             });
+        });
+    }
+    
+    getImpactMultiplyingProjects() {
+        this.service.getProjects(this.countryId).then(response => {
+            this.impactMultiplying = [];
+            for (let projectIdx in response.data) {
+                if (response.data[projectIdx].project_category_name === 'Impact Multiplying') {
+                    this.impactMultiplying.push(response.data[projectIdx]);
+                }
+            }
+            this.fillMissingStaffItems();
+            this.setTotals();
         });
     }
 
@@ -525,7 +591,12 @@ export default class BudgetController {
                 .month(this.month - 1)
                 .date(15);
             this.form.previousData = response.data.top_table_data;
-            this.form.staffItems = response.data.staff_items;
+            this.form.staffItems = [];
+            response.data.staff_items.forEach(item => {
+                if (item.type_name !== 'Travel') {
+                    this.form.staffItems.push(item);
+                }
+            });
 
             response.data.other_items.forEach(item => {
                 item.id = null;
@@ -534,10 +605,10 @@ export default class BudgetController {
 
             this.form.other = [];
 
-            // Don't set miscellaneous to last month's values (they are one time expenses)
+            // Don't set PastMonth to last month's values (they are one time expenses)
             for (let key in Constants.FormSections) {
-                if (['Miscellaneous'].indexOf(key) === -1) {
-                    this.setOtherItemsForSection(key, response.data.other_items);
+                if (['PastMonth'].indexOf(key) === -1) {
+                    this.setOtherItemsForSection(key, response.data.other_items, true);
                 } else {
                     this.form.other[key] = [];
                 }
@@ -593,9 +664,13 @@ export default class BudgetController {
         }
     }
 
-    setOtherItemsForSection(key, items) {
+    setOtherItemsForSection(key, items, newMdf=false) {
         this.form.other[key] = items.filter(item => {
-            return item.form_section === Constants.FormSections[key];
+            if (key === 'MoneyNotSpent' && newMdf) {
+                return item.form_section === Constants.FormSections[key] && item.deduct === 'No';
+            } else {
+                return item.form_section === Constants.FormSections[key];
+            }
         });
         if (key === 'Limbo') {
             for (let idx=0; idx < this.form.other.Limbo.length; idx++) {
@@ -633,87 +708,147 @@ export default class BudgetController {
 
     extractStaffFromStaffItems(staffItems) {
         this.form.staff = {
-        	itemTypes:['Salary', 'Deductions', 'Communication', 'Travel'],
+        	itemTypes:['Salary', 'Deductions', 'Travel'],
         	sortedStaff:[],
         	deleteStaffItems:[],
         };
-        staffItems.forEach(staffItem => {
-        	let staffKey = staffItem.staff_person.toString();
-        	if (!this.form.staff.hasOwnProperty(staffKey)) {
-        		this.form.staff[staffKey] = {
-        			first_name:staffItem.staff_first_name,
-        			last_name:staffItem.staff_last_name,
-        			position:staffItem.position,
-        			items:{}
-        		};
-        		this.form.staff.sortedStaff.push({staffKey:staffKey, name: staffItem.staff_first_name + ' ' + staffItem.staff_last_name});
-        	}
         
-        	this.form.staff[staffKey].items[staffItem.type_name] = staffItem;
-        	if (this.form.staff.itemTypes.indexOf(staffItem.type_name) === -1) {
-        		this.form.staff.itemTypes.push(staffItem.type_name);
-        	}
-        	this.form.staff.sortedStaff = this.form.staff.sortedStaff.sort((a, b) => {if (a.name > b.name) {return 1;} else {return -1;}});
+        this.form.salaryProjects = [this.borderStationId + ''];
+        this.form.staffByProject = {};
+        this.form.staffByProject[this.borderStationId] = {sortedStaff:[]};
+        staffItems.forEach(staffItem => {
+            let workProject = staffItem.work_project + '';
+            if (this.form.salaryProjects.indexOf(workProject) < 0) {
+                this.form.salaryProjects.push(workProject);
+                this.form.staffByProject[workProject] = {sortedStaff:[]};
+            }
+            let staffKey = staffItem.staff_person.toString() + ':' + workProject;
+            if (this.form.staffByProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
+                this.form.staffByProject[workProject].sortedStaff.push(staffKey);
+            }
+            if (!this.form.staff.hasOwnProperty(staffKey)) {
+                this.form.staff[staffKey] = {
+                    first_name:staffItem.staff_first_name,
+                    last_name:staffItem.staff_last_name,
+                    name:staffItem.staff_first_name + ' ' + staffItem.staff_last_name,
+                    position:staffItem.position,
+                    items:{}
+                };
+            }
+        
+            this.form.staff[staffKey].items[staffItem.type_name] = staffItem;
+            if (this.form.staff.itemTypes.indexOf(staffItem.type_name) === -1) {
+                this.form.staff.itemTypes.push(staffItem.type_name);
+            }
+            this.form.staffByProject[workProject].sortedStaff = this.form.staffByProject[workProject].sortedStaff.sort((a, b) => {
+                        if (this.form.staff[a].name > this.form.staff[b].name) {
+                            return 1;
+                         } else {
+                             return -1;}});
         });
+        
+        
         this.fillMissingStaffItems();
     }
 
-    mapNewStaffItems(staffList) {
+    mapNewStaffItems(staffList, staffItems) {
     	let newStaffItems = [];
     	this.form.staff = {
-        	itemTypes:['Salary', 'Communication', 'Travel'],
+        	itemTypes:['Salary', 'Deductions', 'Travel'],
         	sortedStaff:[],
         	deleteStaffItems:[],
         };
+    	this.form.salaryProjects = [this.borderStationId + ''];
+    	this.form.staffByProject = {};
+    	this.form.staffByProject[this.borderStationId] = {sortedStaff:[]};
+    	
+    	staffList.forEach(staff => {
+    	    staff.works_on.forEach(worksOn => {
+    	        let workProject = worksOn.works_on.project_id + '';
+    	        let staffKey = staff.id + ':' + workProject;
+    	        if (this.form.salaryProjects.indexOf(workProject) < 0) {
+                    this.form.salaryProjects.push(workProject);
+                    this.form.staffByProject[workProject] = {sortedStaff:[]};
+                }
+    	        if (this.form.staffByProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
+                    this.form.staffByProject[workProject].sortedStaff.push(staffKey);
+                }
+    	        if (!this.form.staff.hasOwnProperty(staffKey)) {
+                    this.form.staff[staffKey] = {
+                        first_name:staff.first_name,
+                        last_name:staff.last_name,
+                        name:staff.first_name + ' ' + staff.last_name,
+                        position:staff.position,
+                        items:{}
+                    };
+                }
+    	        this.form.staffByProject[workProject].sortedStaff = this.form.staffByProject[workProject].sortedStaff.sort((a, b) => {
+                    if (this.form.staff[a].name > this.form.staff[b].name) {
+                        return 1;
+                     } else {
+                         return -1;}});
+    	    });
+    	});
+    	
+    	
+    	
+    	staffItems.forEach(staffItem => {
+            let workProject = staffItem.work_project + '';
+            if (this.form.salaryProjects.indexOf(workProject) < 0) {
+                return;
+            }
+            let staffKey = staffItem.staff_person.toString() + ':' + workProject;
+            if (this.form.staffByProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
+                return;
+            }
+            if (!this.form.staff.hasOwnProperty(staffKey)) {
+                return;
+            }
         
-        staffList.forEach(staff => {
-        	let staffKey = staff.id.toString();
-        	this.form.staff[staffKey] = {
-        		first_name:staff.first_name,
-    			last_name:staff.last_name,
-    			position:staff.position,
-    			items:{}
-        	};
-        	this.form.staff.sortedStaff.push({staffKey:staffKey, name: staff.first_name + ' ' + staff.last_name});
+            this.form.staff[staffKey].items[staffItem.type_name] = staffItem;
+            if (this.form.staff.itemTypes.indexOf(staffItem.type_name) === -1) {
+                this.form.staff.itemTypes.push(staffItem.type_name);
+            }
+            
         });
         
-        this.form.staffItems.forEach(staffItem =>{
-        	let staffKey = staffItem.staff_person.toString();
-        	if (this.form.staff.hasOwnProperty(staffKey)) {
-        		staffItem.id = null;
-        		this.form.staff[staffKey].items[staffItem.type_name] = staffItem;
-        		if (this.form.staff.itemTypes.indexOf(staffItem.type_name) === -1) {
-	        		this.form.staff.itemTypes.push(staffItem.type_name);
-	        	}
-	        	newStaffItems.push(staffItem);
-        	}
-        });
-        
-        this.form.staff.sortedStaff = this.form.staff.sortedStaff.sort((a, b) => {if (a.name > b.name) {return 1;} else {return -1;}});
-        this.form.staffItems = newStaffItems;
         this.fillMissingStaffItems();
     }
     
     fillMissingStaffItems() {
-    	this.form.staff.sortedStaff.forEach(staff => {
-    		this.form.staff.itemTypes.forEach(itemType => {
-    			let theStaff = this.form.staff[staff.staffKey];
-    			if (!theStaff.items.hasOwnProperty(itemType)) {
-    				let staffItem = {
-    					id: null,
-    					staff_person: staff.staffKey,
-    					staff_first_name: theStaff.first_name,
-    					staff_last_name: theStaff.last_name,
-    					position: theStaff.position,
-    					type_name: itemType,
-    					description: '',
-    					cost: null
-    				};
-    				this.form.staffItems.push(staffItem);
-    				theStaff.items[itemType] = staffItem;
-    			}
-    		});
-    	});
+        if (!this.form.staff || !this.impactMultiplying) {
+            return;
+        }
+        
+        this.fillMissingStaffItemsForProject(this.borderStationId + '');
+        this.impactMultiplying.forEach(multiplying => {
+            this.fillMissingStaffItemsForProject(multiplying.id + '');
+        });
+    }
+    
+    fillMissingStaffItemsForProject(project) {
+        if (!this.form.staffByProject[project]) {
+            return;
+        }
+        this.form.staffByProject[project].sortedStaff.forEach(staffKey => {
+            this.form.staff.itemTypes.forEach(itemType => {
+                let theStaff = this.form.staff[staffKey];
+                if (!theStaff.items.hasOwnProperty(itemType)) {
+                    let staffItem = {
+                        id: null,
+                        staff_person: staffKey,
+                        staff_first_name: theStaff.first_name,
+                        staff_last_name: theStaff.last_name,
+                        position: theStaff.position,
+                        type_name: itemType,
+                        description: '',
+                        cost: null
+                    };
+                    this.form.staffItems.push(staffItem);
+                    theStaff.items[itemType] = staffItem;
+                }
+            });
+        });
     }
     
     enterDetail(staffKey, categoryType) {
@@ -899,5 +1034,19 @@ export default class BudgetController {
         return this.months.filter(month => {
             return month.value === this.month;
         })[0].name;
+    }
+    
+    projectName(projectId) {
+        let name = 'Unnown';
+        if (projectId + '' === this.borderStationId + '') {
+            name = this.form.station_name;
+        } else {
+            for (let idx in this.impactMultiplying) {
+                if (this.impactMultiplying[idx].id + '' === projectId + '') {
+                    name = this.impactMultiplying[idx].station_name;
+                }
+            }
+        }
+        return name;
     }
 }

@@ -83,4 +83,16 @@ export default class BorderStationService {
     getAvailableForms() {
         return this.service.get('api/forms/');
     }
+    
+    getStaff(id) {
+        return this.service.get(`api/border-station/${id}/staff/?include_financial=true`);
+    }
+    
+    getProjects(id) {
+        return this.service.get(`api/border-station/?operating_country=${id}`);
+    }
+    
+    updateWorkAssignment (id, staffAssignment) {
+        return this.service.put(`api/border-station/${id}/staff/work/`, staffAssignment);
+    }
 }

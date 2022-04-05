@@ -50,7 +50,7 @@
 			<tbody>
 				<tr ng-repeat="staff in vm.staff">
 					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</th>
-					<th ng-class="vm.totalColor('total',vm.staffTotals[staff.id]) ">{{ vm.staffTotals[staff.id] }}%</th>
+					<th ng-class="vm.totalColor('total',staff) ">{{ vm.staffTotals[staff.id] }}%
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && !vm.mayEdit()">
 						{{ vm.work[loc.id][staff.id] }}%
 					</td>

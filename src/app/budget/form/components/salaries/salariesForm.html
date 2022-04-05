@@ -1,8 +1,9 @@
 <div >
   <h2 class="text-center">Salaries & Benefits</h2>
-  <hr>
-  <div class="row">
+  <div class="row" ng-repeat="project in budgetCtrl.form.salaryProjects">
+     <hr>
   	 <div class="col-md-11">
+  	 	 <h3>Project: {{ budgetCtrl.projectName(project) }}</h3>
 	  	 <table class="fixed table-striped staff-item-table" ng-model="budgetCtrl.form.staff">
 	  	 	<thead>
 		  	 	<tr>
@@ -10,8 +11,8 @@
 		  	 		<th class="position-col text-center">Position</th>
 		  	 		<th class="salary-col text-center">Gross Pay</th>
 		  	 		<th class="salary-col text-center">Deductions</th>
-		  	 		<th class="salary-col text-center" ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Communication,Travel,'.indexOf(categoryType) < 0">{{ categoryType }}</th>
-		  	 		<th class="image-col text-center" ng-repeat-end ng-if="',Salary,Deductions,Communication,Travel,'.indexOf(categoryType) < 0">
+		  	 		<th class="salary-col text-center" ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">{{ categoryType }}</th>
+		  	 		<th class="image-col text-center" ng-repeat-end ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
 		  	 			<button class="btn-xs btn-danger" ng-click="budgetCtrl.removeItemType(categoryType); budgetForm.markAsDirty();">
             				<i class="fa fa-minus"></i>
         				</button>
@@ -24,45 +25,46 @@
 		  	 	</tr>
 	  	 	</thead>
 	  	 	<tbody>
-	  	 		<tr ng-repeat="staff in budgetCtrl.form.staff.sortedStaff" ng-if="budgetCtrl.form.staff[staff.staffKey].last_name.indexOf('general_staff') === -1">
-	  	 			<td>{{ budgetCtrl.form.staff[staff.staffKey].first_name + ' ' + budgetCtrl.form.staff[staff.staffKey].last_name }}</td>
-	  	 			<td>{{ budgetCtrl.form.staff[staff.staffKey].position }}</td>
+	  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staffByProject[project].sortedStaff"
+	  	 				ng-if="budgetCtrl.form.staff[staffKey].last_name.indexOf('general_staff') === -1">
+	  	 			<td>{{ budgetCtrl.form.staff[staffKey].first_name + ' ' + budgetCtrl.form.staff[staffKey].last_name }}</td>
+	  	 			<td>{{ budgetCtrl.form.staff[staffKey].position }}</td>
 	  	 			<td>
 	  	 				<input class="form-control" type="text" 
 	  	 						onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
 	  	 						ng-change="budgetCtrl.setTotals()" 
-	  	 						ng-model="budgetCtrl.form.staff[staff.staffKey].items['Salary'].cost" 
+	  	 						ng-model="budgetCtrl.form.staff[staffKey].items['Salary'].cost" 
 	  	 						ng-disabled="budgetCtrl.isViewing"/>
 					</td>
 					<td>
 	  	 				<input class="form-control" type="text" 
 	  	 						onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
 	  	 						ng-change="budgetCtrl.setTotals()" 
-	  	 						ng-model="budgetCtrl.form.staff[staff.staffKey].items['Deductions'].cost" 
+	  	 						ng-model="budgetCtrl.form.staff[staffKey].items['Deductions'].cost" 
 	  	 						ng-disabled="budgetCtrl.isViewing"/>
 					</td>
-					<td  ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Communication,Travel,'.indexOf(categoryType) < 0">
+					<td  ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
 						<input class="form-control" type="text" 
 								onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
 								ng-change="budgetCtrl.setTotals()" 
-								ng-model="budgetCtrl.form.staff[staff.staffKey].items[categoryType].cost" 
+								ng-model="budgetCtrl.form.staff[staffKey].items[categoryType].cost" 
 								ng-disabled="budgetCtrl.isViewing"/>
 					</td>
-					<td ng-repeat-end ng-if="',Salary,Deductions,Communication,Travel,'.indexOf(categoryType) < 0" ng-click="budgetCtrl.enterDetail(staff.staffKey, categoryType)">
-            			<i class="fa fa-comment-o" ng-if="!budgetCtrl.form.staff[staff.staffKey].items[categoryType].description"></i>
-            			<i class="fa fa-commenting" ng-if="budgetCtrl.form.staff[staff.staffKey].items[categoryType].description"></i>
+					<td ng-repeat-end ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0" ng-click="budgetCtrl.enterDetail(staffKey, categoryType)">
+            			<i class="fa fa-comment-o" ng-if="!budgetCtrl.form.staff[staffKey].items[categoryType].description"></i>
+            			<i class="fa fa-commenting" ng-if="budgetCtrl.form.staff[staffKey].items[categoryType].description"></i>
 					</td>
 	  	 		</tr>
 	  	 		<tr>
 	  	 			<td colspan=2><b>Total</b></td>
 	  	 			<td>
-	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff['Total'].items['Salary'].cost" disabled="disabled" />
+	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[project].items['Salary'].cost" disabled="disabled" />
 	  	 			</td>
 	  	 			<td>
-	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff['Total'].items['Deductions'].cost" disabled="disabled" />
+	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[project].items['Deductions'].cost" disabled="disabled" />
 	  	 			</td>
-	  	 			<td  ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Communication,Travel,'.indexOf(categoryType) < 0">
-	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff['Total'].items[categoryType].cost" disabled="disabled" />
+	  	 			<td  ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
+	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[project].items[categoryType].cost" disabled="disabled" />
 					</td>
 					<td ng-repeat-end ng-if="',Salary,DeductionsCommunication,Travel,'.indexOf(categoryType) < 0">
 					</td>
@@ -74,7 +76,8 @@
 		<hr>
 	</div>
     <div class="row padding-top-100">
-      <div class="row col-md-12" ng-repeat="otherSalaryItem in budgetCtrl.form.other.Salaries | orderBy:'name'">
+      <div class="row col-md-12" ng-repeat="otherSalaryItem in budgetCtrl.form.other.Salaries | orderBy:'name'"
+      		ng-if="otherSalaryItem.work_project + '' === project">
       	<div class="col-md-2">
       		&nbsp;
         </div>
@@ -93,18 +96,15 @@
         <br/>
         <br/>
       </div>
-	  <div class=col-md-12>
-		 <hr>
-	  </div>
       <div class="row">
-        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Salaries.push({})" ng-hide="budgetCtrl.isViewing">Add Item</button>
+        <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Salaries.push({work_project:project})" ng-hide="budgetCtrl.isViewing">Add Item for {{ budgetCtrl.projectName(project) }}</button>
       </div>
     </div>
     <hr>
     <div class="row text-center">
       <div class="col-md-4 col-md-offset-4">
-        <label>Salaries & Benefits Total</label>
-        <input class="form-control text-center" ng-value="budgetCtrl.form.totals.borderMonitoringStation.salaries_And_Benefits | currency:budgetCtrl.currency" disabled="disabled" />
+        <label>Salaries & Benefits Total for {{ budgetCtrl.projectName(project) }}</label>
+        <input class="form-control text-center" ng-value="budgetCtrl.form.totals.borderMonitoringStation.salaries_And_Benefits[project] | currency:budgetCtrl.currency" disabled="disabled" />
       </div>
     </div>
   </div>

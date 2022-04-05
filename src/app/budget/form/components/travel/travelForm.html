@@ -1,23 +1,5 @@
 <div class="col-md-offset-3 col-md-6">
-  <h2 class="text-center">Travel</h2>
-  <hr>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="checkbox col-md-3 col-md-offset-1">
-        <label>
-          <input type="checkbox" ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.travel_chair_with_bike" ng-disabled="budgetCtrl.isViewing"/>
-        </label>
-      </div>
-      <div class="col-md-8 calc-form-input-no-width">
-        <input class="form-control text-right" type="text" 
-        		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-        		ng-change="budgetCtrl.setTotals()" 
-        		ng-model="budgetCtrl.form.travel_chair_with_bike_amount" 
-        		ng-disabled="!budgetCtrl.form.travel_chair_with_bike || budgetCtrl.isViewing"/>
-        <small>Subcommittee Chairperson Travel</small>
-      </div>
-    </div>
-  </div>
+  <h2 class="text-center">Staff Travel</h2>
   <hr>
   <div class="row text-center">
   	<table class="fixed table-striped staff-item-table" ng-model="budgetCtrl.form.staff">
@@ -30,25 +12,26 @@
 	  	 	</tr>
   	 	</thead>
   	 	<tbody>
-  	 		<tr ng-repeat="staff in budgetCtrl.form.staff.sortedStaff" ng-if="budgetCtrl.form.staff[staff.staffKey].last_name.indexOf('general_staff') === -1">
-  	 			<td>{{ budgetCtrl.form.staff[staff.staffKey].first_name + ' ' + budgetCtrl.form.staff[staff.staffKey].last_name }}</td>
-  	 			<td>{{ budgetCtrl.form.staff[staff.staffKey].position }}</td>
+  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staffByProject[budgetCtrl.borderStationId + ''].sortedStaff"
+  	 				ng-if="budgetCtrl.form.staff[staffKey].last_name.indexOf('general_staff') === -1">
+  	 			<td>{{ budgetCtrl.form.staff[staffKey].first_name + ' ' + budgetCtrl.form.staff[staffKey].last_name }}</td>
+  	 			<td>{{ budgetCtrl.form.staff[staffKey].position }}</td>
   	 			<td>
   	 				<input class="form-control" type="text" 
   	 						onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
   	 						ng-change="budgetCtrl.setTotals()" 
-  	 						ng-model="budgetCtrl.form.staff[staff.staffKey].items['Travel'].cost" 
+  	 						ng-model="budgetCtrl.form.staff[staffKey].items['Travel'].cost" 
   	 						ng-disabled="budgetCtrl.isViewing"/>
 				</td>
 				<td ng-click="budgetCtrl.enterDetail(staff.staffKey, 'Travel')">
-            			<i class="fa fa-comment-o" ng-if="!budgetCtrl.form.staff[staff.staffKey].items['Travel'].description"></i>
-            			<i class="fa fa-commenting" ng-if="budgetCtrl.form.staff[staff.staffKey].items['Travel'].description"></i>
+            			<i class="fa fa-comment-o" ng-if="!budgetCtrl.form.staff[staffKey].items['Travel'].description"></i>
+            			<i class="fa fa-commenting" ng-if="budgetCtrl.form.staff[staffKey].items['Travel'].description"></i>
 					</td>
   	 		</tr>
   	 		<tr>
   	 			<td colspan=2><b>Total</b></td>
   	 			<td>
-  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff['Total'].items['Travel'].cost" disabled="disabled" />
+  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[budgetCtrl.borderStationId + ''].items['Travel'].cost" disabled="disabled" />
   	 			</td>
   	 		</tr>
   	 	</tbody>

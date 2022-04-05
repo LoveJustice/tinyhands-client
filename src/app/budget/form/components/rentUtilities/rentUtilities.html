@@ -1,0 +1,73 @@
+<div class="col-md-offset-1 col-md-10">
+	<h2 class="text-center">Rent & Utilities</h2>
+	<hr>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="col-md-1">
+				<input type="checkbox" ng-model="budgetCtrl.form.booth" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
+			</div>
+			<div class="col-md-4 calc-form-input-no-width">
+				<input class="text-right form-control" type="text" 
+	          		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+	          		ng-model="budgetCtrl.form.booth_amount" 
+	          		ng-disabled="!budgetCtrl.form.booth || budgetCtrl.isViewing" 
+	          		ng-change="budgetCtrl.setTotals()"/>
+	          <small>Booth</small>
+			</div>
+			<operator>=</operator>
+			<div class="col-md-4 input-group">
+				<div class="input-group-addon">{{budgetCtrl.currency}}</div>
+				<input class="form-control text-center" ng-value="budgetCtrl.boothTotalDisplay() | number" disabled="disabled"/>
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+			<div class="col-md-1">
+				<input type="checkbox" ng-model="budgetCtrl.form.office" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
+			</div>
+			<div class="col-md-4 calc-form-input-no-width">
+				<input class="text-right form-control" type="text" 
+	          		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+	          		ng-model="budgetCtrl.form.office_amount" 
+	          		ng-disabled="!budgetCtrl.form.office || budgetCtrl.isViewing" 
+	          		ng-change="budgetCtrl.setTotals()"/>
+	          <small>Office</small>
+			</div>
+			<operator>=</operator>
+			<div class="col-md-4 input-group">
+				<div class="input-group-addon">{{budgetCtrl.currency}}</div>
+				<input class="form-control text-center" ng-value="budgetCtrl.officeTotalDisplay() | number" disabled="disabled"/>
+			</div>
+		</div>
+	</div>
+	<hr>
+    <div class="row">
+        <div ng-repeat="otherAdminItem in budgetCtrl.form.other.RentUtilities">
+            <div class="col-md-4 col-md-offset-2">
+                <input class="form-control" type="text" ng-model="otherAdminItem.name" ng-disabled="budgetCtrl.isViewing" required/>
+            </div>
+            <div class="col-md-4">
+                <input class="text-right form-control" type="text" 
+                		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+                		ng-model="otherAdminItem.cost"
+                		ng-change="budgetCtrl.setTotals()"
+                        ng-disabled="budgetCtrl.isViewing" required/>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.RentUtilities, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>
+            </div>
+            <br/>
+            <br/>
+        </div>
+        <div class="row">
+            <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.RentUtilities.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+        </div>
+    </div>
+    <hr>
+	<div class="row center text-center">
+		<div class="col-md-6 col-md-offset-3">
+			<label>Rent & Utilities Total</label>
+			<input class="form-control text-center" ng-value="budgetCtrl.rentAndUtilitiesTotalDisplay() | currency:budgetCtrl.currency" disabled="disabled"/>
+		</div>
+	</div>
+</div>

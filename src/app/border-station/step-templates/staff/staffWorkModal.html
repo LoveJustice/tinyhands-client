@@ -1,0 +1,78 @@
+<div id="staff-box-modal" class="modal-content">
+	<div class="modal-body">
+		<div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="firstName">First Name</label>
+	            <input type="text" class="form-control" placeholder="First Name"
+	                   ng-model="StaffModalController.staff.first_name" disabled>
+	          </div>
+	          <div class="col-sm-6 form-group">
+	            <label for="lastName">Last Name</label>
+	            <input type="text" class="form-control" placeholder="Last Name"
+	                   ng-model="StaffModalController.staff.last_name" disabled>
+	          </div>
+	      </div>
+	      <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="email">Email</label>
+	            <input type="text" class="form-control" placeholder="Email Address"
+	                   ng-model="StaffModalController.staff.email" disabled>
+	          </div>
+	          <div class="col-sm-6 form-group">
+	            <label for="phone">Phone Number</label>
+	            <input type="text" class="form-control" placeholder="Phone Number"
+	                   ng-model="StaffModalController.staff.phone" disabled>
+	          </div>
+	      </div>
+	      <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="position">Position</label>
+	            <input type="text" class="form-control" placeholder="Position"
+	                   ng-model="StaffModalController.staff.position" disabled>
+	          </div>
+	          <div class="col-sm-6 checkbox">
+	          	<label>
+	              <input type="checkbox"
+	                     ng-model="StaffModalController.staff.receives_money_distribution_form" disabled> Recieves Money Distribution Form
+	            </label>
+	          </div>
+	      </div>
+	      <div class="row">
+	      	<div class="col-sm-6 form-group" ng-if="StaffModalController.staff.works_on.length === 1">
+	            <label for="project">Work Project</label>
+	            <div ng-repeat="worksOn in StaffModalController.staff.works_on">
+	          		<input type="text" class="form-control" ng-model="worksOn.works_on.project_name" disabled>
+	          	</div>
+	      	</div>
+	      	<div class="col-sm-6 form-group" ng-if="StaffModalController.staff.works_on.length !== 1">
+	            <label for="project">Work Project</label>
+	            <div ng-repeat="worksOn in StaffModalController.staff.works_on">
+	            	<div class="col-md-10">
+	          			<input type="text" class="form-control" ng-model="worksOn.works_on.project_name" disabled>
+	          		</div>
+	          		<div class="col-md-2">
+	          			<input type="text" class="form-control" ng-model="worksOn.percent" disabled>
+	          		</div>
+	          	</div>
+	      	</div>
+	      	<div class="col-sm-6 form-group">
+	      		<a ng-href="{{ StaffModalController.financial_url }}" target="_blank"><h3>MDF Project</h3></a>
+	      	</div>
+	      </div>
+	      <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label for="joined">Start Date</label>
+	            <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="StaffModalController.staff.first_date" disabled>
+	          </div>
+	      </div>
+	  </div>
+	  <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4"></div>
+                <div class="col-xs-4 text-center">
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="StaffModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>

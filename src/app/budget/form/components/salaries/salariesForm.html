@@ -11,7 +11,10 @@
 		  	 		<th class="position-col text-center">Position</th>
 		  	 		<th class="salary-col text-center">Gross Pay</th>
 		  	 		<th class="salary-col text-center">Deductions</th>
-		  	 		<th class="salary-col text-center" ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">{{ categoryType }}</th>
+		  	 		<th class="salary-col text-center" ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes"
+		  	 				ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
+		  	 			{{ budgetCtrl.filterCategoryTypeName(categoryType) }}
+		  	 		</th>
 		  	 		<th class="image-col text-center" ng-repeat-end ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
 		  	 			<button class="btn-xs btn-danger" ng-click="budgetCtrl.removeItemType(categoryType); budgetForm.markAsDirty();">
             				<i class="fa fa-minus"></i>
@@ -66,7 +69,7 @@
 	  	 			<td  ng-repeat-start="categoryType in budgetCtrl.form.staff.itemTypes" ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
 	  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[project].items[categoryType].cost" disabled="disabled" />
 					</td>
-					<td ng-repeat-end ng-if="',Salary,DeductionsCommunication,Travel,'.indexOf(categoryType) < 0">
+					<td ng-repeat-end ng-if="',Salary,Deductions,Travel,'.indexOf(categoryType) < 0">
 					</td>
 	  	 		</tr>
 	  	 	</tbody>

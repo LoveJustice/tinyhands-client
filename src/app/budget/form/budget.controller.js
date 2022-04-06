@@ -593,8 +593,14 @@ export default class BudgetController {
             this.form.previousData = response.data.top_table_data;
             this.form.staffItems = [];
             response.data.staff_items.forEach(item => {
-                if (item.type_name !== 'Travel') {
+                if (item.type_name === 'Salary' || item.type_name === 'Deductions' || item.type_name.indexOf('~') >= 0) {
                     this.form.staffItems.push(item);
+                } else {
+                    // don't keep cost or description
+                    let newItem = JSON.parse(JSON.stringify(item));
+                    newItem.cost = null;
+                    newItem.description = null;
+                    this.form.staffItems.push(newItem);
                 }
             });
 
@@ -728,6 +734,7 @@ export default class BudgetController {
             }
             if (!this.form.staff.hasOwnProperty(staffKey)) {
                 this.form.staff[staffKey] = {
+                    id:staffItem.staff_person,
                     first_name:staffItem.staff_first_name,
                     last_name:staffItem.staff_last_name,
                     name:staffItem.staff_first_name + ' ' + staffItem.staff_last_name,
@@ -836,13 +843,14 @@ export default class BudgetController {
                 if (!theStaff.items.hasOwnProperty(itemType)) {
                     let staffItem = {
                         id: null,
-                        staff_person: staffKey,
+                        staff_person: theStaff.id,
                         staff_first_name: theStaff.first_name,
                         staff_last_name: theStaff.last_name,
                         position: theStaff.position,
                         type_name: itemType,
                         description: '',
-                        cost: null
+                        cost: null,
+                        work_project: project,
                     };
                     this.form.staffItems.push(staffItem);
                     theStaff.items[itemType] = staffItem;
@@ -886,7 +894,11 @@ export default class BudgetController {
 	           return;
 	        }
 	        this.modified = true;
-	        this.addItemType(this.modalActions.categoryName);
+	        let newName = this.modalActions.categoryName;
+	        if (this.modalActions.copyData === 'Yes') {
+	            newName += '~';
+	        }
+	        this.addItemType(newName);
 	    });
     }
     
@@ -894,8 +906,13 @@ export default class BudgetController {
     	if (this.form.staff.itemTypes.hasOwnProperty(typeName)) {
     		return;
     	}
+    	
     	this.form.staff.itemTypes.push(typeName);
+    	this.form.salaryProjects.forEach(project => {
+    	    this.form.staff.Total[project].items[typeName] = {cost:null};
+    	});
     	this.fillMissingStaffItems();
+    	this.staffItemsTotalForProject();
     }
     
     removeItemType(typeName) {
@@ -909,14 +926,16 @@ export default class BudgetController {
     	this.form.staff.itemTypes.splice(this.form.staff.itemTypes.indexOf(typeName),1);
     	this.form.staffItems = this.form.staffItems.filter(item => item.type_name !== typeName);
     	
-    	this.form.staff.sortedStaff.forEach(staff => {
-    		let staffEntry = this.form.staff[staff.staffKey];
-    		if (staffEntry.items.hasOwnProperty(typeName)) {
-    			if (staffEntry.items[typeName].id) {
-    				this.form.staff.deleteStaffItems.push(staffEntry.items[typeName]);
-    			}
-    			delete staffEntry.items[typeName];
-    		}
+    	this.form.salaryProjects.forEach(project => {
+    	    this.form.staffByProject[project].sortedStaff.forEach (staffKey => {
+    	        let staffEntry = this.form.staff[staffKey];
+    	        if (staffEntry.items.hasOwnProperty(typeName)) {
+                    if (staffEntry.items[typeName].id) {
+                        this.form.staff.deleteStaffItems.push(staffEntry.items[typeName]);
+                    }
+                    delete staffEntry.items[typeName];
+                }
+    	    });
     	});
     	this.form.$setDirty();
     }
@@ -986,20 +1005,22 @@ export default class BudgetController {
     }
 
     updateOrCreateStaffItems() {
-    	this.form.staff.sortedStaff.forEach(staff => {
-	    	this.form.staff.itemTypes.forEach(itemType => {
-	    		let staffItem = this.form.staff[staff.staffKey].items[itemType];
-	    		staffItem.budget_calc_sheet = this.budgetId;
-	    		if (staffItem.cost === '') {
-	    			staffItem.cost = null;
-	    		}
-	    		if (staffItem.id) {
-	            	this.service.updateStaffItem(this.budgetId, staffItem);
-            	} else {
-	            	this.service.createStaffItem(staffItem);
-            	}
-	    	});
-	    });
+        this.form.salaryProjects.forEach(project => {
+            this.form.staffByProject[project].sortedStaff.forEach (staffKey => {
+                this.form.staff.itemTypes.forEach(itemType => {
+                    let staffItem = this.form.staff[staffKey].items[itemType];
+                    staffItem.budget_calc_sheet = this.budgetId;
+                    if (staffItem.cost === '') {
+                        staffItem.cost = null;
+                    }
+                    if (staffItem.id) {
+                        this.service.updateStaffItem(this.budgetId, staffItem);
+                    } else {
+                        this.service.createStaffItem(staffItem);
+                    }
+                });
+            });
+        });
     }
 
     // ENDREGION: PUT Calls
@@ -1048,5 +1069,9 @@ export default class BudgetController {
             }
         }
         return name;
+    }
+    
+    filterCategoryTypeName (name) {
+        return name.replace('~','');
     }
 }

@@ -12,7 +12,7 @@
 	  	 	</tr>
   	 	</thead>
   	 	<tbody>
-  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staffByProject[budgetCtrl.borderStationId + ''].sortedStaff"
+  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staff.byProject[budgetCtrl.borderStationId + ''].sortedStaff"
   	 				ng-if="budgetCtrl.form.staff[staffKey].last_name.indexOf('general_staff') === -1">
   	 			<td>{{ budgetCtrl.form.staff[staffKey].first_name + ' ' + budgetCtrl.form.staff[staffKey].last_name }}</td>
   	 			<td>{{ budgetCtrl.form.staff[staffKey].position }}</td>

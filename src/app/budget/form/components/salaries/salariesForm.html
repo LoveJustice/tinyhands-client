@@ -1,6 +1,6 @@
 <div >
   <h2 class="text-center">Salaries & Benefits</h2>
-  <div class="row" ng-repeat="project in budgetCtrl.form.salaryProjects">
+  <div class="row" ng-repeat="project in budgetCtrl.form.staff.salaryProjects">
      <hr>
   	 <div class="col-md-11">
   	 	 <h3>Project: {{ budgetCtrl.projectName(project) }}</h3>
@@ -28,7 +28,7 @@
 		  	 	</tr>
 	  	 	</thead>
 	  	 	<tbody>
-	  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staffByProject[project].sortedStaff"
+	  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staff.byProject[project].sortedStaff"
 	  	 				ng-if="budgetCtrl.form.staff[staffKey].last_name.indexOf('general_staff') === -1">
 	  	 			<td>{{ budgetCtrl.form.staff[staffKey].first_name + ' ' + budgetCtrl.form.staff[staffKey].last_name }}</td>
 	  	 			<td>{{ budgetCtrl.form.staff[staffKey].position }}</td>

@@ -73,10 +73,12 @@ export default class BudgetController {
         this.form = {
             other: {},
             totals: {
-                borderMonitoringStation: {},
+                borderMonitoringStation: {
+                },
                 other: {},
                 safeHouse: {},
             },
+            staff:null
         };
 
         this.isCreating = !this.budgetId && this.borderStationId;
@@ -268,7 +270,9 @@ export default class BudgetController {
     }
 
     foodGasLimboGirls() {
-        return this.validAmount(parseInt(this.form.limbo_girls_multiplier) * this.getOtherCost(this.form.other.Limbo));
+    	this.form.totals.limboOtherCost = this.getOtherCost(this.form.other.Limbo)/100;
+        let amount = this.validAmount(this.strToPennies(this.form.limbo_girls_multiplier) * this.form.totals.limboOtherCost);
+        return amount;
     }
     
     foodGasLimboGirlsDisplay() {
@@ -277,14 +281,20 @@ export default class BudgetController {
     // ENDREGION: Food And Gas
     
     impactMultiplyingTotal(project) {
-        let amount = this.getOtherCost(this.form.other.ImpactMultiplying, project);
-        this.form.totals.borderMonitoringStation.impactMultiplying = this.penniesToStr(amount);
-        return amount;
+	    if (this.impactMultiplying) {
+	        let amount = this.getOtherCost(this.form.other.ImpactMultiplying, project);
+	        this.form.totals.borderMonitoringStation.impactMultiplying = this.penniesToStr(amount);
+	        return amount;
+        }
     }
     
     impactMultiplyingTotalDisplay(project) {
-        this.impactMultiplyingTotal(project);
-        return this.form.totals.borderMonitoringStation.impactMultiplying;
+    	if (this.impactMultiplying) {
+	        this.impactMultiplyingTotal(project);
+	        return this.form.totals.borderMonitoringStation.impactMultiplying;
+        } else {
+        	return null;
+        }
     }
     
     pastMonthMoneySentTotal() {
@@ -297,7 +307,6 @@ export default class BudgetController {
     		return;
     	}
     	
-    	this.form.staff.Total = {};
     	this.staffItemsTotalForProject(this.borderStationId + '');
     	this.impactMultiplying.forEach(multiplying => {
     	    this.staffItemsTotalForProject(multiplying.id + '');
@@ -305,15 +314,13 @@ export default class BudgetController {
     }
     
     staffItemsTotalForProject(project) {
-        if (!this.form.staffByProject[project] || this.form.salaryProjects.indexOf(project) < 0) {
+        if (!this.form.staff.byProject[project] || this.form.staff.salaryProjects.indexOf(project) < 0) {
             return;
         }
         
-        this.form.staff.Total[project] = {};
-        this.form.staff.Total[project].items = {};
         this.form.staff.itemTypes.forEach(itemType => {
             let total = 0;
-            this.form.staffByProject[project].sortedStaff.forEach(staffKey => {
+            this.form.staff.byProject[project].sortedStaff.forEach(staffKey => {
                 let staffEntry = this.form.staff[staffKey];
                 let cost = this.strToPennies(staffEntry.items[itemType].cost);
                 if (!Number.isNaN(cost)) {
@@ -350,7 +357,7 @@ export default class BudgetController {
     
     salariesAndBenefitsTotalByProject(project) {
         var amount = 0;
-        if (!this.form.salaryProjects || this.form.salaryProjects.indexOf(project) < 0) {
+        if (!this.form.staff || this.form.staff.salaryProjects.indexOf(project) < 0) {
             return 0;
         }
         
@@ -366,6 +373,9 @@ export default class BudgetController {
         
         amount += this.getOtherCost(this.form.other.Salaries, project);
 
+		if (!this.form.totals.borderMonitoringStation.salaries_And_Benefits) {
+			this.form.totals.borderMonitoringStation.salaries_And_Benefits = {};
+		}
         this.form.totals.borderMonitoringStation.salaries_And_Benefits[project] = this.penniesToStr(amount);
 
         return amount;
@@ -713,27 +723,28 @@ export default class BudgetController {
     }
 
     extractStaffFromStaffItems(staffItems) {
-        this.form.staff = {
-        	itemTypes:['Salary', 'Deductions', 'Travel'],
-        	sortedStaff:[],
-        	deleteStaffItems:[],
-        };
-        
-        this.form.salaryProjects = [this.borderStationId + ''];
-        this.form.staffByProject = {};
-        this.form.staffByProject[this.borderStationId] = {sortedStaff:[]};
+        let staff = {
+    		itemTypes:['Salary', 'Deductions', 'Travel'],
+    		items:[],
+    		deleteStaffItems:[],
+    		salaryProjects: [],
+    		byProject: {},
+    		Total: {},
+    	};
+    	
         staffItems.forEach(staffItem => {
             let workProject = staffItem.work_project + '';
-            if (this.form.salaryProjects.indexOf(workProject) < 0) {
-                this.form.salaryProjects.push(workProject);
-                this.form.staffByProject[workProject] = {sortedStaff:[]};
+            if (staff.salaryProjects.indexOf(workProject) < 0) {
+                staff.salaryProjects.push(workProject);
+                staff.byProject[workProject] = {sortedStaff:[]};
             }
             let staffKey = staffItem.staff_person.toString() + ':' + workProject;
-            if (this.form.staffByProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
-                this.form.staffByProject[workProject].sortedStaff.push(staffKey);
+            if (staff.byProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
+                staff.byProject[workProject].sortedStaff.push(staffKey);
+                staff.Total[workProject] = { items:{} };
             }
-            if (!this.form.staff.hasOwnProperty(staffKey)) {
-                this.form.staff[staffKey] = {
+            if (!staff.hasOwnProperty(staffKey)) {
+                staff[staffKey] = {
                     id:staffItem.staff_person,
                     first_name:staffItem.staff_first_name,
                     last_name:staffItem.staff_last_name,
@@ -743,54 +754,62 @@ export default class BudgetController {
                 };
             }
         
-            this.form.staff[staffKey].items[staffItem.type_name] = staffItem;
-            if (this.form.staff.itemTypes.indexOf(staffItem.type_name) === -1) {
-                this.form.staff.itemTypes.push(staffItem.type_name);
+            staff[staffKey].items[staffItem.type_name] = staffItem;
+            if (staff.itemTypes.indexOf(staffItem.type_name) === -1) {
+                staff.itemTypes.push(staffItem.type_name);
             }
-            this.form.staffByProject[workProject].sortedStaff = this.form.staffByProject[workProject].sortedStaff.sort((a, b) => {
-                        if (this.form.staff[a].name > this.form.staff[b].name) {
+            staff.byProject[workProject].sortedStaff = staff.byProject[workProject].sortedStaff.sort((a, b) => {
+                        if (staff[a].name > staff[b].name) {
                             return 1;
                          } else {
                              return -1;}});
         });
         
+        staff.itemTypes.forEach(itemType => {
+        	staff.salaryProjects.forEach(project => {
+        		staff.Total[project].items[itemType] = {cost:null};
+        	});
+        });
         
-        this.fillMissingStaffItems();
+        
+        this.fillMissingStaffItems(staff);
+        this.form.staff = staff;
     }
 
     mapNewStaffItems(staffList, staffItems) {
-    	let newStaffItems = [];
-    	this.form.staff = {
-        	itemTypes:['Salary', 'Deductions', 'Travel'],
-        	sortedStaff:[],
-        	deleteStaffItems:[],
-        };
-    	this.form.salaryProjects = [this.borderStationId + ''];
-    	this.form.staffByProject = {};
-    	this.form.staffByProject[this.borderStationId] = {sortedStaff:[]};
+    	let staff = {
+    		itemTypes:['Salary', 'Deductions', 'Travel'],
+    		items:[],
+    		deleteStaffItems:[],
+    		salaryProjects: [],
+    		byProject: {},
+    		Total: {},
+    	};
     	
-    	staffList.forEach(staff => {
-    	    staff.works_on.forEach(worksOn => {
+    	staffList.forEach(staffEntry => {
+    	    staffEntry.works_on.forEach(worksOn => {
     	        let workProject = worksOn.works_on.project_id + '';
-    	        let staffKey = staff.id + ':' + workProject;
-    	        if (this.form.salaryProjects.indexOf(workProject) < 0) {
-                    this.form.salaryProjects.push(workProject);
-                    this.form.staffByProject[workProject] = {sortedStaff:[]};
+    	        let staffKey = staffEntry.id + ':' + workProject;
+    	        if (staff.salaryProjects.indexOf(workProject) < 0) {
+                    staff.salaryProjects.push(workProject);
+                    staff.byProject[workProject] = {sortedStaff:[]};
+                    staff.Total[workProject] = { items:{} };
                 }
-    	        if (this.form.staffByProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
-                    this.form.staffByProject[workProject].sortedStaff.push(staffKey);
+    	        if (staff.byProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
+                    staff.byProject[workProject].sortedStaff.push(staffKey);
                 }
-    	        if (!this.form.staff.hasOwnProperty(staffKey)) {
-                    this.form.staff[staffKey] = {
-                        first_name:staff.first_name,
-                        last_name:staff.last_name,
-                        name:staff.first_name + ' ' + staff.last_name,
-                        position:staff.position,
+    	        if (!staff.hasOwnProperty(staffKey)) {
+                    staff[staffKey] = {
+                    	id:staffEntry.id,
+                        first_name:staffEntry.first_name,
+                        last_name:staffEntry.last_name,
+                        name:staffEntry.first_name + ' ' + staffEntry.last_name,
+                        position:staffEntry.position,
                         items:{}
                     };
                 }
-    	        this.form.staffByProject[workProject].sortedStaff = this.form.staffByProject[workProject].sortedStaff.sort((a, b) => {
-                    if (this.form.staff[a].name > this.form.staff[b].name) {
+    	        staff.byProject[workProject].sortedStaff = staff.byProject[workProject].sortedStaff.sort((a, b) => {
+                    if (staff[a].name > staff[b].name) {
                         return 1;
                      } else {
                          return -1;}});
@@ -801,45 +820,50 @@ export default class BudgetController {
     	
     	staffItems.forEach(staffItem => {
             let workProject = staffItem.work_project + '';
-            if (this.form.salaryProjects.indexOf(workProject) < 0) {
+            if (staff.salaryProjects.indexOf(workProject) < 0) {
                 return;
             }
             let staffKey = staffItem.staff_person.toString() + ':' + workProject;
-            if (this.form.staffByProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
+            if (staff.byProject[workProject].sortedStaff.indexOf(staffKey) < 0) {
                 return;
             }
-            if (!this.form.staff.hasOwnProperty(staffKey)) {
+            if (!staff.hasOwnProperty(staffKey)) {
                 return;
             }
         
-            this.form.staff[staffKey].items[staffItem.type_name] = staffItem;
-            if (this.form.staff.itemTypes.indexOf(staffItem.type_name) === -1) {
-                this.form.staff.itemTypes.push(staffItem.type_name);
+            staff[staffKey].items[staffItem.type_name] = staffItem;
+            if (staff.itemTypes.indexOf(staffItem.type_name) === -1) {
+                staff.itemTypes.push(staffItem.type_name);
             }
-            
         });
         
-        this.fillMissingStaffItems();
+        staff.itemTypes.forEach(itemType => {
+        	staff.salaryProjects.forEach(project => {
+        		staff.Total[project].items[itemType] = {cost:null};
+        	});
+        });
+        
+        this.fillMissingStaffItems(staff);
+        this.form.staff = staff;
     }
     
-    fillMissingStaffItems() {
-        if (!this.form.staff || !this.impactMultiplying) {
+    fillMissingStaffItems(staff) {
+        if (!staff) {
             return;
         }
         
-        this.fillMissingStaffItemsForProject(this.borderStationId + '');
-        this.impactMultiplying.forEach(multiplying => {
-            this.fillMissingStaffItemsForProject(multiplying.id + '');
+        staff.salaryProjects.forEach(project => {
+            this.fillMissingStaffItemsForProject(staff, project);
         });
     }
     
-    fillMissingStaffItemsForProject(project) {
-        if (!this.form.staffByProject[project]) {
+    fillMissingStaffItemsForProject(staff, project) {
+        if (!staff.byProject[project]) {
             return;
         }
-        this.form.staffByProject[project].sortedStaff.forEach(staffKey => {
-            this.form.staff.itemTypes.forEach(itemType => {
-                let theStaff = this.form.staff[staffKey];
+        staff.byProject[project].sortedStaff.forEach(staffKey => {
+            staff.itemTypes.forEach(itemType => {
+                let theStaff = staff[staffKey];
                 if (!theStaff.items.hasOwnProperty(itemType)) {
                     let staffItem = {
                         id: null,
@@ -908,7 +932,7 @@ export default class BudgetController {
     	}
     	
     	this.form.staff.itemTypes.push(typeName);
-    	this.form.salaryProjects.forEach(project => {
+    	this.form.staff.salaryProjects.forEach(project => {
     	    this.form.staff.Total[project].items[typeName] = {cost:null};
     	});
     	this.fillMissingStaffItems();
@@ -926,8 +950,8 @@ export default class BudgetController {
     	this.form.staff.itemTypes.splice(this.form.staff.itemTypes.indexOf(typeName),1);
     	this.form.staffItems = this.form.staffItems.filter(item => item.type_name !== typeName);
     	
-    	this.form.salaryProjects.forEach(project => {
-    	    this.form.staffByProject[project].sortedStaff.forEach (staffKey => {
+    	this.form.staff.salaryProjects.forEach(project => {
+    	    this.form.staff.byProject[project].sortedStaff.forEach (staffKey => {
     	        let staffEntry = this.form.staff[staffKey];
     	        if (staffEntry.items.hasOwnProperty(typeName)) {
                     if (staffEntry.items[typeName].id) {
@@ -1005,8 +1029,8 @@ export default class BudgetController {
     }
 
     updateOrCreateStaffItems() {
-        this.form.salaryProjects.forEach(project => {
-            this.form.staffByProject[project].sortedStaff.forEach (staffKey => {
+        this.form.staff.salaryProjects.forEach(project => {
+            this.form.staff.byProject[project].sortedStaff.forEach (staffKey => {
                 this.form.staff.itemTypes.forEach(itemType => {
                     let staffItem = this.form.staff[staffKey].items[itemType];
                     staffItem.budget_calc_sheet = this.budgetId;

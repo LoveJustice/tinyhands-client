@@ -87,7 +87,7 @@ export default class GospelVerificationListController {
         if (queryParameters.reverse) {
             queryParameters.ordering = '-' + queryParameters.ordering;
         }
-        queryParams.page = pageNumber;
+        queryParameters.page = pageNumber;
         delete queryParameters.reverse;
         var params = [];
         Object.keys(queryParameters).forEach( (name) => {

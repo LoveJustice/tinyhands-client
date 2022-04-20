@@ -1,56 +1,58 @@
 import StaffSelectTemplateUrl from './staff-select.html';
+import checkboxSelectionTemplate from './checkboxSelection.html';
+import CheckboxSelectionController from './checkboxSelectionController.js';
 /* global _ */
 
 export class StaffSelectController {
-    constructor(StaffService) {
+    constructor($scope, $uibModal, StaffService) {
         'ngInject';
+        this.$scope = $scope;
+        this.$uibModal = $uibModal;
         this.StaffService = StaffService;
         this.getStaff();
-        this.searchStaff = '';
-        this._selectedStaffList = [];
-    }
-
-    get selectedStaffList() {
-        return this._selectedStaffList;
-    }
-
-    set selectedStaffList(value) {
-        this._selectedStaffList = value;
-        this.selectedStaff = this._selectedStaffList.join(';');
-    }
-
-    $onInit() {
-    	if (this.selectedStaff === undefined) {
-    		this.selectedStaff = '';
-    	}
-    	this.priorSelectedStaff = this.selectedStaff;
-        this.selectedStaffList = this.selectedStaff.split(';').filter((x) => x.length > 0).map((x) => x.trim());
-        this.priorStationId = '';
     }
     
     $doCheck() {
-    	if (this.selectedStaff !== this.priorSelectedStaff) {
-    		this.priorSelectedStaff = this.selectedStaff;
-    		this.selectedStaffList = this.selectedStaff.split(';').filter(x => x.length > 0).map(x => x.trim());
-    	}
-    	if (this.priorStationId !== this.stationId) {
-    		this.priorStationId = this.stationId;
-    		this.getStaff();
-    	}
+        if (this.selectedStaff !== this.priorSelectedStaff) {
+            this.priorSelectedStaff = this.selectedStaff; 
+        }
+        if (this.priorStationId !== this.stationId) {
+            this.priorStationId = this.stationId;
+            this.getStaff();
+        }
+        this.setDisplay()
     }
 
-    filterStaffByName(staffName, value) {
-        if (staffName && value) {
-            let searchValue = value.toLowerCase();
-            return _.includes(staffName.toLowerCase(), searchValue);
-        }
-        return false;
+    setDisplay() {
+        this.display = '';
+        if (this.selectedStaff !== undefined && this.selectedStaff !== null) {
+            let selectedOptions = this.selectedStaff.split(';');
+            this.display = selectedOptions.join(', ');
+        } 
+    }
+
+    selectOptions() {
+        this.$uibModal.open({
+            bindToController: true,
+            controller: CheckboxSelectionController,
+            controllerAs: 'vm',
+            resolve: {
+                optionList: () => this.staff,
+                currentValue: () => this.selectedStaff,
+            },
+            size: 'md',
+            templateUrl: checkboxSelectionTemplate,
+        }).result.then((newSelected) => {
+            this.selectedStaff = _.cloneDeep(newSelected);
+            this.setDisplay();
+        });
     }
 
     getStaff() {
     	if (typeof this.stationId !== 'undefined') {
 	        this.StaffService.getStaff(this.stationId).then((response) => {
 	            this.staff = response.data.map((x) => `${x.first_name} ${x.last_name}`);
+	            this.staff.sort();
 	        });
     	}
     }
@@ -61,6 +63,7 @@ export default {
         selectedStaff: '=',
         stationId: '='
     },
+    controllerAs: 'ctrl',
     controller: StaffSelectController,
     templateUrl: StaffSelectTemplateUrl,
     transclude: true

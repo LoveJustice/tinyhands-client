@@ -1,0 +1,16 @@
+<div class="modal-content">
+	<div class="modal-header">
+	    <h3 class="modal-title">Select Staff</h3>
+	</div>
+	
+	<div class="modal-body" ng-model="vm.selectionList">
+		<div class="col-md-6" ng-repeat="(key, val) in vm.selectionList">
+			<form-step type="checkbox" label="{{ key }}" response-value="vm.selectionList[key]"></form-step>
+		</div>
+	</div>
+	
+	<div class="modal-footer" style='border: none;'>
+	    <button id="selectButton" class="btn btn-primary" type="button" ng-click="vm.select()">Select</button>
+	    <button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
+	</div>
+</div>

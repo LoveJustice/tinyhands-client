@@ -60,7 +60,11 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
             this.matchType = tmp;
         }
         
-        this.getCountries();
+        if ($stateParams.pending) {
+            this.getPendingMatch($stateParams.pending);
+        } else {
+            this.getCountries();
+        }
     }
     
     sortIcon(column) {
@@ -108,6 +112,12 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
         this.personManagementPendingListService.getUserCountries(this.session.user.id).then(promise => {
             this.countries = promise.data;
             this.getPendingMatches();
+        });
+    }
+    
+    getPendingMatch(pending) {
+        this.personManagementPendingListService.getPendingMatch(pending).then ((promise) => {
+            this.compare(promise.data);
         });
     }
 
@@ -257,6 +267,13 @@ class personManagementPendingListController extends BaseMasterPersonCompare {
                 }, (error) => {
                     this.toastr.error(error.data.errors);
                     });
+            }
+            if (this.stateParams.pending) {
+                this.getCountries();
+            }
+        }, () => {
+            if (this.stateParams.pending) {
+                this.getCountries();
             }
         });
     }

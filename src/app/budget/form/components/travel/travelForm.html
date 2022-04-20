@@ -12,7 +12,7 @@
 	  	 	</tr>
   	 	</thead>
   	 	<tbody>
-  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staff.byProject[budgetCtrl.borderStationId + ''].sortedStaff"
+  	 		<tr ng-repeat="staffKey in budgetCtrl.form.staff.byProject[budgetCtrl.borderStationId].sortedStaff"
   	 				ng-if="budgetCtrl.form.staff[staffKey].last_name.indexOf('general_staff') === -1">
   	 			<td>{{ budgetCtrl.form.staff[staffKey].first_name + ' ' + budgetCtrl.form.staff[staffKey].last_name }}</td>
   	 			<td>{{ budgetCtrl.form.staff[staffKey].position }}</td>
@@ -23,7 +23,7 @@
   	 						ng-model="budgetCtrl.form.staff[staffKey].items['Travel'].cost" 
   	 						ng-disabled="budgetCtrl.isViewing"/>
 				</td>
-				<td ng-click="budgetCtrl.enterDetail(staff.staffKey, 'Travel')">
+				<td ng-click="budgetCtrl.enterDetail(staffKey, 'Travel')">
             			<i class="fa fa-comment-o" ng-if="!budgetCtrl.form.staff[staffKey].items['Travel'].description"></i>
             			<i class="fa fa-commenting" ng-if="budgetCtrl.form.staff[staffKey].items['Travel'].description"></i>
 					</td>
@@ -31,7 +31,7 @@
   	 		<tr>
   	 			<td colspan=2><b>Total</b></td>
   	 			<td>
-  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[budgetCtrl.borderStationId + ''].items['Travel'].cost" disabled="disabled" />
+  	 				 <input class="form-control" ng-value="budgetCtrl.form.staff.Total[budgetCtrl.borderStationId].items['Travel'].cost" disabled="disabled" />
   	 			</td>
   	 		</tr>
   	 	</tbody>
@@ -57,7 +57,7 @@
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Travel.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Travel.push({work_project:budgetCtrl.borderStationId})" ng-hide="budgetCtrl.isViewing">Add item</button>
     </div>
   </div>
   <hr>

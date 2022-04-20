@@ -138,7 +138,7 @@
   </div>
   <div class="row">
   	<br>
-  	<button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Limbo.push({})" ng-hide="budgetCtrl.isViewing">Add Limbo PV</button>
+  	<button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Limbo.push({work_project:budgetCtrl.borderStationId})" ng-hide="budgetCtrl.isViewing">Add Limbo PV</button>
   </div>
   <hr>
   <div class="row">
@@ -160,7 +160,7 @@
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.PotentialVictimCare.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.PotentialVictimCare.push({work_project:budgetCtrl.borderStationId})" ng-hide="budgetCtrl.isViewing">Add item</button>
     </div>
   </div>
   <hr>

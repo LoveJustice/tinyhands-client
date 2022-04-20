@@ -43,6 +43,7 @@ export default class BudgetController {
             excludeFromDropDown: [
                 'Past Month Sent Money',
                 'Money Not Spent',
+                'Impact Multiplying',
             ]
         };
 
@@ -135,7 +136,7 @@ export default class BudgetController {
     getOtherCost(otherItems, project = null) {
         let amount = 0;
         for (let i in otherItems) {
-            if (project === null || project === otherItems[i].work_project + '') {
+            if (project === null || project === otherItems[i].work_project) {
                 amount += this.strToPennies(otherItems[i].cost);
             }
         }
@@ -297,8 +298,8 @@ export default class BudgetController {
         }
     }
     
-    pastMonthMoneySentTotal() {
-        let amount = this.getOtherCost(this.form.other.PastMonth); 
+    pastMonthMoneySentTotal(project) {
+        let amount = this.getOtherCost(this.form.other.PastMonth, project); 
         return this.penniesToStr(amount);
     }
     
@@ -307,9 +308,9 @@ export default class BudgetController {
     		return;
     	}
     	
-    	this.staffItemsTotalForProject(this.borderStationId + '');
+    	this.staffItemsTotalForProject(this.borderStationId);
     	this.impactMultiplying.forEach(multiplying => {
-    	    this.staffItemsTotalForProject(multiplying.id + '');
+    	    this.staffItemsTotalForProject(multiplying.id);
     	});
     }
     
@@ -341,13 +342,13 @@ export default class BudgetController {
         
         this.form.totals.borderMonitoringStation.salaries_And_Benefits = {};
         
-        let tmp = this.salariesAndBenefitsTotalByProject(this.borderStationId + '');
-        if (project === this.borderStationId + '') {
+        let tmp = this.salariesAndBenefitsTotalByProject(this.borderStationId);
+        if (project === this.borderStationId) {
             amount = tmp;
         }
         this.impactMultiplying.forEach(multiplying => {
-            tmp = this.salariesAndBenefitsTotalByProject(multiplying.id + '');
-            if (project === multiplying.id + '') {
+            tmp = this.salariesAndBenefitsTotalByProject(multiplying.id);
+            if (project === multiplying.id) {
                 amount = tmp;
             }
         });
@@ -447,11 +448,14 @@ export default class BudgetController {
     }
     // ENDREGION: Travel
     
-    deductedNotSpentTotal() {
+    deductedNotSpentTotal(project) {
+        if (project == null) {
+            return;
+        }
         let deductAmount = 0;
         let notDeductAmount = 0;
         for (let idx in this.form.other.MoneyNotSpent) {
-            if (this.form.other.MoneyNotSpent[idx].cost) {
+            if (this.form.other.MoneyNotSpent[idx].cost && this.form.other.MoneyNotSpent[idx].work_project === project) {
                 if (this.form.other.MoneyNotSpent[idx].deduct === 'Yes') {
                     deductAmount += this.form.other.MoneyNotSpent[idx].cost * 100;
                 } else {
@@ -459,43 +463,48 @@ export default class BudgetController {
                 }
             }
         }
-        this.form.totals.borderMonitoringStation.Money_Not_Spent_To_Deduct = this.penniesToStr(deductAmount);
         if (!this.totals) {
             this.totals = {};
         }
-        this.totals.notDeductableNotSpent = this.penniesToStr(notDeductAmount);
-        this.totals.MoneyNotSpentTotal = this.penniesToStr(deductAmount + notDeductAmount);
+        if (!this.totals.notDeductableNotSpent) {
+            this.totals.notDeductableNotSpent = {};
+        }
+        if (!this.totals.MoneyNotSpentTotal) {
+            this.totals.MoneyNotSpentTotal = {};
+        }
+        this.totals.notDeductableNotSpent[project] = this.penniesToStr(notDeductAmount);
+        this.totals.MoneyNotSpentTotal[project] = this.penniesToStr(deductAmount + notDeductAmount);
         return deductAmount;
     }
     
-    deductedNotSpentTotalDisplay() {
-        return this.penniesToStr(this.deductedNotSpentTotal());
+    deductedNotSpentTotalDisplay(project) {
+        return this.penniesToStr(this.deductedNotSpentTotal(project));
     }
     
-    notDeductedNotSpentTotalDisplay() {
-        this.deductedNotSpentTotal();
-        return this.totals.notDeductableNotSpent;
+    notDeductedNotSpentTotalDisplay(project) {
+        this.deductedNotSpentTotal(project);
+        return this.totals.notDeductableNotSpent[project];
     }
     
-    notSpentTotalDisplay() {
-        this.deductedNotSpentTotal();
+    notSpentTotalDisplay(project) {
+        this.deductedNotSpentTotal(project);
         return this.totals.MoneyNotSpentTotal;
     }
     
 
     // REGION: Functions that handle totals
-    setBorderMonitoringStationTotals(project=null) {
+    setBorderMonitoringStationTotals(project) {
         let amount = (this.salariesAndBenefitsTotal(project) + this.rentAndUtilitiesTotal() + this.adminTotal() + 
-                this.awarenessTotal() + this.travelTotal() + this.potentialVictimCareTotal() - this.deductedNotSpentTotal());
+                this.awarenessTotal() + this.travelTotal() + this.potentialVictimCareTotal() - this.deductedNotSpentTotal(project));
         this.borderMonitoringStationTotal = this.penniesToStr(amount);
         return amount;
     }
     
     setProjectTotal(project) {
         let amount = this.salariesAndBenefitsTotalByProject(project);
-        if (project === this.borderStationId + '') {
+        if (project === this.borderStationId) {
             amount += (this.rentAndUtilitiesTotal() + this.adminTotal() + 
-                    this.awarenessTotal() + this.travelTotal() + this.potentialVictimCareTotal() - this.deductedNotSpentTotal());
+                    this.awarenessTotal() + this.travelTotal() + this.potentialVictimCareTotal() - this.deductedNotSpentTotal(project));
         } else {
             amount += this.impactMultiplyingTotal(project);
         }
@@ -509,14 +518,14 @@ export default class BudgetController {
             if (!this.borderStationId) {
                 return null;
             }
-            useProject = this.borderStationId + '';
+            useProject = this.borderStationId;
         }
         this.setProjectTotal(useProject);
         return this.projectTotal[useProject];
     }
 
     setTotals() {
-        let amount = this.setBorderMonitoringStationTotals();
+        let amount = this.setBorderMonitoringStationTotals(self.borderStationId);
         this.total = this.penniesToStr(amount);
     }
     
@@ -556,13 +565,13 @@ export default class BudgetController {
     }
 
     getBorderStation() {
-        this.service.getBorderStation(this.borderStationId).then(response => {
-            this.form.station_name = response.data.station_name;
-            this.currency = decodeURI(response.data.country_currency);
-            this.service.getCountry(response.data.operating_country).then(response => {
+        this.service.getBorderStation(this.borderStationId).then(responseStation => {
+            this.form.station_name = responseStation.data.station_name;
+            this.currency = decodeURI(responseStation.data.country_currency);
+            this.service.getCountry(responseStation.data.operating_country).then(response => {
                 this.countryId = response.data.id;
                 this.countryName = response.data.name;
-                this.getImpactMultiplyingProjects();
+                this.getImpactMultiplyingProjects(responseStation.data);
                 let options = response.data.options;
                 if ('pastMonthSent' in options && options.pastMonthSent) {
                     this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth });
@@ -572,12 +581,14 @@ export default class BudgetController {
         });
     }
     
-    getImpactMultiplyingProjects() {
+    getImpactMultiplyingProjects(mainProject) {
         this.service.getProjects(this.countryId).then(response => {
             this.impactMultiplying = [];
+            this.allProjects = [mainProject];
             for (let projectIdx in response.data) {
                 if (response.data[projectIdx].project_category_name === 'Impact Multiplying') {
                     this.impactMultiplying.push(response.data[projectIdx]);
+                    this.allProjects.push(response.data[projectIdx]);
                 }
             }
             this.fillMissingStaffItems();
@@ -727,13 +738,14 @@ export default class BudgetController {
     		itemTypes:['Salary', 'Deductions', 'Travel'],
     		items:[],
     		deleteStaffItems:[],
-    		salaryProjects: [],
+    		salaryProjects: [this.borderStationId],
     		byProject: {},
     		Total: {},
     	};
+        staff.byProject[this.borderStationId] = {sortedStaff:[]};
     	
         staffItems.forEach(staffItem => {
-            let workProject = staffItem.work_project + '';
+            let workProject = staffItem.work_project;
             if (staff.salaryProjects.indexOf(workProject) < 0) {
                 staff.salaryProjects.push(workProject);
                 staff.byProject[workProject] = {sortedStaff:[]};
@@ -788,7 +800,7 @@ export default class BudgetController {
     	
     	staffList.forEach(staffEntry => {
     	    staffEntry.works_on.forEach(worksOn => {
-    	        let workProject = worksOn.works_on.project_id + '';
+    	        let workProject = worksOn.works_on.project_id;
     	        let staffKey = staffEntry.id + ':' + workProject;
     	        if (staff.salaryProjects.indexOf(workProject) < 0) {
                     staff.salaryProjects.push(workProject);
@@ -819,7 +831,7 @@ export default class BudgetController {
     	
     	
     	staffItems.forEach(staffItem => {
-            let workProject = staffItem.work_project + '';
+            let workProject = staffItem.work_project;
             if (staff.salaryProjects.indexOf(workProject) < 0) {
                 return;
             }
@@ -1083,11 +1095,11 @@ export default class BudgetController {
     
     projectName(projectId) {
         let name = 'Unnown';
-        if (projectId + '' === this.borderStationId + '') {
+        if (projectId === this.borderStationId) {
             name = this.form.station_name;
         } else {
             for (let idx in this.impactMultiplying) {
-                if (this.impactMultiplying[idx].id + '' === projectId + '') {
+                if (this.impactMultiplying[idx].id === projectId) {
                     name = this.impactMultiplying[idx].station_name;
                 }
             }

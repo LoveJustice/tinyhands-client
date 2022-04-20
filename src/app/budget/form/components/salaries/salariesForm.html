@@ -80,7 +80,7 @@
 	</div>
     <div class="row padding-top-100">
       <div class="row col-md-12" ng-repeat="otherSalaryItem in budgetCtrl.form.other.Salaries | orderBy:'name'"
-      		ng-if="otherSalaryItem.work_project + '' === project">
+      		ng-if="otherSalaryItem.work_project === project">
       	<div class="col-md-2">
       		&nbsp;
         </div>

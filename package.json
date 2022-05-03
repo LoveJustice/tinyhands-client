@@ -76,6 +76,6 @@
     "webpack-dev-server": "2.5.0"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": "17.1.x"
   }
 }

@@ -96,7 +96,7 @@
           <td>{{ budgetCtrl.formatSection(section) }}</td>
           <td width="25%">
             <p class="text-right" ng-if="total[budgetCtrl.borderStationId + '']">{{total[budgetCtrl.borderStationId + ''] | currency:budgetCtrl.currency}}</p>
-            <p class="text-right ng-if="!total[budgetCtrl.borderStationId + '']">{{total | currency:budgetCtrl.currency}}</p>
+            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId + '']">{{total | currency:budgetCtrl.currency}}</p>
           </td>
         </tr>
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.borderMonitoringStation"
@@ -104,7 +104,7 @@
           <td>{{ budgetCtrl.formatSection(section) }}</td>
           <td width="25%">
             <p class="text-right" ng-if="total[budgetCtrl.borderStationId + '']">{{total[budgetCtrl.borderStationId + ''] | currency:budgetCtrl.currency}}</p>
-            <p class="text-right ng-if="!total[budgetCtrl.borderStationId + '']">{{total | currency:budgetCtrl.currency}}</p>
+            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId + '']">{{total | currency:budgetCtrl.currency}}</p>
           </td>
         </tr>
       </tbody>

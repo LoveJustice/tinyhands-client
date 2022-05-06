@@ -573,7 +573,7 @@ export default class BudgetController {
                 this.countryName = response.data.name;
                 this.getImpactMultiplyingProjects(responseStation.data);
                 let options = response.data.options;
-                if ('pastMonthSent' in options && options.pastMonthSent) {
+                if (options && 'pastMonthSent' in options && options.pastMonthSent) {
                     this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth });
                 }
                 this.sections.allSections.push({ name: 'Money Not Spent', templateUrl: moneyNotSpentForm, value: 9999 });

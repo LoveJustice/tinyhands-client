@@ -149,8 +149,8 @@ export class IrfBurkinaFasoController extends BaseIrfCommonController {
             245.5:{
                 enabled:true,
                 group:245,
-                label:'Tipoli',
-                value:'Tipoli',
+                label:'Tripoli',
+                value:'Tripoli',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -158,8 +158,8 @@ export class IrfBurkinaFasoController extends BaseIrfCommonController {
             245.6:{
                 enabled:true,
                 group:245,
-                label:'Riyah',
-                value:'Saudi Arabia',
+                label:'Riyadh',
+                value:'Riyadh',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0

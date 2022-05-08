@@ -15,7 +15,7 @@ export class IrfGhanaController extends BaseIrfCommonController {
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
+        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5, 245.6];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
@@ -104,8 +104,8 @@ export class IrfGhanaController extends BaseIrfCommonController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Nigeria',
-                value: 'Nigeria',
+                label:'Abuja',
+                value: 'Abuja',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -129,6 +129,15 @@ export class IrfGhanaController extends BaseIrfCommonController {
                 points:0
             },
             245.5:{
+                enabled:true,
+                group:245,
+                label:'Lagos',
+                value: 'Lagos',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.6:{
                 enabled:true,
                 group:245,
                 label:'Other:',

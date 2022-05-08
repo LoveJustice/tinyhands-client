@@ -93,7 +93,7 @@ class StationDataController {
     
     getCountries() {
         let selectedCountryName = sessionStorage.getItem('station-stats-country');
-        this.service.getUserCountries(this.session.user.id, 'PROJECT_STATISTICS', 'EDIT').then((promise) => {
+        this.service.getUserCountries(this.session.user.id, 'PROJECT_STATISTICS', 'VIEW').then((promise) => {
             this.countries = promise.data;
             this.country = null;
             for (let idx=0; idx < this.countries.length; idx++) {
@@ -114,7 +114,7 @@ class StationDataController {
             this.stationDisplayData = [{}, {}, {}];
             this.exchangeData = [{}, {}, {}];
             this.exchangeDisplayData = [{}, {}, {}];
-            this.service.getUserStations(this.session.user.id, 'PROJECT_STATISTICS', 'EDIT', this.country).then ((promise) => {
+            this.service.getUserStations(this.session.user.id, 'PROJECT_STATISTICS', 'VIEW', this.country).then ((promise) => {
                 this.stations = promise.data;
                 this.reloadData();
                 if (this.stations !== null && this.projectCategories !== null) {
@@ -127,6 +127,10 @@ class StationDataController {
                     sessionStorage.setItem('station-stats-country', this.countries[idx].name);
                     break;
                 }
+            }
+            this.isViewing = true;
+            if (this.session.checkPermission('PROJECT_STATISTICS','EDIT',parseInt(this.country), null)) {
+                this.isViewing = false;
             }
         } else {
             this.spinner.hide();

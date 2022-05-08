@@ -49,7 +49,7 @@
 	    <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.pendingMatches">
 	        <thead class="sticky-table-header">
 	        	<tr>
-	        		<th class="matchColumn">
+	        		<th colspan="2" class="matchColumn">
 	                	Match
 	                </th>
 	                <th colspan="3" class="text-center rightBorder">
@@ -64,6 +64,9 @@
 	            <tr>
 	                <th class="matchColumn" >
 	                	Type
+	                </th>
+	                <th class="matchColumn" >
+	                	%
 	                </th>
 	                <th ng-click="vm.sortColumn = 'person_match__master1__full_name'; vm.reverse = ! vm.reverse; vm.getPendingMatches()" class="nameColumn">
 	                    Name<i class="glyphicon" ng-class="vm.sortIcon('person_match__master1__full_name')"></i>
@@ -90,7 +93,8 @@
 	        </thead>
 	        <tbody ng-init="vm.sortColumn = 'name'">
 	            <tr ng-repeat="pendingMatch in vm.pendingMatches">
-	                <td class="text-center rightBorder">{{ pendingMatch.match }}</td>
+	                <td class="text-center">{{ pendingMatch.match }}</td>
+	                <td class="text-center rightBorder">{{ pendingMatch.match_results.Match_Prob }}</td>
 	                <td class="text-center"><a ng-href="{{vm.masterPersonLink(pendingMatch.master1_id)}}">{{ pendingMatch.master1_name }}</a></td>
 	                <td class="text-center">{{ pendingMatch.master1_age }}</td>
 	                <td class="text-center rightBorder">{{ pendingMatch.master1_address }}</td>

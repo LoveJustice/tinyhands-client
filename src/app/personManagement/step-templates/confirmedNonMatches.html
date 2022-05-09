@@ -8,6 +8,7 @@
 	                <th class="text-center" width="10%">Age</th>
 	                <th class="text-center" width="30%">Address</th>
 	                <th class="text-center" width="15%">Phone </th>
+	                <th class="text-center" width="15%">Match %</th>
 	                <th></th>
 	            </tr>
 	        </thead>
@@ -18,6 +19,7 @@
 	                <td class="text-center">{{ vm.getMatchAge(match) }}</td>
 	                <td class="text-center">{{ vm.getMatchAddress(match) }}</td>
 	                <td class="text-center">{{ vm.getMatchPhone(match) }}</td>
+	                <td class="text-center">{{ match.match_results.Match_Prob }}</td>
 	                <td><button class="btn btn-sm btn-primary" ng-click="vm.compare(match, 'non')">Compare</button></td>
 	            </tr>
 	        </tbody>

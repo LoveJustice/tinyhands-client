@@ -1,13 +1,14 @@
 import {BaseIrfCommonController} from '../baseIrfCommonController.js';
 import {BaseModalController} from '../../baseModalController.js';
+import '../common/irf.less';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfTanzaniaController extends BaseIrfCommonController {
+export class IrfBurundiController extends BaseIrfCommonController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
@@ -15,11 +16,11 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6];
-        this.purposeQuestions = ["purposeLabel",924.1,924.2,924.3,924.4,924.5,924.6];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,277,251];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,996,929,58,30,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
+        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5, 245.6, 245.7, 245.8, 245.9, 245.11];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974, 1083];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,996,930];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79,1082];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -43,31 +44,13 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'Unemployed',
-                value:'Unemployed',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.4:{
-                enabled:true,
-                group:968,
-                label:'Extremely poor',
-                value:'Extremely poor',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
-                enabled:true,
-                group:968,
                 label:'Young looking',
                 value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.4:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -76,11 +59,29 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
+            968.5:{
+                enabled:true,
+                group:968,
+                label:'Migrant',
+                value:'Migrant',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
+                enabled:true,
+                group:968,
+                label:'Illiterate',
+                value:'Illiterate',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
             968.7:{
                 enabled:true,
                 group:968,
-                label:'Albino',
-                value:'Albino',
+                label:'Villager',
+                value:'Villager',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -88,8 +89,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             968.8:{
                 enabled:true,
                 group:968,
-                label:'Migrant',
-                value:'Migrant',
+                label:'Adventurer',
+                value:'MigrantAdventurer',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -113,8 +114,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Dar es Salaam',
-                value: 'Dar es Salaam',
+                label:'Bujumbura',
+                value: 'Bujumbura',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -122,8 +123,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Zanzibar',
-                value: 'Zanzibar',
+                label:'Cibtoke',
+                value: 'Cibtoke',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -131,8 +132,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Johannesburg, SA',
-                value: 'Johannesburg, SA',
+                label:'Kigali',
+                value: 'Kigali',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -140,13 +141,22 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             245.4:{
                 enabled:true,
                 group:245,
-                label:'Oman',
-                value: 'Oman',
+                label:'Nairobi',
+                value: 'Nairobi',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             245.5:{
+                enabled:true,
+                group:245,
+                label:'Mombasa',
+                value: 'Mombasa',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.6:{
                 enabled:true,
                 group:245,
                 label:'UAE',
@@ -155,7 +165,34 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            245.6:{
+            245.7:{
+                enabled:true,
+                group:245,
+                label:'Kampala',
+                value: 'Kampala',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.8:{
+                enabled:true,
+                group:245,
+                label:'Oman',
+                value: 'Oman',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.9:{
+                enabled:true,
+                group:245,
+                label:'Qatar',
+                value: 'Qatar',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            245.11:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -182,8 +219,8 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Plantation',
-                value:'Plantation',
+                label:'Rural work',
+                value:'Rural work',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -191,31 +228,22 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Fishing',
-                value:'Fishing',
+                label:'Agricultural work',
+                value:'Agricultural work',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
-            924.4:{
+             924.4:{
                 enabled:true,
                 group:924,
-                label:'Mining',
-                value:'Mining',
+                label:'Gold mining',
+                value:'Gold mining',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.5:{
-                enabled:true,
-                group:924,
-                label:'Sex industry',
-                value:'Sex industry',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.6:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -287,44 +315,9 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
                 format:'col-md-12',
                 points:0
             },
-            metLabel:{
+            1083:{
                 enabled:true,
-                label:'Is or was traveling with someone they recently met through:',
-                type:'header',
-                format:'col-md-12',
-                points:0
-            },
-            242:{
-                enabled:true,
-                label:'Missed call',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            243:{
-                enabled:true,
-                label:'Facebook',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            244:{
-                enabled:true,
-                label:'Other website:',
-                type:'other-checkbox',
-                format:'col-md-6',
-                points:0
-            },
-            277:{
-                enabled:true,
-                label:'Met on their way',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            251:{
-                enabled:true,
-                label:"Meeting someone at destination who they don't know at all or don’t know well",
+                label:'Is or was traveling with someone they met recently',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -360,7 +353,7 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             },
             927:{
                 enabled:true,
-                label:'Treatment - no documentation/knowledge',
+                label:'Medical Treatment - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -501,7 +494,14 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             },
             79:{
                 enabled:true,
-                label:'Under 18, Enticed without consent of family',
+                label:'Under 18, enticed without consent of family',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
+            },
+            1082:{
+                enabled:true,
+                label:'Under 18, recruited for work',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -614,7 +614,7 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -622,8 +622,6 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
-        
-        this.includeQuestion[1077] = true;
     }
     
     getDefaultIdentificationTypes() {
@@ -656,6 +654,6 @@ export class IrfTanzaniaController extends BaseIrfCommonController {
 
 export default {
     templateUrl,
-    controller: IrfTanzaniaController,
+    controller: IrfBurundiController,
 };
 

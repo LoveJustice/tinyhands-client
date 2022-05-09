@@ -55,13 +55,17 @@
 						{{ vm.work[loc.id][staff.id] }}%
 					</td>
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && vm.mayEdit()">
-						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57">%
+						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)"
+								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+								ng-disabled="vm.isViewing">%
 					</td>
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'  && !vm.mayEdit()">
 						{{ vm.work[loc.id][staff.id] }}%
 					</td>
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'  && vm.mayEdit()">
-						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57">%
+						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" 
+								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+								ng-disabled="vm.isViewing">%
 					</td>
 				<tr>
 			</tbody>

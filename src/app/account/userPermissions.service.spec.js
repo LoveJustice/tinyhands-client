@@ -45,7 +45,7 @@ describe('UserPermissionsService', () => {
 
     describe('getAllCountries', () => {
         it('should call BaseService.get with correct url', () => {
-            let url = 'api/country/';
+            let url = 'api/country/?page_size=1000';
 
             service.getAllCountries();
 
@@ -58,6 +58,7 @@ describe('UserPermissionsService', () => {
             let url = 'api/border-station/';
 
             service.getBorderStations();
+            let params = [{name:'page_size', value:1000}];
 
             expect(mockBaseService.get).toHaveBeenCalledWith(url, params);
         });

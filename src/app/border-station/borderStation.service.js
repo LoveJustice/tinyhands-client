@@ -6,8 +6,7 @@ export default class BorderStationService {
         this.service = BaseService;
     }
     
-    getBorderStations(open = null) {
-        let params = [];
+    getBorderStations(open = null, params = []) {
         if(open !== null) {
             params.push({name: 'open', value: open});
         }

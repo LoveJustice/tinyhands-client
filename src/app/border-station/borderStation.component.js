@@ -50,7 +50,8 @@ class BorderStationController extends BaseFormController  {
         this.checkboxGroupQuestion = 1081;
         this.featureList = [
             "hasStaff","hasSubcommittee","hasProjectStats",
-            "hasLocations","hasLocationStaffing","hasForms"
+            "hasLocations","hasLocationStaffing","hasForms",
+            "hasMDF"
         ];
         for (let idx=0; idx < this.featureList.length; idx++) {
             this.checkboxGroup.checkboxItem(this.checkboxGroupQuestion, this.featureList[idx]);
@@ -160,6 +161,9 @@ class BorderStationController extends BaseFormController  {
                 if (this.availableFormsPresent) {
                     this.getCurrentForms();
                 }
+                if (this.questions[955].response.value) {
+                    this.countryChange(this.questions[955].response.value);
+                }
                 this.checkboxGroup.initOriginalValues(this.questions);
                 this.getProjects();
             });
@@ -176,7 +180,7 @@ class BorderStationController extends BaseFormController  {
             for (let stationIdx in response.data) {
                 if (response.data[stationIdx].id === parseInt(this.stationId)) {
                     this.projects.push(response.data[stationIdx]);
-                } else if (response.data[stationIdx].project_category_name === 'Impact Multiplying') {
+                } else if (response.data[stationIdx].mdf_project === parseInt(this.stationId)) {
                     this.projects.push(response.data[stationIdx]);
                 }
             }
@@ -313,6 +317,13 @@ class BorderStationController extends BaseFormController  {
         this.questions[948].response.value = !this.questions[948].response.value;
     }
     
+    canMdfFlagBeChanged() {
+        if (!this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF) {
+            
+        }
+    }
+    
+    
     checkFeatures(modifiedFeature) {
         let idx=0;
         let cards = this.getCardInstances('Commitee Members');
@@ -375,6 +386,30 @@ class BorderStationController extends BaseFormController  {
                     this.toastr.error('hasStaff cannot be disabled when hasLocationStaffing is enabled');
                 }
             }
+        }
+        
+        if (this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF) {
+            for (let idx=0; idx < this.staff.length; idx++) {
+                if (this.staff[idx].works_on[0].financial.project_id + '' !== this.$stateParams.id) {
+                    this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF = false;
+                    this.toastr.error('hasMDF cannot be enabled when staff from project ' + 
+                            this.staff[idx].works_on[0].financial.project_name  + ' has work assigned');
+                }
+            }
+            this.questions[1084].response.value = null;
+        } else {
+            let projects = '';
+            let sep = '';
+            for (let idx=0; idx < this.projects.length; idx++) {
+                if (this.projects[idx].id + '' !== this.$stateParams.id) {
+                    projects += sep + this.projects[idx].station_name;
+                    sep = ', ';
+                }
+            }
+            if (projects !== '') {
+                this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF = true;
+                this.toastr.error('hasMDF cannot be disabled when other projects have defined it as their MDF project [' + projects + ']');
+            } 
         }
     }
     
@@ -468,6 +503,17 @@ class BorderStationController extends BaseFormController  {
                     cards.push(the_card);
                 }
                 this.submit();
+            }
+        });
+    }
+    countryChange(country_id) {
+        let params = [{name:'operating_country', value:country_id}];
+        this.service.getBorderStations(true, params).then(response => {
+            this.mdfProjects = [];
+            for (let idx=0; idx < response.data.length; idx++) {
+                if (response.data[idx].features.indexOf('hasMDF') !== -1) {
+                    this.mdfProjects.push(response.data[idx]);
+                }
             }
         });
     }

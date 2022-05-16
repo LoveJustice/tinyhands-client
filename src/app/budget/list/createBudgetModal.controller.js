@@ -21,8 +21,10 @@ export default class CreateBudgetModalController {
         this.service.getUserStationsForAdd(this.session.user.id).then((resp) => {
             let stations = resp.data;
             for (var idx=0; idx < stations.length; idx++) {
-                this.scope.stationDropDown.options.push({"id":stations[idx].id, "label":stations[idx].station_name,
-                    "country":stations[idx].country_name, "country_id":stations[idx].country_id});
+                if (stations[idx].features.indexOf('hasMDF') !== -1) {
+                    this.scope.stationDropDown.options.push({"id":stations[idx].id, "label":stations[idx].station_name,
+                        "country":stations[idx].country_name, "country_id":stations[idx].country_id});
+                }
             }
         });
     }

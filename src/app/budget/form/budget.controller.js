@@ -515,7 +515,7 @@ export default class BudgetController {
     displayProjectTotal(project = null) {
         let useProject = project;
         if (useProject === null) {
-            if (!this.borderStationId) {
+            if (this.borderStationId === undefined) {
                 return null;
             }
             useProject = this.borderStationId;
@@ -586,13 +586,20 @@ export default class BudgetController {
             this.impactMultiplying = [];
             this.allProjects = [mainProject];
             for (let projectIdx in response.data) {
-                if (response.data[projectIdx].project_category_name === 'Impact Multiplying') {
+                if (response.data[projectIdx].mdf_project === mainProject.id) {
                     this.impactMultiplying.push(response.data[projectIdx]);
                     this.allProjects.push(response.data[projectIdx]);
                 }
             }
             this.fillMissingStaffItems();
             this.setTotals();
+            if (this.impactMultiplying.length === 0) {
+                for (let idx=0; idx < this.sections.allSections.length; idx++) {
+                    if (this.sections.allSections[idx].name === 'Impact Multiplying') {
+                        this.sections.allSections.splice(idx, 1);
+                    }
+                }
+            }
         });
     }
 

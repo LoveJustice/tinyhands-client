@@ -95,16 +95,16 @@
         		ng-if="section === 'salaries_And_Benefits'">
           <td>{{ budgetCtrl.formatSection(section) }}</td>
           <td width="25%">
-            <p class="text-right" ng-if="total[budgetCtrl.borderStationId + '']">{{total[budgetCtrl.borderStationId + ''] | currency:budgetCtrl.currency}}</p>
-            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId + '']">{{total | currency:budgetCtrl.currency}}</p>
+            <p class="text-right" ng-if="total[budgetCtrl.borderStationId]">{{total[budgetCtrl.borderStationId] | currency:budgetCtrl.currency}}</p>
+            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId]">{{total | currency:budgetCtrl.currency}}</p>
           </td>
         </tr>
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.borderMonitoringStation"
         		ng-if="section !== 'impactMultiplying'  && section !== 'salaries_And_Benefits'">
           <td>{{ budgetCtrl.formatSection(section) }}</td>
           <td width="25%">
-            <p class="text-right" ng-if="total[budgetCtrl.borderStationId + '']">{{total[budgetCtrl.borderStationId + ''] | currency:budgetCtrl.currency}}</p>
-            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId + '']">{{total | currency:budgetCtrl.currency}}</p>
+            <p class="text-right" ng-if="total[budgetCtrl.borderStationId]">{{total[budgetCtrl.borderStationId] | currency:budgetCtrl.currency}}</p>
+            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId]">{{total | currency:budgetCtrl.currency}}</p>
           </td>
         </tr>
       </tbody>
@@ -133,7 +133,7 @@
     </table>
   </div>
   <div class="col-xs-12 col-md-offset-3 col-md-6" ng-repeat="project in budgetCtrl.impactMultiplying"
-  		ng-if="budgetCtrl.displayProjectTotal(project.id + '') !== '0.00'">
+  		ng-if="budgetCtrl.displayProjectTotal(project.id) !== '0.00'">
    	<table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -141,22 +141,22 @@
         </tr>
       </thead>
       <tbody>
-      	<tr ng-if="budgetCtrl.form.totals.borderMonitoringStation.salaries_And_Benefits[project.id + '']">
+      	<tr ng-if="budgetCtrl.form.totals.borderMonitoringStation.salaries_And_Benefits[project.id]">
       	  <td>Salaries And Benefits</td>
       	  <td width="25%">
-               <p class="text-right">{{budgetCtrl.form.totals.borderMonitoringStation.salaries_And_Benefits[project.id + ''] | currency:budgetCtrl.currency}}</p>
+               <p class="text-right">{{budgetCtrl.form.totals.borderMonitoringStation.salaries_And_Benefits[project.id] | currency:budgetCtrl.currency}}</p>
              </td>
       	</tr>
       	<tr>
       	  <td>Operational Expenses</td>
       	  <td width="25%">
-               <p class="text-right">{{budgetCtrl.impactMultiplyingTotalDisplay(project.id + '') | currency:budgetCtrl.currency}}</p>
+               <p class="text-right">{{budgetCtrl.impactMultiplyingTotalDisplay(project.id) | currency:budgetCtrl.currency}}</p>
              </td>
       	</tr>
       	<tr>
          <td class="text-left text-large"><b>{{ project.station_name }} Subtotal</b></td>
          <td>
-           <p class="text-right text-large"><b>{{ budgetCtrl.displayProjectTotal(project.id + '') | currency:budgetCtrl.currency }}</b></p>
+           <p class="text-right text-large"><b>{{ budgetCtrl.displayProjectTotal(project.id) | currency:budgetCtrl.currency }}</b></p>
          </td>
        </tr>
       </tbody>

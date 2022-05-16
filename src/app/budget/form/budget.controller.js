@@ -18,7 +18,7 @@ import DetailModalController from './detailModal.controller';
 
 
 export default class BudgetController {
-    constructor($state, $stateParams,  $uibModal, BudgetService, UtilService, toastr) {
+    constructor($state, $stateParams,  $uibModal, BudgetService, UtilService, toastr, $scope) {
         'ngInject';
 
         this.$state = $state;
@@ -29,6 +29,7 @@ export default class BudgetController {
         this.toastr = toastr;
         this.currency = '';
         this.modified = false;
+        this.scope = $scope;
 
         this.sections = {
             allSections: [
@@ -149,6 +150,7 @@ export default class BudgetController {
             this.deletedItems.push(item);
         }
         otherArray.splice(idx, 1);
+        this.scope.budgetForm.$setDirty();
     }
 
     validAmount(amount) {
@@ -980,7 +982,7 @@ export default class BudgetController {
                 }
     	    });
     	});
-    	this.form.$setDirty();
+    	this.scope.budgetForm.$setDirty();
     }
 
     // ENDREGION: GET Calls

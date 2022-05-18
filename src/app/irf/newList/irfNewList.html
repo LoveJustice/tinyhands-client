@@ -6,7 +6,9 @@
         </div>
 
         <div class="pull-right"><br>
-            <photoexport ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',null, null)"></photoexport>
+        	<button class="btn btn-primary" ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"
+        			ng-click="irfNewListCtrl.attachmentExport()">Export Attachments</button>
+            <photoexport ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"></photoexport>
             <a ng-if="irfNewListCtrl.hasAddPermission" class="btn btn-success" ng-click="irfNewListCtrl.createIrf()">
                 Input A New IRF
             </a>

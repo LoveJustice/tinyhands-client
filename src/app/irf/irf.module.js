@@ -33,6 +33,7 @@ import IrfListService from './list/irfList.service';
 
 import IrfNewListController from './newList/irfNewList.controller';
 import CreateIrfModalController from './newList/createIrfModal.controller';
+import AttachmentExportModalController from './newList/attachmentExportModal.controller';
 
 import IrfNewListService from './newList/irfNewList.service';
 
@@ -48,6 +49,7 @@ export default angular.module('tinyhands.IRF', [IrfIndiaModule, IrfNepalModule, 
     .service('IrfListService', IrfListService)
     .controller('IrfNewListController', IrfNewListController)
     .controller('CreateIrfModalController', CreateIrfModalController)
+    .controller('AttachmentExportModalController', AttachmentExportModalController)
     .service('IrfNewListService', IrfNewListService)
     .service('IrfService', IrfService)
     .name;

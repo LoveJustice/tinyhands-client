@@ -149,6 +149,7 @@ class BorderStationController extends BaseFormController  {
     }
     
     getBorderStation(id) {
+        this.spinner.show('Retrieving border station');
         this.service.getFormConfig('borderStation').then ((response) => {
             this.config = response.data;
             this.service.getBorderStation(id).then((response) => {
@@ -166,12 +167,13 @@ class BorderStationController extends BaseFormController  {
                 }
                 this.checkboxGroup.initOriginalValues(this.questions);
                 this.getProjects();
-            });
-        });
+            }, () => {this.spinner.hide();});
+        }, () => {this.spinner.hide();});
     }
     
     getProjects() {
         if (!this.questions[955].response.value || this.questions[955].response.value === this.lastCountry) {
+            this.spinner.hide();
             return;
         }
         
@@ -184,7 +186,8 @@ class BorderStationController extends BaseFormController  {
                     this.projects.push(response.data[stationIdx]);
                 }
             }
-        });
+            this.spinner.hide();
+        }, () => {this.spinner.hide();});
     }
     
     saveDetailValues() {

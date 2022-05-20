@@ -17,8 +17,8 @@
       		<option ng-repeat="section in budgetCtrl.sections.allSections" 
       			ng-if="budgetCtrl.sections.excludeFromDropDown.indexOf(section.name) < 0 && project.id + '' === budgetCtrl.borderStationId + ''"
       			value="{{ section.value }}">{{ section.name }}</option>
-      		<option ng-if="project.id !== budgetCtrl.borderStationId"value="8">Salaries & Benefits</option>
-      		<option ng-if="project.id !== budgetCtrl.borderStationId"value="14">Operational Expense</option>
+      		<option ng-if="project.id + '' !== budgetCtrl.borderStationId + ''"value="8">Salaries & Benefits</option>
+      		<option ng-if="project.id + '' !== budgetCtrl.borderStationId + ''"value="14">Operational Expense</option>
       	</select>
       </div>
       <div class="col-md-2">

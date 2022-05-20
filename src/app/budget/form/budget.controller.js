@@ -66,7 +66,9 @@ export default class BudgetController {
         this.active = null;
         this.borderMonitoringStationTotal = 0;
         this.budgetId = $stateParams.id;
-        this.borderStationId = $stateParams.borderStationId;
+        if ($stateParams.borderStationId) {
+            this.borderStationId = parseInt($stateParams.borderStationId);
+        }
 
         this.month = parseInt(window.moment().format('M'));
         this.year = parseInt(window.moment().format('YYYY'));

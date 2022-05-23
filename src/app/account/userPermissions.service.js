@@ -28,7 +28,7 @@ export default class UserPermissionsService {
     }
 
     getAllCountries() {
-        return this.service.get('api/country/');
+        return this.service.get('api/country/?page_size=1000');
     }
     
     getUserStations(id) {
@@ -40,6 +40,7 @@ export default class UserPermissionsService {
         if(open !== null) {
             params.push({name: 'open', value: open});
         }
+        params.push({name: 'page_size', value: 1000});
         return this.service.get('api/border-station/', params);
     }
 }

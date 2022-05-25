@@ -26,7 +26,7 @@ export default class BorderStationService {
     }
     
     getAllCountries() {
-        return this.service.get('api/country/');
+        return this.service.get('api/country/?page_size=1000');
       }
     
     getBorderStation(id) {

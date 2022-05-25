@@ -40,10 +40,10 @@ export class IrfEcuadorController extends BaseIrfCommonController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7,924.8];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,1084,502,925,78,942,926,280,974,1083,1073];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,1084,502,925,78,942,926,280,974,1083,1078,1073,988];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
@@ -57,34 +57,7 @@ export class IrfEcuadorController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-             968.2:{
-                enabled:true,
-                group:968,
-                label:'Young looking',
-                value:'Young looking',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.3:{
-                enabled:true,
-                group:968,
-                label:'Revealing clothing',
-                value:'Revealing clothing',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.4:{
-                enabled:true,
-                group:968,
-                label:'Child(ren)',
-                value:'Child(ren)',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
+            968.2:{
                 enabled:true,
                 group:968,
                 label:'Escaping an exploitative situation',
@@ -93,34 +66,34 @@ export class IrfEcuadorController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
+            968.3:{
+                enabled:true,
+                group:968,
+                label:'Escaping abuse',
+                value:'Escaping abuse',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.4:{
+                enabled:true,
+                group:968,
+                label:'Young looking',
+                value:'Young looking',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.5:{
+                enabled:true,
+                group:968,
+                label:'Child(ren)',
+                value:'Child(ren)',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
             968.6:{
-                enabled:true,
-                group:968,
-                label:'Unemployed',
-                value:'Unemployed',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.7:{
-                enabled:true,
-                group:968,
-                label:'Extremely poor',
-                value:'Extremely poor',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.8:{
-                enabled:true,
-                group:968,
-                label:'Migrant',
-                value:'Migrant',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.9:{
                 enabled:true,
                 group:968,
                 label:'Recently Enslaved',
@@ -129,7 +102,25 @@ export class IrfEcuadorController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.11:{
+            968.7:{
+                enabled:true,
+                group:968,
+                label:'Unemployed',
+                value:'Unemployed',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+             968.8:{
+                enabled:true,
+                group:968,
+                label:'Extremely poor',
+                value:'Extremely poor',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.9:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -148,8 +139,8 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Papua',
-                value: 'Papua',
+                label:'Quito',
+                value: 'Quito',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -157,8 +148,8 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Malaysia',
-                value: 'Malaysia',
+                label:'Bogota',
+                value: 'Bogota',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -166,13 +157,22 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Saudia Arabia',
-                value: 'Saudia Arabia',
+                label:'Lima',
+                value: 'Lima',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
             },
             245.4:{
+                enabled:true,
+                group:245,
+                label:'Buenos Aires',
+                value: 'Buenos Aires',
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.5:{
                 enabled:true,
                 group:245,
                 label:"Don't know",
@@ -181,7 +181,7 @@ export class IrfEcuadorController extends BaseIrfCommonController {
                 format:'col-md-6',
                 points:0
             },
-            245.5:{
+            245.6:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -208,8 +208,8 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Cafe',
-                value:'Cafe',
+                label:'Massage parlor',
+                value:'Massage parlor',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -217,8 +217,8 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Construction',
-                value:'Construction',
+                label:'Modeling',
+                value:'Modeling',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -226,8 +226,8 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Seafood processing',
-                value:'Seafood processing',
+                label:'Hotel',
+                value:'Hotel',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -244,22 +244,13 @@ export class IrfEcuadorController extends BaseIrfCommonController {
             924.6:{
                 enabled:true,
                 group:924,
-                label:'Mining',
-                value:'Mining',
+                label:'Restaurant',
+                value:'Restaurant',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.7:{
-                enabled:true,
-                group:924,
-                label:'Plantation',
-                value:'Plantation',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.8:{
                 enabled:true,
                 group:924,
                 label:'Other:',

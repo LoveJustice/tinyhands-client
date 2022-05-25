@@ -8,6 +8,13 @@ function VdfCommonV3Routes($stateProvider) {
                 id: null
             }
         })
+        .state('vdfBenin', {
+            url: '/vdf/commonV2021_6:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
         .state('vdfGhana', {
             url: '/vdf/commonV2021_6:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV3Component',

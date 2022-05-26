@@ -421,13 +421,13 @@ export default class BudgetController {
     	let amount = 0;
     	amount += this.shelterUtilTotal();
     	amount += this.getOtherCost(this.form.other.PotentialVictimCare);
-    	this.form.totals.borderMonitoringStation.PotentialVictimCare = this.penniesToStr(amount);
+    	this.form.totals.borderMonitoringStation.Potential_Victim_Care = this.penniesToStr(amount);
     	
     	return amount;
     }
     
     potentialVictimCareTotalDisplay() {
-        return this.form.totals.borderMonitoringStation.PotentialVictimCare;
+        return this.form.totals.borderMonitoringStation.Potential_Victim_Care;
     }
     // ENDREGION: Shelter
 
@@ -478,6 +478,9 @@ export default class BudgetController {
         }
         this.totals.notDeductableNotSpent[project] = this.penniesToStr(notDeductAmount);
         this.totals.MoneyNotSpentTotal[project] = this.penniesToStr(deductAmount + notDeductAmount);
+        if (project === null || project == this.borderStationId) {
+            this.form.totals.borderMonitoringStation.Money_Not_Spent_To_Deduct = this.penniesToStr(deductAmount);
+        }
         return deductAmount;
     }
     
@@ -570,6 +573,7 @@ export default class BudgetController {
 
     getBorderStation() {
         this.service.getBorderStation(this.borderStationId).then(responseStation => {
+            this.mainProject = responseStation.data;
             this.form.station_name = responseStation.data.station_name;
             this.currency = decodeURI(responseStation.data.country_currency);
             this.service.getCountry(responseStation.data.operating_country).then(response => {
@@ -1116,6 +1120,20 @@ export default class BudgetController {
             }
         }
         return name;
+    }
+    
+    findProject(projectId) {
+        let project = null;
+        if (projectId === this.borderStationId) {
+            project = this.mainProject;
+        } else {
+            for (let idx in this.impactMultiplying) {
+                if (this.impactMultiplying[idx].id === projectId) {
+                    project = this.impactMultiplying[idx];
+                }
+            }
+        }
+        return project;
     }
     
     filterCategoryTypeName (name) {

@@ -6,7 +6,7 @@
 	<div class="row text-center" ng-if="budgetCtrl.impactMultiplying.length === 0"><h3>There are no Impact Multiplying projects for {{ budgetCtrl.countryName }}</h3></div>
 	<div class="row" ng-repeat="project in budgetCtrl.impactMultiplying">
 		<div class="col-md-10 col-md-offset-2">
-			<h3>Project: {{ budgetCtrl.projectName(project.id) }}</h3>
+			<h3>{{ project.project_category_name }}: {{ budgetCtrl.projectName(project.id) }}</h3>
 		</div>
 		<div ng-repeat="otherImpactMultiplying in budgetCtrl.form.other.ImpactMultiplying"
 				ng-if="otherImpactMultiplying.work_project === project.id">

@@ -86,10 +86,10 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         </thead>
         <tbody ng-repeat="category in vm.dashboardData.categories">
         	<tr ng-if="category.hideDetail" ng-click="category.hideDetail=false;">
-        		<td class="categoryClosed">{{ category.name }} <i class="fa fa-chevron-right"></i></td>
+        		<td class="categoryClosed"><i class="fa fa-chevron-right"></i> {{ category.name }}</td>
         		<td class="rightBorder"></td>
-        		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.monthly_report }}</td>
-        		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.compliance }}</td>
+        		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.monthly_report.toLocaleString('en-US', vm.digits1Format) }}</td>
+        		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.compliance.toLocaleString('en-US', vm.digits1Format) }}</td>
         		<td ng-class="vm.getClass('','boldRightBorder')">{{ category.subtotals.impact.toLocaleString('en-US', vm.digits2Format) }}</td>
         		
         		<td class="rightBorder">{{ category.subtotals['6month_intercepts'] }}</td>
@@ -129,7 +129,7 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="rightBorder">{{ category.subtotals.last_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         	</tr>
         	<tr ng-if="!category.hideDetail" ng-click="category.hideDetail=true;">
-        		<td class="categoryOpen" colspan="29">{{ category.name }} <i class="fa fa-chevron-down"></i></td>
+        		<td class="categoryOpen" colspan="29"><i class="fa fa-chevron-down"></i> {{ category.name }}</td>
         	</tr>
         	<tr ng-if="!category.hideDetail" ng-repeat="entry in category.entries" ng-show="entry.station_open || vm.includeClosed">
         		<td class="rightBorder">{{ entry.station_name }}</td>

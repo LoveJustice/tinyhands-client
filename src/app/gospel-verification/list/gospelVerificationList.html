@@ -75,8 +75,8 @@
                 <td class="text-center">{{ followUp.vdf_date }}</td>
                 <td class="text-center">{{ followUp.date_of_followup }}</td>
                 <td class="text-center">{{ followUp.profess_to_accept_christ }}</td>
-                <td class="text-center" ng-if="gospelVerificationListCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{followUp.viewUrl}}">View</a></td>
-                <td class="text-center" ng-if="gospelVerificationListCtrl.session.checkPermission('GOSPEL_VERIFICATION','EDIT',vdf.station.operating_country.id, vdf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{followUp.editUrl}}">Edit</a></td>
+                <td class="text-center" ng-if="gospelVerificationListCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW', followUp.country, followUp.station)"><a class="btn btn-sm btn-primary" ng-href="{{followUp.viewUrl}}">View</a></td>
+                <td class="text-center" ng-if="gospelVerificationListCtrl.session.checkPermission('GOSPEL_VERIFICATION','EDIT',followUp.country, followUp.station)"><a class="btn btn-sm btn-primary" ng-href="{{followUp.editUrl}}">Edit</a></td>
             </tr>
             <tr ng-show="gospelVerificationListCtrl.vdfs.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Gospel Verifications matched your search for: "{{ gospelVerificationListCtrl.queryParameters.search }}"</h2></td>

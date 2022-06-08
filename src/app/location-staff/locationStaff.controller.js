@@ -252,7 +252,7 @@ class LocationStaffController {
 	        });
         });
         
-        this.service.getStationStaff(this.stationDropDown.selectedOptions[0].id).then((promise) => {
+        this.service.getStationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
             this.allStaff = promise.data;
             this.filterStaff();
             this.staffTotals = {};
@@ -386,10 +386,22 @@ class LocationStaffController {
         this.staffTotals[staff] = Math.round(tot * 100)/100;
     }
     
-    totalColor(base, total) {
-        if (total === 100) {
+    getWorkGoal(staff) {
+        let workGoal = 100;
+        for (let workIdx in staff.works_on) {
+            if (staff.works_on[workIdx].works_on.project_id === this.stationDropDown.selectedOptions[0].id) {
+                workGoal = staff.works_on[workIdx].percent;
+            }
+        }
+        return workGoal;
+    }
+    
+    totalColor(base, staff) {
+        let total = this.staffTotals[staff.id];
+        let workGoal = this.getWorkGoal(staff);
+        if (total === workGoal) {
             return base + ' goodTotal';
-        } else if (total > 100) {
+        } else if (total > workGoal) {
             return base + ' badTotal';
         } else {
             return base;

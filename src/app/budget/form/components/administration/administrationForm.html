@@ -1,105 +1,66 @@
-<div class="col-md-offset-3 col-md-6">
+<div class="col-md-offset-1 col-md-10">
   <h2 class="text-center">Administration</h2>
   <hr>
   <div class="row">
+      <div class="col-md-offset-1 col-md-1"></div>
       <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month"
-          		ng-change="budgetCtrl.setTotals()"
-          		ng-init="budgetCtrl.form.administration_number_of_intercepts_last_month=budgetCtrl.form.administration_number_of_intercepts_last_month != null ? budgetCtrl.form.administration_number_of_intercepts_last_month : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)"
-          		ng-disabled="budgetCtrl.isViewing"/>
-          <small># of PVs Last Month</small>
-      </div>
-      <operator>*</operator>
-      <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="text"
-          		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-          		ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_multiplier" 
-          		ng-change="budgetCtrl.setTotals()" 
-          		ng-disabled="budgetCtrl.isViewing"/>
-      </div>
-      <operator>+</operator>
-      <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="text"
-          		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-          		ng-model="budgetCtrl.form.administration_number_of_intercepts_last_month_adder"
-          		ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
-      </div>
-      <operator>=</operator>
-      <div class="col-md-3 input-group">
-          <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-          <input class="form-control text-center" ng-value="budgetCtrl.adminStationaryTotalDisplay() | number" disabled="disabled"/>
-      </div>
-      <small>Stationary</small>
-  </div>
-  <hr>
-  <div class="row">
-      <div class="col-md-offset-2 col-md-1"></div>
-      <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.administration_number_of_meetings_per_month" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
+          <input class="text-right form-control" type="number" ng-model="budgetCtrl.form.number_of_meetings_per_month" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
           <small># of SC meetings Last Month</small>
       </div>
       <operator>*</operator>
       <div class="col-md-2 calc-form-input-no-width">
           <input class="text-right form-control" type="text" 
           		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-          		ng-model="budgetCtrl.form.administration_number_of_meetings_per_month_multiplier" 
+          		ng-model="budgetCtrl.form.number_of_meetings_per_month_multiplier" 
           		ng-change="budgetCtrl.setTotals()" 
           		ng-disabled="budgetCtrl.isViewing"/>
       </div>
       <operator>=</operator>
       <div class="col-md-3 input-group">
           <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-          <input class="form-control text-center" ng-value="budgetCtrl.adminMeetingsTotalDisplay() | number" disabled="disabled"/>
+          <input class="form-control text-center" ng-value="budgetCtrl.meetingsTotalDisplay() | number" disabled="disabled"/>
       </div>
       
       <small>Meetings</small>
   </div>
+	<br>
+	<div class="row">
+		<div class="col-md-offset-1 col-md-1"></div>
+		<div class="col-md-5">
+			<div class="checkbox col-md-1">
+				<label>
+					<input type="checkbox" ng-change="budgetCtrl.setTotals()" 
+						ng-model="budgetCtrl.form.travel_chair"
+						ng-disabled="budgetCtrl.isViewing"/>
+				</label>
+			</div>
+			<div class="col-md-4 calc-form-input-no-width">
+				<input class="form-control text-right" type="text" 
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+					ng-model="budgetCtrl.form.travel_chair_amount"
+					ng-change="budgetCtrl.setTotals()" 
+					ng-disabled="!budgetCtrl.form.travel_chair || budgetCtrl.isViewing"/>
+				<small>Subcommittee Chairperson Travel</small>
+			</div>
+		</div>
+		<div class="col-md-5">
+			<div class="checkbox col-md-1  col-md-offset-2">
+        		<label>
+					<input type="checkbox" ng-model="budgetCtrl.form.communication_chair" ng-change="budgetCtrl.setTotals()"
+						ng-disabled="budgetCtrl.isViewing" />
+				</label>
+			</div>
+			<div class="col-md-4 calc-form-input-no-width">
+				<input class="text-right form-control" type="text" 
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+					ng-model="budgetCtrl.form.communication_chair_amount" 
+					ng-disabled="!budgetCtrl.form.communication_chair"
+					ng-change="budgetCtrl.setTotals()" />
+				<small>Subcommittee Chairperson Communication</small>
+			</div>
+		</div>
+	</div>
   <hr>
-  <div class="row">
-      <div class="col-md-3">
-      </div>
-      <operator></operator>
-      <div class="col-md-1 col-md-offset-1">
-          <input type="checkbox" ng-model="budgetCtrl.form.administration_booth" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
-      </div>
-      <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="text" 
-          		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-          		ng-model="budgetCtrl.form.administration_booth_amount" 
-          		ng-disabled="!budgetCtrl.form.administration_booth || budgetCtrl.isViewing" 
-          		ng-change="budgetCtrl.setTotals()"/>
-          <small>Booth</small>
-      </div>
-      <operator>=</operator>
-      <div class="col-md-3 input-group">
-          <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-          <input class="form-control text-center" ng-value="budgetCtrl.adminBoothRentalTotalDisplay() | number" disabled="disabled"/>
-      </div>
-  </div>
-  <hr>
-  <div class="row">
-      <div class="col-md-3">
-      </div>
-      <operator></operator>
-      <div class="col-md-1 col-md-offset-1">
-          <input type="checkbox" ng-model="budgetCtrl.form.administration_office" ng-change="budgetCtrl.setTotals()" ng-disabled="budgetCtrl.isViewing"/>
-      </div>
-      <div class="col-md-2 calc-form-input-no-width">
-          <input class="text-right form-control" type="text" 
-          		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-          		ng-model="budgetCtrl.form.administration_office_amount" 
-          		ng-disabled="!budgetCtrl.form.administration_office || budgetCtrl.isViewing" 
-          		ng-change="budgetCtrl.setTotals()"/>
-          <small>Office</small>
-      </div>
-      <operator>=</operator>
-      <div class="col-md-3 input-group">
-          <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-          <input class="form-control text-center" ng-value="budgetCtrl.adminBoothRentalTotal() | number" disabled="disabled"/>
-      </div>
-  </div>
-
-    <hr>
     <div class="row">
         <div ng-repeat="otherAdminItem in budgetCtrl.form.other.Administration">
             <div class="col-md-4 col-md-offset-2">
@@ -119,7 +80,7 @@
             <br/>
         </div>
         <div class="row">
-            <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Administration.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+            <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Administration.push({work_project:budgetCtrl.borderStationId})" ng-hide="budgetCtrl.isViewing">Add item</button>
         </div>
     </div>
   <hr>

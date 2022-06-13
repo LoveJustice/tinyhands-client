@@ -192,4 +192,8 @@ export default class IrfService {
     getRelatedForms(stationId, formNumber) {
         return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
     }
+    
+    getAccount(id) {
+        return this.service.get(`api/account/${id}/`);
+    }
 }

@@ -185,13 +185,13 @@ export class BaseIrfBlindVerificationController extends BaseIrfController {
             if (verificationType === TIE_BREAK_REVIEW) {
                 this.hasTieBreakReview = true;
             }
-            this.getAccount(this.getResponseOfQuestionById(cards[idx].responses, 1094).value);
+            this.getAccountName(this.getResponseOfQuestionById(cards[idx].responses, 1094).value);
         }
     }
     
-    getAccount(accountId) {
-        this.service.getAccount(accountId).then ((response) => {
-            this.nameMap[accountId] = response.data.first_name + ' ' + response.data.last_name;
+    getAccountName(accountId) {
+        this.service.getAccountName(accountId).then ((response) => {
+            this.nameMap[accountId] = response.data;
         });
     }
     

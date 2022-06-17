@@ -4,6 +4,7 @@ export default class CategoryModalController {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
         this.modalActions = modalActions;
+        this.modalActions.copyData = 'No';
     }
     
     add() {

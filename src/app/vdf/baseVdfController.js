@@ -65,7 +65,7 @@ export class BaseVdfController extends BaseFormController {
                 if (this.questions[651].response.value === null || this.questions[651].response.value === '') {
                     this.questions[651].response.value = this.response.station_code;
                 }
-                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}[A-Z]$';
+                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}[A-Z]{1,2}$';
                 this.formNumberChange();
             });
         });

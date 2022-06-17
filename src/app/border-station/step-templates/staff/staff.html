@@ -1,12 +1,23 @@
 <div id="staff-boxes" class="row stretch-vertical">
     <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.sortedPersonCards($ctrl.getCardInstances('Staff'))" ng-if="!$ctrl.getResponseOfQuestionById(card.responses, 970).value">
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openStaffModal(card, false, $index)">
-            <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionById(card.responses, 957).value}} {{$ctrl.getResponseOfQuestionById(card.responses, 958).value}}</h3>
+            <h3 ng-class="$ctrl.stationHeaderClass(card)">{{$ctrl.getResponseOfQuestionById(card.responses, 957).value}} {{$ctrl.getResponseOfQuestionById(card.responses, 958).value}}</h3>
             <div class="panel-body col-md-12">
            		<form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 959).value}}</form-step>
            		<form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 960).value}}</form-step>
            		<form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 961).value}}</form-step>
            		<form-step ng-if="$ctrl.getResponseOfQuestionById(card.responses, 962).value">Recieves Money Distribution Form</form-step>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 stretch-vertical" ng-repeat="staff in $ctrl.staff" ng-if="staff.works_on[0].financial.project_id != $ctrl.$stateParams.id">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openStaffWorkModal(staff)">
+            <h3 class="panel-heading margin-top-0 workProject">{{ staff.first_name }} {{ staff.last_name}}</h3>
+            <div class="panel-body col-md-12">
+           		<form-step>{{ staff.email }}</form-step>
+           		<form-step>{{ staff.phone }}</form-step>
+           		<form-step>{{ staff.position }}</form-step>
+           		<form-step ng-if="staff.receives_money_distribution_form">Recieves Money Distribution Form</form-step>
             </div>
         </div>
     </div>

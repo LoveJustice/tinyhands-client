@@ -11,9 +11,25 @@ import locationTemplate from './step-templates/location/location.html';
 import formsTemplate from './step-templates/forms.html';
 import committeeModalTemplate from './step-templates/committee/committeeModal.html';
 import staffModalTemplate from './step-templates/staff/staffModal.html';
+import staffWorkModalTemplate from './step-templates/staff/staffWorkModal.html';
 import locationModalTemplate from './step-templates/location/locationModal.html';
 
 import templateUrl from './borderStation.html';
+
+class StaffWorkModalController {
+    constructor($uibModalInstance, $scope, staff, parent) {
+        this.$uibModalInstance = $uibModalInstance;
+        this.staff = staff;
+        this.parent = parent;
+        this.financial_url = parent.$state.href('border-station', {
+            id: staff.border_station,
+        });
+    }
+    
+    dismiss() {
+        this.$uibModalInstance.dismiss();
+    }
+}
 
 class BorderStationController extends BaseFormController  { 
     constructor($scope, $state, $stateParams, $timeout, $uibModal, BorderStationService, SessionService, toastr, SpinnerOverlayService) {
@@ -34,7 +50,8 @@ class BorderStationController extends BaseFormController  {
         this.checkboxGroupQuestion = 1081;
         this.featureList = [
             "hasStaff","hasSubcommittee","hasProjectStats",
-            "hasLocations","hasLocationStaffing","hasForms"
+            "hasLocations","hasLocationStaffing","hasForms",
+            "hasMDF"
         ];
         for (let idx=0; idx < this.featureList.length; idx++) {
             this.checkboxGroup.checkboxItem(this.checkboxGroupQuestion, this.featureList[idx]);
@@ -53,6 +70,8 @@ class BorderStationController extends BaseFormController  {
         
         this.detailsQuestions = [948,949,950,951,953,954,955,956,1080,1081];
         this.originalDetailValues = {};
+        this.lastCountry = null;
+        this.staff = [];
         
         this.timeZoneOptions = [];
         this.countryOptions = [];
@@ -65,6 +84,7 @@ class BorderStationController extends BaseFormController  {
         this.availableFormsPresent = false;
         this.loading = false;
         
+        this.getStaff($stateParams.id);
         this.getAllCategories();
         this.getAllCountries();
         this.getAllTimeZones();
@@ -116,7 +136,20 @@ class BorderStationController extends BaseFormController  {
         return result;
     }
     
+    /*
+     * The staff that has been added under the border station will be returned in the getBorderStation,
+     * but that information will not include the project(s) on which they are assigned to work.
+     * Also it will not include staff added under a different border station but assigned to work for
+     * this border station.
+     */
+    getStaff(id) {
+        this.service.getStaff(id).then((response) => {
+            this.staff = response.data;
+        });
+    }
+    
     getBorderStation(id) {
+        this.spinner.show('Retrieving border station');
         this.service.getFormConfig('borderStation').then ((response) => {
             this.config = response.data;
             this.service.getBorderStation(id).then((response) => {
@@ -129,9 +162,32 @@ class BorderStationController extends BaseFormController  {
                 if (this.availableFormsPresent) {
                     this.getCurrentForms();
                 }
+                if (this.questions[955].response.value) {
+                    this.countryChange(this.questions[955].response.value);
+                }
                 this.checkboxGroup.initOriginalValues(this.questions);
-            });
-        });
+                this.getProjects();
+            }, () => {this.spinner.hide();});
+        }, () => {this.spinner.hide();});
+    }
+    
+    getProjects() {
+        if (!this.questions[955].response.value || this.questions[955].response.value === this.lastCountry) {
+            this.spinner.hide();
+            return;
+        }
+        
+        this.service.getProjects(this.questions[955].response.value).then ((response) => {
+            this.projects = [];
+            for (let stationIdx in response.data) {
+                if (response.data[stationIdx].id === parseInt(this.stationId)) {
+                    this.projects.push(response.data[stationIdx]);
+                } else if (response.data[stationIdx].mdf_project === parseInt(this.stationId)) {
+                    this.projects.push(response.data[stationIdx]);
+                }
+            }
+            this.spinner.hide();
+        }, () => {this.spinner.hide();});
     }
     
     saveDetailValues() {
@@ -264,6 +320,13 @@ class BorderStationController extends BaseFormController  {
         this.questions[948].response.value = !this.questions[948].response.value;
     }
     
+    canMdfFlagBeChanged() {
+        if (!this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF) {
+            
+        }
+    }
+    
+    
     checkFeatures(modifiedFeature) {
         let idx=0;
         let cards = this.getCardInstances('Commitee Members');
@@ -327,6 +390,30 @@ class BorderStationController extends BaseFormController  {
                 }
             }
         }
+        
+        if (this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF) {
+            for (let idx=0; idx < this.staff.length; idx++) {
+                if (this.staff[idx].works_on[0].financial.project_id + '' !== this.$stateParams.id) {
+                    this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF = false;
+                    this.toastr.error('hasMDF cannot be enabled when staff from project ' + 
+                            this.staff[idx].works_on[0].financial.project_name  + ' has work assigned');
+                }
+            }
+            this.questions[1084].response.value = null;
+        } else {
+            let projects = '';
+            let sep = '';
+            for (let idx=0; idx < this.projects.length; idx++) {
+                if (this.projects[idx].id + '' !== this.$stateParams.id) {
+                    projects += sep + this.projects[idx].station_name;
+                    sep = ', ';
+                }
+            }
+            if (projects !== '') {
+                this.checkboxGroup.questions[this.checkboxGroupQuestion].hasMDF = true;
+                this.toastr.error('hasMDF cannot be disabled when other projects have defined it as their MDF project [' + projects + ']');
+            } 
+        }
     }
     
     getOtherLocationNames() {
@@ -376,6 +463,11 @@ class BorderStationController extends BaseFormController  {
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, restrictNameList=null) {
         let config = this.config[config_name];      
         let starting_flag_count = the_card.flag_count;
+        let params = {
+                staffList: this.staff,
+                projectId: this.stationId,
+                projects: this.projects
+            };
         this.modalActions = [];
         this.$uibModal.open({
             bindToController: true,
@@ -389,6 +481,7 @@ class BorderStationController extends BaseFormController  {
                 config: () => config,
                 constants: () => null,
                 restrictNameList: () => restrictNameList,
+                params: () => params,
             },
             size: 'lg',
             templateUrl: theTemplate,
@@ -396,6 +489,13 @@ class BorderStationController extends BaseFormController  {
             let cards = this.getCardInstances(config_name);
             if (this.modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
                 if (window.confirm("Confirm that you wish to remove this entry")) {
+                    for (let idx in this.staff) {
+                        if (cards[cardIndex].storage_id !== null) {
+                            if (cards[cardIndex].storage_id === this.staff[idx].id) {
+                                this.staff.splice(idx, 1);
+                            }
+                        }
+                    }
                     cards.splice(cardIndex, 1);
                     this.redFlagTotal = this.redFlagTotal - starting_flag_count;
                     this.submit();
@@ -406,6 +506,17 @@ class BorderStationController extends BaseFormController  {
                     cards.push(the_card);
                 }
                 this.submit();
+            }
+        });
+    }
+    countryChange(country_id) {
+        let params = [{name:'operating_country', value:country_id}];
+        this.service.getBorderStations(true, params).then(response => {
+            this.mdfProjects = [];
+            for (let idx=0; idx < response.data.length; idx++) {
+                if (response.data[idx].features.indexOf('hasMDF') !== -1) {
+                    this.mdfProjects.push(response.data[idx]);
+                }
             }
         });
     }
@@ -425,6 +536,22 @@ class BorderStationController extends BaseFormController  {
                 locationModalTemplate, 'Location', this.getOtherLocationNames());
     }
     
+    openStaffWorkModal(staff) {
+        this.$uibModal.open({
+            bindToController: true,
+            controller: StaffWorkModalController,
+            controllerAs: 'StaffModalController',
+            resolve: {
+                staff: () => staff,
+                parent: () => this
+            },
+            size: 'lg',
+            templateUrl: staffWorkModalTemplate,
+        }).result.then(() => {
+            
+        });
+    }
+    
     prepareForms() {
         let formList = [];
         for (let property in this.formSelected) {
@@ -433,6 +560,52 @@ class BorderStationController extends BaseFormController  {
             }
         }
         this.questions[964].response.value = formList;
+    }
+    
+    /*
+     * Set header color when staff is assigned to work on another project
+     */
+    stationHeaderClass(card) {
+        let cls = 'panel-heading margin-top-0';
+        if (card.storage_id) {
+            for (let staffIdx in this.staff) {
+                if (this.staff[staffIdx].id === card.storage_id) {
+                    for (let workIdx in this.staff[staffIdx].works_on) {
+                        if (this.staff[staffIdx].works_on[workIdx].works_on.project_id !== parseInt(this.stationId)) {
+                            cls += ' financialProject';
+                        }
+                    }
+                }
+            }
+        }
+        
+        return cls;
+    }
+    
+    updateWorkAssignent() {
+        for (let staffIdx in this.staff) {
+            if (this.staff[staffIdx].id === null) {
+                let staffCards = this.getCardInstances('Staff');
+                for (let idx in staffCards) {
+                    let card = staffCards[idx];
+                    let first_name = this.getResponseOfQuestionById(card.responses, 957).value;
+                    let last_name = this.getResponseOfQuestionById(card.responses, 958).value;
+                    if (first_name === this.staff[staffIdx].first_name && last_name === this.staff[staffIdx].last_name) {
+                        this.staff[staffIdx].id = card.storage_id;
+                        break;
+                    }
+                }
+                if (this.staff[staffIdx].id === null) {
+                    alert('unable to find staff card for added staff');
+                }
+            }
+        }
+        
+        this.service.updateWorkAssignment(this.stationId, this.staff).then((response) => {
+            this.staff = response.data;
+        }, (error) => {
+            alert('updateWorkAssignment failed: ' + error)
+           });
     }
     
     submit() {
@@ -445,12 +618,14 @@ class BorderStationController extends BaseFormController  {
              this.spinner.hide();
              this.processResponse(response);
              this.stationId = response.data.storage_id;
+             this.updateWorkAssignent();
              this.saveDetailValues();
              if (this.availableFormsPresent) {
                  this.getCurrentForms();
              }
              this.session.getUserPermissions();  // Refreshes border station list in navbar
              this.toastr.success('Changes saved');
+             this.getProjects();
          }, (error) => {
              this.spinner.hide();
              this.set_errors_and_warnings(error.data);

@@ -84,8 +84,54 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
             	<th class="rightBorder">Budget</th>
             </tr>
         </thead>
-        <tbody>
-        	<tr ng-repeat="entry in vm.dashboardData.entries" ng-show="entry.station_open || vm.includeClosed">
+        <tbody ng-repeat="category in vm.dashboardData.categories">
+        	<tr ng-if="category.hideDetail" ng-click="category.hideDetail=false;">
+        		<td class="categoryClosed"><i class="fa fa-chevron-right"></i> {{ category.name }}</td>
+        		<td class="rightBorder"></td>
+        		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.monthly_report.toLocaleString('en-US', vm.digits1Format) }}</td>
+        		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.compliance.toLocaleString('en-US', vm.digits1Format) }}</td>
+        		<td ng-class="vm.getClass('','boldRightBorder')">{{ category.subtotals.impact.toLocaleString('en-US', vm.digits2Format) }}</td>
+        		
+        		<td class="rightBorder">{{ category.subtotals['6month_intercepts'] }}</td>
+        		<td class="rightBorder">{{ category.subtotals['6month_arrests'] }}</td>
+        		<td class="rightBorder">{{ category.subtotals['6month_cifs'] }}</td>
+        		<td class="rightBorder">{{ category.subtotals['6month_gospel'] }}</td>
+        		<td class="rightBorder">{{ category.subtotals['6month_empowerment'] }}</td>
+        		<td class="boldRightBorder">{{ category.subtotals['6month_budget'].toLocaleString('en-US', vm.moneyFormat) }}</td>
+        		
+        		
+        		<td class="rightBorder">{{ category.subtotals.to_date_intercepts }}</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_irfs }}</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_arrests }}</td>
+        		<td class="rightBorder">
+        			<div ng-if="category.subtotals.to_date_intercepts > 0">
+        				{{ (category.subtotals.to_date_arrests * 100 /category.subtotals.to_date_intercepts).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
+        		</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_conv }}</td>
+        		<td class="rightBorder">
+        			<div ng-if="category.subtotals.to_date_arrests > 0">
+        				{{ (category.subtotals.to_date_conv * 100 /category.subtotals.to_date_arrests).toLocaleString('en-US', vm.digits1Format) }}%
+        			</div>
+        		</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_cifs }}</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_gospel }}</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_vdfs }}</td>
+        		<td class="rightBorder">{{ category.subtotals.to_date_emp }}</td>
+        		<td class="boldRightBorder">{{ category.subtotals.to_date_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
+        		
+        		<td class="rightBorder">{{ category.subtotals.last_staff_count }}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_subcommittee_count}}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_intercepts }}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_arrests}}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_gospel }}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_empowerment }}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
+        	</tr>
+        	<tr ng-if="!category.hideDetail" ng-click="category.hideDetail=true;">
+        		<td class="categoryOpen" colspan="29"><i class="fa fa-chevron-down"></i> {{ category.name }}</td>
+        	</tr>
+        	<tr ng-if="!category.hideDetail" ng-repeat="entry in category.entries" ng-show="entry.station_open || vm.includeClosed">
         		<td class="rightBorder">{{ entry.station_name }}</td>
         		<td class="rightBorder">{{ entry.station_code }}</td>
         		<td ng-class="vm.getClass(entry.monthlyReportColor,'rightBorder')">{{ entry.monthly_report }}</td>
@@ -128,6 +174,8 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="rightBorder">{{ entry.last_empowerment }}</td>
         		<td class="rightBorder">{{ entry.last_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         	</tr>
+        </tbody>
+        <tbody>
         	<tr>
         		<td class="total rightBorder"><b>SL TOTAL</b></td>
         		<td class="total rightBorder">{{ vm.entryCount() }}</td>

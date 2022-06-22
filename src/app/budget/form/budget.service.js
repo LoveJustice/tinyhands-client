@@ -74,6 +74,13 @@ export default class BudgetService {
     getBorderStation(id) {
         return this.service.get(`api/border-station/${id}/`);
     }
+    
+    /**
+     * Get projects for the country
+     */
+    getProjects(id) {
+        return this.service.get(`api/border-station/?operating_country=${id}`);
+    }
 
     /**
      * Function to get the budget form data.

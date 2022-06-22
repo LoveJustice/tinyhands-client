@@ -83,7 +83,7 @@ export class BaseCifController extends BaseFormController {
         this.otherData.questions[289].value = 'Intercept';
         this.otherData.questions[289].otherValue = '';
         if (this.irf.questions[1066].response.value) {
-            this.dateData.questions[479] = this.irf.questions[1066].response.value;
+            this.dateData.questions[479] = {dateType:'basic', value:this.dateData.dateAsUTC(this.irf.questions[1066].response.value)};
         }
         
         if (this.associatedPersons.length === 1) {

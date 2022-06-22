@@ -6,8 +6,7 @@ export default class BorderStationService {
         this.service = BaseService;
     }
     
-    getBorderStations(open = null) {
-        let params = [];
+    getBorderStations(open = null, params = []) {
         if(open !== null) {
             params.push({name: 'open', value: open});
         }
@@ -82,5 +81,17 @@ export default class BorderStationService {
     
     getAvailableForms() {
         return this.service.get('api/forms/');
+    }
+    
+    getStaff(id) {
+        return this.service.get(`api/border-station/${id}/staff/?include_financial=true`);
+    }
+    
+    getProjects(id) {
+        return this.service.get(`api/border-station/?operating_country=${id}`);
+    }
+    
+    updateWorkAssignment (id, staffAssignment) {
+        return this.service.put(`api/border-station/${id}/staff/work/`, staffAssignment);
     }
 }

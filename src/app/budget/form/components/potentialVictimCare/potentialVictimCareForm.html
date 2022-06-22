@@ -60,8 +60,8 @@
   <div class="row">
   	<div class="col-md-3">
 	    <div class="col-md-9 col-md-offset-2 calc-form-input-no-width">
-	      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls" 
-	      ng-init="budgetCtrl.form.food_and_gas_number_of_intercepted_girls=budgetCtrl.form.food_and_gas_number_of_intercepted_girls ? budgetCtrl.form.food_and_gas_number_of_intercepted_girls : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)" ng-disabled="budgetCtrl.isViewing"/>
+	      <input class="text-right form-control" type="number" ng-change="budgetCtrl.setTotals()"  ng-model="budgetCtrl.form.number_of_intercepted_pvs" 
+	      ng-init="budgetCtrl.form.number_of_intercepted_pvs=budgetCtrl.form.number_of_intercepted_pvs ? budgetCtrl.form.number_of_intercepted_pvs : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)" ng-disabled="budgetCtrl.isViewing"/>
 	      <small># of PVs Last Month</small>
 	    </div>
 	    <operator>*</operator>
@@ -71,7 +71,7 @@
 	      <input class="text-right form-control" type="text"  
 	      		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
 	      		ng-change="budgetCtrl.setTotals()" 
-	      		ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_before" 
+	      		ng-model="budgetCtrl.form.food_per_pv_amount" 
 	      		ng-disabled="budgetCtrl.isViewing"/>
 	      <small>Food & Snacks Total per PV</small>
 	    </div>
@@ -79,7 +79,7 @@
     </div>
     <div class="col-md-3">
 	    <div class="col-md-9 calc-form-input-no-width">
-	      <input class="text-right form-control" type="number"  ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.food_and_gas_number_of_intercepted_girls_multiplier_after" ng-disabled="budgetCtrl.isViewing"/>
+	      <input class="text-right form-control" type="number"  ng-change="budgetCtrl.setTotals()" ng-model="budgetCtrl.form.number_of_pv_days" ng-disabled="budgetCtrl.isViewing"/>
 	      <small># Days</small>
 	    </div>
 	    <operator>=</operator>
@@ -97,8 +97,8 @@
 	      <input class="text-right form-control" type="text" 
 	      		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
 	      		ng-change="budgetCtrl.setTotals()"  
-	      		ng-model="budgetCtrl.form.food_and_gas_limbo_girls_multiplier" 
-	      		ng-init="budgetCtrl.form.food_and_gas_limbo_girls_multiplier=budgetCtrl.form.food_and_gas_limbo_girls_multiplier ? budgetCtrl.form.food_and_gas_limbo_girls_multiplier : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)" 
+	      		ng-model="budgetCtrl.form.limbo_girls_multiplier" 
+	      		ng-init="budgetCtrl.form.limbo_girls_multiplier=budgetCtrl.form.limbo_girls_multiplier ? budgetCtrl.form.limbo_girls_multiplier : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)" 
 	      		ng-disabled="budgetCtrl.isViewing"/>
 	      <small>Limbo PV Cost per Day</small>
 	    </div>
@@ -106,14 +106,14 @@
 	 </div>
 	 <div class="col-md-3">
 	    <div class="col-md-9 calc-form-input-no-width">
-	      <input class="text-right form-control" type="number" disabled  ng-model="budgetCtrl.getOtherCost(budgetCtrl.form.other.Limbo)/100"/>
+	      <input class="text-right form-control" type="number" disabled  ng-model="budgetCtrl.form.totals.limboOtherCost"/>
 	      <small>Limbo PV # Days</small>
 	    </div>
 	    <operator>=</operator>
 	 </div>
 	 <div class="col-md-2 input-group text-center">
       <div class="input-group-addon">{{budgetCtrl.currency}}</div>
-      <input class="form-control text-center" ng-value="budgetCtrl.foodGasLimboGirls() | number" disabled="disabled" />
+      <input class="form-control text-center" ng-value="budgetCtrl.foodGasLimboGirlsDisplay() | number" disabled="disabled" />
     </div>
     <small>Limbo PVs</small>
   </div>
@@ -138,29 +138,29 @@
   </div>
   <div class="row">
   	<br>
-  	<button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Limbo.push({})" ng-hide="budgetCtrl.isViewing">Add Limbo PV</button>
+  	<button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Limbo.push({work_project:budgetCtrl.borderStationId})" ng-hide="budgetCtrl.isViewing">Add Limbo PV</button>
   </div>
   <hr>
   <div class="row">
-    <div ng-repeat="otherShelterItem in budgetCtrl.form.other.Shelter">
+    <div ng-repeat="otherPvItem in budgetCtrl.form.other.PotentialVictimCare">
       <div class="col-md-4 col-md-offset-2">
-        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherShelterItem.name" ng-disabled="budgetCtrl.isViewing" required/>
+        <input class="form-control" type="text" ng-change="budgetCtrl.setTotals()" ng-model="otherPvItem.name" ng-disabled="budgetCtrl.isViewing" required/>
       </div>
       <div class="col-md-4">
         <input class="text-right form-control" type="text" 
         		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
         		ng-change="budgetCtrl.setTotals()" 
-        		ng-model="otherShelterItem.cost" 
+        		ng-model="otherPvItem.cost" 
         		ng-disabled="budgetCtrl.isViewing" required/>
       </div>
       <div class="col-md-2">
-        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.Shelter, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>
+        <button class="btn btn-danger" ng-click="budgetCtrl.removeItem(budgetCtrl.form.other.PotentialVictimCare, $index)" ng-hide="budgetCtrl.isViewing">Remove</button>
       </div>
       <br/>
       <br/>
     </div>
     <div class="row">
-      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.Shelter.push({})" ng-hide="budgetCtrl.isViewing">Add item</button>
+      <button class="btn btn-success col-xs-4 col-xs-offset-4" ng-click="budgetCtrl.form.other.PotentialVictimCare.push({work_project:budgetCtrl.borderStationId})" ng-hide="budgetCtrl.isViewing">Add item</button>
     </div>
   </div>
   <hr>

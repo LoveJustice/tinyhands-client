@@ -187,6 +187,50 @@ class IndicatorsController {
         this.spinnerOverlayService.show('Calculating Indicators...');
         this.indicatorsService.calculate(this.countryDropDown.selectedOptions[0].id).then(promise => {
             this.indicatorsData = promise.data;
+            if (this.indicatorsData.blind) {
+                this.indicatorTypes = [
+                    {'key':'irfLag', 'name':'IRF Lag Time', 'color':true},
+                    {'key':'irfCount', 'name':'IRF Forms Entered', 'color':false},
+                    {'key':'irfOriginalFormPercent', 'name':'IRF Original Form Attached %', 'color':false},
+                    {'key':'photosLag', 'name':'Photo Upload Lag Time', 'color':true},
+                    {'key':'photosCount', 'name':'Photos Uploaded', 'color':false},
+                    {'key':'vdfLag', 'name':'VDF Lag Time', 'color':true},
+                    {'key':'vdfCount', 'name':'VDF Forms Entered', 'color':false},
+                    {'key':'vdfOriginalFormPercent', 'name':'VDF Original Form Attached %', 'color':false},
+                    {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
+                    {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
+                    {'key':'cifOriginalFormPercent', 'name':'CIF Original Form Attached %', 'color':false},
+                    {'key':'v1Lag', 'name':'Initial Verification Lag time', 'color':true},
+                    {'key':'v1Count', 'name':'Initial Verifications Completed', 'color':false},
+                    {'key':'v1Backlog', 'name':'Initial Verification Backlog', 'color':true},
+                    {'key':'v2Lag', 'name':'Tie Break Verification Lag time', 'color':true},
+                    {'key':'v2Count', 'name':'Tie Break Verifications Completed', 'color':false},
+                    {'key':'v2Backlog', 'name':'Tie Break Verification Backlog', 'color':true},
+                ];
+                
+            } else {
+                this.indicatorTypes = [
+                    {'key':'irfLag', 'name':'IRF Lag Time', 'color':true},
+                    {'key':'irfCount', 'name':'IRF Forms Entered', 'color':false},
+                    {'key':'irfOriginalFormPercent', 'name':'IRF Original Form Attached %', 'color':false},
+                    {'key':'photosLag', 'name':'Photo Upload Lag Time', 'color':true},
+                    {'key':'photosCount', 'name':'Photos Uploaded', 'color':false},
+                    {'key':'vdfLag', 'name':'VDF Lag Time', 'color':true},
+                    {'key':'vdfCount', 'name':'VDF Forms Entered', 'color':false},
+                    {'key':'vdfOriginalFormPercent', 'name':'VDF Original Form Attached %', 'color':false},
+                    {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
+                    {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
+                    {'key':'cifOriginalFormPercent', 'name':'CIF Original Form Attached %', 'color':false},
+                    {'key':'v1Lag', 'name':'Step 1: Verification Lag time', 'color':true},
+                    {'key':'v1Count', 'name':'Step 1: Verifications Completed', 'color':false},
+                    {'key':'v1Backlog', 'name':'Step 1: Verification Backlog', 'color':true},
+                    {'key':'v2Lag', 'name':'Step 2: Verification Lag time', 'color':true},
+                    {'key':'v2Count', 'name':'Step 2: Verifications Completed', 'color':false},
+                    {'key':'v2Backlog', 'name':'Step 2: Verification Backlog', 'color':true},
+                   // {'key':'v2ChangeCount', 'name':'Verification Change', 'color':false},
+                    {'key':'v2ConflictPercent', 'name':'Conflict %', 'color':false},
+                ];
+            }
             
             // Value on server is the number of conflicts between the validations.  Compute the percentage
             // of conflicting validations.

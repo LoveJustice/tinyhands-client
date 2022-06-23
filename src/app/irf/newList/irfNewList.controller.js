@@ -62,18 +62,19 @@ export default class IrfNewListController {
         this.date_end = new Date();
         this.date_start = new Date();
         this.date_start.setUTCDate(1);
+        this.may_be_verified_by_account = false;
 
         this.oldIndex = 3;
         this.status = {};
         this.status.options = [ {id: '!invalid', label: 'all valid', group:'z'},
             { id: 'in-progress', label: 'in-progress', group:'Status' }, 
-            { id: 'approved,!None', label: 'submitted with evidence category', group:'Status' },
-            { id: 'approved,None', label: 'old - submitted without evidence category', group:'Status'},
+            { id: 'approved,!None', label: 'submitted', group:'Status' },
             { id: 'first-verification', label: 'first-verification', group:'Status' },
             { id: 'second-verification', label: 'second-verification', group:'Status'},
-            { id: 'second-verification,Clear', label: 'clear evidence', group:'Final Verification Evidence Category'},
-            { id: 'second-verification,Some', label: 'some evidence', group:'Final Verification Evidence Category'},
-            { id: 'second-verification,High', label: 'high risk', group:'Final Verification Evidence Category'},
+            { id: 'verification-tie', label: 'verification-tie', group:'Status'},
+            { id: 'verified', label: 'verified', group:'Status'},
+            { id: 'second-verification|verified,Evidence', label: 'evidence', group:'Final Verification Evidence Category'},
+            { id: 'second-verification|verified,High', label: 'high risk', group:'Final Verification Evidence Category'},
             { id: 'invalid', label: 'invalid', group:'Final Verification Evidence Category' }];
         this.status.selectedOptions = [this.status.options[0]];
         this.status.settings = {
@@ -88,7 +89,7 @@ export default class IrfNewListController {
         this.status.customText = {};
         this.status.eventListener = {
             onItemSelect: this.statusChange,
-            onItemDeselect: this.statusChange,
+            onItemDeselect: this.ange,
             ctrl: this,
         };
 
@@ -276,6 +277,9 @@ export default class IrfNewListController {
     }
 
     statusChange() {
+        if (this.ctrl.status.selectedOptions[0].label !== 'submitted' && this.ctrl.status.selectedOptions[0].label !== 'verification-tie') {
+            this.may_be_verified_by_account = false;
+        }
         this.ctrl.searchTimerExpired();
     }
     
@@ -294,9 +298,15 @@ export default class IrfNewListController {
             selectedStatus = this.status.selectedOptions[0].id;
         }
         
-        if (this.queryParameters.country_ids !== selectedCountries || this.queryParameters.status !== selectedStatus) {
+        if (this.status.selectedOptions[0].label !== 'submitted' && this.status.selectedOptions[0].label !== 'verification-tie') {
+            this.may_be_verified_by_account = false;
+        }
+        
+        if (this.queryParameters.country_ids !== selectedCountries || this.queryParameters.status !== selectedStatus ||
+                this.queryParameters.may_verify !== this.may_be_verified_by_account) {
             this.queryParameters.country_ids = selectedCountries;
             this.queryParameters.status = selectedStatus;
+            this.queryParameters.may_verify = this.may_be_verified_by_account;
             this.searchIrfs(); 
         }
     }

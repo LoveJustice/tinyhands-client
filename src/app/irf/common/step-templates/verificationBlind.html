@@ -1,0 +1,74 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+	<div class="row col-md-12" ng-repeat="card in $ctrl.getCardInstances('Verification')"
+			ng-if="!$ctrl.hasTieBreakReview || $ctrl.verificationTypeText(card) !== 'Tie Break'">
+		<div class = "row text-center">
+			<b>{{ $ctrl.verificationTypeText(card) }}</b>
+		</div>
+		<fieldset class="row center-vertical" ng-if="$ctrl.getResponseOfQuestionById(card.responses, 1088).value === 1"
+				ng-disabled="card !== $ctrl.editingVerificationCard">
+			<form-step class="col-md-2">Follow-up call completed</form-step>
+			<div class="col-md-1">
+				<form-step type="radio" radio-name="followup{{ $index }}" response-value="$ctrl.getResponseOfQuestionById(card.responses, 1089).value" label="No"></form-step>
+			</div>
+			<div class="col-md-1">
+				<form-step type="radio" radio-name="followup{{ $index }}" response-value="$ctrl.getResponseOfQuestionById(card.responses, 1089).value" label="Yes"></form-step>
+			</div>
+		</fieldset>
+		<br>
+		<div class="row center-vertical" 
+				ng-show="$ctrl.getResponseOfQuestionById(card.responses, 1089).value === 'Yes' && $ctrl.verificationTypeText(card) === 'Initial Verification'">
+			<form-step class="col-md-2">Follow-up details</form-step>
+			<div class="col-md-8">
+				<textarea class="form-control" placeholder="Details" rows="3" ng-model="$ctrl.getResponseOfQuestionById(card.responses, 1090).value"
+						ng-disabled="card !== $ctrl.editingVerificationCard"></textarea>
+			</div>
+		</div>
+		<br>
+		<fieldset class="row center-vertical" ng-show="card === $ctrl.editingVerificationCard || $ctrl.showAllVerification"
+				ng-disabled="card !== $ctrl.editingVerificationCard">
+			<form-step class="col-md-2">Verification</form-step>
+			<div class="col-md-8">
+				<form-step type="radio" radio-name="evidenceRadio{{ $index }}" response-value="$ctrl.getResponseOfQuestionById(card.responses, 1091).value"
+						label="Evidence of Trafficking"></form-step>
+				<form-step type="radio" radio-name="evidenceRadio{{ $index }}" response-value="$ctrl.getResponseOfQuestionById(card.responses, 1091).value"
+						label="High Risk of Trafficking"></form-step>
+				<form-step type="radio" radio-name="evidenceRadio{{ $index }}" response-value="$ctrl.getResponseOfQuestionById(card.responses, 1091).value"
+						label="Should not count as an Intercept"></form-step>
+			</div>
+		</fieldset>
+		<br ng-show="card === $ctrl.editingVerificationCard || $ctrl.showAllVerification">
+		<div class="row center-vertical" ng-show="card === $ctrl.editingVerificationCard || $ctrl.showAllVerification">
+			<form-step class="col-md-2">Reason</form-step>
+			<div class="col-md-8">
+				<textarea class="form-control" placeholder="Reason" rows="3" ng-model="$ctrl.getResponseOfQuestionById(card.responses, 1092).value"
+						ng-disabled="card !== $ctrl.editingVerificationCard"></textarea>
+			</div>
+		</div>
+		<br ng-show="card === $ctrl.editingVerificationCard || $ctrl.showAllVerification">
+		<div class="row center-vertical" ng-if="card !== $ctrl.editingVerificationCard">
+			<form-step class="col-md-2">Verification Date</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="text" class="form-control" ng-model="$ctrl.getResponseOfQuestionById(card.responses, 1093).value">
+			</div>
+		</div>
+		<div class="row center-vertical" ng-if="card !== $ctrl.editingVerificationCard">
+			<form-step class="col-md-2">Verified By</form-step>
+			<div class="col-md-4">
+				<input ng-disabled="true" type="text" class="form-control" ng-model="$ctrl.nameMap[$ctrl.getResponseOfQuestionById(card.responses, 1094).value]">
+			</div>
+		</div>
+		<br>
+		<div class="row text-center" ng-if="$ctrl.verificationTypeText(card) === 'Tie Break' && card === $ctrl.editingVerificationCard">
+			<button class="btn btn-primary" ng-click="$ctrl.reviewTieBreak()"
+					ng-disabled="!$ctrl.getResponseOfQuestionById(card.responses, 1091).value || !$ctrl.getResponseOfQuestionById(card.responses, 1092).value">Review</button>
+		</div>
+		<hr>
+	</div>
+	<div class="col-md-12 text-center center-vertical" ng-show="$ctrl.canVerify">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="$ctrl.addVerification();">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</fieldset>

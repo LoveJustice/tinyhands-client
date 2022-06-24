@@ -51,7 +51,7 @@ export default class StationModalController extends BaseModalController {
         if (tmp === 1) {
             let entry = this.params.staffList[this.foundStaffIndex].works_on[0].works_on;
             entry.project_id = this.worksOn;
-        } else if (this.isAdd) {
+        } else if (this.isAdd && this.questions[957] && this.questions[958]) {
             this.params.staffList.push({
                 // staff does not have id yet, so we need to match on name
                 id: null,

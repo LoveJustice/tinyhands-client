@@ -95,16 +95,14 @@
         		ng-if="section === 'salaries_And_Benefits'">
           <td>{{ budgetCtrl.formatSection(section) }}</td>
           <td width="25%">
-            <p class="text-right" ng-if="total[budgetCtrl.borderStationId]">{{total[budgetCtrl.borderStationId] | currency:budgetCtrl.currency}}</p>
-            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId]">{{total | currency:budgetCtrl.currency}}</p>
+            <p class="text-right">{{total[budgetCtrl.borderStationId] | currency:budgetCtrl.currency}}</p>
           </td>
         </tr>
         <tr ng-repeat="(section, total) in budgetCtrl.form.totals.borderMonitoringStation"
         		ng-if="section !== 'impactMultiplying'  && section !== 'salaries_And_Benefits'">
           <td>{{ budgetCtrl.formatSection(section) }}</td>
           <td width="25%">
-            <p class="text-right" ng-if="total[budgetCtrl.borderStationId]">{{total[budgetCtrl.borderStationId] | currency:budgetCtrl.currency}}</p>
-            <p class="text-right" ng-if="!total[budgetCtrl.borderStationId]">{{total | currency:budgetCtrl.currency}}</p>
+            <p class="text-right">{{total | currency:budgetCtrl.currency}}</p>
           </td>
         </tr>
       </tbody>

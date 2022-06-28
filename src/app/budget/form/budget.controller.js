@@ -420,6 +420,7 @@ export default class BudgetController {
     potentialVictimCareTotal() {
     	let amount = 0;
     	amount += this.shelterUtilTotal();
+    	amount += this.foodGasInterceptedGirls();
     	amount += this.getOtherCost(this.form.other.PotentialVictimCare);
     	this.form.totals.borderMonitoringStation.Potential_Victim_Care = this.penniesToStr(amount);
     	
@@ -435,11 +436,9 @@ export default class BudgetController {
     travelTotal() {
     	this.staffItemsTotal();
         var amount = 0;
-        if (this.form.travel_chair) {
-            amount += this.strToPennies(this.form.travel_chair_amount);
-        }
+        
         if (this.form.staff) {
-        	 //amount += this.strToPennies(this.form.staff.Total.items.Travel.cost);
+        	 amount += this.strToPennies(this.form.staff.Total[this.borderStationId].items.Travel.cost);
         }
         amount += this.getOtherCost(this.form.other.Travel);
         this.form.totals.borderMonitoringStation.staff_travel = this.penniesToStr(amount);

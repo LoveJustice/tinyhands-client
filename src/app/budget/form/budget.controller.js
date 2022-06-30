@@ -961,7 +961,7 @@ export default class BudgetController {
     	this.form.staff.salaryProjects.forEach(project => {
     	    this.form.staff.Total[project].items[typeName] = {cost:null};
     	});
-    	this.fillMissingStaffItems();
+    	this.fillMissingStaffItems(this.form.staff);
     	this.staffItemsTotalForProject();
     }
     

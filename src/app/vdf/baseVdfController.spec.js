@@ -133,6 +133,7 @@ describe('VdfTestController', () => {
                         Object(
                                 {
                                         question_id: 300,
+                                        question_tag: null,
                                         response: Object(
                                                 {
                                                         gender: Object({ value: '' }),
@@ -166,6 +167,7 @@ describe('VdfTestController', () => {
                         Object(
                                 {
                                         question_id: 301,
+                                        question_tag: null,
                                         response: Object({ value: null })
                                 }
                         )

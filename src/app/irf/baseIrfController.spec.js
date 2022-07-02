@@ -125,7 +125,8 @@ describe('IrfTestController', () => {
             	flag_count: 0, 
             	responses: [ 
             		{
-            			question_id: 9, 
+            			question_id: 9,
+            			question_tag: null,
             			response: {
             				gender: { value: '' },
             				name: {  },
@@ -155,14 +156,17 @@ describe('IrfTestController', () => {
             		},
             		{
             			question_id: 7,
+            			question_tag: null,
             			response: {value: null}
             		},
             		{
             			question_id: 8,
+            			question_tag: null,
             			response: { value: null }
             		},
             		{
             			question_id: 11,
+            			question_tag: null,
             			response: { value: null }
             		}
             	]

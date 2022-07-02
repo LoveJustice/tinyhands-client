@@ -7,7 +7,12 @@ const DateDate = require('./dateData.js');
 class BaseModalController {
     constructor($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants, parentController) {
         'ngInject';
-        let questions =  _.keyBy(card.responses, (x) => x.question_id);
+        let questions = {};
+        if (config.useTags) {
+            questions = _.keyBy(card.responses, (x) => x.question_tag);
+        } else {
+            questions = _.keyBy(card.responses, (x) => x.question_id);
+        }
         this.$uibModalInstance = $uibModalInstance;
         this.$scope = $scope;
 

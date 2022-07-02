@@ -85,7 +85,7 @@ export default class BudgetController {
             staff:null
         };
 
-        this.isCreating = !this.budgetId && this.borderStationId;
+        this.isCreating = !this.budgetId && this.borderStationId >= 0;
         this.isViewing = $stateParams.isViewing === 'true';
 
         this.sectionTemplateUrl = null;

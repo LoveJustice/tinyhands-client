@@ -134,7 +134,7 @@
                 <td class="hidden-xs">{{ irf.date_time_last_updated | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.viewUrl}}">View</a></td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','EDIT',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.editUrl}}">Edit</a></td>
-                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','DELETE',irf.station.operating_country.id, irf.station.id) && irf.status !== 'second-verification' && irf.status !== 'old'"><a class="btn btn-sm btn-danger" ng-click="irfNewListCtrl.deleteIrf(irf, $index)">
+                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','DELETE',irf.station.operating_country.id, irf.station.id) && irf.status !== 'second-verification' && irf.status !== 'old' && irf.status !== 'verified'"><a class="btn btn-sm btn-danger" ng-click="irfNewListCtrl.deleteIrf(irf, $index)">
                     {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>
             <tr ng-show="irfNewListCtrl.irfs.length == 0">

@@ -1,0 +1,35 @@
+<div id="irf-south-africa-interceptee-modal" class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="vm.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <h3 class="modal-title">{{vm.indicatorDetail.header}}</h3>
+        </div>
+        <div class="modal-body form-horizontal">
+        	<div class="row col-md-12" ng-repeat="text in vm.indicatorDetail.text">
+        		{{ text }}
+        	</div>
+        </div>
+        <div ng-if="vm.indicatorDetail.table_data">
+        	<table class="table table-striped"  cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.indicatorDetail.table_data">
+	        <thead>
+	        	<tr>
+	        		<th ng-repeat="label in vm.indicatorDetail.table_data.labels">{{ label }}</th>
+	        	</tr>
+	        </thead>
+	        <tbody>
+	        	<tr ng-repeat="dataRow in vm.indicatorDetail.table_data.rows">
+	        		<td ng_repeat="dataCell in dataRow">{{ dataCell.value }}</td>
+	        	</tr>
+	        </tbody>
+	        </table>
+        </div>
+        <div class="modal-footer" style='border: none;'>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <button class="btn btn-default" ng-click="vm.dismiss()" formnovalidate>Close</button>
+                </div>
+            </div>
+        </div>
+</div>

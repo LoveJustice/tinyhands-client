@@ -617,7 +617,7 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Okada Driver','Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];

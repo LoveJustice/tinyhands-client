@@ -463,8 +463,12 @@ class BorderStationController extends BaseFormController  {
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, restrictNameList=null) {
         let config = this.config[config_name];      
         let starting_flag_count = the_card.flag_count;
+        let staffList = [];
+        if (config_name == 'Staff') {
+            staffList = this.staff;
+        }
         let params = {
-                staffList: this.staff,
+                staffList: staffList,
                 projectId: this.stationId,
                 projects: this.projects
             };
@@ -588,6 +592,10 @@ class BorderStationController extends BaseFormController  {
                 let staffCards = this.getCardInstances('Staff');
                 for (let idx in staffCards) {
                     let card = staffCards[idx];
+                    let lastDate = this.getResponseOfQuestionById(card.responses, 970).value;
+                    if (lastDate !== null) {
+                        continue;
+                    }
                     let first_name = this.getResponseOfQuestionById(card.responses, 957).value;
                     let last_name = this.getResponseOfQuestionById(card.responses, 958).value;
                     if (first_name === this.staff[staffIdx].first_name && last_name === this.staff[staffIdx].last_name) {

@@ -1,8 +1,25 @@
+import indicatorDetailModalTemplate from './indicatorDetailModal.html';
 import './collectionIndicators.less';
+
+class IndicatorDetailModalController {
+    constructor($uibModalInstance, $window, BaseService, indicatorDetail) {
+        'ngInject';
+        this.uibModalInstance = $uibModalInstance;
+        this.window = $window;
+        this.service = BaseService;
+        this.indicatorDetail = indicatorDetail;
+    }
+    
+    dismiss() {
+        this.uibModalInstance.dismiss();
+    }
+}
+
 class IndicatorsController {
-    constructor($rootScope, SessionService, collectionIndicatorsService, SpinnerOverlayService, StickyHeader) {
+    constructor($uibModal, $rootScope, SessionService, collectionIndicatorsService, SpinnerOverlayService, StickyHeader) {
         'ngInject';
         
+        this.modal = $uibModal;
         this.session = SessionService;
         this.indicatorsService = collectionIndicatorsService;
         this.spinnerOverlayService = SpinnerOverlayService;
@@ -211,6 +228,154 @@ class IndicatorsController {
         }, () => {
             this.spinnerOverlayService.hide();
         });
+    }
+    
+    openModal(indicatorDetail) {
+        this.modal.open({
+            animation: true,
+            templateUrl: indicatorDetailModalTemplate,
+            controller: IndicatorDetailModalController,
+            resolve: {
+                indicatorDetail: () => indicatorDetail
+            },
+            controllerAs: "vm",
+            size: 'lg'
+        });
+    }
+    
+    localDetail (type, indicator) {
+        let detailData = {
+            header:"",
+            text:[],
+            tableData: null
+        };
+        switch (type) {
+            case"IRFs in Compliance %":
+                detailData.text.push ("# IRFs in Compliance / # IRFs");
+                detailData.text.push (indicator.irf_compliance_count + ' / ' + indicator.irf_count + ' = ' + indicator.irf_compliance_percent + '%');
+                break;
+            case "CIF %":
+                detailData.text.push ("# CIFs / # PVs");
+                detailData.text.push (indicator.cif_count + ' / ' + indicator.victim_count + ' = ' + indicator.cif_percent + '%');
+                break;
+            case "CIFs in Compliance %":
+                detailData.text.push ("# CIFs in Compliance / # CIFs");
+                detailData.text.push (indicator.cif_compliance_count + ' / ' + indicator.cif_count + ' = ' + indicator.cif_compliance_percent + '%');
+                break;
+            case "VDFs in Compliance %":
+                detailData.text.push ("# VDFs Compliance / # VDFs");
+                detailData.text.push (indicator.vdf_compliance_count + ' / ' + indicator.vdf_count + ' = ' + indicator.vdf_compliance_percent + '%');
+                break;
+            case "Evidence of Trafficking %":
+                detailData.text.push ("Evidence of Trafficking / Total # Verified Forms");
+                detailData.text.push (indicator.evidence_count + " / " + indicator.verified_forms + " = " + indicator.evidence_percent + '%');
+                break;
+            case "Invalid Intercept %":
+                detailData.text.push ("Invalid Intercept / Total #  Verified Forms");
+                detailData.text.push (indicator.invalid_intercept_count + " / " + indicator.verified_forms + " = " + indicator.invalid_intercept_percent + '%');
+                break;
+            case "High Risk of Trafficking %":
+                detailData.text.push ("High Risk of Trafficking / Total # Verified Forms");
+                detailData.text.push (indicator.high_risk_count + " / " + indicator.verified_forms + " = " + indicator.high_risk_percent + '%');
+                break;
+            case "VDF %":
+                detailData.text.push ("# VDFs / # PVs");
+                detailData.text.push (indicator.vdf_count + " / " + indicator.victim_count + " = " + indicator.vdf_percent + '%');
+                break;
+            case "Compliance %":
+                detailData.text.push ("(# IRFs in Compliance + # CIFs in Compliance + # VDFs in Compliance) / (IRFs + CIFs + VDFs)");
+                detailData.text.push ('(' + indicator.irf_compliance_count + ' + ' + indicator.cif_compliance_count + ' + ' + 
+                        indicator.vdf_compliance_count + ') / (' +
+                        indicator.irf_count + ' + ' + indicator.cif_count + ' + ' + indicator.vdf_count + ') = ' + indicator.compliance_percent + '%');
+                break;
+            case 'Collection Lag Time':
+                let lag_formula = '(';
+                let lag_values = '(';
+                let sep = '';
+                let divide_count = 0;
+                let notes = [];
+                if (indicator.irf_lag_score >= 0) {
+                    lag_formula += 'Average IRF Lag Score';
+                    sep = ' + ';
+                    lag_values += indicator.irf_lag_score;
+                    divide_count += 1;
+                } else {
+                    notes.push('**There are no IRFs to compute average lag time');
+                }
+                if (indicator.cif_lag_score >= 0) {
+                    lag_formula += sep + 'Average CIF Lag Score';
+                    lag_values += sep + indicator.cif_lag_score;
+                    sep = ' + ';
+                    divide_count += 1;
+                } else {
+                    notes.push('**There are no CIFs to compute average lag time');
+                }
+                if (indicator.vdf_lag_score >= 0) {
+                    lag_formula += sep + 'Average VDF Lag Score';
+                    lag_values += sep + indicator.vdf_lag_score;
+                    divide_count += 1;
+                } else {
+                    notes.push('**There are no VDFs to compute average lag time');
+                }
+                if (divide_count > 0) {
+                    lag_formula += ') / ' + divide_count;
+                    lag_values += ') / ' + divide_count + ' = ' + indicator.collection_lag_time;
+                    detailData.text.push (lag_formula);
+                    detailData.text.push (lag_values);
+                }
+                
+                if (notes.length > 0) {
+                    detailData.text.push('');
+                    for (let idx = 0; idx < notes.length; idx++) {
+                        detailData.text.push(notes[idx]);
+                    }
+                }
+                break;
+            case "% of Evidence Cases with CIF":
+                detailData.text.push ('# CIFs from Evidence IRFs / # PVs from Evidence IRFs');
+                detailData.text.push (indicator.cif_with_evidence_count + ' / ' + indicator.victim_evidence_count + ' = ' + indicator.evidence_cif_percent + '%');
+                break;
+            case "% of Valid Intercepts":
+                detailData.text.push ('(Evidence of Trafficking + High Risk of Trafficking) / Total # Verified Forms');
+                detailData.text.push ('(' + indicator.evidence_count + ' + ' + indicator.high_risk_count + ') / ' + indicator.verified_forms + ' = ' + indicator.valid_intercept_percent + '%');
+                break;
+            case "% of Phone Numbers Verified":
+                detailData.text.push ('# Phone Numbers Verified / # Phone Numbers');
+                detailData.text.push (indicator.phone_verified_count + ' / ' + indicator.phone_count + ' = ' + indicator.phone_verified_percent + '%');
+                break;
+            case "Total":
+                break;
+            default:
+                return;
+        }
+        
+        detailData.header = "Details of " + type + " for project " + indicator.label;
+        this.openModal(detailData);
+    }
+    
+    getRemoteDetail(type, indicator) {
+        this.spinnerOverlayService.show('Retrieving details...');
+        this.indicatorsService.getDetails(this.dateAsString(this.startDate), this.dateAsString(this.endDate), type, this.countryDropDown.selectedOptions[0].id, indicator.label).then(promise => {
+            this.openModal(promise.data);
+            this.spinnerOverlayService.hide();
+        }, (error) => {
+            this.spinnerOverlayService.hide();
+            alerrt(error);
+        });
+    }
+    
+    getDetail(type, indicator) {
+        if (!indicator || !indicator.label) {
+            return;
+        }
+        let localProcessing = ';IRFs in Compliance %;CIF %;CIFs in Compliance %;VDFs in Compliance %;' +
+                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;' +
+                'Compliance %;Collection Lag Time;% of Evidence Cases with CIF;% of Valid Intercepts;% of Phone Numbers Verified;Total;';
+        if (localProcessing.indexOf(';' + type + ';') >= 0) {
+            this.localDetail(type, indicator);
+        } else {
+            this.getRemoteDetail(type, indicator);
+        }
     }
 }
 

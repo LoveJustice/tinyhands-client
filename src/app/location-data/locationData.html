@@ -103,7 +103,7 @@
 					<td class="dataElement lightBorder" ng-if="!vm.hasLocationStaffing || vm.locationTotals[location.id].intercepts === 0 && vm.locationTotals[location.id].staff === 0"></td>
 					<td  ng-class="vm.deemphasizeZero('dataElement darkBorder astFmt',vm.locationTotals[location.id].arrests)">{{ vm.locationTotals[location.id].arrests }}</td>
 					
-					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[0][location.id].staff)">{{ vm.locationDisplayData[0][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[0][location.id].staff)">{{ vm.locationDisplayData[0][location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement lightBorder intFmt',vm.locationDisplayData[0][location.id].intercepts)">{{ vm.locationDisplayData[0][location.id].intercepts }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[0][location.id].arrests)"
 							ng-if="vm.inputArrests && vm.mayEdit(0)">
@@ -113,7 +113,7 @@
 					</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder astFmt',vm.locationDisplayData[0][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(0)">{{ vm.locationDisplayData[0][location.id].arrests }}</td>
 					
-					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[1][location.id].staff)">{{ vm.locationDisplayData[1][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[1][location.id].staff)">{{ vm.locationDisplayData[1][location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement lightBorder intFmt',vm.locationDisplayData[1][location.id].intercepts)">{{ vm.locationDisplayData[1][location.id].intercepts }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[1][location.id].arrests)"
 							ng-if="vm.inputArrests && vm.mayEdit(1)">
@@ -123,7 +123,7 @@
 					</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder astFmt',vm.locationDisplayData[1][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(1)">{{ vm.locationDisplayData[1][location.id].arrests }}</td>
 					
-					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[2][location.id].staff)">{{ vm.locationDisplayData[2][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[2][location.id].staff)">{{ vm.locationDisplayData[2][location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement lightBorder intFmt',vm.locationDisplayData[2][location.id].intercepts)">{{ vm.locationDisplayData[2][location.id].intercepts }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[2][location.id].arrests)"
 							ng-if="vm.inputArrests && vm.mayEdit(2)">
@@ -133,7 +133,7 @@
 					</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder astFmt',vm.locationDisplayData[2][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(2)">{{ vm.locationDisplayData[2][location.id].arrests }}</td>
 					
-					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[3][location.id].staff)">{{ vm.locationDisplayData[3][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[3][location.id].staff)">{{ vm.locationDisplayData[3][location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement lightBorder intFmt',vm.locationDisplayData[3][location.id].intercepts)">{{ vm.locationDisplayData[3][location.id].intercepts }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[3][location.id].arrests)"
 							ng-if="vm.inputArrests && vm.mayEdit(3)">
@@ -143,7 +143,7 @@
 					</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder astFmt',vm.locationDisplayData[3][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(3)">{{ vm.locationDisplayData[3][location.id].arrests }}</td>
 					
-					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[4][location.id].staff)">{{ vm.locationDisplayData[4][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[4][location.id].staff)">{{ vm.locationDisplayData[4][location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement lightBorder intFmt',vm.locationDisplayData[4][location.id].intercepts)">{{ vm.locationDisplayData[4][location.id].intercepts }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[4][location.id].arrests)"
 							ng-if="vm.inputArrests && vm.mayEdit(4)">
@@ -153,7 +153,7 @@
 					</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder astFmt',vm.locationDisplayData[4][location.id].arrests)" ng-if="!vm.inputArrests || !vm.mayEdit(4)">{{ vm.locationDisplayData[4][location.id].arrests }}</td>
 					
-					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[5][location.id].staff)">{{ vm.locationDisplayData[5][location.id].staff }}</td>
+					<td ng-class="vm.deemphasizeZero('dataElement lightBorder',vm.locationDisplayData[5][location.id].staff)">{{ vm.locationDisplayData[5][location.id].staff.toLocaleString('en-US', vm.digits2Format) }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement lightBorder intFmt',vm.locationDisplayData[5][location.id].intercepts)">{{ vm.locationDisplayData[5][location.id].intercepts }}</td>
 					<td ng-class="vm.deemphasizeZero('dataElement darkBorder',vm.locationDisplayData[5][location.id].arrests)" 
 							ng-if="vm.inputArrests && vm.mayEdit(5)">

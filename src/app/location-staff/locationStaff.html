@@ -35,37 +35,41 @@
 		<table class="table table-striped tableBorder" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.work">
 			<thead class="sticky-table-header">
 				<tr>
-					<th class="staffName"></th>
-					<th class="total">Location</th>
+					<th class="staffName">Work Days</th>
+					<th class="total">
+						<input type="number" ng-model="vm.stationStatistics.work_days" ng-blur="vm.changeWorkDays()"
+									onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+									ng-disabled="vm.isViewing">
+					</th>
 					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave'">{{loc.name}}</th>
 					<th class="fraction">Leave</th>
 				</tr>
 				<tr>
 					<th class="staffName">Staff</th>
 					<th class="total">Totals</th>
-					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave'">{{vm.locationTotals[loc.id]/100}}</th>
-					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'">{{vm.locationTotals[loc.id]/100}}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave'">{{ vm.stationStatistics.work_days === 0 ? '?' : (vm.locationTotals[loc.id]/vm.stationStatistics.work_days).toLocaleString('en-US', vm.digits2Format) }}</th>
+					<th class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'">{{ vm.stationStatistics.work_days === 0 ? '?' : (vm.locationTotals[loc.id]/vm.stationStatistics.work_days).toLocaleString('en-US', vm.digits2Format) }}</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="staff in vm.staff">
 					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</th>
-					<th ng-class="vm.totalColor('total',staff) ">{{ vm.staffTotals[staff.id] }}%
+					<th ng-class="vm.totalColor('total',staff) ">{{ vm.staffTotals[staff.id] }}
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && !vm.mayEdit()">
-						{{ vm.work[loc.id][staff.id] }}%
+						{{ vm.work[loc.id][staff.id] }}
 					</td>
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && vm.mayEdit()">
 						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)"
-								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-								ng-disabled="vm.isViewing">%
+								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46"
+								ng-disabled="vm.isViewing">
 					</td>
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'  && !vm.mayEdit()">
-						{{ vm.work[loc.id][staff.id] }}%
+						{{ vm.work[loc.id][staff.id] }}
 					</td>
 					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="loc.name === 'Leave'  && vm.mayEdit()">
 						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)" 
-								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-								ng-disabled="vm.isViewing">%
+								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46"
+								ng-disabled="vm.isViewing">
 					</td>
 				<tr>
 			</tbody>

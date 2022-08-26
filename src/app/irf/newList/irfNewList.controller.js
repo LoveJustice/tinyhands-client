@@ -1,4 +1,5 @@
 import createIrfModalTemplate from './createIrfModal.html';
+import attachmentExportModalTemplate from './attachmentExportModal.html'
 
 /* global angular */
 
@@ -450,5 +451,14 @@ export default class IrfNewListController {
     getExportFileName() {
         let date = this.moment().format('Y-M-D');
         return `irf-all-data-${date}.csv`;
+    }
+    
+    attachmentExport() {
+        this.modal.open({
+            animation: true,
+            templateUrl: attachmentExportModalTemplate,
+            controller: 'AttachmentExportModalController as vm',
+            size: 'lg'
+        });
     }
 }

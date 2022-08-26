@@ -27,4 +27,12 @@ export default class LocationStaffService {
     setWorkFraction(theValue) {
         return this.service.put(`api/location-staff/`, theValue);
     }
+    
+    getStationData(country_id, yearMonth) {
+        return this.service.get(`api/station-data/country/${country_id}/${yearMonth}/`);
+    }
+    
+    updateStationData(data) {
+        return this.service.put('api/station-data/country/', data);
+    }
 }

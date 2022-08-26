@@ -14,12 +14,12 @@ export class IrfSierraLeoneController extends BaseIrfCommonController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5, 924.6];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,996,929,58,30,928,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,1076,"minorSeparated",17,79];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -68,6 +68,15 @@ export class IrfSierraLeoneController extends BaseIrfCommonController {
                 points:0
             },
             968.6:{
+                enabled:true,
+                group:968,
+                label:'Disabled Child',
+                value:'Disabled Child',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.7:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -426,6 +435,13 @@ export class IrfSierraLeoneController extends BaseIrfCommonController {
                 format:'col-md-12',
                 points:9
             },
+            1076:{
+                enabled:true,
+                label:'Abducted',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
+            },
             "minorSeparated":{
                 enabled:true,
                 label:'Minor Separated Without Consent',
@@ -555,7 +571,7 @@ export class IrfSierraLeoneController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Okada Driver','Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];

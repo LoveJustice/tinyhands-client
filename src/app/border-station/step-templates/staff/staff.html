@@ -10,7 +10,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 stretch-vertical" ng-repeat="staff in $ctrl.staff" ng-if="staff.works_on[0].financial.project_id != $ctrl.$stateParams.id">
+    <div class="col-md-3 stretch-vertical" ng-repeat="staff in $ctrl.staff" ng-if="staff.works_on[0].financial.project_id != $ctrl.$stateParams.id && !staff.last_date">
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openStaffWorkModal(staff)">
             <h3 class="panel-heading margin-top-0 workProject">{{ staff.first_name }} {{ staff.last_name}}</h3>
             <div class="panel-body col-md-12">

@@ -2,12 +2,13 @@
 /* global alert */
 import './locationStaff.less';
 class LocationStaffController {
-    constructor($rootScope, SessionService, locationStaffService, StickyHeader) {
+    constructor($rootScope, SessionService, locationStaffService, StickyHeader, toastr) {
         'ngInject';
         
         this.session = SessionService;
         this.service = locationStaffService;
         this.sticky = StickyHeader;
+        this.toastr = toastr;
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
         this.monthNames = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -23,6 +24,7 @@ class LocationStaffController {
                 ctrl: this,
         };
         this.editAll = this.session.checkPermission('PROJECT_STATISTICS','EDIT_ALL',null, null);
+        this.digits2Format = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
         
         this.countries = [];
         this.stations = null;
@@ -150,6 +152,31 @@ class LocationStaffController {
         this.ctrl.changeStation();
     }
     
+    getStationStatistics() {
+        this.service.getStationData(parseInt(this.country), this.yearAndMonth).then((promise) => {
+            //this.toastr.error('Retrieved statistics');
+            this.stationStatistics = null;
+            for (var idx=0; idx < promise.data.length; idx++) {
+                if (promise.data[idx].station === this.stationDropDown.selectedOptions[0].id) {
+                    this.stationStatistics = promise.data[idx];
+                    break;
+                }
+            }
+            if (this.stationStatistics === null) {
+                this.stationStatistics = {
+                        station: this.stationDropDown.selectedOptions[0].id,
+                        year_month: this.yearAndMonth,
+                        budget: null,
+                        empowerment: null,
+                        work_days:0
+                        };
+            }
+            this.toastr.error('Work days ' + this.stationStatistics.work_days);
+        }, () => {
+            this.toastr.error('Failed to retrieve station statistics');
+        });
+    }
+    
     changeStation() {
         sessionStorage.setItem('station-stats-station', this.stationDropDown.selectedOptions[0].label);
         this.locations = null;
@@ -159,6 +186,7 @@ class LocationStaffController {
         this.workPortion = null;
         this.work = null;
         this.getLocationsAndStaff();
+        this.getStationStatistics()
     }
     
     changeMonth() {
@@ -297,11 +325,11 @@ class LocationStaffController {
         if (oldValue) {
             if (isNaN(this.work[location][staff])) {
             	this.toastr.error('Invalid number format ');
-            	this.work[location][staff] = Math.round(oldValue.work_fraction * 100);
+            	this.work[location][staff] = oldValue.work_fraction;
             	return;
             }  
-            if (Math.round(oldValue.work_fraction*100) !== this.work[location][staff]){
-                oldValue.work_fraction = this.work[location][staff] / 100;
+            if (oldValue.work_fraction !== this.work[location][staff]){
+                oldValue.work_fraction = this.work[location][staff];
                 this.saveWorkFraction(oldValue, location, staff);
             }
         } else {
@@ -310,12 +338,24 @@ class LocationStaffController {
                         year_month: this.yearAndMonth,
                         location: location,
                         staff: staff,
-                        work_fraction: this.work[location][staff]/100
+                        work_fraction: this.work[location][staff]
                 };
                 this.workPortion.push(newValue);
                 this.saveWorkFraction(newValue, location, staff);
             }
         }
+    }
+    
+    changeWorkDays() {
+        this.saveCount +=1;
+        this.service.updateStationData(this.stationStatistics).then (() =>{
+            this.saveCount -= 1;
+        }, ()=>{
+            this.saveCount -= 1;
+            
+            alert('Failed to update the number of work days');
+            window.location.reload();
+        });
     }
     
     saveWorkFraction(value, location, staff, ignoreOldWorkFraction) {
@@ -360,7 +400,7 @@ class LocationStaffController {
         for (let idx=0; idx < this.workPortion.length; idx++) {
             let tmp = this.workPortion[idx];
             if (tmp.location in this.work) {
-	            this.work[tmp.location][tmp.staff] = Math.round(tmp.work_fraction * 100);
+	            this.work[tmp.location][tmp.staff] = tmp.work_fraction;
 	            this.updateTotals(tmp.location, tmp.staff);
             }
         }
@@ -374,7 +414,7 @@ class LocationStaffController {
                 tot += value;
             }
         }
-        this.locationTotals[location] = Math.round(tot * 100)/100;
+        this.locationTotals[location] = tot;
         
         tot = 0;
         for (let idx=0; idx < this.locations.length; idx++) {
@@ -387,12 +427,12 @@ class LocationStaffController {
     }
     
     getWorkGoal(staff) {
-        let workGoal = 100;
-        for (let workIdx in staff.works_on) {
-            if (staff.works_on[workIdx].works_on.project_id === this.stationDropDown.selectedOptions[0].id) {
-                workGoal = staff.works_on[workIdx].percent;
-            }
-        }
+        let workGoal = this.stationStatistics.work_days;
+        //for (let workIdx in staff.works_on) {
+        //    if (staff.works_on[workIdx].works_on.project_id === this.stationDropDown.selectedOptions[0].id) {
+        //        workGoal = staff.works_on[workIdx].percent;
+        //    }
+        //}
         return workGoal;
     }
     

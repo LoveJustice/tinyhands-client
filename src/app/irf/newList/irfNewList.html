@@ -6,7 +6,9 @@
         </div>
 
         <div class="pull-right"><br>
-            <photoexport ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',null, null)"></photoexport>
+        	<button class="btn btn-primary" ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"
+        			ng-click="irfNewListCtrl.attachmentExport()">Export Attachments</button>
+            <photoexport ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"></photoexport>
             <a ng-if="irfNewListCtrl.hasAddPermission" class="btn btn-success" ng-click="irfNewListCtrl.createIrf()">
                 Input A New IRF
             </a>
@@ -134,7 +136,7 @@
                 <td class="hidden-xs">{{ irf.date_time_last_updated | date:"medium" : irfNewListCtrl.timeZoneDifference }}</td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.viewUrl}}">View</a></td>
                 <td ng-if="irfNewListCtrl.session.checkPermission('IRF','EDIT',irf.station.operating_country.id, irf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{irf.editUrl}}">Edit</a></td>
-                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','DELETE',irf.station.operating_country.id, irf.station.id) && irf.status !== 'second-verification' && irf.status !== 'old'"><a class="btn btn-sm btn-danger" ng-click="irfNewListCtrl.deleteIrf(irf, $index)">
+                <td ng-if="irfNewListCtrl.session.checkPermission('IRF','DELETE',irf.station.operating_country.id, irf.station.id) && irf.status !== 'second-verification' && irf.status !== 'old' && irf.status !== 'verified'"><a class="btn btn-sm btn-danger" ng-click="irfNewListCtrl.deleteIrf(irf, $index)">
                     {{ irf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
             </tr>
             <tr ng-show="irfNewListCtrl.irfs.length == 0">

@@ -85,7 +85,7 @@ export default class BudgetController {
             staff:null
         };
 
-        this.isCreating = !this.budgetId && this.borderStationId;
+        this.isCreating = !this.budgetId && this.borderStationId >= 0;
         this.isViewing = $stateParams.isViewing === 'true';
 
         this.sectionTemplateUrl = null;
@@ -961,7 +961,7 @@ export default class BudgetController {
     	this.form.staff.salaryProjects.forEach(project => {
     	    this.form.staff.Total[project].items[typeName] = {cost:null};
     	});
-    	this.fillMissingStaffItems();
+    	this.fillMissingStaffItems(this.form.staff);
     	this.staffItemsTotalForProject();
     }
     

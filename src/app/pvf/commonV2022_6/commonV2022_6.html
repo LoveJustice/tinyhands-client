@@ -1,0 +1,69 @@
+<div id="pvf-commonV2022_6" class="container-fluid padding-top-20">
+    <div class="sticky">
+        <div class="padding-bottom-40">
+            <h1 class="form-number-header float-left padding-left-20">
+                {{$ctrl.questions[651].response.value}}
+            </h1>
+            <h1 class="form-number-header float-right padding-right-20">
+                Total Home Situational Alarms: {{$ctrl.redFlagTotal}}
+            </h1>
+        </div>
+        <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
+            <a ng-repeat="stepTemplate in $ctrl.stepTemplates"
+        		class="btn btn-default"
+        		ng-class="{active: $ctrl.selectedStep == $index}" 
+        		style="white-space: normal;word-wrap: break-word;"
+        		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
+        </div>
+        <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
+        	<span >
+        		<span ng-if="$ctrl.incidentNumber">
+        			&nbsp;&nbsp;<b>Incident</b>
+		 			&nbsp;{{ $ctrl.incidentNumber }}
+        		</span>
+		 		<span ng-if="$ctrl.relatedForms['IRF']">
+		 			&nbsp;&nbsp;<b>IRF</b>
+		 			&nbsp;<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['CIF']">
+		 			&nbsp;&nbsp;<b>CIFs</b>
+		 			<span ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
+		 				&nbsp;<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['PVF']">
+		 			&nbsp;&nbsp;<b>PVFs</b>
+		 			<span ng-repeat="pvfRef in $ctrl.relatedForms['PVF']">
+		 				&nbsp;<a ng-href="{{pvfRef.url}}">{{ pvfRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['LEGAL_CASE']">
+		 			&nbsp;&nbsp;<b>Legal</b>
+		 			<span ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
+		 				&nbsp;<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 	</span>
+		</div>
+        <hr class="margin-bottom-0" />
+    </div>
+    <div id="pvf-commonV2022_6-content" class="padding-bottom-40">
+        <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template.template" ng-hide="$ctrl.selectedStep != $index"></div>
+	    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
+	        <strong>Warning! {{warnings}}</strong>
+	    </div>
+	    <div class="alert alert-danger" ng-repeat="errors in $ctrl.getErrorMessages()">
+	        <strong>Error! {{errors}}</strong>
+	    </div>
+	    <div class="container-fluid padding-bottom-20">
+	        <div class="col-xs-6">
+	            <button class="btn btn-warning" ng-if="$ctrl.response.status == 'in-progress'" ng-disabled="$ctrl.stateParams.isViewing === 'true' || !$ctrl.goodFormNumber" ng-click="$ctrl.save()">Save for Later</button>
+	        </div>
+	        <div class="col-xs-6 text-right">
+	            <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox()" ng-model="$ctrl.ignoreWarnings">
+	            <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox()">Ignore warnings</label>
+	            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true' || !$ctrl.goodFormNumber">Submit</button>
+	        </div>
+	    </div>
+	</div>
+</div>

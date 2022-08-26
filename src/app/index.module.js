@@ -44,6 +44,7 @@ import legalCaseModule from './legalCase/legalCase.module';
 import gospelVerificationModule from './gospel-verification/gospelVerification.module';
 import empModule from './emp/emp.module';
 import gspModule from './gsp/gsp.module';
+import pvfModule from './pvf/pvf.module';
 
 
 import constants from './constants.js';
@@ -92,6 +93,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         gospelVerificationModule,
         empModule,
         gspModule,
+        pvfModule,
     ])
 
     .constant('constants', constants)

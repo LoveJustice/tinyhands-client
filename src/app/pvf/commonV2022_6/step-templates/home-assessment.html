@@ -1,0 +1,198 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row col-md-12">
+		<b>POTENTIAL VICTIM –</b> <i>The following questions are asked directly to the potential victim.</i>
+	</div>
+    <div class="row">
+    	<br><br>
+        <form-step class="col-md-5 control-label">4.1 Did your family/guardian pressure you in any way to accept the broker's offer?</form-step>
+        <div class="col-md-1">
+	        <form-step type="radio" radio-name="guardianPressure" label="N/A" response-value="$ctrl.questions.pvfHsaGuardianPressure.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="guardianPressure" label="No" response-value="$ctrl.questions.pvfHsaGuardianPressure.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="1" type="radio" radio-name="guardianPressure" label="Yes" response-value="$ctrl.questions.pvfHsaGuardianPressure.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-5 control-label">4.2 If they pressured, do you think they will try to send you away again?</form-step>
+        	<div class="col-md-1">
+	        <form-step type="radio" radio-name="overseas" label="N/A" response-value="$ctrl.questions.pvfHsaGuardianTryAgain.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="overseas" label="No" response-value="$ctrl.questions.pvfHsaGuardianTryAgain.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="1" type="radio" radio-name="overseas" label="Yes" response-value="$ctrl.questions.pvfHsaGuardianTryAgain.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-5 control-label">4.3 Do you feel safe at home with your guardian?</form-step>
+        	<div class="col-md-1">
+	        <form-step type="radio" radio-name="safeHome" label="N/A" response-value="$ctrl.questions.pvfHsaSaveAtHome.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="safeHome" label="Yes" response-value="$ctrl.questions.pvfHsaSaveAtHome.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="4" type="radio" radio-name="safeHome" label="No" response-value="$ctrl.questions.pvfHsaSaveAtHome.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-5 control-label">4.4 Do you want to go home?</form-step>
+        	<div class="col-md-1">
+	        <form-step type="radio" radio-name="wantHome" label="N/A" response-value="$ctrl.questions.pvfHsaWantToGoHome.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="wantHome" label="Yes" response-value="$ctrl.questions.pvfHsaWantToGoHome.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="4" type="radio" radio-name="wantHome" label="No" response-value="$ctrl.questions.pvfHsaWantToGoHome.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+    	<form-step class="col-md-12 control-label">4.5 Is the potential victim subject to any of the following by someone in their home?</form-step>
+    </div>
+    <div class="row">
+        <form-step class="col-md-2 col-md-offset-1 control-label">Sexual Abuse</form-step>
+        	<div class="col-md-2">
+	        <form-step type="radio" radio-name="sexualAbuse" label="Wasn't mentioned" response-value="$ctrl.questions.pvfHsaSexualAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="sexualAbuse" label="Never" response-value="$ctrl.questions.pvfHsaSexualAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-2">
+	        <form-step red-flag="6" type="radio" radio-name="sexualAbuse" label="Rarely/Minor" response-value="$ctrl.questions.pvfHsaSexualAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="10" type="radio" radio-name="sexualAbuse" label="Frequent/Severe" response-value="$ctrl.questions.pvfHsaSexualAbuse.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-2 col-md-offset-1 control-label">Physical Abuse</form-step>
+        	<div class="col-md-2">
+	        <form-step type="radio" radio-name="physicalAbuse" label="Wasn't mentioned" response-value="$ctrl.questions.pvfHsaPhysicalAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="physicalAbuse" label="Never" response-value="$ctrl.questions.pvfHsaPhysicalAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="physicalAbuse" label="Rarely/Minor" response-value="$ctrl.questions.pvfHsaPhysicalAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="10" type="radio" radio-name="physicalAbuse" label="Frequent/Severe" response-value="$ctrl.questions.pvfHsaPhysicalAbuse.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-2 col-md-offset-1 control-label">Emotional Abuse</form-step>
+        	<div class="col-md-2">
+	        <form-step type="radio" radio-name="emotionalAbuse" label="Wasn't mentioned" response-value="$ctrl.questions.pvfHsaEmotiionalAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="emotionalAbuse" label="Never" response-value="$ctrl.questions.pvfHsaEmotiionalAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="emotionalAbuse" label="Rarely/Minor" response-value="$ctrl.questions.pvfHsaEmotiionalAbuse.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="2" type="radio" radio-name="emotionalAbuse" label="Frequent/Severe" response-value="$ctrl.questions.pvfHsaEmotiionalAbuse.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-3 control-label">4.6 Does the guardian drink alcohol?</form-step>
+	    <div class="col-md-1 col-md-offset-2">
+	        <form-step type="radio" radio-name="guardianDrink" label="Never" response-value="$ctrl.questions.pvfHsaGuardianAlchol.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-2">
+	        <form-step type="radio" radio-name="guardianDrink" label="Rarely/Minor" response-value="$ctrl.questions.pvfHsaGuardianAlchol.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="1" type="radio" radio-name="guardianDrink" label="Frequent/Severe" response-value="$ctrl.questions.pvfHsaGuardianAlchol.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+        <form-step class="col-md-3 control-label">4.7 Does guardian use drugs?</form-step>
+        <div class="col-md-1 col-md-offset-2">
+            <form-step type="radio" radio-name="guardianDrugs" label="Never" response-value="$ctrl.questions.pvfHsaGuardianDrugs.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-2">
+	        <form-step red-flag="2" type="radio" radio-name="guardianDrugs" label="Rarely/Minor" response-value="$ctrl.questions.pvfHsaGuardianDrugs.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="6" type="radio" radio-name="guardianDrugs" label="Frequent/Severe" response-value="$ctrl.questions.pvfHsaGuardianDrugs.response.value"></form-step>    
+	    </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+        <form-step class="col-md-5 control-label">4.8 Economic Situation of Family</form-step>
+        <div class="col-md-7">
+            <form-step red-flag="7"  type="radio" radio-name="economic" label="Unable to meet basic needs" response-value="$ctrl.questions.pvfHsaEconomic.response.value"></form-step>
+            <form-step type="radio" radio-name="economic" label="Able to meet only basic needs, but it is very difficult" response-value="$ctrl.questions.pvfHsaEconomic.response.value"></form-step>
+            <form-step type="radio" radio-name="economic" label="Comfortably meet basic needs, and can afford to buy some non-essential goods/services" response-value="$ctrl.questions.pvfHsaEconomic.response.value"></form-step>
+            <form-step type="radio" radio-name="economic" label="Wealthy" response-value="$ctrl.questions.pvfHsaEconomic.response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <form-step class="col-md-5 control-label">4.9 Did the potential victim express any suicidal thoughts at any point?</form-step>
+        	<div class="col-md-1">
+	        <form-step type="radio" radio-name="suicidal" label="No" response-value="$ctrl.questions.pvfHsaPvSuicide.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="7" type="radio" radio-name="suicidal" label="Yes" response-value="$ctrl.questions.pvfHsaPvSuicide.response.value"></form-step>    
+	    </div>
+    </div>
+    <hr>
+    <div class="row center-vertical">
+    	<div class="col-md-12">
+    		<b>STAFF –</b> <i>The following questions are asked of the transit staff (not potential victim).</i>
+    	</div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+    	 <form-step class="col-md-5 control-label">4.10 Is there any evidence that the potential victim's guardians were involved in selling them?</form-step>
+    	 <div class="col-md-1">
+	        <form-step type="radio" radio-name="guardianInvolved" label="N/A" response-value="$ctrl.questions.pvfHsaGuardianSellingPv.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="guardianInvolved" label="No" response-value="$ctrl.questions.pvfHsaGuardianSellingPv.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step red-flag="10" type="radio" radio-name="guardianInvolved" label="Yes" response-value="$ctrl.questions.pvfHsaGuardianSellingPv.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row center-vertical">
+    	<form-step class="col-md-3 control-label">If yes, what is the evidence?</form-step>
+    	<div class="col-md-8">
+        	<input type="text" class="form-control" ng-model="$ctrl.questions.pvfHsaGuardianSellingEvidence.response.value">
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+    	<form-step class="col-md-12 control-label">
+    		<i>If a potential victim has 10 or more Home Situation Alarms, please immediately contact the national office for input
+			into the best option for the situation. If the potential victim is a minor, we do not have the legal authority to forcefully
+			separate them from their guardians. Our goal however is to place the potential victim in a safe place.</i>
+		</form-step>
+    </div>
+    <div>&nbsp;</div>
+    
+    <div class="row center-vertical">
+        <form-step class="col-md-5 control-label">4.11 If a PV has 10 or more Home Situation Alarms, did you contact the national office?</form-step>
+        <div class="col-md-1">
+	        <form-step type="radio" radio-name="nationalOffice" label="Yes" response-value="$ctrl.questions.pvfHsaContactNationalOffice.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step type="radio" radio-name="nationalOffice" label="No" response-value="$ctrl.questions.pvfHsaContactNationalOffice.response.value"></form-step>    
+	    </div>
+    </div>
+    <div class="row">
+    	<br>
+    	<div class="col-md-12">
+    		If the potential victim has 10 or more total Home Situation Alarms and you recommend sending the potential victim home to stay with guardians, why?
+    		<input type="text" class="form-control" ng-model="$ctrl.questions.pvfHsaWhySentHome.response.value">
+    	</div>
+    </div>
+    <br>
+</fieldset>

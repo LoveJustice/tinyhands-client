@@ -13,6 +13,7 @@ export class BaseFormController {
         this.$uibModalStack = $uibModalStack;
         this.isViewing = this.stateParams.isViewing === 'true';
         this.stationId = this.stateParams.stationId;
+        this.incidentService = null;
         
         $scope.$on('$destroy', function iVeBeenDismissed() {
             let ctrl = $scope.$ctrl;
@@ -32,6 +33,22 @@ export class BaseFormController {
         this.lastAutoSave = null;
         this.maximumUploadSize = 99 * 1024 * 1024;
         this.maximumFileSize = 20 * 1024 * 1024;
+        this.incidentNames = {
+                address:{
+                    forms:[],
+                    locals:[]
+                },
+                pv:{
+                    forms:[],
+                    irfs:[],
+                    locals:[]
+                },
+                suspect:{
+                    forms:[],
+                    irfs:[],
+                    locals:[]
+                }
+            };
        
         this.errorMessages = [];
         this.warningMessages = [];
@@ -129,15 +146,21 @@ export class BaseFormController {
             }
         }
     }
+    
+    setupQuestions(responses) {
+    	if (this.config.useTags) {
+            this.questions = _.keyBy(responses, (x) => x.question_tag);
+        } else {
+            this.questions = _.keyBy(responses, (x) => x.question_id);
+        }
+    }
+    
 
     processResponse(response, count_flags=true) {
         this.response = response.data;
         this.responses = response.data.responses;
-        if (this.config.useTagsTags) {
-            this.questions = _.keyBy(this.responses, (x) => x.question_tag);
-        } else {
-            this.questions = _.keyBy(this.responses, (x) => x.question_id);
-        }
+        this.setupQuestions(this.responses);
+        
         if (count_flags) {
             for (let idx=0; idx < this.response.cards.length; idx++) {
                 for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
@@ -503,6 +526,24 @@ export class BaseFormController {
         }
 
         return [];
+    }
+    
+    getIncidentNumberFromFormNumber(formNumber) {
+    	for (let idx=3; idx < formNumber.length; idx++) {
+    		let letter = formNumber.charAt(idx);
+    		if (letter !== '-' && (letter < '0' || letter > '9')) {
+    			return formNumber.substring(0, idx);
+    		}
+    	}
+    	return formNumber;
+    }
+    
+    getIncidentNames(incidents) {
+    	if (this.incidentService) {
+    		 this.incidentService.getIncidentNames(incidents).then ((response) => {
+    		 	this.incidentNames = response.data;
+    		 }, (error) => {alert(error);});
+    	}
     }
     
     // Overridden in subclass

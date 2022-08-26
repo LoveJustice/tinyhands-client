@@ -1,0 +1,80 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <form-step class="col-md-3 control-label">6.1 What date did PV leave the care of the Station?</form-step>
+        <div class="col-md-2">
+            <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.pvfReleaseDateLeave.value">    
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+        <form-step class="col-md-3 control-label">6.2 Where did the PV go?</form-step>
+        <div class="col-md-9">
+            <form-step type="radio" radio-name="victimGo" label="Home to stay with guardians" other-value="$ctrl.otherData.questions.pvfReleaseVictimSent.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseVictimSent.value"></form-step>
+            <form-step type="radio" radio-name="victimGo" label="Sent to stay with other relatives" other-value="$ctrl.otherData.questions.pvfReleaseVictimSent.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseVictimSent.value"></form-step>    
+            <form-step type="radio" radio-name="victimGo" label="Sent to Partner Organization" other-value="$ctrl.otherData.questions.pvfReleaseVictimSent.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseVictimSent.value"></form-step>    
+            <form-step type="radio" radio-name="victimGo" label="Government agency" other-value="$ctrl.otherData.questions.pvfReleaseVictimSent.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseVictimSent.value"></form-step>    
+            <form-step type="otherRadio" radio-name="victimGo" label="Other" other-value="$ctrl.otherData.questions.pvfReleaseVictimSent.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseVictimSent.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+        <form-step class="col-md-3 control-label">6.3 How was the PV released?</form-step>
+        <div class="col-md-9">
+            <form-step type="radio" radio-name="howReleased" label="Someone came to pick the PV up from the station/shelter" other-value="$ctrl.otherData.questions.pvfReleaseHowReleased.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseHowReleased.value"></form-step>
+            <form-step type="radio" radio-name="howReleased" label="Staff arranged transportation for the PV to travel alone" other-value="$ctrl.otherData.questions.pvfReleaseHowReleased.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseHowReleased.value"></form-step>
+            <form-step type="radio" radio-name="howReleased" label="Staff accompanied the PV during travel" other-value="$ctrl.otherData.questions.pvfReleaseHowReleased.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseHowReleased.value"></form-step>
+            <form-step type="otherRadio" radio-name="howReleased" label="Other" other-value="$ctrl.otherData.questions.pvfReleaseHowReleased.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseHowReleased.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+        <form-step class="col-md-3 control-label">6.4 What services were provided to the victim?</form-step>
+        <div class="col-md-9">
+        	<form-step type="checkbox" label="Food" response-value="$ctrl.questions.pvfReleaseFood.response.value"></form-step>
+        	<form-step type="checkbox" label="Travel Support" response-value="$ctrl.questions.pvfReleaseTravelSupport.response.value"></form-step>
+        	<form-step type="checkbox" label="Education about HT" response-value="$ctrl.questions.pvfReleaseEducationHt.response.value"></form-step>
+        	<form-step type="checkbox" label="Legal Support" response-value="$ctrl.questions.pvfReleaseLegalSupport.response.value"></form-step>
+        	<form-step type="checkbox" label="Medical Support" response-value="$ctrl.questions.pvfReleaseMedicalSupport.response.value"></form-step>
+        	<form-step type="checkbox" label="Safe Foreign Employment Info" response-value="$ctrl.questions.pvfReleaseSfe.response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+        <form-step class="col-md-3 control-label">6.5 What country was the PV sent back to?</form-step>
+        <div class="col-md-9">
+            <form-step type="radio" radio-name="countrySent" label="Monitoring Country" other-value="$ctrl.otherData.questions.pvfReleaseCountry.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseCountry.value"></form-step>
+            <form-step type="otherRadio" radio-name="countrySent" label="Other" other-value="$ctrl.otherData.questions.pvfReleaseCountry.otherValue" response-value="$ctrl.otherData.questions.pvfReleaseCountry.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+    	<div class="col-md-12">
+	        6.6 How much time did you spend with the PV?&nbsp;
+	        Staff interacted with the potential victim for approximately <input type="number" class="inblock" ng-model="$ctrl.questions.pvfReleaseHours.response.value"> hours
+        </div>
+    </div>
+    <div class="row center-vertical">
+        <form-step class="col-md-3 control-label">6.7 Did you arrange overnight lodging for the PV??</form-step>
+        <div class="col-md-9">
+        	<form-step type="radio" radio-name="overnight" label="No" response-value="$ctrl.otherData.questions.pvfReleaseOvernight.value"></form-step>
+        	<form-step type="radio" radio-name="overnight" label="Yes" response-value="$ctrl.otherData.questions.pvfReleaseOvernight.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+        <form-step class="col-md-12 control-label">
+        	<form-step class="col-md-3 control-label">If yes, where?</form-step>
+        	<div class="col-md-9">
+	        	<form-step type="checkbox" label="short-term shelter" response-value="$ctrl.questions.pvfReleaseShortTermShelter.response.value"></form-step>
+	        	<form-step type="otherCheckbox" label="Other" response-value="$ctrl.questions.pvfReleaseOtherLodging.response.value"></form-step>
+        	</div>
+        </form-step>
+        <div class="col-md-12">
+        <form-step class="col-md-12 control-label">
+        	How many nights? <input type="number" class="inblock" ng-model="$ctrl.questions.pvfReleaseShelterNights.response.value"> Nights
+        </form-step>
+        </div>
+    </div>
+   
+	
+</fieldset>

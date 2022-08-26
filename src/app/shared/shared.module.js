@@ -20,10 +20,13 @@ import StaffService from '../components/staff-select/staff.service';
 import StickyHeaderService from './services/stickyHeader.service';
 import UtilService from './services/util.service';
 import TransitionOnBefore from './TransitionOnBefore';
+import IncidentService from './services/incident.service';
 
 import FormStepComponent from '../components/form-step/form-step.component';
 import LocationSelectComponent from '../components/location-select/location-select.component';
 import StaffSelectComponent from '../components/staff-select/staff-select.component';
+import NameSelectComponent from '../components/name-select/name-select.component';
+import CreateIncidentFormComponent from '../components/create-incident-form/create-incident-form.component';
 
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 import Spinner from './directives/spinner/spinner.directive';
@@ -51,10 +54,13 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'fl
     .service('StaffService', StaffService)
     .service('StickyHeader', StickyHeaderService)
     .service('UtilService', UtilService)
+    .service('IncidentService', IncidentService)
 
     .component('formStep', FormStepComponent)
     .component('locationSelect', LocationSelectComponent)
     .component('staffSelect', StaffSelectComponent)
+    .component('nameSelect', NameSelectComponent)
+    .component('createIncidentForm', CreateIncidentFormComponent)
 
     .directive('confirmButton', ConfirmButton)
     .directive('spinner', Spinner)

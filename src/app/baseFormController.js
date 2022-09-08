@@ -531,7 +531,7 @@ export class BaseFormController {
     getIncidentNumberFromFormNumber(formNumber) {
     	for (let idx=3; idx < formNumber.length; idx++) {
     		let letter = formNumber.charAt(idx);
-    		if (letter !== '-' && (letter < '0' || letter > '9')) {
+    		if (letter !== '_' && (letter < '0' || letter > '9')) {
     			return formNumber.substring(0, idx);
     		}
     	}

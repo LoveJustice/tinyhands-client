@@ -69,7 +69,7 @@ export class NameSelectController {
         this.display = '';
         if (this.selectedNames !== undefined && this.selectedNames !== null) {
             let selectedOptions = this.selectedNames.split(';');
-            this.display = selectedOptions.join(', ');
+            this.display = selectedOptions.join('; ');
         } 
     }
 

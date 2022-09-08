@@ -6,7 +6,6 @@ import PvfRoutes from './pvf.route';
 import PvfService from './pvf.service';
 
 import PvfListController from './list/pvfList.controller';
-import CreatePvfModalController from './list/createPvfModal.controller';
 
 import PvfListService from './list/pvfList.service';
 
@@ -16,6 +15,5 @@ export default angular.module('tinyhands.PVF', [PvfCommonModuleV2022_6, sharedMo
     .config(PvfRoutes)
     .controller('PvfListController', PvfListController)
     .service('PvfListService', PvfListService)
-    .controller('CreatePvfModalController', CreatePvfModalController)
     .service('PvfService', PvfService)
     .name;

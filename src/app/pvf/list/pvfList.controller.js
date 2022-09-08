@@ -1,5 +1,3 @@
-import createPvfModalTemplate from './createPvfModal.html';
-
 /* global angular */
 
 export default class PvfListController {
@@ -134,30 +132,6 @@ export default class PvfListController {
                     this.toastr.error("Unable to find form for station " + station.label);
                 }
             });
-    }
-    
-    createPvf() {
-        var stationsForAdd = this.stationsForAdd;
-        let modalInstance = this.modal.open({
-            animation: true,
-            templateUrl: createPvfModalTemplate,
-            controller: 'CreatePvfModalController as vm',
-            size: 'md',
-            resolve: {
-                stations() {
-                    return stationsForAdd;
-                }
-            }
-        });
-        modalInstance.result.then((station) => {
-            this.service.getFormForStation(station.id).then((response) => {
-                if (response.data.length > 0) {
-                    this.state.go(response.data[0].form_name, {stationId: station.id, countryId: station.country_id, isViewing:false, formName: response.data[0].form_name});
-                } else {
-                    this.toastr.error("Unable to find form for station " + station.label);
-                }
-            });
-        });
     }
 
     searchPvfs() {
@@ -307,9 +281,5 @@ export default class PvfListController {
     getExportFileName() {
         let date = this.moment().format('Y-M-D');
         return `pvf-all-data-${date}.csv`;
-    }
-    
-    createIncidentForm(incident) {
-    	alert(incident);
     }
 }

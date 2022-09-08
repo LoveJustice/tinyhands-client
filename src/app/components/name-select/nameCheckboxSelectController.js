@@ -19,14 +19,17 @@ export default class NameCheckboxSelectionController {
         case 'address':
             this.title = 'Select Location Addresses';
             this.legendText = 'Location Form';
+            this.formType = 'LF'
             break;
         case 'pv':
             this.title = 'Select Potential Victim Names';
             this.legendText = 'Potential Victim Form';
+            this.formType = 'PVF'
             break;
         case 'suspect':
             this.title = 'Select Suspect Names';
             this.legendText = 'Suspect Form';
+            this.formType = 'SF'
             break;
         }
         

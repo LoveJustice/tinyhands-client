@@ -120,7 +120,7 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="rightBorder">{{ category.subtotals.to_date_emp }}</td>
         		<td class="boldRightBorder">{{ category.subtotals.to_date_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         		
-        		<td class="rightBorder">{{ category.subtotals.last_staff_count }}</td>
+        		<td class="rightBorder">{{ category.subtotals.last_staff_count.toLocaleString('en-US', vm.digits2Format) }}</td>
         		<td class="rightBorder">{{ category.subtotals.last_subcommittee_count}}</td>
         		<td class="rightBorder">{{ category.subtotals.last_intercepts }}</td>
         		<td class="rightBorder">{{ category.subtotals.last_arrests}}</td>
@@ -166,7 +166,7 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="rightBorder">{{ entry.to_date_emp }}</td>
         		<td class="boldRightBorder">{{ entry.to_date_budget.toLocaleString('en-US', vm.moneyFormat) }}</td>
         		
-        		<td class="rightBorder">{{ entry.last_staff_count }}</td>
+        		<td class="rightBorder">{{ entry.last_staff_count.toLocaleString('en-US', vm.digits2Format) }}</td>
         		<td class="rightBorder">{{ entry.last_subcommittee_count}}</td>
         		<td class="rightBorder">{{ entry.last_intercepts }}</td>
         		<td class="rightBorder">{{ entry.last_arrests}}</td>
@@ -216,7 +216,7 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="total rightBorder">{{ vm.dashboardData.totals.to_date_emp }}</td>
         		<td class="total boldRightBorder">{{vm.dashboardData.totals.to_date_budget.toLocaleString('en-US', vm.moneyFormat)}}</td>
         		
-        		<td class="total rightBorder">{{vm.dashboardData.totals.last_staff_count}}</td>
+        		<td class="total rightBorder">{{vm.dashboardData.totals.last_staff_count.toLocaleString('en-US', vm.digits2Format) }}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_subcommittee_count}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_intercepts}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.last_arrests}}</td>

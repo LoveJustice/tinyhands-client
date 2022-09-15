@@ -628,13 +628,14 @@ export default class BudgetController {
             this.form.previousData = response.data.top_table_data;
             this.form.staffItems = [];
             response.data.staff_items.forEach(item => {
+                let newItem = JSON.parse(JSON.stringify(item));
+                newItem.id = null;
                 if (item.type_name === 'Salary' || item.type_name === 'Deductions' || item.type_name.indexOf('~') >= 0) {
-                    this.form.staffItems.push(item);
+                    this.form.staffItems.push(newItem);
                 } else {
                     // don't keep cost or description
-                    let newItem = JSON.parse(JSON.stringify(item));
                     newItem.cost = null;
-                    newItem.description = null;
+                    newItem.description = '';
                     this.form.staffItems.push(newItem);
                 }
             });

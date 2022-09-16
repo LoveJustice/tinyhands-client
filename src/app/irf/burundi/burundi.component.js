@@ -1,4 +1,4 @@
-import {BaseIrfCommonController} from '../baseIrfCommonController.js';
+import {BaseIrfBlindVerificationController} from '../baseIrfBlindVerificationController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import '../common/irf.less';
 const CheckboxGroup = require('../../checkboxGroup.js');
@@ -8,37 +8,10 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-import topBoxTemplate from '../common/step-templates/topBox.html';
-import profileTemplate from '../common/step-templates/profile.html';
-import areaIndustryTemplate from '../common/step-templates/areaIndustry.html';
-import resourceSafetyTemplate from '../common/step-templates/resourceSafety.html';
-import controlTemplate from '../common/step-templates/control.html';
-import intercepteesTemplate from '../common/step-templates/interceptees/people.html';
-import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
-import complianceTemplate from '../common/step-templates/compliance.html';
-import verificationTemplate from '../common/step-templates/verification.html';
-import contactTemplate from '../common/step-templates/contact.html';
-import reasonTemplate from '../common/step-templates/reason.html';
-
-
-export class IrfBurundiController extends BaseIrfCommonController {
+export class IrfBurundiController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
-        
-        this.stepTemplates = [
-            {template:topBoxTemplate, name:"Top"},
-            {template:profileTemplate, name:"Profile"},
-            {template:areaIndustryTemplate, name:"Area/Industry"},
-            {template:resourceSafetyTemplate, name:"Resources"},
-            {template:controlTemplate, name:"Control"},
-            {template:contactTemplate, name:"Contact/Staff"},
-            {template:intercepteesTemplate, name:"People"},
-            {template:reasonTemplate, name:"Reason"},
-            {template:attachmentsTemplate, name:"Attachments"},
-            {template:complianceTemplate, name:"Compliance"},
-            {template:verificationTemplate, name:"Verification"},
-        ];
         
         this.checkboxGroup = new CheckboxGroup();
         
@@ -657,6 +630,7 @@ export class IrfBurundiController extends BaseIrfCommonController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

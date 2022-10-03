@@ -1061,7 +1061,12 @@ export default class BudgetController {
     }
     
     finalizeForm() {
-        this.updateOrCreateForm(true);
+        if (this.confirmedFinalize){
+            this.updateOrCreateForm(true);
+        }
+        else {
+            this.confirmedFinalize = true;
+        }
     }
 
     updateOrCreateForm(finalize = false) {

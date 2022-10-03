@@ -16,10 +16,10 @@
       <span>({{ budgetCtrl.getMonthName() }} {{ budgetCtrl.year }})</span>
     </span>
     
-    <button class="btn btn-lg pull-right btn-success"
+    <button class="btn btn-lg btn-success"
         ng-if="!budgetCtrl.form.date_finalized && !budgetCtrl.isViewing"
         ng-disabled="(budgetForm.$invalid)"
-    	ng-click="budgetCtrl.finalizeForm()">Finalize</button>
+    	ng-click="budgetCtrl.finalizeForm()">{{ budgetCtrl.confirmedFinalize ? "Confirm?" : "Finalize" }}</button>
   </h2>
 
   <!-- Section Tabs -->

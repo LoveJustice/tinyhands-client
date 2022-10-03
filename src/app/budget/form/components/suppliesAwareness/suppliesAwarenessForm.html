@@ -32,9 +32,9 @@
 		<div class="col-md-2 calc-form-input-no-width">
 			<input class="text-right form-control" type="number" ng-model="budgetCtrl.form.number_of_intercepts_last_month"
 				ng-change="budgetCtrl.setTotals()"
-				ng-init="budgetCtrl.form.number_of_intercepts_last_month=budgetCtrl.form.number_of_intercepts_last_month != null ? budgetCtrl.form.number_of_intercepts_last_month : (budgetCtrl.form.previousData.last_month ? budgetCtrl.form.previousData.last_month : 0)"
-				ng-disabled="budgetCtrl.isViewing"/>
-				<small># of PVs Last Month</small>
+				ng-disabled="budgetCtrl.isViewing"
+				title="Initially set based on last month's MDF"/>
+				<small title="Initially set based on last month's MDF"># of PVs Last Month</small>
 		</div>
 		<operator>*</operator>
 		<div class="col-md-2 calc-form-input-no-width">

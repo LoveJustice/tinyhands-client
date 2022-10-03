@@ -17,7 +17,7 @@
 		<br>
 		<div class="row center-vertical" 
 				ng-show="$ctrl.getResponseOfQuestionById(card.responses, 1089).value === 'Yes' && $ctrl.verificationTypeText(card) === 'Initial Verification'">
-			<form-step class="col-md-2">Follow-up details</form-step>
+			<form-step class="col-md-2">Follow-up call facts</form-step>
 			<div class="col-md-8">
 				<textarea class="form-control" placeholder="Details" rows="3" ng-model="$ctrl.getResponseOfQuestionById(card.responses, 1090).value"
 						ng-disabled="card !== $ctrl.editingVerificationCard"></textarea>

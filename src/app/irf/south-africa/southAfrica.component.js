@@ -656,7 +656,7 @@ export class IrfSouthAfricaController extends BaseIrfBlindVerificationController
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Church Member', 'Freedom App']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Church Member', 'Freedom Project']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];

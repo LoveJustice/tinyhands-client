@@ -16,6 +16,36 @@ import detailTemplate from './detail.html';
 import CategoryModalController from './components/salaries/categoryModal.controller';
 import DetailModalController from './detailModal.controller';
 
+class Tracking {
+    constructor(shouldFinalize=false) {
+        this.count = 0;
+        this.errors = 0;
+        this.finalize = shouldFinalize;
+    }
+    
+    startRequest() {
+        this.count += 1;
+    }
+    
+    completeRequest(error=false) {
+        this.count -= 1;
+        if (error) {
+            this.errors += 1;
+        }
+    }
+    
+    allRequestsCompleted() {
+        return this.count === 0;
+    }
+    
+    hasErrors() {
+        return this.errors !== 0;
+    }
+    
+    shouldFinalize() {
+        return this.count === 0 && this.errors === 0 && this.finalize;
+    }
+};
 
 export default class BudgetController {
     constructor($state, $stateParams,  $uibModal, BudgetService, UtilService, toastr, $scope) {
@@ -84,6 +114,8 @@ export default class BudgetController {
             },
             staff:null
         };
+        
+        this.tracking = null;
 
         this.isCreating = !this.budgetId && this.borderStationId >= 0;
         this.isViewing = $stateParams.isViewing === 'true';
@@ -626,6 +658,8 @@ export default class BudgetController {
                 .month(this.month - 1)
                 .date(15);
             this.form.previousData = response.data.top_table_data;
+            this.form.number_of_intercepted_pvs = this.form.previousData.last_month;
+            this.form.number_of_intercepts_last_month = this.form.previousData.last_month
             this.form.staffItems = [];
             response.data.staff_items.forEach(item => {
                 let newItem = JSON.parse(JSON.stringify(item));
@@ -999,38 +1033,91 @@ export default class BudgetController {
         this.updateOrCreateOtherItems();
         this.deleteStaffItems();
         this.deleteOtherItems();
-        this.$state.go('budgetList');
+    }
+    
+    startRequest() {
+        this.tracking.startRequest();
+    }
+    
+    completeRequest(isError=false) {
+        if (this.tracking) {
+            this.tracking.completeRequest(isError);
+            if (this.tracking.allRequestsCompleted()) {
+                if (this.tracking.hasErrors()) {
+                    this.tracking = null;
+                } else {
+                    if (this.tracking.shouldFinalize()) {
+                        let now = new Date();
+                        this.form.date_finalized = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+                        this.service.finalize(this.budgetId, this.form);
+                    }
+                    
+                    this.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+                    this.tracking = null;
+                    this.$state.go('budgetList'); 
+                }
+            }
+        }
+    }
+    
+    finalizeForm() {
+        if (this.confirmedFinalize){
+            this.updateOrCreateForm(true);
+        }
+        else {
+            this.confirmedFinalize = true;
+        }
     }
 
-    updateOrCreateForm() {
+    updateOrCreateForm(finalize = false) {
+        this.tracking = new Tracking(finalize);
+        this.startRequest();
         if (this.isCreating) {
+            this.startRequest();
             this.service.createForm(this.form).then(
                 response => {
                     this.budgetId = response.data.id;
                     this.updateOrCreateAll();
-                    this.toastr.success(`${this.form.station_name} Budget Form Created Successfully!`);
+                    this.completeRequest();
                 },
                 error => {
                     this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                    this.completeRequest(true);
                 }
             );
         } else {
+            this.startRequest();
             this.service.updateForm(this.budgetId, this.form).then(() => {
-                this.toastr.success(`${this.form.station_name} Budget Form Updated Successfully!`);
+                this.completeRequest();
+            },
+            error => {
+                this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                this.completeRequest(true);
             });
             this.updateOrCreateAll();
         }
+        this.completeRequest();
     }
 
     updateOtherItem(item) {
-        this.service.updateOtherItem(this.budgetId, item).catch(error => {
+        this.startRequest();
+        this.service.updateOtherItem(this.budgetId, item).then(() => {
+            this.completeRequest();
+        },
+        error => {
             this.toastr.error(`There was an error updating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+            this.completeRequest(true);
         });
     }
 
     createOtherItem(item) {
-        this.service.createOtherItem(this.budgetId, item).catch(error => {
+        this.startRequest();
+        this.service.createOtherItem(this.budgetId, item).then(() => {
+            this.completeRequest();
+        },
+        error => {
             this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+            this.completeRequest(true);
         });
     }
 
@@ -1064,10 +1151,23 @@ export default class BudgetController {
                     if (staffItem.cost === '') {
                         staffItem.cost = null;
                     }
+                    this.startRequest();
                     if (staffItem.id) {
-                        this.service.updateStaffItem(this.budgetId, staffItem);
+                        this.service.updateStaffItem(this.budgetId, staffItem).then(() => {
+                            this.completeRequest();
+                        },
+                        error => {
+                            this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                            this.completeRequest(true);
+                        });
                     } else {
-                        this.service.createStaffItem(staffItem);
+                        this.service.createStaffItem(staffItem).then(() => {
+                            this.completeRequest();
+                        },
+                        error => {
+                            this.toastr.error(`There was an error creating the budget form! ${JSON.stringify(error.data.non_field_errors)}`);
+                            this.completeRequest(true);
+                        });
                     }
                 });
             });

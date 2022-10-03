@@ -16,7 +16,7 @@
 	        </div>
 	    </div>
 	    <hr>
-	    <div class="row center-vertical">
+	    <div class="row center-vertical" ng-if="!$ctrl.narrativeOnly">
 			<div class="col-md-12">
 				<form-step>5.3  Please give any additional information about the interception, how it occurred, the reason you decided to intercept the potential victim(s), etc.</form-step>
 					<form-step>
@@ -24,11 +24,12 @@
 	            </form-step>
 	        </div>
 	    </div>
-	    <hr>
+	    <hr ng-if="!$ctrl.narrativeOnly">
         <div class="row">
             <div>Either fill out the first or second section (not both), depending on whether the potential victim was first noticed by
                 staff, or came from a contact. </div>
-            <div class="padding-top-20">How did you make the interception?</div>
+            <div class="padding-top-20" ng-if="!$ctrl.narrativeOnly">How did you make the interception?</div>
+            <div class="padding-top-20" ng-if="$ctrl.narrativeOnly">Who first identified the potential victim?</div>
             <hr/>
         </div>
         <div class="row center-vertical">

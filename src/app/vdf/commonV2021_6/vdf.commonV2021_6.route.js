@@ -92,6 +92,13 @@ function VdfCommonV3Routes($stateProvider) {
                 id: null
             }
         })
+        .state('vdfTanzania', {
+            url: '/vdf/commonV2021_6:?id&stationId&countryId&isViewing&formName',
+            component: 'vdfCommonV3Component',
+            params: {
+                id: null
+            }
+        })
         .state('vdfSouthAfrica', {
             url: '/vdf/commonV2021_6:?id&stationId&countryId&isViewing&formName',
             component: 'vdfCommonV3Component',

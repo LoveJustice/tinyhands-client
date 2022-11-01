@@ -171,7 +171,7 @@ class LocationStaffController {
                         work_days:0
                         };
             }
-            this.toastr.error('Work days ' + this.stationStatistics.work_days);
+            //this.toastr.error('Work days ' + this.stationStatistics.work_days);
         }, () => {
             this.toastr.error('Failed to retrieve station statistics');
         });
@@ -186,7 +186,7 @@ class LocationStaffController {
         this.workPortion = null;
         this.work = null;
         this.getLocationsAndStaff();
-        this.getStationStatistics()
+        this.getStationStatistics();
     }
     
     changeMonth() {
@@ -207,6 +207,7 @@ class LocationStaffController {
             this.workPortion = promise.data;
             this.populateWork();
         });
+        this.getStationStatistics();
     }
     
     changeYear() {
@@ -225,6 +226,7 @@ class LocationStaffController {
             this.workPortion = promise.data;
             this.populateWork();
         });
+        this.getStationStatistics();
     }
     
     resetTotals() {

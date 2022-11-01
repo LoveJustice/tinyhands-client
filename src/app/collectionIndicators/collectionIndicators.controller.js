@@ -89,7 +89,7 @@ class IndicatorsController {
     }
     
     mergeCountries() {
-        let len = this.countries.length - 1;
+        let len = this.countries.length;
         let result_array = [];
         let assoc = {};
         

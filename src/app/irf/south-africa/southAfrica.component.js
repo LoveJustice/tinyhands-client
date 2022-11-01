@@ -1,4 +1,4 @@
-import {BaseIrfCommonController} from '../baseIrfCommonController.js';
+import {BaseIrfBlindVerificationController} from '../baseIrfBlindVerificationController.js';
 import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
@@ -7,7 +7,7 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfSouthAfricaController extends BaseIrfCommonController {
+export class IrfSouthAfricaController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
@@ -656,7 +656,7 @@ export class IrfSouthAfricaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Church Member', 'Freedom App']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Church Member', 'Freedom Project']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -672,6 +672,7 @@ export class IrfSouthAfricaController extends BaseIrfCommonController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

@@ -177,4 +177,8 @@ export default class BudgetService {
     updateStaffItem(budgetId, itemData) {
         return this.service.put(`api/budget/${budgetId}/staff_item/${itemData.id}/`, itemData);
     }
+    
+    finalize(budgetId, form) {
+        return this.service.put(`api/budget/${budgetId}/finalize/`, form);
+    }
 }

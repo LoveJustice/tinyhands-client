@@ -6,6 +6,23 @@
 			</div>
 		</div>
 	</div>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>VDF Context</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class=col-md-3>
+            <div class="col-md-5">
+                <label>Call Interviewer: </label>
+            </div>
+            <div class="col-md-7">
+                {{ $ctrl.vdfQuestions[6].response.value }}
+            </div>
+        </div>
+    </div>
     <div class="row">
     	<div class=col-md-3>
 	    	<div class="col-md-5">
@@ -13,14 +30,6 @@
 	    	</div>
 	    	<div class="col-md-7">
 	    		{{ $ctrl.vdfQuestions[288].response.value }}
-	    	</div>
-	    </div>
-	    <div class=col-md-9>
-	    	<div class="col-md-1">
-	    		<label>Interviewer</label>
-	    	</div>
-	    	<div class="col-md-9">
-	    		{{ $ctrl.vdfQuestions[6].response.value }}
 	    	</div>
 	    </div>
 	</div>
@@ -89,6 +98,11 @@
 	    </div>
     </div>
     <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Verification Survey</h3>
+        </div>
+    </div>
     <div class="row center-vertical">
     	<div class="col-md-3">
     		<label>Is a change required to the original answer from the VDF below?</label>

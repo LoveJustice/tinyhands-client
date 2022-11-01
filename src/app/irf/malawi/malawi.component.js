@@ -1,4 +1,4 @@
-import {BaseIrfCommonController} from '../baseIrfCommonController.js';
+import {BaseIrfBlindVerificationController} from '../baseIrfBlindVerificationController.js';
 import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
@@ -7,7 +7,7 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfMalawiController extends BaseIrfCommonController {
+export class IrfMalawiController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
@@ -580,6 +580,7 @@ export class IrfMalawiController extends BaseIrfCommonController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

@@ -7,17 +7,17 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeModal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfEcuadorController extends BaseIrfBlindVerificationController {
+export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7,245.8,245.9];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,1084,502,925,78,942,926,280,974,1083,1078,1073,988];
+        this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
@@ -34,49 +34,13 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
+                label:'Recently enslaved',
+                value:'Recently enslaved',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.3:{
-                enabled:true,
-                group:968,
-                label:'Escaping abuse',
-                value:'Escaping abuse',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.4:{
-                enabled:true,
-                group:968,
-                label:'Young looking',
-                value:'Young looking',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
-                enabled:true,
-                group:968,
-                label:'Child(ren)',
-                value:'Child(ren)',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.6:{
-                enabled:true,
-                group:968,
-                label:'Recently Enslaved',
-                value:'Recently Enslaved',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.7:{
                 enabled:true,
                 group:968,
                 label:'Unemployed',
@@ -85,7 +49,7 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-             968.8:{
+            968.4:{
                 enabled:true,
                 group:968,
                 label:'Extremely poor',
@@ -94,7 +58,61 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.9:{
+            968.5:{
+                enabled:true,
+                group:968,
+                label:'Conflict-vulnerable ethnic groups',
+                value:'Conflict-vulnerable ethnic groups',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
+                enabled:true,
+                group:968,
+                label:'Smuggled migrant',
+                value:'Smuggled migrant',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.7:{
+                enabled:true,
+                group:968,
+                label:'Recently returned migrant',
+                value:'Recently returned migrant',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+             968.8:{
+                enabled:true,
+                group:968,
+                label:'No or fraudulent ID cards',
+                value:'No or fraudulent ID cards',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+             968.9:{
+                enabled:true,
+                group:968,
+                label:'Village look',
+                value:'Village look',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+             968.11:{
+                enabled:true,
+                group:968,
+                label:'From rural area',
+                value:'From rural area',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.12:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -113,8 +131,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             245.1:{
                 enabled:true,
                 group:245,
-                label:'Quito',
-                value: 'Quito',
+                label:"PV doesn't know",
+                value:"PV doesn't know",
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -122,8 +140,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             245.2:{
                 enabled:true,
                 group:245,
-                label:'Bogota',
-                value: 'Bogota',
+                label:'Saudia Arabia',
+                value:'Saudia Arabia',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -131,8 +149,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             245.3:{
                 enabled:true,
                 group:245,
-                label:'Lima',
-                value: 'Lima',
+                label:'Yemen',
+                value:'Yemen',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -140,8 +158,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             245.4:{
                 enabled:true,
                 group:245,
-                label:'Buenos Aires',
-                value: 'Buenos Aires',
+                label:'Kenya',
+                value:'Kenya',
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
@@ -149,13 +167,40 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             245.5:{
                 enabled:true,
                 group:245,
-                label:"Don't know",
-                value: "Don't know",
+                label:"Djibouti",
+                value:"Djibouti",
                 type:'checkbox-group',
                 format:'col-md-6',
                 points:0
             },
             245.6:{
+                enabled:true,
+                group:245,
+                label:"Sudan",
+                value:"Sudan",
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.7:{
+                enabled:true,
+                group:245,
+                label:"Addis Ababa central market",
+                value:"Addis Ababa central market",
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.8:{
+                enabled:true,
+                group:245,
+                label:"South Africa",
+                value:"South Africa",
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.9:{
                 enabled:true,
                 group:245,
                 label:'Other:',
@@ -182,8 +227,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Massage parlor',
-                value:'Massage parlor',
+                label:'Sex industry',
+                value:'Sex industry',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -191,8 +236,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Modeling',
-                value:'Modeling',
+                label:'Traditional weaving',
+                value:'Traditional weaving',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -200,8 +245,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             924.4:{
                 enabled:true,
                 group:924,
-                label:'Hotel',
-                value:'Hotel',
+                label:'Construction',
+                value:'Construction',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -209,8 +254,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             924.5:{
                 enabled:true,
                 group:924,
-                label:'Fishing',
-                value:'Fishing',
+                label:'Agriculture',
+                value:'Agriculture',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -218,8 +263,8 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             924.6:{
                 enabled:true,
                 group:924,
-                label:'Restaurant',
-                value:'Restaurant',
+                label:'Street vendor',
+                value:'Street vendor',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -238,13 +283,6 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
                 label:'Signs of Vulnerability',
                 type:'header',
                 format:'',
-                points:0
-            },
-            246:{
-                enabled:true,
-                label:"Doesn't know destination",
-                type:'checkbox',
-                format:'col-md-12',
                 points:0
             },
             1084:{
@@ -306,27 +344,6 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             1083:{
                 enabled:true,
                 label:'Is or was traveling with someone they recently met',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            1078:{
-                enabled:true,
-                label:'Going to meet someone they met online',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            1073:{
-                enabled:true,
-                label:'No phone:',
-                type:'other-checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            988:{
-                enabled:true,
-                label:'Flight paid for with cash or pre-paid credit card',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -517,7 +534,7 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             },
             1076:{
                 enabled:true,
-                label:'Abducted',
+                label:'Forcibly Abducted',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -658,7 +675,7 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Hawker','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -668,6 +685,7 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
         }
         
         this.includeQuestion[1077] = true;
+        this.narrativeOnly = true;
     }
     
     getDefaultIdentificationTypes() {
@@ -701,6 +719,6 @@ export class IrfEcuadorController extends BaseIrfBlindVerificationController {
 
 export default {
     templateUrl,
-    controller: IrfEcuadorController,
+    controller: IrfEthiopiaController,
 };
 

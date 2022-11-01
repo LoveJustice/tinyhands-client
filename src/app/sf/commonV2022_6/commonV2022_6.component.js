@@ -148,6 +148,10 @@ export class SfCommonV2022_6Controller extends BaseSfController {
     	this.checkboxGroupInfo.initOriginalValues(this.questions);
     }
     
+    switchTab() {
+        this.informationCardChange();   // update the master suspect information
+    }
+    
     saveExtra() {
     }
     

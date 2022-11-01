@@ -17,6 +17,7 @@ export class NameSelectController {
         this.priorLocalsLength = -1;
         this.priorIrfsLength = -1;
         this.priorFormsLength = -1;
+        this.priorExcludeName = null;
         this.nameChoices = null;
         this.display = '';
     }
@@ -29,11 +30,13 @@ export class NameSelectController {
         if (this.nameChoices && (this.selectedNames !== this.priorSelectedNames ||
         		this.nameChoices['irfs'].length !== this.priorIrfsLength ||
         		this.nameChoices['locals'].length !== this.priorLocalsLength ||
-        		this.nameChoices['forms'].length !== this.priorFormsLength)) {
+        		this.nameChoices['forms'].length !== this.priorFormsLength ||
+        		this.excludeName !== this.priorExcludeName)) {
             this.priorSelectedNames = this.selectedNames;
             this.priorLocalsLength = this.nameChoices['locals'].length;
             this.priorIrfsLength = this.nameChoices['irfs'].length;
             this.priorFormsLength = this.nameChoices['forms'].length;
+            this.priorExcludeName = this.excludeName;
             this.processNames();
         }
         this.setDisplay();
@@ -42,6 +45,7 @@ export class NameSelectController {
     processNames() {
         let nameTypes = ['forms', 'irfs', 'locals'];
         
+        this.optionList = [];
         for (let nameIdx in nameTypes) {
             let nameType = nameTypes[nameIdx];
             for (let idx in this.nameChoices[nameType]) {

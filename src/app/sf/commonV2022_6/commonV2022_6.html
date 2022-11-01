@@ -9,7 +9,7 @@
         	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
         		class="btn btn-default"
         		ng-class="{active: $ctrl.selectedStep == $index}" 
-        		ng-click="$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
+        		ng-click="$ctrl.selectedStep = $index;$ctrl.switchTab();">{{stepTemplate.name}}</a>
         </div>
         <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
         	<span >

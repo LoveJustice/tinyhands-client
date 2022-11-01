@@ -491,6 +491,28 @@ export class BaseSfController extends BaseFormController {
     	this.dateDataLegal.updateResponses();
     }
     
+    valueInList(newValue, optionList) {
+        let addressCompare = false;
+        if (newValue.hasOwnProperty('address')) {
+            addressCompare = true;
+        }
+        for (let optionIdx in optionList) {
+            if (addressCompare) {
+                if (optionList[optionIdx].address === newValue.address &&
+                        optionList[optionIdx].latitude === newValue.latitude && 
+                        optionList[optionIdx].longitude === newValue.longitude) {
+                    return true;
+                }
+            } else {
+                if (_.isEqual(optionList[optionIdx], newValue)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
     buildMergeOptions() {
     	this.mergeOptions = {};
     	let personFields = ['name','gender','birthdate','age','address','latitude','longitude',
@@ -506,7 +528,7 @@ export class BaseSfController extends BaseFormController {
     				continue;
     			}
     			if (response[fieldName].value) {
-    				if (this.mergeOptions[fieldName].indexOf(response[fieldName].value) < 0) {
+    			    if (!this.valueInList(response[fieldName].value, this.mergeOptions[fieldName])) {
     					this.mergeOptions[fieldName].push(response[fieldName].value);
     				}
     			}

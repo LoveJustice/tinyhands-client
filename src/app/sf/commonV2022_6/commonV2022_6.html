@@ -1,0 +1,64 @@
+<div id="sf-commonV2022_6" class="container-fluid padding-top-20">
+    <div class="sticky">
+        <div class="padding-bottom-40">
+            <h1 class="form-number-header float-left padding-left-20">
+                {{$ctrl.questions.sfTopSfNumber.response.value}}
+            </h1>
+        </div>
+        <div class="btn-group btn-group-justified padding-bottom-10 padding-horizontal-40" role="group">
+        	<a ng-repeat="stepTemplate in $ctrl.stepTemplates"
+        		class="btn btn-default"
+        		ng-class="{active: $ctrl.selectedStep == $index}" 
+        		ng-click="$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
+        </div>
+        <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
+        	<span >
+		 		<span ng-if="$ctrl.relatedForms['IRF']">
+		 			&nbsp;&nbsp;<b>IRF</b>
+		 			&nbsp;<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['CIF']">
+		 			&nbsp;&nbsp;<b>CIFs</b>
+		 			<span ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
+		 				&nbsp;<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['VDF']">
+		 			&nbsp;&nbsp;<b>VDFs</b>
+		 			<span ng-repeat="sfRef in $ctrl.relatedForms['VDF']">
+		 				&nbsp;<a ng-href="{{sfRef.url}}">{{ sfRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		<span ng-if="$ctrl.relatedForms['LEGAL_CASE']">
+		 			&nbsp;&nbsp;<b>Legal</b>
+		 			<span ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
+		 				&nbsp;<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
+		 			</span>
+		 		</span>
+		 		&nbsp;&nbsp;
+		 	</span>
+		</div>
+        <hr class="margin-bottom-0" />
+    </div>
+    <div id="sf-commonV2-content" class="padding-bottom-40">
+	    <div id="irf-content" class="padding-bottom-40">
+	        <div ng-repeat="template in $ctrl.stepTemplates" ng-include="template.template" ng-hide="$ctrl.selectedStep != $index"></div>
+	    </div>
+	    <div class="alert alert-warning" ng-repeat="warnings in $ctrl.getWarningMessages()">
+	        <strong>Warning! {{warnings}}</strong>
+	    </div>
+	    <div class="alert alert-danger" ng-repeat="errors in $ctrl.getErrorMessages()">
+	        <strong>Error! {{errors}}</strong>
+	    </div>
+	    <div class="container-fluid padding-bottom-20">
+	        <div class="col-xs-6">
+	            <button class="btn btn-warning" ng-if="$ctrl.response.status == 'in-progress'" ng-disabled="$ctrl.stateParams.isViewing === 'true' || !$ctrl.goodFormNumber" ng-click="$ctrl.save()">Save for Later</button>
+	        </div>
+	        <div class="col-xs-6 text-right">
+	            <input id="ignore" type="checkbox" ng-if="$ctrl.showIgnoreWarningsCheckbox()" ng-model="$ctrl.ignoreWarnings">
+	            <label for="ignore" ng-if="$ctrl.showIgnoreWarningsCheckbox()">Ignore warnings</label>
+	            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()" ng-disabled="$ctrl.stateParams.isViewing === 'true' || !$ctrl.goodFormNumber">Submit</button>
+	        </div>
+	    </div>
+	</div>
+</div>

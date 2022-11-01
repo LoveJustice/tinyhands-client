@@ -20,6 +20,7 @@ export class CreateIncidentForm {
                 stationsAdd: () => this.stationsAdd,
                 useTitle: () => this.useTitle,
                 formType: () => this.formType,
+                selectOnly: () => this.selectOnly,
             },
             size: 'lg',
             templateUrl: createIncidentModal,
@@ -34,7 +35,8 @@ export default {
         stationsAdd: '=',
         useTitle: '@',
         formType: '@',
-        callController: '='
+        callController: '=',
+        selectOnly: '@'
     },
     controllerAs: '$ctrl',
     controller: CreateIncidentForm,

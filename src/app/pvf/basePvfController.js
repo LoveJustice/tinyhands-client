@@ -75,7 +75,7 @@ export class BasePvfController extends BaseFormController {
             			this.getIncidentNames([this.incidentNumber]);
                 		this.questions.pvfTopPvfNumber.response.value = this.incidentNumber;
                 		this.formNumberPattern = '^' + this.incidentNumber + '[A-Z]{1,2}$';
-                		this.formNumberChange()
+                		this.formNumberChange();
                 		this.number_change();
                 	});
 	            } else {

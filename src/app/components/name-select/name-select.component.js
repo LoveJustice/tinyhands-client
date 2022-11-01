@@ -1,6 +1,8 @@
+import './name-select.less';
 import NameSelectTemplateUrl from './name-select.html';
 import nameCheckboxSelectTemplate from './nameCheckboxSelect.html';
 import NameCheckboxSelectController from './nameCheckboxSelectController.js';
+
 /* global _ */
 
 export class NameSelectController {
@@ -11,9 +13,12 @@ export class NameSelectController {
         this.selectionList = {};
         this.selected = {};
         this.optionList = [];
+        this.priorSelectedNames = null;
         this.priorLocalsLength = -1;
         this.priorIrfsLength = -1;
+        this.priorFormsLength = -1;
         this.nameChoices = null;
+        this.display = '';
     }
     
     $doCheck() {
@@ -23,10 +28,12 @@ export class NameSelectController {
         this.nameChoices = this.nameStructure[this.valueType];
         if (this.nameChoices && (this.selectedNames !== this.priorSelectedNames ||
         		this.nameChoices['irfs'].length !== this.priorIrfsLength ||
-        		this.nameChoices['locals'].length !== this.priorLocalsLength)) {
+        		this.nameChoices['locals'].length !== this.priorLocalsLength ||
+        		this.nameChoices['forms'].length !== this.priorFormsLength)) {
             this.priorSelectedNames = this.selectedNames;
             this.priorLocalsLength = this.nameChoices['locals'].length;
             this.priorIrfsLength = this.nameChoices['irfs'].length;
+            this.priorFormsLength = this.nameChoices['forms'].length;
             this.processNames();
         }
         this.setDisplay();
@@ -84,6 +91,7 @@ export class NameSelectController {
                 selectionList: () => this.selectionList,
                 optionList: () => this.optionList,
                 valueType: () => this.valueType,
+                viewOnly: () => this.viewOnly,
             },
             size: 'lg',
             templateUrl: nameCheckboxSelectTemplate,
@@ -91,6 +99,14 @@ export class NameSelectController {
             this.selectedNames = _.cloneDeep(newSelected);
             this.setDisplay();
         });
+    }
+    
+    getClass() {
+    	if (this.viewOnly) {
+    		return "viewOnly";
+    	} else {
+    		return "allowEdit";
+    	}
     }
 }
 
@@ -100,6 +116,7 @@ export default {
         nameStructure: '=',
         excludeName: '@',
         valueType: '@',
+        viewOnly: '=',
     },
     controllerAs: 'ctrl',
     controller: NameSelectController,

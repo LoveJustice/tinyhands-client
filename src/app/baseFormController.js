@@ -36,6 +36,7 @@ export class BaseFormController {
         this.incidentNames = {
                 address:{
                     forms:[],
+                    irfs:[],
                     locals:[]
                 },
                 pv:{
@@ -247,7 +248,11 @@ export class BaseFormController {
     }
     
     getResponseOfQuestionByTag(responses, questionTag) {
-        return _.find(responses, (x) => x.question_tag === questionTag).response;
+    	let resp = null;
+    	if (responses) {
+	        resp = _.find(responses, (x) => x.question_tag === questionTag).response;
+	    }
+        return resp;
     }
 
     incrementRedFlags(numberOfFlagsToAdd, context) {
@@ -306,7 +311,7 @@ export class BaseFormController {
         }
         if (config.hasOwnProperty('Person')) {
             for (let idx=0; idx < config.Person.length; idx++) {
-                the_card.responses.push({
+            	let personQuestion = {
                     question_id: this.configIdentifier(config.Person[idx],ID),
                     question_tag: this.configIdentifier(config.Person[idx],TAG),
                     response: {
@@ -337,7 +342,18 @@ export class BaseFormController {
                         interviewer_believes: {},
                         pv_believes: {},
                     }
-                });
+                };
+                let defaultTypes = this.getDefaultIdentificationTypes();
+		        for (let idx in defaultTypes) {
+		            if (!(defaultTypes[idx] in personQuestion.response.identifiers)) {
+		                personQuestion.response.identifiers[defaultTypes[idx]] = {
+		                        type: {value:defaultTypes[idx]},
+		                        number: {value:""},
+		                        location: {value:""}
+		                };
+		            }
+		        }
+                the_card.responses.push(personQuestion);
             }
         }
         if (config.hasOwnProperty('Basic')) {

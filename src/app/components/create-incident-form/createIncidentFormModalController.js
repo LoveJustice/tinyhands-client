@@ -2,7 +2,7 @@ import './create-incident-form.less';
 import {encodeGroup} from  '../../encodeGroup.js';
 
 export default class CreateIncidentFormModalController {
-    constructor($uibModalInstance, $scope, incidentService, stationsAdd, useTitle, formType) {
+    constructor($uibModalInstance, $scope, incidentService, stationsAdd, useTitle, formType, selectOnly) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
         this.scope = $scope;
@@ -10,6 +10,7 @@ export default class CreateIncidentFormModalController {
         this.stationsAdd = stationsAdd;
         this.useTitle = useTitle;
         this.formType = formType;
+        this.selectOnly = selectOnly;
         this.incidentType = 'Existing';
         this.incidentNumber = '';
         this.incident = null;
@@ -53,7 +54,7 @@ export default class CreateIncidentFormModalController {
     			break;
     		}
     	}
-    	if (!foundCode) {
+    	if (!foundCode  && !this.selectOnly) {
     		this.errorText = "You do not have permission to add forms for the project with code " + code;
     		return;
     	}
@@ -64,6 +65,7 @@ export default class CreateIncidentFormModalController {
     		// Might have matched substring of a different incident
         	for (let idx=0; idx < promise.data.results.length; idx++) {
         		if (promise.data.results[idx].incident_number === this.incidentNumber) {
+        			this.station_name = promise.data.results[idx].station_name;
         			this.incident = promise.data.results[idx];
         			if (this.incident.incident_date) {
         				let parts = this.incident.incident_date.split('-');

@@ -1,7 +1,5 @@
-import './name-select.less';
-
 export default class NameCheckboxSelectionController {
-    constructor($uibModalInstance, $scope, nameChoices, selectedNames, selectionList, optionList, valueType) {
+    constructor($uibModalInstance, $scope, nameChoices, selectedNames, selectionList, optionList, valueType, viewOnly) {
         'ngInject';
         this.$uibModalInstance = $uibModalInstance;
         this.scope = $scope;
@@ -9,6 +7,7 @@ export default class NameCheckboxSelectionController {
         this.selectionList = selectionList;
         this.selected = {};
         this.valueType = valueType;
+        this.viewOnly = viewOnly;
         this.optionList = optionList;
         this.addedLocal = "";
         this.errorMessage = ' ';

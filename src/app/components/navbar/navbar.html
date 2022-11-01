@@ -86,6 +86,10 @@
                             ui-sref="pvfList">PVFs</a>
                     </li>
                     <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('SF','VIEW',null, null)"
+                            ui-sref="sfList">SFs</a>
+                    </li>
+                    <li>
                         <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
                             ui-sref="monthlyReportList">SMRs</a>
                     </li>

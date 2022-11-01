@@ -5,7 +5,7 @@
 	    </div>
 	</div>
 	<div class="modal-body">
-		<div class="row">
+		<div class="row" ng-if="!vm.selectOnly">
 			<label class="col-md-3">Incident Type</label>
 			<div class="col-md-3">
 				<select class="form-control" ng-model="vm.incidentType" ng-change="vm.changeIncidentType()">
@@ -29,7 +29,7 @@
         	 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.incidentDate" disabled>
         	 		</div>
         	 	</div>
-        	 	<div class = "row">
+        	 	<div class = "row" ng-if="!vm.selectOnly">
         	 		<label class="col-md-3">Project</label>
         	 		<fieldset class="col-md-3" ng-dropdown-multiselect="" options="stationDropDown.options"
 							selected-model="stationDropDown.selectedOptions"
@@ -37,6 +37,12 @@
                             translation-texts="stationDropDown.customText"
                             events="stationDropDown.eventListener" disabled>
 					</fieldset>
+        	 	</div>
+        	 	<div class = "row" ng-if="vm.selectOnly">
+        	 		<label class="col-md-3">Project</label>
+        	 		<div class="col-md-6">
+        	 			<input class="col-md-3" type="text" ng-model="vm.station_name" disabled>
+        	 		</div>
         	 	</div>
         	 	<div class = "row">
         	 		<label class="col-md-3">Incident Summary</label>
@@ -78,7 +84,7 @@
 	
 	<div class="modal-footer">
 	    <button id="createButton" class="btn btn-primary" type="button" ng-click="vm.createForm()"
-	    		ng-if="vm.incident!==null || vm.newDate != null && vm.scope.stationDropDown.selectedOptions.length > 0">Create</button>
+	    		ng-if="vm.incident!==null || vm.newDate != null && vm.scope.stationDropDown.selectedOptions.length > 0">{{ vm.selectOnly?'Select':'Create' }}</button>
 	    <button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
 	</div>
 </div>

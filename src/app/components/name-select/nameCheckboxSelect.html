@@ -10,7 +10,7 @@
 
 	</div>
 	
-	<div class="modal-body" ng-model="vm.selectionList">
+	<fieldset class="modal-body" ng-model="vm.selectionList" ng-disabled="vm.viewOnly">
 		<div  class="col-md-12 row">
 			<div ng-class="vm.getClass(vm.selectionList[key].nameType, 'col-md-6')"   title="{{ vm.selectionList[key].title }}"
 					ng-repeat="key in vm.optionList">
@@ -31,10 +31,10 @@
 		<div id="nameSelectError" class="col-md-12 row">
 			<p>{{ vm.errorMessage }}</p>
 		</div>
-	</div>
+	</fieldset>
 	
 	<div class="modal-footer">
-	    <button id="selectButton" class="btn btn-primary" type="button" ng-click="vm.select()">Select</button>
+	    <button id="selectButton" class="btn btn-primary" type="button" ng-click="vm.select()" ng-if="!vm.viewOnly">Select</button>
 	    <button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
 	</div>
 </div>

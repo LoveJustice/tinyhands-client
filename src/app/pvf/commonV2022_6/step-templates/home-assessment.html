@@ -4,7 +4,7 @@
 	</div>
     <div class="row">
     	<br><br>
-        <form-step class="col-md-5 control-label">4.1 Did your family/guardian pressure you in any way to accept the broker's offer?</form-step>
+        <form-step class="col-md-5 control-label">4.1 Did your family/guardian pressure you in any way to accept the suspect's offer?</form-step>
         <div class="col-md-1">
 	        <form-step type="radio" radio-name="guardianPressure" label="N/A" response-value="$ctrl.questions.pvfHsaGuardianPressure.response.value"></form-step>    
 	    </div>
@@ -112,7 +112,7 @@
 	    </div>
     </div>
     <div class="row">
-        <form-step class="col-md-3 control-label">4.7 Does guardian use drugs?</form-step>
+        <form-step class="col-md-3 control-label">4.7 Does guardian use illegal drugs?</form-step>
         <div class="col-md-1 col-md-offset-2">
             <form-step type="radio" radio-name="guardianDrugs" label="Never" response-value="$ctrl.questions.pvfHsaGuardianDrugs.response.value"></form-step>    
 	    </div>
@@ -151,7 +151,7 @@
     </div>
     <br>
     <div class="row center-vertical">
-    	 <form-step class="col-md-5 control-label">4.10 Is there any evidence that the potential victim's guardians were involved in selling them?</form-step>
+    	 <form-step class="col-md-5 control-label">4.10 Is there evidence that the PV's guardians were involved in selling them?</form-step>
     	 <div class="col-md-1">
 	        <form-step type="radio" radio-name="guardianInvolved" label="N/A" response-value="$ctrl.questions.pvfHsaGuardianSellingPv.response.value"></form-step>    
 	    </div>
@@ -163,7 +163,7 @@
 	    </div>
     </div>
     <div class="row center-vertical">
-    	<form-step class="col-md-3 control-label">If yes, what is the evidence?</form-step>
+    	<form-step class="col-md-3 control-label">If yes, please explain:</form-step>
     	<div class="col-md-8">
         	<input type="text" class="form-control" ng-model="$ctrl.questions.pvfHsaGuardianSellingEvidence.response.value">
         </div>
@@ -191,7 +191,7 @@
     	<br>
     	<div class="col-md-12">
     		If the potential victim has 10 or more total Home Situation Alarms and you recommend sending the potential victim home to stay with guardians, why?
-    		<input type="text" class="form-control" ng-model="$ctrl.questions.pvfHsaWhySentHome.response.value">
+    		<textarea class="form-control" rows="1" ng-model="$ctrl.questions.pvfHsaWhySentHome.response.value"></textarea>
     	</div>
     </div>
     <br>

@@ -40,55 +40,55 @@ export class PvfCommonV2022_6Controller extends BasePvfController {
         
         this.howRecruited = [
             {
-                value:'Promised a Job',
+                value:'Promised a job',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Promised Marriage',
+                value:'Promised marriage',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Approached at Wprk',
+                value:'Approached at work',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Online Job Advertisement',
+                value:'Online job advertisement',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Met Suspect Online',
+                value:'Met suspect online',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Suspect Approached Directly',
+                value:'Suspect approached directly',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Through Friends',
+                value:'Through friends',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:'Through Family',
+                value:'Through family',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             {
-                value:"Suspect Called PV's Mobile",
+                value:"Suspect called PV's mobile",
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -175,6 +175,12 @@ export class PvfCommonV2022_6Controller extends BasePvfController {
                 format:'col-md-3',
                 points:0
             },
+            {
+                value:'Other',
+                type:'other-checkbox-group',
+                format:'col-md-4',
+                points:0
+            }
         ];
         for (let idx in this.howPvTravel) {
         	if (this.howPvTravel[idx].type === 'checkbox-group') {

@@ -13,8 +13,8 @@
         		<div class="col-md-3">
         			<form-step type="checkbox" class="inblock" label="Yes, a Recruitment Agency:" response-value="$ctrl.questions.pvfRecruitmentRecrutedAgency.response.value"></form-step>
         		</div>
-        		<div class="col-md-8">
-        			<name-select selected-names="$ctrl.questions.pvfRecruitmentAgency.response.value" name-structure="$ctrl.incidentNames" value-type="suspect" view-only="$ctrl.isViewing"\>
+        		<div class="col-md-9">
+                    <input type="text" ng-model="$ctrl.questions.pvfRecruitmentAgency.response.value">
         		</div>
         	</div>
         	<div class="row col-md-12">
@@ -51,9 +51,9 @@
 		        	<input type="checkbox" id="howExpenses0" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[1].value]">
 		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[0].label }}</label>
 		        	Currency
-		        	<input type=text ng-model="$ctrl.questions.pvfRecruitmentPvCurrency.response.value">
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPvCurrency.response.value">
 		        	& Amount
-		        	<input type=text ng-model="$ctrl.questions.pvfRecruitmentPvAmount.response.value">
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPvAmount.response.value">
 		        	to suspect
 		        	
 	        	</div>
@@ -69,9 +69,9 @@
 		        	<input type="checkbox" id="howExpenses3" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[3].value]">
 		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[3].label }}</label>
 		        	Currency
-		        	<input type=text ng-model="$ctrl.questions.pvfRecruitmentBrokerCurrency.response.value">
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentBrokerCurrency.response.value">
 		        	& Amount
-		        	<input type=text ng-model="$ctrl.questions.pvfRecruitmentBrokerAmount.response.value">
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentBrokerAmount.response.value">
 		        	which must be repaid
 		        	
 	        	</div>
@@ -90,7 +90,7 @@
             <form-step class="control-label">2.5 Job that was promised</form-step>
         </div>
         <div class="col-md-3 form-group">
-        	<input type=text response-value="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
+        	<input type="text" response-value="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
         </div>
     </div>
     <div class="row">
@@ -99,9 +99,9 @@
         </div>
         
         Currency
-       	<input type=text ng-model="$ctrl.questions.pvfRecruitmentPromisedCurrency.response.value">
+       	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPromisedCurrency.response.value">
        	& Amount
-       	<input type=text mg-model="$ctrl.questions.pvfRecruitmentPromisedAmount.response.value">
+       	<input type="text" mg-model="$ctrl.questions.pvfRecruitmentPromisedAmount.response.value">
     </div>
     
     <br>

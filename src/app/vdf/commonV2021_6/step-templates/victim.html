@@ -1,4 +1,40 @@
 <fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class ="row">
+        <div class="col-md-2" style="padding-left: 1.5%">
+            <label for="source">Source:</label>
+            <select id="source">
+                <option value="Master">Master</option>
+                <option value="Source 1">Intercept</option>
+                <option value="Source 2">Victim</option>
+                <option value="Source 3">Operation</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <button class="btn btn-success" >
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+        <form-step class="col-md-2 control-label">Source of Intelligence: </form-step>
+        <div class="col-md-4">
+        	<div class="col-md-12">
+		        <div class="col-md-3" style="float:left" ng-repeat="source in $ctrl.sourceOptions">
+		            <form-step type="radio" radio-name="sourceType" label="{{source}}"
+		            	other-value="$ctrl.otherData.questions[289].otherValue"
+		            	response-value="$ctrl.otherData.questions[289].value"></form-step>
+		        </div>
+
+	        </div>
+        </div>
+        <div class="col-md-3">
+            <form-step class="col-md-1 control-label">Title</form-step>
+            <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="Title">
+            </div>
+        </div>
+
+    </div>
+    <br/>
+    <br/>
     <div class="row">
         <div class="col-md-4 form-group">
             <form-step class="col-md-3 control-label">1.1 Name</form-step>

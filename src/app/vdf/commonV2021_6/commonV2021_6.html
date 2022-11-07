@@ -2,21 +2,13 @@
     <div class="sticky">
         <div class="padding-bottom-40">
             <h1 class="form-number-header float-left padding-left-20">
-                {{$ctrl.questions[651].response.value}}
-            </h1>
-            <h1 class="form-number-header float-right padding-right-20">
-                Total Home Situational Alarms: {{$ctrl.redFlagTotal}}
+                {{$ctrl.questions[653].response.name.value}}
             </h1>
         </div>
         <div class="btn-group btn-group-justified padding-bottom-20 padding-horizontal-40" role="group">
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 0">Top Box</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 1">Potential Victim/Family Info</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 2">Home Situation Assessment</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 3}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 3">Awareness/Assessment</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 4}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 4">Release Information</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 5}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 5">Final Procedures</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 6}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 6">Attachments</a>
-            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 7}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 7">Compliance</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 0}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 0">Suspect Information</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 1}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 1">Associations / Narrative</a>
+            <a class="btn btn-default" ng-class="{active: $ctrl.selectedStep == 2}" ng-click="$ctrl.autoSave();$ctrl.selectedStep = 2">Legal</a>
         </div>
         <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
         	<span >

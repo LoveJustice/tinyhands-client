@@ -16,6 +16,7 @@ export class BaseVdfController extends BaseFormController {
         this.vdfNumber = "";
         this.associatedPersons = [];
         this.tableDivSize = (window.innerWidth - 50) + 'px';
+
         this.getVdf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
     }
     

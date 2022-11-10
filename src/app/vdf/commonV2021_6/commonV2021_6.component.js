@@ -18,17 +18,17 @@ export class VdfCommonV3Controller extends BaseVdfController {
     constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';        
         super($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
-       this.sourceOptions = [
-            'Intercept', 'Operation',
-            'Victim', 'Police',
-            'Trafficker', 'OSI'
-        ];
+
         this.stepTemplates = [
+            topTemplate,
             victimTemplate,
             homeAssessmentTemplate,
-            awarenessTemplate
+            awarenessTemplate,
+            releaseTemplate,
+            finalTemplate,
+            attachmentsTemplate,
+            logbookTemplate
         ];
-
     }
     
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

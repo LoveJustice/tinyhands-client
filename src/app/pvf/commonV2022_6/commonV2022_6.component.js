@@ -52,7 +52,7 @@ export class PvfCommonV2022_6Controller extends BasePvfController {
                 points:0
             },
             {
-                value:'Approached at Wprk',
+                value:'Approached at Work',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0

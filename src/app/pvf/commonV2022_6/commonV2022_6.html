@@ -15,36 +15,7 @@
         		style="white-space: normal;word-wrap: break-word;"
         		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
         </div>
-        <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
-        	<span >
-        		<span ng-if="$ctrl.incidentNumber">
-        			&nbsp;&nbsp;<b>Incident</b>
-		 			&nbsp;{{ $ctrl.incidentNumber }}
-        		</span>
-		 		<span ng-if="$ctrl.relatedForms['IRF']">
-		 			&nbsp;&nbsp;<b>IRF</b>
-		 			&nbsp;<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
-		 		</span>
-		 		<span ng-if="$ctrl.relatedForms['CIF']">
-		 			&nbsp;&nbsp;<b>CIFs</b>
-		 			<span ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
-		 				&nbsp;<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
-		 			</span>
-		 		</span>
-		 		<span ng-if="$ctrl.relatedForms['PVF']">
-		 			&nbsp;&nbsp;<b>PVFs</b>
-		 			<span ng-repeat="pvfRef in $ctrl.relatedForms['PVF']">
-		 				&nbsp;<a ng-href="{{pvfRef.url}}">{{ pvfRef.formNumber }}</a>
-		 			</span>
-		 		</span>
-		 		<span ng-if="$ctrl.relatedForms['LEGAL_CASE']">
-		 			&nbsp;&nbsp;<b>Legal</b>
-		 			<span ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
-		 				&nbsp;<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
-		 			</span>
-		 		</span>
-		 	</span>
-		</div>
+        <related-forms related-forms="$ctrl.relatedForms" current-form-type="PVF" exclude-form-number="$ctrl.questions.pvfTopPvfNumber.response.value"></related-forms>
         <hr class="margin-bottom-0" />
     </div>
     <div id="pvf-commonV2022_6-content" class="padding-bottom-40">

@@ -10,11 +10,11 @@ export default class IncidentService {
     	return this.service.get(`api/incident/${id}/`);
     }
     
-    submitInstance(incident) {
+    submitIncident(incident) {
     	if (incident.id === null) {
     		return this.postIncident(incident);
     	} else {
-    		return this.putIncident(id, incident);
+    		return this.putIncident(incident);
     	}
     }
     
@@ -38,5 +38,9 @@ export default class IncidentService {
     		sep = ',';
     	}
     	return this.service.get(`api/incident/names/?number=${incidentString}`);
+    }
+    
+    getRelatedForms(stationId, formNumber) {
+        return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
     }
 }

@@ -87,14 +87,14 @@
 	        	<tr>
 	        		<td>Suspect s/he’s a trafficker</td>
 	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	        			<input type="radio" name="'eval' + {{ $index }}" value="Suspect s/he’s a trafficker"
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Suspect s/he's a trafficker"
 	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluation').value">
 	        		</td>
 	        	</tr>
 	        	<tr>
 	        		<td>Don’t believe s/he’s a trafficker</td>
 	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	        			<input type="radio" name="'eval' + {{ $index }}" value="Don’t believe s/he’s a trafficker"
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Don't believe s/he's a trafficker"
 	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluation').value">
 	        		</td>
 	        	</tr>

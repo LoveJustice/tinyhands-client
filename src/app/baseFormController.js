@@ -403,12 +403,13 @@ export class BaseFormController {
     }
     
     getRelatedForms(service, session, stationId, formNumber) {
-        this.service.getRelatedForms(stationId, formNumber).then((response) => {
+        service.getRelatedForms(stationId, formNumber).then((response) => {
             let relatedForms = response.data;
             this.relatedForms = {};
             for (let idx in relatedForms) {
                 let url = null;
-                if (this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
+                if (relatedForms[idx].form_type === 'Incident' ||
+                        this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
                     url = this.state.href(relatedForms[idx].form_name, {
                         id: relatedForms[idx].id,
                         stationId: relatedForms[idx].station_id,

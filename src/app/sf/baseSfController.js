@@ -76,6 +76,7 @@ export class BaseSfController extends BaseFormController {
     	if (this.currentCard) {
     		this.leaveCard(this.currentCard);
     		this.checkAndPopulateMerged(false);
+    		
     	}
     	if (this.informationCard === 'MERGED') {
     		this.resetCheckboxGroupInfo();
@@ -465,6 +466,9 @@ export class BaseSfController extends BaseFormController {
     	container.otherData.updateResponses();
         container.dateData.updateResponses();
         container.checkboxGroup.updateResponses();
+        if (!this.questions.sfTopMergedPerson.response.link_id && this.currentCard.questions.sfInformationPerson.response.link_id) {
+            this.questions.sfTopMergedPerson.response.link_id = this.currentCard.questions.sfInformationPerson.response.link_id;
+        }
     }
     
     enterLegalCard() {

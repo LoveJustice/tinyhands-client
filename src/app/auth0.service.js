@@ -1,6 +1,8 @@
 import {createAuth0Client} from '@auth0/auth0-spa-js';
 
-// TODO move these into .env? or to constants.js?
+// Tried to move these to a backend endpoint,
+// but these are required for our http client itself!
+// TODO move these into a .env but for the UI? or to constants.js?
 const AUTH0_CLIENT_ID = '3Dip91hyG5oiP8RBJ7mZlA6Q81RSNWpP';
 const AUTH0_DOMAIN = 'dev-oiz87mbf.us.auth0.com';
 const AUTH0_AUDIENCE_ID = 'https://searchlightdata.org/api';

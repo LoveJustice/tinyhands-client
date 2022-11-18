@@ -43,6 +43,7 @@ export class NameSelectController {
     }
     
     processNames() {
+        this.selectionList = {};
         let nameTypes = ['forms', 'irfs', 'locals'];
         
         this.optionList = [];
@@ -56,6 +57,8 @@ export class NameSelectController {
                 if (!this.selectionList.hasOwnProperty(nameText)) {
                     this.selectionList[nameText] = this.nameChoices[nameType][idx];
                     this.selectionList[nameText].nameType = nameType;
+                }
+                if (this.optionList.indexOf(nameText) < 0) {
                     this.optionList.push(nameText);
                 }
             }

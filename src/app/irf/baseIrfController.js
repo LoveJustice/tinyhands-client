@@ -297,10 +297,6 @@ export class BaseIrfController extends BaseFormController {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
-    
-    isString(val) {
-    	return typeof val === 'string';
-    }
 
     showIgnoreWarningsCheckbox() {
         return (this.messagesEnabled && this.warningMessages.length > 0) || this.ignoreWarnings;

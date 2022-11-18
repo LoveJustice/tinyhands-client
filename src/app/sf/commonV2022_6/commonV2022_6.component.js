@@ -134,7 +134,9 @@ export class SfCommonV2022_6Controller extends BaseSfController {
     getInfoCardConfig() {
     	let infoCard = {
         	dateQuestions: [{tag:'sfInformationPerson', type:'person'},{tag:'sfInformationInterviewDate', type:'basic'}],
-        	otherQuestions: [],
+        	otherQuestions: [{
+        	    tag: 'sfInformationSourceType',
+        	    radioItems:['Intercept','Operation','Victim','Police','Trafficker','OSI']}],
         	checkboxGroupQuestions: [
 				{tag:'sfInformationPerson-role', items:['Recruiter','Transporter','Master','Facilitator','Boss Trafficker', 'Host']}]
         };

@@ -31,7 +31,7 @@ export default class BaseService {
      */
     addAuth0TokenAsync(headers) {
         if (this.auth0Service.clientReadyPromise) {
-            return this.auth0Service.clientReadyPromise.then((auth0Client) => {
+            const nonQPromise = this.auth0Service.clientReadyPromise.then((auth0Client) => {
                 // Cached in localstorage hopefully
                 const accessTokenPromise = auth0Client.getTokenSilently({
                     audience: AUTH0_AUDIENCE_ID,
@@ -43,9 +43,12 @@ export default class BaseService {
                         headers.Authorization = authHeader;
                     }
                 }).catch(() => {
+                    // Continue with no auth eader
                 });
                 return accessTokenPromise;
             });
+            // When everything returns, trigger angular digest cycle to refresh page
+            return this.$q.when(nonQPromise);
         } else {
             let defer = this.$q.defer();
             // Don't reject, because api/login works without token

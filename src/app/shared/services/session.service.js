@@ -113,7 +113,7 @@ export default class SessionService {
     checkIfAuthenticatedAuth0() {
         let defer = this.$q.defer();
         if(this.auth0Service.clientReadyPromise) {
-            return this.auth0Service.clientReadyPromise.then((client) => {
+            const nonQPromise = this.auth0Service.clientReadyPromise.then((client) => {
                 return client.isAuthenticated();
             }).then((isAuthenticated) => {
                 if(!isAuthenticated){
@@ -125,6 +125,8 @@ export default class SessionService {
                     });
                 }
             });
+            // When everything returns, trigger angular digest cycle to refresh page
+            return this.$q.when(nonQPromise);
         } else {
             defer.reject('Not Authenticated');
             return defer.promise;
@@ -133,6 +135,7 @@ export default class SessionService {
 
     checkIfAuthenticated() {
         if (typeof localStorage.token === 'undefined') {
+            console.log('checkIfAuthenticatedAuth0');
             return this.checkIfAuthenticatedAuth0();
         } else {
             this.root.authenticated = true;
@@ -143,12 +146,14 @@ export default class SessionService {
     logout() {
         this.service.get('api/logout/');
         if(this.auth0Service.clientReadyPromise) {
-            return this.auth0Service.clientReadyPromise.then((client) => {
+            const nonQPromise = this.auth0Service.clientReadyPromise.then((client) => {
                 client.logout();
             }).finally(() => {
                 // Always do legacy logout
                 this.logoutLegacy();
             });
+            // When everything returns, trigger angular digest cycle to refresh page
+            return this.$q.when(nonQPromise);
         } else {
             this.logoutLegacy();
         }

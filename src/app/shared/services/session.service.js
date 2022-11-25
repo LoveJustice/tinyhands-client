@@ -135,7 +135,6 @@ export default class SessionService {
 
     checkIfAuthenticated() {
         if (typeof localStorage.token === 'undefined') {
-            console.log('checkIfAuthenticatedAuth0');
             return this.checkIfAuthenticatedAuth0();
         } else {
             this.root.authenticated = true;

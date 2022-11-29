@@ -1,0 +1,37 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">LF Number: </form-step>
+            <div class="col-md-4">
+                <input  type="text" class="form-control" placeholder="LF Number" ng-model="$ctrl.questions.lfTopLfNumber.response.value" ng-change="$ctrl.formNumberChange()">
+            </div>
+            <div class="col-xs-5 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            	Invalid Form Number
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-4">
+	    	<table class="table table-striped">
+	    		<thead>
+	    			<tr>
+	    				<th colspan="2">Associated Incidents<th>
+	    			</tr>
+	    		</thead>
+	    		<tbody>
+	    			<tr ng-repeat="assoc in $ctrl.associatedIncidents">
+	    				<td>{{ assoc.incident_number }}</td>
+	    				<td>
+	    					<button class="btn btn-danger" ng-click="$ctrl.removeIncident($index)">
+				                {{ assoc.confirmedDelete ? 'confirm' : 'disassociate' }}
+				            </button>
+	    				</td>
+	    			</tr>
+	    		</tbody>
+	    	</table>
+	    </div>
+	    <div class="col-md-1">
+	    	<create-incident-form stations-add="$ctrl.emptyList" use-title="Associate Incident" form-type='SF' call-controller="$ctrl" select-only="true">
+	    </div>
+    </div>
+</fieldset>

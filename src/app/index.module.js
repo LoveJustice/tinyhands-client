@@ -46,6 +46,7 @@ import empModule from './emp/emp.module';
 import gspModule from './gsp/gsp.module';
 import pvfModule from './pvf/pvf.module';
 import sfModule from './sf/sf.module';
+import lfModule from './lf/lf.module';
 import incidentModule from './incident/incident.module';
 
 import constants from './constants.js';
@@ -96,6 +97,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         gspModule,
         pvfModule,
         sfModule,
+        lfModule,
         incidentModule,
     ])
 

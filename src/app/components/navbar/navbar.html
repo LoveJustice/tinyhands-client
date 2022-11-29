@@ -90,6 +90,10 @@
                             ui-sref="sfList">SFs</a>
                     </li>
                     <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('LF','VIEW',null, null)"
+                            ui-sref="lfList">LFs</a>
+                    </li>
+                    <li>
                         <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
                             ui-sref="monthlyReportList">SMRs</a>
                     </li>

@@ -1,14 +1,14 @@
 <div id="vdf-attachments" class="row stretch-vertical">
     <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Attachments')">
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openAttachmentModal(card, false, $index)">
-            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentNumber').value}}){{$ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentDescription').value}}</h3>
-            <div class="panel-body text-center" ng-if="$ctrl.isString($ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentAttachment').value)">
-            	<form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentOption').value}}</form-step>
-                <form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentAttachment').value.split("/")[3]}}</form-step>
+            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentNumber').value}}){{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentDescription').value}}</h3>
+            <div class="panel-body text-center" ng-if="$ctrl.isString($ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentAttachment').value)">
+            	<form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentOption').value}}</form-step>
+                <form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentAttachment').value.split("/")[3]}}</form-step>
             </div>
-            <div class="panel-body text-center" ng-if="!$ctrl.isString($ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentAttachment').value)">
-            	<form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentOption').value}}</form-step>
-                <form-step>Y{{$ctrl.getResponseOfQuestionByTag(card.responses, 'sfAttachmentAttachment').value.name}}</form-step>
+            <div class="panel-body text-center" ng-if="!$ctrl.isString($ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentAttachment').value)">
+            	<form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentOption').value}}</form-step>
+                <form-step>Y{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAttachmentAttachment').value.name}}</form-step>
             </div>
         </div>
     </div>

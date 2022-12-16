@@ -11,7 +11,7 @@ import LfListService from './list/lfList.service';
 
 /* global angular */
 
-export default angular.module('tinyhands.SF', [LfCommonModuleV2022_6, sharedModule])
+export default angular.module('tinyhands.LF', [LfCommonModuleV2022_6, sharedModule])
     .config(LfRoutes)
     .controller('LfListController', LfListController)
     .service('LfListService', LfListService)

@@ -6,13 +6,13 @@
                 <span class="sr-only">Close</span>
             </button>
             <div class="col-md-5">
-            	<h3 class="modal-title">{{AttachmentModalController.questions.sfAttachmentDescription.response.value || 'Attachment'}}</h3>
+            	<h3 class="modal-title">{{AttachmentModalController.questions.lfAttachmentDescription.response.value || 'Attachment'}}</h3>
             </div>
             <div class="col-md-2 margin-top-10">
 	    		<label>Attachment#</label>
 	    	</div>
 			<div class="col-md-3 form-group">
-		        <input type="number" min="0" class="form-control" ng-model="AttachmentModalController.questions.sfAttachmentNumber.response.value">
+		        <input type="number" min="0" class="form-control" ng-model="AttachmentModalController.questions.lfAttachmentNumber.response.value">
 	        </div>
         </div>
         <div class="modal-body">
@@ -21,7 +21,7 @@
 		    		<label>Description</label>
 		    	</div>
 				<div class="col-md-10 form-group">
-			        <input type="text" min="0" class="form-control" ng-model="AttachmentModalController.questions.sfAttachmentDescription.response.value">
+			        <input type="text" min="0" class="form-control" ng-model="AttachmentModalController.questions.lfAttachmentDescription.response.value">
 		        </div>
             </div>
             <div class="row">
@@ -29,7 +29,7 @@
 		    		<label>Option</label>
 		    	</div>
 		    	<div class="col-md-5 form-group">
-		            <select class="form-control" ng-model="AttachmentModalController.questions.sfAttachmentOption.response.value">
+		            <select class="form-control" ng-model="AttachmentModalController.questions.lfAttachmentOption.response.value">
                         <option value="Original Form">Original Form</option>
                         <option value="Charge Sheet">Charge Sheet</option>
                         <option value="Case Notes">Case Notes</option>
@@ -47,17 +47,17 @@
 	                    <label>File to attach</label>
 	                </form-step>
 	            </div>
-	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.questions.sfAttachmentAttachment.response.value"
-	            	ng-change="AttachmentModalController.checkUploadSize(AttachmentModalController.questions.sfAttachmentAttachment.response)">
+	            <input type="file" ngf-select value="Choose File" ng-model="AttachmentModalController.questions.lfAttachmentAttachment.response.value"
+	            	ng-change="AttachmentModalController.checkUploadSize(AttachmentModalController.questions.lfAttachmentAttachment.response)">
             </div>
             <div class="row center-vertical">
             	<div class="col-md-2 form-group">
 	            </div>
-	            <div ng-if="!AttachmentModalController.isString(AttachmentModalController.questions.sfAttachmentAttachment.response.value)">
-	        		<p>{{AttachmentModalController.questions.sfAttachmentAttachment.response.value.name}}</p>
+	            <div ng-if="!AttachmentModalController.isString(AttachmentModalController.questions.lfAttachmentAttachment.response.value)">
+	        		<p>{{AttachmentModalController.questions.lfAttachmentAttachment.response.value.name}}</p>
 	        	</div>
-	        	<div ng-if="AttachmentModalController.isString(AttachmentModalController.questions.sfAttachmentAttachment.response.value)">
-	        		<a href="{{AttachmentModalController.getScannedFormUrl(AttachmentModalController.questions.sfAttachmentAttachment.response.value)}}">{{AttachmentModalController.questions.sfAttachmentAttachment.response.value.split("/")[3]}}</a>
+	        	<div ng-if="AttachmentModalController.isString(AttachmentModalController.questions.lfAttachmentAttachment.response.value)">
+	        		<a href="{{AttachmentModalController.getScannedFormUrl(AttachmentModalController.questions.lfAttachmentAttachment.response.value)}}">{{AttachmentModalController.questions.lfAttachmentAttachment.response.value.split("/")[3]}}</a>
 	        	</div>
         	</div>
         	<div class="row center-vertical">
@@ -67,7 +67,7 @@
         <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="AttachmentModalController.save()" ng-disabled="!AttachmentModalController.questions.sfAttachmentAttachment.response.value" ng-if="!AttachmentModalController.isViewing">Save</button>
+                    <button class="btn btn-success float-left" ng-click="AttachmentModalController.save()" ng-disabled="!AttachmentModalController.questions.lfAttachmentAttachment.response.value" ng-if="!AttachmentModalController.isViewing">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
                     <button class="btn btn-danger" ng-click="AttachmentModalController.delete()" ng-if="!AttachmentModalController.isAdd && !AttachmentModalController.isViewing">Delete</button>

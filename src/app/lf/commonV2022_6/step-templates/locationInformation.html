@@ -3,7 +3,7 @@
         <div class="col-md-2 form-group">
 	        <select name='form' class="form-control" ng-model="$ctrl.informationCard" ng-change="$ctrl.informationCardChange()">
 	            <option value="MERGED">MERGED</option>
-	            <option ng-repeat="opt in $ctrl.getCardInstances('Information')" value="{{ $index }}">{{  $ctrl.getResponseOfQuestionByTag(opt.responses, 'sfInformationSourceType').value + ':' + $ctrl.getResponseOfQuestionByTag(opt.responses, 'sfInformationSourceTitle').value }}</option>
+	            <option ng-repeat="opt in $ctrl.getCardInstances('Information')" value="{{ $index }}">{{  $ctrl.getResponseOfQuestionByTag(opt.responses, 'lfInformationSourceType').value + ':' + $ctrl.getResponseOfQuestionByTag(opt.responses, 'lfInformationSourceTitle').value }}</option>
 	        </select>
 	       
         </div>
@@ -18,33 +18,33 @@
     		</div>
     		<div class="col-md-10">
 	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Intercept"
-	    				response-value="$ctrl.currentCard.questions.sfInformationSourceType.response.value"
-	    				other-value="$ctrl.currentCard.questions.otherData.questions.sfInformationSourceType.otherValue"></form-step>
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
 	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Operation"
-	    				response-value="$ctrl.currentCard.questions.sfInformationSourceType.response.value"
-	    				other-value="$ctrl.currentCard.questions.otherData.questions.sfInformationSourceType.otherValue"></form-step>
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
 	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Victim"
-	    				response-value="$ctrl.currentCard.questions.sfInformationSourceType.response.value"
-	    				other-value="$ctrl.currentCard.questions.otherData.questions.sfInformationSourceType.otherValue"></form-step>
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
 	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Police"
-	    				response-value="$ctrl.currentCard.questions.sfInformationSourceType.response.value"
-	    				other-value="$ctrl.currentCard.questions.otherData.questions.sfInformationSourceType.otherValue"></form-step>
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
 	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Trafficker"
-	    				response-value="$ctrl.currentCard.questions.sfInformationSourceType.response.value"
-	    				other-value="$ctrl.currentCard.questions.otherData.questions.sfInformationSourceType.otherValue"></form-step>
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
 	    		<form-step class="col-md-3" type="radio" radio-name="source" label="OSI"
-	    				response-value="$ctrl.currentCard.questions.sfInformationSourceType.response.value"
-	    				other-value="$ctrl.currentCard.questions.otherData.questions.sfInformationSourceType.otherValue"></form-step>
-	    		<form-step class="col-md-6" type="otherRadio" radio-name="source" label="Other"
-			            	other-value="$ctrl.currentCard.otherData.questions.sfInformationSourceType.otherValue"
-			                response-value="$ctrl.currentCard.otherData.questions.sfInformationSourceType.value"></form-step>
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-9" type="otherRadio" radio-name="source" label="Other"
+			            other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"
+			            response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"></form-step>
 	    	</div>
     	</fieldset>
     	<fieldset class="col-md-1 form-group"  ng-if="$ctrl.currentCard" ng-disabled="$ctrl.isViewing === true">
     		<label>Title</label>
     	</fieldset>
     	<fieldset class="col-md-2 form-group"  ng-if="$ctrl.currentCard" ng-disabled="$ctrl.isViewing === true">
-    		<input type="text" ng-model="$ctrl.currentCard.questions.sfInformationSourceTitle.response.value">
+    		<input type="text" ng-model="$ctrl.currentCard.questions.lfInformationSourceTitle.response.value">
     	</fieldset>
     	<fieldset class="col-md-1 form-group" ng-if="$ctrl.currentCard && $ctrl.getCardInstances('Information').length > 1" ng-disabled="$ctrl.isViewing === true">
          	<button class="btn btn-danger" ng-click="$ctrl.removeInformationCard()" ng-if="!$ctrl.currentCard.confirmedDelete">
@@ -63,19 +63,19 @@
 	    				<label>Interviewer Name</label>
 	    			</div>
 	    			<div class="col-md-8">
-		                <staff-select selected-staff="$ctrl.currentCard.questions.sfInformationInterviewerName.response.value" station-id="$ctrl.stationId"></staff-select>
+		                <staff-select selected-staff="$ctrl.currentCard.questions.lfInformationInterviewerName.response.value" station-id="$ctrl.stationId"></staff-select>
 		            </div>
 	    		</div>
 	    		<div class="col-md-3 form-group">
 	    			<label>Interview Date</label>
-	    			<input type="date"  ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.currentCard.dateData.questions.sfInformationInterviewDate.value">
+	    			<input type="date"  ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.currentCard.dateData.questions.lfInformationInterviewDate.value">
 	    		</div>
 	    		<div class="col-md-3 form-group">
 	    			<div class="col-md-3">
 	    				<label>Location</label>
 	    			</div>
 	    			<div class="col-md-9">
-		                <location-select selected-location="$ctrl.currentCard.questions.sfInformationInterviewLocation.response.value" station-id="$ctrl.stationId"></location-select>
+		                <location-select selected-location="$ctrl.currentCard.questions.lfInformationInterviewLocation.response.value" station-id="$ctrl.stationId"></location-select>
 		            </div>
 		            
 	    		</div>
@@ -83,165 +83,125 @@
 	    </div>
 	    <div ng-if="$ctrl.currentCard">
 	    	<div class="row">
-		    	<div class="col-md-4 form-group">
-		    		<div class="col-md-3">
-		            	<label>1.1 Name</label>
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.1 Which Place</label>
 		            </div>
-		            <div class="col-md-8">
-		                <input type="text" class="form-control" placeholder="Name" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.name.value">
-		            </div>
-		            <div class="col-md-1">
-			            <associated-person ng-model="$ctrl.currentCard.questions.sfInformationPerson.response"
-			            		person-list="$ctrl.associatedPersons" 
-			            		birth-date="$ctrl.currentCard.dateData.questions.sfInformationPerson"
-			            		associated-controller="$ctrl"></associatedPerson>
-		            </div>
-		        </div>
-		        <div class="col-md-3 form-group">
-		        	<div class="col-md-5">
-		            	<label>1.2 Gender</label>
-		            </div>
-		            <div class="col-md-7">
-		                 <select class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.gender.value">
-		                      <option value="Female">Female</option>
-		                      <option value="Male">Male</option>
-		                 </select>
-		            </div>
-		        </div>
-		        <div class="col-md-5 form-group">
-		        	<div class="col-md-2">
-		            	<label style="float:left">1.3 DOB</label>
-		            </div>
-		            <div class="col-md-4">
-		                <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.currentCard.dateData.questions.sfInformationPerson.value">
-		            </div>
-		            <div class="col-md-1">
-		        		<b>or</b>
-		        	</div>
-		        	<div class="col-md-2">
-		            <label>Age</label>
-		            </div>
-		            <div class="col-md-2">
-		                <input type="number" class="form-control" placeholder="Age" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.age.value">
+		            <div class="col-md-10">
+		                <form-step class="col-md-3" type="radio" radio-name="whichPlace" label="Transit Location"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="whichPlace" label="Meet Point"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="whichPlace" label="Destination"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="whichPlace" label="Source of ID"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="whichPlace" label="Recruitment Agency"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.otherValue"></form-step>
+		    			<form-step class="col-md-3" type="otherRadio" radio-name="whichPlace" label="Other"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlace.otherValue"></form-step>
 		            </div>
 		        </div>
 	    	</div>
 	    	<div class="row">
-		     	<div class="col-md-6 form-group">
-		        	<label class="col-md-2 control-label margin-top-30">1.4 Address</label>
-		        	<div class="col-md-10 margin-top-0">
-			        	<address-entry ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.address.value"
-			        			latitude-model="$ctrl.currentCard.questions.sfInformationPerson.response.latitude.value"
-			        			longitude-model="$ctrl.currentCard.questions.sfInformationPerson.response.longitude.value" view-only="$ctrl.isViewing"></addressEntry>
-			        </div>
-		        </div>
-		        <div class="col-md-6 form-group margin-top-30">
-		        	<label class="col-md-2 control-label">Address Notes</label>
-		        	<div class="col-md-10">
-		                <input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.address_notes.value">
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.2 What kind of place is it?</label>
 		            </div>
+		            <div class="col-md-10">
+		                <form-step class="col-md-3" type="radio" radio-name="placeKind" label="House"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="placeKind" label="Bus Station"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="placeKind" label="Hotel"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="placeKind" label="Train Station"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		                <form-step class="col-md-3" type="radio" radio-name="placeKind" label="Airport"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		    			<form-step class="col-md-3" type="radio" radio-name="placeKind" label="Port"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		    			<form-step class="col-md-3" type="otherRadio" radio-name="placeKind" label="Other"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfInformationPlaceKind.otherValue"></form-step>
+		            </div>
+		        </div>
+	    	</div>
+	    	<div class="row">
+		     	<div class="col-md-12 form-group">
+		        	<label class="col-md-2 control-label margin-top-30">1.3 Address</label>
+		        	<div class="col-md-10 margin-top-0">
+			        	<address-entry ng-model="$ctrl.currentCard.questions.lfInformationAddress.response"
+			        			latitude-model="$ctrl.currentCard.questions.lfInformationLatitude.response.value"
+			        			longitude-model="$ctrl.currentCard.questions.lfInformationLongitude.response.value" view-only="$ctrl.isViewing"></addressEntry>
+			        </div>
 		        </div>
 			</div>
 			<div class="row">
-				<div class="col-md-3 form-group">
-					<div class="col-md-4">
-		        		<label>1.5 Phone</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        	 	<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.phone.value">
-		        	</div>
-		        </div>
-		        <div class="col-md-6 form-group">
-		        	<div class="col-md-3">
-		        		<label>1.6 Social Media</label>
-		        	</div>
-		        	<div class="col-md-9">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.social_media.value">
-		        	</div>
-		        </div>
-		        <div class="col-md-3 form-group">
-		        	<div class="col-md-3">
-		        		<label>Platform</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.social_media_platform.value">
-		        	</div>
-		        </div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-4 form-group">
-					<div class="col-md-4">
-		        		<label>1.7 Nationality</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        	 	<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.nationality.value">
-		        	</div>
-		        </div>
-		        <div class="col-md-4 form-group center-vertical">
-		        	<div class="col-md-1">
-		        		<label>1.8</label>
-		        	</div>
-		        	<div class="col-md-3">
-		        		<label>Passport</label>
-		        		<label>Other ID#</label>
-		        	</div>
-		        	<div class="col-md-8">
-			        	<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.identifiers['Passport'].number.value">
-			        	<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.identifiers['Other ID#'].number.value">
-		        	</div>
+		     	<div class="col-md-8 form-group">
+		        	<label class="col-md-3 control-label">1.4 Name/Signboard</label>
+		        	<div class="col-md-9 margin-top-0">
+		                <input type="text" class="form-control" placeholder="Name/Signboard" ng-model="$ctrl.currentCard.questions.lfInformationSignboard.response.value">
+			        </div>
 		        </div>
 		        <div class="col-md-4 form-group">
-		        	<div class="col-md-4">
-		        		<label>1.9 Occupation</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.occupation.value">
-		        	</div>
+		        	<label class="col-md-4 control-label">1.5 Phone #</label>
+		        	<div class="col-md-6 margin-top-0">
+		                <input type="text" class="form-control" placeholder="Phone #" ng-model="$ctrl.currentCard.questions.lfInformationPhone.response.value">
+			        </div>
 		        </div>
 			</div>
-			<div class="row center-vertical">
-				<div class="col-md-12">
-					<div class="col-md-2 form-group">
-						<label>1.10 Role</label>
-					</div>
-					<div class="col-md-10 form-group">
-						<form-step type="checkbox" class="col-md-2" label="{{ roleItem }}" ng-repeat="roleItem in $ctrl.currentCard.checkboxGroupItems['sfInformationPerson-role']"
-							response-value="$ctrl.currentCard.checkboxGroup.questions['sfInformationPerson-role'][roleItem]"></form-step>
-						<form-step type="otherCheckbox" class="col-md-4" label="Other:"
-				        	response-value="$ctrl.currentCard.checkboxGroup.questions['sfInformationPerson-role'].internalOther"></form-step>
-					</div>
-				        
-				</div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-8">
-					<div class="col-md-3 form-group">
-						<label>1.11 Vehicle Description</label>
-					</div>
-					<div class="col-md-9 form-group">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationVehicle.response.value">
-		        	</div>
-				</div>
-				<div class="col-md-4">
-					<div class="col-md-4 form-group">
-						<label>1.12 Plate #</label>
-					</div>
-					<div class="col-md-8 form-group">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPlateNumber.response.value">
-		        	</div>
-				</div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-12">
-					<div class="col-md-2 form-group">
-						<label>1.13 Appearance</label>
-					</div>
-					<div class="col-md-10 form-group">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.appearance.value">
-		        	</div>
-				</div>
-			</div>
-	    </div>
+		    <div class="row">
+		     	<div class="col-md-6 form-group">
+		        	<label class="col-md-4 control-label">1.6 Location in town</label>
+		        	<div class="col-md-8">
+		                <input type="text" class="form-control" placeholder="Location" ng-model="$ctrl.currentCard.questions.lfInformationLocation.response.value">
+			        </div>
+		        </div>
+		        <div class="col-md-3 form-group">
+		        	<label class="col-md-4 control-label">1.7 Color</label>
+		        	<div class="col-md-6">
+		                <input type="text" class="form-control" placeholder="Color" ng-model="$ctrl.currentCard.questions.lfInformationColor.response.value">
+			        </div>
+			    </div>
+			    <div class="col-md-3 form-group">
+		        	<label class="col-md-5 control-label">1.8 # of levels</label>
+		        	<div class="col-md-4">
+		                <input type="text" class="form-control" placeholder="levels" ng-model="$ctrl.currentCard.questions.lfInformationNumberOfLevels.response.value">
+			        </div>
+		        </div>
+		    </div>
+		     <div class="row">
+		    	<div class="col-md-12 form-group">
+	            	<label class="col-md-2">1.9 Descriptive Features</label>
+		            <div class="col-md-9">
+		            	 <input type="text" class="form-control" placeholder="Description" ng-model="$ctrl.currentCard.questions.lfInformationDescription.response.value">
+		            </div>
+		        </div>
+	    	</div>
+	    	<div class="row">
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.10 Nearby Landmarks</label>
+		            </div>
+		            <div class="col-md-9">
+		            	 <input type="text" class="form-control" placeholder="Landmarks" ng-model="$ctrl.currentCard.questions.lfInformationLandmarks.response.value">
+		            </div>
+		        </div>
+	    	</div>
+    	</div>
 	    
 	    
 	    
@@ -251,192 +211,126 @@
 	    
 	    <div ng-if="!$ctrl.currentCard">
 	    	<div class="row">
-		    	<div class="col-md-4 form-group">
-		    		<div class="col-md-3">
-		            	<label>1.1 Name</label>
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.1 Which Place</label>
 		            </div>
-		            <div class="col-md-8">
-		            	<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.name.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.name">{{ item }}</option>
+		            <div class="col-md-10">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedPlace.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationPlace">{{ item }}</option>
 		            	</select>
 		            </div>
 		        </div>
-		        <div class="col-md-3 form-group">
-		        	<div class="col-md-5">
-		            	<label>1.2 Gender</label>
+	    	</div>
+	    	<div class="row">
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.2 Which kind of place is it?</label>
 		            </div>
-		            <div class="col-md-7">
-		            	<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.gender.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.gender">{{ item }}</option>
-		            	</select>
-		            </div>
-		        </div>
-		        <div class="col-md-5 form-group">
-		        	<div class="col-md-2">
-		            	<label style="float:left">1.3 DOB</label>
-		            </div>
-		            <div class="col-md-4">
-		            	<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.birthdate.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.birthdate">{{ item }}</option>
-		            	</select>
-		            </div>
-		            <div class="col-md-1">
-		        		<b>or</b>
-		        	</div>
-		        	<div class="col-md-2">
-		            <label>Age</label>
-		            </div>
-		            <div class="col-md-2">
-		            	<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.age.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.age">{{ item }}</option>
+		            <div class="col-md-10">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedPlaceKind.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationPlaceKind">{{ item }}</option>
 		            	</select>
 		            </div>
 		        </div>
 	    	</div>
 	    	<div class="row center-vertical">
-		     	<div class="col-md-5 form-group margin-top-15">
-		        	<label class="col-md-3 control-label">1.4 Address</label>
-		        	<div class="col-md-9">
+		     	<div class="col-md-11 form-group margin-top-15">
+		        	<label class="col-md-2 control-label">1.3 Address</label>
+		        	<div class="col-md-10">
 		        		<select class="form-control" ng-model="$ctrl.mergedAddressString" ng-change="$ctrl.addressChanged()">
-		            		<option value="{{ item.address }}" ng-repeat="item in $ctrl.mergeOptions.address">{{ item.address }}</option>
+		            		<option value="{{ item.address }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationAddress">{{ item.address }}</option>
 		            	</select>
 			        </div>
 		        </div>
 		        <div class="col-md-1 form-group">
-		        	<address-entry ng-model="$ctrl.questions.sfTopMergedPerson.response.address.value"
-			        			latitude-model="$ctrl.questions.sfTopMergedPerson.response.latitude.value"
-			        			longitude-model="$ctrl.questions.sfTopMergedPerson.response.longitude.value"
+		        	<address-entry ng-model="$ctrl.questions.lfMergedAddress.response"
+			        			latitude-model="$ctrl.questions.lfMergedLatitude.response.value"
+			        			longitude-model="$ctrl.questions.lfMergedLongitude.response.value"
 			        			hide-text="true"
 			        			view-only="true"></addressEntry>
 		        </div>
-		        <div class="col-md-6 form-group  margin-top-15">
-		        	<label class="col-md-2 control-label">Address Notes</label>
-		        	<div class="col-md-10">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.address_notes.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.address_notes">{{ item }}</option>
+			</div>
+			<div class="row">
+		    	<div class="col-md-8 form-group">
+		    		<div class="col-md-3">
+		            	<label>1.4 Name/Signboard</label>
+		            </div>
+		            <div class="col-md-9">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedSignboard.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationSignboard">{{ item }}</option>
 		            	</select>
 		            </div>
 		        </div>
-			</div>
-			<div class="row">
-				<div class="col-md-3 form-group">
-					<div class="col-md-4">
-		        		<label>1.5 Phone</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.phone.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.phone">{{ item }}</option>
+		        <div class="col-md-4 form-group">
+		    		<div class="col-md-4">
+		            	<label>1.5 Phone #</label>
+		            </div>
+		            <div class="col-md-8">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedPhone.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationPhone">{{ item }}</option>
 		            	</select>
-		        	</div>
+		            </div>
 		        </div>
-		        <div class="col-md-6 form-group">
-		        	<div class="col-md-3">
-		        		<label>1.6 Social Media</label>
-		        	</div>
-		        	<div class="col-md-9">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.social_media.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.social_media">{{ item }}</option>
+	    	</div>
+	    	<div class="row">
+		    	<div class="col-md-6 form-group">
+		    		<div class="col-md-3">
+		            	<label>1.6 Location in town</label>
+		            </div>
+		            <div class="col-md-9">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedLocationInTown.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationLocation">{{ item }}</option>
 		            	</select>
-		        	</div>
+		            </div>
 		        </div>
 		        <div class="col-md-3 form-group">
-		        	<div class="col-md-3">
-		        		<label>Platform</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.social_media_platform.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.social_media_platform">{{ item }}</option>
+		    		<div class="col-md-4">
+		            	<label>1.7 Color</label>
+		            </div>
+		            <div class="col-md-8">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedColor.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationColor">{{ item }}</option>
 		            	</select>
-		        	</div>
+		            </div>
 		        </div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-4 form-group">
-					<div class="col-md-4">
-		        		<label>1.7 Nationality</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.nationality.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.nationality">{{ item }}</option>
+		        <div class="col-md-3 form-group">
+		    		<div class="col-md-6">
+		            	<label>1.8 # of levels</label>
+		            </div>
+		            <div class="col-md-6">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedNumberOfLevels.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationNumberOfLevels">{{ item }}</option>
 		            	</select>
-		        	</div>
+		            </div>
 		        </div>
-		        <div class="col-md-4 form-group center-vertical">
-		        	<div class="col-md-1">
-		        		<label>1.8</label>
-		        	</div>
-		        	<div class="col-md-3">
-		        		<label>Passport</label>
-		        		<label>Other ID#</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.identifiers['Passport'].number.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions['identifiers.Passport']">{{ item }}</option>
+	    	</div>
+	    	<div class="row">
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.9 Descriptive Features</label>
+		            </div>
+		            <div class="col-md-10">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedDescription.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationDescription">{{ item }}</option>
 		            	</select>
-		            	<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.identifiers['Other ID#'].number.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions['identifiers.Other ID#']">{{ item }}</option>
-		            	</select>
-		        	</div>
+		            </div>
 		        </div>
-		        <div class="col-md-4 form-group">
-		        	<div class="col-md-4">
-		        		<label>1.9 Occupation</label>
-		        	</div>
-		        	<div class="col-md-8">
-		        		<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.occupation.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.occupation">{{ item }}</option>
+	    	</div>
+	    	<div class="row">
+		    	<div class="col-md-12 form-group">
+		    		<div class="col-md-2">
+		            	<label>1.10 Nearby Landmarks</label>
+		            </div>
+		            <div class="col-md-10">
+		            	<select class="form-control" ng-model="$ctrl.questions.lfMergedLandmarks.response.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.lfInformationLandmarks">{{ item }}</option>
 		            	</select>
-		        	</div>
+		            </div>
 		        </div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-12">
-					<div class="col-md-2 form-group">
-						<label>1.10 Role</label>
-					</div>
-					<fieldset class="col-md-10 form-group" ng-disabled="true">
-						<form-step type="checkbox" class="col-md-2" label="{{ roleItem.value }}" ng-repeat="roleItem in $ctrl.role"
-							response-value="$ctrl.checkboxGroupInfo.questions['sfTopMergedPerson-role'][roleItem.value]"></form-step>
-						<form-step type="otherCheckbox" class="col-md-4" label="Other:"
-				        	response-value="$ctrl.checkboxGroupInfo.questions['sfTopMergedPerson-role'].internalOther"></form-step>
-					</fieldset>
-				        
-				</div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-8">
-					<div class="col-md-3 form-group">
-						<label>1.11 Vehicle Description</label>
-					</div>
-					<div class="col-md-9 form-group">
-						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedVehicle.response.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.sfTopMergedVehicle">{{ item }}</option>
-		            	</select>
-		        	</div>
-				</div>
-				<div class="col-md-4">
-					<div class="col-md-4 form-group">
-						<label>1.12 Plate #</label>
-					</div>
-					<div class="col-md-8 form-group">
-						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPlateNumber.response.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.sfTopMergedPlateNumber">{{ item }}</option>
-		            	</select>
-		        	</div>
-				</div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-12">
-					<div class="col-md-2 form-group">
-						<label>1.13 Appearance</label>
-					</div>
-					<div class="col-md-10 form-group">
-						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.appearance.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.appearance">{{ item }}</option>
-		            	</select>
-		        	</div>
-				</div>
-			</div>
+	    	</div>
+	    	
+			
 	    </div>
     </fieldset>
 </fieldset>

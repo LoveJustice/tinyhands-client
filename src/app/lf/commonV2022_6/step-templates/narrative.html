@@ -1,53 +1,11 @@
 <fieldset ng-disabled="$ctrl.isViewing === true">
-	<div class="row">
-        <div class="col-md-2 form-group">
-        	<label>2.1 Potential Victims</label>
-        </div>
-        <div class="col-md-6 form-group">
-        	<name-select selected-names="$ctrl.getResponseOfQuestionByTag($ctrl.associationCard.responses, 'sfAssociationPvs').value" ng-if="$ctrl.associationCard"
-        			name-structure="$ctrl.incidentNames"
-        			value-type="pv"
-        			view-only="$ctrl.isViewing"></name-select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 form-group">
-        	<label>2.2 Suspects</label>
-        </div>
-        <div class="col-md-6 form-group">
-        	<name-select selected-names="$ctrl.getResponseOfQuestionByTag($ctrl.associationCard.responses, 'sfAssociationSuspects').value"  ng-if="$ctrl.associationCard"
-        			name-structure="$ctrl.incidentNames"
-        			exclude-name="{{ $ctrl.questions.sfTopMergedPerson.response.name.value }}"
-        			value-type="suspect"
-        			view-only="$ctrl.isViewing"></name-select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 form-group">
-        	<label>2.3 Locations</label>
-        </div>
-        <div class="col-md-6 form-group">
-        	<name-select selected-names="$ctrl.getResponseOfQuestionByTag($ctrl.associationCard.responses, 'sfAssociationLocations').value"  ng-if="$ctrl.associationCard"
-        			name-structure="$ctrl.incidentNames"
-        			value-type="address"
-        			view-only="$ctrl.isViewing"></name-select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 form-group">
-        	<label>2.4 What evidence is there that this person is connected to human trafficking?  How does he/she facilitate it?</label>
-        </div>
-        <div class="col-md-12">
-        	<textarea class="form-control" rows="3" ng-model="$ctrl.getResponseOfQuestionByTag($ctrl.associationCard.responses, 'sfAssociationNarrative').value"></textarea>
-        </div>
-    </div>
     <div id="EvaluationTable" class="row">
     	<table class="table table-striped" ng-model="sfListCtrl.sfs">
 	        <thead>
 	            <tr>
-	            	<th class="evalLabel" rowspan="2">2.5 What do you believe about him/her?</th>
+	            	<th class="evalLabel" rowspan="2">3.1 What do you believe about this place?</th>
 	            	<th class="evalEntry" ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	            		<select ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluatorType').value">
+	            		<select ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluatorType').value">
 	            			<option value="">Select a Role</option>
 	            			<option value="Interviewer">Interviewer</option>
 	            			<option value="PV">PV</option>
@@ -65,40 +23,49 @@
 	            </tr>
 	            <tr>
 	            	<th ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	            		<input type="text" placeholder="name" ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluatorName').value">
+	            		<input type="text" placeholder="name" ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluatorName').value">
 	            	</th>
 	            </tr>
 	        </thead>
 	        <tbody>
 	        	<tr>
-	        		<td>Definitely trafficked many people</td>
+	        		<td>Definitely used to traffic many people</td>
 	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	        			<input type="radio" name="'eval' + {{ $index }}" value="Definitely trafficked many people"
-	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluation').value">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Definitely used to traffic many people"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td>Has trafficked some people</td>
+	        		<td>Has been used to traffic some people</td>
 	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	        			<input type="radio" name="'eval' + {{ $index }}" value="Has trafficked some people"
-	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluation').value">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Has been used to traffic some people"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td>Suspect s/he’s a trafficker</td>
+	        		<td>Suspect is is used for trafficking</td>
 	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	        			<input type="radio" name="'eval' + {{ $index }}" value="Suspect s/he's a trafficker"
-	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluation').value">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Suspect is is used for trafficking"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
 	        		</td>
 	        	</tr>
 	        	<tr>
-	        		<td>Don’t believe s/he’s a trafficker</td>
+	        		<td>Don’t believe it is used for trafficking</td>
 	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
-	        			<input type="radio" name="'eval' + {{ $index }}" value="Don't believe s/he's a trafficker"
-	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'sfEvaluationEvaluation').value">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Don’t believe it is used for trafficking"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
 	        		</td>
 	        	</tr>
 	        </tbody>
 	    </table>
+    </div>
+    <hr>
+    <div class="col-md-12 row">
+    	<label>What evidence is there that this place is connected to human trafficking?</label>
+    	<textarea class="col-md-12" id="evidence" rows="2" ng-model="$ctrl.questions.lfNarrativeEvidence.response.value"></textarea>
+    </div>
+    <div class="col-md-12 row">
+    	<label>How is it used to facilitate it?</label>
+    	<textarea class="col-md-12" id="facilitate" rows="2" ng-model="$ctrl.questions.lfNarrativeFacilitate.response.value"></textarea>
     </div>
 </fieldset>

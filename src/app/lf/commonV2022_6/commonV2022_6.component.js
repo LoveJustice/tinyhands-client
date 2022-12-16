@@ -134,12 +134,18 @@ export class LfCommonV2022_6Controller extends BaseLfController {
     
     getInfoCardConfig() {
     	let infoCard = {
-        	dateQuestions: [{tag:'lfInformationPerson', type:'person'},{tag:'lfInformationInterviewDate', type:'basic'}],
+        	dateQuestions: [{tag:'lfInformationInterviewDate', type:'basic'}],
         	otherQuestions: [{
         	    tag: 'lfInformationSourceType',
-        	    radioItems:['Intercept','Operation','Victim','Police','Trafficker','OSI']}],
-        	checkboxGroupQuestions: [
-				{tag:'lfInformationPerson-role', items:['Recruiter','Transporter','Master','Facilitator','Boss Trafficker', 'Host']}]
+        	    radioItems:['Intercept','Operation','Victim','Police','Trafficker','OSI']},
+        	    {
+        	    tag: 'lfInformationPlace',
+        	    radioItems:['Transit Location','Meet Point','Destination','Source of ID','Recruitment Agency']},
+        	    {
+        	    tag: 'lfInformationPlaceKind',
+        	    radioItems:['House','Bus Station','Hotel','Train Station','Airport','Port']}
+        	    ],
+        	checkboxGroupQuestions: []
         };
         return infoCard;
     }
@@ -159,6 +165,11 @@ export class LfCommonV2022_6Controller extends BaseLfController {
     }
     
     submitExtra() {
+    }
+    
+    openAssociationModal(responses = [], isAdd = false, idx=null) {
+        this.commonModal(responses, isAdd, idx, BaseModalController, 'AssociationModalController',
+                associationTemplate, 'Association');
     }
 
     openAttachmentModal(responses = [], isAdd = false, idx=null) {

@@ -47,8 +47,14 @@ class BaseModalController {
         if (this.config.hasOwnProperty('RadioOther')) {
             for (let property in this.config.RadioItems) {
                 let parts = ('' + property).split('-');
-                if (parts.length === 1 && this.config.RadioOther.indexOf(Number(property)) >= 0 ||
-                        parts.length === 2 && this.config.RadioOther.indexOf(Number(parts[0])) >= 0) {
+                let searchValue = null;
+                if (this.config.useTags) {
+            		searchValue = parts[0];
+            	} else {
+            		searchValue = Number(parts[0]);
+            	}
+                if (parts.length === 1 && this.config.RadioOther.indexOf(searchValue) >= 0 ||
+                        parts.length === 2 && this.config.RadioOther.indexOf(searchValue) >= 0) {
                     this.otherData.setRadioButton(this.config.RadioItems[property], property);
                 }
             }

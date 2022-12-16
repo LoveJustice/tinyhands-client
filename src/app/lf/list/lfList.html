@@ -46,18 +46,15 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('lf_number', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('lf_number', 'reverse') }"></i>
                 </th>
-                <th ng-click="lfListCtrl.updateSort('staff_name')" width="15%">Name
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('staff_name', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
+                <th ng-click="lfListCtrl.updateSort('merged_place')" width="15%">Place
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('merged_place', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('merged_place', 'reverse')}"></i>
                 </th>
-                <th ng-click="lfListCtrl.updateSort('interview_date')" width="16%">Gender
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('interview_date', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('interview_date', 'reverse')}"></i>
+                <th ng-click="lfListCtrl.updateSort('merged_place_kind')" width="16%">Kind
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('merged_place_kind', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('merged_place_kind', 'reverse')}"></i>
                 </th>
-                <th ng-click="lfListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Age
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
-                </th>
+                <th>Address</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -66,9 +63,9 @@
         <tbody>
             <tr ng-repeat="lf in lfListCtrl.lfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ lf.lf_number }}</td>
-                <td>{{ lf.name }}</td>
-                <td>{{ lf.gender }}</td>
-                <td>{{ lf.age }}</td>
+                <td>{{ lf.merged_place }}</td>
+                <td>{{ lf.merged_place_kind }}</td>
+                <td>{{ lf.address }}</td>
                 <td ng-if="lfListCtrl.session.checkPermission('LF','VIEW',lf.station.operating_country.id, lf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{lf.viewUrl}}">View</a></td>
                 <td ng-if="lfListCtrl.session.checkPermission('LF','EDIT',lf.station.operating_country.id, lf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{lf.editUrl}}">Edit</a></td>
                 <td ng-if="lfListCtrl.session.checkPermission('LF','DELETE',lf.station.operating_country.id, lf.station.id)"><a class="btn btn-sm btn-danger" ng-click="lfListCtrl.deleteLf(lf, $index)">

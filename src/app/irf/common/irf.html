@@ -23,33 +23,7 @@
         		ng-class="{active: $ctrl.selectedStep == $index}" 
         		ng-click="$ctrl.autoSave();$ctrl.selectedStep = $index;">{{stepTemplate.name}}</a>
         </div>
-        <div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
-        	<span >
-		 		<span ng-if="$ctrl.relatedForms['IRF']">
-		 			&nbsp;&nbsp;<b>IRF</b>
-		 			&nbsp;<a ng-href="{{$ctrl.relatedForms['IRF'][0].url}}">{{ $ctrl.relatedForms['IRF'][0].formNumber }}</a>
-		 		</span>
-		 		<span ng-if="$ctrl.relatedForms['CIF']">
-		 			&nbsp;&nbsp;<b>CIFs</b>
-		 			<span ng-repeat="cifRef in $ctrl.relatedForms['CIF']">
-		 				&nbsp;<a ng-href="{{cifRef.url}}">{{ cifRef.formNumber }}</a>
-		 			</span>
-		 		</span>
-		 		<span ng-if="$ctrl.relatedForms['VDF']">
-		 			&nbsp;&nbsp;<b>VDFs</b>
-		 			<span ng-repeat="vdfRef in $ctrl.relatedForms['VDF']">
-		 				&nbsp;<a ng-href="{{vdfRef.url}}">{{ vdfRef.formNumber }}</a>
-		 			</span>
-		 		</span>
-		 		<span ng-if="$ctrl.relatedForms['LEGAL_CASE']">
-		 			&nbsp;&nbsp;<b>Legal</b>
-		 			<span ng-repeat="caseRef in $ctrl.relatedForms['LEGAL_CASE']">
-		 				&nbsp;<a ng-href="{{caseRef.url}}">{{ caseRef.formNumber }}</a>
-		 			</span>
-		 		</span>
-		 		&nbsp;&nbsp;
-		 	</span>
-		</div>
+        <related-forms related-forms="$ctrl.relatedForms" current-form-type="IRF" exclude-form-number="$ctrl.questions[1].response.value"></related-forms>
         <hr class="margin-bottom-0" />
     </div>
     <div id="irf-content" class="padding-bottom-40">

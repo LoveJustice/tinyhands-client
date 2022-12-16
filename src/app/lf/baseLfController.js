@@ -95,7 +95,7 @@ export class BaseLfController extends BaseFormController {
     	let card = this.createCard('Information');
     	this.getResponseOfQuestionByTag(card.responses, 'lfInformationIncident').value = this.stateParams.incidentId;
     	this.getResponseOfQuestionByTag(card.responses, 'lfInformationSourceType').value = 'Intercept';
-    	let clearFields = ['lfInformationSourceTitle', 'lfInformationInterviewerName', 'lfInformationInterviewLocation'];
+    	let clearFields = ['lfInformationSourceTitle', 'lfInformationInterviewerName', 'lfInformationLocation'];
     	for (let idx in clearFields) {
     		this.getResponseOfQuestionByTag(card.responses, clearFields[idx]).value = '';
     	}
@@ -265,6 +265,9 @@ export class BaseLfController extends BaseFormController {
             } else {
                 this.redFlagTotal = this.redFlagTotal + the_card.flag_count - starting_flag_count;
                 if (isAdd) {
+                	if (config_name === 'Association') {
+                		this.getResponseOfQuestionByTag(the_card.responses, 'lfAssociationIncident').value = this.stateParams.incidentId;
+                	}
                     cards.push(the_card);
                 }
             }
@@ -317,126 +320,30 @@ export class BaseLfController extends BaseFormController {
     
     checkAndPopulateMerged(isDelete) {
     	// Generic processing for simple person fields
-    	let personFields = ['name','gender','birthdate','age','address','latitude','longitude',
-    		'address_notes','phone','social_media','social_media_platform','nationality',
-    		'occupation','appearance'];
+    	
+    	let locationFields = [
+    		{cardField:'lfInformationPlace', mainField:'lfMergedPlace'}, 
+    		{cardField:'lfInformationPlaceKind', mainField:'lfMergedPlaceKind'}, 
+    		{cardField:'lfInformationPlaceDetail', mainField:'lfMergedPlaceDetail'}, 
+    		{cardField:'lfInformationLatitude', mainField:'lfMergedLatitude'}, 
+    		{cardField:'lfInformationLongitude', mainField:'lfMergedLongitude'}, 
+    		{cardField:'lfInformationSignboard', mainField:'lfMergedSignboard'}, 
+    		{cardField:'lfInformationPhone', mainField:'lfMergedPhone'}, 
+    		{cardField:'lfInformationLocation', mainField:'lfMergedLocationInTown'}, 
+    		{cardField:'lfInformationColor', mainField:'lfMergedColor'}, 
+    		{cardField:'lfInformationNumberOfLevels', mainField:'lfMergedNumberOfLevels'}, 
+    		{cardField:'lfInformationDescription', mainField:'lfMergedDescription'}, 
+    		{cardField:'lfInformationLandmarks', mainField:'lfMergedLandmarks'}];
     	let cards = this.getCardInstances('Information');
-    	for (let idx in personFields) {
-			let fieldName = personFields[idx];
-			if (!(fieldName in this.questions.lfTopMergedPerson.response)) {
-				this.questions.lfTopMergedPerson.response[fieldName] = {value:null};
-			}
-    		let current = this.questions.lfTopMergedPerson.response[fieldName].value;
+    	for (let idx in locationFields) {
+			let cardFieldName = locationFields[idx]['cardField'];
+			let mainFieldName = locationFields[idx]['mainField'];
+			
+    		let current = this.questions[mainFieldName].response.value;
     		if (current) {
 	    		let found = false;
 	    		for (let cardIdx in cards) {
-	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-	    			if (response[fieldName].value === current) {
-	    				found = true;
-	    				break;
-	    			}
-	    		}
-	    		if (!found) {
-	    			if (isDelete) {
-	    				this.questions.lfTopMergedPerson.response[fieldName].value = null;
-	    			} else {
-	    				this.questions.lfTopMergedPerson.response[fieldName].value = this.currentCard.questions.lfInformationPerson.response[fieldName].value;
-	    				if (fieldName === 'age') {
-	    					this.questions.lfTopMergedPerson.response[fieldName].value = '' + this.currentCard.questions.lfInformationPerson.response[fieldName].value;
-	    				} else {
-	    					this.questions.lfTopMergedPerson.response[fieldName].value = this.currentCard.questions.lfInformationPerson.response[fieldName].value;
-	    				}
-	    			}
-	    		}
-    		}
-    		if (!this.questions.lfTopMergedPerson.response[fieldName].value) {
-	    		for (let cardIdx in cards) {
-	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-	    			if (!(fieldName in response)) {
-	    				continue;
-	    			}
-	    			if (response[fieldName].value) {
-	    				if (fieldName === 'age') {
-	    					this.questions.lfTopMergedPerson.response[fieldName].value = '' + response[fieldName].value;
-	    				} else {
-	    					this.questions.lfTopMergedPerson.response[fieldName].value = response[fieldName].value;
-	    				}
-	    				break;
-	    			}
-	    		}
-    		}
-    	}
-    	
-    	// process roles - union values
-    	let roleSet = [];
-    	for (let cardIdx in cards) {
-			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-			if (response.role.value) {
-				let roleItems = response.role.value.split(';');
-				for (let itemIdx in roleItems) {
-					if (roleSet.indexOf(roleItems[itemIdx]) < 0) {
-						roleSet.push(roleItems[itemIdx]);
-					}
-				}
-			}
-		}
-		let newRoles = '';
-		let sep = '';
-		for (let idx in roleSet) {
-			newRoles += sep + roleSet[idx];
-			sep = ';';
-		}
-		this.questions.lfTopMergedPerson.response.role = {value:newRoles};
-    	
-    	// process person identifiers
-    	let defaultTypes = this.getDefaultIdentificationTypes();
-    	for (let idx in defaultTypes) {
-    		if (!(defaultTypes[idx] in this.questions.lfTopMergedPerson.response.identifiers)) {
-    			this.questions.lfTopMergedPerson.response.identifiers[defaultTypes[idx]] = {
-		                        type: {value:defaultTypes[idx]},
-		                        number: {value:""},
-		                        location: {value:""}};
-    		}
-    		let current = this.questions.lfTopMergedPerson.response.identifiers[defaultTypes[idx]].number.value;
-    		if (current) {
-	    		let found = false;
-	    		for (let cardIdx in cards) {
-	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-	    			if (response.identifiers[defaultTypes[idx]].number.value === current) {
-	    				found = true;
-	    				break;
-	    			}
-	    		}
-	    		if (!found) {
-	    			if (isDelete) {
-	    				this.questions.lfTopMergedPerson.response.identifiers[defaultTypes[idx]].number.value = '';
-	    			} else {
-	    				this.questions.lfTopMergedPerson.response.identifiers[defaultTypes[idx]].number.value = 
-	    						this.currentCard.questions.lfInformationPerson.response.identifiers[defaultTypes[idx]].number.value;
-	    			}
-	    		}
-    		}
-    		
-    		if (!this.questions.lfTopMergedPerson.response.identifiers[defaultTypes[idx]].number.value) {
-    		for (let cardIdx in cards) {
-	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-	    			if (response.identifiers[defaultTypes[idx]].number.value) {
-	    				this.questions.lfTopMergedPerson.response.identifiers[defaultTypes[idx]].number.value =
-	    						response.identifiers[defaultTypes[idx]].number.value;
-	    				break;
-	    			}
-	    		}
-    		}
-    	}
-    	
-    	// process non-person questions
-		let mergeQuestion = [{merge:'lfTopMergedVehicle', source:'lfInformationVehicle'},{merge:'lfTopMergedPlateNumber',source:'lfInformationPlateNumber'}];
-		for (let idx in mergeQuestion) {
-			let current = this.questions[mergeQuestion[idx].merge].response.value;
-			if (current) {
-	    		let found = false;
-	    		for (let cardIdx in cards) {
-	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, mergeQuestion[idx].source);
+	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, cardFieldName);
 	    			if (response.value === current) {
 	    				found = true;
 	    				break;
@@ -444,21 +351,47 @@ export class BaseLfController extends BaseFormController {
 	    		}
 	    		if (!found) {
 	    			if (isDelete) {
-	    				this.questions[mergeQuestion[idx].merge].response.value = null;
+	    				this.questions[mainFieldName].response.value = null;
 	    			} else {
-	    				this.questions[mergeQuestion[idx].merge].response.value = this.currentCard.questions[mergeQuestion[idx].source].response.value;
+	    				this.questions[mainFieldName].response.value = this.currentCard.questions[cardFieldName].response.value;
 	    			}
 	    		}
-	    	}
-	    	if (!this.questions[mergeQuestion[idx].merge].response.value) {
+    		}
+    		if (!this.questions[mainFieldName].response.value) {
 	    		for (let cardIdx in cards) {
-	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, mergeQuestion[idx].source);
+	    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, cardFieldName);
 	    			if (response.value) {
-	    				this.questions[mergeQuestion[idx].merge].response.value = response.value;
+	    				this.questions[mainFieldName].response.value = response.value;
 	    				break;
 	    			}
 	    		}
-	    	}
+    		}
+    	}
+    	
+    	let current = this.questions.lfMergedAddress.response;
+    	let found = false;
+    	for (let cardIdx in cards) {
+			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationAddress');
+			if (response === current) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			if (isDelete) {
+				this.questions.lfMergedAddress.response.value = null;
+			} else {
+				this.questions.lfMergedAddress.response = this.currentCard.questions.lfInformationAddress.response;
+			}
+		}
+		if (!this.questions.lfMergedAddress.response) {
+    		for (let cardIdx in cards) {
+    			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationAddress');
+    			if (response) {
+    				this.questions[mainFieldName].response = response;
+    				break;
+    			}
+    		}
 		}
     }
     
@@ -466,34 +399,8 @@ export class BaseLfController extends BaseFormController {
     	container.otherData.updateResponses();
         container.dateData.updateResponses();
         container.checkboxGroup.updateResponses();
-        if (!this.questions.lfTopMergedPerson.response.link_id && this.currentCard.questions.lfInformationPerson.response.link_id) {
-            this.questions.lfTopMergedPerson.response.link_id = this.currentCard.questions.lfInformationPerson.response.link_id;
-        }
     }
     
-    enterLegalCard() {
-		this.checkboxGroupLegal = new CheckboxGroup();
-		for (let question_tag in this.legalCheckboxGroupQuestions) {
-			for (let idx in this.legalCheckboxGroupQuestions[question_tag]) {
-				let entry = this.legalCheckboxGroupQuestions[question_tag][idx];
-				if (entry.type === 'checkbox-group') {
-					this.checkboxGroupLegal.checkboxItem(question_tag, entry.value);
-				}
-			}
-		}
-		let legalQuestions =  _.keyBy(this.legalCard.responses, (x) => x.question_tag);
-		this.checkboxGroupLegal.initOriginalValues(legalQuestions);
-		
-		this.dateDataLegal = new DateData(legalQuestions);
-		for (let idx in this.legalDateData) {
-    		this.dateDataLegal.setDate(this.legalDateData[idx], 'basic');
-    	}
-    }
-    
-    saveLegalCard() {
-    	this.checkboxGroupLegal.updateResponses();
-    	this.dateDataLegal.updateResponses();
-    }
     
     valueInList(newValue, optionList) {
         let addressCompare = false;
@@ -519,21 +426,24 @@ export class BaseLfController extends BaseFormController {
     
     buildMergeOptions() {
     	this.mergeOptions = {};
-    	let personFields = ['name','gender','birthdate','age','address','latitude','longitude',
-    		'address_notes','phone','social_media','social_media_platform','nationality',
-    		'occupation','appearance'];
+    	let locationFields = ['lfInformationPlace', 'lfInformationPlaceKind', 'lfInformationPlaceDetail','lfInformationAddress',
+    			'lfInformationLatitude','lfInformationLongitude','lfInformationSignboard','lfInformationPhone','lfInformationLocation',
+    			'lfInformationColor','lfInformationNumberOfLevels', 'lfInformationDescription', 'lfInformationLandmarks'];
     	let cards = this.getCardInstances('Information');
-    	for (let idx in personFields) {
-			let fieldName = personFields[idx];
+    	for (let idx in locationFields) {
+			let fieldName = locationFields[idx];
 			this.mergeOptions[fieldName] = [];
 			for (let cardIdx in cards) {
-				let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-    			if (!(fieldName in response)) {
-    				continue;
-    			}
-    			if (response[fieldName].value) {
-    			    if (!this.valueInList(response[fieldName].value, this.mergeOptions[fieldName])) {
-    					this.mergeOptions[fieldName].push(response[fieldName].value);
+				let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, fieldName);
+				let value = '';
+				if (fieldName === 'lfInformationAddress') {
+					value = response;
+				} else {
+					value = response.value;
+				}
+    			if (value) {
+    			    if (!this.valueInList(value, this.mergeOptions[fieldName])) {
+    					this.mergeOptions[fieldName].push(value);
     				}
     			}
 			}
@@ -541,44 +451,16 @@ export class BaseLfController extends BaseFormController {
 		}
 		
 		this.mergedAddressString = '';
-		if (this.questions.lfTopMergedPerson.response.address.value) {
-			this.mergedAddressString = this.questions.lfTopMergedPerson.response.address.value.address;
-		}
-		
-		let defaultTypes = this.getDefaultIdentificationTypes();
-    	for (let idx in defaultTypes) {
-    		let fieldName = defaultTypes[idx];
-    		this.mergeOptions['identifiers.' + fieldName] = [];
-    		for (let cardIdx in cards) {
-				let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationPerson');
-    			if (!(fieldName in response.identifiers)) {
-    				continue;
-    			}
-    			if (response.identifiers[fieldName].number.value) {
-    				if (this.mergeOptions['identifiers.' + fieldName].indexOf(response.identifiers[fieldName].number.value) < 0) {
-    					this.mergeOptions['identifiers.' + fieldName].push(response.identifiers[fieldName].number.value);
-    				}
-    			}
-			}
-    	}
-    	
-    	let mergeQuestion = [{merge:'lfTopMergedVehicle', source:'lfInformationVehicle'},{merge:'lfTopMergedPlateNumber',source:'lfInformationPlateNumber'}];
-		for (let idx in mergeQuestion) {
-			this.mergeOptions[mergeQuestion[idx].merge] = [];
-			for (let cardIdx in cards) {
-				let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, mergeQuestion[idx].source); 
-				if (response.value) {
-					this.mergeOptions[mergeQuestion[idx].merge].push(response.value);
-				}
-			}
+		if (this.questions.lfMergedAddress.response) {
+			this.mergedAddressString = this.questions.lfMergedAddress.response.address;
 		}
     }
     
     addressChanged() {
-    	if ('address' in this.mergeOptions) {
-    		for (let idx in this.mergeOptions.address) {
-    			if (this.mergeOptions.address[idx].address === this.mergedAddressString) {
-    				this.questions.lfTopMergedPerson.response.address.value = this.mergeOptions.address[idx];
+    	if ('lfInformationAddress' in this.mergeOptions) {
+    		for (let idx in this.mergeOptions.lfInformationAddress) {
+    			if (this.mergeOptions.lfInformationAddress[idx].address === this.mergedAddressString) {
+    				this.questions.lfMergedAddress.response.value = this.mergeOptions.lfInformationAddress[idx];
     				break;
     			}
     		}
@@ -649,7 +531,6 @@ export class BaseLfController extends BaseFormController {
         if (this.currentCard) {
         	this.leaveCard(this.currentCard);
         }
-        this.saveLegalCard();
         this.outCustomHandling();
         this.submitExtra();
         this.errorMessages = [];

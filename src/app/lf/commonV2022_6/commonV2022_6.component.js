@@ -10,6 +10,7 @@ import locationInformationTemplate from './step-templates/locationInformation.ht
 import associationsTemplate from './step-templates/associations/association.html';
 import narrativeTemplate from './step-templates/narrative.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
+import complianceTemplate from './step-templates/compliance.html';
 
 import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
 import associationTemplate from './step-templates/associations/association-modal.html';
@@ -25,6 +26,7 @@ export class LfCommonV2022_6Controller extends BaseLfController {
             {template:associationsTemplate, name:'Associations'},
             {template:narrativeTemplate, name:'Narrative'},
             {template:attachmentsTemplate,name:'Attachments'},
+            {template:complianceTemplate,name:'Compliance'},
         ];
         
         this.checkboxGroupInfo = new CheckboxGroup();

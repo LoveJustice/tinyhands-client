@@ -10,6 +10,7 @@ import suspectInformationTemplate from './step-templates/suspectInformation.html
 import associationsNarrativeTemplate from './step-templates/associationsNarrative.html';
 import legalTemplate from './step-templates/legal.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
+import complianceTemplate from './step-templates/compliance.html';
 
 import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
 
@@ -24,6 +25,7 @@ export class SfCommonV2022_6Controller extends BaseSfController {
             {template:associationsNarrativeTemplate, name:'Associations'},
             {template:legalTemplate,name:'Legal'},
             {template:attachmentsTemplate,name:'Attachments'},
+            {template:complianceTemplate,name:'Compliance'},
         ];
         
         this.checkboxGroupInfo = new CheckboxGroup();

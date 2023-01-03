@@ -200,6 +200,17 @@ class IndicatorsController {
                     {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
                     {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
                     {'key':'cifOriginalFormPercent', 'name':'CIF Original Form Attached %', 'color':false},
+                    
+                    {'key':'pvfLag', 'name':'PVF Lag Time', 'color':true},
+                    {'key':'pvfCount', 'name':'PVF Forms Entered', 'color':false},
+                    {'key':'pvfOriginalFormPercent', 'name':'PVF Original Form Attached %', 'color':false},
+                    {'key':'sfLag', 'name':'SF Lag Time', 'color':true},
+                    {'key':'sfCount', 'name':'SF Forms Entered', 'color':false},
+                    {'key':'sfOriginalFormPercent', 'name':'SF Original Form Attached %', 'color':false},
+                    {'key':'lfLag', 'name':'LF Lag Time', 'color':true},
+                    {'key':'lfCount', 'name':'LF Forms Entered', 'color':false},
+                    {'key':'lfOriginalFormPercent', 'name':'LF Original Form Attached %', 'color':false},
+                    
                     {'key':'v1Lag', 'name':'Initial Verification Lag time', 'color':true},
                     {'key':'v1Count', 'name':'Initial Verifications Completed', 'color':false},
                     {'key':'v1Backlog', 'name':'Initial Verification Backlog', 'color':true},
@@ -221,6 +232,11 @@ class IndicatorsController {
                     {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
                     {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
                     {'key':'cifOriginalFormPercent', 'name':'CIF Original Form Attached %', 'color':false},
+                    
+                    {'key':'pvfLag', 'name':'PVF Lag Time', 'color':true},
+                    {'key':'pvfCount', 'name':'PVF Forms Entered', 'color':false},
+                    {'key':'pvfOriginalFormPercent', 'name':'PVF Original Form Attached %', 'color':false},
+                    
                     {'key':'v1Lag', 'name':'Step 1: Verification Lag time', 'color':true},
                     {'key':'v1Count', 'name':'Step 1: Verifications Completed', 'color':false},
                     {'key':'v1Backlog', 'name':'Step 1: Verification Backlog', 'color':true},

@@ -7,6 +7,20 @@ function PvfCommonV2022_6Routes($stateProvider) {
             params: {
                 id: null
             }
+        })
+        .state('pvfIndia', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
+        })
+        .state('pvfIndiaNetwork', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
         });
 }
 

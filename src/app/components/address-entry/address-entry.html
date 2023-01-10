@@ -1,6 +1,6 @@
 <div class="form-group">
   <div class="row col-md-12 center-vertical">
-     <input id="address-entry" disabled="true" name="addressEntry" type="text" ng-model="addressEntryController.$scope.ngModel.address" />
-     <img id="address-icon" class="ico" ng-src="assets/images/location-map-marker.svg" ng-click="addressEntryController.searchAddress()">
+     <input id="address-entry" ng-if="!addressEntryController.hideText" disabled="true" name="addressEntry" type="text" ng-model="addressEntryController.$scope.ngModel.address" />
+     <img id="address-icon" ng-src="assets/images/location-map-marker.svg" ng-click="addressEntryController.searchAddress()">
   </div>
 </div>

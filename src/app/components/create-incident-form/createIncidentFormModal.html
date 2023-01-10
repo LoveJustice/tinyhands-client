@@ -1,0 +1,90 @@
+<div id="createIncidentModal" class="modal-content">
+	<div class="modal-header">
+		<div class="col-md-12 text-center">
+	    	<h3 class="modal-title">{{ vm.useTitle }}</h3>
+	    </div>
+	</div>
+	<div class="modal-body">
+		<div class="row" ng-if="!vm.selectOnly">
+			<label class="col-md-3">Incident Type</label>
+			<div class="col-md-3">
+				<select class="form-control" ng-model="vm.incidentType" ng-change="vm.changeIncidentType()">
+                    <option value="Existing">Existing</option>
+                    <option value="New">New</option>
+                </select>
+            </div>
+        </div>
+        <div ng-if="vm.incidentType==='Existing'">
+        	<div class = "row">
+	        	<label class="col-md-3">Incident Number</label>
+	        	<div class="col-md-3">
+	        		<input type="text" ng-model="vm.incidentNumber">
+	        	</div>
+	        	 <button class="btn btn-primary" type="button" ng-click="vm.findIncident()" ng-disabled="vm.incidentNumber.length < 6">Find Incident</button>
+        	 </div>
+        	 <div  ng-if="vm.incident">
+        	 	<div class = "row">
+        	 		<label class="col-md-3">Incident Date</label>
+        	 		<div class="col-md-3">
+        	 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.incidentDate" disabled>
+        	 		</div>
+        	 	</div>
+        	 	<div class = "row" ng-if="!vm.selectOnly">
+        	 		<label class="col-md-3">Project</label>
+        	 		<fieldset class="col-md-3" ng-dropdown-multiselect="" options="stationDropDown.options"
+							selected-model="stationDropDown.selectedOptions"
+                            extra-settings="stationDropDown.settings"
+                            translation-texts="stationDropDown.customText"
+                            events="stationDropDown.eventListener" disabled>
+					</fieldset>
+        	 	</div>
+        	 	<div class = "row" ng-if="vm.selectOnly">
+        	 		<label class="col-md-3">Project</label>
+        	 		<div class="col-md-6">
+        	 			<input class="col-md-3" type="text" ng-model="vm.station_name" disabled>
+        	 		</div>
+        	 	</div>
+        	 	<div class = "row">
+        	 		<label class="col-md-3">Incident Summary</label>
+        	 		<div class="col-md-9">
+        	 		 	<textarea class="form-control" rows="3" ng-model="vm.incident.summary" disabled></textarea>
+        	 		 </div>
+        	 	</div>
+        	 </div>
+        </div>
+        <div ng-if="vm.incidentType==='New'">
+        	<div class = "row">
+        	 		<label class="col-md-3">Incident Date</label>
+        	 		<div class="col-md-3">
+        	 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.newDate">
+        	 		</div>
+        	 	</div>
+        	 	<div class = "row">
+        	 		<label class="col-md-3">Project</label>
+        	 		<fieldset class="col-md-3" ng-dropdown-multiselect="" options="stationDropDown.options"
+							selected-model="stationDropDown.selectedOptions"
+                            extra-settings="stationDropDown.settings"
+                            translation-texts="stationDropDown.customText"
+                            events="stationDropDown.eventListener">
+					</fieldset>
+        	 	</div>
+        	 	<div class = "row">
+        	 		<label class="col-md-3">Incident Summary</label>
+        	 		<div class="col-md-9">
+        	 		 	<textarea class="form-control" rows="3" ng-model="vm.newSummary"></textarea>
+        	 		 </div>
+        	 	</div>
+        </div>
+        
+        
+        <div class="row col-md-12" ng-if="vm.errorText !== null">
+        	<p>{{ vm.errorText }}</p>
+        </div>
+	</div>
+	
+	<div class="modal-footer">
+	    <button id="createButton" class="btn btn-primary" type="button" ng-click="vm.createForm()"
+	    		ng-if="vm.incident!==null || vm.newDate != null && vm.scope.stationDropDown.selectedOptions.length > 0">{{ vm.selectOnly?'Select':'Create' }}</button>
+	    <button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
+	</div>
+</div>

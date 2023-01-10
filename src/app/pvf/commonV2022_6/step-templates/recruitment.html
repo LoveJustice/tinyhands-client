@@ -1,0 +1,108 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <form-step class="control-label">2.1 Did someone recruit the PV/persuade them to go?</form-step>
+        </div>
+        <div class="col-md-8 form-group">
+        	<div class="row col-md-12">
+        		<div class="col-md-12">
+        			<form-step type="checkbox" class="inblock" label="No" response-value="$ctrl.questions.pvfRecruitmentRecrutedNo.response.value"></form-step>
+        		</div>
+        	</div>
+        	<div class="row col-md-12">
+        		<div class="col-md-3">
+        			<form-step type="checkbox" class="inblock" label="Yes, a Recruitment Agency:" response-value="$ctrl.questions.pvfRecruitmentRecrutedAgency.response.value"></form-step>
+        		</div>
+        		<div class="col-md-9">
+                    <input type="text" ng-model="$ctrl.questions.pvfRecruitmentAgency.response.value">
+        		</div>
+        	</div>
+        	<div class="row col-md-12">
+        		<div class="col-md-3">
+        			<form-step type="checkbox" class="inblock" label="Yes, one or more suspects" response-value="$ctrl.questions.pvfRecruitmentRecrutedBroker.response.value"></form-step>
+        		</div>
+        		<div class="col-md-8">
+        			<name-select selected-names="$ctrl.questions.pvfRecruitmentBroker.response.value" name-structure="$ctrl.incidentNames" value-type="suspect" view-only="$ctrl.isViewing"\>
+        		</div>
+        	</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <form-step class="control-label">2.2 How was the PV recruited? (check all that apply)</form-step>
+        </div>
+        <div class="col-md-6">
+	        <div ng-repeat="quest in $ctrl.howRecruited">
+	        	<form-step ng-if="quest.type=='checkbox-group'" type="checkbox" class={{quest.format}}
+					label="{{quest.value}}" response-value="$ctrl.checkboxGroup.questions.pvfRecruitmentHowRecruited[quest.value]"></form-step>
+				<form-step ng-if="quest.type=='other-checkbox-group'" type="otherCheckbox" class={{quest.format}}
+					label="{{quest.value}}" response-value="$ctrl.checkboxGroup.questions.pvfRecruitmentHowRecruited.internalOther"></form-step>
+	        </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <form-step class="control-label">2.3 How were tavel expenses paid</form-step>
+        </div>
+        <div class="col-md-8">
+        	<div class="col-md-12">
+	        	<div class="row col-md-12">
+		        	<input type="checkbox" id="howExpenses0" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[1].value]">
+		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[0].label }}</label>
+		        	Currency
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPvCurrency.response.value">
+		        	& Amount
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPvAmount.response.value">
+		        	to suspect
+		        	
+	        	</div>
+	        	<div class="row col-md-12">
+	        		<input type="checkbox" id="howExpenses1" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[1].value]">
+	        		<label for="howExpenses1">{{ $ctrl.howExpensesPaid[1].label }}</label>
+	        	</div>
+	        	<div class="row col-md-12">
+	        		<input type="checkbox" id="howExpenses2" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[2].value]">
+	        		<label for="howExpenses1">{{ $ctrl.howExpensesPaid[2].label }}</label>
+	        	</div>
+	        	<div class="row col-md-12">
+		        	<input type="checkbox" id="howExpenses3" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[3].value]">
+		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[3].label }}</label>
+		        	Currency
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentBrokerCurrency.response.value">
+		        	& Amount
+		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentBrokerAmount.response.value">
+		        	which must be repaid
+		        	
+	        	</div>
+        	</div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3 form-group">
+            <form-step class="control-label">2.4 Date the PV left Home</form-step>
+        </div>
+        <div class="col-md-2 form-group">
+        	<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.pvfRecruitmentDateLeftHome.value">
+        </div>
+        <div class="col-md-2 form-group">
+            <form-step class="control-label">2.5 Job that was promised</form-step>
+        </div>
+        <div class="col-md-3 form-group">
+        	<input type="text" response-value="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-5 form-group">
+            <form-step class="control-label">2.6 If going for a job, how much did the broker say they would be earning per month?</form-step>
+        </div>
+        
+        Currency
+       	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPromisedCurrency.response.value">
+       	& Amount
+       	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPromisedAmount.response.value">
+    </div>
+    
+    <br>
+</fieldset>

@@ -1,0 +1,46 @@
+<div id=",incident" class="container-fluid padding-top-20">
+    <div class="sticky">
+        <div class="padding-bottom-40">
+            <h1 class="form-number-header float-left padding-left-20">
+                {{$ctrl.incident.incident_number}}
+            </h1>
+        </div>
+        <related-forms related-forms="$ctrl.relatedForms" current-form-type="Incident" exclude-form-number="$ctrl.incident.incident_number"></related-forms>
+        <hr class="margin-bottom-0" />
+    </div>
+    <div id="sf-commonV2-content" class="padding-bottom-40">
+    	<div class = "row">
+        	<label class="col-md-2">Incident Number</label>
+        	<div class="col-md-2">
+        		<input type="text" class="form-control" ng-model="$ctrl.incident.incident_number" disabled>
+        	</div>
+       	 </div>
+       	 <div  ng-if="$ctrl.incident">
+       	 	<div class = "row">
+       	 		<label class="col-md-2">Incident Date</label>
+       	 		<div class="col-md-2">
+       	 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.incidentDate" disabled>
+       	 		</div>
+       	 	</div>
+       	 	<div class = "row">
+       	 		<label class="col-md-2">Project</label>
+       	 		<div class="col-md-2">
+       	 			<input class="form-control" type="text" ng-model="$ctrl.incident.station_name" disabled>
+       	 		</div>
+       	 	</div>
+       	 	&nbsp;
+       	 	<div class = "row">
+       	 		<label class="col-md-2">Incident Summary</label>
+       	 		<div class="col-md-9">
+       	 		 	<textarea class="form-control" rows="5" ng-model="$ctrl.incident.summary"></textarea>
+       	 		 </div>
+       	 	</div>
+       	</div>
+       	&nbsp;
+	    <div class="container-fluid padding-bottom-20">
+	        <div class="col-xs-6 text-right">
+	            <button class="btn btn-success margin-left-20" ng-click="$ctrl.submit()">Submit</button>
+	        </div>
+	    </div>
+	</div>
+</div>

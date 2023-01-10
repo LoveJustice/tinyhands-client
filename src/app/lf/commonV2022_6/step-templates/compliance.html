@@ -1,0 +1,56 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing">
+	<div class="row col-md-12">
+	 	<h3>Compliance</h3>
+	</div>
+	<div class="row"></div>
+	<div class="row" ng-if="$ctrl.gospelQuestions && $ctrl.gospelQuestions.question1060.response.value==='Yes'">
+		<Form-step class="col-md-12">Gospel Verification Changes</form-step>
+		<div class=col-md-12>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.gospelQuestions.question1061.response.value"></textarea>
+		</div>
+	</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date PVF Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.lfComplianceDateReceived.value">
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row center-vertical">
+    	<form-step class="col-md-4">Were there any missing required fields that prevented submission?</form-step>
+    	<div class="col-md-1">
+      		<form-step type="radio" label="No" response-value="$ctrl.questions.lfComplianceIncomplete.response.value" radio-name="incompleteQuestions"></form-step>
+     	</div>
+   		<div class="col-md-1">
+			<form-step type="radio" label="Yes" response-value="$ctrl.questions.lfComplianceIncomplete.response.value" radio-name="incompleteQuestions"></form-step>
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Please list missing required fields</form-step>
+		<div class="col-md-4">
+			<input type="text" class="form-control" placeholder="Incomplete sections" ng-model="$ctrl.questions.lfComplianceIncompleteSections.response.value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date Complete Information was Received</form-step>
+		<div class="col-md-4">
+			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.lfComplianceDateComplete.value">
+		</div>
+	</div>
+	<br>
+	<div class="row center-vertical">
+		<form-step class="col-md-1">List any changes made to the form when entering into SL</form-step>
+		<div class=col-md-8>
+			<textarea class="form-control" rows="3" ng-model="$ctrl.questions.lfComplianceNotes.response.value"></textarea>
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row center-vertical">
+		<form-step class="col-md-4">Date VDF Submitted</form-step>
+		<div class="col-md-4">
+			<input ng-disabled="true" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.lfComplianceDateSubmitted.value">
+		</div>
+	</div>
+</fieldset>

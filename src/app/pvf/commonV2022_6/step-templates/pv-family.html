@@ -1,0 +1,170 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">1.1 Name</form-step>
+            <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="Name" ng-model="$ctrl.questions.pvfPvInfoPv.response.name.value">
+            </div>
+            <div class="col-md-1">
+	            <associated-person ng-model="$ctrl.questions.pvfPvInfoPv.response" person-list="$ctrl.associatedPersons" birth-date="$ctrl.dateData.questions.pvfPvInfoPv"></associatedPerson>
+            </div>
+        </div>
+        <div class="col-md-3 form-group">
+            <form-step class="col-md-5 control-label">1.2 Gender</form-step>
+            <div class="col-md-7">
+                 <select class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.gender.value">
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                 </select>
+            </div>
+        </div>
+        <div class="col-md-5 form-group">
+            <form-step class="col-md-2 control-label" style="float:left">1.3 DOB</form-step>
+            <div class="col-md-4">
+                <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.pvfPvInfoPv.value">
+            </div>
+            <div class="col-md-1">
+        		<b>or</b>
+        	</div>
+            <form-step class="col-md-2 control-label">Age</form-step>
+            <div class="col-md-2">
+                <input type="number" class="form-control" placeholder="Age" ng-model="$ctrl.questions.pvfPvInfoPv.response.age.value">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-md-3">
+            <form-step class="col-md-5 control-label" style="float:left">1.4 Phone #</form-step>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.phone.value">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form-step class="col-md-3 control-label" style="float:left">1.5 Social media ID</form-step>
+            <div class="col-md-9">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.social_media.value">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <form-step class="col-md-4 control-label" style="float:left">Platform</form-step>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.social_media_platform.value">
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+    	<div class="col-md-3">
+            <form-step class="col-md-5 control-label" style="float:left">1.6 WhatsApp</form-step>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.whatsApp.value">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form-step class="col-md-3 control-label" style="float:left">1.7 Education</form-step>
+            <div class="col-md-3">
+                <form-step type="radio" radio-name="education" label="None/Illiterate" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+            </div>
+            <div class="col-md-2">
+                <form-step type="radio" radio-name="education" label="Primary" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+            </div>
+            <div class="col-md-2">
+                <form-step type="radio" radio-name="education" label="Secondary" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+            </div>
+            <div class="col-md-2">
+                <form-step type="radio" radio-name="education" label="University" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    	<br>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-4 control-label">1.8 Nationality</form-step>
+            <div class="col-md-8">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.nationality.value">
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <form-step class="col-md-5 control-label">1.9 Occupation</form-step>
+            <div class="col-md-7">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.occupation.value">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    	<br>
+    	<div class="col-md-8">
+            <form-step class="col-md-4 control-label">1.10 Guardian or Family Contact Name</form-step>
+            <div class="col-md-8">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.guardian_name.value">
+            </div>
+        </div>
+        <div class="col-md-4">
+			<form-step class="col-md-4 control-label">Phone Number</form-step>
+            <div class="col-md-6">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.guardian_phone.value">
+            </div>
+			
+	    </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <form-step class="col-md-2 control-label">1.11 Relationship to the PV</form-step>
+            <div class="col-md-10">
+	            <form-step type="radio" class="col-md-2" radio-name="guardian_relationship" label="Parent"
+			            	response-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].value"
+			            	other-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].otherValue"></form-step>
+			    <form-step type="radio" class="col-md-2" radio-name="guardian_relationship" label="Sibling"
+			            	response-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].value"
+			            	other-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].otherValue"></form-step>
+			    <form-step type="radio" class="col-md-2" radio-name="guardian_relationship" label="Grandparent"
+			            	response-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].value"
+			            	other-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].otherValue"></form-step>
+			    <form-step type="radio" class="col-md-2" radio-name="guardian_relationship" label="Aunt/Uncle"
+			            	response-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].value"
+			            	other-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].otherValue"></form-step>
+			    <form-step type="radio" class="col-md-2" radio-name="guardian_relationship" label="Spouse"
+			            	response-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].value"
+			            	other-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].otherValue"></form-step>
+			            	
+			            	
+			    <form-step type="otherRadio" class="col-md-6" radio-name="guardian_relationship" label="Other:"
+			            	other-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].otherValue"
+			                response-value="$ctrl.otherData.questions['pvfPvInfoPv-guardian_relationship'].value"></form-step>
+            </div>
+        </div>
+	</div>
+	<div class="row">
+    	<br>
+    	<div class="col-md-8">
+            <form-step class="col-md-4 control-label">1.12 Other Contact Name</form-step>
+            <div class="col-md-8">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.other_contact_name.value">
+            </div>
+        </div>
+        <div class="col-md-4">
+			<form-step class="col-md-4 control-label">Phone Number</form-step>
+            <div class="col-md-6">
+                <input type="text" class="form-control" ng-model="$ctrl.questions.pvfPvInfoPv.response.other_contact_phone.value">
+            </div>
+			
+	    </div>
+    </div>
+	
+    <div class="row col-md-12">
+    	<br>
+        <form-step class="col-md-5 control-label">1.13 Did your guardian know you were traveling to intended destination?</form-step>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="guardianKnow" label="Yes" response-value="$ctrl.questions.pvfPvGuardianKnowDest.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="guardianKnow" label="No" response-value="$ctrl.questions.pvfPvGuardianKnowDest.response.value"></form-step>    
+	    </div>
+	    <div class="col-md-3">
+	        <form-step type="radio" radio-name="guardianKnow" label="N/A" response-value="$ctrl.questions.pvfPvGuardianKnowDest.response.value"></form-step>    
+	    </div>  
+    </div>
+    <br>
+</fieldset>

@@ -1,0 +1,71 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div id="EvaluationTable" class="row">
+    	<table class="table table-striped" ng-model="sfListCtrl.sfs">
+	        <thead>
+	            <tr>
+	            	<th class="evalLabel" rowspan="2">3.1 What do you believe about this place?</th>
+	            	<th class="evalEntry" ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
+	            		<select ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluatorType').value">
+	            			<option value="">Select a Role</option>
+	            			<option value="Interviewer">Interviewer</option>
+	            			<option value="PV">PV</option>
+	            			<option value="Police">Police</option>
+	            		</select>
+	            		<button class="btn btn-danger" ng-click="$ctrl.removeEvaluationCard($index)">
+			                <i class="fa fa-minus"></i>
+			            </button>
+	            	</th>
+	            	<th>
+	            		<button class="btn btn-success" ng-click="$ctrl.addEvaluationCard()">
+			                <i class="fa fa-plus"></i>
+			            </button>
+	            	</th>
+	            </tr>
+	            <tr>
+	            	<th ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
+	            		<input type="text" placeholder="name" ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluatorName').value">
+	            	</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr>
+	        		<td>Definitely used to traffic many people</td>
+	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Definitely used to traffic many people"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>Has been used to traffic some people</td>
+	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Has been used to traffic some people"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>Suspect is is used for trafficking</td>
+	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Suspect is is used for trafficking"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<td>Don’t believe it is used for trafficking</td>
+	        		<td ng-repeat="eval in $ctrl.getCardInstances('Evaluation')">
+	        			<input type="radio" name="'eval' + {{ $index }}" value="Don’t believe it is used for trafficking"
+	        					ng-model="$ctrl.getResponseOfQuestionByTag(eval.responses, 'lfEvaluationEvaluation').value">
+	        		</td>
+	        	</tr>
+	        </tbody>
+	    </table>
+    </div>
+    <hr>
+    <div class="col-md-12 row">
+    	<label>What evidence is there that this place is connected to human trafficking?</label>
+    	<textarea class="col-md-12" id="evidence" rows="2" ng-model="$ctrl.questions.lfNarrativeEvidence.response.value"></textarea>
+    </div>
+    <div class="col-md-12 row">
+    	<label>How is it used to facilitate it?</label>
+    	<textarea class="col-md-12" id="facilitate" rows="2" ng-model="$ctrl.questions.lfNarrativeFacilitate.response.value"></textarea>
+    </div>
+</fieldset>

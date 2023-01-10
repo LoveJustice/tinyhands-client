@@ -1,7 +1,7 @@
 function SfCommonV2022_6Routes($stateProvider) {
     'ngInject';
     $stateProvider
-        .state('sfNepal', {
+        .state('sfGhana', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {
@@ -16,6 +16,27 @@ function SfCommonV2022_6Routes($stateProvider) {
             }
         })
         .state('sfIndiaNetwork', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfKenya', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfNepal', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfSouthAfrica', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {

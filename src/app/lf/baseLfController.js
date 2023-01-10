@@ -192,6 +192,7 @@ export class BaseLfController extends BaseFormController {
 	            	this.service.getAssociatedIncidents(id).then((response) => {
 	            		this.associatedIncidents = response.data;
 	            	});
+	            	this.selectedStep = 1;
 	            }
 	            
 	            let cards = this.getCardInstances('Information');

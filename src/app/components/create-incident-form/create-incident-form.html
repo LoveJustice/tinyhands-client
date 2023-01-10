@@ -1,3 +1,6 @@
-<a class="btn btn-success" ng-click="$ctrl.create()">
+<a class="btn btn-success" ng-click="$ctrl.create()" ng-if="$ctrl.useTitle!==''">
 	{{ $ctrl.useTitle }}
+</a>
+<a class="btn btn-success" ng-click="$ctrl.create()" ng-if="$ctrl.useTitle==''">
+	<i class="fa fa-plus"></i>
 </a>

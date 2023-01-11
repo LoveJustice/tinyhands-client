@@ -95,7 +95,7 @@
 	        			{{ indicator.irf_lag }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td rowspan="6" ng-class="collectionIndicators.getHeadClass('bold cif-dark center')">CIF</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('cif-light')">CIFs</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
@@ -104,7 +104,7 @@
 	        			{{ indicator.cif_count }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('cif-dark')">CIF %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('med-grey', 'cif-light', $index)"
@@ -112,7 +112,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.cif_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('cif-light')">CIFs in Compliance #</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'cif-light', $index)"
@@ -120,7 +120,7 @@
 	        			{{ indicator.cif_compliance_count }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('cif-dark')">CIFs in Compliance %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('med-grey', 'cif-light', $index)"
@@ -128,7 +128,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.cif_compliance_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('cif-light')">CIF Collection Lag Time</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'cif-light', $index)"
@@ -136,7 +136,7 @@
 	        			{{ indicator.cif_lag }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('cif-dark')">CIFs with Evidence #</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('med-grey', 'cif-light', $index)"
@@ -144,7 +144,7 @@
 	        			{{ indicator.cif_with_evidence_count }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td rowspan="4" ng-class="collectionIndicators.getHeadClass('bold vdf-dark center')">VDF</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('vdf-light')">VDFs</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
@@ -153,7 +153,7 @@
 	        			{{ indicator.vdf_count }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('vdf-dark')">VDFs in Compliance #</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('med-grey','vdf-light', $index)"
@@ -161,7 +161,7 @@
 	        			{{ indicator.vdf_compliance_count }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('vdf-light')">VDFs in Compliance %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey','vdf-light', $index)"
@@ -169,7 +169,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.vdf_compliance_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('vdf-dark')">VDF Collection Lag Time</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('med-grey','vdf-light', $index)"
@@ -177,6 +177,106 @@
 	        			{{ indicator.vdf_lag }}
 	        		</td>
 	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td rowspan="4" ng-class="collectionIndicators.getHeadClass('bold pvf-dark center')">PVF</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('pvf-light')">PVFs</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','pvf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PVFs', indicator)">
+	        			{{ indicator.vdf_count }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('pvf-dark')">PVFs in Compliance #</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','pvf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PVFs in Compliance #', indicator)">
+	        			{{ indicator.vdf_compliance_count }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('pvf-light')">PVFs in Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','pvf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PVFs in Compliance %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.vdf_compliance_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('pvf-dark')">PVF Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','pvf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PVF Collection Lag Time', indicator)">
+	        			{{ indicator.vdf_lag }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td rowspan="4" ng-class="collectionIndicators.getHeadClass('bold sf-dark center')">SF</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('sf-light')">SFs</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','sf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('SFs', indicator)">
+	        			{{ indicator.sf_count }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('sf-dark')">SFs in Compliance #</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','sf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('SFs in Compliance #', indicator)">
+	        			{{ indicator.sf_compliance_count }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('sf-light')">SFs in Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','sf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('SFs in Compliance %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.sf_compliance_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('sf-dark')">SF Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','sf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('SF Collection Lag Time', indicator)">
+	        			{{ indicator.sf_lag }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td rowspan="4" ng-class="collectionIndicators.getHeadClass('bold lf-dark center')">LF</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('lf-light')">LFs</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','lf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('LFs', indicator)">
+	        			{{ indicator.lf_count }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('lf-dark')">LFs in Compliance #</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','lf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('LFs in Compliance #', indicator)">
+	        			{{ indicator.lf_compliance_count }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('lf-light')">LFs in Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','lf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('LFs in Compliance %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.lf_compliance_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('lf-dark')">LF Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','lf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('LF Collection Lag Time', indicator)">
+	        			{{ indicator.lf_lag }}
+	        		</td>
+	        	</tr>
+	        	
 	        	<tr>
 	        		<td rowspan="7" ng-class="collectionIndicators.getHeadClass('bold dark-grey center')">Verification</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('dark-grey')">Total # Verified Forms</td>
@@ -234,7 +334,9 @@
 	        			{{ collectionIndicators.displayPercent(indicator.high_risk_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	
+	        	
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td rowspan="10" ng-class="collectionIndicators.getHeadClass('bold light-grey center')">Project Compliance</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('')">VDF %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
@@ -243,7 +345,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.vdf_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">PV Photos %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
@@ -251,7 +353,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.photo_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('')">S Photos %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
@@ -259,7 +361,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.suspect_photo_percent) }}
 	        		</td>
 	        	</tr>
-				<tr>
+				<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Compliance %</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
@@ -267,7 +369,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.compliance_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('')">Collection Lag Time</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
@@ -275,7 +377,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.collection_lag_time) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Evidence Cases with CIF</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
@@ -283,7 +385,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.evidence_cif_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('')">% of Valid Intercepts</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
@@ -291,7 +393,7 @@
 	        			{{ collectionIndicators.displayPercent(indicator.valid_intercept_percent) }}
 	        		</td>
 	        	</tr>
-	        	<tr>
+	        	<tr ng-if="!collectionIndicators.pvfForm">
 	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Phone Numbers Verified</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
@@ -299,6 +401,74 @@
 	        			{{ collectionIndicators.displayPercent(indicator.phone_verified_percent) }}
 	        		</td>
 	        	</tr>
+	        	
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td rowspan="10" ng-class="collectionIndicators.getHeadClass('bold light-grey center')">Project Compliance</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('')">IRF Suspect SF %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('IRF Suspect SF %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.sf_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">PVF %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PVF %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.vdf_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('')">S Photos %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('S Photos %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.suspect_photo_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Compliance %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail(' Compliance %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.compliance_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('')">PV Photos %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PV Photos %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.photo_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">Collection Lag Time</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('Collection Lag Time', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.collection_lag_time) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('')">% of Valid Intercepts</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('% of Valid Intercepts', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.valid_intercept_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('light-grey')">% of Phone Numbers Verified</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey', 'comp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('% of Phone Numbers Verified', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.phone_verified_percent) }}
+	        		</td>
+	        	</tr>
+	        	
+	        	
 	        	<tr>
 	        		<td ng-class="collectionIndicators.getHeadClass('bold black right')"><b>Total</b></td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"

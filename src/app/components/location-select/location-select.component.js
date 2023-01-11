@@ -30,6 +30,9 @@ export class LocationSelectController {
     $doCheck() {
         if (this.selectedLocation !== this.priorSelectedLocation) {
                 this.priorSelectedLocation = this.selectedLocation;
+                if (this.selectedLocation === null) {
+                	this.selectedLocation = '';
+                }
                 this.selectedLocationList = this.selectedLocation.split(';').filter(x => x.length > 0).map(x => x.trim());
         }
         if (this.priorStationId !== this.stationId) {

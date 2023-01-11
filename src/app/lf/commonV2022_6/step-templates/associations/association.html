@@ -1,0 +1,50 @@
+<div id="vdf-associations" class="row stretch-vertical">
+    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Association')">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openAssociationModal(card, false, $index)">
+            <h3 class="panel-heading margin-top-0">{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationSourceType').value}}:{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationSourceTitle').value}}</h3>
+            <div class="panel-body text-left">
+            	<div class="col-md-12">
+		            <label>Interview:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationInterviewerName').value}} |
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationInterviewDate').value}} |
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationLocation').value}} 
+		        </div>
+		        <div class="col-md-12">
+		            <label>In Charge:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPersonsInCharge').value}}
+		        </div>
+		        
+		        <div class="col-md-12">
+		            <label>PVs visited:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvsVisited').value}}
+		        </div>
+		        <div class="col-md-12">
+		            <label>How long:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvsStayHowLong').value}} |
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvsStayStartDate').value}}
+		        </div>
+		        <div class="col-md-12">
+		            <label>Attempt to hide:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvHide').value}} |
+		             {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvHideExplain').value}}
+		        </div>
+		        <div class="col-md-12">
+		            <label>Free to go out:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvFreeToGo').value}} |
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationPvFreeToGoExplain').value}}
+		        </div>
+		        <div class="col-md-12">
+		            <label>Suspects associated:</label>
+		            {{$ctrl.getResponseOfQuestionByTag(card.responses, 'lfAssociationSuspects').value}}
+		        </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center center-vertical" ng-if="!$ctrl.isViewing">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="$ctrl.openAssociationModal(null, true)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>

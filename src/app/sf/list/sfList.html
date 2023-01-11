@@ -1,0 +1,87 @@
+<div class="container" id="sfList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Suspect Forms (SFs)</h1>
+        </div>
+        
+         <div class="pull-right"><br>
+            <create-incident-form stations-add="sfListCtrl.stationsForAdd" use-title="Create SF" form-type='SF' call-controller="sfListCtrl">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="sfListCtrl.countryDropDown.options"
+							selected-model="sfListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="sfListCtrl.countryDropDown.settings"
+                             translation-texts="sfListCtrl.countryDropDown.customText"
+                             events="sfListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="sfListCtrl.searchSfs()" ng-model="sfListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+            <div ng-dropdown-multiselect="" options="sfListCtrl.status.options"
+							selected-model="sfListCtrl.status.selectedOptions"
+                             extra-settings="sfListCtrl.status.settings"
+                             translation-texts="sfListCtrl.status.customText"
+                             events="sfListCtrl.status.eventListener" class="pull-right">
+			</div>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="sfListCtrl.stickyOptions" ng-model="sfListCtrl.sfs">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="sfListCtrl.updateSort('sf_number')" width="8%">SF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': sfListCtrl.getSortIcon('sf_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': sfListCtrl.getSortIcon('sf_number', 'reverse') }"></i>
+                </th>
+                <th ng-click="sfListCtrl.updateSort('staff_name')" width="15%">Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': sfListCtrl.getSortIcon('staff_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': sfListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
+                </th>
+                <th ng-click="sfListCtrl.updateSort('interview_date')" width="16%">Gender
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': sfListCtrl.getSortIcon('interview_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': sfListCtrl.getSortIcon('interview_date', 'reverse')}"></i>
+                </th>
+                <th ng-click="sfListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Age
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': sfListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': sfListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="sf in sfListCtrl.sfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ sf.sf_number }}</td>
+                <td>{{ sf.name }}</td>
+                <td>{{ sf.gender }}</td>
+                <td>{{ sf.age }}</td>
+                <td ng-if="sfListCtrl.session.checkPermission('SF','VIEW',sf.station.operating_country.id, sf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{sf.viewUrl}}">View</a></td>
+                <td ng-if="sfListCtrl.session.checkPermission('SF','EDIT',sf.station.operating_country.id, sf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{sf.editUrl}}">Edit</a></td>
+                <td ng-if="sfListCtrl.session.checkPermission('SF','DELETE',sf.station.operating_country.id, sf.station.id)"><a class="btn btn-sm btn-danger" ng-click="sfListCtrl.deleteSf(sf, $index)">
+                    {{ sf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="sfListCtrl.sfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No SFs Matched your search for: "{{ sfListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="sfListCtrl.paginate" controller="sfListCtrl">
+    </div>
+    <br>
+</div>

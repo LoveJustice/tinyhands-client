@@ -2,6 +2,9 @@
 const OtherData = require('./otherData.js');
 const DateData = require('./dateData.js');
 
+const ID = 1;
+const TAG = 2;
+
 export class BaseFormController {
     constructor($scope, $stateParams, $uibModalStack) {
         'ngInject';
@@ -10,6 +13,7 @@ export class BaseFormController {
         this.$uibModalStack = $uibModalStack;
         this.isViewing = this.stateParams.isViewing === 'true';
         this.stationId = this.stateParams.stationId;
+        this.incidentService = null;
         
         $scope.$on('$destroy', function iVeBeenDismissed() {
             let ctrl = $scope.$ctrl;
@@ -29,6 +33,23 @@ export class BaseFormController {
         this.lastAutoSave = null;
         this.maximumUploadSize = 99 * 1024 * 1024;
         this.maximumFileSize = 20 * 1024 * 1024;
+        this.incidentNames = {
+                address:{
+                    forms:[],
+                    irfs:[],
+                    locals:[]
+                },
+                pv:{
+                    forms:[],
+                    irfs:[],
+                    locals:[]
+                },
+                suspect:{
+                    forms:[],
+                    irfs:[],
+                    locals:[]
+                }
+            };
        
         this.errorMessages = [];
         this.warningMessages = [];
@@ -91,13 +112,16 @@ export class BaseFormController {
         }
     }
     
-    processPersonIdentificationOut (question) {
+    processPersonIdentificationOut (ignore) {
     }
-
     
-    processPersonResponses(responses, personConfigList, phase, mainForm) {
+    processPersonResponses(responses, personConfigList, phase, ignore) {
         for (let idx in responses) {
-            if (personConfigList.indexOf(responses[idx].question_id) > -1) {
+            let identifier = responses[idx].question_id;
+            if (this.config.useTags) {
+                identifier = responses[idx].question_tag;
+            }
+            if (personConfigList.indexOf(identifier) > -1) {
                 if (phase === 'In') {
                     this.processPersonIdentificationIn(responses[idx]);
                 } else if (phase === 'Out') {
@@ -123,11 +147,21 @@ export class BaseFormController {
             }
         }
     }
+    
+    setupQuestions(responses) {
+    	if (this.config.useTags) {
+            this.questions = _.keyBy(responses, (x) => x.question_tag);
+        } else {
+            this.questions = _.keyBy(responses, (x) => x.question_id);
+        }
+    }
+    
 
     processResponse(response, count_flags=true) {
         this.response = response.data;
         this.responses = response.data.responses;
-        this.questions = _.keyBy(this.responses, (x) => x.question_id);
+        this.setupQuestions(this.responses);
+        
         if (count_flags) {
             for (let idx=0; idx < this.response.cards.length; idx++) {
                 for (let idx1=0; idx1 < this.response.cards[idx].instances.length; idx1++) {
@@ -141,7 +175,11 @@ export class BaseFormController {
 
         // Copy response data for auto-save compare
         let originalResponse = jQuery.extend(true, {}, this.response);
-        this.originalQuestions = _.keyBy(originalResponse.responses, (x) => x.question_id);
+        if (this.config.useTags) {
+            this.originalQuestions = _.keyBy(originalResponse.responses, (x) => x.question_tag);
+        } else {
+            this.originalQuestions = _.keyBy(originalResponse.responses, (x) => x.question_id);
+        }
         this.autoSaveModified = false;
         if (this.response.status === 'in-progress' && this.autoSaveInterval() > 0) {
             this.lastAutoSave = new Date();
@@ -156,6 +194,22 @@ export class BaseFormController {
     inCustomHandling() {
         this.setValuesForOtherInputs();
         this.setValuesForDateInputs();
+    }
+    
+    configIdentifier(value, idType) {
+        if (idType === ID) {
+            if (this.config.useTags) {
+                return this.config.tagMap[value];
+            } else {
+                return value;
+            }
+        } else {
+            if (this.config.useTags) {
+                return value;
+            } else {
+                return null;
+            }
+        }
     }
 
     outCustomHandling() {
@@ -191,6 +245,14 @@ export class BaseFormController {
 
     getResponseOfQuestionById(responses, questionId) {
         return _.find(responses, (x) => x.question_id === questionId).response;
+    }
+    
+    getResponseOfQuestionByTag(responses, questionTag) {
+    	let resp = null;
+    	if (responses) {
+	        resp = _.find(responses, (x) => x.question_tag === questionTag).response;
+	    }
+        return resp;
     }
 
     incrementRedFlags(numberOfFlagsToAdd, context) {
@@ -229,9 +291,16 @@ export class BaseFormController {
                 let card = cards[idx];
                 let value = null;
                 for (let respIdx=0; respIdx < card.responses.length; respIdx++) {
-                    if (card.responses[respIdx].question_id === indexQuestion) {
-                        value = card.responses[respIdx].response.value;
-                        break;
+                    if (this.config.useTags) {
+                        if (card.responses[respIdx].question_tag === indexQuestion) {
+                            value = card.responses[respIdx].response.value;
+                            break;
+                        }
+                    } else {
+                        if (card.responses[respIdx].question_id === indexQuestion) {
+                            value = card.responses[respIdx].response.value;
+                            break;
+                        }
                     }
                 }
                 if (value !== null && value !== '') {
@@ -242,8 +311,9 @@ export class BaseFormController {
         }
         if (config.hasOwnProperty('Person')) {
             for (let idx=0; idx < config.Person.length; idx++) {
-                the_card.responses.push({
-                    question_id: config.Person[idx],
+            	let personQuestion = {
+                    question_id: this.configIdentifier(config.Person[idx],ID),
+                    question_tag: this.configIdentifier(config.Person[idx],TAG),
                     response: {
                         gender: {
                             value: ""
@@ -272,31 +342,57 @@ export class BaseFormController {
                         interviewer_believes: {},
                         pv_believes: {},
                     }
-                });
+                };
+                let defaultTypes = this.getDefaultIdentificationTypes();
+		        for (let idx in defaultTypes) {
+		            if (!(defaultTypes[idx] in personQuestion.response.identifiers)) {
+		                personQuestion.response.identifiers[defaultTypes[idx]] = {
+		                        type: {value:defaultTypes[idx]},
+		                        number: {value:""},
+		                        location: {value:""}
+		                };
+		            }
+		        }
+                the_card.responses.push(personQuestion);
             }
         }
         if (config.hasOwnProperty('Basic')) {
             for (let idx=0; idx < config.Basic.length; idx++) {
                 if (config.Basic[idx] === indexQuestion) {
-                    the_card.responses.push({question_id: config.Basic[idx], response: {value: lastIndex+1}});
+                    the_card.responses.push({
+                            question_id: this.configIdentifier(config.Basic[idx], ID),
+                            question_tag: this.configIdentifier(config.Basic[idx], TAG),
+                            response: {value: lastIndex+1}});
                 } else {
                     if (config.hasOwnProperty('FormDefault') && config.Basic[idx] in config.FormDefault) {
-                        the_card.responses.push({question_id: config.Basic[idx], response:config.FormDefault[config.Basic[idx]]});
+                        the_card.responses.push({
+                                question_id: this.configIdentifier(config.Basic[idx], ID),
+                                question_tag: this.configIdentifier(config.Basic[idx], TAG), 
+                                response:config.FormDefault[config.Basic[idx]]});
                     } else {
-                        the_card.responses.push({question_id: config.Basic[idx], response: {value:null}});
+                        the_card.responses.push({
+                                question_id: this.configIdentifier(config.Basic[idx], ID),
+                                question_tag: this.configIdentifier(config.Basic[idx], TAG),
+                                response: {value:null}});
                     }
                 }
             }
         }
         if (config.hasOwnProperty('Date')) {
             for (let idx=0; idx < config.Date.length; idx++) {
-                the_card.responses.push({question_id: config.Date[idx], response: {value:null}});
+                the_card.responses.push({
+                        question_id: this.configIdentifier(config.Date[idx], ID),
+                        question_tag: this.configIdentifier(config.Date[idx], TAG),
+                        response: {value:null}});
             }
         }
         if (config.hasOwnProperty('RadioOther')) {
             for (let idx=0; idx < config.RadioOther.length; idx++) {
                 if (!(config.hasOwnProperty('Person') && config.Person.indexOf(config.RadioOther[idx]) > -1)) {
-                    the_card.responses.push({question_id: config.RadioOther[idx], response: {value:null}});
+                    the_card.responses.push({
+                            question_id: this.configIdentifier(config.RadioOther[idx], ID),
+                            question_tag: this.configIdentifier(config.RadioOther[idx], TAG),
+                            response: {value:null}});
                 }
             }
         }
@@ -307,12 +403,13 @@ export class BaseFormController {
     }
     
     getRelatedForms(service, session, stationId, formNumber) {
-        this.service.getRelatedForms(stationId, formNumber).then((response) => {
+        service.getRelatedForms(stationId, formNumber).then((response) => {
             let relatedForms = response.data;
             this.relatedForms = {};
             for (let idx in relatedForms) {
                 let url = null;
-                if (this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
+                if (relatedForms[idx].form_type === 'Incident' ||
+                        this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
                     url = this.state.href(relatedForms[idx].form_name, {
                         id: relatedForms[idx].id,
                         stationId: relatedForms[idx].station_id,
@@ -369,13 +466,18 @@ export class BaseFormController {
     
     commonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name, options = {}) {
         let config = this.config[config_name];
+        config.useTags = this.config.useTags;
         if (isAdd) {
             the_card = this.createCard(config_name);
         }
         
         if (config.hasOwnProperty('Person')) {
             for (let idx in the_card.responses) {
-                if (config.Person.indexOf(the_card.responses[idx].question_id) > -1) {
+                let identifier = the_card.responses[idx].question_id;
+                if (this.config.useTags) {
+                    identifier = the_card.responses[idx].question_tag;
+                }
+                if (config.Person.indexOf(identifier) > -1) {
                     this.processPersonIdentificationIn(the_card.responses[idx]);
                 }
             }
@@ -443,6 +545,24 @@ export class BaseFormController {
         return [];
     }
     
+    getIncidentNumberFromFormNumber(formNumber) {
+    	for (let idx=3; idx < formNumber.length; idx++) {
+    		let letter = formNumber.charAt(idx);
+    		if (letter !== '_' && (letter < '0' || letter > '9')) {
+    			return formNumber.substring(0, idx);
+    		}
+    	}
+    	return formNumber;
+    }
+    
+    getIncidentNames(incidents) {
+    	if (this.incidentService) {
+    		 this.incidentService.getIncidentNames(incidents).then ((response) => {
+    		 	this.incidentNames = response.data;
+    		 }, (error) => {alert(error);});
+    	}
+    }
+    
     // Overridden in subclass
     getUploadFileQuestions() {
         return [];
@@ -463,7 +583,11 @@ export class BaseFormController {
         let totalSize = startingSize;
         let fileQuestions = this.getUploadFileQuestions();
         for (let idx=0; idx < responses.length; idx++) {
-            if (fileQuestions.indexOf(responses[idx].question_id) !== -1) {
+            let identifier = responses[idx].question_id;
+            if (this.config.useTags) {
+                identifier = responses[idx].question_tag;
+            }
+            if (fileQuestions.indexOf(identifier) !== -1) {
                 totalSize += this.getResponseSize(responses[idx].response);
             }
         }

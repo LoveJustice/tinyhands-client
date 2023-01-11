@@ -1,0 +1,84 @@
+<div class="container" id="lfList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Location Forms (LFs)</h1>
+        </div>
+        
+         <div class="pull-right"><br>
+            <create-incident-form stations-add="lfListCtrl.stationsForAdd" use-title="Create LF" form-type='LF' call-controller="lfListCtrl">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="lfListCtrl.countryDropDown.options"
+							selected-model="lfListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="lfListCtrl.countryDropDown.settings"
+                             translation-texts="lfListCtrl.countryDropDown.customText"
+                             events="lfListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="lfListCtrl.searchLfs()" ng-model="lfListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+            <div ng-dropdown-multiselect="" options="lfListCtrl.status.options"
+							selected-model="lfListCtrl.status.selectedOptions"
+                             extra-settings="lfListCtrl.status.settings"
+                             translation-texts="lfListCtrl.status.customText"
+                             events="lfListCtrl.status.eventListener" class="pull-right">
+			</div>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="lfListCtrl.stickyOptions" ng-model="lfListCtrl.lfs">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="lfListCtrl.updateSort('lf_number')" width="8%">LF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('lf_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('lf_number', 'reverse') }"></i>
+                </th>
+                <th ng-click="lfListCtrl.updateSort('merged_place')" width="15%">Place
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('merged_place', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('merged_place', 'reverse')}"></i>
+                </th>
+                <th ng-click="lfListCtrl.updateSort('merged_place_kind')" width="16%">Kind
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lfListCtrl.getSortIcon('merged_place_kind', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lfListCtrl.getSortIcon('merged_place_kind', 'reverse')}"></i>
+                </th>
+                <th>Address</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="lf in lfListCtrl.lfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ lf.lf_number }}</td>
+                <td>{{ lf.merged_place }}</td>
+                <td>{{ lf.merged_place_kind }}</td>
+                <td>{{ lf.address }}</td>
+                <td ng-if="lfListCtrl.session.checkPermission('LF','VIEW',lf.station.operating_country.id, lf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{lf.viewUrl}}">View</a></td>
+                <td ng-if="lfListCtrl.session.checkPermission('LF','EDIT',lf.station.operating_country.id, lf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{lf.editUrl}}">Edit</a></td>
+                <td ng-if="lfListCtrl.session.checkPermission('LF','DELETE',lf.station.operating_country.id, lf.station.id)"><a class="btn btn-sm btn-danger" ng-click="lfListCtrl.deleteLf(lf, $index)">
+                    {{ lf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="lfListCtrl.lfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No LFs Matched your search for: "{{ lfListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="lfListCtrl.paginate" controller="lfListCtrl">
+    </div>
+    <br>
+</div>

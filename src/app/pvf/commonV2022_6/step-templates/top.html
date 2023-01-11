@@ -1,0 +1,34 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">PVF Number: </form-step>
+            <div class="col-md-4">
+                <input  type="text" class="form-control" placeholder="VDF Number" ng-model="$ctrl.questions.pvfTopPvfNumber.response.value" ng-change="$ctrl.formNumberChange()">
+            </div>
+            <div class="col-xs-5 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            	Invalid Form Number
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interviewer Name:</form-step>
+            <div class="col-md-9">
+                <staff-select selected-staff="$ctrl.questions.pvfTopInterviewer.response.value" station-id="$ctrl.stationId"></staff-select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <br>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interview Date: </form-step>
+            <div class="col-md-9">
+                 <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.pvfTopInterviewDate.value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-md-3 control-label">Interview Location: </form-step>
+            <div class="col-md-9">
+                <location-select selected-location="$ctrl.questions.pvfTopLocation.response.value" station-id="$ctrl.stationId"></location-select>
+            </div>
+        </div>
+    </div>
+</fieldset>

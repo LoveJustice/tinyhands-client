@@ -46,15 +46,16 @@
         <div class="row">
 	    	<div class="col-md-6">
 	    		<div>
-	    			&nbsp;
-		    		<form-step type="textarea" label="8.1 What is the primary reason you believe this person is being trafficked or is at high risk of being trafficked?"
+                    <form-step ng-if="!$ctrl.narrativeOnly" type="textarea" label="8.1 What is the primary reason you believe this person is being trafficked or is at high risk of being trafficked?"
 		    			response-value="$ctrl.questions[142].response.value"></form-step>
+                    <form-step ng-if="$ctrl.narrativeOnly" type="textarea" label="Narrative - include the primary reason that you believe this person was being trafficked or was at high risk of being trafficked"
+                            response-value="$ctrl.questions[146].response.value"></form-step>
 	    		</div>
 	    	</div>
 	    	<div class="col-md-6">
 	    		<div>
 	    			<p>&nbsp;</p>
-	    			<form-step>8.3 How sure are you that an interception should be made given the "When to Intercept Posters"?</form-step>
+	    			<form-step>How sure are you that an interception should be made given the "When to Intercept Posters"?</form-step>
 		    		<form-step>
 		             <label for="how-sure">Rate from 1-5 (1 = not at all sure, 5 = absolutely sure)</label>
 		             <select id="how-sure" ng-model="$ctrl.questions[147].response.value">
@@ -67,11 +68,11 @@
 		    		</form-step>
 		    	</div>
 		    	<div>
-	                <form-step>8.4 Why did the potential victims stop?</form-step>
+	                <form-step>Why did the potential victims stop?</form-step>
 	                <form-step type="checkbox" label="Staff convinced (not forced) to stop" response-value="$ctrl.questions[149].response.value"></form-step>
 	                <form-step type="checkbox" label="Family convinced or forced (if under 18 years) to stop" response-value="$ctrl.questions[148].response.value"></form-step>
 	                <form-step type="text" class="col-md-12" label="Family Phone #" response-value="$ctrl.questions[940].response.value"></form-step>
-	                <form-step type="checkbox" label="Police/immigration official convinced or forced to stop" response-value="$ctrl.questions[150].response.value"></form-step> 
+	                <form-step type="checkbox" label="Police convinced or forced to stop" response-value="$ctrl.questions[150].response.value"></form-step>
 	                <form-step ng-if="$ctrl.includeQuestion[1077]" type="checkbox" label="PV decided to stop on their own prior to interception and needed resources to return home" response-value="$ctrl.questions[1077].response.value"></form-step>
 	            </div>
 	    	</div>

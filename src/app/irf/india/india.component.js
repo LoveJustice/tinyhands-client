@@ -14,7 +14,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12,968.13,968.14,968.15,968.16,968.17];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12,968.13,968.14,968.15];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5, 245.6];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4,924.5,924.6,924.7];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,242,244];
@@ -34,8 +34,8 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Young looking',
-                value:'Young looking',
+                label:'Recently enslaved',
+                value:'Recently enslaved',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -43,8 +43,8 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'girl from Nepal',
-                value:'girl from Nepal',
+                label:'Unemployed',
+                value:'Unemployed',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -52,8 +52,8 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             968.4:{
                 enabled:true,
                 group:968,
-                label:'girl from Bangladesh',
-                value:'girl from Bangladesh',
+                label:'Extremely poor',
+                value:'Extremely poor',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -61,8 +61,8 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             968.5:{
                 enabled:true,
                 group:968,
-                label:'Eloping',
-                value:'Eloping',
+                label:'Young looking',
+                value:'Young looking',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -88,8 +88,8 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             968.8:{
                 enabled:true,
                 group:968,
-                label:'Village dress',
-                value:'Village dress',
+                label:'Village look',
+                value:'Village look',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -106,22 +106,13 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             968.11:{
                 enabled:true,
                 group:968,
-                label:'Typical village look',
-                value:'Typical village look',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.12:{
-                enabled:true,
-                group:968,
                 label:'Carrying a baby',
                 value:'Carrying a baby',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            968.13:{
+            968.12:{
                 enabled:true,
                 group:968,
                 label:'Foreign looking',
@@ -130,7 +121,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.14:{
+            968.13:{
                 enabled:true,
                 group:968,
                 label:'New clothes',
@@ -139,7 +130,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.15:{
+            968.14:{
                 enabled:true,
                 group:968,
                 label:'Dirty clothes',
@@ -148,16 +139,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.16:{
-                enabled:true,
-                group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.17:{
+            968.15:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -409,7 +391,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             },
             927:{
                 enabled:true,
-                label:'Treatment - no documentation/knowledge',
+                label:'Medical Treatment - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -480,7 +462,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             },
             "otherControlLabel":{
                 enabled:true,
-                label:'Other Illegitimate Means of Control',
+                label:'Other Illegitimate Means of Control by Suspect',
                 type:'header',
                 format:'',
                 points:0
@@ -515,7 +497,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             },
             55:{
                 enabled:true,
-                label:'Passport is with broker',
+                label:'Passport is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
@@ -529,7 +511,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             },
             "minorSeparated":{
                 enabled:true,
-                label:'Minor Separated Without Consent',
+                label:'Minor Illegitimately Separated from Family',
                 type:'header',
                 format:'',
                 points:0
@@ -656,7 +638,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Rickshaw Driver','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper', 'Taxi driver'], ['Other NGO', 'Hotel Owner', 'Subcommittee'],[]];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -664,6 +646,8 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+
+        this.narrativeOnly = true;
     }
     
     getDefaultIdentificationTypes() {

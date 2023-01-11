@@ -14,7 +14,7 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12,968.13];
         this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3, 924.4, 924.5, 924.6];
         this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,242,244];
@@ -34,13 +34,31 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
+                label:'Recently enslaved',
+                value:'Recently enslaved',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.3:{
+                enabled:true,
+                group:968,
+                label:'Unemployed',
+                value:'Unemployed',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.4:{
+                enabled:true,
+                group:968,
+                label:'Extremely poor',
+                value:'Extremely poor',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.5:{
                 enabled:true,
                 group:968,
                 label:'Young looking',
@@ -49,16 +67,7 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
                 format:'col-md-3',
                 points:0
             },
-            968.4:{
-                enabled:true,
-                group:968,
-                label:'Nepali girl',
-                value:'Nepali girl',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Wearing revealing clothing',
@@ -67,15 +76,16 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.7:{
                 enabled:true,
                 group:968,
-                label:'1.5 Child(ren)',
+                label:'Child(ren)',
+                value:'Child(ren)',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            968.7:{
+            968.8:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -84,7 +94,34 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
                 format:'col-md-3',
                 points:0
             },
-            968.8:{
+            968.9:{
+                enabled:true,
+                group:968,
+                label:'From rural area',
+                value:'From rural area',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.11:{
+                enabled:true,
+                group:968,
+                label:'Village look',
+                value:'Village look',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.12:{
+                enabled:true,
+                group:968,
+                label:'Signs of abuse',
+                value:'Signs of abuse',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.13:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -572,7 +609,7 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Rickshaw driver','Bus driver']];
+        this.contactList = [['Police','Shopkeeper', 'Taxi driver'], ['Other NGO', 'Hotel Owner', 'Subcommittee'],[]];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -580,6 +617,8 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+
+        this.narrativeOnly = true;
     }
     
     getDefaultIdentificationTypes() {

@@ -65,9 +65,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-		     	<div class="col-md-12 form-group margin-top-15">
-		        	<label class="col-md-2 control-label">Address:</label>
+            <div class="row ">
+		     	<div class="form-group margin-top-0 margin-bottom-0">
+		        	<label class="col-md-2 control-label margin-top-20">Address:</label>
 		        	<div class="col-md-10 margin-top-0">
 			        	<address-entry ng-model="IntercepteeModalController.questions[9].response.address.value"
 			        			latitude-model="IntercepteeModalController.questions[9].response.latitude.value"
@@ -76,24 +76,13 @@
 		        </div>
 		    </div>
 		    <div class="row">
-		        <div class="col-md-12 form-group">
+		        <div class="col-md-12 form-group margin-top-0">
 		        	<label class="col-md-2 control-label">Address Notes:</label>
 		        	<div class="col-md-10">
 		                <input type="text" class="form-control" ng-model="IntercepteeModalController.questions[9].response.address_notes.value">
 		            </div>
 		        </div>
 		    </div>
-            <div class="row">
-                <div class="col-md-5 form-group margin-top-15">
-                    <label class="col-md-3 control-label">Phone #</label>
-                    <div class="col-md-9">
-                        <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.phone.value">
-                    </div>
-                </div>
-                <div class="col-md-3 form-group margin-top-20 center-vertical">
-                	<form-step type="checkbox" label="Phone # Verified" response-value="IntercepteeModalController.questions[9].response.phone_verified.value"></form-step>
-                </div>
-            </div>
             <div class="row">
             	<div class="row center-vertical col-md-12">
 		    		<div class="col-md-7 center-vertical">
@@ -115,15 +104,41 @@
 		    			</table>
 		    		</div>
 			    	<div class="col-md-5 form-group margin-top-15" >
-	                 	<input type="checkbox" id="notPresent" ng-model="IntercepteeModalController.questions[941].response.value">
-	            		<label for="notPresent">Not physically present</label>
+			    		<label class="col-md-6">Physically Present?</label>
+			    		<div class="col-md-3">
+				    		<input type="radio" id="physicallyPresentYes" name="physicallyPresent" value="false"
+				    				ng-model="IntercepteeModalController.questions[1331].response.value">
+				    		<label for="physicallyPresentYes">Yes</label>
+			    		</div>
+			    		<div class="col-md-3">
+				    		<input type="radio" id="physicallyPresentNo" name="physicallyPresent" value="true" 
+				    				ng-model="IntercepteeModalController.questions[1331].response.value">
+				    		<label for="physicallyPresentNo">No</label>
+			    		</div>
+	                 	
 	            		<div ng-show="IntercepteeModalController.questions[9].response.role.value!=='PVOT'">
-	                    	<input type="checkbox" id="custody" ng-model="IntercepteeModalController.questions[9].response.arrested.value">
-	                    	<label for="custody">Taken into police custody</label>
+	            			<label class="col-md-8">Taken into police custody</label>
+	            			<div class="col-md-4">
+		            			<select class="form-control" ng-model="IntercepteeModalController.questions[9].response.arrested.value">
+		                            <option value="Yes">Yes</option>
+		                            <option value="No">No</option>
+		                        </select>
+	                        </div>
 	                    </div>
 					</div>
 				</div>
 		    </div>
+            <div class="row">
+                <div class="col-md-5 form-group margin-top-15">
+                    <label class="col-md-3 control-label">Phone #</label>
+                    <div class="col-md-9">
+                        <input class="form-control" ng-model="IntercepteeModalController.questions[9].response.phone.value">
+                    </div>
+                </div>
+                <div class="col-md-3 form-group margin-top-20 center-vertical">
+                	<form-step type="checkbox" label="Phone # Verified" response-value="IntercepteeModalController.questions[9].response.phone_verified.value"></form-step>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <div class="row">

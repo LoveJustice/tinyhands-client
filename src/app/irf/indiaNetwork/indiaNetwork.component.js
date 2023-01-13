@@ -480,7 +480,7 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
                 label:'ID or work permit is with broker',
                 type:'checkbox',
                 format:'col-md-12',
-                points:9
+                points:6
             },
             501:{
                 enabled:true,

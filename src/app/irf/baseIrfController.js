@@ -80,7 +80,7 @@ export class BaseIrfController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[1].response.value.match(this.formNumberPattern) !== null);
-        if (this.goodFormNumber) {
+        if (this.goodFormNumber && this.stateParams.id) {
             this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.questions[1].response.value);
         }
     }

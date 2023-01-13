@@ -16,7 +16,7 @@
 	        </div>
 	    </div>
 	    <hr>
-	    <div class="row center-vertical" ng-if="!$ctrl.narrativeOnly">
+	    <div class="row center-vertical" ng-if="!$ctrl.version2022_8">
 			<div class="col-md-12">
 				<form-step>Please give any additional information about the interception, how it occurred, the reason you decided to intercept the potential victim(s), etc.</form-step>
 					<form-step>
@@ -24,7 +24,7 @@
 	            </form-step>
 	        </div>
 	    </div>
-	    <hr ng-if="!$ctrl.narrativeOnly">
+	    <hr ng-if="!$ctrl.version2022_8">
         <div class="row">
             <div>Either fill out the first or second section (not both), depending on whether the potential victim was first noticed by
                 staff, or came from a contact. </div>
@@ -32,8 +32,8 @@
             <hr/>
         </div>
         <div class="row padding-top-20">
-            <div class="col-md-3" ng-if="!$ctrl.narrativeOnly">How did you make the interception?</div>
-            <div class="col-md-3" ng-if="$ctrl.narrativeOnly">Who first identified the potential victim?</div>
+            <div class="col-md-3" ng-if="!$ctrl.version2022_8">How did you make the interception?</div>
+            <div class="col-md-3" ng-if="$ctrl.version2022_8">Who first identified the potential victim?</div>
         </div>
         <div class="row padding-top-20">
             <div class="col-md-6">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <hr/>
-                <div ng-if="!$ctrl.narrativeOnly">
+                <div ng-if="!$ctrl.version2022_8">
                     <div class="padding-bottom-20">Did you pay the contact for this information?</div>
                     <div class="row center-vertical">
                         <div class="col-md-2">
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="$ctrl.narrativeOnly">
+                <div ng-if="$ctrl.version2022_8">
                     <div class="margin-left-10">
                         <form-step label="If you paid a contact for the information, how much did you pay?" type="text" response-value="$ctrl.questions[104].response.value"></form-step>
                     </div>

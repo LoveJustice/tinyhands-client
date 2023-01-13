@@ -665,6 +665,7 @@ export class IrfIndiaController extends BaseIrfBlindVerificationController {
         }
 
         this.narrativeOnly = true;
+        this.version2022_8 = true;
     }
     
     getDefaultIdentificationTypes() {

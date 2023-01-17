@@ -1,6 +1,6 @@
 import IrfNamibiaAirComponent from './namibiaAir.component';
 
-import IrfNamibiaAirRoutes from './irf.NamibiaAir.route';
+import IrfNamibiaAirRoutes from './irf.namibiaAir.route';
 
 /* global angular */
 

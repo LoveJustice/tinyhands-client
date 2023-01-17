@@ -4,7 +4,7 @@ const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfKenyaController extends BaseIrfBlindVerificationController {
@@ -14,12 +14,12 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9];
+        this.destinationQuestions = ["destinationLabel",245.0,245.1, 245.2, 245.3, 245.4, 245.5];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244,977,713];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,996,929,58,30,930,74];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
+        this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083,977,713,1072];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,996,929,58,30,74,930];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -34,13 +34,31 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
+                label:'Recently enslaved',
+                value:'Recently enslaved',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.3:{
+                enabled:true,
+                group:968,
+                label:'Unemployed',
+                value:'Unemployed',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.4:{
+                enabled:true,
+                group:968,
+                label:'Extremely poor',
+                value:'Extremely poor',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.5:{
                 enabled:true,
                 group:968,
                 label:'Young looking',
@@ -49,7 +67,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.4:{
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -58,7 +76,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.5:{
+            968.7:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -67,7 +85,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.8:{
                 enabled:true,
                 group:968,
                 label:'Signs of abuse',
@@ -76,7 +94,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'col-md-3',
                 points:0
             },
-            968.7:{
+            968.9:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -90,6 +108,15 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 label:'Destination area known for trafficking',
                 type:'header',
                 format:'',
+                points:0
+            },
+            245.0:{
+                enabled:true,
+                group:245,
+                label:"PV doesn't know",
+                value:"PV doesn't know",
+                type:'checkbox-group',
+                format:'col-md-3',
                 points:0
             },
             245.1:{
@@ -155,8 +182,8 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Massage Parlor',
-                value:'Massage Parlor',
+                label:'Spa/massage',
+                value:'Spa/massage',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -177,11 +204,18 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'',
                 points:0
             },
-            246:{
+            1084:{
                 enabled:true,
-                label:"Doesn't know destination",
+                label:"Stranded/abandoned",
                 type:'checkbox',
-                format:'col-md-12',
+                format:'col-md-6',
+                points:0
+            },
+            1073:{
+                enabled:true,
+                label:"No Phone",
+                type:'checkbox',
+                format:'col-md-6',
                 points:0
             },
             502:{
@@ -207,7 +241,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             },
             942:{
                 enabled:true,
-                label:'3.5 Family unwilling to let them go',
+                label:'Family unwilling to let them go',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -233,32 +267,11 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'col-md-12',
                 points:0
             },
-            metLabel:{
+            1083:{
                 enabled:true,
-                label:'Is or was traveling with someone they recently met through:',
-                type:'header',
+                label:'Is or was traveling with someone they recently met',
+                type:'checkbox',
                 format:'col-md-12',
-                points:0
-            },
-            242:{
-                enabled:true,
-                label:'Missed call',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            243:{
-                enabled:true,
-                label:'Facebook',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            244:{
-                enabled:true,
-                label:'Other website:',
-                type:'other-checkbox',
-                format:'col-md-6',
                 points:0
             },
             977:{
@@ -270,7 +283,14 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             },
             713:{
                 enabled:true,
-                label:'Job details were changed in route',
+                label:'Job details were changed en route',
+                type:'checkbox',
+                format:'col-md-12',
+                points:0
+            },
+            1072:{
+                enabled:true,
+                label:'Traveling to city from rural area for first time',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -306,7 +326,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             },
             927:{
                 enabled:true,
-                label:'Treatment - no documentation/knowledge',
+                label:'Medical Treatment - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -370,7 +390,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             },
             603:{
                 enabled:true,
-                label:'Contradiction between stories of suspect/PV',
+                label:'Contradiction between stories of suspect and PV',
                 type:'checkbox',
                 format:'col-md-12',
                 points:5
@@ -391,7 +411,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             },
             "otherControlLabel":{
                 enabled:true,
-                label:'Other Illegitimate Means of Control',
+                label:'Other Illegitimate Means of Control by Suspect',
                 type:'header',
                 format:'',
                 points:0
@@ -426,10 +446,17 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             },
             55:{
                 enabled:true,
-                label:'Passport is with broker',
+                label:'Passport is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
+            },
+            1085:{
+                enabled:true,
+                label:'ID or work permit is with a suspect',
+                type:'checkbox',
+                format:'col-md-12',
+                points:6
             },
             501:{
                 enabled:true,
@@ -438,9 +465,16 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 format:'col-md-12',
                 points:9
             },
+            1076:{
+                enabled:true,
+                label:'Forcibly abducted',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
+            },
             "minorSeparated":{
                 enabled:true,
-                label:'Minor Separated Without Consent',
+                label:'Minor Illegitimately Separated from Family',
                 type:'header',
                 format:'',
                 points:0
@@ -455,6 +489,13 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
             79:{
                 enabled:true,
                 label:'Under 18, Enticed without consent of family',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
+            },
+            1086:{
+                enabled:true,
+                label:'Under 16, recruited for work',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -575,6 +616,8 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+        
+        this.version2022_8 = true;
     }
     
     getDefaultIdentificationTypes() {

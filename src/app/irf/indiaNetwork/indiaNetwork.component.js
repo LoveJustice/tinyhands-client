@@ -477,7 +477,7 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
             },
             1085:{
                 enabled:true,
-                label:'ID or work permit is with broker',
+                label:'ID or work permit is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:6
@@ -642,6 +642,7 @@ export class IrfIndiaNetworkController extends BaseIrfBlindVerificationControlle
         }
 
         this.narrativeOnly = true;
+        this.version2022_8 = true;
     }
     
     getDefaultIdentificationTypes() {

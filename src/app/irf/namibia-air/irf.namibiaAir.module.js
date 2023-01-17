@@ -1,4 +1,4 @@
-import IrfNamibiaAirComponent from './NamibiaAir.component';
+import IrfNamibiaAirComponent from './namibiaAir.component';
 
 import IrfNamibiaAirRoutes from './irf.NamibiaAir.route';
 

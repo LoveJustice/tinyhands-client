@@ -7,7 +7,7 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfNamibiaController extends BaseIrfBlindVerificationController {
+export class IrfNamibiaAirController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
@@ -758,6 +758,6 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
 
 export default {
     templateUrl,
-    controller: IrfNamibiaController,
+    controller: IrfNamibiaAirController,
 };
 

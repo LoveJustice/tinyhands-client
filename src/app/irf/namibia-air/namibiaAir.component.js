@@ -725,6 +725,7 @@ export class IrfNamibiaAirController extends BaseIrfBlindVerificationController 
         }
         
         this.version2022_8 = true;
+        this.officialFlight = true;
     }
     
     getDefaultIdentificationTypes() {

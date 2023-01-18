@@ -30,6 +30,7 @@ export class BaseSfController extends BaseFormController {
         this.stationId = this.stateParams.stationId;
         this.associatedIncidents = [];
         this.associatedIncidentsUpdate = false;
+        this.goodFormNumber = false;
         
         this.mergeOptions = {};
         this.mergedAddressString = "";
@@ -690,7 +691,7 @@ export class BaseSfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.sfTopSfNumber.response.value === null || this.questions.sfTopSfNumber.response.value === '') {
+        if (this.questions.sfTopSfNumber.response.value === null || this.questions.sfTopSfNumber.response.value === '' || this.goodFormNumber == false) {
             return false;
         }
         return true;

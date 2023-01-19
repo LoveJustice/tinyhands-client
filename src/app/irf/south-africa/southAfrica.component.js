@@ -545,7 +545,7 @@ export class IrfSouthAfricaController extends BaseIrfBlindVerificationController
             },
             "minorSeparated":{
                 enabled:true,
-                label:'Minor Separated Without Consent',
+                label:'Minor Illegitimately Separated from Family',
                 type:'header',
                 format:'',
                 points:0

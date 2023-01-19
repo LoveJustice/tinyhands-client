@@ -412,7 +412,7 @@ export class IrfGhanaController extends BaseIrfCommonController {
             },
             "otherControlLabel":{
                 enabled:true,
-                label:'Other Illegitimate Means of Control',
+                label:'Other Illegitimate Means of Control by Suspect',
                 type:'header',
                 format:'',
                 points:0
@@ -475,7 +475,7 @@ export class IrfGhanaController extends BaseIrfCommonController {
             },
             "minorSeparated":{
                 enabled:true,
-                label:'Minor Separated Without Consent',
+                label:'Minor Illegitimately Separated from Family',
                 type:'header',
                 format:'',
                 points:0

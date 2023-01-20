@@ -7,20 +7,18 @@ import IntercepteeModalController from '../intercepteeModal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfNamibiaController extends BaseIrfBlindVerificationController {
+export class IrfNamibiaAirController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
         
-        this.immigration = true;
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12,968.13];
         this.destinationQuestions = ["destinationLabel",245.0,245.1, 245.2, 245.3, 245.4, 245.5, 245.6];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6];
-        this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083,977,988,186,197];
-        //this.deceiveQuestions = ["deceiveLabel",59,117,45,927,929,58,713,30,178,928,30,167,74,930];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,713,178,167,74,930];
+        this.vulnerabilityQuestions = ["vulnerableLabel",30,1073,59,502,977,974,1083,988,928,178,186,930];
+        this.deceiveQuestions = ["deceiveLabel",925,45,927,929,58,942,713,926,280,197];
         this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,1068,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
@@ -264,14 +262,14 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
             
             vulnerableLabel:{
                 enabled:true,
-                label:'Signs of Vulnerability',
+                label:'Subsection A',
                 type:'header',
                 format:'',
                 points:0
             },
-            1084:{
+            30:{
                 enabled:true,
-                label:"Stranded/abandoned",
+                label:'Caught in a lie',
                 type:'checkbox',
                 format:'col-md-6',
                 points:0
@@ -281,6 +279,13 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
                 label:"No Phone",
                 type:'checkbox',
                 format:'col-md-6',
+                points:0
+            },
+            59:{
+                enabled:true,
+                label:'No/small bags though claim to be going for a long time',
+                type:'checkbox',
+                format:'col-md-12',
                 points:0
             },
             246:{
@@ -385,7 +390,7 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
             
             "deceiveLabel":{
                 enabled:true,
-                label:'Signs of Attempts to Evade or Deceive',
+                label:'Subsection B (One or more required for airport intercept)',
                 type:'header',
                 format:'',
                 points:0
@@ -439,13 +444,7 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
                 format:'col-md-12',
                 points:0
             },
-            30:{
-                enabled:true,
-                label:'Caught in a lie',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
+            
             713:{
                 enabled:true,
                 label:'Job details were changed en route',
@@ -716,7 +715,7 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Airline','Immigration']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],[]];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -760,6 +759,6 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
 
 export default {
     templateUrl,
-    controller: IrfNamibiaController,
+    controller: IrfNamibiaAirController,
 };
 

@@ -29,6 +29,13 @@ function PvfCommonV2022_6Routes($stateProvider) {
                 id: null
             }
         })
+        .state('pvfNamibia', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
+        })
         .state('pvfNepal', {
             url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
             component: 'pvfCommon202206Component',

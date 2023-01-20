@@ -100,49 +100,6 @@
     </div>
     
     <div class="container-fluid" ng-if="$ctrl.version2022_8">
-        <div class="row col-md-12" ng-if="$ctrl.immigration">
-        	<table class="immigrationTable">
-        		<thead>
-        			<tr>
-        				<th class="immigrationHeader"></th>
-        				<th class="immigrationCell"></th>
-        				<th class="immigrationCell">Entry</th>
-        				<th class="immigrationCell">Transit</th>
-        				<th class="immigrationCell">Exit</th>
-        				<th class="immigrationCase">Immigration Case Number</th>
-        			</tr>
-        		</thead>
-        		<tbody>
-        			<tr>
-        				<td rowspan="2">LJ Recommendation</td>
-        				<td>Allow</td>
-        				<td><input type="radio" name="ljEntry" value="Allow" ng-model="$ctrl.questions[981].response.value"></td>
-        				<td><input type="radio" name="ljTransit" value="Allow" ng-model="$ctrl.questions[982].response.value"></td>
-        				<td><input type="radio" name="ljExit" value="Allow" ng-model="$ctrl.questions[983].response.value"></td>
-        				<td rowspan="4"><form-step type="text" response-value="$ctrl.questions[987].response.value"></form-step></td>
-        			</tr>
-        			<tr>
-        				<td>Deny</td>
-        				<td><input type="radio" name="ljEntry" value="Deny" ng-model="$ctrl.questions[981].response.value"></td>
-        				<td><input type="radio" name="ljTransit" value="Deny" ng-model="$ctrl.questions[982].response.value"></td>
-        				<td><input type="radio" name="ljExit" value="Deny" ng-model="$ctrl.questions[983].response.value"></td>
-        			</tr>
-        			<tr>
-        				<td rowspan="2">Immigration Decision</td>
-        				<td>Allow</td>
-        				<td><input type="radio" name="immEntry" value="Allow" ng-model="$ctrl.questions[984].response.value"></td>
-        				<td><input type="radio" name="immTransit" value="Allow" ng-model="$ctrl.questions[985].response.value"></td>
-        				<td><input type="radio" name="imExit" value="Allow" ng-model="$ctrl.questions[986].response.value"></td>
-        			</tr>
-        			<tr>
-        				<td>Deny</td>
-        				<td><input type="radio" name="imEntry" value="Deny" ng-model="$ctrl.questions[984].response.value"></td>
-        				<td><input type="radio" name="imTransit" value="Deny" ng-model="$ctrl.questions[985].response.value"></td>
-        				<td><input type="radio" name="imExit" value="Deny" ng-model="$ctrl.questions[986].response.value"></td>
-        			</tr>
-        		</tbody>
-        	</table>
-        </div>
         
         <div class="row col-md-12">
    			<form-step>How sure are you that you were right to intercept given the "When to Intercept Posters"?</form-step>
@@ -163,6 +120,23 @@
     	<div class="row col-md-12 margin-top-30">
 	        <form-step type="textarea" label="Narrative - include the primary reason that you believe this person was being trafficked or was at high risk of being trafficked"
 	                response-value="$ctrl.questions[146].response.value"></form-step>
+    	</div>
+    	<div class="row" ng-if="$ctrl.officialFlight" >
+	    	&nbsp;
+	    </div>
+	    <div class="row col-md-12 margin-top-30"">
+	    	<div class="col-md-6" ng-if="$ctrl.officialFlight" style="border:1px solid black;">
+	    		<div class="row col-md-6">
+	    			<label>Official</label>
+	    			<form-step type="text" label="Name" response-value="$ctrl.questions[1568].response.value"></form-step>
+	    			<form-step type="checkbox" label="Signature" response-value="$ctrl.questions[1569].response.value"></form-step>
+				</div>
+				<div class="row col-md-6">
+	    			<form-step type="text" label="Flight Number" response-value="$ctrl.questions[1069].response.value"></form-step>
+	    			<form-step type="textarea" label="Route"
+		                response-value="$ctrl.questions[1570].response.value"></form-step>
+				</div>
+	    	</div>
     	</div>
     	<div class="row">
     		&nbsp;

@@ -13,6 +13,7 @@ export class BasePvfController extends BaseFormController {
         this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
         this.session = SessionService;
+        this.goodFormNumber = false;
 
         this.pvfNumber = "";
         this.associatedPersons = [];
@@ -203,7 +204,7 @@ export class BasePvfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.pvfTopPvfNumber.response.value === null || this.questions.pvfTopPvfNumber.response.value === '') {
+        if (this.questions.pvfTopPvfNumber.response.value === null || this.questions.pvfTopPvfNumber.response.value === '' || this.goodFormNumber == false) {
             return false;
         }
         return true;

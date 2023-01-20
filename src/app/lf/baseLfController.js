@@ -30,6 +30,7 @@ export class BaseLfController extends BaseFormController {
         this.stationId = this.stateParams.stationId;
         this.associatedIncidents = [];
         this.associatedIncidentsUpdate = false;
+        this.goodFormNumber = false;
         
         this.mergeOptions = {};
         this.mergedAddressString = "";
@@ -571,7 +572,7 @@ export class BaseLfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '') {
+        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '' || this.goodFormNumber == false) {
             return false;
         }
         return true;

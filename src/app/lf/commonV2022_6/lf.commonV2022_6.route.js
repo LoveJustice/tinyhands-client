@@ -29,6 +29,13 @@ function LfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('lfMalawi', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('lfNamibia', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',

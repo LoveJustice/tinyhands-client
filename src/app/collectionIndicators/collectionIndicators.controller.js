@@ -68,6 +68,7 @@ class IndicatorsController {
             this.startDate.setDate(1);
             this.startDate.setMonth(this.startDate.getMonth()-1);
         }
+        this.pvfForm = false;
         
         this.endDate = new Date();
         this.endDate.setDate(0);
@@ -223,6 +224,9 @@ class IndicatorsController {
         this.spinnerOverlayService.show('Calculating Indicators...');
         this.indicatorsService.calculate(this.countryDropDown.selectedOptions[0].id, this.dateAsString(this.startDate), this.dateAsString(this.endDate)).then(promise => {
             this.indicatorsData = promise.data;
+            if (this.indicatorsData.length > 0) {
+                this.pvfForm = this.indicatorsData[0].pvf_form;
+            }
             this.scrollIndicators(1);
             this.spinnerOverlayService.hide();
         }, () => {
@@ -262,8 +266,20 @@ class IndicatorsController {
                 detailData.text.push ("# CIFs in Compliance / # CIFs");
                 detailData.text.push (indicator.cif_compliance_count + ' / ' + indicator.cif_count + ' = ' + indicator.cif_compliance_percent + '%');
                 break;
+            case "SFs in Compliance %":
+                detailData.text.push ("# SFs in Compliance / # SFs");
+                detailData.text.push (indicator.sf_compliance_count + ' / ' + indicator.sf_count + ' = ' + indicator.sf_compliance_percent + '%');
+                break;
+            case "LFs in Compliance %":
+                detailData.text.push ("# LFs in Compliance / # LFs");
+                detailData.text.push (indicator.lf_compliance_count + ' / ' + indicator.lf_count + ' = ' + indicator.lf_compliance_percent + '%');
+                break;
             case "VDFs in Compliance %":
                 detailData.text.push ("# VDFs Compliance / # VDFs");
+                detailData.text.push (indicator.vdf_compliance_count + ' / ' + indicator.vdf_count + ' = ' + indicator.vdf_compliance_percent + '%');
+                break;
+            case "PVFs in Compliance %":
+                detailData.text.push ("# PVFs Compliance / # PVFs");
                 detailData.text.push (indicator.vdf_compliance_count + ' / ' + indicator.vdf_count + ' = ' + indicator.vdf_compliance_percent + '%');
                 break;
             case "Evidence of Trafficking %":
@@ -281,6 +297,16 @@ class IndicatorsController {
             case "VDF %":
                 detailData.text.push ("# VDFs / # PVs");
                 detailData.text.push (indicator.vdf_count + " / " + indicator.victim_count + " = " + indicator.vdf_percent + '%');
+                break;
+            case "PVF %":
+                detailData.text.push ("# PVFs / # PVs");
+                detailData.text.push (indicator.vdf_count + " / " + indicator.victim_count + " = " + indicator.vdf_percent + '%');
+                break;
+            case " Compliance %":
+                detailData.text.push ("(# IRFs in Compliance + # PVFs in Compliance + # SFs in Compliance + # LFs in Compliance) / (IRFs + PVFs + SFs + LFs)");
+                detailData.text.push ('(' + indicator.irf_compliance_count + ' + ' + indicator.vdf_compliance_count + ' + ' + 
+                        indicator.sf_compliance_count + '+' + indicator.lf_compliance_count + ') / (' +
+                        indicator.irf_count + ' + ' + indicator.vdf_count + ' + ' + indicator.sf_count + ' + ' + indicator.lf_count + ') = ' + indicator.compliance_percent + '%');
                 break;
             case "Compliance %":
                 detailData.text.push ("(# IRFs in Compliance + # CIFs in Compliance + # VDFs in Compliance) / (IRFs + CIFs + VDFs)");
@@ -343,6 +369,10 @@ class IndicatorsController {
                 detailData.text.push ('# Phone Numbers Verified / # Phone Numbers');
                 detailData.text.push (indicator.phone_verified_count + ' / ' + indicator.phone_count + ' = ' + indicator.phone_verified_percent + '%');
                 break;
+            case "IRF Suspect SF %":
+                detailData.text.push ('# SFs / # Suspects');
+                detailData.text.push (indicator.sf_count + ' / ' + indicator.suspect_count + ' = ' + indicator.sf_percent + '%');
+                break;
             case "Total":
                 break;
             default:
@@ -369,8 +399,10 @@ class IndicatorsController {
             return;
         }
         let localProcessing = ';IRFs in Compliance %;CIF %;CIFs in Compliance %;VDFs in Compliance %;' +
-                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;' +
-                'Compliance %;Collection Lag Time;% of Evidence Cases with CIF;% of Valid Intercepts;% of Phone Numbers Verified;Total;';
+                'PVFs in Compliance %;SFs in Compliance %;LFs in Compliance %;' +
+                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;PVF %;' +
+                'Compliance %; Compliance %;Collection Lag Time;% of Evidence Cases with CIF;% of Valid Intercepts;' +
+                '% of Phone Numbers Verified;IRF Suspect SF %;Total;';
         if (localProcessing.indexOf(';' + type + ';') >= 0) {
             this.localDetail(type, indicator);
         } else {

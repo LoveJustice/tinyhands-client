@@ -18,7 +18,7 @@ export class VdfCommonV3Controller extends BaseVdfController {
     constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';        
         super($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
-       
+
         this.stepTemplates = [
             topTemplate,
             victimTemplate,

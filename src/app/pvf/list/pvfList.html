@@ -1,0 +1,93 @@
+<div class="container" id="pvfList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Potential Victim Forms (PVFs)</h1>
+        </div>
+
+        <div class="pull-right"><br>
+            <photoexport ng-if="pvfListCtrl.session.checkPermission('PVF','VIEW',null, null)"></photoexport>
+            <create-incident-form stations-add="pvfListCtrl.stationsForAdd" use-title="Create PVF" form-type='PVM' call-controller="pvfListCtrl">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2 col-xs-3" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="pvfListCtrl.countryDropDown.options"
+							selected-model="pvfListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="pvfListCtrl.countryDropDown.settings"
+                             translation-texts="pvfListCtrl.countryDropDown.customText"
+                             events="pvfListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <!-- End dropdown -->
+
+        <!-- Search -->
+        <div class="col-md-3 search-bar pull-right">
+            <form>
+                  <label class="pull-right">
+                      <input ng-change="pvfListCtrl.searchPvfs()" ng-model="pvfListCtrl.queryParameters.search" placeholder="Search" class="form-control" autofocus>
+                  </label>
+            </form>
+            <div ng-dropdown-multiselect="" options="pvfListCtrl.status.options"
+							selected-model="pvfListCtrl.status.selectedOptions"
+                             extra-settings="pvfListCtrl.status.settings"
+                             translation-texts="pvfListCtrl.status.customText"
+                             events="pvfListCtrl.status.eventListener" class="pull-right">
+			</div>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="pvfListCtrl.stickyOptions" ng-model="pvfListCtrl.pvfs">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="pvfListCtrl.updateSort('pvf_number')" width="8%">PVF #
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': pvfListCtrl.getSortIcon('pvf_number', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': pvfListCtrl.getSortIcon('pvf_number', 'reverse') }"></i>
+                </th>
+                <th ng-click="pvfListCtrl.updateSort('staff_name')" width="15%">Staff Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': pvfListCtrl.getSortIcon('staff_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': pvfListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
+                </th>
+                <th ng-click="pvfListCtrl.updateSort('interview_date')" width="16%">Date of Interview
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': pvfListCtrl.getSortIcon('interview_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': pvfListCtrl.getSortIcon('interview_date', 'reverse')}"></i>
+                </th>
+                <th ng-click="pvfListCtrl.updateSort('date_time_entered_into_system')" width="16%" class="hidden-xs">Date Entered
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': pvfListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': pvfListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
+                </th>
+                <th ng-click="pvfListCtrl.updateSort('date_time_last_updated')" width="16%" class="hidden-xs">Time Last Edited
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': pvfListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': pvfListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="pvf in pvfListCtrl.pvfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td>{{ pvf.pvf_number }}</td>
+                <td>{{ pvf.staff_name }}</td>
+                <td>{{ pvf.date_of_interview }}</td>
+                <td class="hidden-xs">{{ pvf.date_time_entered_into_system }}</td>
+                <td class="hidden-xs">{{ pvf.date_time_last_updated }}</td>
+                <td ng-if="pvfListCtrl.session.checkPermission('PVF','VIEW',pvf.station.operating_country.id, pvf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{pvf.viewUrl}}">View</a></td>
+                <td ng-if="pvfListCtrl.session.checkPermission('PVF','EDIT',pvf.station.operating_country.id, pvf.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{pvf.editUrl}}">Edit</a></td>
+                <td ng-if="pvfListCtrl.session.checkPermission('PVF','DELETE',pvf.station.operating_country.id, pvf.station.id)"><a class="btn btn-sm btn-danger" ng-click="pvfListCtrl.deletePvf(pvf, $index)">
+                    {{ pvf.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+            </tr>
+            <tr ng-show="pvfListCtrl.pvfs.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No PVFs Matched your search for: "{{ pvfListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="pvfListCtrl.paginate" controller="pvfListCtrl">
+    </div>
+    <br>
+</div>

@@ -1,0 +1,111 @@
+<fieldset ng-disabled="$ctrl.isViewing === true" ng-if="$ctrl.legalCard">
+	<div class="row">
+		<div class="col-md-1 form-group">
+        	<label>3.1 Arrested</label>
+        </div>
+        <div class="col-md-11 form-group">
+        	<form-step class="col-md-2" type="radio" radio-name="arrest" label="Yes - in police custody" response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalArrested').value"></form-step>
+        	<form-step class="col-md-4" type="radio" radio-name="arrest" label="Yes - but has been released (not on bail)" response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalArrested').value"></form-step>
+        	<form-step class="col-md-3" type="radio" radio-name="arrest" label="Yes - but has been released on bail" response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalArrested').value"></form-step>
+        	<form-step class="col-md-2" type="radio" radio-name="arrest" label="No" response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalArrested').value"></form-step>
+        </div>
+    </div>
+    <div class="row">
+		<div class="col-md-3 form-group">
+			<span>
+        		<label>3.2 Arrest Date</label>
+        		<input type="date" ng-model="$ctrl.dateDataLegal.questions['sfLegalArrestDate'].value">
+        	</span>
+        </div>
+        <div class="col-md-3 form-group">
+        	<span>
+	        	<label>3.3 Police Case#</label>
+	        	<input type="text" ng-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses,'sfLegalPoliceCase').value">
+	        </span>
+        </div>
+        <div class="col-md-4 form-group">
+        	<span>
+	        	<label>3.4 Charge Sheet Date</label>
+	        	<input type="date" ng-model="$ctrl.dateDataLegal.questions['sfLegalChargeSheetDate'].value">
+	        	(attach copy if available)
+	        </span>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="form-group col-md-2">
+	        	<label>3.5 Crime(s) Person Charged With:</label>
+	        	
+        </div>
+        	<textarea class="col-md-9" id="legalCrimes" rows="2" ng-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalCrimesCharged').value"></textarea>
+    </div>
+    <br>
+    <div id="LegalTable" class="row">
+    	<table class="table table-striped">
+    		<thead>
+	            <tr>
+	            	<th class="legalLabel">If not yet arrested:</th>
+	            	<th class="attemptEntry">Attempt to File</th>
+	            	<th c;ass="unableEntry">Unable to File</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	        	<tr>
+	        		<th>One or more PVs Willing to File?</th>
+	        		<td>
+	        			<label>"Yes, willing - List Pv names willing to file:"</label>
+			        	<name-select selected-names="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalPvAttempt').value" ng-if="$ctrl.associationCard"
+			        			name-structure="$ctrl.incidentNames"
+			        			value-type="pv"
+			        			view-only="$ctrl.isViewing"></name-select>
+	        		</td>
+	        		<td>
+	        			<form-step class="col-md-12" type="checkbox" label="{{ item.value }}" ng-repeat="item in $ctrl.legalCheckboxGroupQuestions['sfLegalPvUnable']"
+							response-value="$ctrl.checkboxGroupLegal.questions['sfLegalPvUnable'][item.value]"></form-step>
+	        		</td>
+	        	</tr>
+	        	<tr>
+	        		<th>Location and Bio of Suspect</th>
+	        		<td>
+	        			<form-step type="radio" radio-name="locationAttempt" label="Currently At/Near Station"
+	        					response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalLocationAttempt').value"></form-step>
+	        			<form-step type="radio" radio-name="locationAttempt" label="In Police Custody"
+	        					response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses,'sfLegalLocationAttempt').value"></form-step>
+	        		</td>
+	        		
+	        		<td>
+	        			<form-step class="col-md-12" type="checkbox" label="{{ item.value }}" ng-if="item.type==='checkbox-group'"
+	        				ng-repeat="item in $ctrl.legalCheckboxGroupQuestions['sfLegalLocationUnable']"
+							response-value="$ctrl.checkboxGroupLegal.questions['sfLegalLocationUnable'][item.value]"></form-step>
+						<div class="col-md-12">
+							<label class="col-md-1 margin-top-20">Address</label>
+						
+							<address-entry class="col-md-11" ng-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalLocationLastAddress').value"
+			        			latitude-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalLocationLastLatitude').value"
+			        			longitude-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalLocationLastLongitude').value"
+			        			view-only="$ctrl.isViewing"></address-entry>
+			        	
+							<label class="col-md-1">Notes</label>
+							<textarea class="col-md-6" rows="2" ng-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalLocationLastNotes').value"></textarea>
+							<label class="col-md-1">Date</label>
+							<input class="col-md-2" type="date" ng-model="$ctrl.dateDataLegal.questions['sfLegalLocationLastDate'].value">
+						</div>
+					</td>
+	        	</tr>
+	        	<tr>
+	        		<th>Police Willing to Arrest?</th>
+	        		<td>
+	        			<form-step type="checkbox" label="Yes, willing - Police Station willing to arrest"
+	        				response-value="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalPoliceAttempt').value">
+	        		</td>
+	        		<td>
+	        			<form-step class="col-md-12" type="checkbox" label="{{ item.value }}" ng-if="item.type==='checkbox-group'"
+	        				ng-repeat="item in $ctrl.legalCheckboxGroupQuestions['sfLegalPoliceUnable']"
+							response-value="$ctrl.checkboxGroupLegal.questions['sfLegalPoliceUnable'][item.value]"></form-step>
+						<form-step class="col-md-12" type="otherCheckbox" label="Other Reason"
+							response-value="$ctrl.checkboxGroupLegal.questions['sfLegalPoliceUnable'].internalOther"></form-step>
+	        		</td>
+	        	</tr>
+	        </tbody>
+    	</table>
+    </div>
+</fieldset>

@@ -1,13 +1,13 @@
-import {BaseIrfCommonController} from '../baseIrfCommonController.js';
+import {BaseIrfBlindVerificationController} from '../baseIrfBlindVerificationController.js';
 import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfNamibiaController extends BaseIrfCommonController {
+export class IrfNamibiaController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
@@ -15,13 +15,13 @@ export class IrfNamibiaController extends BaseIrfCommonController {
         this.immigration = true;
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12];
-        this.destinationQuestions = ["destinationLabel",245.1, 245.2, 245.3, 245.4, 245.5, 245.6];
-        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,977,925,78,942,926,280,974,"metLabel",243,244,988,186,197];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12,968.13];
+        this.destinationQuestions = ["destinationLabel",245.0,245.1, 245.2, 245.3, 245.4, 245.5, 245.6];
+        this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6];
+        this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083,977,988,186,197];
         //this.deceiveQuestions = ["deceiveLabel",59,117,45,927,929,58,713,30,178,928,30,167,74,930];
-        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,713,30,178,167,74,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,"minorSeparated",17,79];
+        this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,713,178,167,74,930];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,1068,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -36,8 +36,8 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
+                label:'Recently enslaved',
+                value:'Recently enslaved',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
@@ -45,67 +45,13 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             968.3:{
                 enabled:true,
                 group:968,
-                label:'Young looking',
-                value:'Young looking',
+                label:'Unemployed',
+                value:'Unemployed',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.4:{
-                enabled:true,
-                group:968,
-                label:'Child(ren)',
-                value:'Child(ren)',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.5:{
-                enabled:true,
-                group:968,
-                label:'With a chaperone',
-                value:'With a chaperone',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.6:{
-                enabled:true,
-                group:968,
-                label:'Disoriented',
-                value:'Disoriented',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.7:{
-                enabled:true,
-                group:968,
-                label:'New Passport',
-                value:'New Passport',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.8:{
-                enabled:true,
-                group:968,
-                label:'Revealing clothing',
-                value:'Revealing clothing',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.9:{
-                enabled:true,
-                group:968,
-                label:'Signs of abuse',
-                value:'Signs of abuse',
-                type:'checkbox-group',
-                format:'col-md-3',
-                points:0
-            },
-            968.11:{
                 enabled:true,
                 group:968,
                 label:'Extremely poor',
@@ -114,7 +60,70 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
+            968.5:{
+                enabled:true,
+                group:968,
+                label:'Young looking',
+                value:'Young looking',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.6:{
+                enabled:true,
+                group:968,
+                label:'Child(ren)',
+                value:'Child(ren)',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.7:{
+                enabled:true,
+                group:968,
+                label:'Disoriented',
+                value:'Disoriented',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.8:{
+                enabled:true,
+                group:968,
+                label:'With a chaperone',
+                value:'With a chaperone',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.9:{
+                enabled:true,
+                group:968,
+                label:'New Passport',
+                value:'New Passport',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.11:{
+                enabled:true,
+                group:968,
+                label:'Wearing revealing clothing',
+                value:'Wearing revealing clothing',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
             968.12:{
+                enabled:true,
+                group:968,
+                label:'Signs of abuse',
+                value:'Signs of abuse',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.13:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -128,6 +137,15 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 label:'Destination area known for trafficking',
                 type:'header',
                 format:'',
+                points:0
+            },
+            245.0:{
+                enabled:true,
+                group:245,
+                label:"PV doesn't know",
+                value:"PV doesn't know",
+                type:'checkbox-group',
+                format:'col-md-3',
                 points:0
             },
             245.1:{
@@ -202,8 +220,8 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Salon',
-                value:'Salon',
+                label:'Hair & beauty',
+                value:'Hair & beauty',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -211,22 +229,13 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Entertainment',
-                value:'Entertainment',
+                label:'Hotel',
+                value:'Hotel',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
             },
             924.4:{
-                enabled:true,
-                group:924,
-                label:'Hospitality',
-                value:'Hospitality',
-                type:'checkbox-group',
-                format:'col-md-4',
-                points:0
-            },
-            924.5:{
                 enabled:true,
                 group:924,
                 label:'Construction',
@@ -235,7 +244,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 format:'col-md-4',
                 points:0
             },
-            924.6:{
+            924.5:{
                 enabled:true,
                 group:924,
                 label:'Spa/massage',
@@ -244,7 +253,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 format:'col-md-4',
                 points:0
             },
-            924.7:{
+            924.6:{
                 enabled:true,
                 group:924,
                 label:'Other:',
@@ -260,6 +269,20 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 format:'',
                 points:0
             },
+            1084:{
+                enabled:true,
+                label:"Stranded/abandoned",
+                type:'checkbox',
+                format:'col-md-6',
+                points:0
+            },
+            1073:{
+                enabled:true,
+                label:"No Phone",
+                type:'checkbox',
+                format:'col-md-6',
+                points:0
+            },
             246:{
                 enabled:true,
                 label:"Doesn't know destination",
@@ -270,13 +293,6 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             502:{
                 enabled:true,
                 label:"Doesn't speak language at destination",
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            977:{
-                enabled:true,
-                label:"Doesn't speak English",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -323,37 +339,23 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 format:'col-md-12',
                 points:0
             },
-            metLabel:{
+            1083:{
                 enabled:true,
-                label:'Is or was traveling with someone they recently met through:',
-                type:'header',
+                label:'Is or was traveling with someone they recently met',
+                type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
-            242:{
+            977:{
                 enabled:true,
-                label:'Missed call',
+                label:"Doesn't speak English",
                 type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            243:{
-                enabled:true,
-                label:'Facebook',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            244:{
-                enabled:true,
-                label:'Other website:',
-                type:'other-checkbox',
-                format:'col-md-6',
+                format:'col-md-12',
                 points:0
             },
             988:{
                 enabled:true,
-                label:'Flight paid for in cash pre-paid credit card',
+                label:'Flight paid for in cash or pre-paid credit card',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -367,7 +369,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             197:{
                 enabled:true,
-                label:'Afraid of suspected trafficker/host',
+                label:'Afraid of suspect/host',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -411,7 +413,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             927:{
                 enabled:true,
-                label:'Treatment - no documentation/knowledge/details',
+                label:'Medical Treatment - no documentation/knowledge/details',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -437,16 +439,16 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 format:'col-md-12',
                 points:0
             },
-            978:{
+            30:{
                 enabled:true,
-                label:'Non-relative host paid for flight',
+                label:'Caught in a lie',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
-            30:{
+            713:{
                 enabled:true,
-                label:'Caught in a lie',
+                label:'Job details were changed en route',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -467,7 +469,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             74:{
                 enabled:true,
-                label:'Refuses to give family info.',
+                label:'Minor will not give family information.',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -489,7 +491,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             603:{
                 enabled:true,
-                label:'Contradiction between stories of suspect/PV',
+                label:'Contradiction between stories of suspect and PV',
                 type:'checkbox',
                 format:'col-md-12',
                 points:5
@@ -510,7 +512,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             "otherControlLabel":{
                 enabled:true,
-                label:'Other Illegitimate Means of Control',
+                label:'Other Illegitimate Means of Control by Suspect',
                 type:'header',
                 format:'',
                 points:0
@@ -545,10 +547,17 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
             55:{
                 enabled:true,
-                label:'Passport is with broker',
+                label:'Passport is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
+            },
+            1085:{
+                enabled:true,
+                label:'ID or work permit is with a suspect',
+                type:'checkbox',
+                format:'col-md-12',
+                points:6
             },
             501:{
                 enabled:true,
@@ -556,6 +565,13 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 type:'checkbox',
                 format:'col-md-12',
                 points:9
+            },
+            1076:{
+                enabled:true,
+                label:'Forcibly abducted',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
             },
             "minorSeparated":{
                 enabled:true,
@@ -574,6 +590,13 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             79:{
                 enabled:true,
                 label:'Under 18, Enticed without consent of family',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
+            },
+            1086:{
+                enabled:true,
+                label:'Under 16, recruited for work',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -693,7 +716,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Airline Official','Immigration']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Airline','Immigration']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -701,6 +724,9 @@ export class IrfNamibiaController extends BaseIrfCommonController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+        
+        this.version2022_8 = true;
+        this.officialFlight = true;
     }
     
     getDefaultIdentificationTypes() {
@@ -709,6 +735,7 @@ export class IrfNamibiaController extends BaseIrfCommonController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

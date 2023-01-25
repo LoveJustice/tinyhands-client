@@ -1,0 +1,63 @@
+<fieldset ng-disabled="$ctrl.isViewing">
+	
+	<h4>PV - The following questions are asked directly to the potential victim.</h4>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">5.1 Migration can be rewarding, but also risky if unprepared or uninformed. Were you aware that migrants can be deceived and end up in exploitative situations?</form-step>
+        <div class="col-md-5">
+            <form-step type="radio" radio-name="exploitive" label="Was aware, but did not know how bad until intercepted by LJ" response-value="$ctrl.questions.pvfAwarenessPvAware.response.value"></form-step>
+            <form-step type="radio" radio-name="exploitive" label="Was aware, but didn't think it was happening to them" response-value="$ctrl.questions.pvfAwarenessPvAware.response.value"></form-step>
+            <form-step type="radio" radio-name="exploitive" label="Was not aware" response-value="$ctrl.questions.pvfAwarenessPvAware.response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">5.2 Have you ever heard the gospel before?</form-step>
+        <div class="col-md-8">
+            <form-step type="radio" radio-name="heardGospel" label="No" response-value="$ctrl.questions.pvfAwarenessHeardMessage.response.value"></form-step>
+            <form-step type="radio" radio-name="heardGospel" label="Yes" response-value="$ctrl.questions.pvfAwarenessHeardMessage.response.value"></form-step>
+        </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">5.3 What do you believe now?</form-step>
+        <div class="col-md-8">
+            <form-step type="radio" radio-name="believe" label="Does not believe Jesus is the one true God" response-value="$ctrl.questions.pvfAwarenessWhatBelieveNow.response.value"></form-step>
+            <form-step type="radio" radio-name="believe" label="Already believes Jesus is the one true God" response-value="$ctrl.questions.pvfAwarenessWhatBelieveNow.response.value"></form-step>
+            <form-step type="radio" radio-name="believe" label="Came to believe that Jesus is the one true God" response-value="$ctrl.questions.pvfAwarenessWhatBelieveNow.response.value"></form-step>
+        </div>
+    </div>
+    <div class="row">
+    	<form-step class="col-md-12 control-label">5.4 If the PV accepted Christ for the first time, write their testimony in the space below:</form-step>
+    	<div class="col-md-12">
+    		<textarea class="form-control" rows="3" ng-model="$ctrl.questions.pvfAwarenessPvTestimony.response.value"></textarea>
+    	</div>
+    </div>
+    <h4>STAFF - The following questions are asked of the transit staff (not potential victim).</h4>
+	<div class="row center-vertical">
+		<form-step class="col-md-4 control-label">5.5 Did the staff share the gospel with the potential victim?</form-step>
+	    <div class="col-md-1">
+	        <form-step type="radio" radio-name="sharedGospel" label="No" response-value="$ctrl.questions.pvfAwarenessShareGospel.response.value"></form-step>
+	        <form-step type="radio" radio-name="sharedGospel" label="Yes" response-value="$ctrl.questions.pvfAwarenessShareGospel.response.value"></form-step> 
+	    </div>
+    </div>
+    <br>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">If yes, how? (check all that apply)</form-step>
+	    <div class="col-md-8">
+	            <form-step type="checkbox" label="Film" response-value="$ctrl.questions.pvfAwarenessFilm.response.value"></form-step>
+	            <form-step type="checkbox" label="Tract/Pamphlet" response-value="$ctrl.questions.pvfAwarenessTract.response.value"></form-step>
+	            <form-step type="checkbox" label="Oral Preaching" response-value="$ctrl.questions.pvfAwarenessOralPreaching.response.value"></form-step>
+	            <form-step type="checkbox" label="Shared Personal Testimony" response-value="$ctrl.questions.pvfAwarenessTestimony.response.value"></form-step>
+	            <form-step type="checkbox" label="Bible" response-value="$ctrl.questions.pvfAwarenessBible.response.value"></form-step>
+	            <form-step type="otherCheckbox" label="Other:" response-value="$ctrl.questions.pvfAwarenessOther.response.value"></form-step>
+	    </div>
+    </div>
+    <div class="row center-vertical">
+		<form-step class="col-md-4 control-label">If no, why?</form-step>
+		<div class="col-md-6">
+		    <div class="row col-md-12">
+	            <textarea class="form-control" rows="3" ng-model="$ctrl.questions.pvfAwarenessWhyNotShare.response.value"></textarea>
+	        </div>
+        </div>
+    </div>
+</fieldset>

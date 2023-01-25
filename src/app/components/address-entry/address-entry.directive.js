@@ -1,6 +1,7 @@
 import addressEntryTemplate from './address-entry.html';
 import SearchAddressController from './searchAddressController.js';
 import searchAddressTemplate from './searchAddress.html';
+import './address-entry.less';
 
 export default function AddressEntryDirective() {
     'ngInject';
@@ -16,6 +17,7 @@ export default function AddressEntryDirective() {
             latitudeModel: '=',
             longitudeModel: '=',
             viewOnly: '=',
+            hideText: '=?'
         }
     };
 
@@ -28,6 +30,7 @@ class AddressEntryController {
         this.label = $scope.label;
         this.$scope = $scope;
         this.$uibModal = $uibModal;
+        this.hideText = $scope.hideText;
         this.addressString = '';
         if ($scope.ngModel && $scope.ngModel.address) {
             this.addressString = $scope.ngModel.address;

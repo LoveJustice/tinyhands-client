@@ -19,6 +19,7 @@ export class BaseIrfController extends BaseFormController {
         this.locations = [];
         this.restrictChanges = false;
         this.tableDivSize = (window.innerWidth - 50) + 'px';
+        this.goodFormNumber = false;
         
         this.includeQuestion = {};
         
@@ -80,7 +81,7 @@ export class BaseIrfController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[1].response.value.match(this.formNumberPattern) !== null);
-        if (this.goodFormNumber) {
+        if (this.goodFormNumber && this.stateParams.id) {
             this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.questions[1].response.value);
         }
     }
@@ -297,10 +298,6 @@ export class BaseIrfController extends BaseFormController {
             this.incrementRedFlags(flagData.numberOfFlagsToAdd);
         });
     }
-    
-    isString(val) {
-    	return typeof val === 'string';
-    }
 
     showIgnoreWarningsCheckbox() {
         return (this.messagesEnabled && this.warningMessages.length > 0) || this.ignoreWarnings;
@@ -389,7 +386,8 @@ export class BaseIrfController extends BaseFormController {
 
     autoSaveHasMinimumData() {
         if (this.questions[1].response.value === null || this.questions[1].response.value === '' ||
-                this.questions[1066].response.value === null || this.questions[1066].response.value === '') {
+                this.questions[1066].response.value === null || this.questions[1066].response.value === '' ||
+                this.goodFormNumber == false) {
             return false;
         }
         return true;

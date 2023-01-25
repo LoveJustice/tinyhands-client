@@ -1,0 +1,11 @@
+<div class="row" id="relatedFormsScroll" ng-style="{'width':$ctrl.tableDivSize}">
+	<span>
+		<span ng-repeat="formType in $ctrl.formTypes" ng-if="$ctrl.shouldDisplay(formType)">
+			&nbsp;&nbsp;<b>{{ formType }}</b>
+			<span ng-repeat="formRef in $ctrl.relatedForms[formType]"
+					ng-if="formType !== $ctrl.currentForm || formRef.formNumber !== excludeFormNumber">
+		 		&nbsp;<a ng-href="{{formRef.url}}">{{ formRef.formNumber }}</a>
+		 	</span>
+		</span>
+	</span>
+</div>

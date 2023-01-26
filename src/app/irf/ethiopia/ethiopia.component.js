@@ -4,7 +4,7 @@ const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
@@ -289,7 +289,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
                 enabled:true,
                 label:"Stranded/abandoned",
                 type:'checkbox',
-                format:'col-md-12',
+                format:'col-md-6',
                 points:0
             },
             502:{
@@ -366,7 +366,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
                 enabled:true,
                 label:'No phone',
                 type:'checkbox',
-                format:'col-md-12',
+                format:'col-md-6',
                 points:0
             },
             
@@ -400,7 +400,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
             },
             927:{
                 enabled:true,
-                label:'Treatment - no documentation/knowledge',
+                label:'Medical Treatment - no documentation/knowledge',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -478,7 +478,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
             },
             "otherControlLabel":{
                 enabled:true,
-                label:'Other Illegitimate Means of Control',
+                label:'Other Illegitimate Means of Control by Suspect',
                 type:'header',
                 format:'',
                 points:0
@@ -513,14 +513,14 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
             },
             55:{
                 enabled:true,
-                label:'Passport is with broker',
+                label:'Passport is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
             },
             1085:{
                 enabled:true,
-                label:'ID or work permit is with a broker',
+                label:'ID or work permit is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:6
@@ -541,7 +541,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
             },
             "minorSeparated":{
                 enabled:true,
-                label:'Minor Separated Without Consent',
+                label:'Minor Illegitimately Separated from Family',
                 type:'header',
                 format:'',
                 points:0
@@ -565,7 +565,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
                 label:'Under 16, recruited for work',
                 type:'checkbox',
                 format:'col-md-12',
-                points:9
+                points:10
             },
             
             234:{
@@ -686,6 +686,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
         
         this.includeQuestion[1077] = true;
         this.narrativeOnly = true;
+        this.version2022_8 = true;
     }
     
     getDefaultIdentificationTypes() {

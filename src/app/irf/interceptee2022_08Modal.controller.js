@@ -87,5 +87,8 @@ export default class IntercepteeModalController extends BaseModalController {
         } else {
             this.originalQuestions[9].response.photo.value = this.initialPhoto;
         }
+        if (!this.questions[1331].response.value) {
+        	this.questions[1331].response.value = '';
+        }
     }
 }

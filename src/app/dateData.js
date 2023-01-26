@@ -67,7 +67,7 @@ class DateData {
 		    if (this.questions.hasOwnProperty(property)) {
 		    	let dt = this.questions[property].value;
 		    	let dateString = '';
-		    	if (dt !== null) {
+		    	if (dt) {
 		    		if (dt instanceof Date && !isNaN(dt.getTime())) {
 		    			dateString = this.dateToString(dt);
 		    		} else {

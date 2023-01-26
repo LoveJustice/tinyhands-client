@@ -1,6 +1,13 @@
 function PvfCommonV2022_6Routes($stateProvider) {
     'ngInject';
     $stateProvider
+    	.state('pvfBurkinaFaso', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
+        })
     	.state('pvfBenin', {
             url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
             component: 'pvfCommon202206Component',

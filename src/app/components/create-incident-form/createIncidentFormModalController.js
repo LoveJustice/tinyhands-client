@@ -108,7 +108,7 @@ export default class CreateIncidentFormModalController {
     			summary: this.newSummary,
     			station: this.scope.stationDropDown.selectedOptions[0].id
     		};
-    		this.incidentService.submitInstance(newIncident).then ((response) => {
+    		this.incidentService.submitIncident(newIncident).then ((response) => {
     			this.$uibModalInstance.close(response.data);
     		}, (error) => {alert(error);});
 

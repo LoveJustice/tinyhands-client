@@ -1,25 +1,25 @@
-import {BaseIrfCommonController} from '../baseIrfCommonController.js';
+import {BaseIrfBlindVerificationController} from '../baseIrfBlindVerificationController.js';
 import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
 import IntercepteeModalController from '../intercepteeModal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/intercepteeConsentModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
-export class IrfLiberiaController extends BaseIrfCommonController {
+export class IrfLiberiaController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
         'ngInject';
         super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
         
         this.checkboxGroup = new CheckboxGroup();
         
-        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7];
+        this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12];
+        this.destinationQuestions = ["destinationLabel",245.0,245.1,245.2,245.3,245.4,245.5,245.6,245.7];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5];
-        this.vulnerabilityQuestions = ["vulnerableLabel",246,502,925,78,942,926,280,974,"metLabel",243,244];
+        this.vulnerabilityQuestions = ["vulnerableLabel",246,1084,1073,502,925,78,942,926,280,974,1083,1072];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,501,1076,"minorSeparated",17,79];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -34,13 +34,31 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             968.2:{
                 enabled:true,
                 group:968,
-                label:'Escaping an exploitative situation',
-                value:'Escaping an exploitative situation',
+                label:'Recently enslaved',
+                value:'Recently enslaved',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
             968.3:{
+                enabled:true,
+                group:968,
+                label:'Unemployed',
+                value:'Unemployed',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.4:{
+                enabled:true,
+                group:968,
+                label:'Extremely poor',
+                value:'Extremely poor',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.5:{
                 enabled:true,
                 group:968,
                 label:'Young looking',
@@ -49,7 +67,7 @@ export class IrfLiberiaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.4:{
+            968.6:{
                 enabled:true,
                 group:968,
                 label:'Child(ren)',
@@ -58,16 +76,16 @@ export class IrfLiberiaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.5:{
+            968.7:{
                 enabled:true,
                 group:968,
-                label:'From a rural area',
-                value:'From a rural area',
+                label:'From rural area',
+                value:'From rural area',
                 type:'checkbox-group',
                 format:'col-md-3',
                 points:0
             },
-            968.6:{
+            968.8:{
                 enabled:true,
                 group:968,
                 label:'Migrant',
@@ -76,7 +94,25 @@ export class IrfLiberiaController extends BaseIrfCommonController {
                 format:'col-md-3',
                 points:0
             },
-            968.7:{
+            968.9:{
+                enabled:true,
+                group:968,
+                label:'Single mother',
+                value:'Single mother',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.11:{
+                enabled:true,
+                group:968,
+                label:'Village look',
+                value:'Village look',
+                type:'checkbox-group',
+                format:'col-md-3',
+                points:0
+            },
+            968.12:{
                 enabled:true,
                 group:968,
                 label:'Other:',
@@ -90,6 +126,15 @@ export class IrfLiberiaController extends BaseIrfCommonController {
                 label:'Destination area known for trafficking',
                 type:'header',
                 format:'',
+                points:0
+            },
+            245.0:{
+                enabled:true,
+                group:245,
+                label:"PV doesn't know",
+                value:"PV doesn't know",
+                type:'checkbox-group',
+                format:'col-md-6',
                 points:0
             },
             245.1:{
@@ -173,8 +218,8 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Diamond mine',
-                value:'Diamond mine',
+                label:'Mine',
+                value:'Mine',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -182,8 +227,8 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             924.3:{
                 enabled:true,
                 group:924,
-                label:'Rubber plantation',
-                value:'Rubber plantation',
+                label:'Agriculture',
+                value:'Agriculture',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0
@@ -213,11 +258,18 @@ export class IrfLiberiaController extends BaseIrfCommonController {
                 format:'',
                 points:0
             },
-            246:{
+            1084:{
                 enabled:true,
-                label:"Doesn't know destination",
+                label:"Stranded/abandoned",
                 type:'checkbox',
-                format:'col-md-12',
+                format:'col-md-6',
+                points:0
+            },
+            1073:{
+                enabled:true,
+                label:"No Phone",
+                type:'checkbox',
+                format:'col-md-6',
                 points:0
             },
             502:{
@@ -264,49 +316,14 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             },
             974:{
                 enabled:true,
-                label:'First time travelling abroad',
+                label:'First time traveling abroad',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
             },
-            metLabel:{
+            1083:{
                 enabled:true,
-                label:'Is or was traveling with someone they recently met through:',
-                type:'header',
-                format:'col-md-12',
-                points:0
-            },
-            242:{
-                enabled:true,
-                label:'Missed call',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            243:{
-                enabled:true,
-                label:'Facebook',
-                type:'checkbox',
-                format:'col-md-3',
-                points:0
-            },
-            244:{
-                enabled:true,
-                label:'Other website:',
-                type:'other-checkbox',
-                format:'col-md-6',
-                points:0
-            },
-            1070:{
-                enabled:true,
-                label:'Does not have any form of ID',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            1071:{
-                enabled:true,
-                label:'Bus driver expecting payment for travel at destination',
+                label:'Is or was traveling with someone they recently met',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -314,13 +331,6 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             1072:{
                 enabled:true,
                 label:'Travelling to city from rural area for first time',
-                type:'checkbox',
-                format:'col-md-12',
-                points:0
-            },
-            1073:{
-                enabled:true,
-                label:'Does not own mobile phone',
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -434,7 +444,7 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             },
             "otherControlLabel":{
                 enabled:true,
-                label:'Other Illegitimate Means of Control',
+                label:'Other Illegitimate Means of Control by Suspect',
                 type:'header',
                 format:'',
                 points:0
@@ -469,10 +479,17 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             },
             55:{
                 enabled:true,
-                label:'Passport is with broker',
+                label:'Passport is with a suspect',
                 type:'checkbox',
                 format:'col-md-12',
                 points:7
+            },
+            1085:{
+                enabled:true,
+                label:'ID or work permit is with a suspect',
+                type:'checkbox',
+                format:'col-md-12',
+                points:6
             },
             501:{
                 enabled:true,
@@ -483,14 +500,14 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             },
             1076:{
                 enabled:true,
-                label:'Abducted',
+                label:'Forcibly Abducted',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
             },
             "minorSeparated":{
                 enabled:true,
-                label:'Minor Separated Without Consent',
+                label:'Minor Illegitimately Separated from Family',
                 type:'header',
                 format:'',
                 points:0
@@ -505,6 +522,13 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             79:{
                 enabled:true,
                 label:'Under 18, Enticed without consent of family',
+                type:'checkbox',
+                format:'col-md-12',
+                points:10
+            },
+            1086:{
+                enabled:true,
+                label:'Under 16, recruited for work',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
@@ -617,7 +641,7 @@ export class IrfLiberiaController extends BaseIrfCommonController {
             },
         };
         
-        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Okada Driver','Bus Driver']];
+        this.contactList = [['Police','Shopkeeper','Taxi driver'],['Other NGO','Hotel Owner','Subcommittee'],['Ocada Driver','Bus Driver']];
         
         for (let entry in this.details) {
             let detail = this.details[entry];
@@ -627,6 +651,7 @@ export class IrfLiberiaController extends BaseIrfCommonController {
         }
         
         this.includeQuestion[1077] = true;
+        this.version2022_8 = true;
     }
     
     getDefaultIdentificationTypes() {
@@ -635,6 +660,7 @@ export class IrfLiberiaController extends BaseIrfCommonController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

@@ -8,6 +8,13 @@ function PvfCommonV2022_6Routes($stateProvider) {
                 id: null
             }
         })
+    	.state('pvfEthiopia', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
+        })
         .state('pvfGhana', {
             url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
             component: 'pvfCommon202206Component',
@@ -30,6 +37,13 @@ function PvfCommonV2022_6Routes($stateProvider) {
             }
         })
         .state('pvfKenya', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
+        })
+        .state('pvfLiberia', {
             url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
             component: 'pvfCommon202206Component',
             params: {

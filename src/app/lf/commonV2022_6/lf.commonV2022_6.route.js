@@ -1,7 +1,14 @@
 function LfCommonV2022_6Routes($stateProvider) {
     'ngInject';
     $stateProvider
-    .state('lfBenin', {
+    	.state('lfBenin', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+    	.state('lfEthiopia', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
             params: {
@@ -30,6 +37,13 @@ function LfCommonV2022_6Routes($stateProvider) {
             }
         })
         .state('lfKenya', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('lfLiberia', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
             params: {

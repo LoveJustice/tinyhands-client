@@ -43,6 +43,13 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('sfMalawi', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('sfLiberia', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',

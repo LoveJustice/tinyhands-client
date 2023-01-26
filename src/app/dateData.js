@@ -67,8 +67,15 @@ class DateData {
 		    if (this.questions.hasOwnProperty(property)) {
 		    	let dt = this.questions[property].value;
 		    	let dateString = '';
-		    	if (dt !== null && dt instanceof Date && !isNaN(dt.getTime())) {
-		    	    dateString = this.dateToString(dt);
+		    	if (dt !== null) {
+		    		if (dt instanceof Date && !isNaN(dt.getTime())) {
+		    			dateString = this.dateToString(dt);
+		    		} else {
+		    			// Date is invalid.  Set the value to a real
+		    			// date so that the serializer will be able to parse
+		    			// but very old so validation can recognize it as invalid
+		    	    	dateString = '1800-01-01'
+		    	    }
 		    	}
 		    	if (this.questions[property].dateType === 'person') {
 		    		this.origQuestions[property].response.birthdate.value = dateString;

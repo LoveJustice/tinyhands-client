@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="col-md-12">
-				<h3>Gospel Verification <b>{{ $ctrl.vdfQuestions[651].response.value }}</b></h3>
+				<h3>Gospel Verification <b>{{ $ctrl.formQuestions[$ctrl.questionIdDict.formNumber[$ctrl.formType]].response.value }}</b></h3>
 			</div>
 		</div>
 	</div>
@@ -19,7 +19,7 @@
                 <label>Call Interviewer: </label>
             </div>
             <div class="col-md-7">
-                {{ $ctrl.vdfQuestions[6].response.value }}
+                {{ $ctrl.formQuestions[$ctrl.questionIdDict.interviewer[$ctrl.formType]].response.value }}
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
 	    		<label>Date</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[288].response.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.interviewDate[$ctrl.formType]].response.value }}
 	    	</div>
 	    </div>
 	</div>
@@ -39,7 +39,7 @@
 	    		<label>Name</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[653].response.name.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.pv[$ctrl.formType]].response.name.value }}
 	    	</div>
 	    </div>
 	    <div class=col-md-3>
@@ -47,7 +47,7 @@
 	    		<label>Phone #</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[653].response.phone.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.pv[$ctrl.formType]].response.phone.value }}
 	    	</div>
 	    </div>
 	    <div class=col-md-6>
@@ -55,7 +55,7 @@
 	    		<label>Social Media ID</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[653].response.social_media.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.pv[$ctrl.formType]].response.social_media.value }}
 	    	</div>
 	    </div>
     </div>
@@ -65,7 +65,7 @@
 	    		<label>Guardian Name</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[653].response.guardian_name.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.pv[$ctrl.formType]].response.guardian_name.value }}
 	    	</div>
 	    </div>
 	    <div class=col-md-3>
@@ -73,7 +73,7 @@
 	    		<label>Guardian Phone#</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[653].response.guardian_phone.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.pv[$ctrl.formType]].response.guardian_phone.value }}
 	    	</div>
 	    </div>
 	    <div class=col-md-6>
@@ -81,7 +81,7 @@
 	    		<label>Relationship to Guardian</label>
 	    	</div>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[653].response.guardian_relationship.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.pv[$ctrl.formType]].response.guardian_relationship.value }}
 	    	</div>
 	    </div>
     </div>
@@ -93,7 +93,7 @@
 	    </div>
 	    <div class=col-md-3>
 	    	<div class="col-md-7">
-	    		{{ $ctrl.vdfQuestions[675].response.value }}
+	    		{{ $ctrl.formQuestions[$ctrl.questionIdDict.heardGospel[$ctrl.formType]].response.value }}
 	    	</div>
 	    </div>
     </div>
@@ -124,15 +124,15 @@
     	<div class="col-md-3">
     		<input id="believeA" type="radio" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'" 
     			name="believe" value="Does not believe Jesus is the one true God" 
-    			ng-model="$ctrl.vdfQuestions[676].response.value"></input>
+    			ng-model="$ctrl.formQuestions[$ctrl.questionIdDict.believeNow[$ctrl.formType]].response.value"></input>
     		<label for="believeA">Does not believe Jesus is the one true God</label><br>
             <input id="believeB" type="radio" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'" 
             	name="believe" value="Already believes Jesus is the one true God"
-            	ng-model="$ctrl.vdfQuestions[676].response.value"></input>
+            	ng-model="$ctrl.formQuestions[$ctrl.questionIdDict.believeNow[$ctrl.formType]].response.value"></input>
             <label for="believeB">Already believes Jesus is the one true God</label><br>
             <input id="believeC" type="radio" ng-disabled="$ctrl.questions[1060].response.value!=='Yes'"
             	name="believe" value="Came to believe that Jesus is the one true God"
-            	ng-model="$ctrl.vdfQuestions[676].response.value"></input>
+            	ng-model="$ctrl.formQuestions[$ctrl.questionIdDict.believeNow[$ctrl.formType]].response.value"></input>
             <label for="believeC">Came to believe that Jesus is the one true God</label><br>
     	</div>
     </div>

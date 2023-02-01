@@ -12,10 +12,43 @@ export class BaseGospelVerificationController extends BaseFormController {
         this.spinner = SpinnerOverlayService;
         this.session = SessionService;
 
+        // 0: vdf, 1: pvf
+        this.formType = null;
+        this.questionIdDict = {
+            "heardGospel": [675, 1644],
+            "believeNow": [676, 1645],
+            "interviewer": [6, 1572],
+            "formNumber": [651, 1571],
+            "interviewDate": [288, 1573],
+            "pv": [653, 1575],
+        };
         this.getGospelVerification(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
-        this.getVdf(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.vdf_id);
+        this.getForm(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.vdf_id);
     }
-    
+
+    parseFormResponse(response){
+        this.form = response.data;
+        this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
+        this.origForm = {
+            "heardGospel":this.formQuestions[this.questionIdDict.heardGospel[this.formType]].response.value,
+            "believeNow":this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value
+        };
+    }
+
+    getForm(countryId, stationId, formId) {
+        this.service.getVdf(countryId, stationId, formId).then((response) => {
+            this.formType = 0;
+            this.parseFormResponse(response);
+        }, (error) => {
+            this.formType = 1;
+            this.service.getPvf(countryId, stationId, formId).then((response) => {
+                this.formType = 1;
+                this.parseFormResponse(response);
+            });
+        });
+    }
+
+
     getGospelVerification(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
             this.config = response.data;
@@ -25,23 +58,6 @@ export class BaseGospelVerificationController extends BaseFormController {
         });
     }
 
-    getVdf(countryId, stationId, id) {
-        this.service.getVdf(countryId, stationId, id).then((response) => {
-            this.vdf = response.data;
-            this.vdfQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
-            this.origVdf = {
-                   675:this.vdfQuestions[675].response.value,
-                   676:this.vdfQuestions[676].response.value
-            };
-            this.vdfUrl = this.state.href(response.data.form_name, 
-                    {   id:response.data.storage_id, 
-                        stationId:response.data.station_id, 
-                        countryId:response.data.country_id, 
-                        isViewing:true,
-                        formName: response.data.form_name});
-        });
-    }
-    
     updateChangeRequired() {
         if (this.questions[1060].response.value === 'Yes') {
             this.questions[1062].response.value = null;
@@ -50,7 +66,7 @@ export class BaseGospelVerificationController extends BaseFormController {
             this.questions[1065].response.value = null;
         } else if (this.questions[1060].response.value === 'No') {
             this.questions[1061].response.value = null;
-            this.vdfQuestions[676].response.value = 'Came to believe that Jesus is the one true God';
+            this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value = 'Came to believe that Jesus is the one true God';
         }
     }
 
@@ -59,8 +75,8 @@ export class BaseGospelVerificationController extends BaseFormController {
     }
 
     submit() {
-        if (this.origVdf[676] !== this.vdfQuestions[676].response.value) {
-            this.service.updateGospelVdf(this.stateParams.vdf_id, this.vdfQuestions[676].response.value).then(
+        if (this.origForm.believeNow[this.formType] !== this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value) {
+            this.service.updateGospelVdf(this.stateParams.vdf_id, this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value).then(
                     () => {
                     }, ()=>{
                         alert("Failed to update VDF");

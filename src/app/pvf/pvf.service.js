@@ -5,13 +5,13 @@ export default class PvfService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
-        this.file_questions = [692];
+        this.file_questions = ['pvfAttachmentsAttachment'];
     }
     
     getFormNumber(pvf) {
         let response = '';
         for (let idx in pvf.responses) {
-            if (pvf.responses[idx].question_id === 651) {
+            if (pvf.responses[idx].question_tag === 'pvfTopPvfNumber') {
                 response = pvf.responses[idx].response.value;
                 break;
             }
@@ -32,7 +32,7 @@ export default class PvfService {
     appendScannedFiles(formData, responses, formNumber, startingIndex) {
         let cnt = startingIndex;
         for (let idx=0; idx < responses.length; idx++) {
-            if (this.file_questions.indexOf(responses[idx].question_id) !== -1) {
+            if (this.file_questions.indexOf(responses[idx].question_tag) !== -1) {
                 let t = Object.prototype.toString.call(responses[idx].response.value);
                 if (t === '[object Blob]') {
                     let fileName = formNumber + '_' + responses[idx].response.value.$ngfName;
@@ -61,7 +61,7 @@ export default class PvfService {
     removeTimeZoneAdjustment(pvf) {
         let dateTimeQuestions = [4];
         for (let idx=0; idx < pvf.responses.length; idx++) {
-            let t1 = dateTimeQuestions.indexOf(pvf.responses[idx].question_id);
+            let t1 = dateTimeQuestions.indexOf(pvf.responses[idx].question_tag);
             if (t1 > -1) {
                 let dt = pvf.responses[idx].response.value;
                 if (dt instanceof  Date) {

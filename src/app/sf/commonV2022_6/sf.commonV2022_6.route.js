@@ -1,6 +1,27 @@
 function SfCommonV2022_6Routes($stateProvider) {
     'ngInject';
     $stateProvider
+    	.state('sfBurkinaFaso', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+    	.state('sfBenin', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+    	.state('sfEthiopia', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('sfGhana', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
@@ -23,6 +44,20 @@ function SfCommonV2022_6Routes($stateProvider) {
             }
         })
         .state('sfKenya', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfMalawi', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfLiberia', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {

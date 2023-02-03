@@ -1,0 +1,46 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>4 Moved by an illegitimate means of control.</h3>
+		</div>
+	</div>
+	<div id="coached" class="col-md-12 margin-bottom-20">
+		<div ng-repeat="quest in $ctrl.coachedQuestions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+		</div>
+	</div>
+	<div id="jobTooGood" class="col-md-6">
+		<div ng-repeat="quest in $ctrl.jobTooGoodQuestions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='text'" type="text" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+		</div>
+	</div>
+	<div id="otherSigns" class="col-md-6">
+		<div ng-repeat="quest in $ctrl.otherSignsQuestions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='text'" type="text" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+		</div>
+	</div>
+	<hr>&nbsp;
+	<div class="row center-vertical">
+		<div class="col-md-12">
+			<form-step class="padding-20" type="number" min="0" response-value="$ctrl.questions[143].response.value"
+					label="Reported Total Red Flag Points"></form-step>
+		</div>
+    </div>
+
+</fieldset>

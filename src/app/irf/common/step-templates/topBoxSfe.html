@@ -1,0 +1,51 @@
+<fieldset class="form-horizontal" ng-disabled="$ctrl.isViewing === true">
+    <div class="row">
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-4 control-label">IRF Number: </form-step>
+            <div class="col-xs-4">
+                <input type="text" id="formNumber" class="form-control" placeholder="Irf Number" ng-model="$ctrl.questions[1].response.value" ng-change="$ctrl.formNumberChange()">
+            </div>
+            <div class="col-xs-4 alert-danger" ng-show="!$ctrl.goodFormNumber">
+            	Invalid Form Number
+            </div>
+        </div>
+       <div class="col-md-4 form-group">
+            <form-step class="col-xs-4 control-label">Counselor Name: </form-step>
+            <div class="col-xs-8">
+                <staff-select selected-staff="$ctrl.questions[6].response.value" station-id="$ctrl.stationId"></staff-select>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <br>
+		<div class="col-md-4 form-group">
+            <form-step class="col-xs-4 control-label">Date: </form-step>
+            <div class="col-xs-4">
+                 <input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions[1066].value">
+            </div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-3 control-label">Time: </form-step>
+            <div class="col-md-9">
+        		<input type="time" class="form-control" ng-model-options="{timezone: 'utc', timeStripZeroSeconds:true}" format="hh:mm A" step="60" ng-model="$ctrl.clock">
+        	</div>
+        </div>
+        <div class="col-md-4 form-group">
+            <form-step class="col-xs-4 control-label">Counselor Station: </form-step>
+            <div class="col-xs-8">
+                <input type="text" ng-model="$ctrl.response.station_name" disabled>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+    	<div class="col-md-1">
+    		<label>Source:</label>
+    	</div>
+    	<div class="col-md-11">
+    	<form-step class="col-md-3" type="radio" radio-name="locationRadio" ng-repeat="location in $ctrl.locations" label="{{location}}" other-value="$ctrl.otherData.questions[3].otherValue" response-value="$ctrl.otherData.questions[3].value"></form-step>
+        <form-step class="col-md-3" type="otherRadio" label="Other:" radio-name="locationRadio" other-value="$ctrl.otherData.questions[3].otherValue" response-value="$ctrl.otherData.questions[3].value"></form-step>
+        </div>
+    </div>
+</fieldset>

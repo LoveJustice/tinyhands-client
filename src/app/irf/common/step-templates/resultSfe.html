@@ -1,0 +1,40 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Result</h3>
+		</div>
+	</div>
+	<div class="row col-md-11 margin-left-10 borderLines">
+		<div class="col-md-6 borderLineRight">
+			<div class="level2Header">Check all that apply:</div>
+			<div class="col-md-12">
+				<form-step type="checkbox" label="PV was referred to technical/vocational training" response-value="$ctrl.questions[1838].response.value"></form-step>
+				<form-step type="checkbox" label="PV was referred to other education" response-value="$ctrl.questions[1839].response.value"></form-step>
+				<form-step type="checkbox" label="PV decided to change plans and look for a job within Nepal due to SFE staff’s counseling" 
+						response-value="$ctrl.questions[1841].response.value"></form-step>
+			</div>
+				
+			<label class="margin-top-20">If the PV decided to change plans and go abroad the  recommended way due to SFE staff’s counseling, indicate the change(s) that occurred:</label>
+			<div class="col-md-12">
+				<div class="col-md-12">
+					<form-step type="checkbox" label="Changed MPA" response-value="$ctrl.checkboxGroup.questions[1840]['Changed MPA']"></form-step>
+					<form-step type="checkbox" label="Changed destination country" response-value="$ctrl.checkboxGroup.questions[1840]['Changed destination country']"></form-step>
+					<form-step type="checkbox" label="Changed company/job" response-value="$ctrl.checkboxGroup.questions[1840]['Changed company/job']"></form-step>
+					
+					<form-step type="otherCheckbox" label="Other" response-value="$ctrl.checkboxGroup.questions[1840].internalOther"></form-step>
+				</div>
+			</div>
+		</div>
+		<div id="vulnerability" class="col-md-6 margin-top-30">
+			<div class="com-md-12">
+				<p>I certify that I have followed procedures and filled out this form correctly, completely, and accurately.</p>
+			</div>
+			<div class="margin-top-60">
+				<form-step class="">
+					<input id="scanned" type="checkbox" ng-change="$ctrl.getWarningMessages()" ng-model="$ctrl.questions[151].response.value">
+					<label for="scanned">Scanned form has signature</label>
+				</form-step>
+			</div>
+		</div>
+	</div>
+</fieldset>

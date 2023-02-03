@@ -48,7 +48,7 @@
         <div class="col-md-8">
         	<div class="col-md-12">
 	        	<div class="row col-md-12">
-		        	<input type="checkbox" id="howExpenses0" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[1].value]">
+		        	<input type="checkbox" id="howExpenses0" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[0].value]">
 		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[0].label }}</label>
 		        	Currency
 		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPvCurrency.response.value">
@@ -90,7 +90,7 @@
             <form-step class="control-label">2.5 Job that was promised</form-step>
         </div>
         <div class="col-md-3 form-group">
-        	<input type="text" response-value="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
+        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
         </div>
     </div>
     <div class="row">

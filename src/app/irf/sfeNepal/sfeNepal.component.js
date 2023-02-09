@@ -560,7 +560,7 @@ export class IrfSfeNepalController extends BaseIrfSfeController {
             },
             1827:{
                 enabled:true,
-                label:'Using an invalid MPA',
+                label:'Using an unregistered MPA',
                 type:'checkbox',
                 format:'col-md-12',
                 points:10

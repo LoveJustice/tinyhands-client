@@ -100,11 +100,16 @@ export class BaseIrfSfeController extends BaseIrfBlindVerificationController {
 		for (let idx in intercepteeCards) {
 			for (let respIdx in intercepteeCards[idx].responses) {
 				if (intercepteeCards[idx].responses[respIdx].question_id === 9) {
-					if (intercepteeCards[idx].responses[respIdx].response.role.value === 'Suspect') {
+					if (intercepteeCards[idx].responses[respIdx].response.role.value !== 'PVOT') {
 						foundSuspect = true;
 						if (this.agentName || this.agentPhone) {
 							intercepteeCards[idx].responses[respIdx].response.name.value = this.agentName;
 							intercepteeCards[idx].responses[respIdx].response.phone.value = this.agentPhone;
+							if (this.questions[2081].response.value === 'Yes') {
+								intercepteeCards[idx].responses[respIdx].response.role.value = 'Suspect';
+							} else {
+								intercepteeCards[idx].responses[respIdx].response.role.value = 'Agent';
+							}
 						} else {
 							// agent name and phone are null/blank do not keep suspect card
 							intercepteeCards.splice(idx, 1);
@@ -117,7 +122,11 @@ export class BaseIrfSfeController extends BaseIrfBlindVerificationController {
 		if (!foundSuspect && (this.agentName || this.agentPhone)) {
 			// There is no pre-existing suspect card and the agent name or phone is populated
 			let card = this.createCard('People');
-			this.setIntercepteeCard(card, 'Suspect','true', this.agentName, this.agentPhone);
+			if (this.questions[2081].response.value === 'Yes') {
+				this.setIntercepteeCard(card, 'Suspect','true', this.agentName, this.agentPhone);
+			} else {
+				this.setIntercepteeCard(card, 'Agent','true', this.agentName, this.agentPhone);
+			}
 			intercepteeCards.push(card);
 		}
 	}

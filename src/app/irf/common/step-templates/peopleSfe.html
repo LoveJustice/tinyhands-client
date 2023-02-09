@@ -143,67 +143,120 @@
 	</div>
 	<div class="row borderLines margin-left-10 margin-right-10">
 		<div class="row form-group margin-top-10">
-			<div class="col-md-6">
+			<div class="col-md-6 borderLineRight">
 				<label class="col-md-2 control-label">MPA Name</label>
 				<div class="col-md-10">
 					<input type="text" default="" class="form-control" ng-model="$ctrl.questions[1834].response.value" required>
 				</div>
-			</div>
-			<div class="col-md-5">
-				<label class="col-md-4 control-label">MPA Phone Number</label>
-				<div class="col-md-8">
+				<label class="col-md-2 control-label">Phone #</label>
+				<div class="col-md-10">
 					<input type="text" class="form-control" ng-model="$ctrl.questions[1835].response.value" required>
 				</div>
+				<div class="row margin-left-5 margin-top-10">
+					<label class="col-md-4 control-label">Who initiated contact?</label>
+					<div class="col-md-8">
+						<form-step type="radio" class="col-md-6" radio-name="mpaWhoInitiated" label="PV"
+								other-value="$ctrl.otherData.questions[1836].otherValue"
+								response-value="$ctrl.otherData.questions[1836].value"></form-step>
+						<form-step type="radio" class="col-md-6" radio-name="mpaWhoInitiated" label="MPA"
+								other-value="$ctrl.otherData.questions[1836].otherValue"
+								response-value="$ctrl.otherData.questions[1836].value"></form-step>
+						<form-step type="otherRadio" class="col-md-12" radio-name="mpaWhoInitiated" label="Other"
+								other-value="$ctrl.otherData.questions[1836].otherValue"
+								response-value="$ctrl.otherData.questions[1836].value"></form-step>
+					</div>
+				</div>
+				<div class="row margin-left-5">
+					<label class="col-md-2 control-label">How?</label>
+					<div class="col-md-10">
+					<form-step type="radio" class="col-md-3" radio-name="mpaHowInitiated" label="Phone"
+							other-value="$ctrl.otherData.questions[1837].otherValue"
+							response-value="$ctrl.otherData.questions[1837].value"></form-step>
+					<form-step type="radio" class="col-md-3" radio-name="mpaHowInitiated" label="In-person"
+							other-value="$ctrl.otherData.questions[1837].otherValue"
+							response-value="$ctrl.otherData.questions[1837].value"></form-step>
+					<form-step type="radio" class="col-md-3" radio-name="mpaHowInitiated" label="Social media"
+							other-value="$ctrl.otherData.questions[1837].otherValue"
+							response-value="$ctrl.otherData.questions[1837].value"></form-step>
+					<form-step type="radio" class="col-md-3" radio-name="mpaHowInitiated" label="Email"
+							other-value="$ctrl.otherData.questions[1837].otherValue"
+							response-value="$ctrl.otherData.questions[1837].value"></form-step>
+					<form-step type="radio" class="col-md-6" radio-name="mpaHowInitiated" label="Through a relative/friend"
+							other-value="$ctrl.otherData.questions[1837].otherValue"
+							response-value="$ctrl.otherData.questions[1837].value"></form-step>
+					<form-step type="otherRadio" class="col-md-6" radio-name="mpaHowInitiated" label="Other"
+							other-value="$ctrl.otherData.questions[1837].otherValue"
+							response-value="$ctrl.otherData.questions[1837].value"></form-step>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="row form-group">
 			<div class="col-md-6">
 				<label class="col-md-2 control-label">Agent Name</label>
 				<div class="col-md-10">
 					<input type="text" class="form-control" ng-model="$ctrl.agentName" required>
 				</div>
-			</div>
-			<div class="col-md-5">
-				<label class="col-md-4 control-label">Agent Phone Number</label>
-				<div class="col-md-8">
+				<label class="col-md-2 control-label">Phone #</label>
+				<div class="col-md-10">
 					<input type="text" class="form-control" ng-model="$ctrl.agentPhone" required>
+				</div>
+				<div class="row margin-top-10">
+					<label class="col-md-4 control-label">Who initiated contact?</label>
+					<div class="col-md-8">
+						<form-step type="radio" class="col-md-6" radio-name="agentWhoInitiated" label="PV"
+								other-value="$ctrl.otherData.questions[2079].otherValue"
+								response-value="$ctrl.otherData.questions[2079].value"></form-step>
+						<form-step type="radio" class="col-md-6" radio-name="agentWhoInitiated" label="Agent"
+								other-value="$ctrl.otherData.questions[2079].otherValue"
+								response-value="$ctrl.otherData.questions[2079].value"></form-step>
+						<form-step type="otherRadio" class="col-md-12" radio-name="agentWhoInitiated" label="Other"
+								other-value="$ctrl.otherData.questions[2079].otherValue"
+								response-value="$ctrl.otherData.questions[2079].value"></form-step>
+					</div>
+				</div>
+				<div class="row">
+					<label class="col-md-1 control-label text-right">How?</label>
+					<div class="col-md-11">
+					<form-step type="radio" class="col-md-3" radio-name="agentHowInitiated" label="Phone"
+							other-value="$ctrl.otherData.questions[2078].otherValue"
+							response-value="$ctrl.otherData.questions[2078].value"></form-step>
+					<form-step type="radio" class="col-md-3" radio-name="agentHowInitiated" label="In-person"
+							other-value="$ctrl.otherData.questions[2078].otherValue"
+							response-value="$ctrl.otherData.questions[2078].value"></form-step>
+					<form-step type="radio" class="col-md-3" radio-name="agentHowInitiated" label="Social media"
+							other-value="$ctrl.otherData.questions[2078].otherValue"
+							response-value="$ctrl.otherData.questions[2078].value"></form-step>
+					<form-step type="radio" class="col-md-3" radio-name="agentHowInitiated" label="Email"
+							other-value="$ctrl.otherData.questions[2078].otherValue"
+							response-value="$ctrl.otherData.questions[2078].value"></form-step>
+					<form-step type="radio" class="col-md-6" radio-name="agentHowInitiated" label="Through a relative/friend"
+							other-value="$ctrl.otherData.questions[2078].otherValue"
+							response-value="$ctrl.otherData.questions[2078].value"></form-step>
+					<form-step type="otherRadio" class="col-md-6" radio-name="agentHowInitiated" label="Other"
+							other-value="$ctrl.otherData.questions[2078].otherValue"
+							response-value="$ctrl.otherData.questions[2078].value"></form-step>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div class="row form-group">
-			<div class="col-md-11">
-			<label class="col-md-2 control-label">Who initiated contact?</label>
-			<form-step type="radio" class="col-md-1" radio-name="whoInitiated" label="PV"
-					other-value="$ctrl.otherData.questions[1836].otherValue"
-					response-value="$ctrl.otherData.questions[1836].value"></form-step>
-			<form-step type="radio" class="col-md-2" radio-name="whoInitiated" label="MPA/Agent"
-					other-value="$ctrl.otherData.questions[1836].otherValue"
-					response-value="$ctrl.otherData.questions[1836].value"></form-step>
-			<form-step type="otherRadio" class="col-md-3" radio-name="whoInitiated" label="Other"
-					other-value="$ctrl.otherData.questions[1836].otherValue"
-					response-value="$ctrl.otherData.questions[1836].value"></form-step>
-			</div>
-			<div class="col-md-11">
-			<label class="col-md-1 control-label text-right">How?</label>
-			<form-step type="radio" class="col-md-1" radio-name="howInitiated" label="Phone"
-					other-value="$ctrl.otherData.questions[1837].otherValue"
-					response-value="$ctrl.otherData.questions[1837].value"></form-step>
-			<form-step type="radio" class="col-md-2" radio-name="howInitiated" label="In-person"
-					other-value="$ctrl.otherData.questions[1837].otherValue"
-					response-value="$ctrl.otherData.questions[1837].value"></form-step>
-			<form-step type="radio" class="col-md-2" radio-name="howInitiated" label="Social media"
-					other-value="$ctrl.otherData.questions[1837].otherValue"
-					response-value="$ctrl.otherData.questions[1837].value"></form-step>
-			<form-step type="radio" class="col-md-1" radio-name="howInitiated" label="Email"
-					other-value="$ctrl.otherData.questions[1837].otherValue"
-					response-value="$ctrl.otherData.questions[1837].value"></form-step>
-			<form-step type="radio" class="col-md-2" radio-name="howInitiated" label="Through a relative/friend"
-					other-value="$ctrl.otherData.questions[1837].otherValue"
-					response-value="$ctrl.otherData.questions[1837].value"></form-step>
-			<form-step type="otherRadio" class="col-md-3" radio-name="howInitiated" label="Other"
-					other-value="$ctrl.otherData.questions[1837].otherValue"
-					response-value="$ctrl.otherData.questions[1837].value"></form-step>
-			</div>
+	</div>
+	<div class="row borderLines margin-left-10 margin-right-10 text-center">
+		<label>Do you suspect the MPA / Agent is attempting to traffic the PV (or others)?</label>
+	</div>
+	<div class="row borderLines margin-left-10 margin-right-10">
+		<div class="col-md-6 borderLineRight text-center">
+			<div class="col-md-4">&nbsp;</div>
+			<form-step type="radio" class="col-md-2" radio-name="mpaSuspect" label="No"
+						response-value="$ctrl.questions[2080].response.value"></form-step>
+			<form-step type="radio" class="col-md-2" radio-name="mpaSuspect" label="Yes"
+						response-value="$ctrl.questions[2080].response.value"></form-step>
+		</div>
+		<div class="col-md-6">
+			<div class="col-md-4">&nbsp;</div>
+			<form-step type="radio" class="col-md-2" radio-name="agentSuspect" label="No"
+						response-value="$ctrl.questions[2081].response.value"></form-step>
+			<form-step type="radio" class="col-md-2" radio-name="agentSuspect" label="Yes"
+						response-value="$ctrl.questions[2081].response.value"></form-step>
+		</div>
 		</div>
 	</div>
 </fieldset>

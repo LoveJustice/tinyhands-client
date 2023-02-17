@@ -387,7 +387,7 @@ export class BaseIrfController extends BaseFormController {
     autoSaveHasMinimumData() {
         if (this.questions[1].response.value === null || this.questions[1].response.value === '' ||
                 this.questions[1066].response.value === null || this.questions[1066].response.value === '' ||
-                this.goodFormNumber == false) {
+                this.goodFormNumber === false) {
             return false;
         }
         return true;

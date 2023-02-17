@@ -1,0 +1,38 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>3 Without the resources to stay safe...</h3>
+		</div>
+	</div>
+	<div id="vulnerability" class="col-md-6">
+		<div ng-repeat="quest in $ctrl.vulnerabilityQuestions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox-group'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group][$ctrl.details[quest].value]"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox-group'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group].internalOther"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='master-checkbox-group'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group].internalMaster" disabled></form-step>
+		</div>
+	</div>
+	<div id="Vulnerability2" class="col-md-6">
+		<div ng-repeat="quest in $ctrl.vulnerability2Questions" ng-if="$ctrl.details[quest].enabled">
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>
+			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
+			<form-step ng-if="$ctrl.details[quest].type=='checkbox-group'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group][$ctrl.details[quest].value]"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='other-checkbox-group'" type="otherCheckbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group].internalOther"></form-step>
+			<form-step ng-if="$ctrl.details[quest].type=='master-checkbox-group'" type="checkbox" class={{$ctrl.details[quest].format}}
+				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.checkboxGroup.questions[$ctrl.details[quest].group].internalMaster" disabled></form-step>
+		</div>
+	</div>
+	<br>
+</fieldset>

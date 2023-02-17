@@ -1,0 +1,154 @@
+<fieldset>
+    <div class="row">
+        <div class="col-md-2 form-group">
+	        <select name='form' class="form-control" ng-model="$ctrl.informationCard" ng-change="$ctrl.informationCardChange()">
+	            <option value="MERGED">MERGED</option>
+	            <option ng-repeat="opt in $ctrl.getCardInstances('Information')" value="{{ $index }}">{{  $ctrl.getResponseOfQuestionByTag(opt.responses, 'lfInformationSourceType').value + ':' + $ctrl.getResponseOfQuestionByTag(opt.responses, 'lfInformationSourceTitle').value }}</option>
+	        </select>
+	    </div>
+	
+	<fieldset class="col-md-5" ng-if="$ctrl.currentCard" ng-disabled="true">
+       		<div class="col-md-2">
+    			<label>Source of Intelligence</label>
+    		</div>
+    		<div class="col-md-10">
+	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Intercept"
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Operation"
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Victim"
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Police"
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-3" type="radio" radio-name="source" label="Trafficker"
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-3" type="radio" radio-name="source" label="OSI"
+	    				response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"
+	    				other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"></form-step>
+	    		<form-step class="col-md-9" type="otherRadio" radio-name="source" label="Other"
+			            other-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.otherValue"
+			            response-value="$ctrl.currentCard.otherData.questions.lfInformationSourceType.value"></form-step>
+	    	</div>
+    	</fieldset>
+    	<fieldset class="col-md-1 form-group"  ng-if="$ctrl.currentCard" ng-disabled="true">
+    		<label>Title</label>
+    	</fieldset>
+    	<fieldset class="col-md-2 form-group"  ng-if="$ctrl.currentCard" ng-disabled="true">
+    		<input type="text" ng-model="$ctrl.currentCard.questions.lfInformationSourceTitle.response.value">
+    	</fieldset>
+    </div>
+    <fieldset ng-disabled="true">
+	    <div ng-if="$ctrl.currentCard">
+	    	<div class="row">
+	    		<div class="col-md-5 form-group">
+	    			<div class="col-md-4">
+	    				<label>Interviewer Name</label>
+	    			</div>
+	    			<div class="col-md-8">
+		                <staff-select selected-staff="$ctrl.currentCard.questions.lfInformationInterviewerName.response.value" station-id="$ctrl.stationId"></staff-select>
+		            </div>
+	    		</div>
+	    		<div class="col-md-3 form-group">
+	    			<label>Interview Date</label>
+	    			<input type="date"  ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.currentCard.dateData.questions.lfInformationInterviewDate.value">
+	    		</div>
+	    		<div class="col-md-3 form-group">
+	    			<div class="col-md-3">
+	    				<label>Location</label>
+	    			</div>
+	    			<div class="col-md-9">
+		                <location-select selected-location="$ctrl.currentCard.questions.lfInformationInterviewLocation.response.value" station-id="$ctrl.stationId"></location-select>
+		            </div>
+		            
+	    		</div>
+	    	</div>
+	    </div>
+	</fieldset>
+	<fieldset ng-disabled="$ctrl.isViewing === true" ng-if="$ctrl.currentCard">
+			<div class="row">
+	            <div class="col-md-3 form-group">
+		    		<label>2.1 Person(s) in Charge</label>
+		    	</div>
+				<div class="col-md-9 form-group">
+			        <name-select selected-names="$ctrl.currentCard.questions.lfAssociationPersonsInCharge.response.value"
+			        			name-structure="$ctrl.incidentNames"
+			        			value-type="suspect"
+			        			view-only="$ctrl.currentCard.isViewing"></name-select>
+		        </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-5 form-group">
+		    		<label>2.2 Names of PVs who have visited this place</label>
+		    	</div>
+		    	<div class="col-md-7 form-group">
+		    		<name-select selected-names="$ctrl.currentCard.questions.lfAssociationPvsVisited.response.value"
+			        			name-structure="$ctrl.incidentNames"
+			        			value-type="pv"
+			        			view-only="$ctrl.currentCard.isViewing"></name-select>
+			    </div>
+	        </div>
+	        <div class="row">
+            	<div class="col-md-5 form-group">
+		    		<label>2.3 For how long did PV(s) stay at this place?</label>
+		    	</div>
+		    	<div class="col-md-7">
+		    		<form-step type="radio" radio-name="howLong" label="N/A (Not Applicable)"
+		    				response-value="$ctrl.currentCard.otherData.questions.lfAssociationPvsStayHowLong.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfAssociationPvsStayHowLong.otherValue"></form-step>
+		    	</div>
+		    	<span>
+		    		<form-step class="col-md-3" type="otherRadio" radio-name="howLong" label=""
+		    				response-value="$ctrl.currentCard.otherData.questions.lfAssociationPvsStayHowLong.value"
+		    				other-value="$ctrl.currentCard.otherData.questions.lfAssociationPvsStayHowLong.otherValue"></form-step>
+		    		days, starting
+		    		<input type="date"  ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.currentCard.dateData.questions.lfAssociationPvsStayStartDate.value">
+	    		</span>
+	        </div>
+	        <div class="col-md-12 row">
+            	<div class="col-md-12">
+		    		<label>Was there any attempt made to hide the PV's presence at this place?</label>
+		    	</div>
+		    	<div class="col-md-12">
+		    		<form-step class="col-md-2" type="radio" radio-name="attemptHide" label="Yes"
+		    				response-value="$ctrl.currentCard.questions.lfAssociationPvHide.response.value"></form-step>
+		    		<label class="col-md-2">explain</label>
+		    		<textarea class="col-md-7" rows="2" ng-model="$ctrl.currentCard.questions.lfAssociationPvHideExplain.response.value"></textarea>
+		    	</div>
+		    	<div class="col-md-12">
+		    		<form-step class="col-md-2" type="radio" radio-name="attemptHide" label="No"
+		    				response-value="$ctrl.currentCard.questions.lfAssociationPvHide.response.value"></form-step>
+		    	</div>
+	        </div>
+	         <div class="col-md-12 row">
+            	<div class="col-md-12">
+		    		<label>Was the PV free to go out from the place?</label>
+		    	</div>
+		    	<div class="col-md-12">
+		    		<form-step class="col-md-2" type="radio" radio-name="freeToGo" label="No"
+		    				response-value="$ctrl.currentCard.questions.lfAssociationPvFreeToGo.response.value"></form-step>
+		    		<label class="col-md-2">explain</label>
+		    		<textarea class="col-md-7" rows="2" ng-model="$ctrl.currentCard.questions.lfAssociationPvFreeToGoExplain.response.value"></textarea>
+		    	</div>
+		    	<div class="col-md-12">
+		    		<form-step class="col-md-2" type="radio" radio-name="freeToGo" label="Yes"
+		    				response-value="$ctrl.currentCard.questions.lfAssociationPvFreeToGo.response.value"></form-step>
+		    	</div>
+	        </div>
+	        <div class="row">
+            	<div class="col-md-5 form-group">
+		    		<label>2.4 Suspects who are associated with this place?</label>
+		    	</div>
+		    	<div class="col-md-7 form-group">
+		    		<name-select selected-names="$ctrl.currentCard.questions.lfAssociationSuspects.response.value"
+			        			name-structure="$ctrl.incidentNames"
+			        			value-type="suspect"
+			        			view-only="$ctrl.currentCard.isViewing"></name-select>
+			    </div>
+	        </div>
+		</fieldset>
+</fieldset>

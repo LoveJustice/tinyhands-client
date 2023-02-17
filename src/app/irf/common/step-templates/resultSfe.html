@@ -1,0 +1,39 @@
+<fieldset ng-disabled="$ctrl.isViewing === true">
+	<div class="row">
+		<div class="col-md-12">
+			<h3 class="sameLine margin-bottom-0">Result</h3>
+			<p class="sameLine margin-bottom-0"> - After the PV changed their initial plans, what happened (check all that apply): </p>
+		</div>
+	</div>
+	<div class="row col-md-11 margin-left-10 borderLines">
+		<div class="col-md-6 borderLineRight">
+			<label class="margin-top-10">Decided to go abroad the recommended way by making the following change(s):</label>
+			<div class="col-md-12">
+				<div class="col-md-12">
+					<form-step class="col-md-6" type="checkbox" label="Changed MPA" response-value="$ctrl.checkboxGroup.questions[1840]['Changed MPA']"></form-step>
+					<form-step class="col-md-6" type="checkbox" label="Changed destination country" response-value="$ctrl.checkboxGroup.questions[1840]['Changed destination country']"></form-step>
+					<form-step class="col-md-6" type="checkbox" label="Changed company/job" response-value="$ctrl.checkboxGroup.questions[1840]['Changed company/job']"></form-step>
+					
+					<form-step class="col-md-6" type="otherCheckbox" label="Other" response-value="$ctrl.checkboxGroup.questions[1840].internalOther"></form-step>
+				</div>
+			</div>
+			<div class="col-md-12 margin-bottom-10">
+				<form-step type="checkbox" label="PV was referred to technical/vocational training" response-value="$ctrl.questions[1838].response.value"></form-step>
+				<form-step type="checkbox" label="PV was referred to other education" response-value="$ctrl.questions[1839].response.value"></form-step>
+				<form-step type="checkbox" label="PV decided to change plans and look for a job within Nepal" 
+						response-value="$ctrl.questions[1841].response.value"></form-step>
+			</div>
+		</div>
+		<div id="vulnerability" class="col-md-6 margin-top-30">
+			<div class="com-md-12">
+				<p>I certify that I have followed procedures and filled out this form correctly, completely, and accurately.</p>
+			</div>
+			<div class="margin-top-60">
+				<form-step class="">
+					<input id="scanned" type="checkbox" ng-change="$ctrl.getWarningMessages()" ng-model="$ctrl.questions[151].response.value">
+					<label for="scanned">Scanned form has signature</label>
+				</form-step>
+			</div>
+		</div>
+	</div>
+</fieldset>

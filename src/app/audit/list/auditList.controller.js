@@ -110,7 +110,7 @@ export default class AuditListController {
         this.service.getFormTypes().then ((promise) => {
             let formTypes = [];
             for (let idx=0; idx < promise.data.results.length; idx++) {
-                if (promise.data.results[idx].name === 'IRF' || promise.data.results[idx].name === 'CIF' || promise.data.results[idx].name === 'VDF') {
+                if (promise.data.results[idx].name === 'IRF' || promise.data.results[idx].name === 'CIF' || promise.data.results[idx].name === 'VDF' || promise.data.results[idx].name === 'PVF' || promise.data.results[idx].name === 'SF' || promise.data.results[idx].name === 'LF') {
                     formTypes.push(promise.data.results[idx]);
                 }
             }

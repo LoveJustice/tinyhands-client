@@ -1,9 +1,8 @@
 import {BaseFormController} from '../baseFormController.js';
 import {IrfStubController} from '../cif/irfStub.js';
-const CheckboxGroup = require('../checkboxGroup.js');
 
 export class BaseLegalCaseController extends BaseFormController {
-    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService) {
+    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService) {
         'ngInject';
         super($scope, $stateParams, $uibModalStack);
         
@@ -12,6 +11,7 @@ export class BaseLegalCaseController extends BaseFormController {
         this.service = LegalCaseService;
         this.irfService = IrfService;
         this.session = SessionService;
+        this.incidentService = IncidentService;
         this.state = $state;
         this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
@@ -31,21 +31,6 @@ export class BaseLegalCaseController extends BaseFormController {
     
     formNumberChange() {
         this.goodFormNumber = (this.questions[998].response.value.match(this.formNumberPattern) !== null);
-    }
-    
-    number_change() {
-        let question_id = 998;
-        let legalCaseNumber = this.questions[question_id].response.value;
-        if (this.legalCaseNumber !== legalCaseNumber) {
-            this.legalCaseNumber = legalCaseNumber;
-            this.irf = null;
-            this.tmpIrf = null;
-            this.irfRef = null;
-            this.cifRefs = [];
-            if (this.goodFormNumber) {
-                this.getRelatedForms(this.service, this.session, this.stateParams.stationId, legalCaseNumber);
-            }
-        }
     }
     
     getRelatedFormsComplete() {
@@ -137,20 +122,24 @@ export class BaseLegalCaseController extends BaseFormController {
                 let timelineCards = this.getCardInstances('Timeline');
                 timelineCards.sort(BaseLegalCaseController.compareTimelineEntries);
                 if (this.stateParams.id === null) {
-                    this.questions[997].response.value = 'active';
+                	this.incidentService.getIncident(this.stateParams.incidentId).then((response) => {
+	                	this.incidentNumber = response.data.incident_number;
+	                	this.questions[998].response.value = this.incidentNumber;
+	                    this.questions[997].response.value = 'active';
+	                    this.formNumberPattern = '^' + this.incidentNumber+ '[A-Z]{0,2}$';
+                		this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.incidentNumber);
+                		this.formNumberChange();
+	                });
                 } else {
+         			this.incidentNumber = this.getIncidentNumberFromFormNumber(this.questions[998].response.value);
                     this.set_errors_and_warnings(response.data);
                     this.messagesEnabled = true;
-                }
-                if (this.questions[998].response.value === null || this.questions[998].response.value === '') {
-                    this.questions[998].response.value = this.response.station_code;
+                    this.formNumberPattern = '^' + this.incidentNumber+ '[A-Z]{0,2}$';
+                	this.getRelatedForms(this.service, this.session, this.stateParams.stationId, this.incidentNumber);
+                	this.formNumberChange();
                 }
                 this.station_name = this.response.station_name;
-                this.formNumberPattern = '^' + this.response.station_code + '[0-9]{3,}[A-Z]{0,1}$';
                 this.formNumberChange();
-                if (this.goodFormNumber) {
-                    this.number_change();
-                }
                 this.getLocations(this.stateParams.stationId);
             });
         });

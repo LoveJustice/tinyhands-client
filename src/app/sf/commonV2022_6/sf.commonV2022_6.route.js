@@ -15,6 +15,13 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('sfBurundi', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
     	.state('sfEthiopia', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
@@ -43,7 +50,28 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('sfIndonesia', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('sfKenya', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfLesotho', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfLiberia', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {
@@ -57,7 +85,7 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
-        .state('sfLiberia', {
+        .state('sfMozambique', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {

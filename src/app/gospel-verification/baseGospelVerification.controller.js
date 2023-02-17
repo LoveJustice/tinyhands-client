@@ -15,12 +15,12 @@ export class BaseGospelVerificationController extends BaseFormController {
         // 0: vdf, 1: pvf
         this.formType = null;
         this.questionIdDict = {
-            "heardGospel": [675, 1644],
-            "believeNow": [676, 1645],
-            "interviewer": [6, 1572],
-            "formNumber": [651, 1571],
-            "interviewDate": [288, 1573],
-            "pv": [653, 1575],
+            "heardGospel": [675, 'pvfAwarenessHeardMessage'],
+            "believeNow": [676, 'pvfAwarenessWhatBelieveNow'],
+            "interviewer": [6, 'pvfTopInterviewer'],
+            "formNumber": [651, 'pvfTopPvfNumber'],
+            "interviewDate": [288, 'pvfTopInterviewDate'],
+            "pv": [653, 'pvfPvInfoPv'],
         };
         this.getGospelVerification(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.getForm(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.vdf_id);
@@ -28,7 +28,11 @@ export class BaseGospelVerificationController extends BaseFormController {
 
     parseFormResponse(response){
         this.form = response.data;
-        this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
+        if (this.formType == 0) {
+        	this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
+        } else {
+        	this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_tag);
+        }
         this.origForm = {
             "heardGospel":this.formQuestions[this.questionIdDict.heardGospel[this.formType]].response.value,
             "believeNow":this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value

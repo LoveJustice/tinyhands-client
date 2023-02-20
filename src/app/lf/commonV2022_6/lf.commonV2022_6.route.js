@@ -15,6 +15,13 @@ function LfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('lfBurundi', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
     	.state('lfEthiopia', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
@@ -43,6 +50,13 @@ function LfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('lfIndonesia', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('lfKenya', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
@@ -50,7 +64,21 @@ function LfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('lfLesotho', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('lfMalawi', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('lfMozambique', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
             params: {

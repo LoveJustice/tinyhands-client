@@ -165,6 +165,16 @@ export default class LegalCaseListController {
             });
         });
     }
+    
+    createForm(incident) {
+    	this.service.getFormForStation(incident.station).then((response) => {
+                if (response.data.length > 0) {
+                    this.state.go(response.data[0].form_name, {stationId: incident.station, countryId: incident.country_id, isViewing:false, formName: response.data[0].form_name, incidentId: incident.id});
+                } else {
+                    this.toastr.error("Unable to find form for station " + station.label);
+                }
+            });
+    }
 
     searchLegalCases() {
         if (this.timer.hasOwnProperty('$$timeoutId')) {

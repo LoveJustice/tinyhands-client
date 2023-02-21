@@ -248,7 +248,7 @@ export class IrfZambiaController extends BaseIrfBlindVerificationController {
             },
             502:{
                 enabled:true,
-                label:"Doesn't speak language at destination",
+                label:"Doesn't speak local language at destination",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0

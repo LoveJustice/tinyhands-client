@@ -178,7 +178,7 @@
 	        		</td>
 	        	</tr>
 	        	<tr ng-if="collectionIndicators.pvfForm">
-	        		<td rowspan="4" ng-class="collectionIndicators.getHeadClass('bold pvf-dark center')">PVF</td>
+	        		<td rowspan="5" ng-class="collectionIndicators.getHeadClass('bold pvf-dark center')">PVF</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('pvf-light')">PVFs</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey','pvf-light', $index)"
@@ -208,6 +208,14 @@
 	        				ng-class="collectionIndicators.getCellClass('med-grey','pvf-light', $index)"
 	        				ng-click="collectionIndicators.getDetail('PVF Collection Lag Time', indicator)">
 	        			{{ indicator.vdf_lag }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('pvf-dark')">PVF Shared Gospel %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','pvf-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('PVF Collection Lag Time', indicator)">
+	        			{{  collectionIndicators.displayPercent(indicator.vdf_gospel_percent) }}
 	        		</td>
 	        	</tr>
 	        	<tr ng-if="collectionIndicators.pvfForm">

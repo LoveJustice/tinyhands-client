@@ -706,7 +706,7 @@ export class BaseSfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.sfTopSfNumber.response.value === null || this.questions.sfTopSfNumber.response.value === '' || this.goodFormNumber == false) {
+        if (this.questions.sfTopSfNumber.response.value === null || this.questions.sfTopSfNumber.response.value === '' || this.goodFormNumber === false) {
             return false;
         }
         return true;

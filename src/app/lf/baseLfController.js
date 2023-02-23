@@ -351,8 +351,8 @@ export class BaseLfController extends BaseFormController {
     		{cardField:'lfInformationLandmarks', mainField:'lfMergedLandmarks'}];
     	let cards = this.getCardInstances('Information');
     	for (let idx in locationFields) {
-			let cardFieldName = locationFields[idx]['cardField'];
-			let mainFieldName = locationFields[idx]['mainField'];
+			let cardFieldName = locationFields[idx].cardField;
+			let mainFieldName = locationFields[idx].mainField;
 			
     		let current = this.questions[mainFieldName].response.value;
     		if (current) {
@@ -403,7 +403,7 @@ export class BaseLfController extends BaseFormController {
     		for (let cardIdx in cards) {
     			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationAddress');
     			if (response) {
-    				this.questions[mainFieldName].response = response;
+    				this.questions.mainFieldName.response = response;
     				break;
     			}
     		}
@@ -587,7 +587,7 @@ export class BaseLfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '' || this.goodFormNumber == false) {
+        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '' || this.goodFormNumber === false) {
             return false;
         }
         return true;

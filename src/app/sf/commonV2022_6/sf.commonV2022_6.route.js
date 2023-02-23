@@ -112,6 +112,20 @@ function SfCommonV2022_6Routes($stateProvider) {
             params: {
                 id: null,
             }
+        })
+        .state('sfUganda', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfZambia', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
         });
 }
 

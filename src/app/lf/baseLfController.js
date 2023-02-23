@@ -154,6 +154,18 @@ export class BaseLfController extends BaseFormController {
     
     getInfoCardConfig() {
     }
+    
+    getAllIncidentNames() {
+    	if (this.incidentNumber) {
+    		let allIncidents = [this.incidentNumber];
+    		if (this.associatedIncidents) {
+    			for (let idx in this.associatedIncidents) {
+    				allIncidents.push(this.associatedIncidents[idx].incident_number);
+    			}
+    		}
+    		this.getIncidentNames(allIncidents);
+    	}
+    }
 
     getLf(stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -192,6 +204,7 @@ export class BaseLfController extends BaseFormController {
 	            if (id) {
 	            	this.service.getAssociatedIncidents(id).then((response) => {
 	            		this.associatedIncidents = response.data;
+	            		this.getAllIncidentNames();
 	            	});
 	            	this.selectedStep = 1;
 	            }
@@ -472,6 +485,7 @@ export class BaseLfController extends BaseFormController {
     createForm(incident) {
     	this.associatedIncidents.push(incident);
     	this.associatedIncidentsUpdate = true;
+    	this.getAllIncidentNames();
     }
     
     removeIncident(index) {
@@ -480,6 +494,7 @@ export class BaseLfController extends BaseFormController {
     		if (selected.confirmedDelete) {
 	            this.associatedIncidents.splice(index,1);
 	            this.associatedIncidentsUpdate = true;
+	            this.getAllIncidentNames();
 	        }
 	        else {
 	            selected.confirmedDelete = true;

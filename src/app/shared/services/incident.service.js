@@ -34,7 +34,7 @@ export default class IncidentService {
     	let incidentString = '';
     	let sep = '';
     	for (let idx in incidentNumbers) {
-    		incidentString += sep + incidentNumbers[0];
+    		incidentString += sep + incidentNumbers[idx];
     		sep = ',';
     	}
     	return this.service.get(`api/incident/names/?number=${incidentString}`);

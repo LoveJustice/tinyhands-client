@@ -154,6 +154,18 @@ export class BaseLfController extends BaseFormController {
     
     getInfoCardConfig() {
     }
+    
+    getAllIncidentNames() {
+    	if (this.incidentNumber) {
+    		let allIncidents = [this.incidentNumber];
+    		if (this.associatedIncidents) {
+    			for (let idx in this.associatedIncidents) {
+    				allIncidents.push(this.associatedIncidents[idx].incident_number);
+    			}
+    		}
+    		this.getIncidentNames(allIncidents);
+    	}
+    }
 
     getLf(stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -192,6 +204,7 @@ export class BaseLfController extends BaseFormController {
 	            if (id) {
 	            	this.service.getAssociatedIncidents(id).then((response) => {
 	            		this.associatedIncidents = response.data;
+	            		this.getAllIncidentNames();
 	            	});
 	            	this.selectedStep = 1;
 	            }
@@ -338,8 +351,8 @@ export class BaseLfController extends BaseFormController {
     		{cardField:'lfInformationLandmarks', mainField:'lfMergedLandmarks'}];
     	let cards = this.getCardInstances('Information');
     	for (let idx in locationFields) {
-			let cardFieldName = locationFields[idx]['cardField'];
-			let mainFieldName = locationFields[idx]['mainField'];
+			let cardFieldName = locationFields[idx].cardField;
+			let mainFieldName = locationFields[idx].mainField;
 			
     		let current = this.questions[mainFieldName].response.value;
     		if (current) {
@@ -390,7 +403,7 @@ export class BaseLfController extends BaseFormController {
     		for (let cardIdx in cards) {
     			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationAddress');
     			if (response) {
-    				this.questions[mainFieldName].response = response;
+    				this.questions.mainFieldName.response = response;
     				break;
     			}
     		}
@@ -472,6 +485,7 @@ export class BaseLfController extends BaseFormController {
     createForm(incident) {
     	this.associatedIncidents.push(incident);
     	this.associatedIncidentsUpdate = true;
+    	this.getAllIncidentNames();
     }
     
     removeIncident(index) {
@@ -480,6 +494,7 @@ export class BaseLfController extends BaseFormController {
     		if (selected.confirmedDelete) {
 	            this.associatedIncidents.splice(index,1);
 	            this.associatedIncidentsUpdate = true;
+	            this.getAllIncidentNames();
 	        }
 	        else {
 	            selected.confirmedDelete = true;
@@ -572,7 +587,7 @@ export class BaseLfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '' || this.goodFormNumber == false) {
+        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '' || this.goodFormNumber === false) {
             return false;
         }
         return true;

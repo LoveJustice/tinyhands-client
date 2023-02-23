@@ -204,7 +204,7 @@ export class BasePvfController extends BaseFormController {
     }
     
     autoSaveHasMinimumData() {
-        if (this.questions.pvfTopPvfNumber.response.value === null || this.questions.pvfTopPvfNumber.response.value === '' || this.goodFormNumber == false) {
+        if (this.questions.pvfTopPvfNumber.response.value === null || this.questions.pvfTopPvfNumber.response.value === '' || this.goodFormNumber === false) {
             return false;
         }
         return true;

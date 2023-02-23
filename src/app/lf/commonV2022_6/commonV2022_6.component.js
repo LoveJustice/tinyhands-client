@@ -7,13 +7,12 @@ import templateUrl from './commonV2022_6.html';
 
 import topTemplate from './step-templates/top.html';
 import locationInformationTemplate from './step-templates/locationInformation.html';
-import associationsTemplate from './step-templates/associations/association.html';
+import associationsTemplate from './step-templates/associations.html';
 import narrativeTemplate from './step-templates/narrative.html';
 import attachmentsTemplate from './step-templates/attachments/attachment.html';
 import complianceTemplate from './step-templates/compliance.html';
 
 import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
-import associationTemplate from './step-templates/associations/association-modal.html';
 
 export class LfCommonV2022_6Controller extends BaseLfController {
     constructor($scope, $uibModal, LfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout) {

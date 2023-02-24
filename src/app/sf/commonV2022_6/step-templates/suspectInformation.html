@@ -213,10 +213,20 @@
 				        
 				</div>
 			</div>
+            <div class="row center-vertical">
+				<div class="col-md-12">
+					<div class="col-md-2 form-group">
+						<label>1.11 Appearance</label>
+					</div>
+					<div class="col-md-10 form-group">
+		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.appearance.value">
+		        	</div>
+				</div>
+			</div>
 			<div class="row center-vertical">
 				<div class="col-md-8">
 					<div class="col-md-3 form-group">
-						<label>1.11 Vehicle Description</label>
+						<label>1.12 Vehicle Description</label>
 					</div>
 					<div class="col-md-9 form-group">
 		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationVehicle.response.value">
@@ -224,20 +234,10 @@
 				</div>
 				<div class="col-md-4">
 					<div class="col-md-4 form-group">
-						<label>1.12 Plate #</label>
+						<label>1.13 Plate #</label>
 					</div>
 					<div class="col-md-8 form-group">
 		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPlateNumber.response.value">
-		        	</div>
-				</div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-12">
-					<div class="col-md-2 form-group">
-						<label>1.13 Appearance</label>
-					</div>
-					<div class="col-md-10 form-group">
-		        		<input type="text" class="form-control" ng-model="$ctrl.currentCard.questions.sfInformationPerson.response.appearance.value">
 		        	</div>
 				</div>
 			</div>
@@ -404,9 +404,21 @@
 				</div>
 			</div>
 			<div class="row center-vertical">
+				<div class="col-md-12">
+					<div class="col-md-2 form-group">
+						<label>1.11 Appearance</label>
+					</div>
+					<div class="col-md-10 form-group">
+						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.appearance.value">
+		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.appearance">{{ item }}</option>
+		            	</select>
+		        	</div>
+				</div>
+			</div>
+            <div class="row center-vertical">
 				<div class="col-md-8">
 					<div class="col-md-3 form-group">
-						<label>1.11 Vehicle Description</label>
+						<label>1.12 Vehicle Description</label>
 					</div>
 					<div class="col-md-9 form-group">
 						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedVehicle.response.value">
@@ -416,23 +428,11 @@
 				</div>
 				<div class="col-md-4">
 					<div class="col-md-4 form-group">
-						<label>1.12 Plate #</label>
+						<label>1.13 Plate #</label>
 					</div>
 					<div class="col-md-8 form-group">
 						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPlateNumber.response.value">
 		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.sfTopMergedPlateNumber">{{ item }}</option>
-		            	</select>
-		        	</div>
-				</div>
-			</div>
-			<div class="row center-vertical">
-				<div class="col-md-12">
-					<div class="col-md-2 form-group">
-						<label>1.13 Appearance</label>
-					</div>
-					<div class="col-md-10 form-group">
-						<select class="form-control" ng-model="$ctrl.questions.sfTopMergedPerson.response.appearance.value">
-		            		<option value="{{ item }}" ng-repeat="item in $ctrl.mergeOptions.appearance">{{ item }}</option>
 		            	</select>
 		        	</div>
 				</div>

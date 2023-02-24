@@ -597,6 +597,7 @@ export class IrfUgandaController extends BaseIrfBlindVerificationController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

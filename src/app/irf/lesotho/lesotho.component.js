@@ -634,6 +634,7 @@ export class IrfLesothoController extends BaseIrfBlindVerificationController {
     
     getIrfComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
+        this.initializeVerification();
     }
     
     submitExtra() {

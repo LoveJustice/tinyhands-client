@@ -78,7 +78,7 @@ export class SfCommonV2022_6Controller extends BaseSfController {
         this.legalCheckboxGroupQuestions = {
         	sfLegalPvUnable:[
 		        	{
-		                value:"No:",
+		                value:"No",
 		                type:'checkbox-group'
 		            },
 		            {

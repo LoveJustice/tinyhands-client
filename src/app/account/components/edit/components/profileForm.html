@@ -20,4 +20,28 @@
                            ng-model="accountEditCtrl.account.last_name"/>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>Role</label>
+                    <select type="text" ng-model="accountEditCtrl.account.role">
+                    	<option value=""></option>
+                    	<option value="Data Entry">Data Entry</option>
+                    	<option value="Project Manager">Project Manager</option>
+                    	<option value="Champion">Champion</option>
+                    	<option value="Program Staff">Program Staff</option>
+                    	<option value="National Office">National Office</option>
+                    	<option value="Auditor">Auditor</option>
+                    	<option value="Partner">Partner</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label>Country</label>
+                    <select type="text" ng-model="accountEditCtrl.account.country_name">
+                    	<option value=""></option>
+                    	<option ng-repeat="country in accountEditCtrl.countries" value="{{ country.name }}">{{ country.name }}</option>
+                    </select>
+                </div>
+            </div>
         </div>

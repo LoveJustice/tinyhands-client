@@ -140,8 +140,10 @@ class StationDataController {
     sortStations() {
         this.sortedStations = [];
         for (let idx=0; idx < this.projectCategories.length; idx++) {
+        	this.projectCategories[idx].present = false;
             for (let idx1=0; idx1 < this.stations.length; idx1++) {
                 if (this.stations[idx1].project_category_name === this.projectCategories[idx].name) {
+                	this.projectCategories[idx].present = true;
                     this.sortedStations.push(this.stations[idx1]);
                 }
             }

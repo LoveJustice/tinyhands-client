@@ -107,8 +107,12 @@
 	        	</tr>
 	        </thead>
 	        <fieldset ng-disabled="vm.isViewing === true">
-	        <tbody>
-	        	<tr ng-repeat="station in vm.sortedStations" ng-if="(station.open || vm.includeClosed)">
+	        <tbody ng-repeat="category in vm.projectCategories" ng-if="category.present">
+	        	<tr>
+	        		<td class="categoryHeader" colspan="20">{{ category.name }}</td>
+	        	</tr>
+	        	<tr ng-repeat="station in vm.sortedStations" ng-if="(station.open || vm.includeClosed) && station.project_category_name === category.name">
+	        		<td ng-if="station.isLabel">{{ station.category }}</td>
 	        		<td class="rightSep stationName">{{ station.station_name }}</td>
 	        		<td class="boldRightBorder stationCode">{{ station.station_code }}</td>
 	        		
@@ -184,6 +188,8 @@
 	        				ng-disabled="vm.isViewing">
 	        		</td>
 	        	</tr>
+	        </tbody>
+	        <tbody>
 	        	<tr>
 	        		<td class="rightSep total stationName">Totals</td>
 	        		<td class="boldRightBorder total stationCode"></td>

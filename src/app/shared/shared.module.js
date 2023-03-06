@@ -28,6 +28,7 @@ import StaffSelectComponent from '../components/staff-select/staff-select.compon
 import NameSelectComponent from '../components/name-select/name-select.component';
 import CreateIncidentFormComponent from '../components/create-incident-form/create-incident-form.component';
 import RelatedFormsComponent from '../components/related-forms/related-forms.component';
+import OpenMasterPersonComponent from '../components/open-master-person/open-master-person.component';
 
 import ConfirmButton from './directives/confirmButton/confirmButton.directive';
 import Spinner from './directives/spinner/spinner.directive';
@@ -63,6 +64,7 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'fl
     .component('nameSelect', NameSelectComponent)
     .component('createIncidentForm', CreateIncidentFormComponent)
     .component('relatedForms', RelatedFormsComponent)
+    .component('openMasterPerson', OpenMasterPersonComponent)
 
     .directive('confirmButton', ConfirmButton)
     .directive('spinner', Spinner)

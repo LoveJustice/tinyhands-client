@@ -689,6 +689,8 @@ export default class BudgetController {
                     this.form.other[key] = [];
                 }
             }
+            
+            this.form.past_sent_approved = '';
 
             this.getStaff();
 

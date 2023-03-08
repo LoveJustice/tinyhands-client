@@ -400,9 +400,9 @@ class IndicatorsController {
         }
         let localProcessing = ';IRFs in Compliance %;CIF %;CIFs in Compliance %;VDFs in Compliance %;' +
                 'PVFs in Compliance %;SFs in Compliance %;LFs in Compliance %;' +
-                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;PVF %;' +
+                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;' +
                 'Compliance %; Compliance %;Collection Lag Time;% of Evidence Cases with CIF;% of Valid Intercepts;' +
-                '% of Phone Numbers Verified;IRF Suspect SF %;Total;';
+                '% of Phone Numbers Verified;Total;';
         if (localProcessing.indexOf(';' + type + ';') >= 0) {
             this.localDetail(type, indicator);
         } else {

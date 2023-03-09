@@ -178,7 +178,7 @@
 	        		</td>
 	        	</tr>
 	        	<tr ng-if="collectionIndicators.pvfForm">
-	        		<td rowspan="5" ng-class="collectionIndicators.getHeadClass('bold pvf-dark center')">PVF</td>
+	        		<td rowspan="4" ng-class="collectionIndicators.getHeadClass('bold pvf-dark center')">PVF</td>
 	        		<td ng-class="collectionIndicators.getHeadClass('pvf-light')">PVFs</td>
 	        		<td ng-repeat="indicator in collectionIndicators.indicators"
 	        				ng-class="collectionIndicators.getCellClass('light-grey','pvf-light', $index)"
@@ -208,14 +208,6 @@
 	        				ng-class="collectionIndicators.getCellClass('med-grey','pvf-light', $index)"
 	        				ng-click="collectionIndicators.getDetail('PVF Collection Lag Time', indicator)">
 	        			{{ indicator.vdf_lag }}
-	        		</td>
-	        	</tr>
-	        	<tr ng-if="collectionIndicators.pvfForm">
-	        		<td ng-class="collectionIndicators.getHeadClass('pvf-dark')">PVF Shared Gospel %</td>
-	        		<td ng-repeat="indicator in collectionIndicators.indicators"
-	        				ng-class="collectionIndicators.getCellClass('med-grey','pvf-light', $index)"
-	        				ng-click="collectionIndicators.getDetail('PVF Collection Lag Time', indicator)">
-	        			{{  collectionIndicators.displayPercent(indicator.vdf_gospel_percent) }}
 	        		</td>
 	        	</tr>
 	        	<tr ng-if="collectionIndicators.pvfForm">
@@ -282,6 +274,31 @@
 	        				ng-class="collectionIndicators.getCellClass('med-grey','lf-light', $index)"
 	        				ng-click="collectionIndicators.getDetail('LF Collection Lag Time', indicator)">
 	        			{{ indicator.lf_lag }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td rowspan="3" ng-class="collectionIndicators.getHeadClass('bold gsp-dark center')">Gospel</td>
+	        		<td ng-class="collectionIndicators.getHeadClass('gsp-light')">Gospel Shared %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','gsp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('Gospel Shared %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.vdf_gospel_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('gsp-dark')">Intercept Profession %</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('med-grey','gsp-dark', $index)"
+	        				ng-click="collectionIndicators.getDetail('Intercept Profession %', indicator)">
+	        			{{ collectionIndicators.displayPercent(indicator.gospel_profession_percent) }}
+	        		</td>
+	        	</tr>
+	        	<tr ng-if="collectionIndicators.pvfForm">
+	        		<td ng-class="collectionIndicators.getHeadClass('gsp-light')"># GSP</td>
+	        		<td ng-repeat="indicator in collectionIndicators.indicators"
+	        				ng-class="collectionIndicators.getCellClass('light-grey','gsp-light', $index)"
+	        				ng-click="collectionIndicators.getDetail('# GSP', indicator)">
+	        			{{ indicator.gsp_count }}
 	        		</td>
 	        	</tr>
 	        	

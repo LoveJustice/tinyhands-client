@@ -375,6 +375,18 @@ class IndicatorsController {
                 break;
             case "Total":
                 break;
+            case "Gospel Shared %":
+            	detailData.text.push ('# PVFs with gospel shared / # PVFs');
+            	detailData.text.push (indicator.vdf_gospel_count + ' / ' + indicator.vdf_count + ' = ' + indicator.vdf_gospel_percent + '%');
+            	break;
+            case "Intercept Profession %":
+            	detailData.text.push ('# verified professions / # PVs that did not already believe');
+            	detailData.text.push (indicator.gospel_profession_count + ' / ' + indicator.profession_denominator + ' = ' + indicator.gospel_profession_percent + '%');
+            	break;
+            case "# GSP":
+            	detailData.text.push ('# Gospel Mini Forms');
+            	detailData.text.push (indicator.gsp_count);
+            	break;
             default:
                 return;
         }
@@ -400,9 +412,9 @@ class IndicatorsController {
         }
         let localProcessing = ';IRFs in Compliance %;CIF %;CIFs in Compliance %;VDFs in Compliance %;' +
                 'PVFs in Compliance %;SFs in Compliance %;LFs in Compliance %;' +
-                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;PVF %;' +
+                'Evidence of Trafficking %;Invalid Intercept %;High Risk of Trafficking %;VDF %;' +
                 'Compliance %; Compliance %;Collection Lag Time;% of Evidence Cases with CIF;% of Valid Intercepts;' +
-                '% of Phone Numbers Verified;IRF Suspect SF %;Total;';
+                '% of Phone Numbers Verified;IRF Suspect SF %;Total;Gospel Shared %;Intercept Profession %;# GSP;';
         if (localProcessing.indexOf(';' + type + ';') >= 0) {
             this.localDetail(type, indicator);
         } else {

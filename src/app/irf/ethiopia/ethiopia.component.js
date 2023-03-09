@@ -15,7 +15,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7,245.8,245.9];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7,245.8,245.9,245.11];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
         this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
@@ -201,6 +201,15 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
                 points:0
             },
             245.9:{
+                enabled:true,
+                group:245,
+                label:"Dubai",
+                value:"Dubai",
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.11:{
                 enabled:true,
                 group:245,
                 label:'Other:',

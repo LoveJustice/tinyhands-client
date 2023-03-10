@@ -153,7 +153,7 @@
 	    </div>
     </div>
 	
-    <div class="row col-md-12">
+    <div class="row col-md-10">
     	<br>
         <form-step class="col-md-5 control-label">1.13 Did your guardian know you were traveling to intended destination?</form-step>
 	    <div class="col-md-1">
@@ -165,6 +165,9 @@
 	    <div class="col-md-3">
 	        <form-step type="radio" radio-name="guardianKnow" label="N/A" response-value="$ctrl.questions.pvfPvGuardianKnowDest.response.value"></form-step>    
 	    </div>  
+    </div>
+    <div class="col-md-2">
+    	<open-master-person person-id="$ctrl.questions.pvfPvInfoPv.response.storage_id"/>
     </div>
     <br>
 </fieldset>

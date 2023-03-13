@@ -265,6 +265,27 @@ class IndicatorsController {
         });
     }
     
+    hasData(obj, key) {
+    	if (obj.hasOwnProperty(key) && obj[key] !== null && obj[key] !== '') {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    doesEntryHaveData(entry) {
+    	if (this.hasData(this.indicatorsData.latest, entry.key)) {
+    		return true;
+    	}
+    	
+    	for (let idx in this.history) {
+    		if (this.hasData(this.history[idx], entry.key)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
+    }
+    
     selectColumn(idx) {
         if (this.highlight === idx) {
             this.highlight = null;

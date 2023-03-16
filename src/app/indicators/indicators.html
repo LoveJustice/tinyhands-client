@@ -41,7 +41,7 @@
 	            </tr>
 	        </thead>
 	        <tbody>
-	        	<tr ng-repeat="entry in indicators.indicatorTypes">
+	        	<tr ng-repeat="entry in indicators.indicatorTypes" ng-if="indicators.doesEntryHaveData(entry)">
 	        		<td><b>{{ entry.name }}</b></td>
 	                <td class="col2-data">{{ indicators.indicatorsData.goals[entry.key] }}</td>
 	                <td ng-class="indicators.getCellClass(entry, indicators.indicatorsData.latest[entry.key], -1001)"><b>{{ indicators.indicatorsData.latest[entry.key] }}</b></td>

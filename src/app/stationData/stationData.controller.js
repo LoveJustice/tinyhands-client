@@ -208,6 +208,7 @@ class StationDataController {
             this.loadCount -= 1;
             if (this.loadCount < 1) {
                 this.spinner.hide();
+                this.editAll = this.session.checkPermission('PROJECT_STATISTICS','EDIT_ALL',null, null);
             }
         });
         

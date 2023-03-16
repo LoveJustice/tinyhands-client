@@ -377,6 +377,7 @@ class LocationDataController {
                 this.locationDisplayData[col]._Total.arrests += this.locationDisplayData[col][this.locations[idx].id].arrests;
             }
         }
+        this.editAll = this.session.checkPermission('PROJECT_STATISTICS','EDIT_ALL',null, null);
     }
     
     deemphasizeZero(baseClass, value) {

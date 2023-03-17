@@ -140,6 +140,13 @@ function LfCommonV2022_6Routes($stateProvider) {
             params: {
                 id: null,
             }
+        })
+        .state('lfZimbabwe', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
         });
 }
 

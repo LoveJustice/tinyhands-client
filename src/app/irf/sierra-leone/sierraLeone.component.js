@@ -173,8 +173,8 @@ export class IrfSierraLeoneController extends BaseIrfBlindVerificationController
             924.2:{
                 enabled:true,
                 group:924,
-                label:'Diamond Mine',
-                value:'Diamond Mine',
+                label:'Mine',
+                value:'Mine',
                 type:'checkbox-group',
                 format:'col-md-4',
                 points:0

@@ -222,6 +222,7 @@ export class BasePvfController extends BaseFormController {
         this.service.submitPvf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
             this.stateParams.id = response.data.storage_id;
             this.processResponse(response);
+            this.getPvfComplete();
             if (this.stateParams.id !== null && this.questions.pvfTopPvfNumber.response.value !== null) {
                 this.relatedUrl = this.state.href('relatedForms', {
                     stationId: this.stateParams.stationId,

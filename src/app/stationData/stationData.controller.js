@@ -1,9 +1,26 @@
 /* global jQuery */
+import stationDetailModalTemplate from './stationDetailModal.html';
 import './stationData.less';
+
+class StationDetailModalController {
+    constructor($uibModalInstance, $window, BaseService, stationDetail) {
+        'ngInject';
+        this.uibModalInstance = $uibModalInstance;
+        this.window = $window;
+        this.service = BaseService;
+        this.stationDetail = stationDetail;
+    }
+    
+    dismiss() {
+        this.uibModalInstance.dismiss();
+    }
+}
+
 class StationDataController {
-    constructor($rootScope, SessionService, stationDataService, SpinnerOverlayService, StickyHeader, toastr) {
+    constructor($uibModal, $rootScope, SessionService, stationDataService, SpinnerOverlayService, StickyHeader, toastr) {
         'ngInject';
         
+        this.modal = $uibModal;
         this.session = SessionService;
         this.service = stationDataService;
         this.spinner = SpinnerOverlayService;
@@ -362,6 +379,30 @@ class StationDataController {
         }
         
         return fullClass;
+    }
+    
+     openModal(stationDetail) {
+        this.modal.open({
+            animation: true,
+            templateUrl: stationDetailModalTemplate,
+            controller: StationDetailModalController,
+            resolve: {
+                stationDetail: () => stationDetail
+            },
+            controllerAs: "vm",
+            size: 'lg'
+        });
+    }
+    
+    getDetail(station, month, type) {
+     this.spinner.show('Retrieving details...');
+        this.service.getDetail(station, month, type).then(promise => {
+        	this.spinner.hide();
+            this.openModal(promise.data);
+        }, (error) => {
+            this.spinner.hide();
+            alert(error);
+        });
     }
 }
 

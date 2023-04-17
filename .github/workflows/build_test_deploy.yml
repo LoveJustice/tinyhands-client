@@ -22,7 +22,7 @@ jobs:
            mkdir -p ~/.ssh/
            echo "$SL_HOST" > ~/.ssh/known_hosts
            npm run stage
-           scp -i ../private.key -r ./dist $SL_USER@$SL_HOST/home/thi/tinyhands/dist
+           scp -i ../private.key -r ./dist $SL_USER@$SL_HOST:/home/thi/tinyhands/dist
         env:
            SL_PRIVATE_KEY: ${{secrets.SL_STAGING_SSH_KEY}}
            SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}

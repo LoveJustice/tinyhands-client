@@ -15,16 +15,18 @@ jobs:
           node-version: '17'
       - run: npm install 
       - run: npm run testSingleRun
-      - if: github.ref == 'refs/heads/feature/github-action'
+      - name: Install SSH key for staging
+        if: github.ref == 'refs/heads/feature/github-action'
+        uses: shimataro/ssh-key-action@v2
+        with:
+           key: ${{secrets.SL_STAGING_SSH_KEY}}
+           known_hosts: ${{secrets.SL_STAGING_SSH_HOST}}
+      - name: build and copy to staging
+        if: github.ref == 'refs/heads/feature/github-action'
         run: |
-           echo "$SL_PRIVATE_KEY" > ../private.key
-           sudo chmod 600 ../private.key
-           mkdir -p ~/.ssh/
-           echo "$SL_HOST" > ~/.ssh/known_hosts
            npm run stage
-           scp -i ../private.key -r ./dist $SL_USER@$SL_HOST:/home/thi/tinyhands/dist
+           rsync -r ./dist/ $SL_USER@$SL_HOST:/home/thi/tinyhands/
         env:
-           SL_PRIVATE_KEY: ${{secrets.SL_STAGING_SSH_KEY}}
            SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
            SL_USER: ${{secrets.SL_STAGING_SSH_USER}}
 

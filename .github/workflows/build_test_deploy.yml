@@ -25,9 +25,6 @@ jobs:
         if: github.ref == 'refs/heads/feature/github-action'
         run: |
            npm run stage
-           rsync -r ./dist/ $SL_USER@$SL_HOST:/home/thi/tinyhands/
-        env:
-           SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
-           SL_USER: ${{secrets.SL_STAGING_SSH_USER}}
+           rsync -r ./dist/ thi@staging.searchlightdata.org:/home/thi/tinyhands/
 
 

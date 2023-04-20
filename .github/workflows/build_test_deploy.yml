@@ -13,6 +13,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '17'
+      - name: Configure SSH known hosts
+         run:|
+            mkdir -p ~/.ssh
+            ssh-keyscan ${{secrets.SL_STAGING_SSH_HOST}} >> ~/.ssh/known_hosts
       - run: npm install 
       - run: npm run testSingleRun
       - name: Install SSH key for staging

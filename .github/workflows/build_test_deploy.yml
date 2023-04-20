@@ -15,11 +15,15 @@ jobs:
           node-version: '17'
       - run: npm install 
       - run: npm run testSingleRun
+      - name: Write SSH key
+        run: |
+         echo "$SL_PRIVATE_KEY" > ~/.ssh/id_rsa
+         chmod 600 ~/.ssh/id_rsa
       - name: Install SSH key for staging
         if: github.ref == 'refs/heads/feature/github-action'
         uses: shimataro/ssh-key-action@v2
         with:
-           key: $SL_PRIVATE_KEY
+           key: ~/.ssh/id_rsa
            known_hosts: $SL_HOST
       - name: Configure SSH known hosts
         run: |
@@ -29,6 +33,6 @@ jobs:
         if: github.ref == 'refs/heads/feature/github-action'
         run: |
            npm run stage
-           rsync -r -e "ssh -i $SL_PRIVATE_KEY}" ./dist/ $SL_USER@$SL_HOST:/home/$SL_USER/tinyhands/
+           rsync -r -e "ssh -i ~/.ssh/id_rsa" ./dist/ $SL_USER@$SL_HOST:/home/$SL_USER/tinyhands/
 
 

@@ -29,7 +29,7 @@ jobs:
         with:
           key: ${{ secrets.SL_STAGING_SSH_KEY }}
           known_hosts: ${{ secrets.SL_STAGING_KNOWN_HOSTS }}
-      - run: ls
+      - run: echo $PWD
       - run: npm run stage
       - run: rsync -r -e "ssh -i ${{ secrets.SL_STAGING_SSH_KEY }}" ./dist/ $SL_USER@$SL_HOST:$SL_REMOTE_PATH
     env: 

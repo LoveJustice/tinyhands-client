@@ -1,23 +1,24 @@
 name: tinyhands-client-build-test
 run-name: ${{ github.actor }} build and test client
-on: [push]
+on:
+  - push
 env:
-  SL_PRIVATE_KEY: ${{secrets.SL_STAGING_SSH_KEY}}
-  SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
-  SL_USER: ${{secrets.SL_STAGING_SSH_USER}}
+  SL_PRIVATE_KEY: ${{ secrets.SL_STAGING_SSH_KEY }}
+  SL_HOST: ${{ secrets.SL_STAGING_SSH_HOST }}
+  SL_USER: ${{ secrets.SL_STAGING_SSH_USER }}
 jobs:
   build-client:
-	  runs-on: ubuntu-latest
-		steps:
-		- name: Checkout repo
-      uses: actions/checkout@v3
-		- name: Set up Node
-      uses: actions/setup-node@v3
-			with:
-			  node-version: '17'
-		- run: mkdir -p ~/.ssh/
-		- run: npm install 
-		- run: npm run testSingleRun
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - run: mkdir -p ~/.ssh/
+      - run: npm install 
+      - run: npm run testSingleRun
 	deploy-staging:
 		runs-on: ubuntu-latest
 		needs: [build-client]

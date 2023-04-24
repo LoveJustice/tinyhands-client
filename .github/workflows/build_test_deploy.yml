@@ -18,7 +18,7 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     needs: [build-client]
-    if: github.ref == 'refs/heads/feature/github-action'
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -38,3 +38,26 @@ jobs:
       SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
       SL_USER: ${{secrets.SL_STAGING_SSH_USER}}
       SL_REMOTE_PATH: ${{ secrets.SL_STAGING_REMOTE_PATH }}
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [build-client]
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SL_PROD_SSH_KEY }}
+          known_hosts: ${{ secrets.SL_PROD_KNOWN_HOSTS }}
+      - run: npm install rimraf
+      - run: npm run prod
+      - run: rsync -r ./dist/ $SL_USER@$SL_HOST:$SL_REMOTE_PATH
+    env: 
+      SL_HOST: ${{secrets.SL_PROD_SSH_HOST}}
+      SL_USER: ${{secrets.SL_PROD_SSH_USER}}
+      SL_REMOTE_PATH: ${{ secrets.SL_PROD_REMOTE_PATH }}

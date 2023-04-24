@@ -19,19 +19,20 @@ jobs:
       - run: mkdir -p ~/.ssh/
       - run: npm install 
       - run: npm run testSingleRun
-	deploy-staging:
-		runs-on: ubuntu-latest
-		needs: [build-client]
-		if: github.ref == 'refs/heads/feature/github-action'
-		steps:
-		- name: NPM Install
-			uses: shimataro/ssh-key-action@v2
-			with:
-				key: ${{ secrets.SL_STAGING_SSH_KEY }}
-				known_hosts: ${{ secrets.SL_STAGING_KNOWN_HOSTS }}
-			run: |
-				npm run stage
-				rsync -r -e "ssh -i ${{ secrets.SL_STAGING_SSH_KEY }}" ./dist/ $SL_USER@$SL_HOST:/home/$SL_USER/tinyhands/
-		env: 
-			SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
-			SL_USER: ${{secrets.SL_STAGING_SSH_USER}}
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: [build-client]
+    if: github.ref == 'refs/heads/feature/github-action'
+    steps:
+      - name: NPM Install
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SL_STAGING_SSH_KEY }}
+          known_hosts: ${{ secrets.SL_STAGING_KNOWN_HOSTS }}
+        run: |
+          npm run stage
+          rsync -r -e "ssh -i ${{ secrets.SL_STAGING_SSH_KEY }}" ./dist/ $SL_USER@$SL_HOST:$SL_REMOTE_PATH
+    env: 
+      SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
+      SL_USER: ${{secrets.SL_STAGING_SSH_USER}}
+      SL_REMOTE_PATH: ${{ secrets.SL_STAGING_REMOTE_PATH }}

@@ -2,10 +2,6 @@ name: tinyhands-client-build-test
 run-name: ${{ github.actor }} build and test client
 on:
   - push
-env:
-  SL_PRIVATE_KEY: ${{ secrets.SL_STAGING_SSH_KEY }}
-  SL_HOST: ${{ secrets.SL_STAGING_SSH_HOST }}
-  SL_USER: ${{ secrets.SL_STAGING_SSH_USER }}
 jobs:
   build-client:
     runs-on: ubuntu-latest
@@ -24,6 +20,12 @@ jobs:
     needs: [build-client]
     if: github.ref == 'refs/heads/feature/github-action'
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
@@ -31,7 +33,7 @@ jobs:
           known_hosts: ${{ secrets.SL_STAGING_KNOWN_HOSTS }}
       - run: echo $PWD
       - run: npm run stage
-      - run: rsync -r -e "ssh -i ${{ secrets.SL_STAGING_SSH_KEY }}" ./dist/ $SL_USER@$SL_HOST:$SL_REMOTE_PATH
+      - run: rsync -r ./dist/ $SL_USER@$SL_HOST:$SL_REMOTE_PATH
     env: 
       SL_HOST: ${{secrets.SL_STAGING_SSH_HOST}}
       SL_USER: ${{secrets.SL_STAGING_SSH_USER}}

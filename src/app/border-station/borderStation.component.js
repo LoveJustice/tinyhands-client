@@ -167,6 +167,8 @@ class BorderStationController extends BaseFormController  {
                 }
                 this.checkboxGroup.initOriginalValues(this.questions);
                 this.getProjects();
+                this.setForms = this.session.checkPermission('PROJECTS','SET_FORMS',null, null);
+        		this.setFeatures = this.session.checkPermission('PROJECTS','SET_FEATURES',null, null);
             }, () => {this.spinner.hide();});
         }, () => {this.spinner.hide();});
     }

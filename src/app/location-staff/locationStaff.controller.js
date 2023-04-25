@@ -406,6 +406,7 @@ class LocationStaffController {
 	            this.updateTotals(tmp.location, tmp.staff);
             }
         }
+        this.editAll = this.session.checkPermission('PROJECT_STATISTICS','EDIT_ALL',null, null);
     }
     
     updateTotals(location, staff) {

@@ -31,4 +31,8 @@ export default class MonthlyStatinDataEntryService {
     updateExchangeRate(exchangeRate) {
         return this.service.put(`api/exchange-rate/`, exchangeRate);
     }
+    
+    getDetail(station_id, yearMonth, type) {
+    	return this.service.get(`api/station-data/detail/${station_id}/${yearMonth}/${type}/`);
+    }
 }

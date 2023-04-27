@@ -559,7 +559,7 @@ export class BaseFormController {
     	if (this.incidentService) {
     		 this.incidentService.getIncidentNames(incidents).then ((response) => {
     		 	this.incidentNames = response.data;
-    		 }, (error) => {alert(error);});
+    		 }, (error) => {alert('Failed to retrieve incident names');});
     	}
     }
     

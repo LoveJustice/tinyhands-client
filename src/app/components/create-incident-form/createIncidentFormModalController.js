@@ -110,7 +110,7 @@ export default class CreateIncidentFormModalController {
     		};
     		this.incidentService.submitIncident(newIncident).then ((response) => {
     			this.$uibModalInstance.close(response.data);
-    		}, (error) => {alert(error);});
+    		}, () => {alert('Failed to save incident');});
 
     	} else {
     		this.$uibModalInstance.close(this.incident);

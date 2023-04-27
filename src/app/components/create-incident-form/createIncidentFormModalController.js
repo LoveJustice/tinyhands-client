@@ -70,7 +70,7 @@ export default class CreateIncidentFormModalController {
         			if (this.incident.incident_date) {
         				let parts = this.incident.incident_date.split('-');
         				if (parts.length === 3) {
-        					this.incidentDate = new Date(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
+        					this.incidentDate = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2])+1);
         				}
         			}
         			

@@ -24,7 +24,7 @@ export class OpenMasterPersonController {
 	                    };
 	        		this.url = this.state.href('personManagement', params);
 	        	}
-	        }, (error) => {alert(error)});
+	        }, () => {alert('Failed to retrieve master person')});
         }
         
     }

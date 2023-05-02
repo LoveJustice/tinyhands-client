@@ -1,5 +1,6 @@
 import './create-incident-form.less';
 import {encodeGroup} from  '../../encodeGroup.js';
+const DateData = require('../../dateData.js');
 
 export default class CreateIncidentFormModalController {
     constructor($uibModalInstance, $scope, incidentService, stationsAdd, useTitle, formType, selectOnly) {
@@ -68,10 +69,8 @@ export default class CreateIncidentFormModalController {
         			this.station_name = promise.data.results[idx].station_name;
         			this.incident = promise.data.results[idx];
         			if (this.incident.incident_date) {
-        				let parts = this.incident.incident_date.split('-');
-        				if (parts.length === 3) {
-        					this.incidentDate = new Date(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
-        				}
+                        let dateData = new DateData([]);
+                        this.incidentDate = dateData.dateAsUTC(this.incident.incident_date);
         			}
         			
         			for (let optionIdx=0; optionIdx < this.scope.stationDropDown.options.length; optionIdx++) {

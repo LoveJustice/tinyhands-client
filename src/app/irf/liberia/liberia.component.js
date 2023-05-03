@@ -3,7 +3,7 @@ import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
-import IntercepteeModalController from '../intercepteeModal.controller';
+import IntercepteeModalController from '../interceptee2022_08Modal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 

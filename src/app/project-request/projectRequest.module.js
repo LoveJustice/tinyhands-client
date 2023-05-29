@@ -4,7 +4,7 @@ import sharedModule from '../shared/shared.module';
 import ProjectRequestRoutes from './projectRequest.route';
 import ProjectRequestService from './projectRequest.service';
 
-import ProjectRequestListController from './list/ProjectRequestList.controller';
+import ProjectRequestListController from './list/projectRequestList.controller';
 import InputProjectRequestController from './inputProjectRequests.controller';
 import ReviewProjectRequestController from './reviewProjectRequest.controller';
 

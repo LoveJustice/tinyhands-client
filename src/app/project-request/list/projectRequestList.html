@@ -1,0 +1,115 @@
+<div class="container" id="ProjectRequestList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7">
+            <h1>Project Requests</h1>
+        </div>
+
+        <div class="pull-right"><br>
+            <a ng-if="$ctrl.hasAddPermission && $ctrl.stationsForAdd.length > 0" class="btn btn-success" ng-if="vm.stationsForAdd.length > 0" ng-click="$ctrl.inputRequests()">
+                Input Requests
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2" >
+        	<p>Country</p>
+            <div ng-dropdown-multiselect="" options="$ctrl.countryDropDown.options"
+							selected-model="$ctrl.countryDropDown.selectedOptions"
+                             extra-settings="$ctrl.countryDropDown.settings"
+                             translation-texts="$ctrl.countryDropDown.customText"
+                             events="$ctrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <div class="col-md-3">
+        	<div ng-if="$ctrl.countryDropDown.selectedOptions.length!==0 && $ctrl.projects.length!==0">
+	        	<p>Project</p>
+	        	<select ng-model="$ctrl.queryParameters.project_id" ng-change="$ctrl.searchRequests()">
+	        		<option value=''>All</option>
+	        		<option value="{{ project.id }}" ng-repeat="project in $ctrl.projects"
+	        				ng-if="$ctrl.countryDropDown.selectedOptions[0].id===project.operating_country">{{ project.station_name }}</option>
+	        	</select>
+        	</div>
+        </div>
+        
+        <div class="col-md-1">
+        	<p>Status</p>
+        	<select ng-model="$ctrl.queryParameters.status" ng-change="$ctrl.searchRequests()">
+        		<option value=''>All</option>
+        		<option value='Submitted'>Submitted</option>
+        		<option value='Approved'>Approved</option>
+        		<option value='Completed'>Completed</option>
+        		<option value='Declined'>Declined</option>
+        	</select>
+        </div>
+        <div class="col-md-1">
+        	<p>Frequency</p>
+        	<select ng-model="$ctrl.queryParameters.frequency" ng-change="$ctrl.searchRequests()">
+        		<option value=''>All</option>
+        		<option value='monthly'>Monthly</option>
+        		<option value='single'>Single</option>
+        	</select>
+        </div>
+        <div class="col-md-1">
+        	<p>Discussion</p>
+        	<select ng-model="$ctrl.queryParameters.discussion" ng-change="$ctrl.searchRequests()">
+        		<option value=''>All</option>
+        		<option value='monthly'>Includes Me</option>
+        	</select>
+        </div>
+
+        <!-- Search -->
+        <div class="col-md-3 pull-right">
+        	<input ng-change="$ctrl.showPage(1)" ng-model="$ctrl.queryParameters.search" placeholder="Search" autofocus>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="$ctrl.stickyOptions" ng-model="$ctrl.requests">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="$ctrl.updateSort('project__station_name')" width="8%">Project
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': $ctrl.getSortIcon('project__station_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': $ctrl.getSortIcon('project__station_name', 'reverse') }"></i>
+                </th>
+                <th ng-click="$ctrl.updateSort('status')" width="15%">Status
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': $ctrl.getSortIcon('status', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': $ctrl.getSortIcon('status', 'reverse')}"></i>
+                </th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Monthly</th>
+                <th>Review</th>
+                <th>Discuss</th>
+                <th>Approve</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-dblclick="$ctrl.approve($index)">
+                <td>{{ request.project_name }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.category_name }}</td>
+                <td>{{ request.cost }}</td>
+                <td ng-if="!request.staff_name">{{ request.description }}</td>
+                <td ng-if="request.staff_name">{{ request.benefit_type_name }} for {{ request.staff_name }}</td>
+                <td ng-if="request.monthly"><i class="fa fa-check-square-o monthlyIcon"></i></td>
+                <td ng-if="!request.monthly"><i class="fa fa-square-o monthlyIcon"></i></td>
+                <td ng-click="$ctrl.review(request)"><i class="fa fa-search reviewIcon"></i></td>
+                <td ng-if="request.projectrequestdiscussion_set.length < 1"  ng-click="$ctrl.discuss(request)"> <i class="fa fa-comment-o discussIcon"></i></td>
+                <td ng-if="request.projectrequestdiscussion_set.length > 0"  ng-click="$ctrl.discuss(request)"> <i class="fa fa-commenting discussIcon"></i></td>
+                <td ng-if="!request.can_approve"></td>
+                <td class="text-center" ng-if="request.can_approve"> <i class="fa fa-check-circle-o requestIcon approveIcon"></i></td>
+        	</tr>
+        	<tr ng-show="$ctrl.requests.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No Requests Matched your search for: "{{ $ctrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="$ctrl.paginate" controller="$ctrl">
+    </div>
+    <br>
+</div>

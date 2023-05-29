@@ -1,0 +1,49 @@
+<div id="project-request-discussion" class="modal-content">
+    <form name="DiscussionForm">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="vm.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-5">
+            	<h3 class="modal-title">Project Request Discussion</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+		<div class="row">
+			<textarea class="form-control" rows="4" ng-model="vm.discussionText"></textarea>
+		</div>
+		<div class="row">
+			<div class="col-md-8">
+				<b>Notify: </b>
+				<select ng-model="vm.notifyAccount">
+					<option value="">None</option>
+					<option  ng-repeat="account in vm.notifyAccounts" value="{{ $index }}">{{ account.email }}</option>
+				</select>
+			</div>
+			<div class="col-md-2">
+                <button class="btn btn-success float-left" ng-click="vm.addEntry()" ng-disabled="vm.discussionText===''">Add Entry</button>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-default" ng-click="vm.checkClose()">Close</button>
+            </div>
+		</div>
+		<br>
+        <div style="height: 300px; overflow:auto">
+            <hr>
+            <div ng-repeat="discussion in vm.discussionEntries">
+            	<div class="col-md-6">
+	            		<b>Author:</b> {{ discussion.author_email }} &nbsp;&nbsp;{{ discussion.date_time_entered }}
+	            </div>
+	            <div class="col-md-6" ng-if="discussion.notify_email">
+	            		<b>Notify</b> {{discussion.notify_email }}
+	            </div>
+	            <div class="col-md-12">
+	            	{{ discussion.text }}
+	            	<hr>
+	            </div>
+            </div>
+            </div>
+        </div>
+    </form>
+</div>

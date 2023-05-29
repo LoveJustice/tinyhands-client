@@ -1,0 +1,91 @@
+<div id="inputRequests" class="container-fluid">
+	<div class="center-vertical">
+		<h2 class="col-md-3">Review Project Request</h2>
+		<div class="col-md-7">
+			<button class="btn pull-right" ng-click="$ctrl.attach()">Attachments</button>
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-info pull-right" ng-if="$ctrl.projectRequest.projectrequestdiscussion_set.length < 1" ng-click="$ctrl.discuss()">Start Discussion</button>
+			<button class="btn btn-info pull-right" ng-if="$ctrl.projectRequest.projectrequestdiscussion_set.length >0" ng-click="$ctrl.discuss()">Discussion</button>
+		</div>
+	</div>
+	<div class="row col-md-12">
+		<div class="col-md-1"><b>Project:</b></div>
+		<div class="col-md-2">{{ $ctrl.projectRequest.project_name }}</div>
+		<fieldset class="col-md-3" ng-disabled="!$ctrl.canUpdate">
+			<b>Budget:</b> 
+			<select ng-model="$ctrl.projectRequest.override_mdf_project">
+				<option ng-repeat="option in $ctrl.budgetProjects" value="{{ option.id }}">{{ option.station_name }}</option>
+			</select>
+		</fieldset>
+		<div class="col-md-3"><b>Request Date:</b> {{ $ctrl.requestDate }}</div>
+		<div class="col-md-2"><b>Status:</b> {{ $ctrl.projectRequest.status }}</div>
+	</div>
+	<div class="row col-md-12">
+		<div class="col-md-1"><b>Category:</b></div>
+		<fieldset class="col-md-8" ng-disabled="!$ctrl.canUpdate">
+			<select ng-model='$ctrl.projectRequest.category'>
+            	<option ng-repeat="opt in $ctrl.categories" value="{{ opt.id }}">{{ opt.text }}</option>
+            </select>
+        </fieldset>
+	</div>
+	<div class="row col-md-12">
+		<div class="col-md-1"><b>Amount:</b></div>
+		<div class="col-md-1">
+			<input class="text-right form-control" type="text" 
+        			onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+        			ng-model="$ctrl.projectRequest.cost" ng-disabled="!$ctrl.canUpdate">
+		</div>
+		<div class="col-md-2"></div>
+		<div class="col-md-2" ng-if="$ctrl.projectRequest.cost !== $ctrl.projectRequest.original_cost"><b>Original Amount:</b></div>
+		<div class="col-md-1" ng-if="$ctrl.projectRequest.cost !== $ctrl.projectRequest.original_cost">{{ $ctrl.projectRequest.original_cost }}</div>
+	</div>
+	<div class="row col-md-12">
+		<div class="col-md-1"><b>Description:</b></div>
+		<div class="col-md-8"><input type="text" ng-model="$ctrl.projectRequest.description" ng-disabled="!$ctrl.canUpdate"></div>
+	</div>
+	<div class="row col-md-12">
+		<div class="col-md-1"><b>Monthly:</b></div>
+		<div class="col-md-1"><input type="checkbox" ng-model="$ctrl.projectRequest.monthly" ng-disabled="!$ctrl.canUpdate"></div>
+	</div>
+	<div class="row col-md-12" ng-if="$ctrl.projectRequest.category === $ctrl.salariesAndBenefitsId || $ctrl.projectRequest.category === $ctrl.staffTravelId">
+		<div class="col-md-1"><b>Staff:</b></div>
+		<fieldset class="col-md-1">
+			<select  ng-model="$ctrl.projectRequest.staff">
+				<option ng-repeat="opt in $ctrl.staff" value="{{ opt.id }}">{{ opt.first_name }} {{opt.last_name }}</option>
+			</select>
+		</fieldset>
+	</div>
+	<div class="row col-md-12" ng-if="$ctrl.projectRequest.category === $ctrl.salariesAndBenefitsId">
+		<div class="col-md-1"><b>Benefit:</b></div>
+		<fieldset class="col-md-1">
+			<select ng-model="$ctrl.projectRequest.benefit_type_name">
+            	<option ng-repeat="opt in $ctrl.benefits" value="{{ opt }}">{{ opt }}</option>
+            </select>
+		</fieldset>
+	</div>
+	<div class="row col-md-12">
+		<div class="col-md-1">
+			<b>Comment:</b>
+			<p class="text-danger" ng-if="$ctrl.entryCost !== $ctrl.projectRequest.cost && $ctrl.projectRequest.comment === '' ">Amount changed: Comment Required</p>
+		</div>
+		<div class="col-md-10">
+			<textarea class="form-control" rows="3" ng-model="$ctrl.projectRequest.comment" ng-disabled="!$ctrl.canUpdate"></textarea>
+		</div>
+	</div>
+	<div class="row col-md-12">
+		<hr>
+		<div class="col-md-4"></div>
+		<div class="col-md-1">
+			<button class="btn btn-success" ng-if="$ctrl.canApprove" ng-click="$ctrl.update()" ng-disabled="$ctrl.entryCost !== $ctrl.projectRequest.cost">Approve</button>
+			<button class="btn btn-success" ng-if="!$ctrl.canApprove && $ctrl.canModifyApproved" ng-click="$ctrl.update()" ng-disabled="$ctrl.entryCost !== $ctrl.projectRequest.cost">Update</button>
+			<button class="btn btn-success" ng-if="!$ctrl.canApprove && !$ctrl.canModifyApproved && $ctrl.isAuthor" ng-click="$ctrl.update()">Update</button>
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-danger" ng-if="$ctrl.canModifyApproved || $ctrl.canApprove" ng-click="$ctrl.decline()">Decline</button>
+		</div>
+		<div class="col-md-2">
+			<button class="btn btn-warning" ng-if="$ctrl.canModifyApproved || $ctrl.canApprove" ng-click="$ctrl.changeApprovedAmount()">Change Approved Amount</button>
+		</div>
+	</div>
+</div>

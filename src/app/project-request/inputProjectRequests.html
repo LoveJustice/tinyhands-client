@@ -1,0 +1,59 @@
+<div id="inputRequests" class="container-fluid">
+	<h2>Requests for {{ $ctrl.stateParams.name }}</h2>
+	<div>
+		<div class="col-md-2"><p>Add new benefit type</p></div>
+		<div class="col-md-2"><input type="text" ng-model="$ctrl.newBenefit"></div>
+		<div class="col-md-2"><button class="btn btn-success" ng-if="$ctrl.newBenefit" ng-click="$ctrl.addBenefit()">Add Benefit</button></div>
+	</div>
+    <table class="table table-striped" float-thead="$ctrl.stickyOptions" ng-model="$ctrl.requests">
+        <thead class="sticky-table-header">
+            <tr>
+                <th width="10%">Category</th>
+                <th width="7%">Amount</th>
+                <th width="20%">Description</th>
+                <th width="5%">Monthly</th>
+                <th width="15%">Staff</th>
+                <th width="10%">Benefit</th>
+                <th width="5%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="request in $ctrl.requests">
+                <td>
+                	<select ng-model='request.category' ng-change="$ctrl.changeCategory($index)">
+                		<option ng-repeat="opt in $ctrl.categories" value="{{ opt.id }}">{{ opt.text }}</option>
+                	</select>
+                </td>
+                <td><input class="text-right form-control" type="text" 
+        			onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+        			ng-model="request.cost" >
+        		</td>
+                <td ng-if="request.category !== $ctrl.multipliersId"><input class="form-control" type="text" ng-model="request.description"></td>
+                <td ng-if="request.category === $ctrl.multipliersId">
+                	<select ng-model="request.description">
+                		<option ng-repeat="opt in $ctrl.multipliers" value="{{ opt.name }}">{{ opt.name }}</option>
+                	</select>
+                </td>
+                <td class="text-center"><input type="checkbox" ng-model="request.monthly"></td>
+                <td>
+                	<select ng-if="request.category === $ctrl.salariesAndBenefitsId || request.category === $ctrl.staffTravelId" ng-model="request.staff">
+                		<option ng-repeat="opt in $ctrl.staff" value="{{ opt.id }}">{{ opt.first_name }} {{opt.last_name }}</option>
+                	</select>
+                </td>
+                <td>
+                	<select ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-model="request.benefit_type_name">
+                		<option ng-repeat="opt in $ctrl.benefits" value="{{ opt }}">{{ opt }}</option>
+                	</select>
+                </td>
+                <td><a class="btn btn-sm btn-danger" ng-click="$ctrl.deleteRequest(request, $index)">
+                    {{ request.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
+        	</tr>
+        </tbody>
+    </table>
+    <div class="col-md-12" ng-if="$ctrl.categories !== null && $ctrl.staff !== null && $ctrl.benefits !== null && $ctrl.multipliers !== null">
+            <button class="btn btn-success" ng-click="$ctrl.createRequest()">
+                <i class="fa fa-plus"></i>
+            </button>
+            <button class="btn btn-success pull-right" ng-if="$ctrl.validRequests()" ng-click="$ctrl.submit()">Submit</button>
+    </div>
+</div>

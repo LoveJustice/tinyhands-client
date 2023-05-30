@@ -120,6 +120,13 @@ function LfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('lfRwanda', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('lfSierraLeone', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
@@ -128,6 +135,13 @@ function LfCommonV2022_6Routes($stateProvider) {
             }
         })
         .state('lfSouthAfrica', {
+            url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'lfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('lfTanzania', {
             url: '/lf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'lfCommon202206Component',
             params: {

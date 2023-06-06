@@ -19,7 +19,7 @@
 	 <table class="table table-striped" float-thead="vm.stickyOptions" cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;" ng-model="vm.dashboardData">
         <thead class="sticky-table-header">
         	<tr>
-        		<th class="boldRightBorder" colspan=5></th>
+        		<th class="boldRightBorder" colspan=4></th>
         		<th class="boldRightBorder" colspan=6>Last 6 Months</th>
         		<th class="boldRightBorder" colspan=11>All Time</th>
         		<th class="rightBorder" colspan=7>Last Month {{ vm.dashboardData.month }}</th>
@@ -37,16 +37,9 @@
             		<div>Avg</div>
             		<div>SMR</div>
             	</th>
-            	<th class="rightBorder" title="Project Compliance">
+            	<th class="boldRightBorder" title="Project Compliance">
             		<div>Project</div>
             		<div>Compl</div>
-            	</th>
-            	<th class="boldRightBorder" title="The IBR is the ratio between:
-a) the % of the overall THN arrests and intercepts (averaged between the two), and 
-b) the % of the overall THN budget. 
-
-For example, if a station has 10% of the impact (which could be, for example, 5% of the arrests and 15% of the intercepts), and 10% of the budget, the impact-to-budget ratio would be 1.0 (exactly the same as the whole of THN).  ">
-            		<div>IBR</div>
             	</th>
             	
             	<th class="rightBorder" title="Intercepts">Int</th>
@@ -90,8 +83,7 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="rightBorder"></td>
         		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.monthly_report.toLocaleString('en-US', vm.digits1Format) }}</td>
         		<td ng-class="vm.getClass('','rightBorder')">{{ category.subtotals.compliance.toLocaleString('en-US', vm.digits1Format) }}</td>
-        		<td ng-class="vm.getClass('','boldRightBorder')">{{ category.subtotals.impact.toLocaleString('en-US', vm.digits2Format) }}</td>
-        		
+
         		<td class="rightBorder">{{ category.subtotals['6month_intercepts'] }}</td>
         		<td class="rightBorder">{{ category.subtotals['6month_arrests'] }}</td>
         		<td class="rightBorder">{{ category.subtotals['6month_cifs'] }}</td>
@@ -137,7 +129,7 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td ng-class="vm.getClass(entry.monthlyReportColor,'rightBorder')">{{ entry.monthly_report }}</td>
         		<td ng-class="vm.getClass(entry.complianceColor,'rightBorder')">{{ entry.compliance }}</td>
         		<td ng-class="vm.getClass(entry.impactColor,'boldRightBorder')">{{ entry.impact.toLocaleString('en-US', vm.digits2Format) }}</td>
-        		
+
         		<td class="rightBorder">{{ entry['6month_intercepts'] }}</td>
         		<td class="rightBorder">{{ entry['6month_arrests'] }}</td>
         		<td class="rightBorder">{{ entry['6month_cifs'] }}</td>
@@ -181,12 +173,6 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         		<td class="total rightBorder">{{ vm.entryCount() }}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.monthly_report.toLocaleString('en-US', vm.digits1Format)}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals.compliance.toLocaleString('en-US', vm.digits1Format)}}</td>
-        		<td class="total boldRightBorder" ng-if="vm.dashboardData.totals['6month_arrests'] > 0">
-        			{{ (vm.dashboardData.totals['6month_budget']/vm.dashboardData.totals['6month_intercepts'] *.4).toLocaleString('en-US', vm.moneyFormat) }}
-        		</td>
-        		<td class="total boldRightBorder" ng-if="!vm.dashboardData.totals['6month_arrests'] || vm.dashboardData.totals['6month_arrests'] <= 0">
-        			{{ (vm.dashboardData.totals['6month_budget']/vm.dashboardData.totals['6month_intercepts'] *.8).toLocaleString('en-US', vm.moneyFormat) }}
-        		</td>
         		
         		<td class="total rightBorder">{{vm.dashboardData.totals['6month_intercepts']}}</td>
         		<td class="total rightBorder">{{vm.dashboardData.totals['6month_arrests']}}</td>
@@ -227,7 +213,6 @@ For example, if a station has 10% of the impact (which could be, for example, 5%
         	</tr>
         	<tr>
         		<td class="total"><b>To Date TOTAL</b></td>
-        		<td class="total"></td>
         		<td class="total"></td>
         		<td class="total"></td>
         		<td class="total boldRightBorder"></td>

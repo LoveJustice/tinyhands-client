@@ -443,6 +443,8 @@ export class BaseFormController {
                 );
             }
             this.getRelatedFormsComplete();
+        }, () =>{
+            this.getRelatedFormsComplete();
         });
     }
     

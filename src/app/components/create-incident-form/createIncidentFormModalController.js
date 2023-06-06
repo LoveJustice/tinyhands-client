@@ -98,7 +98,7 @@ export default class CreateIncidentFormModalController {
     	    if (this.newDate.getDate() < 9) {
     	    	dateString += '0'
     	    }
-    	    dateString += (this.newDate.getDate() + 1);
+    	    dateString += (this.newDate.getDate());
     		let newIncident = {
     			id: null,
     			status:'approved',

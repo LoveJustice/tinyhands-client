@@ -127,9 +127,8 @@
         		<td class="rightBorder">{{ entry.station_name }}</td>
         		<td class="rightBorder">{{ entry.station_code }}</td>
         		<td ng-class="vm.getClass(entry.monthlyReportColor,'rightBorder')">{{ entry.monthly_report }}</td>
-        		<td ng-class="vm.getClass(entry.complianceColor,'rightBorder')">{{ entry.compliance }}</td>
-        		<td ng-class="vm.getClass(entry.impactColor,'boldRightBorder')">{{ entry.impact.toLocaleString('en-US', vm.digits2Format) }}</td>
-        		
+        		<td ng-class="vm.getClass(entry.complianceColor,'boldRightBorder')">{{ entry.compliance }}</td>
+
         		<td class="rightBorder">{{ entry['6month_intercepts'] }}</td>
         		<td class="rightBorder">{{ entry['6month_arrests'] }}</td>
         		<td class="rightBorder">{{ entry['6month_cifs'] }}</td>

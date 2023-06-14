@@ -10,19 +10,36 @@
             </div>
         </div>
         <div class="modal-body">
-		<div class="row">
-			<textarea class="form-control" rows="4" ng-model="vm.discussionText"></textarea>
-		</div>
-		<div class="row">
-			<div class="col-md-8">
-				<b>Notify: </b>
-				<select ng-model="vm.notifyAccount">
-					<option value="">None</option>
-					<option  ng-repeat="account in vm.notifyAccounts" value="{{ $index }}">{{ account.email }}</option>
-				</select>
+        <div class="row">
+        	<div class="col-md-2">
+				<b>Discussion:</b>
 			</div>
 			<div class="col-md-2">
-                <button class="btn btn-success float-left" ng-click="vm.addEntry()" ng-disabled="vm.discussionText===''">Add Entry</button>
+				<input type="radio" id="discussionOpen" name="discussion" value="Open" ng-model="vm.request.discussion_status" ng-change="vm.changeDiscussionStatus()" ng-disabled="vm.request.discussion_status=='Open'">
+				<label for="discussionOpen">Open</label>
+			</div>
+			<div class="col-md-2">
+				<input type="radio" id="discussionClosed" name="discussion" value="Closed" ng-model="vm.request.discussion_status" ng-change="vm.changeDiscussionStatus()" ng-disabled="vm.request.discussion_status!='Open'">
+				<label for="discussionClosed">Closed</label>
+			</div>
+        </div>
+		<div class="row">
+			<textarea class="form-control" rows="4" ng-model="vm.discussionText" ng-disabled="vm.request.discussion_status!=='Open'"
+					placeholder="{{ vm.request.discussion_status!=='Open' ? 'Open discussion above to start discussion' : ''}}"></textarea>
+		</div>
+		<div class="row">
+			<div class="col-md-1">
+				<b>Notify: </b>
+			</div>
+
+			<fieldset class="col-md-7" ng-dropdown-multiselect="" options="vm.accountDropDown.options"
+						selected-model="vm.accountDropDown.selectedOptions"
+						extra-settings="vm.accountDropDown.settings"
+						translation-texts="vm.accountDropDown.customText"
+						ng-disabled="vm.request.discussion_status!=='Open'">
+       		</fieldset>
+			<div class="col-md-2">
+                <button class="btn btn-success float-left" ng-click="vm.addEntry()" ng-disabled="vm.discussionText==='' || vm.request.discussion_status!=='Open'">Add Entry</button>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-default" ng-click="vm.checkClose()">Close</button>
@@ -35,8 +52,8 @@
             	<div class="col-md-6">
 	            		<b>Author:</b> {{ discussion.author_email }} &nbsp;&nbsp;{{ discussion.date_time_entered }}
 	            </div>
-	            <div class="col-md-6" ng-if="discussion.notify_email">
-	            		<b>Notify</b> {{discussion.notify_email }}
+	            <div class="col-md-6" ng-if="discussion.notify_emails">
+	            		<b>Notify</b> {{ discussion.notify_emails }}
 	            </div>
 	            <div class="col-md-12">
 	            	{{ discussion.text }}

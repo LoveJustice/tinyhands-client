@@ -1,6 +1,9 @@
 /* global jQuery */
 import discussProjectRequestTemplate from './discussProjectRequestModal.html';
 import DiscussProjectRequestModalController from './discussProjectRequestModal.controller.js';
+import attachProjectRequestTemplate from './attachProjectRequestModal.html';
+import AttachProjectRequestModalController from './attachProjectRequestModal.controller.js';
+import {dropDecimals} from  './dropDecimal.js';
 
 export default class ReviewProjectRequestController {
     constructor(ProjectRequestService, SessionService, SpinnerOverlayService, $state, $stateParams,  $uibModal, toastr) {
@@ -25,6 +28,7 @@ export default class ReviewProjectRequestController {
         this.salariesAndBenefitsId = null;
         this.multipliersId = null;
         this.changeAmount = false;
+        this.showComment = false;
         
         this.getMultipliers();
         this.getProjectRequst();
@@ -42,6 +46,9 @@ export default class ReviewProjectRequestController {
             	}
             	if (this.categories[idx].text === 'Multipliers') {
             		this.multipliersId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Operational Expenses') {
+            		this.operationalId = this.categories[idx].id + '';
             	}
             }
         }, ()=>{
@@ -73,6 +80,8 @@ export default class ReviewProjectRequestController {
 		this.spinner.show("Retrieving Project Request");
 		this.service.getRequest(this.stateParams.id).then((promise) => {
 			this.projectRequest = promise.data;
+			this.projectRequest.comment = '';
+			dropDecimals([this.projectRequest]);
 			this.projectRequest.override_mdf_project = this.projectRequest.override_mdf_project + '';
 			this.projectRequest.category = this.projectRequest.category + '';
 			if (this.projectRequest.staff) {
@@ -80,6 +89,7 @@ export default class ReviewProjectRequestController {
 			}
 			this.requestDate = this.projectRequest.date_time_entered.substring(0,  this.projectRequest.date_time_entered.indexOf('T'));
 			this.entryCost = this.projectRequest.cost + '';
+			this.entryOrig = this.projectRequest.originalCost + '';
 			
 			this.isAuthor = (this.session.user.id === this.projectRequest.author) &&
 				(this.projectRequest.status === 'Submitted' || this.projectRequest.status === 'Approved');
@@ -98,6 +108,7 @@ export default class ReviewProjectRequestController {
 		});
 	}
 	
+	// get projects that can be used as override MDF projects
 	getBudgets() {
 		this.service.getBudgetProjects(this.projectRequest.country_id).then((promise) => {
 			for(let idx in promise.data.results) {
@@ -110,6 +121,20 @@ export default class ReviewProjectRequestController {
 			this.spinner.hide();
 			this.toastr.error("Failed to retrieve budgets");
 		});
+	}
+	
+	// If the category is not Salaries & Benefits or Operational Expenses, then we must use the
+	// default MDF project
+	categoryChange() {
+		if (this.projectRequest.category !== this.salariesAndBenefitsId && this.projectRequest.category !== this.operationalId) {
+			this.projectRequest.override_mdf_project = this.projectRequest.default_mdf_project_id + '';
+		}
+	}
+	
+	// When the author updates the original cost, then also update the cost.  The project request
+	// will return the the submitted status and need to be approved.
+	authorUpdate() {
+		this.projectRequest.cost = this.projectRequest.original_cost;
 	}
 	
 	discuss() {
@@ -138,9 +163,38 @@ export default class ReviewProjectRequestController {
         });
     }
     
+    attach() {
+	    let request = this.projectRequest;
+    	let theService = this.service;
+    	let modalInstance = this.modal.open({
+            animation: true,
+            templateUrl: attachProjectRequestTemplate,
+            controller: AttachProjectRequestModalController,
+            size: 'lg',
+            controllerAs: "vm",
+            resolve: {
+            	service() {return theService;},
+                request() {return request;},
+            },
+        });
+        modalInstance.result.then(() => {
+            if (request.projectrequestdiscussion_set.length < 1) {
+            	// A discussion entry was added in the modal and it was
+            	// the first entry.  Add a blank entry to the set to change
+            	// the icon
+            	request.projectrequestdiscussion_set.push({});
+            }
+        });
+    }
+    
     decline() {
+    	this.showComment = true;
     	if (this.projectRequest.comment === '') {
-    		this.toastr.warning('Must enter a comment to Decline');
+    		if (this.projectRequest.approved_mdf) {
+    			this.toastr.warning('Must enter a comment to Complete');
+    		} else {
+    			this.toastr.warning('Must enter a comment to Decline');
+    		}
     		return;
     	}
     	
@@ -158,8 +212,12 @@ export default class ReviewProjectRequestController {
     
     update() {
     	let localRequest = jQuery.extend(true, {}, this.projectRequest);
-    	if (localRequest.status === 'Submitted') {
+    	if (this.canApprove) {
     		localRequest.status = 'Approved';
+    	} else {
+    		if (this.isAuthor) {
+    			localRequest.status = 'Submitted';
+    		}
     	}
     	this.spinner.show("Processing request...");   
     		this.service.putRequest(localRequest).then( () => {
@@ -172,6 +230,8 @@ export default class ReviewProjectRequestController {
     }
     
     changeApprovedAmount() {
+    	this.enterApprovedAmount = true
+    	this.showComment = true;
     	if (this.projectRequest.comment === '' || this.entryCost === this.projectRequest.cost) {
     		this.toastr.warning('Must change the request amount and enter a comment to Change Approved Amount');
     		return;

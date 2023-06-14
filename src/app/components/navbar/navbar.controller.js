@@ -32,6 +32,21 @@ export default class NavbarController {
             }
         });
     }
+    
+    showForms() {
+    	 return (
+    	 		this.session.checkPermission('IRF','VIEW',null, null) || 
+    	 		this.session.checkPermission('VDF','VIEW',null, null) ||
+    	 		this.session.checkPermission('PVF','VIEW',null, null) ||
+    	 		this.session.checkPermission('SF','VIEW',null, null) ||
+    	 		this.session.checkPermission('LF','VIEW',null, null) ||
+    	 		this.session.checkPermission('MONTHLY_REPORT','VIEW',null, null) ||
+    	 		this.session.checkPermission('BUDGETS','VIEW',null, null) ||
+    	 		this.session.checkPermission('EMP','VIEW',null, null) ||
+    	 		this.session.checkPermission('GSP','VIEW',null, null) ||
+    	 		this.session.checkPermission('PROJECT_REQUEST','VIEW',null, null));
+    	 		
+    }
 
     logout() {
         this.session.logout();

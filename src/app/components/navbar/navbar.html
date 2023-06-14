@@ -86,7 +86,7 @@
 
             <!-- START: FORMS -->
             <li class="dropdown" ng-class="{open:formsOpen}"
-                ng-hide="!navbarCtrl.session.user.permission_irf_view && !navbarCtrl.session.user.permission_vif_view"
+                ng-hide="!navbarCtrl.showForms()"
                 ng-mouseleave="formsOpen = false">
                 <a class="dropdown-toggle" data-toggle="dropdown" ng-click="formsOpen=!formsOpen">Forms
                     <span class="caret"></span>

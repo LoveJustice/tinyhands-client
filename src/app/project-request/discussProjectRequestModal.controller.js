@@ -10,11 +10,31 @@ export default class DiscussProjectRequestModalController{
 		
 		this.discussionText = '';
 		this.notifyAccount = '';
-		this.discussionEntries = [];
-		this.notifyAccounts = [];
+		this.discussionEntries = null;
+		this.notifyAccounts = null;
+		this.discussionStatus = request.discussion_status;
 		
-		this.getDiscussionEntries(request.id);
+		this.accountDropDown = {};
+        this.accountDropDown.options = [];
+        this.accountDropDown.selectedOptions = [];
+        this.accountDropDown.settings = {smartButtonMaxItems:2, showCheckAll: false, showUncheckAll: false,};
+        this.accountDropDown.customText = {buttonDefaultText: 'None'};
+        
+		
 		this.getDiscussionAccounts(request.id);
+		this.getDiscussionEntries(request.id);
+	}
+	
+	changeDiscussionStatus() {
+		this.service.changeDiscussionStatus(this.request).then((promise) => {
+			this.discussionStatus = this.request.discussion_status;
+			promise.data.date_time_entered = this.updateTimestamp(promise.data.date_time_entered);
+			this.discussionEntries.unshift(promise.data);
+			this.modified = true;
+		}, () =>{
+			alert("Failed to update discussion status");
+			this.request.discussion_status = this.discussionStatus;
+		});
 	}
 	
 	updateTimestamp(ts) {
@@ -29,31 +49,46 @@ export default class DiscussProjectRequestModalController{
 	getDiscussionEntries(id) {
 		this.spinner.show("Retrieving discussion entries..."); 
 		this.service.getDiscussion(id).then((promise) => {
-			this.spinner.hide();
+			if (this.notifyAccounts !== null) {
+				this.spinner.hide();
+			}
 			this.discussionEntries = promise.data.results;
 			for (let discussIdx in this.discussionEntries) {
 				this.discussionEntries[discussIdx].date_time_entered =
 				this.updateTimestamp(this.discussionEntries[discussIdx].date_time_entered);
 			}
-		}, () => {this.spinner.hide();});
+		}, () => {
+			if (this.discussionEntries !== null && this.notifyAccounts !== null) {
+				this.spinner.hide();
+			}
+		});
 	}
 	
 	getDiscussionAccounts(id) {
 		this.service.getDiscussionAccounts(id).then((promise) => {
+			if (this.discussionEntries !== null) {
+				this.spinner.hide();
+			}
 			this.notifyAccounts = promise.data;
-		}, () => {});
+			for (let accountIdx in this.notifyAccounts) {
+				this.accountDropDown.options.push({id: this.notifyAccounts[accountIdx].id, label: this.notifyAccounts[accountIdx].email});
+			}
+		}, () => {
+			if (this.discussionEntries !== null && this.notifyAccounts !== null) {
+				this.spinner.hide();
+			}
+		});
 	}
 	
 	addEntry() {
-		let notifyId = null;
-		if (this.notifyAccount !== '') {
-			let index = Number(this.notifyAccount);
-			notifyId = this.notifyAccounts[index].id;
+		let notifyIds = [];
+		for (let selectedIndex in this.accountDropDown.selectedOptions) {
+			notifyIds.push(this.accountDropDown.selectedOptions[selectedIndex].id);
 		}
 		let newEntry = {
 			request:this.request.id,
 			author: this.userId,
-			notify: notifyId,
+			notify: notifyIds,
 			text: this.discussionText,
 		};
 		this.spinner.show("Adding new entry..."); 

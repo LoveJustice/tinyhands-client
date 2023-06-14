@@ -33,14 +33,15 @@
         	</div>
         </div>
         
-        <div class="col-md-1">
+        <div class="col-md-2">
         	<p>Status</p>
         	<select ng-model="$ctrl.queryParameters.status" ng-change="$ctrl.searchRequests()">
         		<option value=''>All</option>
         		<option value='Submitted'>Submitted</option>
         		<option value='Approved'>Approved</option>
-        		<option value='Completed'>Completed</option>
+        		<option value='Approved-Completed'>Approved-Completed</option>
         		<option value='Declined'>Declined</option>
+        		<option value='Declined-Completed'>Declined-Completed</option>
         	</select>
         </div>
         <div class="col-md-1">
@@ -51,16 +52,17 @@
         		<option value='single'>Single</option>
         	</select>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
         	<p>Discussion</p>
         	<select ng-model="$ctrl.queryParameters.discussion" ng-change="$ctrl.searchRequests()">
         		<option value=''>All</option>
-        		<option value='monthly'>Includes Me</option>
+        		<option value='Includes Me'>Open & Includes Me</option>
+        		<option value='Waiting on Me'>Open & Waiting on Me</option>
         	</select>
         </div>
 
         <!-- Search -->
-        <div class="col-md-3 pull-right">
+        <div class="col-md-2 pull-right">
         	<input ng-change="$ctrl.showPage(1)" ng-model="$ctrl.queryParameters.search" placeholder="Search" autofocus>
         </div>
         <!-- End search -->
@@ -87,7 +89,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-dblclick="$ctrl.approve($index)">
+            <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-click="$ctrl.confirmedCleanup($index)">
                 <td>{{ request.project_name }}</td>
                 <td>{{ request.status }}</td>
                 <td>{{ request.category_name }}</td>
@@ -96,11 +98,11 @@
                 <td ng-if="request.staff_name">{{ request.benefit_type_name }} for {{ request.staff_name }}</td>
                 <td ng-if="request.monthly"><i class="fa fa-check-square-o monthlyIcon"></i></td>
                 <td ng-if="!request.monthly"><i class="fa fa-square-o monthlyIcon"></i></td>
-                <td ng-click="$ctrl.review(request)"><i class="fa fa-search reviewIcon"></i></td>
-                <td ng-if="request.projectrequestdiscussion_set.length < 1"  ng-click="$ctrl.discuss(request)"> <i class="fa fa-comment-o discussIcon"></i></td>
-                <td ng-if="request.projectrequestdiscussion_set.length > 0"  ng-click="$ctrl.discuss(request)"> <i class="fa fa-commenting discussIcon"></i></td>
+                <td><a ng-href="{{request.reviewUrl}}"><i class="fa fa-search reviewIcon"></i></a></td>
+                <td ng-click="$ctrl.discuss(request)"> <i ng-class="$ctrl.discussClass(request)"></i></td>
                 <td ng-if="!request.can_approve"></td>
-                <td class="text-center" ng-if="request.can_approve"> <i class="fa fa-check-circle-o requestIcon approveIcon"></i></td>
+                <td class="text-center" ng-if="request.can_approve && !request.confirmedApprove" ng-click="$ctrl.approve($index)"> <i class="fa fa-check-circle-o requestIcon approveIcon"></i></td>
+                <td class="text-center text-danger" ng-if="request.can_approve && request.confirmedApprove" ng-click="$ctrl.approve($index)">Confirm</td>
         	</tr>
         	<tr ng-show="$ctrl.requests.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Requests Matched your search for: "{{ $ctrl.queryParameters.search }}"</h2></td>

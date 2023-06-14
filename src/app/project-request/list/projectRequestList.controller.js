@@ -3,6 +3,7 @@ import selectProjectModalTemplate from './selectProjectModal.html';
 import discussProjectRequestTemplate from '../discussProjectRequestModal.html';
 import DiscussProjectRequestModalController from '../discussProjectRequestModal.controller.js';
 import {encodeGroup} from  '../../encodeGroup.js';
+import {dropDecimals} from  '../dropDecimal.js';
 import './projectRequestList.less';
 
 class SelectProjectModalController {
@@ -54,6 +55,7 @@ export default class ProjectRequestListController {
         this.countries = [];
         this.projects = [];
         this.stationsForAdd = [];
+        this.confirmIndex = null;
 
         this.timer = {};
         this.requests = [];
@@ -61,7 +63,7 @@ export default class ProjectRequestListController {
         this.queryParameters = {
             "page_size": 20,
             "reverse": true,
-            "ordering": 'project__station_name',
+            "ordering": 'date_time_entered',
             "search": '',
             "status": '',
             "frequency":'',
@@ -90,37 +92,12 @@ export default class ProjectRequestListController {
             ctrl: this   
         };
 
-        // If there was a search value provided in the url, set it
-        let foundStateParams = false;
-        if($stateParams) {
-            if ($stateParams.search) {
-                foundStateParams = true;
-                this.queryParameters.search = $stateParams.search;
-            }
-            if ($stateParams.status) {
-                foundStateParams = true;
-                this.queryParameters.status = $stateParams.status;
-            }
-            if ($stateParams.country_ids) {
-                foundStateParams = true;
-                this.queryParameters.country_ids = $stateParams.country_ids;
-            }
-        }
-        
-        if (!foundStateParams) {
-            let tmp = sessionStorage.getItem('requestList-search');
-            if (tmp !== null) {
-                this.queryParameters.search = tmp;
-            }
-            tmp = sessionStorage.getItem('requestList-status');
-            if (tmp !== null) {
-                this.queryParameters.status = tmp;
-            }
-            tmp = sessionStorage.getItem('requestList-country_ids');
-            if (tmp !== null) {
-                this.queryParameters.country_ids = tmp;
-            }
-        }
+    	Object.keys(this.queryParameters).forEach( (name) => {
+    		let tmp = sessionStorage.getItem('requestList-' + name);
+    		if (tmp !== null) {
+    			this.queryParameters[name] = tmp;
+    		}
+    	});
 
         this.getUserCountries();
         this.getProjects();
@@ -142,6 +119,7 @@ export default class ProjectRequestListController {
         delete queryParameters.reverse;
         var params = [];
         Object.keys(queryParameters).forEach( (name) => {
+        	sessionStorage.setItem('requestList-' + name, queryParameters[name]);
             if (queryParameters[name] !== null && queryParameters[name] !== '') {
                 params.push({"name": name, "value": queryParameters[name]});
             }
@@ -153,9 +131,6 @@ export default class ProjectRequestListController {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
         }
-        sessionStorage.setItem('requestList-search', this.queryParameters.search);
-        sessionStorage.setItem('requestList-status', this.queryParameters.status);
-        sessionStorage.setItem('requestList-country_ids', this.queryParameters.country_ids);
         this.timer = this.timeout( () => {
             this.showPage(1);
         }, 500);
@@ -245,6 +220,14 @@ export default class ProjectRequestListController {
         });
     }
     
+    addExtra (request) {
+    	request.can_approve = request.status === 'Submitted' && this.session.checkPermission('PROJECT_REQUEST','APPROVE',request.country_id, request.project);
+    	request.confirmedApprove = false;
+    	request.reviewUrl = this.state.href('reviewProjectRequest', {
+            id: request.id,
+        });
+    }
+    
     showPage(pageNumber) {
         this.spinnerOverlayService.show("Searching for Project Requests...");        
         this.service.getRequestList(this.transform(this.queryParameters, pageNumber)).then( (promise) => {
@@ -253,16 +236,23 @@ export default class ProjectRequestListController {
             this.paginate.currentPage = pageNumber;
             this.spinnerOverlayService.hide();
             for (let requestIdx in this.requests) {
-            	let request = this.requests[requestIdx];
-            	request.can_approve = request.status === 'Submitted' && this.session.checkPermission('PROJECT_REQUEST','APPROVE',request.country_id, request.project);
+            	this.addExtra (this.requests[requestIdx]);
             }
+            dropDecimals(this.requests);
+        }, () => {
+        	this.spinnerOverlayService.hide();
         });
     }
     
-    review(request) {
-    	this.state.go('reviewProjectRequest', {
-                id: request.id,
-            });
+    discussClass(request) {
+    	let cssClass = 'fa fa-comment-o discussNotOpen';
+    	
+    	if (request.discussion_status === 'Open') {
+    		cssClass = 'fa fa-commenting discussOpen';
+    	} else if (request.discussion_status === 'Closed') {
+    		cssClass = 'fa fa-commenting discussNotOpen';
+    	}
+    	return cssClass;
     }
     
     discuss(request) {
@@ -290,8 +280,22 @@ export default class ProjectRequestListController {
         });
     }
     
+    confirmedCleanup(index) {
+    	if (this.confirmIndex !== null && this.confirmIndex < this.requests.length && this.confirmIndex !== index) {
+    		this.requests[this.confirmIndex].confirmedApprove = false;
+    	}
+    	this.confirmIndex = index;
+    }
+    
     approve(index) {
+    	this.confirmedCleanup(index);
+    	
     	let request = this.requests[index];
+    	if (!request.confirmedApprove) {
+            request.confirmedApprove = true;
+            return;
+        }
+    	
     	if (request.can_approve) {
     		let localRequest = jQuery.extend(true, {}, request);
     		localRequest.status = 'Approved';
@@ -299,9 +303,10 @@ export default class ProjectRequestListController {
     		this.service.putRequest(localRequest).then( (promise) => {
     			this.spinnerOverlayService.hide();
     			this.requests[index] = promise.data;
-    		}, () => {
+    			this.addExtra (this.requests[index]);
+    		}, (error) => {
     			this.spinnerOverlayService.hide();
-    			this.toastr.error("Failed to approve request");
+    			this.toastr.error("Failed to approve request:" + error.statusText);
     		});
     		
     	}

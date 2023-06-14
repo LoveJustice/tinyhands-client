@@ -31,16 +31,16 @@ export default class ProjectRequestService {
         }
     }
     
-    approveRequest(id) {
-    	return this.service.put(`api/project-request/approve/${id}/`);
-    }
-    
     putRequest(request) {
         return this.service.put(`api/project-request/${request.id}/`, request);
     }
     
     postRequest(request) {
         return this.service.post(`api/project-request/`, request);
+    }
+    
+    changeDiscussionStatus(request) {
+    	return this.service.put(`api/project-request/discussion-status/${request.id}/`, request);
     }
     
     getUserCountries(userId) {
@@ -80,5 +80,30 @@ export default class ProjectRequestService {
     
     postDiscussionEntry(entry) {
     	return this.service.post(`api/project-request/discussion/`, entry);
+    }
+    
+    getAttachment(id) {
+    	return this.service.get(`api/project-request/attachment/?request_id=${id}`);
+    }
+    
+    postAttachment(attachment) {
+    	let myAttachment = jQuery.extend(true, {}, attachment);
+        let formData = new FormData();
+        formData.append("main", JSON.stringify(myAttachment));
+        let t = Object.prototype.toString.call(myAttachment.attachment);
+        if (t === '[object Blob]') {
+            let fileName =  myAttachment.request + '_' + myAttachment.attachment.$ngfName;
+            formData.append('scanned', myAttachment.attachment, fileName);
+            myAttachment.attachment = {'name': fileName};
+        } else if (t === '[object File]') {
+            let fileName = myAttachment.request + '_' + myAttachment.attachment.name;
+            formData.append('scanned', myAttachment.attachment, fileName);
+            myAttachment.attachment = {'name': fileName};
+        }
+        return this.service.post(`api/project-request/attachment/`, formData, {'Content-Type': undefined});
+    }
+    
+    deleteAttachment(id) {
+    	return this.service.delete(`api/project-request/attachment/${id}/`);
     }
 }

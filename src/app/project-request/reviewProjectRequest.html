@@ -30,8 +30,8 @@
 	</div>
 	<div class="row col-md-12 reviewLine">
 		<div class="col-md-1"><b>Amount:</b></div>
-		<div class="col-md-1" ng-if="!$ctrl.isAuthor">{{ $ctrl.projectRequest.original_cost }}</div>
-		<div class="col-md-1" ng-if="$ctrl.isAuthor">
+		<div class="col-md-1" ng-if="!$ctrl.isAuthor || $ctrl.projectRequest.prior_request!==null || $ctrl.projectRequest.approved_mdf">{{ $ctrl.projectRequest.original_cost }}</div>
+		<div class="col-md-1" ng-if="$ctrl.isAuthor  && $ctrl.projectRequest.prior_request==null && !$ctrl.projectRequest.approved_mdf">
 			<input class="text-right form-control" type="text" 
         			onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
         			ng-model="$ctrl.projectRequest.original_cost" ng-disabled="!$ctrl.canUpdate" ng-change="$ctrl.authorUpdate()">
@@ -46,6 +46,11 @@
 	        			ng-model="$ctrl.projectRequest.cost" ng-disabled="!$ctrl.canUpdate || !$ctrl.enterApprovedAmount">
 			</div>
 		</div>
+		<div class="col-md-3"></div>
+		<div class="col-md-1" ng-if="$ctrl.reviewPriorUrl">
+			<a ng-href="{{$ctrl.reviewPriorUrl}}">Prior Request</a>
+		</div>
+		
 	</div>
 	<div class="row col-md-12 reviewLine">
 		<div class="col-md-1"><b>Description:</b></div>
@@ -53,7 +58,7 @@
 	</div>
 	<div class="row col-md-12 reviewLine">
 		<div class="col-md-1"><b>Monthly:</b></div>
-		<div class="col-md-1"><input type="checkbox" ng-model="$ctrl.projectRequest.monthly" ng-disabled="true"></div>
+		<div class="col-md-1"><input type="checkbox" ng-model="$ctrl.projectRequest.monthly" ng-disabled="!$ctrl.canUpdate || $ctrl.projectRequest.approved_mdf ||  $ctrl.projectRequest.prior_request!==null"></div>
 	</div>
 	<div class="row col-md-12 reviewLine" ng-if="$ctrl.projectRequest.category === $ctrl.salariesAndBenefitsId || $ctrl.projectRequest.category === $ctrl.staffTravelId">
 		<div class="col-md-1"><b>Staff:</b></div>

@@ -125,6 +125,10 @@
                             ui-sref="budgetList">MDFs</a>
                     </li>
                     <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('MDF','VIEW',null, null);"
+                            ui-sref="mdfList">MDFs-PR</a>
+                    </li>
+                    <li>
                         <a ng-show="navbarCtrl.session.checkPermission('EMP','VIEW',null, null);"
                             ui-sref="empList">Emps</a>
                     </li>

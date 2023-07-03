@@ -1,3 +1,5 @@
+// global location
+
 export default class DiscussProjectRequestModalController{
 	constructor($uibModalInstance, SpinnerOverlayService, $scope, service, request) {
 		this.$uibModalInstance = $uibModalInstance;
@@ -40,8 +42,7 @@ export default class DiscussProjectRequestModalController{
 			    option: '',
 			    attachment: null  
 			};
-		}, (error) => {
-			alert(error);
+		}, () => {
 			this.spinner.hide();
 		});
 	}

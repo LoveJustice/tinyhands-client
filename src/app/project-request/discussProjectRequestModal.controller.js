@@ -32,7 +32,6 @@ export default class DiscussProjectRequestModalController{
 			this.discussionEntries.unshift(promise.data);
 			this.modified = true;
 		}, () =>{
-			alert("Failed to update discussion status");
 			this.request.discussion_status = this.discussionStatus;
 		});
 	}

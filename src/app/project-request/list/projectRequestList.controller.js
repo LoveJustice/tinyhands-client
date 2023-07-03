@@ -225,6 +225,7 @@ export default class ProjectRequestListController {
     	request.confirmedApprove = false;
     	request.reviewUrl = this.state.href('reviewProjectRequest', {
             id: request.id,
+            mdf_id: null,
         });
     }
     

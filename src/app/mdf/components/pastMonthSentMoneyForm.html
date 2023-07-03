@@ -1,0 +1,58 @@
+<div class="col-md-offset-2 col-md-8">
+  <h2 class="text-center">Past Month Sent Money</h2>
+  <h4></h4>
+  <hr>
+  <div class="row" ng-repeat="project in mdfCtrl.allProjects">
+  	<div class="row">
+  	<div class="col-md-12 center-vertical">
+			<h3 class=col-md-6>{{ project.project_category_name }}: {{ project.station_name }}</h3>
+			<div>
+				<label>Approved by</label>
+				<input class="pull-rightform-control" type="text"  
+	        		ng-model="mdfCtrl.form.past_sent_approved" 
+	        		ng-disabled="mdfCtrl.isViewing"/>
+        	</div>
+	</div>
+    <div ng-repeat="item in mdfCtrl.form.mdfitem_set"
+    		ng-if="item.work_project===project.id && item.category===mdfCtrl.constants.FormSections.PastMonth">
+      <div class="col-md-5">
+        <input class="form-control" type="text" ng-model="item.description" ng-disabled="mdfCtrl.isViewing" required/>
+      </div>
+      <div class="col-md-3">
+      	<select ng-model="item.associated_section" required>
+      		<option ng-repeat="section in mdfCtrl.sections.allSections" 
+      			ng-if="mdfCtrl.sections.excludeFromDropDown.indexOf(section.name) < 0 && project.id === mdfCtrl.borderStationId"
+      			value="{{ section.value }}">{{ section.name }}</option>
+      		<option ng-if="project.id !== mdfCtrl.borderStationId" value="8">Salaries & Benefits</option>
+      		<option ng-if="project.id !== mdfCtrl.borderStationId" value="14">Operational Expense</option>
+      	</select>
+      </div>
+      <div class="col-md-2">
+        <input class="text-right form-control" type="text" 
+        		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+        		ng-change="mdfCtrl.setTotals()" 
+        		ng-model="item.cost" 
+        		ng-disabled="mdfCtrl.isViewing" required/>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-danger" ng-click="mdfCtrl.removeItem(mdfCtrl.form.mdfitem_set, $index)" ng-hide="mdfCtrl.isViewing">Remove</button>
+      </div>
+      <br/>
+      <br/>
+    </div>
+    <div class="row">
+      <button class="btn btn-success col-xs-4 col-xs-offset-4"
+	      	ng-click="mdfCtrl.addItem(project.id,mdfCtrl.constants.FormSections.PastMonth)"
+	      	ng-hide="mdfCtrl.isViewing">Add item for {{ project.station_name }}
+	  </button>
+    </div>
+  </div>
+  <hr>
+  <div class="row center text-center">
+    <div class="col-md-6 col-md-offset-3">
+      <label>Past Month Sent Money Total</label>
+      <input class="text-center form-control" ng-value="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits" disabled="disabled" />
+    </div>
+  </div>
+  </div>
+</div>

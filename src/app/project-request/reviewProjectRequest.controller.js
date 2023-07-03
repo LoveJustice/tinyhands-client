@@ -29,6 +29,7 @@ export default class ReviewProjectRequestController {
         this.multipliersId = null;
         this.changeAmount = false;
         this.showComment = false;
+        this.reviewPriorUrl = null;
         
         this.getMultipliers();
         this.getProjectRequst();
@@ -102,6 +103,12 @@ export default class ReviewProjectRequestController {
 			this.getCategories(this.projectRequest.project);
 	        this.getStaff(this.projectRequest.project);
 	        this.getBenefitTypes(this.projectRequest.project);
+	        if (this.projectRequest.prior_request) {
+	        	this.reviewPriorUrl = this.state.href('reviewProjectRequest', {
+		            id: this.projectRequest.prior_request,
+		            mdf_id: null,
+		        });
+	        }
 		}, ()=> {
 			this.spinner.hide();
 			this.toastr.error("Failed to retrieve project request");
@@ -203,7 +210,7 @@ export default class ReviewProjectRequestController {
     	this.spinner.show("Processing request...");   
     		this.service.putRequest(localRequest).then( () => {
     			this.spinner.hide();
-    			this.state.go('projectRequestList',{});
+    			this.returnToSource();
     		}, () => {
     			this.spinner.hide();
     			this.toastr.error("Failed to decline request");
@@ -222,7 +229,7 @@ export default class ReviewProjectRequestController {
     	this.spinner.show("Processing request...");   
     		this.service.putRequest(localRequest).then( () => {
     			this.spinner.hide();
-    			this.state.go('projectRequestList',{});
+    			this.returnToSource();
     		}, () => {
     			this.spinner.hide();
     			this.toastr.error("Failed to update request");
@@ -230,7 +237,7 @@ export default class ReviewProjectRequestController {
     }
     
     changeApprovedAmount() {
-    	this.enterApprovedAmount = true
+    	this.enterApprovedAmount = true;
     	this.showComment = true;
     	if (this.projectRequest.comment === '' || this.entryCost === this.projectRequest.cost) {
     		this.toastr.warning('Must change the request amount and enter a comment to Change Approved Amount');
@@ -244,10 +251,18 @@ export default class ReviewProjectRequestController {
     	this.spinner.show("Processing request...");   
     		this.service.putRequest(localRequest).then( () => {
     			this.spinner.hide();
-    			this.state.go('projectRequestList',{});
+    			this.returnToSource();
     		}, () => {
     			this.spinner.hide();
     			this.toastr.error("Failed to update request");
     		});
+    }
+    
+    returnToSource() {
+    	if (this.stateParams.mdf_id) {
+			this.state.go('mdf-pr',{id:this.stateParams.mdf_id, borderStationId: this.projectRequest.override_mdf_project, isViewing:false});
+		} else {
+			this.state.go('projectRequestList',{});
+		}
     }
 }

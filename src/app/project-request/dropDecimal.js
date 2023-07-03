@@ -18,4 +18,4 @@ export function dropDecimals(requestList) {
 			request.cost = dropDecimal(request.cost);
 		}
 	}
-};
+}

@@ -22,7 +22,7 @@ function PvfRoutes($stateProvider) {
       controllerAs: '$ctrl',
     })
     .state('reviewProjectRequest', {
-      url: '/reviewProjectRequests?id',
+      url: '/reviewProjectRequest?id&mdf_id',
       params: {
       },
       templateUrl: reviewRequestTemplate,

@@ -1,0 +1,84 @@
+#mdf-calc-form{
+  .btn {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:focus {
+      outline: 0;
+    }
+  }
+  .calc-form-input-no-width {
+    padding: 0;
+    margin: 0;
+  }
+  .text-small {
+  	font-size: 75%;
+  }
+  .textDiscussionFont {
+  	font-size: 40%;
+  }
+  .text-large {
+  	font-size: 125%;
+  }
+  .text-wrap {
+  	white-space: normal;
+	word-wrap: break-word;
+  }
+  .staff-item-table {
+    border-collapse:separate;
+  	border-spacing: 10px;
+  }
+  .name-col {
+  	min-width: 150px;
+  	max-width: 150px;
+  	width: 150px;
+  }
+  .position-col {
+  	min-width: 150px;
+  	max-width: 150px;
+  	width: 150px;
+  }
+  .salary-col {
+  	min-width: 80px;
+  	max-width: 80px;
+  	overflow-wrap: anywhere;
+  	width:70px;
+  }
+  .image-col {
+  	min-width: 20px;
+  	max-width: 20px;
+  	width: 20px;
+  }
+  #sectionArea {
+    @media screen and (max-width: 991px) {
+      margin-top: 275px;
+    }
+  }
+  #totalTable {
+    margin-top: 20px;
+  }
+  .costSingleNew {
+  	border: 2px solid PaleGreen;
+  }
+  .costMonthlyNew {
+  	border: 2px solid ForestGreen;
+  }
+  .costMonthlyChange {
+  	border: 2px solid Gold;
+  }
+  .costChange {
+  	border-style: solid;
+  	border-color: gold;
+  }
+  .reviewIcon {
+		color:red;
+		font-size:1.5em;
+	}
+  .multiplierUnset {
+  	border: 2px solid red;
+  }
+  .boldLine {
+  	border: none;
+  	height: 2px;
+  	background-color: #333;
+  }
+}

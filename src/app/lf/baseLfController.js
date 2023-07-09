@@ -96,7 +96,7 @@ export class BaseLfController extends BaseFormController {
     	let card = this.createCard('Information');
     	this.getResponseOfQuestionByTag(card.responses, 'lfInformationIncident').value = this.stateParams.incidentId;
     	this.getResponseOfQuestionByTag(card.responses, 'lfInformationSourceType').value = 'Intercept';
-    	let clearFields = ['lfInformationSourceTitle', 'lfInformationInterviewerName', 'lfInformationLocation'];
+    	let clearFields = ['lfInformationSourceTitle', 'lfInformationInterviewerName', 'lfInformationLocation','lfInformationDescription'];
     	for (let idx in clearFields) {
     		this.getResponseOfQuestionByTag(card.responses, clearFields[idx]).value = '';
     	}

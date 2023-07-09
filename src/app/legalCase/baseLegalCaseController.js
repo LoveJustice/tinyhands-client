@@ -44,13 +44,7 @@ export class BaseLegalCaseController extends BaseFormController {
              };
             this.tmpIrf = new IrfStubController(this.$scope, this.$uibModal, this.constants, this.irfService, irfStateParams, this.state, this);
             this.getIrfComplete();
-        } else {
-            this.getSubIrfComplete();
         }
-    }
-    
-    getSubIrfComplete() {
-        
     }
     
     getIrfComplete() {
@@ -58,7 +52,6 @@ export class BaseLegalCaseController extends BaseFormController {
             this.irf = this.tmpIrf;
             this.associatedPersons = this.irf.getIntercepteePersons('PVOT');
         }
-        this.getSubIrfComplete();
     }
     
     copyIrfData() {
@@ -111,6 +104,9 @@ export class BaseLegalCaseController extends BaseFormController {
             this.otherData.setRadioButton(this.locations, 3);
         });
     }
+    
+    getLegalCaseComplete() {
+    }
 
     getLegalCase(countryId, stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -141,6 +137,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 this.station_name = this.response.station_name;
                 this.formNumberChange();
                 this.getLocations(this.stateParams.stationId);
+                this.getLegalCaseComplete();
             });
         });
     }

@@ -90,15 +90,15 @@ export default class CreateIncidentFormModalController {
     
     createForm() {
     	if (this.incidentType === 'New') {
-    	    let dateString = this.newDate.getFullYear() + '-';
-    	    if (this.newDate.getMonth() < 9) {
+    	    let dateString = this.newDate.getUTCFullYear() + '-';
+    	    if (this.newDate.getUTCMonth() < 9) {
     	    	dateString += '0';
     	    }
-    	    dateString += (this.newDate.getMonth() + 1) + '-';
-    	    if (this.newDate.getDate() < 9) {
+    	    dateString += (this.newDate.getUTCMonth() + 1) + '-';
+    	    if (this.newDate.getUTCDate() < 10) {
     	    	dateString += '0'
     	    }
-    	    dateString += (this.newDate.getDate() + 1);
+    	    dateString += (this.newDate.getUTCDate());
     		let newIncident = {
     			id: null,
     			status:'approved',

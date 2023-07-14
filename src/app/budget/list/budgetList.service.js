@@ -23,8 +23,8 @@ export default class BudgetListService {
         return this.service.get(nextPageUrl);
     }
 
-    getMdf(id) {
-        return this.service.get(`api/mdf/${id}/`);
+    getMdf(id, mdf_type) {
+        return this.service.get(`api/mdf/${id}/?mdf_type=${mdf_type}`);
     }
 
     sendMdfEmails(people) {

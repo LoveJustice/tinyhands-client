@@ -5,7 +5,7 @@ export default class MdfListService {
     }
 
     deleteBorderStationMdf(id) {
-        return this.service.delete(`api/mdf/${id}/`);
+        return this.service.delete(`api/mdf-pr/${id}/`);
     }
 
     getMdfList(searchTerm, sortValue, country_ids, nextPage) {
@@ -36,7 +36,7 @@ export default class MdfListService {
     }
     
     getUserStationsForAdd(id) {
-        return this.service.get(`api/user_permission/stations/${id}/?permission_group=BUDGETS&form_type=MDF&form_present=true&action=ADD`);
+        return this.service.get(`api/user_permission/stations/${id}/?permission_group=MDF&form_type=MDF&form_present=true&action=ADD`);
     }
     
     getNewMdf(projectId, year, month) {

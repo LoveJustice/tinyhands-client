@@ -3,14 +3,21 @@
 		<h2 class="text-center form-inline">
 			{{ mdfCtrl.form.station_name }} Budget Calculation Form ({{ mdfCtrl.getMonthName() }} {{ mdfCtrl.year }})   
 			<div class="pull-right" ng-if="mdfCtrl.canApproveForm()">
-  				<button class="btn btn-lg btn-success text-wrap"
-        				ng-disabled="(mdfForm.$invalid)"
-    					ng-click="mdfCtrl.approveForm()">{{ mdfCtrl.confirmedFinalize ? "Confirm?" : "Approve" }}</button>
+  				<button ng-class="mdfCtrl.getApprovalClass()"
+        				ng-disabled="(mdfForm.$invalid || !mdfForm.$pristine)"
+    					ng-click="mdfCtrl.approveForm()">{{ mdfCtrl.confirmApprove ? mdfCtrl.getConfirmText() : mdfCtrl.getApprovalText() }}</button>
     			<br>
     			<p class="textDiscussionFont">Open Discussions: {{mdfCtrl.openDiscussions }} </p>
 			</div>
 		</h2>
 		
+	</div>
+	<div class="row text-center">
+		<label>Currency:&nbsp;</label>
+		<select ng-model="mdfCtrl.currencyType" ng-change="mdfCtrl.updateCurrencyDisplay();">
+			<option value="local">local</option>
+			<option value="USD">USD</option>
+		</select>
 	</div>
 
   <!-- Section Tabs -->
@@ -60,7 +67,7 @@
 
   <!-- Total Table -->
   <div id="totalTable" class="col-xs-12 col-md-offset-3 col-md-6">
-    <table class="table table-bordered table-hover">
+    <table class="table">
       <thead>
         <tr>
           <th colspan="2" class="text-center">{{ mdfCtrl.getProject(mdfCtrl.form.border_station).project_category_name}}: {{ mdfCtrl.getProject(mdfCtrl.form.border_station).station_name }}</th>
@@ -89,23 +96,23 @@
         </tr>
         <tr>
           <td class="text-left active text-small">Last Month's Distribution Subtotal</td>
-          <td class="text-right active text-small">{{ mdfCtrl.form.last_months_total | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+          <td class="text-right active text-small">{{ mdfCtrl.penniesToStr(mdfCtrl.strToPennies(mdfCtrl.form.last_months_total)) | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
         </tr>
-        <tr ng-if="mdfCtrl.pastMonthMoneySentTotal() > 0">
+        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0">
         	<td>&nbsp;</td>
         </tr>
-        <tr ng-if="mdfCtrl.pastMonthMoneySentTotal() > 0">
+        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0">
           <td class="text-left active text-small">
           	<div>Past Month Sent Money Subtotal</div>
           	<div>This total has already been sent and is not included in the monthly distribution.</div>
           </td>
-          <td class="text-right active text-small">{{ mdfCtrl.pastMonthMoneySentTotal() | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+          <td class="text-right active text-small">{{ mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="col-xs-12 col-md-offset-3 col-md-6" ng-repeat="project in mdfCtrl.form.impact_projects"
-  		ng-if="mdfCtrl.displayProjectTotal(project.id) !== '0.00'">
+  <div class="col-xs-12 col-md-offset-3 col-md-6" ng-repeat="project in mdfCtrl.allProjects"
+  		ng-if="project.id !== mdfCtrl.form.border_station && mdfCtrl.displayProjectTotal(project.id) !== '0.00'">
    	<table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -125,12 +132,28 @@
                <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.ImpactMultiplying].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
              </td>
       	</tr>
+      	<tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent] && mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay > 0">
+        	<td>Money Not Spent(To Deduct)</td>
+	        	<td width="25%">
+	            <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay| currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+        	</td>
+        </tr>
       	<tr>
          <td class="text-left text-large"><b>{{ project.station_name }} Subtotal</b></td>
          <td>
            <p class="text-right text-large"><b>{{  mdfCtrl.totals[project.id].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</b></p>
          </td>
        </tr>
+       <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+        	<td>&nbsp;</td>
+        </tr>
+        <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+          <td class="text-left active text-small">
+          	<div>Past Month Sent Money Subtotal</div>
+          	<div>This total has already been sent and is not included in the monthly distribution.</div>
+          </td>
+          <td class="text-right active text-small">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+        </tr>
       </tbody>
     </table>
   </div>

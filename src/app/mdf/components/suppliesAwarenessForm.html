@@ -16,13 +16,13 @@
 					</td>
 					<td ng-class="mdfCtrl.getMultiplierColor('',mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness])">
 						<input class="text-right form-control" type="text"
-			          		ng-model="mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness].cost" 
+			          		ng-model="mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness].display" 
 			          		disabled/>
 			          	<small>Stationary Multiplier</small>
 					</td>
 					<td>
 						<a ng-if="mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness].request" 
-								ng-href="{{ mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness].request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+								ng-href="{{ mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness].request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [mdfCtrl.multiplierByLocation[mdfCtrl.constants.FormSections.Awareness].request])"></i></a>
 					</td>
 					<td>
 						=
@@ -49,11 +49,11 @@
   				<td>{{ request.description }}</td>
   				<td ng-class="mdfCtrl.getCostColor('',[request])">
   					<input class="text-right awareness-extra-item-value form-control" type="text" 
-			        		ng-model="request.cost"
+			        		ng-model="request.costDisplay"
 			        		disabled/>
   				</td>
   				<td class="text-center">
-  					<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+  					<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
   				</td>
   			</tr>
   		</tbody>
@@ -84,15 +84,15 @@
 	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
 	  	 				ng-if="request.status==='Approved' && request.project===mdfCtrl.form.border_station && request.category===mdfCtrl.constants.FormSections.Awareness && mdfCtrl.amountChanged(request)">
 	  	 			<td>{{ request.description }}</td>
-	  	 			<td class="text-right">{{ request.original_cost }}</td>
-					<td class="text-right">{{ request.cost }}</td>
+	  	 			<td class="text-right">{{ request.originalCostDisplay }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
 					<td>
 						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
                		</td>
 					<td>{{ mdfCtrl.getComment(request) }}</td>
 					<td class="text-center">
-						<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 					</td>
 	  	 		</tr>
 	  	 	</tbody>
@@ -122,7 +122,7 @@
                		</td>
 					<td>{{ mdfCtrl.getComment(request) }}</td>
 					<td class="text-center">
-						<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 					</td>
 	  	 		</tr>
 	  	 	</tbody>
@@ -152,7 +152,7 @@
                		</td>
 					<td>{{ mdfCtrl.getComment(request) }}</td>
 					<td class="text-center">
-						<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 					</td>
 	  	 		</tr>
 	  	 	</tbody>

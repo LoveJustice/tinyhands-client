@@ -69,7 +69,8 @@ export default class ProjectRequestListController {
             "frequency":'',
             "discussion": '',
             "country_ids": '',
-            "project_id": ''
+            "project_id": '',
+            "category":''
         };
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
@@ -101,6 +102,7 @@ export default class ProjectRequestListController {
 
         this.getUserCountries();
         this.getProjects();
+        this.getCategories();
         this.getProjectRequests();
         
         this.getUserStationsForAdd();
@@ -134,6 +136,14 @@ export default class ProjectRequestListController {
         this.timer = this.timeout( () => {
             this.showPage(1);
         }, 500);
+    }
+    
+    getCategories() {
+    	this.service.getProjectCategories(-1).then((promise) => {
+            this.categories = promise.data;
+        }, ()=>{
+        	this.toastr.error('Failed to retrieve categories');
+        });
     }
     
     countryChange() {

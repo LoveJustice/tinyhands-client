@@ -15,11 +15,11 @@
 	  				<td>{{ request.description }}</td>
 	  				<td ng-class="mdfCtrl.getCostColor('',[request])">
 	  					<input class="text-right awareness-extra-item-value form-control" type="text" 
-				        		ng-model="request.cost"
+				        		ng-model="request.costDisplay"
 				        		disabled/>
 	  				</td>
 	  				<td class="text-center">
-	  					<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+	  					<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 	  				</td>
 	  			</tr>
 	  		</tbody>
@@ -32,7 +32,7 @@
 			<input class="form-control text-center" ng-value="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Administration].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits" disabled/>
 		</div>
 	</div>
-		 <div class="col-md-11" ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Administration].changed_count">
+	<div class="col-md-11" ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Administration].changed_count">
   	 	<hr>
 	  	<h4>{{ mdfCtrl.findProject(mdfCtrl.form.border_station).station_name }}: Requests with changed amount</h4>
 	  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
@@ -50,15 +50,15 @@
 	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
 	  	 				ng-if="request.status==='Approved' && request.project===mdfCtrl.form.border_station && request.category===mdfCtrl.constants.FormSections.Administration && mdfCtrl.amountChanged(request)">
 	  	 			<td>{{ request.description }}</td>
-	  	 			<td class="text-right">{{ request.original_cost }}</td>
-					<td class="text-right">{{ request.cost }}</td>
+	  	 			<td class="text-right">{{ request.originalCostDisplay }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
 					<td>
 						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
                		</td>
 					<td>{{ mdfCtrl.getComment(request) }}</td>
 					<td class="text-center">
-						<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 					</td>
 	  	 		</tr>
 	  	 	</tbody>
@@ -81,14 +81,14 @@
 	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
 	  	 				ng-if="request.status==='Declined' && request.category===mdfCtrl.constants.FormSections.Administration && request.project===mdfCtrl.form.border_station">
 	  	 			<td>{{ request.description }}</td>
-					<td class="text-right">{{ request.cost }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
 					<td>
 						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
                		</td>
 					<td>{{ mdfCtrl.getComment(request) }}</td>
 					<td class="text-center">
-						<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 					</td>
 	  	 		</tr>
 	  	 	</tbody>
@@ -111,14 +111,14 @@
 	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
 	  	 				ng-if="request.status==='Approved-Complete' && request.category===mdfCtrl.constants.FormSections.Administration && request.project===mdfCtrl.form.border_station">
 	  	 			<td>{{ request.description }}</td>
-					<td class="text-right">{{ request.cost }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
 					<td>
 						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
                		</td>
 					<td>{{ mdfCtrl.getComment(request) }}</td>
 					<td class="text-center">
-						<a ng-href="{{ request.editUrl }}"><i class="fa fa-search reviewIcon"></i></a>
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
 					</td>
 	  	 		</tr>
 	  	 	</tbody>

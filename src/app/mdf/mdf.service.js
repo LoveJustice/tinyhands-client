@@ -29,10 +29,14 @@ export default class MdfService {
     }
     
     updateMdfItem(item) {
-    	return this.service.post(`api/mdf-item/${item.id}/`, item);
+    	return this.service.put(`api/mdf-item/${item.id}/`, item);
     }
     
     deleteMdfItem(item) {
     	return this.service.delete(`api/mdf-item/${item.id}/`);
+    }
+    
+    approveMdf(mdf) {
+    	return this.service.put(`api/mdf-pr/approve/${mdf.id}/`, mdf);
     }
 }

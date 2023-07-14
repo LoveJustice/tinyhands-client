@@ -77,7 +77,7 @@
           <a ui-sref="{{ form.mdf_type }}({id:form.id, isViewing:true})" class="btn btn-sm btn-primary">View</a>
           <a ui-sref="{{ form.mdf_type }}({id:form.id})" class="btn btn-sm btn-primary" 
           		ng-if="mdfListCtrl.session.checkPermission('MDF','EDIT',form.border_station.operating_country.id, form.border_station.id) && form.status!=='Approved'&&form.status!=='Final'">Edit</a>
-          <a ui-sref="{{ form.mdf_type }}({id: form.id})" class="btn btn-sm btn-primary">Send MDF</a>
+          <a ui-sref="mdf({id: form.id, mdf_type:form.mdf_type})" class="btn btn-sm btn-primary">Send MDF</a>
 
           <button ng-if="mdfListCtrl.session.checkPermission('MDF','DELETE',form.border_station.operating_country.id, form.border_station.id) && form.mdf_type==='mdf-pr' && form.status!=='Approved'"
           		class="btn btn-sm btn-danger animated" ng-click="mdfListCtrl.removeMdf(mdfListCtrl.listOfMdfs, form)"

@@ -41,7 +41,7 @@ class Tracking {
     }
 }
 
-export default class MdfController {
+export default class MdfPrController {
     constructor($state, $stateParams,  $uibModal, MdfService, SessionService, UtilService, SpinnerOverlayService, toastr, $scope) {
         'ngInject';
 
@@ -53,8 +53,16 @@ export default class MdfController {
         this.utils = UtilService;
         this.spinner = SpinnerOverlayService;
         this.toastr = toastr;
+        this.currencyType = 'local';
         this.currency = "";
+        this.localCurrency = "";
+        this.usdCurrency = "$"
         this.decimalDigits = 2;
+        this.dropDecimal = false;
+        this.localDropDecimal = false;
+        this.usdDropDecimal = false;
+        this.localDecimalDigits = 2;
+        this.usdDecimalDigits = 2;
         this.modified = false;
         this.scope = $scope;
 
@@ -159,12 +167,15 @@ export default class MdfController {
         return pennies;
     }
     
-        
     penniesToStr(pennies) {
-        let dollars = Math.floor(pennies / 100);
-        let cents = pennies - dollars * 100;
+    	let value = pennies;
+    	if (this.currencyType === 'USD') {
+    		value = Math.round(value / this.form.exchange_rate);
+    	}
+        let dollars = Math.floor(value / 100);
+        let cents = value - dollars * 100;
         let str = '';
-        if (!this.dropDecimal || cents !== 0) {
+        if (!this.dropDecimal || cents !== 0 || this.currencyType === 'USD') {
 	        str = cents + '';
 	        if (cents < 10) {
 	            str = '0' + str;
@@ -174,6 +185,24 @@ export default class MdfController {
         	str = dollars + '';
         }
         return str;
+    }
+    
+    updateCurrencyDisplay() {
+    	this.updateSessionData();
+    	if (this.currencyType === 'USD') {
+    		this.currency = this.usdCurrency;
+        	this.decimalDigits = this.usdDecimalDigits;
+       		this.dropDecimal = this.usdDropDecimal;
+       		this.isViewing = true;
+    	} else {
+    		this.currency = this.localCurrency;
+        	this.decimalDigits = this.localDecimalDigits;
+       		this.dropDecimal = this.localDropDecimal;
+       		this.isViewing = this.$stateParams.isViewing === 'true';
+    	}
+    	this.requestDisplay();
+    	this.totalsDisplay();
+    	this.itemDisplay();
     }
     
     setTotals() {
@@ -225,7 +254,7 @@ export default class MdfController {
     	} else {
     		amount += this.getRequestTotal(project, Constants.FormSections.ImpactMultiplying);
     	}
-    	amount += this.setPastMoneySentTotal(project);
+    	this.setPastMoneySentTotal(project);
     	amount += this.setMoneyNotSpentTotal(project);
     	
     	this.totals[project].total = amount;
@@ -336,13 +365,42 @@ export default class MdfController {
     	return css_class;
     }
     
+    getReviewColor(existing, requests) {
+    	let cssClass = existing;
+    	let isOpen = false;
+    	for (let requestIndex in requests) {
+    		if (requests[requestIndex].discussion_status === 'Open') {
+    			isOpen = true;
+    			break;
+    		}
+    	}
+    	if (isOpen) {
+    		cssClass += ' reviewOpenIcon';
+    	} else {
+    		cssClass += ' reviewIcon';
+    	}
+    	
+    	return cssClass;
+    }
+    
     getBenefitCost(project, staff, benefit) {
     	let key = this.getSalaryKey(project,staff,benefit);
     	if (key in this.salary.requests) {
-    		return this.salary.requests[key][0].cost;
+    		return this.penniesToStr(this.strToPennies(this.salary.requests[key][0].cost));
     	} else {
     		return null;
     	}
+    }
+    
+    getBenefitRequests(project, staff) {
+    	let staffRequests = [];
+    	for (let requestIndex in this.form.requests) {
+    		let request = this.form.requests[requestIndex];
+    		if (request.project === project && request.staff === staff && request.category === Constants.FormSections.Salaries) {
+    			staffRequests.push(request);
+    		}
+    	}
+    	return staffRequests;
     }
     
     getSalaryKey(project, staff, benefit) {
@@ -405,7 +463,7 @@ export default class MdfController {
     	this.multiplierByLocation = {};
     	for (let multiplierIndex in this.form.multiplier_types) {
     		let multiplier = this.form.multiplier_types[multiplierIndex];
-    		this.multiplierByName[multiplier.name] = {cost:0, multiplier:multiplier, request:null};
+    		this.multiplierByName[multiplier.name] = {cost:0, display:'0', multiplier:multiplier, request:null};
     		this.multiplierByLocation[multiplier.category] = this.multiplierByName[multiplier.name];
     	}
     }
@@ -451,6 +509,7 @@ export default class MdfController {
     		if (request.category === Constants.FormSections.Multipliers) {
     			if (request.description !== '' && request.description in this.multiplierByName) {
     				this.multiplierByName[request.description].cost = request.cost;
+    				this.multiplierByName[request.description].display = this.penniesToStr(this.strToPennies(request.cost));
     				this.multiplierByName[request.description].request = request;
     			}
     			continue;
@@ -493,14 +552,16 @@ export default class MdfController {
         let newBenefits = [];
         for (let requestIndex in this.form.requests) {
         	let request = this.form.requests[requestIndex];
-        	if (request.category !== Constants.FormSections.Salaries || request.status !== 'Approved') {
-        		continue;
-        	}
+        	
         	if (this.salary.projects.indexOf(request.project) < 0) {
         		this.salary.projects.push(request.project);
         		this.salary.staffByProject[request.project] = [];
         		this.totals[request.project][Constants.FormSections.Salaries].Salary = {total:0,display:''};
         		this.totals[request.project][Constants.FormSections.Salaries].Deductions = {total:0,display:''};
+        	}
+        	
+        	if (request.category !== Constants.FormSections.Salaries || request.status !== 'Approved') {
+        		continue;
         	}
         	
         	if (this.salary.benefits.indexOf(request.benefit_type_name) < 0 && newBenefits.indexOf(request.benefit_type_name) < 0) {
@@ -522,19 +583,72 @@ export default class MdfController {
         	let pennies = this.strToPennies(request.cost);
         	
         	if (request.benefit_type_name === 'Deductions') {
-        		this.totals[request.project][Constants.FormSections.Salaries].total -= pennies;
-        	} else {
-        		this.totals[request.project][Constants.FormSections.Salaries].total += pennies;
-        	}
+        		pennies = -pennies;
+        	} 
+        	this.totals[request.project][Constants.FormSections.Salaries].total += pennies;
         	this.totals[request.project][Constants.FormSections.Salaries].requestTotal =
         		this.totals[request.project][Constants.FormSections.Salaries].total;
         	this.totals[request.project][Constants.FormSections.Salaries].display =
         			this.penniesToStr(this.totals[request.project][Constants.FormSections.Salaries].total);
-        	this.totals[request.project][Constants.FormSections.Salaries][request.benefit_type_name].total = pennies;
+        	this.totals[request.project][Constants.FormSections.Salaries][request.benefit_type_name].total += pennies;
         	this.totals[request.project][Constants.FormSections.Salaries][request.benefit_type_name].display = 
         			this.penniesToStr(this.totals[request.project][Constants.FormSections.Salaries][request.benefit_type_name].total);
         }
         this.salary.benefits = this.salary.benefits.concat(newBenefits.sort());
+    }
+    
+    totalsDisplay() {
+    	for (let projectIndex in this.projects) {
+    		let project = this.projects[projectIndex];
+    		if (this.totals[project].total) {
+    			this.totals[project].display = this.penniesToStr(this.totals[project].total);
+    		}
+    		for (let sectionIndex in Constants.FormSections) {
+    			let section = Constants.FormSections[sectionIndex];
+    			if (this.totals[project][section] && this.totals[project][section].total) {
+    				this.totals[project][section].display = this.penniesToStr(this.totals[project][section].total);
+    			}
+    			if (section === Constants.FormSections.Salaries) {
+    				for (let benefitIndex in this.salary.benefits) {
+    					let benefit = this.salary.benefits[benefitIndex];
+    					if (this.totals[project][section] && this.totals[project][section][benefit] && this.totals[project][section][benefit].total) {
+    						this.totals[project][section][benefit].display = this.penniesToStr(this.totals[project][section][benefit].total);
+    					}
+    				}
+    			}
+    			if (section === Constants.FormSections.MoneyNotSpent) {
+    				if (this.totals[project][section] && this.totals[project][section].toDeductTotal) {
+    					this.totals[project][section].toDeductDisplay = this.penniesToStr(this.totals[project][section] && this.totals[project][section].toDeductTotal);
+    				}
+    				if (this.totals[project][section] && this.totals[project][section].notDeductTotal) {
+    					this.totals[project][section].notDeductDisplay = this.penniesToStr(this.totals[project][section] && this.totals[project][section].notDeductTotal);
+    				}
+    			}
+    		}
+    	}
+    }
+    
+    requestDisplay() {
+    	for (let requestIndex in this.form.requests) {
+        	let request = this.form.requests[requestIndex];
+        	request.costDisplay = this.penniesToStr(this.strToPennies(request.cost));
+        	request.originalCostDisplay = this.penniesToStr(this.strToPennies(request.original_cost));
+        }
+        
+        for (let multiplier in this.multiplierByName) {
+        	if (this.multiplierByName[multiplier].cost) {
+        		this.multiplierByName[multiplier].display = this.penniesToStr(this.strToPennies(this.multiplierByName[multiplier].cost));
+        	}
+        }
+    }
+    
+    itemDisplay() {
+    	for (let itemIndex in this.form.mdfitem_set) {
+    		let item = this.form.mdfitem_set[itemIndex];
+    		if (item.cost) {
+    			item.display = this.penniesToStr(this.strToPennies(item.cost));
+    		}
+    	}
     }
 
     getMdfForm() {
@@ -546,10 +660,10 @@ export default class MdfController {
                 this.month = parseInt(window.moment(this.form.month_year).format('M'));
                 this.year = parseInt(window.moment(this.form.month_year).format('YYYY'));
                 this.borderStationId = response.data.border_station;
-                this.currency = decodeURI(this.form.country_currency);
+                this.localCurrency = decodeURI(this.form.country_currency);
                 if (this.form.drop_decimal) {
-                	this.dropDecimal = true;
-                	this.decimalDigits = 0;
+                	this.localDropDecimal = true;
+                	this.localDecimalDigits = 0;
                 }
                 if (this.form.impact_projects.length > 0) {
                 	this.sections.allSections.push({ name: 'Impact Multiplying', templateUrl: impactMultiplyingForm, value: Constants.FormSections.ImpactMultiplying, include:false });
@@ -557,48 +671,8 @@ export default class MdfController {
                 if (this.form.past_month_sent) {
                 	this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth, include: false});
                 }
-                
                 this.sections.allSections.push({ name: 'Money Not Spent', templateUrl: moneyNotSpentForm, value: 9999, include: false });
-                for (let requestIndex in this.form.requests) {
-                	let request = this.form.requests[requestIndex];
-                	if (this.dropDecimal) {
-                		request.cost = this.penniesToStr(this.strToPennies(request.cost));
-                		request.original_cost = this.penniesToStr(this.strToPennies(request.original_cost));
-                	}
-                	request.editUrl = this.$state.href('reviewProjectRequest', {
-    	                id: request.id,
-    	                mdf_id: this.form.id,
-    	            });
-    	            if (request.status === 'Declined-Completed') {
-    	            	request.status = 'Declined';
-    	            }
-    	            if (request.status === 'Approved-Completed') {
-    	            	if (!request.monthly) {
-    	            		request.status = 'Approved';
-    	            	} else {
-    	            		if (this.form.month_year < request.completed_date_time) {
-    	            			request.status = 'Approved';
-    	            		}
-    	            	}
-    	            }
-                }
-                this.allProjects = [];
-                for (let projIndex in this.form.related_projects) {
-                	let project = this.form.related_projects[projIndex];
-                	if (project.id === this.form.border_station) {
-                		this.allProjects.push(project);
-                	}
-                }
-                this.allProjects = this.allProjects.concat(this.form.impact_projects);
-                
-                this.form.totals = {
-                    borderMonitoringStation: {},
-                    other: {},
-                    safeHouse: {},
-                };
-    			this.buildData();
-    			
-    			let tmp = sessionStorage.getItem('mdfState');
+                let tmp = sessionStorage.getItem('mdfState');
 		        if (tmp) {
 		        	let parts = tmp.split('|');
 		        	if (parts[1]) {
@@ -618,7 +692,60 @@ export default class MdfController {
 		        				}
 		        		}
 		        	}
+		        	if (parts[4]) {
+		        		this.currencyType = parts[4];
+		        	}
 		        }
+		        this.updateCurrencyDisplay();
+                
+                for (let requestIndex in this.form.requests) {
+                	let request = this.form.requests[requestIndex];
+                	request.editUrl = this.$state.href('reviewProjectRequest', {
+    	                id: request.id,
+    	                mdf_id: this.form.id,
+    	            });
+    	            if (request.status === 'Declined-Completed') {
+    	            	request.status = 'Declined';
+    	            }
+    	            if (request.status === 'Approved-Completed') {
+    	            	if (!request.monthly) {
+    	            		request.status = 'Approved';
+    	            	} else {
+    	            		if (this.form.month_year < request.completed_date_time) {
+    	            			request.status = 'Approved';
+    	            		}
+    	            	}
+    	            }
+                }
+                this.requestDisplay();
+                this.allProjects = [];
+                for (let projIndex in this.form.related_projects) {
+                	let project = this.form.related_projects[projIndex];
+                	if (project.id === this.form.border_station) {
+                		this.allProjects.push(project);
+                	}
+                }
+                this.allProjects = this.allProjects.concat(this.form.impact_projects);
+                for (let projIndex in this.form.related_projects) {
+                	let found = false;
+                	for (let allProjIndex in this.allProjects) {
+                		if (this.allProjects[allProjIndex].id === this.form.related_projects[projIndex].id) {
+                			found = true;
+                			break;
+                		}
+                	}
+                	if (!found) {
+                		this.allProjects.push(this.form.related_projects[projIndex]);
+                	}
+                }
+                
+                this.form.totals = {
+                    borderMonitoringStation: {},
+                    other: {},
+                    safeHouse: {},
+                };
+    			this.buildData();
+    			
 		        this.setTotals();
             })
             .then(() => {
@@ -692,7 +819,7 @@ export default class MdfController {
     
     completeRequest(isError=false) {
         if (this.tracking) {
-            this.tracking.completeRequest(isError);
+        	this.tracking.completeRequest(isError);
             if (this.tracking.allRequestsCompleted()) {
                 if (this.tracking.hasErrors()) {
                     this.tracking = null;
@@ -723,16 +850,58 @@ export default class MdfController {
     	return canApprove;
     }
     
+    getConfirmText() {
+    	let text = '';
+    	if (this.openDiscussions > 0) {
+    		text = 'Comfirm: close discussions and approve MDF?';
+    	} else {
+    		text = 'Comfirm: approve MDF?';
+    	}
+    	return text;
+    }
+    
+    getApprovalText() {
+    	let text = 'Unknown';
+    	if (this.form) {
+	    	if (this.form.status === 'Submitted') {
+	    		text = 'Regional Steward Approve';
+	    	} else if (this.form.status === 'Initial Review') {
+	    		text = 'AT Director Approve';
+	    	}
+    	}
+    	return text;
+    }
+    
+    getApprovalClass() {
+    	let text = '';
+    	if (this.confirmApprove) {
+    		if (this.openDiscussions > 0) {
+    			text='btn btn-lg btn-danger text-wrap';
+    		} else {
+    			text='btn btn-lg btn-warning text-wrap';
+    		}
+    	} else {
+    		text='btn btn-lg btn-success text-wrap';
+    	}
+    	return text;
+    }	
+    
     approveForm() {
-        if (this.confirmedFinalize){
-            //this.approveMdf();
+        if (this.confirmApprove){
+            this.service.approveMdf(this.form).then(() => {
+            	this.$state.go('mdfList'); 
+            }, (error) => {
+            	this.toastr.error(`There was an error approving the mdf form! ${JSON.stringify(error.data.non_field_errors)}`);
+            	this.confirmApprove = false;
+            });
         }
         else {
             if (this.openDiscussions > 0) {
-            	if (confirm('There are ' + this.openDiscussions + ' requests with open discussions.  Confirm that you wish to close those discussions and approve the MDF')) {
-            	}
+            	this.comfirmText = 'Comfirm: close discussions and approve MDF?'
+            	this.confirmApprove = true;
             } else {
-            	this.confirmedFinalize = true;
+            this.comfirmText = 'Comfirm: approve MDF?'
+            	this.confirmApprove = true;
             }
         }
     }
@@ -807,6 +976,10 @@ export default class MdfController {
     	mdfState += '|';
     	if (this.reviewStaff) {
     		mdfState += this.reviewStaff.id;
+    	}
+    	mdfState += '|';
+    	if (this.currencyType) {
+    		mdfState += this.currencyType;
     	}
     	sessionStorage.setItem('mdfState', mdfState);
     }

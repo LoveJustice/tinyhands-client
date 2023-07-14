@@ -1,5 +1,5 @@
 import mdfListTemplate from './list/mdfList.html';
-import mdfTemplate from './mdf.html';
+import mdfPrTemplate from './mdfPr.html';
 import './list/mdfList.less';
 import './mdf.less';
 
@@ -18,8 +18,8 @@ function mdfRouteConfig($stateProvider) {
         })
         .state('mdf-pr', {
             url: '/mdf-pr/:id?borderStationId&isViewing',
-            templateUrl: mdfTemplate,
-            controller: 'MdfController',
+            templateUrl: mdfPrTemplate,
+            controller: 'MdfPrController',
             controllerAs: 'mdfCtrl',
             params: {
                 id: null

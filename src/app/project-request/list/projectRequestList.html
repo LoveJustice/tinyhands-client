@@ -11,6 +11,13 @@
             </a>
         </div>
     </div>
+    <div class="row">
+    	 <!-- Search -->
+        <div class="col-md-2 pull-right">
+        	<input ng-change="$ctrl.showPage(1)" ng-model="$ctrl.queryParameters.search" placeholder="Search" autofocus>
+        </div>
+        <!-- End search -->
+    </div>
 
     <div class="row">
         <div class="col-md-2" >
@@ -32,7 +39,13 @@
 	        	</select>
         	</div>
         </div>
-        
+        <div class="col-md-2">
+        	<p>Category</p>
+        	<select ng-model='$ctrl.queryParameters.category' ng-change="$ctrl.searchRequests()">
+        		<option value=''>All</option>
+               	<option ng-repeat="opt in $ctrl.categories" value="{{ opt.id }}">{{ opt.text }}</option>
+            </select>
+        </div>
         <div class="col-md-2">
         	<p>Status</p>
         	<select ng-model="$ctrl.queryParameters.status" ng-change="$ctrl.searchRequests()">
@@ -56,16 +69,11 @@
         	<p>Discussion</p>
         	<select ng-model="$ctrl.queryParameters.discussion" ng-change="$ctrl.searchRequests()">
         		<option value=''>All</option>
-        		<option value='Includes Me'>Open & Includes Me</option>
-        		<option value='Waiting on Me'>Open & Waiting on Me</option>
+        		<option value='Open'>Open</option>
+        		<option value='Includes Me'>Includes Me</option>
+        		<option value='Waiting on Me'>Waiting on Me</option>
         	</select>
         </div>
-
-        <!-- Search -->
-        <div class="col-md-2 pull-right">
-        	<input ng-change="$ctrl.showPage(1)" ng-model="$ctrl.queryParameters.search" placeholder="Search" autofocus>
-        </div>
-        <!-- End search -->
     </div>
     <br/>
     <table class="table table-striped" float-thead="$ctrl.stickyOptions" ng-model="$ctrl.requests">

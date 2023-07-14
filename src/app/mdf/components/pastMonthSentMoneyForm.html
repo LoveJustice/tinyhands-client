@@ -28,11 +28,14 @@
       	</select>
       </div>
       <div class="col-md-2">
-        <input class="text-right form-control" type="text" 
+        <input ng-if="mdfCtrl.currencyType==='local'" class="text-right form-control" type="text" 
         		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
         		ng-change="mdfCtrl.setTotals()" 
         		ng-model="item.cost" 
         		ng-disabled="mdfCtrl.isViewing" required/>
+        <input ng-if="mdfCtrl.currencyType==='USD'" class="text-right form-control" type="text" 
+        		ng-model="item.display" 
+        		disabled/>
       </div>
       <div class="col-md-2">
         <button class="btn btn-danger" ng-click="mdfCtrl.removeItem(mdfCtrl.form.mdfitem_set, $index)" ng-hide="mdfCtrl.isViewing">Remove</button>

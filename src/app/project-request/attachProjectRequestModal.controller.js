@@ -1,4 +1,5 @@
-// global location
+/* global location */
+/* global alert */
 
 export default class DiscussProjectRequestModalController{
 	constructor($uibModalInstance, SpinnerOverlayService, $scope, service, request) {

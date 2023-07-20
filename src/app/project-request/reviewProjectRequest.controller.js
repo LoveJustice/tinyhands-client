@@ -219,7 +219,7 @@ export default class ReviewProjectRequestController {
     
     update() {
     	let localRequest = jQuery.extend(true, {}, this.projectRequest);
-    	if (this.canApprove) {
+    	if (this.canApprove || this.canModifyApproved) {
     		localRequest.status = 'Approved';
     	} else {
     		if (this.isAuthor) {

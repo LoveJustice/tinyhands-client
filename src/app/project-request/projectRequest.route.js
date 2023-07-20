@@ -6,8 +6,9 @@ function PvfRoutes($stateProvider) {
     'ngInject';
     $stateProvider
     .state('projectRequestList', {
-      url: '/projectRequest',
+      url: '/projectRequest?mdf_id',
       params: {
+      	mdf_id:null,
       },
       templateUrl: projectRequestListTemplate,
       controller: 'ProjectRequestListController',

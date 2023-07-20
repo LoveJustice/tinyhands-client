@@ -1,17 +1,20 @@
 <div class="container" id="ProjectRequestList"><br/>
 
     <div class="row">
-        <div class="col-xs-7">
+    	<div class="col-xs-12" ng-if="$ctrl.stateParams.mdf_id!==null">
+            <h1>Project Requests for MDF with Open Discussions</h1>
+        </div>
+        <div class="col-xs-7" ng-if="$ctrl.stateParams.mdf_id===null">
             <h1>Project Requests</h1>
         </div>
 
-        <div class="pull-right"><br>
+        <div class="pull-right" ng-if="$ctrl.stateParams.mdf_id===null"><br>
             <a ng-if="$ctrl.hasAddPermission && $ctrl.stationsForAdd.length > 0" class="btn btn-success" ng-if="vm.stationsForAdd.length > 0" ng-click="$ctrl.inputRequests()">
                 Input Requests
             </a>
         </div>
     </div>
-    <div class="row">
+    <div class="row" ng-if="$ctrl.stateParams.mdf_id===null">
     	 <!-- Search -->
         <div class="col-md-2 pull-right">
         	<input ng-change="$ctrl.showPage(1)" ng-model="$ctrl.queryParameters.search" placeholder="Search" autofocus>
@@ -19,7 +22,7 @@
         <!-- End search -->
     </div>
 
-    <div class="row">
+    <div class="row" ng-if="$ctrl.stateParams.mdf_id===null">
         <div class="col-md-2" >
         	<p>Country</p>
             <div ng-dropdown-multiselect="" options="$ctrl.countryDropDown.options"
@@ -97,7 +100,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-click="$ctrl.confirmedCleanup($index)">
+            <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-mouseleave="request.confirmedApprove = false;">
                 <td>{{ request.project_name }}</td>
                 <td>{{ request.status }}</td>
                 <td>{{ request.category_name }}</td>

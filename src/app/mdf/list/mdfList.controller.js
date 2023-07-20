@@ -35,6 +35,7 @@ export default class MdfList {
 
         this.hasAddPermission = true;
         this.listOfMdfs = [];
+        this.parameters = ['searchTerm', 'sortValue', 'countryIds'];
         
         this.paginate = {
             items:0,
@@ -59,17 +60,15 @@ export default class MdfList {
             ctrl: this,
         };
         
-        if ($stateParams) {
-            if ($stateParams.search) {
-                this.searchTerm = $stateParams.search;
-            }
-            if ($stateParams.countryIds) {
-                this.countryIds = $stateParams.countryIds;
-            }
-        }
+        for (let paramIndex in this.parameters) {
+        	let name = this.parameters[paramIndex];
+        	let tmp = sessionStorage.getItem('mdfList-' + name);
+    		if (tmp && tmp !== 'undefined') {
+    			this[name] = tmp;
+    		}
+	    }
         
         this.getUserCountries();
-        this.getMdfList(this.searchTerm, this.sortValue);
     }
     
     extractPage(url) {
@@ -88,7 +87,16 @@ export default class MdfList {
     }
     
     showPage(pageNumber) {
-        this.spinnerOverlayService.show("Searching for MDFs...");        
+        this.spinnerOverlayService.show("Searching for MDFs...");  
+        for (let paramIndex in this.parameters) {
+        	let name = this.parameters[paramIndex];
+        	let value = this[name];
+        	if (value) {
+        		sessionStorage.setItem('mdfList-' + name, value.replace('-',''));
+        	} else {
+        		sessionStorage.setItem('mdfList-' + name, '');
+        	}
+	    }      
         this.service.getMdfList(this.searchTerm, this.sortValue, this.countryIds, pageNumber).then( (promise) => {
             this.listOfMdfs = promise.data.results;
             this.paginate.items = promise.data.count;
@@ -188,6 +196,7 @@ export default class MdfList {
                     }
                 }
             }
+            this.getMdfList(this.searchTerm, this.sortValue);
         });
     }
 

@@ -216,7 +216,7 @@ export default class StaffController {
     		let sep = '';
     		for (let selIdx in this.coordinator[project.border_station].selectedOptions) {
     			tmp += sep + this.coordinator[project.border_station].selectedOptions[selIdx].label;
-    			sep = ';'
+    			sep = ';';
             			
             }
             project.coordinator = tmp;

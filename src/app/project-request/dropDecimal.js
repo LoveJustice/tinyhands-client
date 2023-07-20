@@ -1,6 +1,6 @@
 function dropDecimal (value) {
 	let rv = value;
-	let pos = value.indexOf('.')
+	let pos = value.indexOf('.');
 	if (pos >= 0 && pos < value.length) {
 		let decimal = value.substring(pos);
 		if (!isNaN(decimal)) {

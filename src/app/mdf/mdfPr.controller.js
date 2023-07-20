@@ -56,7 +56,7 @@ export default class MdfPrController {
         this.currencyType = 'local';
         this.currency = "";
         this.localCurrency = "";
-        this.usdCurrency = "$"
+        this.usdCurrency = "$";
         this.decimalDigits = 2;
         this.dropDecimal = false;
         this.localDropDecimal = false;
@@ -185,6 +185,10 @@ export default class MdfPrController {
         	str = dollars + '';
         }
         return str;
+    }
+    
+    currencyChange() {
+    	this.updateCurrencyDisplay();
     }
     
     updateCurrencyDisplay() {
@@ -411,10 +415,12 @@ export default class MdfPrController {
     
     
     getProject(projectId) {
-    	for (let projectIndex in this.form.related_projects) {
-    		if (this.form.related_projects[projectIndex].id === projectId) {
-    			return this.form.related_projects[projectIndex];
-    		}
+    	if (this.form) {
+	    	for (let projectIndex in this.form.related_projects) {
+	    		if (this.form.related_projects[projectIndex].id === projectId) {
+	    			return this.form.related_projects[projectIndex];
+	    		}
+	    	}
     	}
     	
     	return null;
@@ -897,10 +903,10 @@ export default class MdfPrController {
         }
         else {
             if (this.openDiscussions > 0) {
-            	this.comfirmText = 'Comfirm: close discussions and approve MDF?'
+            	this.comfirmText = 'Comfirm: close discussions and approve MDF?';
             	this.confirmApprove = true;
             } else {
-            this.comfirmText = 'Comfirm: approve MDF?'
+            	this.comfirmText = 'Comfirm: approve MDF?';
             	this.confirmApprove = true;
             }
         }

@@ -70,6 +70,7 @@ export default class ProjectRequestListController {
             "discussion": '',
             "country_ids": '',
             "project_id": '',
+            "mdf_id":'',
             "category":''
         };
         this.stickyOptions = this.sticky.stickyOptions;
@@ -93,12 +94,16 @@ export default class ProjectRequestListController {
             ctrl: this   
         };
 
-    	Object.keys(this.queryParameters).forEach( (name) => {
-    		let tmp = sessionStorage.getItem('requestList-' + name);
-    		if (tmp !== null) {
-    			this.queryParameters[name] = tmp;
-    		}
-    	});
+		if (this.stateParams.mdf_id!==null) {
+			this.queryParameters.mdf_id = this.stateParams.mdf_id;
+		} else {
+	    	Object.keys(this.queryParameters).forEach( (name) => {
+	    		let tmp = sessionStorage.getItem('requestList-' + name);
+	    		if (tmp !== null) {
+	    			this.queryParameters[name] = tmp;
+	    		}
+	    	});
+    	}
 
         this.getUserCountries();
         this.getProjects();
@@ -121,7 +126,9 @@ export default class ProjectRequestListController {
         delete queryParameters.reverse;
         var params = [];
         Object.keys(queryParameters).forEach( (name) => {
-        	sessionStorage.setItem('requestList-' + name, queryParameters[name]);
+        	if (this.stateParams.mdf_id === null && name !== 'mdf_list') {
+        		sessionStorage.setItem('requestList-' + name, queryParameters[name]);
+        	}
             if (queryParameters[name] !== null && queryParameters[name] !== '') {
                 params.push({"name": name, "value": queryParameters[name]});
             }
@@ -291,16 +298,7 @@ export default class ProjectRequestListController {
         });
     }
     
-    confirmedCleanup(index) {
-    	if (this.confirmIndex !== null && this.confirmIndex < this.requests.length && this.confirmIndex !== index) {
-    		this.requests[this.confirmIndex].confirmedApprove = false;
-    	}
-    	this.confirmIndex = index;
-    }
-    
     approve(index) {
-    	this.confirmedCleanup(index);
-    	
     	let request = this.requests[index];
     	if (!request.confirmedApprove) {
             request.confirmedApprove = true;

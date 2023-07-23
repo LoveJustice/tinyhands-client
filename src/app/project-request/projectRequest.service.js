@@ -20,7 +20,7 @@ export default class ProjectRequestService {
     }
     
     getBudgetProjects(country_id) {
-    	return this.service.get(`api/border-station/list/?country_ids=${country_id}`);
+    	return this.service.get(`api/border-station/list/?country_ids=${country_id}&page_size=1000`);
     }
     
     submitRequest(request) {

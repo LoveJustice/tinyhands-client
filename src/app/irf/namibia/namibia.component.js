@@ -729,6 +729,14 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
         this.officialFlight = true;
     }
     
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
+    }
+    
     getDefaultIdentificationTypes() {
         return ['Passport', 'Other ID#'];
     }

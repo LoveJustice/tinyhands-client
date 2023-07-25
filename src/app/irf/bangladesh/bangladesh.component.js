@@ -646,6 +646,14 @@ export class IrfBangladeshController extends BaseIrfBlindVerificationController 
         }
     }
     
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
+    }
+    
     getDefaultIdentificationTypes() {
         return ['Passport', 'Other ID#'];
     }

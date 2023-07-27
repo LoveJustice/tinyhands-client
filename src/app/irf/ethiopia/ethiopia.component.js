@@ -19,7 +19,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
         this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,1822,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -484,6 +484,13 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
+            },
+            1822:{
+                enabled:true,
+                label:'Convinced by agent/recruitment agency to work on visa other than work visa',
+                type:'checkbox',
+                format:'col-md-12',
+                points:7
             },
             "otherControlLabel":{
                 enabled:true,

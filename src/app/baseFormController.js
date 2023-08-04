@@ -216,13 +216,18 @@ export class BaseFormController {
         this.otherData.updateResponses();
         this.dateData.updateResponses();
     }
+    
+    overrideRadioItems(items, questionId) {
+        return items;
+    }
 
     setValuesForOtherInputs() {
         this.otherData = new OtherData(this.questions);
         if (this.config.hasOwnProperty('RadioOther')) {
             for (let idx=0; idx < this.config.RadioOther.length; idx++) {
                 let questionId = this.config.RadioOther[idx];
-                this.otherData.setRadioButton(this.config.RadioItems[questionId], questionId);
+                let items = this.overrideRadioItems(this.config.RadioItems[questionId], questionId);
+                this.otherData.setRadioButton(items, questionId);
             }
         }
     }

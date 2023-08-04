@@ -628,6 +628,14 @@ export class IrfLesothoController extends BaseIrfBlindVerificationController {
         this.version2022_8 = true;
     }
     
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
+    }
+    
     getDefaultIdentificationTypes() {
         return ['Passport', 'Other ID#'];
     }

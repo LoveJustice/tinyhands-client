@@ -18,6 +18,8 @@ export default class IntercepteeModalController extends BaseModalController {
             this.identificationTypes = this.options.identificationTypes;
         }
         
+        this.formVerified = (this.parentController.questions[821].response.value !== '' && this.parentController.questions[821].response.value !== null);
+        
         if (this.questions[9].response.photo.value !== null &&
                 this.questions[9].response.photo.value !== '') {
             this.initialPhoto = this.questions[9].response.photo.value;

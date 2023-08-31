@@ -551,7 +551,7 @@ export class IrfSfeNepalController extends BaseIrfSfeController {
                 format:'level2Header',
                 points:0
             },
-            79:{
+            1082:{
                 enabled:true,
                 label:'Under 18 (enticed to work)',
                 type:'checkbox',

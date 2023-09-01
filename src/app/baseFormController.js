@@ -76,7 +76,7 @@ export class BaseFormController {
     }
     
     processPersonIdentificationIn(question) {
-        if (!question.storage_id && (!question.response || !question.response.name)) {
+        if (!question.response || question.response.name === undefined) {
             question.response = {
                 storage_id: null,
                 name: {

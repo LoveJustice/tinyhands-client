@@ -509,7 +509,6 @@ export class BaseLfController extends BaseFormController {
         if (this.currentCard) {
         	this.leaveCard(this.currentCard);
         }
-        this.saveLegalCard();
         this.outCustomHandling();
         this.saveExtra();
         this.errorMessages = [];

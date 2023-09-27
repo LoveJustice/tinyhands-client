@@ -52,9 +52,9 @@ export default class LegalCaseService {
 
     getLegalCase(countryId, stationId, id) {
         if (id !== null) {
-            return this.service.get(`api/legal-case/${stationId}/${id}`);
+            return this.service.get(`api/legal-charge/${stationId}/${id}`);
         } else {
-            return this.service.get(`api/legal-case/blank/${stationId}`);
+            return this.service.get(`api/legal-charge/blank/${stationId}`);
         }
     }
     
@@ -86,7 +86,7 @@ export default class LegalCaseService {
         this.removeTimeZoneAdjustment(myLegalCase);
         this.appendScannedForm(formData, myLegalCase.responses, myLegalCase.cards, this.getFormNumber(myLegalCase));
         formData.append("main", JSON.stringify(myLegalCase));
-        return this.service.put(`api/legal-case/${stationId}/${id}/`, formData, {'Content-Type': undefined});
+        return this.service.put(`api/legal-charge/${stationId}/${id}/`, formData, {'Content-Type': undefined});
     }
     
     postLegalCase(legalCase) {
@@ -95,11 +95,11 @@ export default class LegalCaseService {
         this.removeTimeZoneAdjustment(myLegalCase);
         this.appendScannedForm(formData, myLegalCase.responses, myLegalCase.cards, this.getFormNumber(myLegalCase));
         formData.append("main", JSON.stringify(myLegalCase));
-        return this.service.post(`api/legal-case/`, formData, {'Content-Type': undefined});
+        return this.service.post(`api/legal-charge/`, formData, {'Content-Type': undefined});
     }
     
     getFormConfig(formName) {
-        let url=`api/forms/config/${formName}/`;
+        let url=`api/forms/config/${formName}/?identifier=tag`;
         return this.service.get(url);
     }
     
@@ -114,5 +114,13 @@ export default class LegalCaseService {
     
     getLocation(stationId) {
         return this.service.get(`api/border-station/${stationId}/location/`);
+    }
+    
+    getCountrySpecificCharges(countryId) {
+    	return this.service.get(`api/legal-charge/country-specific/?country_id=${countryId}`);
+    }
+    
+    getIncidentDetail(incidentId) {
+    	return this.service.get(`api/legal-charge/incident/${incidentId}/`);
     }
 }

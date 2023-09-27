@@ -1,9 +1,9 @@
 <div id="vdf-attachments" class="row stretch-vertical">
     <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Attachments')">
         <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openAttachmentModal(card, false, $index)">
-            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionById(card.responses, 610).value}}){{$ctrl.getResponseOfQuestionById(card.responses, 611).value}}</h3>
-            <div class="panel-body text-center" ng-if="$ctrl.isString($ctrl.getResponseOfQuestionById(card.responses, 900).value)">
-                <form-step>{{$ctrl.getResponseOfQuestionById(card.responses, 900).value}}</form-step>
+            <h3 class="panel-heading margin-top-0">({{$ctrl.getResponseOfQuestionByTag(card.responses, 'lcAttachmentNumber').value}}){{$ctrl.getResponseOfQuestionByTag(card.responses, 'lcAttachmentDescription').value}}</h3>
+            <div class="panel-body text-center" ng-if="$ctrl.isString($ctrl.getResponseOfQuestionByTag(card.responses, 'lcAttachmentOption').value)">
+                <form-step>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lcAttachmentOption').value}}</form-step>
             </div>
         </div>
     </div>

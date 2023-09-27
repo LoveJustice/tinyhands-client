@@ -1,0 +1,19 @@
+<div id="vdf-attachments" class="row stretch-vertical">
+    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Verification')">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openVerificationModal(card, false, $index)">
+            <h3 class="panel-heading margin-top-0">{{ $ctrl.getSf($ctrl.getResponseOfQuestionByTag(card.responses, 'lcVerificationSf').value).merged_person.full_name + 
+            		$ctrl.displayCaseNumbers($ctrl.getResponseOfQuestionByTag(card.responses, 'lcVerificationSequence').value) }}</h3>
+            <div class="panel-body text-center">
+	                <form-step>Arrested: {{ $ctrl.getResponseOfQuestionByTag($ctrl.getSuspect($ctrl.getResponseOfQuestionByTag(card.responses, 'lcVerificationSf').value).responses, 'lcSuspectArrestStatus').value }}</form-step>
+	                <form-step>{{ $ctrl.suspectSummary($ctrl.getResponseOfQuestionByTag(card.responses, 'lcVerificationSf').value, $ctrl.getResponseOfQuestionByTag(card.responses, 'lcVerificationSequence').value) }}</form-step>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center center-vertical" ng-if="!$ctrl.isViewing">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="$ctrl.openVerificationModal(null, true)">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+</div>

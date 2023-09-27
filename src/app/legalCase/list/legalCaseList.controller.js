@@ -25,8 +25,8 @@ export default class LegalCaseListController {
         this.timeZoneDifference ="+0545";
         this.queryParameters = {
             "page_size": 20,
-            "reverse": true,
-            "ordering": 'date_time_of_interception',
+            "reverse": false,
+            "ordering": 'incident__incident_number',
             "search": '',
             "status": 'active',
             "country_ids": ''
@@ -171,7 +171,7 @@ export default class LegalCaseListController {
                 if (response.data.length > 0) {
                     this.state.go(response.data[0].form_name, {stationId: incident.station, countryId: incident.country_id, isViewing:false, formName: response.data[0].form_name, incidentId: incident.id});
                 } else {
-                    this.toastr.error("Unable to find form for station " + station.label);
+                    this.toastr.error("Unable to find form for station " + incident.station);
                 }
             });
     }
@@ -267,8 +267,8 @@ export default class LegalCaseListController {
         for (let idx=0; idx < legalCases.length; idx++) {
             let legalCase = legalCases[idx];
             if (legalCase.form_name !== null) {
-                legalCase.viewUrl = this.state.href(legalCases[idx].form_name, {id:legalCase.id, stationId:legalCase.station, countryId:legalCase.country_id, isViewing:true,formName: legalCases[idx].form_name});
-                legalCase.editUrl = this.state.href(legalCases[idx].form_name, {id:legalCase.id, stationId:legalCase.station, countryId:legalCase.country_id, isViewing:false,formName: legalCases[idx].form_name});
+                legalCase.viewUrl = this.state.href(legalCases[idx].form_name, {id:legalCase.id, stationId:legalCase.station, countryId:legalCase.country_id, incidentId:legalCase.incident, isViewing:true,formName: legalCases[idx].form_name});
+                legalCase.editUrl = this.state.href(legalCases[idx].form_name, {id:legalCase.id, stationId:legalCase.station, countryId:legalCase.country_id, incidentId:legalCase.incident, isViewing:false,formName: legalCases[idx].form_name});
             }
             //legalCase.relatedUrl = this.state.href('relatedForms', {stationId: legalCase.station.id, formNumber: legalCase.legalCase_number});
         }

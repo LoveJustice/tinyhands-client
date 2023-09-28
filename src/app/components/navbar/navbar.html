@@ -16,75 +16,7 @@
         ng-if="authenticated">
         <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
 
-			<!-- START: BASE -->
-			<li class="dropdown" ng-class="{open:baseOpen}" ng-if="navbarCtrl.session.checkPermission('STAFF','VIEW',null, null)"
-                ng-mouseleave="baseOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="baseOpen=!baseOpen">Base
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                       <li>
-                               <a ng-show="navbarCtrl.session.checkPermission('STAFF','VIEW',null, null)"
-                           ui-sref="staffList">Staff</a>
-                       </li>
-                       <li>
-                               <a ng-show="navbarCtrl.session.checkPermission('PROJECTS','VIEW',null, null)"
-                           ui-sref="projectList">Projects</a>
-                       </li>
-                       
-                       <li>
-                        <a ui-sref="countries">Countries</a>
-                    </li>
-                </ul>
-            </li>
-			
-			<!-- END:: BASE -->
-            <!-- START: BORDERSTATIONS -->
-            <li class="dropdown" ng-class="{open:stationsOpen}"
-                ng-show="navbarCtrl.session.checkPermission('PROJECTS','VIEW',null, null);"
-                ng-mouseleave="stationsOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" id="border_station_dropdown"
-                    ng-click="stationsOpen=!stationsOpen">Projects
-                    <b class="caret"></b>
-                </a>
-                <ul id="border-station-dropdown" class="dropdown-menu">
-                    <li>
-                        <a ui-sref="border-station({id: null})"
-                            ng-show="navbarCtrl.session.checkPermission('PROJECTS','ADD',null, null);">
-                            Create Project
-                        </a>
-                    </li>
-                    <hr style="margin: 4px" />
-                    <li class="country-menu" ng-repeat="country in navbarCtrl.countryNames">
-                        <div class="country-label" ng-click="isCollapsed = !isCollapsed">
-                            <h4>{{country}}</h4>
-                            <i ng-class="{'glyphicon-menu-right': isCollapsed, 'glyphicon-menu-down': !isCollapsed }"
-                                class="glyphicon icon"></i>
-                        </div>
-                        <div ng-repeat="category in navbarCtrl.categoryNames">
-	                        <div class="project-category" ng-if="navbarCtrl.countryCategoryMap[country + ':' + category]"
-	                        		ng-click="navbarCtrl.collapse[country + ':' + category] = !navbarCtrl.collapse[country + ':' + category]">
-	                        	<p uib-collapse="isCollapsed">
-	                                <i>{{ category }}</i>
-	                                <i ng-class="{'glyphicon-menu-right': navbarCtrl.collapse[country + ':' + category], 'glyphicon-menu-down': !navbarCtrl.collapse[country + ':' + category] }"
-                                		class="glyphicon icon"></i>
-	                        	</p>
-	                        </div>
-	                        <div class="border-station">
-	                            <p ng-repeat="station in navbarCtrl.countryCategoryMap[country + ':' + category]" ng-if="station.open"
-	                                uib-collapse="isCollapsed || navbarCtrl.collapse[country + ':' + category]">
-	                                <a ui-sref="border-station({id: station.id, countryId: station.operating_country, new_staff:false})">
-	                                    {{ station.station_name }}
-	                                </a>
-	                            </p>
-	                        </div>
-	                	</div>
-                    </li>
-                </ul>
-            </li>
-            <!-- END: BORDERSTATIONS -->
-
-            <!-- START: FORMS -->
+			<!-- START: FORMS -->
             <li class="dropdown" ng-class="{open:formsOpen}"
                 ng-hide="!navbarCtrl.showForms()"
                 ng-mouseleave="formsOpen = false">
@@ -117,18 +49,6 @@
                             ui-sref="lfList">LFs</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
-                            ui-sref="monthlyReportList">SMRs</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('BUDGETS','VIEW',null, null);"
-                            ui-sref="budgetList">MDFs</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('MDF','VIEW',null, null);"
-                            ui-sref="mdfList">MDFs-PR</a>
-                    </li>
-                    <li>
                         <a ng-show="navbarCtrl.session.checkPermission('EMP','VIEW',null, null);"
                             ui-sref="empList">Emps</a>
                     </li>
@@ -137,12 +57,108 @@
                             ui-sref="gspList">Gsps</a>
                     </li>
                     <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_REQUEST','VIEW',null, null);"
-                            ui-sref="projectRequestList({mdf_id:null})">Project Requests</a>
+                        <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
+                            ui-sref="monthlyReportList">SMRs</a>
                     </li>
                 </ul>
             </li>
             <!-- END: FORMS -->
+            
+            <!-- START: Projects -->
+			<li class="dropdown" ng-class="{open:projectsOpen}" ng-if="navbarCtrl.session.checkPermission('PROJECTS','VIEW',null, null)||navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
+                ng-mouseleave="projectsOpen = false">
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="projectsOpen=!projectsOpen">Projects
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                	<li>
+                       	<a ng-show="navbarCtrl.session.checkPermission('PROJECTS','VIEW',null, null)"
+                           ui-sref="projectList">Project List</a>
+               		</li>
+               		<li>
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
+                        	ui-sref="operationsDashboard">Dashboard</a>
+                    </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
+                        	ui-sref="stationData">Project Data</a>
+                    </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
+                        	ui-sref="locationData">Location Data</a>
+                    </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
+                        	ui-sref="locationStaff">Location Staffing</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END: Projects -->
+            
+            <!-- START: Staff/SC -->
+			<li class="dropdown" ng-class="{open:staffOpen}" ng-if="navbarCtrl.session.checkPermission('STAFF','VIEW',null, null)"
+                ng-mouseleave="staffOpen = false">
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="staffOpen=!staffOpen">Staff/SC
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                	<li>
+                    	<a ng-show="navbarCtrl.session.checkPermission('STAFF','VIEW',null, null)"
+                           ui-sref="staffList">Staff</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END: Staff/SC -->
+            
+            <!-- START: Budget -->
+			<li class="dropdown" ng-class="{open:budgetOpen}" ng-if="navbarCtrl.session.checkPermission('PROJECT_REQUEST','VIEW',null, null)||navbarCtrl.session.checkPermission('MDF','VIEW',null, null)"
+                ng-mouseleave="budgetOpen = false">
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="budgetOpen=!budgetOpen">Budget
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                	<li>
+                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_REQUEST','VIEW',null, null);"
+                            ui-sref="projectRequestList({mdf_id:null})">Requests</a>
+                    </li>
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('MDF','VIEW',null, null);"
+                            ui-sref="mdfList">MDFs</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END: Budget -->
+            
+            <!-- START: Follow ups -->
+			<li class="dropdown" ng-class="{open:followUpsOpen}"
+                ng-hide="!navbarCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW',null, null)"
+                ng-mouseleave="followUpsOpen = false">
+                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="followUpsOpen=!followUpsOpen">Follow-ups
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a ng-show="navbarCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW',null, null)"
+                            ui-sref="gospelVerificationList">Gospel Verification</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- END: Follow ups -->
+            
+            <!-- START: Audits -->
+            <li>
+            	<a ng-show="navbarCtrl.session.checkPermission('AUDIT','VIEW',null, null)"
+                        	ui-sref="auditList">Audits</a>
+            </li>
+            <!-- END: Audits -->
+            
+            <!-- START: Legal -->
+            <li>
+                <a ng-show="navbarCtrl.session.checkPermission('LEGAL_CASE','VIEW',null, null);"
+                    ui-sref="legalCaseList">Legal</a>
+            </li>
+            <!-- END: Legal -->
+           
             <!-- START: REPORTS -->
             <li class="dropdown" ng-class="{open:reportsOpen}"
             	ng-hide="!(navbarCtrl.session.checkPermission('CIF','VIEW',null, null)||navbarCtrl.session.checkPermission('IRF','VIEW',null, null)||navbarCtrl.session.checkPermission('VDF','VIEW',null, null)||navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null))"
@@ -166,53 +182,6 @@
                 </ul>
             </li>
              <!-- END: REPORTS -->
-             
-	         <li class="dropdown" ng-class="{open:stationStatsOpen}"
-            	ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                ng-mouseleave="stationStatsOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="stationStatsOpen=!stationStatsOpen">Project Stats
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                	<li>
-                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="operationsDashboard">Dashboard</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="stationData">Project Data</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="locationData">Location Data</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="locationStaff">Location Staffing</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a ng-show="navbarCtrl.session.checkPermission('LEGAL_CASE','VIEW',null, null);"
-                    ui-sref="legalCaseList">Legal Cases</a>
-            </li>
-            <li>
-            	<a ng-show="navbarCtrl.session.checkPermission('AUDIT','VIEW',null, null)"
-                        	ui-sref="auditList">Audits</a>
-            </li>
-            <li class="dropdown" ng-class="{open:followUpsOpen}"
-                ng-hide="!navbarCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW',null, null)"
-                ng-mouseleave="followUpsOpen = false">
-                <a class="dropdown-toggle" data-toggle="dropdown" ng-click="followUpsOpen=!followUpsOpen">Follow-ups
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW',null, null)"
-                            ui-sref="gospelVerificationList">Gospel Verification</a>
-                    </li>
-                </ul>
-            </li>
         </ul>
         
 

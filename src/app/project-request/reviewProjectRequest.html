@@ -112,5 +112,8 @@
 		<div class="col-md-2">
 			<button class="btn btn-warning" ng-if="$ctrl.canModifyApproved || $ctrl.canApprove" ng-click="$ctrl.changeApprovedAmount()">Change Approved Amount</button>
 		</div>
+		<div class="col-md-4 text-right">
+			<button class="btn btn-danger" ng-if="$ctrl.projectRequest.status==='Submitted'&&($ctrl.canApprove || $ctrl.isAuthor)" ng-click="$ctrl.deleteRequest()">Delete</button>
+		</div>
 	</div>
 </div>

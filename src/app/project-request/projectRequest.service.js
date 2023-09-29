@@ -19,6 +19,10 @@ export default class ProjectRequestService {
         }
     }
     
+    deleteRequest(id) {
+        return this.service.delete(`api/project-request/${id}/`);
+    }
+    
     getBudgetProjects(country_id) {
     	return this.service.get(`api/border-station/list/?country_ids=${country_id}&page_size=1000`);
     }

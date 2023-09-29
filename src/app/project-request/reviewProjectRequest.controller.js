@@ -217,6 +217,16 @@ export default class ReviewProjectRequestController {
     		});
     }
     
+    deleteRequest() {
+        this.spinner.show("Processing request...");
+        this.service.deleteRequest(this.projectRequest.id).then(() => {
+            this.returnToSource();
+        }, () => {
+            this.spinner.hide();
+            this.toastr.error("Failed to delete request");
+        });
+    }
+    
     update() {
     	let localRequest = jQuery.extend(true, {}, this.projectRequest);
     	if (this.canApprove || this.canModifyApproved) {

@@ -117,6 +117,10 @@ export class BaseLegalCaseController extends BaseFormController {
                 this.processResponse(response);
                 let timelineCards = this.getCardInstances('Timeline');
                 timelineCards.sort(BaseLegalCaseController.compareTimelineEntries);
+                if (this.stateParams.id === null) {
+	                this.set_errors_and_warnings(response.data);
+	                this.messagesEnabled = true;
+	            }
                 this.service.getIncidentDetail(this.stateParams.incidentId).then((response) => {
                 	this.incidentNumber = response.data.incident_number;
                 	this.sfs = response.data.sfs;

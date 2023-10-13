@@ -3,7 +3,6 @@ import {BaseModalController} from '../../baseModalController.js';
 import {LegalCaseModalController} from '../legalCaseModalController.js';
 import {LegalCaseVictimModalController} from '../legalCaseVictimModalController.js';
 import {LegalCaseSuspectModalController} from '../legalCaseSuspectModalController.js';
-import {LegalCaseVerificationModalController} from '../legalCaseVerificationModalController.js';
 import './common.less';
 
 import templateUrl from './common.html';
@@ -63,8 +62,8 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
                 attachmentTemplate, 'Attachments');
     }
     openVerificationModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, LegalCaseVerificationModalController, 'VerificationModalController',
-                verificationTemplate, 'Verification');
+        this.commonModal(responses, isAdd, idx, LegalCaseSuspectModalController, 'VerificationModalController',
+                verificationTemplate, 'Suspects');
     }
 }
 

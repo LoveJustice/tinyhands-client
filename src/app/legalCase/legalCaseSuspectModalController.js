@@ -133,6 +133,17 @@ class LegalCaseSuspectModalController extends BaseModalController {
     	}
     }
     
+    caseChargeChange(suspectCharge) {
+    	if (!suspectCharge.questions.lcSuspectChargeWasCharged.response.value &&
+    			suspectCharge.dateData.questions.lcSuspectChargeVerdictSubmittedDate.value) {
+    		suspectCharge.questions.lcSuspectChargeWasCharged.response.value = true;
+    		this.confirmCaseCharge("You cannot remove charge (" + suspectCharge.questions.lcSuspectChargeCharge.response.value +
+    				 ") from the case because a verdict has been submitted for the case.", "Keep Charge");
+    		return;
+    	}
+    	return;
+    }
+    
     removeCase(caseIndex) {
     	this.courtCases[caseIndex].charges = [];
     }
@@ -158,6 +169,24 @@ class LegalCaseSuspectModalController extends BaseModalController {
     		} else {
     			this.checkboxGroup.questions.lcSuspectCourtCases[caseIndex+1] = true;
     		}
+    	});
+    }
+    
+    confirmCaseCharge(message, declineLabel) {
+    this.modalActions = [];
+    	this.$uibModal.open({
+    		bindToController: true,
+    		controller: ConfirmModalController,
+    		controllerAs: "$ctrl",
+    		resolve: {
+    			message: () => message,
+    			acceptLabel: () => null,
+    			declineLabel: () => declineLabel,
+    			modalActions: () => this.modalActions,
+    		},
+    		size: 'md',
+    		templateUrl: confirmTemplate,
+    	}).result.then(() => {
     	});
     }
     

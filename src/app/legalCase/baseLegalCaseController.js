@@ -289,8 +289,16 @@ export class BaseLegalCaseController extends BaseFormController {
         		cardQuestions.lcSuspectChargeVerdictSubmittedDate.response.value = submission_date;
         	}
         }
+        let activeCourtCase = false;
         for (let courtCaseIdx in this.courtCase) {
         	this.courtCase[courtCaseIdx].checkboxGroup.updateResponses();
+        	if (this.courtCase[courtCaseIdx].questions.lcCourtCaseStatus.response.value !== 'Verdict Rendered' && 
+        			this.courtCase[courtCaseIdx].questions.lcCourtCaseStatus.response.value !== 'Voluntarily Dismissed') {
+        		activeCourtCase = true;
+        	}
+        }
+        if (!activeCourtCase && this.questions.lcStatus.response.value === 'active') {
+        	this.questions.lcStatus.response.value = 'closed';
         }
         if (this.ignoreWarnings) {
             this.response.ignore_warnings = 'True';

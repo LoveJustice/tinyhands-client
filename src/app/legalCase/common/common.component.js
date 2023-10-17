@@ -18,9 +18,9 @@ import victimTemplate from './step-templates/victims/victimModal.html';
 import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
 
 export class LegalCaseCommonController extends BaseLegalCaseController {
-    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService) {
+    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService) {
         'ngInject';        
-        super($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService);
+        super($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService);
        
         this.stepTemplates = [
             legalCaseTemplate,
@@ -58,7 +58,7 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         }
     }
     
-    getSubIrfComplete() {
+    getLegalCaseComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
     }
     

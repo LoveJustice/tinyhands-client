@@ -4,7 +4,8 @@
         <tr>
           <th ng-click="vm.sortColumn = 'first_name'; vm.reverse = ! vm.reverse;">First Name</th>
           <th ng-click="vm.sortColumn = 'last_name'; vm.reverse = ! vm.reverse;">Last Name</th>
-          <th ng-click="vm.sortColumn = 'user_designation'; vm.reverse = ! vm.reverse;">User Designation</th>
+          <th width="200px" ng-click="vm.sortColumn = 'role'; vm.reverse = ! vm.reverse;">Role</th>
+          <th ng-click="vm.sortColumn = 'country_name'; vm.reverse = ! vm.reverse;">Country Name</th>
           <th ng-click="vm.sortColumn = 'date_joined'; vm.reverse = ! vm.reverse;" class="text-center">Created</th>
           <th ng-click="vm.sortColumn = 'last_login'; vm.reverse = ! vm.reverse;" class="text-center">Last Login</th>
           <th width="60px"></th>
@@ -17,7 +18,8 @@
         <tr ng-repeat="account in accountListCtrl.accounts | orderBy:vm.sortColumn:vm.reverse" id="{{account.id}}" ng-mouseenter="account.hover = true" ng-mouseleave="account.hover = false; account.accountdelete = false">
           <td class="name">{{account.first_name}}</td>
           <td class="name">{{account.last_name}}</td>
-          <td>{{account.user_designation_name}}</td>
+          <td>{{account.role}}</td>
+          <td>{{account.country_name}}</td>
           <td class="text-center">{{account.date_joined | date:"yyyy/MM/dd"}}</td>
           <td class="text-center">{{account.last_login | date:"yyyy/MM/dd"}}</td>
           <td>

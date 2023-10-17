@@ -265,7 +265,7 @@ export class IrfMalawiController extends BaseIrfBlindVerificationController {
             },
             502:{
                 enabled:true,
-                label:"Doesn't speak language at destination",
+                label:"Doesn't speak local language at destination",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -636,6 +636,14 @@ export class IrfMalawiController extends BaseIrfBlindVerificationController {
         
         this.narrativeOnly = true;
         this.version2022_8 = true;
+    }
+    
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
     }
     
     getDefaultIdentificationTypes() {

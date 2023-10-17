@@ -190,33 +190,31 @@ class IndicatorsController {
             if (this.indicatorsData.blind) {
                 this.indicatorTypes = [
                     {'key':'irfLag', 'name':'IRF Lag Time', 'color':true},
-                    {'key':'irfCount', 'name':'IRF Forms Entered', 'color':false},
                     {'key':'irfOriginalFormPercent', 'name':'IRF Original Form Attached %', 'color':false},
-                    {'key':'photosLag', 'name':'Photo Upload Lag Time', 'color':true},
-                    {'key':'photosCount', 'name':'Photos Uploaded', 'color':false},
+                    {'key':'irfCount', 'name':'IRF Forms Entered', 'color':false},
                     {'key':'vdfLag', 'name':'VDF Lag Time', 'color':true},
-                    {'key':'vdfCount', 'name':'VDF Forms Entered', 'color':false},
                     {'key':'vdfOriginalFormPercent', 'name':'VDF Original Form Attached %', 'color':false},
+                    {'key':'vdfCount', 'name':'VDF Forms Entered', 'color':false},
                     {'key':'cifLag', 'name':'CIF Lag Time', 'color':true},
                     {'key':'cifCount', 'name':'CIF Forms Entered', 'color':false},
                     {'key':'cifOriginalFormPercent', 'name':'CIF Original Form Attached %', 'color':false},
                     
                     {'key':'pvfLag', 'name':'PVF Lag Time', 'color':true},
-                    {'key':'pvfCount', 'name':'PVF Forms Entered', 'color':false},
                     {'key':'pvfOriginalFormPercent', 'name':'PVF Original Form Attached %', 'color':false},
+                    {'key':'pvfCount', 'name':'PVF Forms Entered', 'color':false},
                     {'key':'sfLag', 'name':'SF Lag Time', 'color':true},
-                    {'key':'sfCount', 'name':'SF Forms Entered', 'color':false},
                     {'key':'sfOriginalFormPercent', 'name':'SF Original Form Attached %', 'color':false},
+                    {'key':'sfCount', 'name':'SF Forms Entered', 'color':false},
                     {'key':'lfLag', 'name':'LF Lag Time', 'color':true},
-                    {'key':'lfCount', 'name':'LF Forms Entered', 'color':false},
                     {'key':'lfOriginalFormPercent', 'name':'LF Original Form Attached %', 'color':false},
+                    {'key':'lfCount', 'name':'LF Forms Entered', 'color':false},
                     
                     {'key':'v1Lag', 'name':'Initial Verification Lag time', 'color':true},
-                    {'key':'v1Count', 'name':'Initial Verifications Completed', 'color':false},
                     {'key':'v1Backlog', 'name':'Initial Verification Backlog', 'color':true},
+                    {'key':'v1Count', 'name':'Initial Verifications Completed', 'color':false},
                     {'key':'v2Lag', 'name':'Tie Break Verification Lag time', 'color':true},
-                    {'key':'v2Count', 'name':'Tie Break Verifications Completed', 'color':false},
                     {'key':'v2Backlog', 'name':'Tie Break Verification Backlog', 'color':true},
+                    {'key':'v2Count', 'name':'Tie Break Verifications Completed', 'color':false},
                 ];
                 
             } else {
@@ -265,6 +263,27 @@ class IndicatorsController {
             this.scrollHistory(0);
             this.spinnerOverlayService.hide();
         });
+    }
+    
+    hasData(obj, key) {
+    	if (obj.hasOwnProperty(key) && obj[key] !== null && obj[key] !== '') {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    doesEntryHaveData(entry) {
+    	if (this.hasData(this.indicatorsData.latest, entry.key)) {
+    		return true;
+    	}
+    	
+    	for (let idx in this.history) {
+    		if (this.hasData(this.history[idx], entry.key)) {
+    			return true;
+    		}
+    	}
+    	
+    	return false;
     }
     
     selectColumn(idx) {

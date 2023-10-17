@@ -46,7 +46,7 @@ export default class AuditController {
         this.service.getForms().then ((promise) => {
             let forms = [];
             for (let idx=0; idx < promise.data.length; idx++) {
-                if (promise.data[idx].form_type.name === 'IRF' || promise.data[idx].form_type.name === 'CIF' || promise.data[idx].form_type.name === 'VDF') {
+                if (promise.data[idx].form_type.name === 'IRF' || promise.data[idx].form_type.name === 'CIF' || promise.data[idx].form_type.name === 'VDF' || promise.data[idx].form_type.name === 'PVF' || promise.data[idx].form_type.name === 'SF' || promise.data[idx].form_type.name === 'LF') {
                     forms.push(promise.data[idx]);
                 }
             }

@@ -1,0 +1,59 @@
+name: tinyhands-client-build-test
+run-name: ${{ github.actor }} build and test client
+on:
+  - push
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - run: mkdir -p ~/.ssh/
+      - run: npm install 
+      - run: npm run testSingleRun
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: [build-client]
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SL_STAGING_SSH_KEY }}
+          known_hosts: ${{ secrets.SL_STAGING_KNOWN_HOSTS }}
+      - run: npm install rimraf
+      - run: npm run stage
+      - run: rsync -r ./dist/ $SL_DIST_PATH
+    env:
+      SL_DIST_PATH: ${{ secrets.SL_STAGING_DIST_PATH }}
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: [build-client]
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '17'
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SL_PROD_SSH_KEY }}
+          known_hosts: ${{ secrets.SL_PROD_KNOWN_HOSTS }}
+      - run: npm install rimraf
+      - run: npm run prod
+      - run: rsync -r ./dist/ $SL_DIST_PATH
+    env: 
+      SL_DIST_PATH: ${{ secrets.SL_PROD_DIST_PATH }}

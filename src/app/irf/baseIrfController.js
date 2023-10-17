@@ -386,8 +386,8 @@ export class BaseIrfController extends BaseFormController {
 
     autoSaveHasMinimumData() {
         if (this.questions[1].response.value === null || this.questions[1].response.value === '' ||
-                this.questions[1066].response.value === null || this.questions[1066].response.value === '' ||
-                this.goodFormNumber == false) {
+                this.dateData.questions[1066].value === null || this.dateData.questions[1066].value === '' ||
+                this.goodFormNumber === false) {
             return false;
         }
         return true;
@@ -412,6 +412,7 @@ export class BaseIrfController extends BaseFormController {
                     formNumber: this.questions[1].response.value
                 });
             }
+            this.getIrfComplete();
             this.spinner.hide();
         }, (error) => {
                 this.processFailedResponse(error, 'baseIrfController.doAutoSave');

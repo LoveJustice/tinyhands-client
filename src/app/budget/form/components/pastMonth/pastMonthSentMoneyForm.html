@@ -4,8 +4,14 @@
   <hr>
   <div class="row" ng-repeat="project in budgetCtrl.allProjects">
   	<div class="row">
-  	<div class="col-md-12">
-			<h3>{{ project.project_category_name }}: {{ project.station_name }}</h3>
+  	<div class="col-md-12 center-vertical">
+			<h3 class=col-md-6>{{ project.project_category_name }}: {{ project.station_name }}</h3>
+			<div>
+				<label>Approved by</label>
+				<input class="pull-rightform-control" type="text"  
+	        		ng-model="budgetCtrl.form.past_sent_approved" 
+	        		ng-disabled="budgetCtrl.isViewing"/>
+        	</div>
 	</div>
     <div ng-repeat="otherPastMonthItem in budgetCtrl.form.other.PastMonth"
     		ng-if="otherPastMonthItem.work_project === project.id">

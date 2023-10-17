@@ -14,8 +14,8 @@
 					to profess and believe that Jesus is the one true God. A new entry should be created for each
 					non-PV that professes to accept Christ.</p>
 				<p class="col-md-12">
-					<i>Note: We are specifically and only tracking the profession - accepting and believing of the
-					Gospel, not the welcoming of hearing it from a LJ Staff.</i>
+					<i>Note: We are specifically and only tracking the profession - a verbal expression of accepting and believing of the
+					Gospel, not the welcoming of hearing it from a LJ Staff member.</i>
 				</p>
 	    	</div>
     	<div class="col-md-12 row">
@@ -84,7 +84,7 @@
 			</div>
     	</div>
 		<div class="container-fluid padding-bottom-20">
-			<div class=" col-md-8 row text-center padding-top-10" ng-if="vm.accepted==='Yes' && vm.gsp.full_name">
+			<div class=" col-md-8 row text-center padding-top-10" ng-if="vm.isFormComplete()">
 				<button class="btn btn-success" ng-click="vm.submit()">Submit</button>
 			</div>
 		</div>

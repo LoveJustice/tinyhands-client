@@ -17,7 +17,7 @@
 	</div>
 	<div class="row">&nbsp;</div>
 	<div class="row center-vertical">
-    	<form-step class="col-md-4">Were there any missing required fields that prevented submission?</form-step>
+    	<form-step class="col-md-4">Were there any missing required fields on the original form?</form-step>
     	<div class="col-md-1">
       		<form-step type="radio" label="No" response-value="$ctrl.questions.pvfComplianceIncomplete.response.value" radio-name="incompleteQuestions"></form-step>
      	</div>
@@ -26,14 +26,14 @@
 		</div>
 	</div>
 	<br>
-	<div class="row center-vertical">
+	<div class="row center-vertical" ng-show="$ctrl.questions.pvfComplianceIncomplete.response.value==='Yes'">
 		<form-step class="col-md-4">Please list missing required fields</form-step>
 		<div class="col-md-4">
 			<input type="text" class="form-control" placeholder="Incomplete sections" ng-model="$ctrl.questions.pvfComplianceIncompleteSections.response.value">
 		</div>
 	</div>
 	<br>
-	<div class="row center-vertical">
+	<div class="row center-vertical" ng-show="$ctrl.questions.pvfComplianceIncomplete.response.value==='Yes'">
 		<form-step class="col-md-4">Date Complete Information was Received</form-step>
 		<div class="col-md-4">
 			<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.pvfComplianceDateComplete.value">

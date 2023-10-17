@@ -43,12 +43,12 @@
     <br>
     <div class="row">
         <div class="col-md-3 form-group">
-            <form-step class="control-label">2.3 How were tavel expenses paid</form-step>
+            <form-step class="control-label">2.3 How were travel expenses paid</form-step>
         </div>
         <div class="col-md-8">
         	<div class="col-md-12">
 	        	<div class="row col-md-12">
-		        	<input type="checkbox" id="howExpenses0" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[1].value]">
+		        	<input type="checkbox" id="howExpenses0" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[0].value]">
 		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[0].label }}</label>
 		        	Currency
 		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentPvCurrency.response.value">
@@ -63,11 +63,11 @@
 	        	</div>
 	        	<div class="row col-md-12">
 	        		<input type="checkbox" id="howExpenses2" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[2].value]">
-	        		<label for="howExpenses1">{{ $ctrl.howExpensesPaid[2].label }}</label>
+	        		<label for="howExpenses2">{{ $ctrl.howExpensesPaid[2].label }}</label>
 	        	</div>
 	        	<div class="row col-md-12">
 		        	<input type="checkbox" id="howExpenses3" ng-model="$ctrl.checkboxGroup.questions.pvfRecruitmentTravelExpenses[$ctrl.howExpensesPaid[3].value]">
-		        	<label for="howExpenses0">{{ $ctrl.howExpensesPaid[3].label }}</label>
+		        	<label for="howExpenses3">{{ $ctrl.howExpensesPaid[3].label }}</label>
 		        	Currency
 		        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentBrokerCurrency.response.value">
 		        	& Amount
@@ -90,7 +90,7 @@
             <form-step class="control-label">2.5 Job that was promised</form-step>
         </div>
         <div class="col-md-3 form-group">
-        	<input type="text" response-value="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
+        	<input type="text" ng-model="$ctrl.questions.pvfRecruitmentJobPromised.response.value">
         </div>
     </div>
     <div class="row">

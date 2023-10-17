@@ -96,7 +96,7 @@ export class BaseLfController extends BaseFormController {
     	let card = this.createCard('Information');
     	this.getResponseOfQuestionByTag(card.responses, 'lfInformationIncident').value = this.stateParams.incidentId;
     	this.getResponseOfQuestionByTag(card.responses, 'lfInformationSourceType').value = 'Intercept';
-    	let clearFields = ['lfInformationSourceTitle', 'lfInformationInterviewerName', 'lfInformationLocation'];
+    	let clearFields = ['lfInformationSourceTitle', 'lfInformationInterviewerName', 'lfInformationLocation','lfInformationDescription'];
     	for (let idx in clearFields) {
     		this.getResponseOfQuestionByTag(card.responses, clearFields[idx]).value = '';
     	}
@@ -154,6 +154,18 @@ export class BaseLfController extends BaseFormController {
     
     getInfoCardConfig() {
     }
+    
+    getAllIncidentNames() {
+    	if (this.incidentNumber) {
+    		let allIncidents = [this.incidentNumber];
+    		if (this.associatedIncidents) {
+    			for (let idx in this.associatedIncidents) {
+    				allIncidents.push(this.associatedIncidents[idx].incident_number);
+    			}
+    		}
+    		this.getIncidentNames(allIncidents);
+    	}
+    }
 
     getLf(stationId, id) {
         this.service.getFormConfig(this.stateParams.formName).then ((response) => {
@@ -192,6 +204,7 @@ export class BaseLfController extends BaseFormController {
 	            if (id) {
 	            	this.service.getAssociatedIncidents(id).then((response) => {
 	            		this.associatedIncidents = response.data;
+	            		this.getAllIncidentNames();
 	            	});
 	            	this.selectedStep = 1;
 	            }
@@ -273,8 +286,6 @@ export class BaseLfController extends BaseFormController {
                     cards.push(the_card);
                 }
             }
-            this.autoSaveModified = true;
-            this.autoSave();
         });
     }
     
@@ -338,8 +349,8 @@ export class BaseLfController extends BaseFormController {
     		{cardField:'lfInformationLandmarks', mainField:'lfMergedLandmarks'}];
     	let cards = this.getCardInstances('Information');
     	for (let idx in locationFields) {
-			let cardFieldName = locationFields[idx]['cardField'];
-			let mainFieldName = locationFields[idx]['mainField'];
+			let cardFieldName = locationFields[idx].cardField;
+			let mainFieldName = locationFields[idx].mainField;
 			
     		let current = this.questions[mainFieldName].response.value;
     		if (current) {
@@ -390,7 +401,7 @@ export class BaseLfController extends BaseFormController {
     		for (let cardIdx in cards) {
     			let response = this.getResponseOfQuestionByTag(cards[cardIdx].responses, 'lfInformationAddress');
     			if (response) {
-    				this.questions[mainFieldName].response = response;
+    				this.questions.mainFieldName.response = response;
     				break;
     			}
     		}
@@ -472,6 +483,7 @@ export class BaseLfController extends BaseFormController {
     createForm(incident) {
     	this.associatedIncidents.push(incident);
     	this.associatedIncidentsUpdate = true;
+    	this.getAllIncidentNames();
     }
     
     removeIncident(index) {
@@ -480,6 +492,7 @@ export class BaseLfController extends BaseFormController {
     		if (selected.confirmedDelete) {
 	            this.associatedIncidents.splice(index,1);
 	            this.associatedIncidentsUpdate = true;
+	            this.getAllIncidentNames();
 	        }
 	        else {
 	            selected.confirmedDelete = true;
@@ -565,43 +578,6 @@ export class BaseLfController extends BaseFormController {
             });
         
         this.messagesEnabled = true;
-    }
-    
-    autoSaveInterval() {
-        return 30000;
-    }
-    
-    autoSaveHasMinimumData() {
-        if (this.questions.lfTopLfNumber.response.value === null || this.questions.lfTopLfNumber.response.value === '' || this.goodFormNumber == false) {
-            return false;
-        }
-        return true;
-    }
-    
-    doAutoSave() {
-        this.response.status = 'in-progress';
-        this.questions[this.config.TotalFlagId].response.value = this.redFlagTotal;
-        this.outCustomHandling();
-        this.saveExtra();
-        this.errorMessages = [];
-        this.warningMessages = [];
-        this.messagesEnabled = false;
-        this.spinner.show('Auto saving LF...');
-        this.service.submitLf(this.stateParams.stationId, this.stateParams.id, this.response).then((response) => {
-            this.stateParams.id = response.data.storage_id;
-            this.processResponse(response);
-            if (this.stateParams.id !== null && this.questions.lfTopLfNumber.response.value !== null) {
-                this.relatedUrl = this.state.href('relatedForms', {
-                    stationId: this.stateParams.stationId,
-                    formNumber: this.questions.lfTopLfNumber.response.value
-                });
-            }
-            this.spinner.hide();
-        }, (error) => {
-            this.set_errors_and_warnings(error.data);
-            this.spinner.hide();
-           });
-        this.messagesEnabled = false;
     }
 }
 

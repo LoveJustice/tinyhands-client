@@ -3,7 +3,7 @@ import {BaseModalController} from '../../baseModalController.js';
 const CheckboxGroup = require('../../checkboxGroup.js');
 
 import templateUrl from '../common/irf.html';
-import IntercepteeModalController from '../intercepteeModal.controller';
+import IntercepteeModalController from '../interceptee2022_08Modal.controller';
 import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
@@ -15,11 +15,11 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
         this.checkboxGroup = new CheckboxGroup();
         
         this.profileQuestions = [968.1,968.2,968.3,968.4,968.5,968.6,968.7,968.8,968.9,968.11,968.12];
-        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7,245.8,245.9];
+        this.destinationQuestions = ["destinationLabel",245.1,245.2,245.3,245.4,245.5,245.6,245.7,245.8,245.9,245.11];
         this.purposeQuestions = ["purposeLabel",924.1, 924.2,924.3,924.4,924.5,924.6,924.7];
         this.vulnerabilityQuestions = ["vulnerableLabel",1084,1073,502,925,78,942,926,280,974,1083];
         this.deceiveQuestions = ["deceiveLabel",59,117,45,927,928,929,58,30,930];
-        this.controlLeftQuestions = ["coachedLabel",603,23,931,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
+        this.controlLeftQuestions = ["coachedLabel",603,23,931,1822,"otherControlLabel",932,933,247,10,55,1085,501,1076,"minorSeparated",17,79,1086];
         this.controlRightQuestions = [234,"jobLabel",934,935,936,937,938,939,57,712,"marriedLabel",24,25,26,216];
         this.details = {
             968.1:{
@@ -203,6 +203,15 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
             245.9:{
                 enabled:true,
                 group:245,
+                label:"Dubai",
+                value:"Dubai",
+                type:'checkbox-group',
+                format:'col-md-6',
+                points:0
+            },
+            245.11:{
+                enabled:true,
+                group:245,
                 label:'Other:',
                 type:'other-checkbox-group',
                 format:'col-md-6',
@@ -294,7 +303,7 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
             },
             502:{
                 enabled:true,
-                label:"Doesn't speak language at destination",
+                label:"Doesn't speak local language at destination",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -475,6 +484,13 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
                 type:'checkbox',
                 format:'col-md-12',
                 points:10
+            },
+            1822:{
+                enabled:true,
+                label:'Convinced by agent/recruitment agency to work on visa other than work visa',
+                type:'checkbox',
+                format:'col-md-12',
+                points:7
             },
             "otherControlLabel":{
                 enabled:true,
@@ -687,6 +703,14 @@ export class IrfEthiopiaController extends BaseIrfBlindVerificationController {
         this.includeQuestion[1077] = true;
         this.narrativeOnly = true;
         this.version2022_8 = true;
+    }
+    
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
     }
     
     getDefaultIdentificationTypes() {

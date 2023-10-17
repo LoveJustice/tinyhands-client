@@ -23,6 +23,12 @@ export default class GospelVerificationService {
             return this.service.get(`api/vdf/${stationId}/${id}`);
         }
     }
+
+    getPvf(countryId, stationId, id) {
+        if (id !== null) {
+            return this.service.get(`api/pvf/${stationId}/${id}`);
+        }
+    }
     
     submitVdf(stationId, id, vdf) {
         return this.putVdf(stationId, id, vdf);

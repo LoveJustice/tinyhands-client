@@ -26,6 +26,10 @@ export default class GspController {
         this.getGsp(this.stateParams.stationId, this.stateParams.id);
     }
 
+    isFormComplete() {
+        return this.accepted==='Yes' && this.gsp.full_name && this.gsp.age && this.gsp.gender && this.professionDate && this.gsp.staff_name && this.gsp.notes;
+    }
+
     getGsp(stationId, id) {
         this.service.getGsp(id, stationId).then((response) => {
             this.gsp = response.data;

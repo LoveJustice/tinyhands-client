@@ -1,5 +1,6 @@
 import './create-incident-form.less';
 import {encodeGroup} from  '../../encodeGroup.js';
+const DateData = require('../../dateData.js');
 
 export default class CreateIncidentFormModalController {
     constructor($uibModalInstance, $scope, incidentService, stationsAdd, useTitle, formType, selectOnly) {
@@ -68,10 +69,8 @@ export default class CreateIncidentFormModalController {
         			this.station_name = promise.data.results[idx].station_name;
         			this.incident = promise.data.results[idx];
         			if (this.incident.incident_date) {
-        				let parts = this.incident.incident_date.split('-');
-        				if (parts.length === 3) {
-        					this.incidentDate = new Date(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]));
-        				}
+                        let dateData = new DateData([]);
+                        this.incidentDate = dateData.dateAsUTC(this.incident.incident_date);
         			}
         			
         			for (let optionIdx=0; optionIdx < this.scope.stationDropDown.options.length; optionIdx++) {
@@ -91,15 +90,15 @@ export default class CreateIncidentFormModalController {
     
     createForm() {
     	if (this.incidentType === 'New') {
-    	    let dateString = this.newDate.getFullYear() + '-';
-    	    if (this.newDate.getMonth() < 9) {
+    	    let dateString = this.newDate.getUTCFullYear() + '-';
+    	    if (this.newDate.getUTCMonth() < 9) {
     	    	dateString += '0';
     	    }
-    	    dateString += (this.newDate.getMonth() + 1) + '-';
-    	    if (this.newDate.getDate() < 9) {
+    	    dateString += (this.newDate.getUTCMonth() + 1) + '-';
+    	    if (this.newDate.getUTCDate() < 10) {
     	    	dateString += '0'
     	    }
-    	    dateString += (this.newDate.getDate() + 1);
+    	    dateString += (this.newDate.getUTCDate());
     		let newIncident = {
     			id: null,
     			status:'approved',
@@ -110,7 +109,7 @@ export default class CreateIncidentFormModalController {
     		};
     		this.incidentService.submitIncident(newIncident).then ((response) => {
     			this.$uibModalInstance.close(response.data);
-    		}, (error) => {alert(error);});
+    		}, () => {alert('Failed to save incident');});
 
     	} else {
     		this.$uibModalInstance.close(this.incident);

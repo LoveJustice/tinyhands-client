@@ -297,7 +297,7 @@ export class IrfNamibiaAirController extends BaseIrfBlindVerificationController 
             },
             502:{
                 enabled:true,
-                label:"Doesn't speak language at destination",
+                label:"Doesn't speak local language at destination",
                 type:'checkbox',
                 format:'col-md-12',
                 points:0
@@ -726,6 +726,14 @@ export class IrfNamibiaAirController extends BaseIrfBlindVerificationController 
         
         this.version2022_8 = true;
         this.officialFlight = true;
+    }
+    
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
     }
     
     getDefaultIdentificationTypes() {

@@ -66,6 +66,7 @@ import AssociatedPersonDirective from './components/associated-person/associated
 import AddressEntryDirective from './components/address-entry/address-entry.directive';
 import PaginateDirective from './components/paginate/paginate.directive';
 
+let $injector
 angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCsv, ngFileUpload, ngSanitize, ngTouch, uiBootstrap, 'ui.dateTimeInput', 'ui.bootstrap', 'ui.bootstrap.datetimepicker',
         sharedModule,
         accountModule,
@@ -120,4 +121,8 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
     .component('mdfexport', MdfExportComponent)
     .component('createbudget', CreateButtonComponent)
 
-    .factory('auth0Service', [createAuth0Service]);
+    .factory('auth0Service', [createAuth0Service])
+
+    // Need global $injector for wrapping angular components in React with angular2react,
+    // see https://github.com/coatue-oss/angular2react
+    .run(['$injector', function(_$injector) { $injector = _$injector }]);

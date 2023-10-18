@@ -28,8 +28,24 @@ module.exports = function (env) {
         entry: {
             app: './app/index.module.js'
         },
+        resolve: {
+          extensions: ['.ts', '.tsx', '.js', '.json']
+        },
         module: {
-            rules: [{
+            rules: [
+            // Plain typescript for react helper functions, etc
+            {
+                test: /\.ts$/,
+                include: srcPath,
+                loader: 'ts-loader'
+            },
+            // Typescript with XML for React components
+            {
+                test: /\.tsx$/,
+                include: srcPath,
+                loader: 'ts-loader'
+            },
+            {
                 test: /\.js$/,
                 include: srcPath,
                 enforce: 'pre',

@@ -45,6 +45,7 @@
     "ngx-bootstrap": "^3.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
+    "react-date-picker": "^10.5.1",
     "react-dom": "^18.2.0",
     "react2angular": "^4.0.6",
     "toastr": "2.1.4"

@@ -56,6 +56,11 @@ module.exports = function (env) {
                 include: srcPath,
                 loader: 'babel-loader'
             },
+            // Needed for react date picker
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            },
             {
                 test: /\.html$/,
                 include: appPath,

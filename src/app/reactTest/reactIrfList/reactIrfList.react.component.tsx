@@ -1,4 +1,10 @@
 import * as React from 'react';
+import SessionService from "../../shared/services/session.service";
+import IrfNewListService from "../../irf/newList/irfNewList.service";
+import DatePicker from "react-date-picker";
+import _ from 'lodash';
+
+import "react-date-picker/dist/DatePicker.css";
 
 // Steps I used:
 // Make a class-based react component
@@ -6,16 +12,29 @@ import * as React from 'react';
 // All of the this.xxx = ZZZ that come from angular dependencies get commented out
 // All usages of the above angular dependencies change from this.xxx to this.props.ZZZ (except this.state = $state)
 //  (simple find and replace on each statement in constructor)
-// All of the other this.yyy = [] for initialization of state become this.state.yyy = []
+// All of the other this.yyy = [] for initialization of state become stateModifications.yyy = []
+//   this.state = stateModifications at the end of the constructor
+// Copy over the functions of the class, calls to this.aMethodOfTheClass() does NOT change,
+//   but code inside changes in similar ways to the constructor
 // All expressions using the above variables become this.state.yyy as well
-// Copy over the functions of the class, calls to this.aMethodOfTheClass() does NOT change, but code inside does
+// Find places where state is changed, make a new stateModifications object copying the existing state
+//   then use stateState(stateModifications)
+// <div ng-if="expression"></div> becomes {expression && (<div></div)}
+// ng-click="expression()" becomes onClick={() => { expression() }
+// if ng-model is on the same tag as ng-click, set the state in the onClick function
+// Add types
+// Change date inputs to react-date-picker
+
+
+const createIrfModalTemplateUrl = '../../irf/newList/createIrfModal.html';
+const attachmentExportModalTemplateUrl = '../../irf/newList/attachmentExportModal.html'
 
 type ReactIrfListProps = {
     // Props from parent
 
     // AngularJS Injections
-    IrfNewListService: any
-    SessionService: any
+    SessionService: SessionService
+    IrfNewListService: IrfNewListService
     $stateParams: any
     $uibModal: any
     StickyHeader: any
@@ -33,22 +52,45 @@ type ReactIrfListProps = {
 // stationsForAdd: any[],
 // ...
 // }
-type ReactIrfListState = any;
 
-class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState> {
+interface ReactIrfListState {
+    countries: any[],
+    stationsForAdd: any[],
+    timer: any,
+    searchTimer: any,
+    irfs: any[],
+    nextPage: string
+    timeZoneDifference: string,
+    queryParameters: any,
+    paginate: any,
+    stickyOptions: any,
+    countryDropDown: any,
+    date_start: Date | null,
+    date_end: Date | null,
+    //  false, "true"? Not sure how checkbox input works
+    may_be_verified_by_account: boolean | string,
+    oldIndex: number,
+    status: any
+}
+
+type ReactIrfListStateModifications = Partial<ReactIrfListState>
+
+class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateModifications> {
+    // TODO this has to be a typo when someone deleted part of the word change
+    ange: any;
+
     constructor(props: ReactIrfListProps) {
         super(props);
 
-        this.state = {}
-        this.state.countries = [];
-        this.state.stationsForAdd = [];
-
-        this.state.timer = {};
-        this.state.searchTimer = null;
-        this.state.irfs = [];
-        this.state.nextPage = '';
-        this.state.timeZoneDifference = '+0545';
-        this.state.queryParameters = {
+        let stateBeingBuilt: ReactIrfListStateModifications = {}
+        stateBeingBuilt.countries = [];
+        stateBeingBuilt.stationsForAdd = [];
+        stateBeingBuilt.timer = {};
+        stateBeingBuilt.searchTimer = null;
+        stateBeingBuilt.irfs = [];
+        stateBeingBuilt.nextPage = '';
+        stateBeingBuilt.timeZoneDifference = '+0545';
+        stateBeingBuilt.queryParameters = {
             page_size: 20,
             reverse: true,
             ordering: 'date_of_interception,time_of_interception',
@@ -57,40 +99,40 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
             country_ids: '',
         };
 
-        this.state.paginate = {
+        stateBeingBuilt.paginate = {
             items: 0,
-            pageSize: this.state.queryParameters.page_size,
+            pageSize: stateBeingBuilt.queryParameters.page_size,
             currentPage: 1,
         };
 
-        this.state.stickyOptions = this.state.sticky.stickyOptions;
-        this.state.stickyOptions.zIndex = 1;
+        stateBeingBuilt.stickyOptions = this.props.StickyHeader.stickyOptions;
+        stateBeingBuilt.stickyOptions.zIndex = 1;
 
-        this.state.countryDropDown = {};
-        this.state.countryDropDown.options = [];
-        this.state.countryDropDown.selectedOptions = [];
-        this.state.countryDropDown.settings = {
+        stateBeingBuilt.countryDropDown = {};
+        stateBeingBuilt.countryDropDown.options = [];
+        stateBeingBuilt.countryDropDown.selectedOptions = [];
+        stateBeingBuilt.countryDropDown.settings = {
             smartButtonMaxItems: 2,
             showCheckAll: false,
             showUncheckAll: false,
         };
-        this.state.countryDropDown.customText = {buttonDefaultText: 'All'};
-        this.state.countryDropDown.eventListener = {
-            onItemSelect: this.state.countryChange,
-            onItemDeselect: this.state.countryChange,
-            onSelectAll: this.state.countryChange,
-            onDeselectAll: this.state.countryChange,
+        stateBeingBuilt.countryDropDown.customText = {buttonDefaultText: 'All'};
+        stateBeingBuilt.countryDropDown.eventListener = {
+            onItemSelect: this.countryChange,
+            onItemDeselect: this.countryChange,
+            onSelectAll: this.countryChange,
+            onDeselectAll: this.countryChange,
             ctrl: this,
         };
-        this.state.queryParameters.date_filter = 'None';
-        this.state.date_end = new Date();
-        this.state.date_start = new Date();
-        this.state.date_start.setUTCDate(1);
-        this.state.may_be_verified_by_account = false;
+        stateBeingBuilt.queryParameters.date_filter = 'None';
+        stateBeingBuilt.date_end = new Date();
+        stateBeingBuilt.date_start = new Date();
+        stateBeingBuilt.date_start.setUTCDate(1);
+        stateBeingBuilt.may_be_verified_by_account = false;
 
-        this.state.oldIndex = 3;
-        this.state.status = {};
-        this.state.status.options = [{id: '!invalid', label: 'all valid', group: 'z'},
+        stateBeingBuilt.oldIndex = 3;
+        stateBeingBuilt.status = {};
+        stateBeingBuilt.status.options = [{id: '!invalid', label: 'all valid', group: 'z'},
             {id: 'in-progress', label: 'in-progress', group: 'Status'},
             {id: 'approved,!None', label: 'submitted', group: 'Status'},
             {id: 'first-verification', label: 'first-verification', group: 'Status'},
@@ -108,8 +150,8 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
                 group: 'Final Verification Evidence Category'
             },
             {id: 'invalid', label: 'invalid', group: 'Final Verification Evidence Category'}];
-        this.state.status.selectedOptions = [this.state.status.options[0]];
-        this.state.status.settings = {
+        stateBeingBuilt.status.selectedOptions = [stateBeingBuilt.status.options[0]];
+        stateBeingBuilt.status.settings = {
             smartButtonMaxItems: 1,
             showCheckAll: false,
             showUncheckAll: false,
@@ -124,71 +166,75 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
             groupBy: 'group',
             closeOnSelect: true,
         };
-        this.state.status.customText = {};
-        this.state.status.eventListener = {
-            onItemSelect: this.state.statusChange,
-            onItemDeselect: this.state.ange,
+        stateBeingBuilt.status.customText = {};
+        stateBeingBuilt.status.eventListener = {
+            onItemSelect: this.statusChange,
+            onItemDeselect: this.ange,
             ctrl: this,
         };
 
         // If there was a search value provided in the url, set it
         let foundStateParams = false;
-        if (props.$stateParams) {
-            if (props.$stateParams.search) {
+        if (this.props.$stateParams) {
+            if (this.props.$stateParams.search) {
                 foundStateParams = true;
-                this.state.queryParameters.search = props.$stateParams.search;
+                stateBeingBuilt.queryParameters.search = this.props.$stateParams.search;
             }
-            if (props.$stateParams.country_ids) {
+            if (this.props.$stateParams.country_ids) {
                 foundStateParams = true;
-                this.state.queryParameters.country_ids = props.$stateParams.country_ids;
+                stateBeingBuilt.queryParameters.country_ids = this.props.$stateParams.country_ids;
             }
-            if (props.$stateParams.status) {
+            if (this.props.$stateParams.status) {
                 foundStateParams = true;
-                this.state.queryParameters.status = props.$stateParams.status;
+                stateBeingBuilt.queryParameters.status = this.props.$stateParams.status;
             }
         }
 
         if (!foundStateParams) {
             let tmp = sessionStorage.getItem('irfList-search');
             if (tmp !== null) {
-                this.state.queryParameters.search = tmp;
+                stateBeingBuilt.queryParameters.search = tmp;
             }
             tmp = sessionStorage.getItem('irfList-status');
             if (tmp !== null) {
-                this.state.queryParameters.status = tmp;
+                stateBeingBuilt.queryParameters.status = tmp;
             }
             tmp = sessionStorage.getItem('irfList-country_ids');
             if (tmp !== null) {
-                this.state.queryParameters.country_ids = tmp;
+                stateBeingBuilt.queryParameters.country_ids = tmp;
             }
         }
 
         let tmp = sessionStorage.getItem('irfList-date_filter');
         if (tmp !== null) {
-            this.state.queryParameters.date_filter = tmp;
+            stateBeingBuilt.queryParameters.date_filter = tmp;
         }
         tmp = sessionStorage.getItem('irfList-date_start');
         if (tmp !== null) {
-            this.state.date_start = new Date(tmp);
+            stateBeingBuilt.date_start = new Date(tmp);
         }
         tmp = sessionStorage.getItem('irfList-date_end');
         if (tmp !== null) {
-            this.state.date_end = new Date(tmp);
+            stateBeingBuilt.date_end = new Date(tmp);
         }
 
-        sessionStorage.setItem('irfList-date_filter', this.state.queryParameters.date_filter);
-        sessionStorage.setItem('irfList-date_start', this.state.date_start);
-        sessionStorage.setItem('irfList-date_end', this.state.date_end);
+        sessionStorage.setItem('irfList-date_filter', stateBeingBuilt.queryParameters.date_filter);
+        // @ts-ignore
+        sessionStorage.setItem('irfList-date_start', stateBeingBuilt.date_start);
+        // @ts-ignore
+        sessionStorage.setItem('irfList-date_end', stateBeingBuilt.date_end);
 
-        if (this.state.queryParameters.status !== '') {
-            this.state.status.selectedOptions = [];
-            for (let optionIdx in this.state.status.options) {
-                if (this.state.queryParameters.status === this.state.status.options[optionIdx].id) {
-                    this.state.status.selectedOptions.push(this.state.status.options[optionIdx]);
+        if (stateBeingBuilt.queryParameters.status !== '') {
+            stateBeingBuilt.status.selectedOptions = [];
+            for (let optionIdx in stateBeingBuilt.status.options) {
+                if (stateBeingBuilt.queryParameters.status === stateBeingBuilt.status.options[optionIdx].id) {
+                    stateBeingBuilt.status.selectedOptions.push(stateBeingBuilt.status.options[optionIdx]);
                     break;
                 }
             }
         }
+
+        this.state = stateBeingBuilt;
 
     }
 
@@ -200,38 +246,107 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
         this.getUserStationsForAdd();
     }
 
+
+    setSearchTimer() {
+        if (this.state.searchTimer) {
+            this.props.$timeout.cancel(this.state.searchTimer);
+        }
+
+        this.setState(
+            {
+                searchTimer: this.props.$timeout(() => {
+                    this.searchTimerExpired();
+                }, 1500)
+            }
+        )
+    }
+
+    searchTimerExpired() {
+        let stateModifications: ReactIrfListStateModifications = {};
+        stateModifications.searchTimer = null;
+
+        var selectedCountries = '';
+        var sep = '';
+        for (var idx = 0; idx < this.state.countryDropDown.selectedOptions.length; idx++) {
+            selectedCountries = selectedCountries + sep + this.state.countryDropDown.selectedOptions[idx].id;
+            sep = ',';
+        }
+
+        var selectedStatus = '';
+        if (this.state.status.selectedOptions.length > 0) {
+            selectedStatus = this.state.status.selectedOptions[0].id;
+        }
+
+        if (this.state.status.selectedOptions[0].label !== 'submitted' && this.state.status.selectedOptions[0].label !== 'verification-tie') {
+            stateModifications.may_be_verified_by_account = false;
+        }
+
+        if (this.state.queryParameters.country_ids !== selectedCountries || this.state.queryParameters.status !== selectedStatus ||
+            this.state.queryParameters.may_verify !== stateModifications.may_be_verified_by_account) {
+            stateModifications.queryParameters = this.state.queryParameters;
+            stateModifications.queryParameters.country_ids = selectedCountries;
+            stateModifications.queryParameters.status = selectedStatus;
+            stateModifications.queryParameters.may_verify = stateModifications.may_be_verified_by_account;
+            this.setState(stateModifications);
+            this.searchIrfs();
+        } else {
+            this.setState(stateModifications);
+        }
+    }
+
+    countryChange() {
+        // TODO does this work without this.ctrl?
+        this.setSearchTimer();
+    }
+
+    statusChange() {
+        // TODO does this work without this.ctrl?
+        if (this.state.status.selectedOptions[0].label !== 'submitted' && this.state.status.selectedOptions[0].label !== 'verification-tie') {
+            this.setState({
+                may_be_verified_by_account: false
+            });
+        }
+        this.searchTimerExpired();
+    }
+
+    hasAddPermission() {
+        return this.props.SessionService.checkPermission('IRF', 'ADD', null, null) === true;
+    }
+
     getUserCountries() {
         let keepOldList = ['Nepal', 'Bangladesh', 'India'];
         let keepOld = false;
         this.props.IrfNewListService.getUserCountries(this.props.SessionService.user.id).then(promise => {
-            this.state.countries = promise.data;
-            this.state.countryDropDown.options = [];
-            for (var idx = 0; idx < this.state.countries.length; idx++) {
-                this.state.countryDropDown.options.push({
-                    id: this.state.countries[idx].id,
-                    label: this.state.countries[idx].name,
+            let stateModifications: ReactIrfListStateModifications = {};
+            stateModifications.countries = promise.data;
+            stateModifications.countryDropDown.options = [];
+            for (var idx = 0; idx < stateModifications.countries.length; idx++) {
+                stateModifications.countryDropDown.options.push({
+                    id: stateModifications.countries[idx].id,
+                    label: stateModifications.countries[idx].name,
                 });
-                if (keepOldList.indexOf(this.state.countries[idx].name) > -1) {
+                if (keepOldList.indexOf(stateModifications.countries[idx].name) > -1) {
                     keepOld = true;
                 }
             }
             this.getUserStationsForAdd();
 
-            if (this.state.queryParameters.country_ids.length > 0) {
-                let country_array = this.state.queryParameters.country_ids.split(',');
+            if (stateModifications.queryParameters.country_ids.length > 0) {
+                let country_array = stateModifications.queryParameters.country_ids.split(',');
                 for (let idx = 0; idx < country_array.length; idx++) {
                     let country_id = Number(country_array[idx]);
-                    for (let idx1 = 0; idx1 < this.state.countries.length; idx1++) {
-                        if (this.state.countries[idx1].id === country_id) {
-                            this.state.countryDropDown.selectedOptions.push(this.state.countryDropDown.options[idx1]);
+                    for (let idx1 = 0; idx1 < stateModifications.countries.length; idx1++) {
+                        if (stateModifications.countries[idx1].id === country_id) {
+                            stateModifications.countryDropDown.selectedOptions.push(stateModifications.countryDropDown.options[idx1]);
                         }
                     }
                 }
             }
 
-            if (!keepOld && this.state.status.options[this.state.oldIndex].label.startsWith('old')) {
-                this.state.status.options.splice(this.state.oldIndex, 1);
+            if (!keepOld && stateModifications.status.options[stateModifications.oldIndex].label.startsWith('old')) {
+                stateModifications.status.options.splice(stateModifications.oldIndex, 1);
             }
+            this.setState(stateModifications);
 
         });
     }
@@ -245,32 +360,39 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
         sessionStorage.setItem('irfList-status', this.state.queryParameters.status);
         sessionStorage.setItem('irfList-country_ids', this.state.queryParameters.country_ids);
         sessionStorage.setItem('irfList-date_filter', this.state.queryParameters.date_filter);
+        // @ts-ignore
         sessionStorage.setItem('irfList-date_start', this.state.date_start);
+        // @ts-ignore
         sessionStorage.setItem('irfList-date_end', this.state.date_end);
 
-        this.state.queryParameters.date_start = this.dateAsString(this.state.date_start);
-        this.state.queryParameters.date_end = this.dateAsString(this.state.date_end);
-        this.state.timer = this.props.$timeout(() => {
-            this.state.go('.', {
+        let stateModifications: ReactIrfListStateModifications = {}
+        stateModifications.queryParameters = {}
+        stateModifications.queryParameters.date_start = this.dateAsString(this.state.date_start);
+        stateModifications.queryParameters.date_end = this.dateAsString(this.state.date_end);
+        stateModifications.timer = this.props.$timeout(() => {
+            this.props.$state.go('.', {
                 search: this.state.queryParameters.search,
                 status: this.state.queryParameters.status,
                 country_ids: this.state.queryParameters.country_ids,
             });
             this.getIrfList();
         }, 500);
+        this.setState(stateModifications);
     }
 
     getUserStationsForAdd() {
         this.props.IrfNewListService.getUserStationsForAdd(this.props.SessionService.user.id).then(promise => {
-            this.state.stationsForAdd = promise.data;
-            for (let idx = 0; idx < this.state.stationsForAdd.length; idx++) {
-                for (let idx2 = 0; idx2 < this.state.countries.length; idx2++) {
-                    if (this.state.stationsForAdd[idx].operating_country === this.state.countries[idx2].id) {
-                        this.state.stationsForAdd[idx].country_name = this.state.countries[idx2].name;
-                        this.state.stationsForAdd[idx].country_id = this.state.countries[idx2].id;
+            let stateModifications: any = {};
+            stateModifications.stationsForAdd = promise.data;
+            for (let idx = 0; idx < stateModifications.stationsForAdd.length; idx++) {
+                for (let idx2 = 0; idx2 < stateModifications.countries.length; idx2++) {
+                    if (stateModifications.stationsForAdd[idx].operating_country === stateModifications.countries[idx2].id) {
+                        stateModifications.stationsForAdd[idx].country_name = stateModifications.countries[idx2].name;
+                        stateModifications.stationsForAdd[idx].country_id = stateModifications.countries[idx2].id;
                     }
                 }
             }
+            this.setState(stateModifications);
         });
     }
 
@@ -295,16 +417,19 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
     showPage(pageNumber) {
         this.props.SpinnerOverlayService.show("Searching for IRFs...");
         this.props.IrfNewListService.getIrfList(this.transform(this.state.queryParameters, pageNumber)).then((promise) => {
-            this.state.irfs = promise.data.results;
-            this.state.paginate.items = promise.data.count;
-            this.state.paginate.currentPage = pageNumber;
+            let stateModifications: ReactIrfListStateModifications = {}
+            stateModifications.irfs = promise.data.results;
+            stateModifications.paginate = {};
+            stateModifications.paginate.items = promise.data.count;
+            stateModifications.paginate.currentPage = pageNumber;
+            this.setState(stateModifications)
             this.props.SpinnerOverlayService.hide();
-            this.addUrls(this.state.irfs);
+            this.addUrls(stateModifications.irfs);
         });
     }
 
     transform(queryParameters, pageNumber) {
-        var queryParams = angular.copy(queryParameters);
+        var queryParams = _.cloneDeep(queryParameters);
         if (queryParams.reverse) {
             let parts = queryParams.ordering.split(',');
             queryParams.ordering = "";
@@ -330,14 +455,14 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
         for (let idx = 0; idx < irfs.length; idx++) {
             let irf = irfs[idx];
             if (irf.form_name !== null) {
-                irf.viewUrl = this.state.href(irfs[idx].form_name, {
+                irf.viewUrl = this.props.$state.href(irfs[idx].form_name, {
                     id: irf.id,
                     stationId: irf.station.id,
                     countryId: irf.station.operating_country.id,
                     isViewing: true,
                     formName: irfs[idx].form_name,
                 });
-                irf.editUrl = this.state.href(irfs[idx].form_name, {
+                irf.editUrl = this.props.$state.href(irfs[idx].form_name, {
                     id: irf.id,
                     stationId: irf.station.id,
                     countryId: irf.station.operating_country.id,
@@ -345,24 +470,55 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
                     formName: irfs[idx].form_name,
                 });
             }
-            irf.relatedUrl = this.state.href('relatedForms', {
+            irf.relatedUrl = this.props.$state.href('relatedForms', {
                 stationId: irf.station.id,
                 formNumber: irf.irf_number
             });
         }
     }
 
+    createIrf() {
+        var stationsForAdd = this.state.stationsForAdd;
+        let modalInstance = this.props.$uibModal.open({
+            animation: true,
+            templateUrl: createIrfModalTemplateUrl,
+            controller: 'CreateIrfModalController as vm',
+            size: 'md',
+            resolve: {
+                stations() {
+                    return stationsForAdd;
+                },
+            },
+        });
+        modalInstance.result.then(station => {
+            this.props.IrfNewListService.getFormForStation(station.id).then(response => {
+                if (response.data.length > 0) {
+                    this.props.$state.go(response.data[0].form_name, {
+                        stationId: station.id,
+                        countryId: station.country_id,
+                        isViewing: false,
+                        formName: response.data[0].form_name,
+                    });
+                } else {
+                    this.props.toastr.error('Unable to find form for station ' + station.label);
+                }
+            });
+        });
+    }
+
+    attachmentExport() {
+        this.props.$uibModal.open({
+            animation: true,
+            templateUrl: attachmentExportModalTemplateUrl,
+            controller: 'AttachmentExportModalController as vm',
+            size: 'lg'
+        });
+    }
+
     render() {
-        // let exportAttachmentsButton = <button className="btn btn-primary"
-        //                                       ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"
-        //                                       ng-click="irfNewListCtrl.attachmentExport()">Export Attachments
-        // </button>;
-        let photoexport = <photoexportComponent
-            ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"></photoexportComponent>;
-        // let createIrfButton = <a ng-if="irfNewListCtrl.hasAddPermission" className="btn btn-success"
-        //                          ng-click="irfNewListCtrl.createIrf()">
-        //     Input A New IRF
-        // </a>;
+        console.log('rerendering');
+        // let photoexport = <photoexportComponent
+        //     ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"></photoexportComponent>;
         // let countryMultiSelect = <div ng-dropdown-multiselect="" options="irfNewListCtrl.countryDropDown.options"
         //                               selected-model="irfNewListCtrl.countryDropDown.selectedOptions"
         //                               extra-settings="irfNewListCtrl.countryDropDown.settings"
@@ -376,13 +532,33 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
         //     <option value="Second Verification">Second Verification/Verified</option>
         //     <option value="Interception">Interception</option>
         // </select>;
-        // let fromDateInput = <input type="date" className="form-control" ng-model-options="{timezone: 'utc'}"
-        //                            ng-model="irfNewListCtrl.date_start" ng-change="irfNewListCtrl.searchIrfs()"/>;
-        // let toDateInput = <input type="date" className="form-control" ng-model-options="{timezone: 'utc'}"
-        //                          ng-model="irfNewListCtrl.date_end" ng-change="irfNewListCtrl.searchIrfs()"/>;
-        // let searchStringInput = <input ng-change="irfNewListCtrl.searchIrfs()"
-        //                                ng-model="irfNewListCtrl.queryParameters.search" placeholder="Search"
-        //                                className="form-control" autoFocus/>;
+
+        // TODO not sure how to do UTC timezone yet
+        //  It will also be styled differently
+        let fromDateInput = <DatePicker onChange={(newDate: Date | null) => {
+            this.setState({
+                date_start: newDate
+            });
+            this.searchIrfs();
+        }}/>
+        let toDateInput = <DatePicker onChange={(newDate: Date | null) => {
+            this.setState({
+                date_end: newDate
+            });
+            this.searchIrfs();
+        }}/>
+        let searchStringInput = <input placeholder="Search"
+                                       className="form-control"
+                                       autoFocus
+                                       onChange={(event) => {
+                                           const newValue = event.target.value
+                                           const currentQueryParams = this.state.queryParameters
+                                           currentQueryParams.search = newValue
+                                           this.setState({
+                                               queryParameters: currentQueryParams
+                                           });
+                                           this.searchIrfs()
+                                       }}/>;
         // let statusOptionsMultiSelect = <div style="width:180px" ng-dropdown-multiselect=""
         //                                     options="irfNewListCtrl.status.options"
         //                                     ng-show="irfNewListCtrl.filterType!='Filter by Second-Verification Evidence'"
@@ -463,9 +639,14 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
         //     </tbody>
         // </table>;
         // let paginate = <paginate page-control="irfNewListCtrl.paginate" controller="irfNewListCtrl"/>;
-        // let mayBeVerifiedCheckbox = <input type="checkbox" className="form-control"
-        //                                    ng-model="irfNewListCtrl.may_be_verified_by_account"
-        //                                    ng-change="irfNewListCtrl.searchTimerExpired()"/>;
+        let mayBeVerifiedCheckbox = <input type="checkbox" className="form-control"
+                                           onChange={(event) => {
+                                               const newValue = event.target.value
+                                               this.setState({
+                                                   may_be_verified_by_account: newValue
+                                               });
+                                               this.searchTimerExpired()
+                                           }}/>;
         return (
             <div className="container" id="irfNewList"><br/>
                 <div className="row">
@@ -474,9 +655,19 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
                     </div>
 
                     <div className="pull-right"><br/>
-                        {/*{exportAttachmentsButton}*/}
-                        {photoexport}
-                        {/*{createIrfButton}*/}
+                        {this.props.SessionService.checkPermission('IRF', 'VIEW PI', null, null) && (
+                            // <> and </> get removed when building so you don't have a wrapper div
+                            <>
+                                <button className="btn btn-primary" onClick={() => this.attachmentExport()}>
+                                    Export Attachments
+                                </button>
+
+                            </>
+                        )}
+                        {/*{photoexport}*/}
+                        {this.hasAddPermission() && (
+                            <a className="btn btn-success" onClick={() => this.createIrf()}>Input A New IRF</a>
+                        )}
                     </div>
                 </div>
 
@@ -485,7 +676,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
                         <p>Countries</p>
                         {/*{countryMultiSelect}*/}
                     </div>
-                    <!-- End dropdown -->
+                    {/* End dropdown */}
                     <div className="col-md-6">
                         <div className="row">
                             <div className="col-md-4">Filter by Date</div>
@@ -493,35 +684,35 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
                                 {/*{dateTypeSelect}*/}
                             </div>
                         </div>
-                        <div className="row center-vertical"
-                             ng-show="irfNewListCtrl.queryParameters.date_filter!='None'">
-                            <div className="col-md-1 center-vertical">
-                                <p>From:</p>
-                            </div>
-                            <div className="col-md-4">
-                                {/*{fromDateInput}*/}
-                            </div>
-                            <div className="col-md-1 center-vertical">
-                                <p>To:</p>
-                            </div>
-                            <div className="col-md-4">
-                                {/*{toDateInput}*/}
-                            </div>
-                        </div>
+                        {this.state.queryParameters.date_filter != 'None' && (
+                            <div className="row center-vertical">
+                                <div className="col-md-1 center-vertical">
+                                    <p>From:</p>
+                                </div>
+                                <div className="col-md-4">
+                                    {fromDateInput}
+                                </div>
+                                <div className="col-md-1 center-vertical">
+                                    <p>To:</p>
+                                </div>
+                                <div className="col-md-4">
+                                    {toDateInput}
+                                </div>
+                            </div>)}
                     </div>
 
-                    <!-- Search -->
+                    {/* Search */}
                     <div className="col-md-3 search-bar pull-right">
                         <form>
                             <label className="pull-right">
-                                {/*{searchStringInput}*/}
+                                {searchStringInput}
                             </label>
                         </form>
 
                         {/*{statusOptionsMultiSelect}*/}
 
                     </div>
-                    <!-- End search -->
+                    {/* End search */}
 
                 </div>
                 <div className="row"
@@ -529,7 +720,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListState>
                     <div className="col-md-3 search-bar pull-right">
                         <div className="row center-vertical">
                             <div className="col-md-2">
-                                {/*{mayBeVerifiedCheckbox}*/}
+                                {mayBeVerifiedCheckbox}
                             </div>
                             <div className="col-md-10">May be verified by me</div>
                         </div>

@@ -13,5 +13,6 @@ export default angular.module('tinyhands.reactIrfList', [sharedModule])
         // Since this is a routed component, it shouldn't have any
         [],
         // Angular services, etc, passed into React component (also via props)
-        ['LocationService']))
+        ['IrfNewListService', 'SessionService', '$stateParams', '$uibModal', 'StickyHeader',
+            'SpinnerOverlayService', '$state', '$timeout', 'toastr', 'constants', 'moment']))
     .name

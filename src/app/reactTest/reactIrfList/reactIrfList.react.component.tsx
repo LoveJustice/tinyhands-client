@@ -5,6 +5,10 @@ import DatePicker from "react-date-picker";
 import _ from 'lodash';
 
 import "react-date-picker/dist/DatePicker.css";
+// @ts-ignore
+import createIrfModalTemplate from '../../irf/newList/createIrfModal.html';
+// @ts-ignore
+import attachmentExportModalTemplate from '../../irf/newList/attachmentExportModal.html'
 
 // Steps I used:
 // Make a class-based react component
@@ -25,9 +29,15 @@ import "react-date-picker/dist/DatePicker.css";
 // Add types
 // Change date inputs to react-date-picker
 
-
-const createIrfModalTemplateUrl = '../../irf/newList/createIrfModal.html';
-const attachmentExportModalTemplateUrl = '../../irf/newList/attachmentExportModal.html'
+// TODO:
+//  - automatically default status to !invalid
+//  - modals open but don't work right
+//  - countries list
+//  - sticky header
+//  - table itself
+//  - date type connected to dates
+//  - dates to show up
+//  - search box text not getting added to query params
 
 type ReactIrfListProps = {
     // Props from parent
@@ -481,7 +491,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         var stationsForAdd = this.state.stationsForAdd;
         let modalInstance = this.props.$uibModal.open({
             animation: true,
-            templateUrl: createIrfModalTemplateUrl,
+            templateUrl: createIrfModalTemplate,
             controller: 'CreateIrfModalController as vm',
             size: 'md',
             resolve: {
@@ -509,7 +519,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
     attachmentExport() {
         this.props.$uibModal.open({
             animation: true,
-            templateUrl: attachmentExportModalTemplateUrl,
+            templateUrl: attachmentExportModalTemplate,
             controller: 'AttachmentExportModalController as vm',
             size: 'lg'
         });
@@ -651,7 +661,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
             <div className="container" id="irfNewList"><br/>
                 <div className="row">
                     <div className="col-xs-7">
-                        <h1>Interception Record Forms (IRFs)</h1>
+                        <h1>React!! Interception Record Forms (IRFs)</h1>
                     </div>
 
                     <div className="pull-right"><br/>

@@ -28,6 +28,8 @@ import attachmentExportModalTemplate from '../../irf/newList/attachmentExportMod
 // if ng-model is on the same tag as ng-click, set the state in the onClick function
 // Add types
 // Change date inputs to react-date-picker
+// Add html imports but add @ts-ignore
+// ng-class to className
 
 // TODO:
 //  - automatically default status to !invalid
@@ -63,7 +65,20 @@ type ReactIrfListProps = {
 // ...
 // }
 
-interface ReactIrfListState {
+type Irf = {
+    irf_number: number
+    status: any;
+    staff_name: any;
+    number_of_victims: number;
+    number_of_traffickers: number;
+    date_time_of_interception: string;
+    verified_date: any;
+    date_time_last_updated: string;
+    station: any;
+    confirmedDelete: any;
+}
+
+type ReactIrfListState = {
     countries: any[],
     stationsForAdd: any[],
     timer: any,
@@ -84,6 +99,7 @@ interface ReactIrfListState {
 }
 
 type ReactIrfListStateModifications = Partial<ReactIrfListState>
+
 
 class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateModifications> {
     // TODO this has to be a typo when someone deleted part of the word change
@@ -516,6 +532,25 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         });
     }
 
+    deleteIrf(irf, index) {
+        if (irf.confirmedDelete) {
+            this.props.IrfNewListService.deleteIrf(irf.station.id, irf.id).then(
+                () => {
+                    // TODO will this work?
+                    const newState = _.cloneDeep(this.state)
+                    newState.irfs.splice(index, 1);
+                    this.setState(newState);
+                    this.props.toastr.success('Successfully Deleted IRF!');
+                },
+                () => {
+                    this.props.toastr.error('Unable to Delete IRF!');
+                }
+            );
+        } else {
+            irf.confirmedDelete = true;
+        }
+    }
+
     attachmentExport() {
         this.props.$uibModal.open({
             animation: true,
@@ -523,6 +558,60 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
             controller: 'AttachmentExportModalController as vm',
             size: 'lg'
         });
+    }
+
+    getSortIcon(column, reverse): boolean {
+        if (reverse === 'reverse') {
+            return column === this.state.queryParameters.ordering && this.state.queryParameters.reverse;
+        }
+        return column === this.state.queryParameters.ordering && !this.state.queryParameters.reverse;
+    }
+
+    updateSort(column: string) {
+        let currentState = this.state;
+
+        if (column === this.state.queryParameters.ordering) {
+            currentState.queryParameters.reverse = !currentState.queryParameters.reverse;
+        }
+        currentState.queryParameters.ordering = column;
+        this.setState(currentState);
+        this.getIrfList();
+    }
+
+
+    // Being lazy, because I don't know if we want to move to AG Grid
+    // Usually I would extract this into a separate React component instead of just a function
+    createHeaderSortableHeaderCell(column: string, label: string, width: string, hiddenXs?: boolean) {
+        // TODO move this code into getSortIcon?
+        const isSortedForward = this.getSortIcon(column, '!reverse')
+        const isSortedReversed = this.getSortIcon(column, 'reverse')
+        let iconClass = ''
+        if (isSortedReversed) {
+            iconClass = 'glyphicon glyphicon-sort-by-alphabet-alt'
+        } else if (isSortedForward) {
+            iconClass = 'glyphicon glyphicon-sort-by-alphabet'
+        }
+        if (hiddenXs) {
+            iconClass += ' hidden-xs'
+        }
+        return (<th onClick={() => {
+            this.updateSort(column)
+        }} style={{width: width}}>
+            {label}
+            <i className={iconClass}/>
+        </th>)
+    }
+
+    // TODO actually do this
+    formatDate(date: string) {
+        // | date:"medium" : irfNewListCtrl.timeZoneDifference
+        return date
+    }
+
+    // TODO actually do this
+    formatNumber(number: number) {
+        //  | number
+        return number
     }
 
     render() {
@@ -579,75 +668,68 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         //                                     translation-texts="irfNewListCtrl.status.customText"
         //                                     events="irfNewListCtrl.status.eventListener" className="pull-right">
         // </div>;
-        // let table = <table className="table table-striped" float-thead="irfNewListCtrl.stickyOptions"
-        //                    ng-model="irfNewListCtrl.irfs">
-        //     <thead className="sticky-table-header">
-        //     <tr>
-        //         <th ng-click="irfNewListCtrl.updateSort('irf_number')" width="8%">IRF #
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('irf_number', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('irf_number', 'reverse') }"></i>
-        //         </th>
-        //         <th width="8%">Status</th>
-        //         <th ng-click="irfNewListCtrl.updateSort('staff_name')" width="15%">Staff Name
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('staff_name', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('staff_name', 'reverse')}"></i>
-        //         </th>
-        //         <th ng-click="irfNewListCtrl.updateSort('number_of_victims')" width="10%"># of Potential Victims
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('number_of_victims', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('number_of_victims', 'reverse')}"></i>
-        //         </th>
-        //         <th ng-click="irfNewListCtrl.updateSort('number_of_traffickers')" width="10%"># of Suspects
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('number_of_traffickers', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('number_of_traffickers', 'reverse')}"></i>
-        //         </th>
-        //         <th ng-click="irfNewListCtrl.updateSort('date_of_interception,time_of_interception')"
-        //             width="16%">Time of Interception
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('date_of_interception,time_of_interception', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('date_of_interception,time_of_interception', 'reverse')}"></i>
-        //         </th>
-        //         <th ng-click="irfNewListCtrl.updateSort('verified_date')" width="16%"
-        //             className="hidden-xs">Verification Date
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('verified_date', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('verified_date', 'reverse')}"></i>
-        //         </th>
-        //         <th ng-click="irfNewListCtrl.updateSort('date_time_last_updated')" width="16%"
-        //             className="hidden-xs">Time Last Edited
-        //             <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': irfNewListCtrl.getSortIcon('date_time_last_updated', '!reverse'),
-        //         'glyphicon glyphicon-sort-by-alphabet-alt': irfNewListCtrl.getSortIcon('date_time_last_updated', 'reverse')}"></i>
-        //         </th>
-        //         <th></th>
-        //         <th></th>
-        //         <th></th>
-        //     </tr>
-        //     </thead>
-        //     <tbody>
-        //     <tr ng-repeat="irf in irfNewListCtrl.irfs | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
-        //         <td>{{irf.irf_number}}</td>
-        //         <td>{{irf.status}}</td>
-        //         <td>{{irf.staff_name}}</td>
-        //         <td>{{irf.number_of_victims | number}}</td>
-        //         <td>{{irf.number_of_traffickers | number}}</td>
-        //         <td>{{irf.date_time_of_interception | date:"medium" : irfNewListCtrl.timeZoneDifference}}</td>
-        //         <td className="hidden-xs">{{irf.verified_date}}</td>
-        //         <td className="hidden-xs">{{
-        //             irf
-        //             .date_time_last_updated | date:"medium" : irfNewListCtrl.timeZoneDifference}}</td>
-        //         <td ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',irf.station.operating_country.id, irf.station.id)">
-        //             <a className="btn btn-sm btn-primary" ng-href="{{irf.viewUrl}}">View</a></td>
-        //         <td ng-if="irfNewListCtrl.session.checkPermission('IRF','EDIT',irf.station.operating_country.id, irf.station.id)">
-        //             <a className="btn btn-sm btn-primary" ng-href="{{irf.editUrl}}">Edit</a></td>
-        //         <td ng-if="irfNewListCtrl.session.checkPermission('IRF','DELETE',irf.station.operating_country.id, irf.station.id) && irf.status !== 'second-verification' && irf.status !== 'old' && irf.status !== 'verified'">
-        //             <a className="btn btn-sm btn-danger" ng-click="irfNewListCtrl.deleteIrf(irf, $index)">
-        //                 {{irf.confirmedDelete ? "Confirm?" : "Delete"}}</a></td>
-        //     </tr>
-        //     <tr ng-show="irfNewListCtrl.irfs.length == 0">
-        //         <td colSpan="12" style="text-align:center;"><h2>No IRFs Matched your search for: "{{
-        //             irfNewListCtrl
-        //             .queryParameters.search
-        //         }}"</h2></td>
-        //     </tr>
-        //     </tbody>
-        // </table>;
+
+        // TODO actually order them
+        //  orderBy:this.queryParameters.ordering:this.queryParameters.reverse
+        let orderedIrfs = this.state.irfs;
+
+        // TODO re-add this part
+        //   float-thead="irfNewListCtrl.stickyOptions"
+        //   <thead className="sticky-table-header">
+        let table = <table className="table table-striped"
+                           ng-model="irfNewListCtrl.irfs">
+            <thead>
+            <tr>
+                <th style={{width: "8%"}}>Status</th>
+                {this.createHeaderSortableHeaderCell('irf_number', 'IRF #', '8%')}
+                {this.createHeaderSortableHeaderCell('staff_name', 'Staff Name', '15%')}
+                {this.createHeaderSortableHeaderCell('number_of_victims', '# of Potential Victims', '10%')}
+                {this.createHeaderSortableHeaderCell('number_of_traffickers', '# of Suspects', '10%')}
+                {this.createHeaderSortableHeaderCell('date_of_interception,time_of_interception', 'Time of Interception', '16%')}
+                {this.createHeaderSortableHeaderCell('verified_date', 'Verification Date', '16%', true)}
+                {this.createHeaderSortableHeaderCell('date_time_last_updated', 'Time Last Edited', '16%', true)}
+                <th/>
+                <th/>
+                <th/>
+            </tr>
+            </thead>
+            <tbody>
+            {orderedIrfs && orderedIrfs.length > 0 &&
+            orderedIrfs.map((irf: Irf, index: number) =>
+                <tr key={irf.irf_number}>
+                    <td>{irf.irf_number}</td>
+                    <td>{irf.status}</td>
+                    <td>{irf.staff_name}</td>
+                    <td>{this.formatNumber(irf.number_of_victims)}</td>
+                    <td>{this.formatNumber(irf.number_of_traffickers)}</td>
+                    <td>{this.formatDate(irf.date_time_of_interception)}</td>
+                    <td className="hidden-xs">{irf.verified_date}</td>
+                    <td className="hidden-xs">{this.formatDate(irf.date_time_last_updated)}</td>
+                    {this.props.SessionService.checkPermission('IRF', 'VIEW', irf.station.operating_country.id, irf.station.id) && (
+                        // TODO Fix ng-href
+                        <td><a className="btn btn-sm btn-primary" ng-href="{{irf.viewUrl}}">View</a></td>
+                    )}
+                    {this.props.SessionService.checkPermission('IRF', 'EDIT', irf.station.operating_country.id, irf.station.id) && (
+                        // TODO Fix ng-href
+                        <td><a className="btn btn-sm btn-primary" ng-href="{{irf.editUrl}}">Edit</a></td>
+                    )}
+                    {this.props.SessionService.checkPermission('IRF', 'DELETE', irf.station.operating_country.id, irf.station.id)
+                    && irf.status !== 'second-verification' && irf.status !== 'old' && irf.status !== 'verified'
+                    && (
+                        <td><a className="btn btn-sm btn-danger" onClick={() => this.deleteIrf(irf, index)}>
+                            {irf.confirmedDelete ? "Confirm?" : "Delete"}</a></td>
+                    )}
+                </tr>
+            )}
+            {orderedIrfs && orderedIrfs.length == 0 && (
+                <td colSpan={12} style={{textAlign:"center"}}>
+                    <h2>No IRFs Matched your search for: "{
+                        this.state.queryParameters.search
+                    }"</h2>
+                </td>
+            )}
+            </tbody>
+        </table>;
         // let paginate = <paginate page-control="irfNewListCtrl.paginate" controller="irfNewListCtrl"/>;
         let mayBeVerifiedCheckbox = <input type="checkbox" className="form-control"
                                            onChange={(event) => {
@@ -737,7 +819,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
                     </div>
                 </div>
                 <br/>
-                {/*{table}*/}
+                {table}
 
                 <div className="row text-center">
                     {/*{paginate}*/}

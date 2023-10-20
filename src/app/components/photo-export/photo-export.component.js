@@ -5,7 +5,10 @@ import PhotoExportController from "./photo-export.controller";
 
 const PhotoExportComponent = {
     bindings: {},
-    template: photoExportTemplate,
+    // This could be a breaking change.
+    // I had to change template to templateUrl for some reason
+    // However, on my local irfNew still seems to be working
+    templateUrl: photoExportTemplate,
     controller: PhotoExportController
 }
 

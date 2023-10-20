@@ -9,6 +9,10 @@ import "react-date-picker/dist/DatePicker.css";
 import createIrfModalTemplate from '../../irf/newList/createIrfModal.html';
 // @ts-ignore
 import attachmentExportModalTemplate from '../../irf/newList/attachmentExportModal.html'
+import {DummyAngularComponentWrapped} from "../../components/dummy-component/dummy-component.react.component";
+import {PaginateComponentReact} from "../../components/paginate/paginate.react.component";
+import PureReactComponent from "../../components/pure-react-component/pure-react-component";
+import {PhotoExportReact} from "../../components/photo-export/photo-export.react.component";
 
 // Steps I used:
 // Make a class-based react component
@@ -30,16 +34,17 @@ import attachmentExportModalTemplate from '../../irf/newList/attachmentExportMod
 // Change date inputs to react-date-picker
 // Add html imports but add @ts-ignore
 // ng-class to className
+// turned all angular components I needed into react components
+// replaced all selects (single and multi selects) with react-select
 
 // TODO:
 //  - automatically default status to !invalid
 //  - modals open but don't work right
 //  - countries list
 //  - sticky header
-//  - table itself
 //  - date type connected to dates
 //  - dates to show up
-//  - search box text not getting added to query params
+//  - Page keeps redirecting me to log in all the time
 
 type ReactIrfListProps = {
     // Props from parent
@@ -392,7 +397,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         sessionStorage.setItem('irfList-date_end', this.state.date_end);
 
         let stateModifications: ReactIrfListStateModifications = {}
-        stateModifications.queryParameters = {}
+        stateModifications.queryParameters = this.state.queryParameters;
         stateModifications.queryParameters.date_start = this.dateAsString(this.state.date_start);
         stateModifications.queryParameters.date_end = this.dateAsString(this.state.date_end);
         stateModifications.timer = this.props.$timeout(() => {
@@ -408,7 +413,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
 
     getUserStationsForAdd() {
         this.props.IrfNewListService.getUserStationsForAdd(this.props.SessionService.user.id).then(promise => {
-            let stateModifications: any = {};
+            let stateModifications: ReactIrfListStateModifications = {};
             stateModifications.stationsForAdd = promise.data;
             for (let idx = 0; idx < stateModifications.stationsForAdd.length; idx++) {
                 for (let idx2 = 0; idx2 < stateModifications.countries.length; idx2++) {
@@ -445,7 +450,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         this.props.IrfNewListService.getIrfList(this.transform(this.state.queryParameters, pageNumber)).then((promise) => {
             let stateModifications: ReactIrfListStateModifications = {}
             stateModifications.irfs = promise.data.results;
-            stateModifications.paginate = {};
+            stateModifications.paginate = this.state.paginate;
             stateModifications.paginate.items = promise.data.count;
             stateModifications.paginate.currentPage = pageNumber;
             this.setState(stateModifications)
@@ -615,9 +620,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
     }
 
     render() {
-        console.log('rerendering');
-        // let photoexport = <photoexportComponent
-        //     ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"></photoexportComponent>;
+        console.log('rerendering', this.state?.paginate?.items);
         // let countryMultiSelect = <div ng-dropdown-multiselect="" options="irfNewListCtrl.countryDropDown.options"
         //                               selected-model="irfNewListCtrl.countryDropDown.selectedOptions"
         //                               extra-settings="irfNewListCtrl.countryDropDown.settings"
@@ -722,15 +725,20 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
                 </tr>
             )}
             {orderedIrfs && orderedIrfs.length == 0 && (
-                <td colSpan={12} style={{textAlign:"center"}}>
-                    <h2>No IRFs Matched your search for: "{
-                        this.state.queryParameters.search
-                    }"</h2>
-                </td>
+                <tr>
+                    <td colSpan={12} style={{textAlign: "center"}}>
+                        <h2>No IRFs Matched your search for: "{
+                            this.state.queryParameters.search
+                        }"</h2>
+                    </td>
+                </tr>
             )}
             </tbody>
         </table>;
-        // let paginate = <paginate page-control="irfNewListCtrl.paginate" controller="irfNewListCtrl"/>;
+        let paginate = <PaginateComponentReact
+            pageControl={this.state.paginate}
+            showPage={(pageNumber) => this.showPage(pageNumber)}
+        />;
         let mayBeVerifiedCheckbox = <input type="checkbox" className="form-control"
                                            onChange={(event) => {
                                                const newValue = event.target.value
@@ -756,7 +764,9 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
 
                             </>
                         )}
-                        {/*{photoexport}*/}
+                        {this.props.SessionService.checkPermission('IRF','VIEW PI',null, null) && (
+                          <PhotoExportReact />
+                        )}
                         {this.hasAddPermission() && (
                             <a className="btn btn-success" onClick={() => this.createIrf()}>Input A New IRF</a>
                         )}
@@ -820,9 +830,14 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
                 </div>
                 <br/>
                 {table}
+                <DummyAngularComponentWrapped
+                    thingThing={"2"}
+                    callback={() => alert('alert from callback in AngularJS')}
+                />
+                <PureReactComponent callback={() => alert('alert from Pure React')} dataThing={3}/>
 
                 <div className="row text-center">
-                    {/*{paginate}*/}
+                    {paginate}
                 </div>
                 <br/>
             </div>

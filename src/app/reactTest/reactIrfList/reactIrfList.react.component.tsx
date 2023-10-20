@@ -13,6 +13,7 @@ import {DummyAngularComponentWrapped} from "../../components/dummy-component/dum
 import {PaginateComponentReact} from "../../components/paginate/paginate.react.component";
 import PureReactComponent from "../../components/pure-react-component/pure-react-component";
 import {PhotoExportReact} from "../../components/photo-export/photo-export.react.component";
+import Select from "react-select";
 
 // Steps I used:
 // Make a class-based react component
@@ -36,6 +37,9 @@ import {PhotoExportReact} from "../../components/photo-export/photo-export.react
 // ng-class to className
 // turned all angular components I needed into react components
 // replaced all selects (single and multi selects) with react-select
+//   - add react select component at right place (add isMulti flag if needed)
+//   - change options objects to use id instead of value
+//   -
 
 // TODO:
 //  - automatically default status to !invalid
@@ -142,11 +146,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         stateBeingBuilt.countryDropDown = {};
         stateBeingBuilt.countryDropDown.options = [];
         stateBeingBuilt.countryDropDown.selectedOptions = [];
-        stateBeingBuilt.countryDropDown.settings = {
-            smartButtonMaxItems: 2,
-            showCheckAll: false,
-            showUncheckAll: false,
-        };
+
         stateBeingBuilt.countryDropDown.customText = {buttonDefaultText: 'All'};
         stateBeingBuilt.countryDropDown.eventListener = {
             onItemSelect: this.countryChange,
@@ -163,24 +163,24 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
 
         stateBeingBuilt.oldIndex = 3;
         stateBeingBuilt.status = {};
-        stateBeingBuilt.status.options = [{id: '!invalid', label: 'all valid', group: 'z'},
-            {id: 'in-progress', label: 'in-progress', group: 'Status'},
-            {id: 'approved,!None', label: 'submitted', group: 'Status'},
-            {id: 'first-verification', label: 'first-verification', group: 'Status'},
-            {id: 'second-verification', label: 'second-verification', group: 'Status'},
-            {id: 'verification-tie', label: 'verification-tie', group: 'Status'},
-            {id: 'verified', label: 'verified', group: 'Status'},
+        stateBeingBuilt.status.options = [{value: '!invalid', label: 'all valid', group: 'z'},
+            {value: 'in-progress', label: 'in-progress', group: 'Status'},
+            {value: 'approved,!None', label: 'submitted', group: 'Status'},
+            {value: 'first-verification', label: 'first-verification', group: 'Status'},
+            {value: 'second-verification', label: 'second-verification', group: 'Status'},
+            {value: 'verification-tie', label: 'verification-tie', group: 'Status'},
+            {value: 'verified', label: 'verified', group: 'Status'},
             {
-                id: 'second-verification|verified,Evidence',
+                value: 'second-verification|verified,Evidence',
                 label: 'evidence',
                 group: 'Final Verification Evidence Category'
             },
             {
-                id: 'second-verification|verified,High',
+                value: 'second-verification|verified,High',
                 label: 'high risk',
                 group: 'Final Verification Evidence Category'
             },
-            {id: 'invalid', label: 'invalid', group: 'Final Verification Evidence Category'}];
+            {value: 'invalid', label: 'invalid', group: 'Final Verification Evidence Category'}];
         stateBeingBuilt.status.selectedOptions = [stateBeingBuilt.status.options[0]];
         stateBeingBuilt.status.settings = {
             smartButtonMaxItems: 1,
@@ -265,16 +265,22 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
             }
         }
 
+        // This is the only time that state can be set outside of setState
+        //  during construction
         this.state = stateBeingBuilt;
 
+        this.getUserCountries();
+        this.searchIrfs();
+
+        this.getUserStationsForAdd([]).then((stationsForAdd) => {
+            const stateModifications: ReactIrfListStateModifications = {}
+            stateModifications.stationsForAdd = stationsForAdd;
+            this.setState(stateModifications)
+        });
     }
 
     // Not sure if these are supposed to be in the constructor or not
     componentDidMount() {
-        this.getUserCountries();
-        this.searchIrfs();
-
-        this.getUserStationsForAdd();
     }
 
 
@@ -299,7 +305,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         var selectedCountries = '';
         var sep = '';
         for (var idx = 0; idx < this.state.countryDropDown.selectedOptions.length; idx++) {
-            selectedCountries = selectedCountries + sep + this.state.countryDropDown.selectedOptions[idx].id;
+            selectedCountries = selectedCountries + sep + this.state.countryDropDown.selectedOptions[idx].value;
             sep = ',';
         }
 
@@ -308,7 +314,8 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
             selectedStatus = this.state.status.selectedOptions[0].id;
         }
 
-        if (this.state.status.selectedOptions[0].label !== 'submitted' && this.state.status.selectedOptions[0].label !== 'verification-tie') {
+        if (this.state.status.selectedOptions.length > 0 &&
+            this.state.status.selectedOptions[0].label !== 'submitted' && this.state.status.selectedOptions[0].label !== 'verification-tie') {
             stateModifications.may_be_verified_by_account = false;
         }
 
@@ -332,7 +339,8 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
 
     statusChange() {
         // TODO does this work without this.ctrl?
-        if (this.state.status.selectedOptions[0].label !== 'submitted' && this.state.status.selectedOptions[0].label !== 'verification-tie') {
+        if (this.state.status.selectedOptions > 0 &&
+            this.state.status.selectedOptions[0].label !== 'submitted' && this.state.status.selectedOptions[0].label !== 'verification-tie') {
             this.setState({
                 may_be_verified_by_account: false
             });
@@ -345,40 +353,48 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
     }
 
     getUserCountries() {
+        console.log('getUserCountries');
         let keepOldList = ['Nepal', 'Bangladesh', 'India'];
         let keepOld = false;
         this.props.IrfNewListService.getUserCountries(this.props.SessionService.user.id).then(promise => {
+            console.log('country promise returned', promise.data);
             let stateModifications: ReactIrfListStateModifications = {};
             stateModifications.countries = promise.data;
+            stateModifications.countryDropDown = this.state.countryDropDown;
             stateModifications.countryDropDown.options = [];
             for (var idx = 0; idx < stateModifications.countries.length; idx++) {
                 stateModifications.countryDropDown.options.push({
-                    id: stateModifications.countries[idx].id,
+                    value: stateModifications.countries[idx].id,
                     label: stateModifications.countries[idx].name,
                 });
                 if (keepOldList.indexOf(stateModifications.countries[idx].name) > -1) {
                     keepOld = true;
                 }
             }
-            this.getUserStationsForAdd();
+            this.getUserStationsForAdd(promise.data).then((stationsForAdd) => {
+                // Use existing state modifications
+                stateModifications.stationsForAdd = stationsForAdd;
 
-            if (stateModifications.queryParameters.country_ids.length > 0) {
-                let country_array = stateModifications.queryParameters.country_ids.split(',');
-                for (let idx = 0; idx < country_array.length; idx++) {
-                    let country_id = Number(country_array[idx]);
-                    for (let idx1 = 0; idx1 < stateModifications.countries.length; idx1++) {
-                        if (stateModifications.countries[idx1].id === country_id) {
-                            stateModifications.countryDropDown.selectedOptions.push(stateModifications.countryDropDown.options[idx1]);
+                if (this.state.queryParameters.country_ids.length > 0) {
+                    let country_array = this.state.queryParameters.country_ids.split(',');
+                    for (let idx = 0; idx < country_array.length; idx++) {
+                        let country_id = Number(country_array[idx]);
+                        stateModifications.countries = this.state.countries;
+                        stateModifications.countryDropDown = this.state.countryDropDown;
+                        for (let idx1 = 0; idx1 < stateModifications.countries.length; idx1++) {
+                            if (stateModifications.countries[idx1].id === country_id) {
+                                stateModifications.countryDropDown.selectedOptions.push(stateModifications.countryDropDown.options[idx1]);
+                            }
                         }
                     }
                 }
-            }
 
-            if (!keepOld && stateModifications.status.options[stateModifications.oldIndex].label.startsWith('old')) {
-                stateModifications.status.options.splice(stateModifications.oldIndex, 1);
-            }
-            this.setState(stateModifications);
-
+                if (!keepOld && stateModifications.status.options[stateModifications.oldIndex].label.startsWith('old')) {
+                    stateModifications.status = this.state.status;
+                    stateModifications.status.options.splice(stateModifications.oldIndex, 1);
+                }
+                this.setState(stateModifications);
+            });
         });
     }
 
@@ -411,19 +427,19 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
         this.setState(stateModifications);
     }
 
-    getUserStationsForAdd() {
-        this.props.IrfNewListService.getUserStationsForAdd(this.props.SessionService.user.id).then(promise => {
-            let stateModifications: ReactIrfListStateModifications = {};
-            stateModifications.stationsForAdd = promise.data;
-            for (let idx = 0; idx < stateModifications.stationsForAdd.length; idx++) {
-                for (let idx2 = 0; idx2 < stateModifications.countries.length; idx2++) {
-                    if (stateModifications.stationsForAdd[idx].operating_country === stateModifications.countries[idx2].id) {
-                        stateModifications.stationsForAdd[idx].country_name = stateModifications.countries[idx2].name;
-                        stateModifications.stationsForAdd[idx].country_id = stateModifications.countries[idx2].id;
+    getUserStationsForAdd(countries) {
+        console.log('Calling backend for user stations state')
+        return this.props.IrfNewListService.getUserStationsForAdd(this.props.SessionService.user.id).then(promise => {
+            const stationsForAdd = promise.data;
+            for (let idx = 0; idx < stationsForAdd.length; idx++) {
+                for (let idx2 = 0; idx2 < countries.length; idx2++) {
+                    if (stationsForAdd[idx].operating_country === countries[idx2].id) {
+                        stationsForAdd[idx].country_name = countries[idx2].name;
+                        stationsForAdd[idx].country_id = countries[idx2].id;
                     }
                 }
             }
-            this.setState(stateModifications);
+            return stationsForAdd;
         });
     }
 
@@ -620,7 +636,7 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
     }
 
     render() {
-        console.log('rerendering', this.state?.paginate?.items);
+        console.log('rerendering', this.state?.paginate?.items, this.state.countryDropDown.items);
         // let countryMultiSelect = <div ng-dropdown-multiselect="" options="irfNewListCtrl.countryDropDown.options"
         //                               selected-model="irfNewListCtrl.countryDropDown.selectedOptions"
         //                               extra-settings="irfNewListCtrl.countryDropDown.settings"
@@ -764,8 +780,8 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
 
                             </>
                         )}
-                        {this.props.SessionService.checkPermission('IRF','VIEW PI',null, null) && (
-                          <PhotoExportReact />
+                        {this.props.SessionService.checkPermission('IRF', 'VIEW PI', null, null) && (
+                            <PhotoExportReact/>
                         )}
                         {this.hasAddPermission() && (
                             <a className="btn btn-success" onClick={() => this.createIrf()}>Input A New IRF</a>
@@ -776,7 +792,16 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
                 <div className="row">
                     <div className="col-md-3">
                         <p>Countries</p>
-                        {/*{countryMultiSelect}*/}
+                        <Select value={this.state.countryDropDown.selectedOptions}
+                                options={this.state.countryDropDown.options}
+                                isMulti={true}
+                                onChange={(selectedOptions) => {
+                                    const stateModifications: ReactIrfListStateModifications = {}
+                                    stateModifications.countryDropDown = this.state.countryDropDown;
+                                    stateModifications.countryDropDown.selectedOptions = selectedOptions;
+                                    this.setState(stateModifications);
+                                    this.countryChange();
+                                }}/>
                     </div>
                     {/* End dropdown */}
                     <div className="col-md-6">
@@ -817,17 +842,20 @@ class ReactIrfList extends React.Component<ReactIrfListProps, ReactIrfListStateM
                     {/* End search */}
 
                 </div>
-                <div className="row"
-                     ng-if="irfNewListCtrl.status.selectedOptions[0].label === 'submitted' || irfNewListCtrl.status.selectedOptions[0].label==='verification-tie'">
-                    <div className="col-md-3 search-bar pull-right">
-                        <div className="row center-vertical">
-                            <div className="col-md-2">
-                                {mayBeVerifiedCheckbox}
+                {this.state.status.selectedOptions.length > 0 &&
+                (this.state.status.selectedOptions[0].label === 'submitted'
+                    || this.state.status.selectedOptions[0].label === 'verification-tie') && (
+                    <div className="row">
+                        <div className="col-md-3 search-bar pull-right">
+                            <div className="row center-vertical">
+                                <div className="col-md-2">
+                                    {mayBeVerifiedCheckbox}
+                                </div>
+                                <div className="col-md-10">May be verified by me</div>
                             </div>
-                            <div className="col-md-10">May be verified by me</div>
                         </div>
                     </div>
-                </div>
+                )}
                 <br/>
                 {table}
                 <DummyAngularComponentWrapped

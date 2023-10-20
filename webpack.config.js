@@ -19,6 +19,7 @@ function getServerApiUrl(env) {
     }
 }
 
+var nodeModulesPath = path.resolve(__dirname, "node_modules/");
 var srcPath = path.resolve(__dirname, "src/");
 var appPath = path.resolve(srcPath, "app/");
 
@@ -53,7 +54,14 @@ module.exports = function (env) {
             },
             {
                 test: /\.js$/,
-                include: srcPath,
+                // Run babel on all of our stuff and also some problematic ES6-only modules
+                include: [srcPath, nodeModulesPath],
+                exclude: function(modulePath) {
+                  return (
+                    /node_modules/.test(modulePath) &&
+                    !/node_modules\\@floating-ui/.test(modulePath)
+                  );
+                },
                 loader: 'babel-loader'
             },
             // Needed for react date picker

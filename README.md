@@ -1,31 +1,28 @@
 # Tiny Hands Dreamsuite
 
-### Codeship Status
-[ ![Codeship Status for tu-software-studio/tinyhands-client](https://codeship.com/projects/be6ab140-e41a-0133-4db8-3aa3f222b1f1/status?branch=develop)](https://codeship.com/projects/146238)
-
 ### Front-End Setup
-1. Have [npm](http://blog.npmjs.org/post/85484771375/how-to-install-npm) installed on your machine
-2. Install dependencies: `npm install`
-3. `npm run dev` will start the local server and launch the application in your browser
+UNDER CONSTRUCTION
 
 --------------------
 ### Developing
-**Important Note:** the URLs for the rest endpoints when developing, on staging, or master are in [`webpack.config.js`](webpack.config.js).  
+UNDER CONSTRUCTION
 
 --------------------
 #### Local Development
-`npm run dev` 	  -> Runs the website locally and automatically reloads when files are changed
+UNDER CONSTRUCTION
 
 #### Unit Testing
-`npm run test`	  -> To run unit tests  
+UNDER CONSTRUCTION
 
 #### Building
-`npm run local`   -> Bundles project for local environment
-`npm run stage`    -> Bundles project for staging environment  
-`npm run prod`    -> Bundles project for production environment  
+UNDER CONSTRUCTION
 
 --------------------
 ### Frameworks Used
+UNDER CONSTRUCTION
+
+OLD:
+
 [AngularJS](https://angularjs.org/) JS Framework  
 **UI**  
 [Angular UI Bootstrap](http://angular-ui.github.io/bootstrap/) UI Framework  

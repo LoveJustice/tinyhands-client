@@ -159,7 +159,7 @@ export default class StaffListController {
     }
     
     getCountryName(countryId) {
-    	let countryName = 'Unknwon';
+    	let countryName = 'Unknown';
     	for (let idx in this.countries) {
     		if (countryId === this.countries[idx].id) {
     			countryName = this.countries[idx].name;

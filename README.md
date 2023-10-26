@@ -1,74 +1,40 @@
 # Searchlight Client
 This is the client for Searchlight
 
-# Getting Started with Create React App + AngularJS
+## React + TypeScript + Vite + AngularJS
 
-This project was originally created with AngularJS in 2015, but was re-bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-Hopefully everything works the regular React way, but we will see.
+The core of this project is generated from Vite from a React, Typescript and SWC (babel replacement) template
+[@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/)
+Inside that core is an AngularJS app started in 2015 that will be gradually replaced with React
 
-You may need to upgrade your local Node
-(I had to use nvm to change to an updated version)
+## Why Vite? Why not CRA, NextJS, Remix, Parcel?
+I was going to use CRA, but I found it was "silently deprecated" https://github.com/facebook/create-react-app/issues/13072
+On the website they recommended NextJS or Remix (Full-stack Server side rendering frameworks)
+The 4 choices laid out in the official response are NextJS, Remix, Parcel and Vite.
+Our use-case matches Vite and Parcel the best, and Vite seems to have more traction.
+```
+Some projects will never fit into any popular [Server side rendering] framework's mold, and that's okay.
+Maybe you're developing an internal dashboard that needs to integrate with a PHP site, 
+and none of the frameworks let you do that very easily.
+That's a great use case for a lower-level tool like Parcel or purely client-side Vite templates.
+```
+(see https://github.com/reactjs/react.dev/pull/5487#issuecomment-1409720741)
 
-## Available Scripts
+## Expanding the ESLint configuration
 
-In the project directory, you can run:
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-### `npm start`
+- Configure the top-level `parserOptions` property like this:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```js
+   parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+   },
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
---------------------
-### Frameworks Used
-UNDER CONSTRUCTION
-
-OLD:
-
-[AngularJS](https://angularjs.org/) JS Framework  
-**UI**  
-[Angular UI Bootstrap](http://angular-ui.github.io/bootstrap/) UI Framework  
-[Bootstrap](http://getbootstrap.com/) UI Framework  
-[ngInfiniteScroll](https://sroze.github.io/ngInfiniteScroll/) Third-party tool for running functions when scrolling  
-[Less CSS](http://lesscss.org/) CSS Language  
-**Testing**  
-[Jasmine](http://jasmine.github.io/) JS Unit testing  
-[Karma](http://karma-runner.github.io/) JS Unit testing  
-[Protractor](https://github.com/angular/protractor) E2E Testing 
-[webdriver-manger](https://www.npmjs.com/package/webdriver-manager) E2E Testing
-**Building/Compiling**  
-[ES6 Babel](https://babeljs.io/) ES6to5 Transpiler  
-[Webpack 2](https://webpack.js.org/)
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list

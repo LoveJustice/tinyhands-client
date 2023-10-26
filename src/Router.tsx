@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import PageWithLotsOfReactComponents from './pageWithLotsOfReactComponents';
 import App from './App';
 import ErrorPage from './ErrorPage';
+import { SimpleComponentReact } from './SimpleComponent'
 
 const Router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const Router = createBrowserRouter([
         path: '/react-things',
         element: <PageWithLotsOfReactComponents />,
       },
+      {
+        path: '/simple-wrapped-angular-component',
+        element: <SimpleComponentReact />
+      }
     ]
 }])
 

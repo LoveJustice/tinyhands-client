@@ -6,6 +6,7 @@ import AddProjectModalTemplate from './step-templates/addProjectModal.html';
 
 class AddProjectModalController {
 	constructor($uibModalInstance, staff, projects, coordinator) {
+	    'ngInject';
 		this.$uibModalInstance = $uibModalInstance;
 		this.staff = staff;
 		this.projects = projects;

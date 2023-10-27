@@ -10,6 +10,7 @@ import { faAppleAlt, faBathtub, faShieldCat, faShieldDog } from '@fortawesome/fr
 import Select from 'react-select';
 import { DateTime } from 'luxon';
 import { ErrorMessage, Field, Form as FormikForm, Formik } from 'formik';
+import { Link } from 'react-router-dom';
 
 const DUMMY_API = 'https://dummy.restapiexample.com/api/v1/employees';
 
@@ -111,6 +112,11 @@ const PageWithLotsOfReactComponents = () => {
   const dateString = DateTime.now().toFormat('d MMM yyyy');
 
   return <div>
+    <ul>
+      {/* TODO do this without reloadDocument */}
+      <li><Link reloadDocument to={'/#!/simple-angular-page?id=7'}>React Router link to Angular page</Link></li>
+      <li><Link to={'/simple-wrapped-angular-component'}>React Router link to React page</Link></li>
+    </ul>
     <div>
       Some font awesome icons:
       <FontAwesomeIcon icon={faAppleAlt} />

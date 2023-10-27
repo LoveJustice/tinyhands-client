@@ -23,8 +23,11 @@
     "@types/node": "^20.8.9",
     "ag-grid-community": "^30.2.0",
     "ag-grid-react": "^30.2.0",
+
     "angular": "1.7.9",
     "angular2react": "^3.0.2",
+    "@uirouter/angularjs": "1.0.20",
+
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
     "formik": "^2.4.5",

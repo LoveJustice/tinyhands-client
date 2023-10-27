@@ -7,6 +7,7 @@ The core of this project is generated from Vite from a React, Typescript and SWC
 [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/)
 Inside that core is an AngularJS app started in 2015 that will be gradually replaced with React
 
+
 ## Why Vite? Why not CRA, NextJS, Remix, Parcel?
 I was going to use CRA, but I found it was "silently deprecated" https://github.com/facebook/create-react-app/issues/13072
 On the website they recommended NextJS or Remix (Full-stack Server side rendering frameworks)

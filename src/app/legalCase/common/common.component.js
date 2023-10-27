@@ -1,6 +1,6 @@
 import {BaseLegalCaseController} from '../baseLegalCaseController.js';
 import {BaseModalController} from '../../baseModalController.js';
-import {LegalCaseModalController} from '../legalCaseModalController.js';
+import {LegalCaseTimelineModalController} from '../legalCaseTimelineModalController.js';
 import {LegalCaseVictimModalController} from '../legalCaseVictimModalController.js';
 import {LegalCaseSuspectModalController} from '../legalCaseSuspectModalController.js';
 import './common.less';
@@ -43,7 +43,7 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
     }
     
     openTimelineModal(responses = [], isAdd = false, idx=null) {
-        this.commonModal(responses, isAdd, idx, LegalCaseModalController, 'TimelineModalController',
+        this.commonModal(responses, isAdd, idx, LegalCaseTimelineModalController, 'TimelineModalController',
                 timelineEntryTemplate, 'Timeline');
     }
     

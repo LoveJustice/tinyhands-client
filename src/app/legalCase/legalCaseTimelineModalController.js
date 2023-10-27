@@ -1,12 +1,13 @@
 import {BaseModalController} from '../baseModalController.js';
 
 // Only addition is to get the case status from the legal case into the suspect modal
-class LegalCaseModalController extends BaseModalController {
+class LegalCaseTimelineModalController extends BaseModalController {
     constructor($uibModalInstance, $scope, constants, isAdd, card, isViewing, modalActions, config, parentController, caseStatus, userName) {
         'ngInject';
         super($uibModalInstance, $scope, isAdd, card, isViewing, modalActions, config, constants, parentController);
         this.caseStatus = caseStatus;
         this.userName = userName;
+        this.parentController = parentController;
     }
     
     delayedQuestionData() {
@@ -20,6 +21,11 @@ class LegalCaseModalController extends BaseModalController {
             if (this.questions.lcTimelineCommentDate.response) {
                 this.dateData.questions.lcTimelineCommentDate.value = new Date();
             }
+            if (this.parentController.courtCase.length < 2) {
+            	this.questions.lcTimelineCourtCaseSequence.response.value = '1';
+            }
+        } else {
+        	this.questions.lcTimelineCourtCaseSequence.response.value += '';
         }
     }
     
@@ -56,4 +62,4 @@ class LegalCaseModalController extends BaseModalController {
     }
 }
 
-export {LegalCaseModalController};
+export {LegalCaseTimelineModalController};

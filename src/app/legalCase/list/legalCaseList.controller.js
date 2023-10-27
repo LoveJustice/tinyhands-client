@@ -53,7 +53,7 @@ export default class LegalCaseListController {
         };
         
         this.status = {};
-        this.status.options = [{id: 'active', label: 'active'}, {id: 'closed', label: 'closed'}, {id: 'inactive', label: 'inactive'},{id: 'active,closed,inactive', label: 'All'}];
+        this.status.options = [{id: 'active', label: 'active'}, {id: 'closed', label: 'closed'},{id: 'active,closed', label: 'All'}];
         this.status.selectedOptions = [this.status.options[0]];
         this.status.settings = {smartButtonMaxItems:1, showCheckAll: false, showUncheckAll: false, selectionLimit:1, closeOnSelect: true};
         this.status.customText = {};

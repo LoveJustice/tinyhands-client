@@ -117,18 +117,20 @@ class LegalCaseSuspectModalController extends BaseModalController {
     		// Add case
     		let caseCharges = this.parentController.courtCase[caseIndex].checkboxGroup.getValue('lcCourtCaseCharges').split(';');
     		for (let chargeIndex in caseCharges) {
-    			let newCard = this.parentController.createCard('Suspect Charge');
-    			let theCharge = {
-    				saved: false,
-    				questions:_.keyBy(newCard.responses, (x) => x.question_tag),
-    			};
-    			theCharge.questions.lcSuspectChargeSuspect.response.value = this.questions.lcSuspectSuspect.response.value;
-    			theCharge.questions.lcSuspectChargeSequence.response.value = caseIndex+1;
-    			theCharge.questions.lcSuspectChargeCharge.response.value = caseCharges[chargeIndex];
-    			theCharge.dateData = new DateData(theCharge.questions);
-        		theCharge.dateData.setDate('lcSuspectChargeVerdictDate','basic');
-        		theCharge.dateData.setDate('lcSuspectChargeVerdictSubmittedDate','basic');
-    			this.courtCases[caseIndex].charges.push(theCharge);
+    			if (caseCharges[chargeIndex] !== '') {
+	    			let newCard = this.parentController.createCard('Suspect Charge');
+	    			let theCharge = {
+	    				saved: false,
+	    				questions:_.keyBy(newCard.responses, (x) => x.question_tag),
+	    			};
+	    			theCharge.questions.lcSuspectChargeSuspect.response.value = this.questions.lcSuspectSuspect.response.value;
+	    			theCharge.questions.lcSuspectChargeSequence.response.value = caseIndex+1;
+	    			theCharge.questions.lcSuspectChargeCharge.response.value = caseCharges[chargeIndex];
+	    			theCharge.dateData = new DateData(theCharge.questions);
+	        		theCharge.dateData.setDate('lcSuspectChargeVerdictDate','basic');
+	        		theCharge.dateData.setDate('lcSuspectChargeVerdictSubmittedDate','basic');
+	    			this.courtCases[caseIndex].charges.push(theCharge);
+    			}
     		}
     	}
     }
@@ -292,7 +294,7 @@ class LegalCaseSuspectModalController extends BaseModalController {
     			}
     		}
     	}
-    	
+    	this.parentController.setCaseStatus();
     }
 }
 

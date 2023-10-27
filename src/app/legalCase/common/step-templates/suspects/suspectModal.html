@@ -31,12 +31,36 @@
 		                	<option value="No">No</option>
 		                </select>
 			        </div>
-		            <div class="col-md-5">
-			            <div class="col-md-5 form-group">
-		            		<label>Arrest Status</label>
+			        <div class="col-md-2 form-group" >
+	            		<label ng-if="SuspectModalController.questions.lcSuspectArrested.response.value==='Yes'">Arrest Date</label>
+		            </div>
+		            <div class="col-md-3 form-group">
+				        <input ng-if="SuspectModalController.questions.lcSuspectArrested.response.value==='Yes'" type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions.lcSuspectArrestDate.value"
+				        		ng-disabled="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
+			        </div>
+			        <div class="col-md-1 form-group" ng-show="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
+	            		<label>Submitted</label>
+		            </div>
+		            <div class="col-md-3 form-group" ng-show="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
+				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value" disabled>
+			        </div>
+			   </div>
+	        	<div class="row center-vertical" ng-if="SuspectModalController.questions.lcSuspectArrested.response.value==='Yes'">
+	            	<div class="col-md-3 form-group">
+	            		<label>Named in charge sheet?</label>
+		            </div>
+		            <div class="col-md-1 form-group">
+				        <select ng-model="SuspectModalController.questions.lcSuspectNamedOnChargeSheet.response.value" ng-disabled="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
+					        <option value="No">No</option>
+		                	<option value="Yes">Yes</option>
+		                </select>
+			        </div>
+			        <div class="col-md-5">
+			            <div class="col-md-5 form-group" ng-if="SuspectModalController.questions.lcSuspectArrested.response.value==='Yes'">
+		            		<label>Custody Status</label>
 			            </div>
-			            <div class="col-md-7 form-group">
-					        <select ng-model="SuspectModalController.questions.lcSuspectArrestStatus.response.value" ng-disabled="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
+			            <div class="col-md-7 form-group" ng-if="SuspectModalController.questions.lcSuspectArrested.response.value==='Yes'">
+					        <select ng-model="SuspectModalController.questions.lcSuspectArrestStatus.response.value">
 					        	<option value=""></option>
 			                	<option value="Has Been Released">Has Been Released</option>
 			                	<option value="Released on Bail">Released on Bail</option>
@@ -44,30 +68,6 @@
 			                	<option value="In Police Custody">In Police Custody</option>
 			                </select>
 				        </div>
-			        </div>
-			        <div class="col-md-3 form-group">
-	            		<label>Named in charge sheet?</label>
-		            </div>
-		            <div class="col-md-2 form-group">
-				        <select ng-model="SuspectModalController.questions.lcSuspectNamedOnChargeSheet.response.value" ng-disabled="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
-					        <option value="No">No</option>
-		                	<option value="Yes">Yes</option>
-		                </select>
-			        </div>
-	        	</div>
-	        	<div class="row center-vertical" ng-if="SuspectModalController.questions.lcSuspectArrested.response.value==='Yes'">
-	            	<div class="col-md-2 form-group">
-	            		<label>Arrest Date</label>
-		            </div>
-		            <div class="col-md-4 form-group">
-				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions.lcSuspectArrestDate.value"
-				        		ng-disabled="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
-			        </div>
-			        <div class="col-md-2 form-group" ng-show="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
-	            		<label>Submitted</label>
-		            </div>
-		            <div class="col-md-4 form-group" ng-show="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value">
-				        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="SuspectModalController.dateData.questions.lcSuspectArrestSubmittedDate.value" disabled>
 			        </div>
 	        	</div>
 	        	 <div class="row" ng-if="SuspectModalController.courtCaseCount > 1">
@@ -86,22 +86,23 @@
 			    	<hr class="hr-main">
 			    	<span>
 			    		<form-step class="sequenceNumber">{{ SuspectModalController.displayNumber(courtCase) }}</form-step>
-			    		<label>Charged:</label>
-			    		<span ng-repeat="suspectCharge in courtCase.charges">
-			    			&nbsp;
-			    			<input type="checkbox"
-				            	ng-model="suspectCharge.questions.lcSuspectChargeWasCharged.response.value"
-				            	id="{{suspectCharge.questions.lcSuspectChargeWasCharged.response.value + $index}}"
-				            	ng-change="SuspectModalController.caseChargeChange(suspectCharge)">
-			            	<label for="{{suspectCharge.questions.lcSuspectChargeWasCharged.response.value + $index}}">{{suspectCharge.questions.lcSuspectChargeCharge.response.value}}</label>
-			    		</span>
 			    	</span>
 			    	<span>
 	    				<div class=col-md-11>
-				    		<div class="row col-md-12" form-group" style="display:inline-block" ng-repeat="suspectCharge in courtCase.charges"
-				    			ng-if="suspectCharge.questions.lcSuspectChargeWasCharged.response.value">
-					    		<h4>Charge: {{ suspectCharge.questions.lcSuspectChargeCharge.response.value }}</h4>
-					    		<div class="row col-md-12">
+				    		<div class="row col-md-12" form-group" style="display:inline-block" ng-repeat="suspectCharge in courtCase.charges">
+				    			<span>
+					    			<h4 class="col-md-8" style="display:inline-block" >Charge: {{ suspectCharge.questions.lcSuspectChargeCharge.response.value }}</h4>
+					    			<label>Legal Status</label>
+					    			<select ng-model="suspectCharge.questions.lcSuspectChargeLegalStatus.response.value"
+					    					ng-disabled="suspectCharge.dateData.questions.lcSuspectChargeVerdictSubmittedDate.value">
+					    				<option>Pre-trial</option>
+					    				<option>Awaiting Verdict</option>
+					    				<option>Verdict</option>
+					    				<option>Case Dismissed</option>
+					    				<option>Not Charged</option>
+					    			</select>
+					    		</span>
+					    		<div class="row col-md-12" ng-if="suspectCharge.questions.lcSuspectChargeLegalStatus.response.value==='Verdict'">
 					    			<div class="col-md-2">
 					    				<label>Verdict</label>
 					    			</div>
@@ -116,7 +117,8 @@
 					    				<label>Sentence mentioned in attached verdict</label>
 					    			</div>
 					    			<div class="col-md-2" ng-if="suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Conviction'||suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Acquittal'">
-					    				<select ng-model="suspectCharge.questions.lcSuspectChargeSentenceAttached.response.value">
+					    				<select ng-model="suspectCharge.questions.lcSuspectChargeSentenceAttached.response.value"
+					    						ng-disabled="suspectCharge.dateData.questions.lcSuspectChargeVerdictSubmittedDate.value">
 								        	<option value=""></option>
 									        <option value="Yes">Yes</option>
 						                	<option value="No">No</option>

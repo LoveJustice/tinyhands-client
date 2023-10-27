@@ -1,4 +1,11 @@
 <div id="legal-case-timeline" class="row stretch-vertical">
+	<div class="row" ng-if="$ctrl.courtCase.length > 1">
+		<label>Court Case</label>
+		<select ng-model='$ctrl.timelineCase'>
+			<option value="">All</option>
+			<option value="{{ case.questions.lcCourtCaseSequence.response.value }}" ng-repeat="case in $ctrl.courtCase">{{ case.questions.lcCourtCaseSequence.response.value }}</option>
+		</select>
+	</div>
 	<table class="table table-striped" float-thead="$ctrl.stickyOptions">
         <thead class="sticky-table-header">
             <tr>
@@ -12,7 +19,8 @@
             </tr>
         </thead>
         <tbody>
-        	<tr ng-repeat="card in $ctrl.getCardInstances('Timeline')"  ng-click="$ctrl.openTimelineModal(card, false, $index)" ng-if="!$ctrl.getResponseOfQuestionByTag(card.responses, 'lcTimelineDateRemoved').value"]>
+        	<tr ng-repeat="card in $ctrl.getCardInstances('Timeline')"  ng-click="$ctrl.openTimelineModal(card, false, $index)"
+        			ng-if="!$ctrl.getResponseOfQuestionByTag(card.responses, 'lcTimelineDateRemoved').value&&($ctrl.timelineCase ===''||$ctrl.getResponseOfQuestionByTag(card.responses, 'lcTimelineCourtCaseSequence').value+''===$ctrl.timelineCase)">
         		<td>{{$ctrl.getResponseOfQuestionByTag(card.responses, 'lcTimelineCommentDate').value}}</td>
         		<td colspan=2><textarea class="form-control" rows="2" ng-model="$ctrl.getResponseOfQuestionByTag(card.responses, 'lcTimelineComment').value" readonly></textarea><td>
         	</tr>

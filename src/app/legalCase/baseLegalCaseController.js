@@ -23,6 +23,7 @@ export class BaseLegalCaseController extends BaseFormController {
         this.countrySpecific = null;
         this.formReady = false;
         this.basicCharges = ['Human Trafficking', 'Sexual Assault','Kidnapping','Fraud'];
+        this.timelineCase = '';
 
         this.legalCaseNumber = "";
         this.tableDivSize = (window.innerWidth - 50) + 'px';
@@ -117,7 +118,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 this.processResponse(response);
                 let timelineCards = this.getCardInstances('Timeline');
                 timelineCards.sort(BaseLegalCaseController.compareTimelineEntries);
-                if (this.stateParams.id === null) {
+                if (this.stateParams.id !== null) {
 	                this.set_errors_and_warnings(response.data);
 	                this.messagesEnabled = true;
 	            }
@@ -142,6 +143,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 if (courtCases.length < 1) {
                 	this. addCourtCase();
                 }
+                this.setCaseStatus();
             });
         });
     }
@@ -190,6 +192,37 @@ export class BaseLegalCaseController extends BaseFormController {
     			this.courtCase[cardIndex].checkboxGroup.questions.lcCourtCaseCharges[charge] = true;
     		}
     	});
+    }
+    
+    setCaseStatus() {
+    	let active = false;
+    	for (let courtCaseIdx in this.courtCase) {
+    		let activeCourtCase = false;
+    		
+    		let chargeCards = this.getCardInstances('Suspect Charge');
+        	for (let card=0; card < chargeCards.length; card++) {
+        		let cardQuestions = _.keyBy(chargeCards[card].responses, (x) => x.question_tag);
+        		if (cardQuestions.lcSuspectChargeSequence.response.value === this.courtCase[courtCaseIdx].questions.lcCourtCaseSequence.response.value &&
+        			cardQuestions.lcSuspectChargeLegalStatus.response.value !== 'Verdict' &&
+        			cardQuestions.lcSuspectChargeLegalStatus.response.value !== 'Not Charged') {
+        			activeCourtCase = true;
+        			active = true;
+        			break;
+        		}
+        	}
+    		
+        	if (activeCourtCase) {
+        		this.courtCase[courtCaseIdx].questions.lcCourtCaseStatus.response.value = 'active';
+        	} else {
+        		this.courtCase[courtCaseIdx].questions.lcCourtCaseStatus.response.value = 'closed';
+        	}
+        }
+        
+        if (active) {
+        	this.questions.lcStatus.response.value = 'active';
+        } else {
+        	this.questions.lcStatus.response.value = 'closed';
+        }
     }
     
     openCommonModal(the_card, isAdd, cardIndex, theController, theControllerName, theTemplate, config_name) {
@@ -289,17 +322,7 @@ export class BaseLegalCaseController extends BaseFormController {
         		cardQuestions.lcSuspectChargeVerdictSubmittedDate.response.value = submission_date;
         	}
         }
-        let activeCourtCase = false;
-        for (let courtCaseIdx in this.courtCase) {
-        	this.courtCase[courtCaseIdx].checkboxGroup.updateResponses();
-        	if (this.courtCase[courtCaseIdx].questions.lcCourtCaseStatus.response.value !== 'Verdict Rendered' && 
-        			this.courtCase[courtCaseIdx].questions.lcCourtCaseStatus.response.value !== 'Voluntarily Dismissed') {
-        		activeCourtCase = true;
-        	}
-        }
-        if (!activeCourtCase && this.questions.lcStatus.response.value === 'active') {
-        	this.questions.lcStatus.response.value = 'closed';
-        }
+        
         if (this.ignoreWarnings) {
             this.response.ignore_warnings = 'True';
         } else {
@@ -356,7 +379,7 @@ export class BaseLegalCaseController extends BaseFormController {
     	
     	// Add new charge
     	let courtCases = this.getCardInstances('Court Case');
-    	let caseSequence = this.getResponseOfQuestionByTag(courtCases[cardIndex].responses,'lcCourtCaseSequence').value + '';
+    	let caseSequence = this.getResponseOfQuestionByTag(courtCases[cardIndex].responses,'lcCourtCaseSequence').value;
     	
     	// Find all SFs for suspects that are marked as being part of the case
     	let suspects = this.getCardInstances('Suspects');
@@ -364,7 +387,7 @@ export class BaseLegalCaseController extends BaseFormController {
     	for (let suspectIndex in suspects) {
     		let suspectCases = this.getResponseOfQuestionByTag(suspects[suspectIndex].responses,'lcSuspectCourtCases').value.split(';');
     		for (let caseIndex in suspectCases) {
-    			if (suspectCases[caseIndex] === caseSequence) {
+    			if (suspectCases[caseIndex] === caseSequence + '') {
     				sfsForAdd.push(this.getResponseOfQuestionByTag(suspects[suspectIndex].responses,'lcSuspectSuspect').value);
     			}
     		}
@@ -377,7 +400,7 @@ export class BaseLegalCaseController extends BaseFormController {
     			if (this.getResponseOfQuestionByTag(charges[chargeIndex].responses,'lcSuspectChargeSuspect').value !== sf) {
     				continue;
     			}
-    			if (this.getResponseOfQuestionByTag(charges[chargeIndex].responses,'lcSuspectChargeSequence').value + '' !== caseSequence) {
+    			if (this.getResponseOfQuestionByTag(charges[chargeIndex].responses,'lcSuspectChargeSequence').value + '' !== caseSequence+'') {
     				continue;
     			}
     			if (this.getResponseOfQuestionByTag(charges[chargeIndex].responses,'lcSuspectChargeCharge').value !== charge) {
@@ -398,6 +421,8 @@ export class BaseLegalCaseController extends BaseFormController {
     		this.getResponseOfQuestionByTag(newCard.responses,'lcSuspectChargeCharge').value = charge;
     		this.getCardInstances('Suspect Charge').push(newCard);
     	}
+    	
+    	this.setCaseStatus();
     }
     
     getSuspect(sf) {

@@ -4,7 +4,7 @@
             <h3 class="panel-heading margin-top-0">{{ $ctrl.getSf($ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectSuspect').value).merged_person.full_name + 
             		$ctrl.displayCaseNumbers($ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectCourtCases').value) }}</h3>
             <div class="panel-body text-center">
-	                <form-step>Arrested: {{ $ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectArrestStatus').value }}</form-step>
+	                <form-step>Arrested: {{ $ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectArrested').value }} - {{ $ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectArrestStatus').value }}</form-step>
 	                <form-step>{{ $ctrl.suspectSummary($ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectSuspect').value, null) }}</form-step>
             </div>
         </div>

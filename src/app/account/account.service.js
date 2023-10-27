@@ -4,8 +4,12 @@ export default class AccountService {
         this.service = BaseService;
     }
 
-    getAccounts() {
-        return this.service.get('api/account/all/');
+    getAccounts(search='') {
+    	if (search !== '') {
+    		return this.service.get(`api/account/?page_size=10000&&search=${search}`);
+    	} else {
+        	return this.service.get('api/account/?page_size=10000');
+        }
     }
 
     getAccount(id) {

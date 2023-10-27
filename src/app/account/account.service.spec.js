@@ -15,7 +15,7 @@ describe('AccountService', () => {
 
     describe('getAccounts', () => {
         it('should call BaseService.get with correct url', () => {
-            let url = 'api/account/all/';
+            let url = 'api/account/?page_size=10000';
 
             service.getAccounts();
 

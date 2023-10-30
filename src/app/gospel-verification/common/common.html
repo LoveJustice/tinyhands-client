@@ -106,7 +106,7 @@
     </div>
     <div class="row center-vertical">
     	<div class="col-md-3">
-    		<label>Is a change required to the original answer from the VDF below?</label>
+    		<label>Is a change required to the original answer from the PVF below?</label>
     	</div>
     	<div class="col-md-3">
 	    	<input id="changeYes" type="radio" name="changesRequired" value="Yes" ng-model="$ctrl.questions[1060].response.value"\
@@ -140,7 +140,7 @@
     <br>
     <div class="row col-md-12" ng-if="$ctrl.questions[1060].response.value==='Yes'">
     	<div>
-    		<label>This is a change from what was marked on the original VDF. Please explain why there is a change.</label>
+    		<label>This is a change from what was marked on the original PVF. Please explain why there is a change.</label>
     		<textarea class="form-control" rows="3" ng-model="$ctrl.questions[1061].response.value"></textarea>
     	</div>
     </div>

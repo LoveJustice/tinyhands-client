@@ -83,7 +83,7 @@ export class BaseGospelVerificationController extends BaseFormController {
             this.service.updateGospelVdf(this.stateParams.vdf_id, this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value).then(
                     () => {
                     }, ()=>{
-                        alert("Failed to update VDF");
+                        alert("Failed to update PVF");
                     }); 
         }
         if (!this.questions[1034].response.value) {

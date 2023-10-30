@@ -13,6 +13,6 @@ export default class GospelVerificationListService {
     }
     
     getFormForStation(stationId) {
-        return this.service.get('api/forms/?type_name=VDF&station_id=' + stationId);
+        return this.service.get('api/forms/?type_name=PVF&station_id=' + stationId);
     }
 }

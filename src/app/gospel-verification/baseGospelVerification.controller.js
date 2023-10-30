@@ -12,15 +12,14 @@ export class BaseGospelVerificationController extends BaseFormController {
         this.spinner = SpinnerOverlayService;
         this.session = SessionService;
 
-        // 0: vdf, 1: pvf
-        this.formType = null;
+
         this.questionIdDict = {
-            "heardGospel": [675, 'pvfAwarenessHeardMessage'],
-            "believeNow": [676, 'pvfAwarenessWhatBelieveNow'],
-            "interviewer": [6, 'pvfTopInterviewer'],
-            "formNumber": [651, 'pvfTopPvfNumber'],
-            "interviewDate": [288, 'pvfTopInterviewDate'],
-            "pv": [653, 'pvfPvInfoPv'],
+            "heardGospel": 'pvfAwarenessHeardMessage',
+            "believeNow": 'pvfAwarenessWhatBelieveNow',
+            "interviewer": 'pvfTopInterviewer',
+            "formNumber": 'pvfTopPvfNumber',
+            "interviewDate": 'pvfTopInterviewDate',
+            "pv": 'pvfPvInfoPv',
         };
         this.getGospelVerification(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.id);
         this.getForm(this.stateParams.countryId, this.stateParams.stationId, this.stateParams.vdf_id);
@@ -28,27 +27,16 @@ export class BaseGospelVerificationController extends BaseFormController {
 
     parseFormResponse(response){
         this.form = response.data;
-        if (this.formType == 0) {
-        	this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_id);
-        } else {
-        	this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_tag);
-        }
+        this.formQuestions = _.keyBy(response.data.responses, (x) => x.question_tag);
         this.origForm = {
-            "heardGospel":this.formQuestions[this.questionIdDict.heardGospel[this.formType]].response.value,
-            "believeNow":this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value
+            "heardGospel":this.formQuestions[this.questionIdDict.heardGospel].response.value,
+            "believeNow":this.formQuestions[this.questionIdDict.believeNow].response.value
         };
     }
 
     getForm(countryId, stationId, formId) {
-        this.service.getVdf(countryId, stationId, formId).then((response) => {
-            this.formType = 0;
+        this.service.getPvf(countryId, stationId, formId).then((response) => {
             this.parseFormResponse(response);
-        }, (error) => {
-            this.formType = 1;
-            this.service.getPvf(countryId, stationId, formId).then((response) => {
-                this.formType = 1;
-                this.parseFormResponse(response);
-            });
         });
     }
 
@@ -70,7 +58,7 @@ export class BaseGospelVerificationController extends BaseFormController {
             this.questions[1065].response.value = null;
         } else if (this.questions[1060].response.value === 'No') {
             this.questions[1061].response.value = null;
-            this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value = 'Came to believe that Jesus is the one true God';
+            this.formQuestions[this.questionIdDict.believeNow].response.value = 'Came to believe that Jesus is the one true God';
         }
     }
 
@@ -79,8 +67,8 @@ export class BaseGospelVerificationController extends BaseFormController {
     }
 
     submit() {
-        if (this.origForm.believeNow[this.formType] !== this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value) {
-            this.service.updateGospelVdf(this.stateParams.vdf_id, this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value).then(
+        if (this.origForm.believeNow !== this.formQuestions[this.questionIdDict.believeNow].response.value) {
+            this.service.updateGospelVdf(this.stateParams.vdf_id, this.formQuestions[this.questionIdDict.believeNow].response.value).then(
                     () => {
                     }, ()=>{
                         alert("Failed to update PVF");

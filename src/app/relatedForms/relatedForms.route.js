@@ -1,4 +1,4 @@
-import relatedFormsTemplate from './relatedForms.html';
+import relatedFormsTemplate from './relatedForms.html?url';
 
 function relatedFormsRouteConfig($stateProvider) {
     'ngInject';

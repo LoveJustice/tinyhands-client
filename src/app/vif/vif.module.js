@@ -18,7 +18,6 @@ import VifListController from './list/vifList.controller';
 
 import VifBuilder from './form/vifBuilder.service';
 import VifListService from './list/vifList.service';
-import VifService from './form/vif.service';
 
 export default angular.module('tinyhands.VIF', [sharedModule])
     .config(VIFRoutes)
@@ -39,5 +38,4 @@ export default angular.module('tinyhands.VIF', [sharedModule])
 
     .service('VifBuilder', VifBuilder)
     .service('VifListService', VifListService)
-    .service('VifService', VifService)
     .name;

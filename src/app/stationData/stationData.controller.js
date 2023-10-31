@@ -1,5 +1,5 @@
 /* global jQuery */
-import stationDetailModalTemplate from './stationDetailModal.html';
+import stationDetailModalTemplate from './stationDetailModal.html?url';
 import './stationData.less';
 
 class StationDetailModalController {

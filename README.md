@@ -9,6 +9,9 @@ Inside that core is an AngularJS app started in 2015 that will be gradually repl
 
 Routing is heavily influenced by https://medium.com/@pacawrights.dev/angular-js-to-react-the-easy-way-c3c4454de385
 
+Broken dependencies:
+    "fullcalendar": "3.9.0",
+
 ## Why Vite? Why not CRA, NextJS, Remix, Parcel?
 I was going to use CRA, but I found it was "silently deprecated" https://github.com/facebook/create-react-app/issues/13072
 On the website they recommended NextJS or Remix (Full-stack Server side rendering frameworks)

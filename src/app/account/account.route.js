@@ -1,13 +1,13 @@
-import accountTemplate from './account.html';
+import accountTemplate from './account.html?url';
 import './account.less';
-import accountListTemplate from './components/list/accountList.html';
+import accountListTemplate from './components/list/accountList.html?url';
 import './components/list/accountList.less';
-import activateTemplate from './components/activate/activateAccount.html';
-import controlTemplate from './components/control/accessControl.html';
+import activateTemplate from './components/activate/activateAccount.html?url';
+import controlTemplate from './components/control/accessControl.html?url';
 import './components/control/accessControl.less';
-import editTemplate from './components/edit/accountEdit.html';
+import editTemplate from './components/edit/accountEdit.html?url';
 import './components/edit/accountEdit.less';
-import notFoundTemplate from './components/edit/accountNotFound.html';
+import notFoundTemplate from './components/edit/accountNotFound.html?url';
 
 function accountRouteConfig($stateProvider) {
     'ngInject';

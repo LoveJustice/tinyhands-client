@@ -1,4 +1,4 @@
-import indicatorDetailModalTemplate from './indicatorDetailModal.html';
+import indicatorDetailModalTemplate from './indicatorDetailModal.html?url';
 import './collectionIndicators.less';
 
 class IndicatorDetailModalController {

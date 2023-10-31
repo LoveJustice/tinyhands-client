@@ -2,7 +2,6 @@ import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
 import PageWithLotsOfReactComponents from './examples/pageWithLotsOfReactComponents';
 import App from './App';
 import { SimpleComponentReact } from './examples/SimpleComponent';
-import { useLocation } from 'react-router';
 
 // function FallbackToAngular(){
 //   const location = useLocation();
@@ -22,11 +21,11 @@ const TOP_LEVEL_REACT_PAGES: RouteObject[] = [
     path: 'simple-wrapped-angular-component',
     element: <SimpleComponentReact />,
   }
-  // ,
-  // {
-  //   index: true,
-  //   element: <FallbackToAngular />
-  // }
+  ,
+  {
+    index: true,
+    element: <div>Testing</div>
+  }
 ];
 
 const ReactRouter = createBrowserRouter([

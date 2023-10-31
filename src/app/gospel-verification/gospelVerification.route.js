@@ -1,4 +1,4 @@
-import gospelVerificationListTemplate from './list/gospelVerificationList.html';
+import gospelVerificationListTemplate from './list/gospelVerificationList.html?url';
 import './list/gospelVerificationList.less';
 
 function GospelVerificationRoutes($stateProvider) {

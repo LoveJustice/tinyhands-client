@@ -1,6 +1,6 @@
-import addressEntryTemplate from './address-entry.html';
+import addressEntryTemplate from './address-entry.html?url';
 import SearchAddressController from './searchAddressController.js';
-import searchAddressTemplate from './searchAddress.html';
+import searchAddressTemplate from './searchAddress.html?url';
 import './address-entry.less';
 
 export default function AddressEntryDirective() {

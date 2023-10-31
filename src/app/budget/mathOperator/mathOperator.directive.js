@@ -1,4 +1,4 @@
-import mathOperatorTemplate from './mathOperator.html';
+import mathOperatorTemplate from './mathOperator.html?url';
 
 export default function MathOperatorDirective() {
     'ngInject';

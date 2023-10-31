@@ -1,6 +1,6 @@
 import './create-incident-form.less';
 import {encodeGroup} from  '../../encodeGroup.js';
-const DateData = require('../../dateData.js');
+import DateData from '../../dateData';
 
 export default class CreateIncidentFormModalController {
     constructor($uibModalInstance, $scope, incidentService, stationsAdd, useTitle, formType, selectOnly) {

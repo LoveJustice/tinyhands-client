@@ -1,4 +1,4 @@
-import indicatorsTemplate from './indicators.html';
+import indicatorsTemplate from './indicators.html?url';
 import './indicators.less';
 
 function indicatorsRoutes($stateProvider) {

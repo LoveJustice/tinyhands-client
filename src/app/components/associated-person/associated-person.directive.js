@@ -1,5 +1,5 @@
-import associatedPersonTemplate from './associated-person.html';
-import selectPersonTemplate from './selectPerson.html';
+import associatedPersonTemplate from './associated-person.html?url';
+import selectPersonTemplate from './selectPerson.html?url';
 import SelectPersonController from './selectPersonController.js';
 
 class AssociatedPersonController {

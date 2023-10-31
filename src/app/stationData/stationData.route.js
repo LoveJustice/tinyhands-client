@@ -1,4 +1,4 @@
-import stationDataTemplate from './stationData.html';
+import stationDataTemplate from './stationData.html?url';
 import './stationData.less';
 
 function stationDataRoutes($stateProvider) {

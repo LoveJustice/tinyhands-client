@@ -1,12 +1,12 @@
 import {BaseIrfBlindVerificationController} from '../baseIrfBlindVerificationController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import '../common/irf.less';
-const CheckboxGroup = require('../../checkboxGroup.js');
+import CheckboxGroup from '../../checkboxGroup';
 
-import templateUrl from '../common/irf.html';
+import templateUrl from '../common/irf.html?url';
 import IntercepteeModalController from '../interceptee2022_08Modal.controller';
-import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html';
-import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
+import intercepteeModalTemplate from '../common/step-templates/interceptees/interceptee2022_8Modal.html?url';
+import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html?url';
 
 export class IrfBangladeshController extends BaseIrfBlindVerificationController {
     constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {

@@ -1,4 +1,4 @@
-import traffickermatchListTemplate from './traffickermatch.html';
+import traffickermatchListTemplate from './traffickermatch.html?url';
 
 
 function traffickermatchRouteConfig($stateProvider) {

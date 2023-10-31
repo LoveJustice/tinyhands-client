@@ -1,4 +1,4 @@
-import pvfListTemplate from './list/pvfList.html';
+import pvfListTemplate from './list/pvfList.html?url';
 import './list/pvfList.less';
 
 function PvfRoutes($stateProvider) {

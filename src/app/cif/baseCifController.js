@@ -1,5 +1,5 @@
 import {BaseFormController} from '../baseFormController.js';
-import printCardTemplate from './common/printCardTemplate.html';
+import printCardTemplate from './common/printCardTemplate.html?url';
 import {IrfStubController} from './irfStub.js';
 
 export class BaseCifController extends BaseFormController {

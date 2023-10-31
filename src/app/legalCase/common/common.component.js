@@ -3,19 +3,19 @@ import {BaseModalController} from '../../baseModalController.js';
 import {LegalCaseModalController} from '../legalCaseModalController.js';
 import './common.less';
 
-const CheckboxGroup = require('../../checkboxGroup.js');
+import CheckboxGroup from '../../checkboxGroup';
 
-import templateUrl from './common.html';
-import legalCaseTemplate from './step-templates/legalCase.html';
-import timelineTemplate from './step-templates/timeline/timeline.html';
-import suspectsTemplate from './step-templates/suspects/suspect.html';
-import victimsTemplate from './step-templates/victims/victim.html';
-import attachmentsTemplate from './step-templates/attachments/attachment.html';
+import templateUrl from './common.html?url';
+import legalCaseTemplate from './step-templates/legalCase.html?url';
+import timelineTemplate from './step-templates/timeline/timeline.html?url';
+import suspectsTemplate from './step-templates/suspects/suspect.html?url';
+import victimsTemplate from './step-templates/victims/victim.html?url';
+import attachmentsTemplate from './step-templates/attachments/attachment.html?url';
 
-import timelineEntryTemplate from './step-templates/timeline/timelineModal.html';
-import suspectTemplate from './step-templates/suspects/suspectModal.html';
-import victimTemplate from './step-templates/victims/victimModal.html';
-import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
+import timelineEntryTemplate from './step-templates/timeline/timelineModal.html?url';
+import suspectTemplate from './step-templates/suspects/suspectModal.html?url';
+import victimTemplate from './step-templates/victims/victimModal.html?url';
+import attachmentTemplate from './step-templates/attachments/attachmentModal.html?url';
 
 export class LegalCaseCommonController extends BaseLegalCaseController {
     constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService) {

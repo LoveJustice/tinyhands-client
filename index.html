@@ -9,19 +9,23 @@
   </head>
   <!-- Google tag (gtag.js) -->
   <!-- TODO Do we need this??? -->
-<!--  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JY82WDLGXS"></script>-->
-<!--  <script>-->
-<!--    window.dataLayer = window.dataLayer || [];-->
-<!--    function gtag(){dataLayer.push(arguments);}-->
-<!--    gtag('js', new Date());-->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JY82WDLGXS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-<!--    gtag('config', 'G-JY82WDLGXS');-->
-<!--  </script>-->
+    gtag('config', 'G-JY82WDLGXS');
+  </script>
   <body>
-    <div id="root"></div>
-    <div style='height: 700px;width:100%' id="angularRoot">
-      <div style='width:100%' id="angularRouter" ui-view>
-      </div>
+    <div class="full-height" id="root"></div>
+    <div id="angular-root">
+
+<!--      These are now included in App.tsx wrapped in React -->
+<!--      <spinner-overlay></spinner-overlay>-->
+<!--      <navbar></navbar>-->
+<!--      <div class="full-height" id="angular-router" ui-view>-->
+<!--      </div>-->
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

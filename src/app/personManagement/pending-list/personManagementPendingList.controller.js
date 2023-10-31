@@ -1,7 +1,7 @@
 import "./personManagementPendingList.less";
 import {BaseMasterPersonCompare} from '../baseMasterPersonCompare.js';
 import MatchModalController from '../matchModal.controller';
-import matchTemplate from '../step-templates/matchModal.html';
+import matchTemplate from '../step-templates/matchModal.html?url';
 
 class personManagementPendingListController extends BaseMasterPersonCompare {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementPendingListService, personManagementService, SessionService, $uibModal, $state, $stateParams, $document, toastr, constants) {

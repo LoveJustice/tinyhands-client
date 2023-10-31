@@ -1,6 +1,6 @@
 import {CifModalController} from './cifModalController.js';
 
-const CheckboxGroup = require('../checkboxGroup.js');
+import CheckboxGroup from '../checkboxGroup';
 
 class AssociatedPersonModalController extends CifModalController {
     constructor($uibModalInstance, constants, $scope, isAdd, card, isViewing, modalActions, config, parentController, identificationTypes, associatedPersons, checkboxGroupItems) {

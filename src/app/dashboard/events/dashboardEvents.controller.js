@@ -1,4 +1,4 @@
-import eventModalTemplate from '../../events/calendar/eventModal.html';
+import eventModalTemplate from '../../events/calendar/eventModal.html?url';
 
 export default class DashboardEventsController {
     constructor($scope, $uibModal, EventsService) {

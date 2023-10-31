@@ -1,5 +1,5 @@
 import TallyController from './tally.controller.js';
-import tallyTemplate from './tally.html';
+import tallyTemplate from './tally.html?url';
 import './tally.less';
 
 export default function TallyDirective() {

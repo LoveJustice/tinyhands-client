@@ -87,4 +87,4 @@ class CheckboxGroup {
     }
 }
 
-module.exports = CheckboxGroup;
+export default CheckboxGroup;

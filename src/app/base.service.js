@@ -14,7 +14,9 @@ export default class BaseService {
      * @param auth0Service Service to help with Auth0 authentication
      * @param $q Helps to wrap legacy token making in promise to match Auth0
      */
-    constructor($http, auth0Service, $q) {
+    constructor($http,
+                auth0Service,
+                $q) {
         'ngInject';
 
         this.$http = $http;
@@ -61,11 +63,13 @@ export default class BaseService {
         if (localStorage.getItem('token')) {
             headers.Authorization = localStorage.token;
             let defer = this.$q.defer();
-            // Don't reject, because api/login works without token
             defer.resolve();
             return defer.promise;
         } else {
-            return this.addAuth0TokenAsync(headers);
+            let defer = this.$q.defer();
+            defer.resolve();
+            return defer.promise;
+            // return this.addAuth0TokenAsync(headers);
         }
     }
 

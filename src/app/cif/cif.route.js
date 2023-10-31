@@ -1,4 +1,4 @@
-import cifListTemplate from './list/cifList.html';
+import cifListTemplate from './list/cifList.html?url';
 import './list/cifList.less';
 
 function CifRoutes($stateProvider) {

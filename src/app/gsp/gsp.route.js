@@ -1,6 +1,6 @@
-import gspListTemplate from './list/gspList.html';
+import gspListTemplate from './list/gspList.html?url';
 import './list/gspList.less';
-import gspTemplate from './gsp.html';
+import gspTemplate from './gsp.html?url';
 
 function GspRoutes($stateProvider) {
     'ngInject';

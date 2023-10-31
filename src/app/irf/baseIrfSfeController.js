@@ -1,19 +1,19 @@
 import {BaseIrfBlindVerificationController} from './baseIrfBlindVerificationController.js';
-const OtherData = require('../otherData.js');
-const DateData = require('../dateData.js');
+import OtherData from '../otherData';
+import DateData from '../dateData';
 import './common/irf.less';
 
-import topBoxTemplate from './common/step-templates/topBoxSfe.html';
-import areaTemplate from './common/step-templates/areaSfe.html';
-import industryTemplate from './common/step-templates/industrySfe.html';
-import resourcesTemplate from './common/step-templates/resourcesSfe.html';
-import controlTemplate from './common/step-templates/controlSfe.html';
-import narrativeTemplate from './common/step-templates/narrativeSfe.html';
-import peopleTemplate from './common/step-templates/peopleSfe.html';
-import resultTemplate from './common/step-templates/resultSfe.html';
-import attachmentsTemplate from './common/step-templates/attachments/attachment.html';
-import complianceTemplate from './common/step-templates/compliance.html';
-import verificationTemplate from './common/step-templates/verificationBlind.html';
+import topBoxTemplate from './common/step-templates/topBoxSfe.html?url';
+import areaTemplate from './common/step-templates/areaSfe.html?url';
+import industryTemplate from './common/step-templates/industrySfe.html?url';
+import resourcesTemplate from './common/step-templates/resourcesSfe.html?url';
+import controlTemplate from './common/step-templates/controlSfe.html?url';
+import narrativeTemplate from './common/step-templates/narrativeSfe.html?url';
+import peopleTemplate from './common/step-templates/peopleSfe.html?url';
+import resultTemplate from './common/step-templates/resultSfe.html?url';
+import attachmentsTemplate from './common/step-templates/attachments/attachment.html?url';
+import complianceTemplate from './common/step-templates/compliance.html?url';
+import verificationTemplate from './common/step-templates/verificationBlind.html?url';
 
 export class BaseIrfSfeController extends BaseIrfBlindVerificationController {
 	constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {

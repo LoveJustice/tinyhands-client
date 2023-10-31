@@ -1,4 +1,4 @@
-import EditCountryModalTemplate from './countryModal.html';
+import EditCountryModalTemplate from './countryModal.html?url';
 
 class CountriesController {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, countriesService, $uibModal) {

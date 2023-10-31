@@ -1,4 +1,4 @@
-import paginateTemplate from './paginate.html';
+import paginateTemplate from './paginate.html?url';
 import './paginate.less';
 
 class PaginateController {

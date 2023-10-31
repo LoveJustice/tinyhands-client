@@ -1,5 +1,5 @@
 import MapController from './map.controller.js';
-import mapTemplate from './map.html';
+import mapTemplate from './map.html?url';
 import './map.less';
 
 export default function MapDirective() {

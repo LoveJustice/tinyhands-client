@@ -1,5 +1,5 @@
 import DashboardEventsController from './dashboardEvents.controller';
-import dashboardEventsTemplate from './events.html';
+import dashboardEventsTemplate from './events.html?url';
 import './events.less';
 
 export default function DashboardEventsDirective() {

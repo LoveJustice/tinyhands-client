@@ -1,5 +1,5 @@
-import address2DeleteModalTemplate from '../delete/address2DeleteModal.html';
-import address2EditModalTemplate from '../edit/address2EditModal.html';
+import address2DeleteModalTemplate from '../delete/address2DeleteModal.html?url';
+import address2EditModalTemplate from '../edit/address2EditModal.html?url';
 
 class Address2Controller {
     constructor(StickyHeader, $rootScope, $scope, $http, $timeout, address2Service, $uibModal, $stateParams, $state, toastr) {

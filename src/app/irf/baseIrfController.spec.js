@@ -14,7 +14,7 @@ const IdConstants = {
 		"92":[['Hotel owner', 'Rickshaw driver', 'Taxi driver'], ['Bus driver', 'Church member', 'Other NGO'], ['Police', 'Subcomittee member']],
 	},
 	Interceptees: {
-		BaseUrl: API_URL,
+		BaseUrl: import.meta.env.VITE_API_URL,
 		Category:6,
 		ImageQuestion:7,
 		Person: [9],

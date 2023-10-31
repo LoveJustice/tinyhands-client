@@ -1,4 +1,4 @@
-import dashboardTemplate from './dashboard.html';
+import dashboardTemplate from './dashboard.html?url';
 import './dashboard.less';
 
 function dashboardRouteConfig($stateProvider) {

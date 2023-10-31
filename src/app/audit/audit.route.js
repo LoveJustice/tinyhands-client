@@ -1,9 +1,9 @@
-import auditListTemplate from './list/auditList.html';
+import auditListTemplate from './list/auditList.html?url';
 import './list/auditList.less';
-import auditSampleListTemplate from './sampleList/auditSampleList.html';
+import auditSampleListTemplate from './sampleList/auditSampleList.html?url';
 import './sampleList/auditSampleList.less';
-import auditTemplate from './audit.html';
-import auditSampleTemplate from './auditSample.html';
+import auditTemplate from './audit.html?url';
+import auditSampleTemplate from './auditSample.html?url';
 
 function AuditRoutes($stateProvider) {
     'ngInject';

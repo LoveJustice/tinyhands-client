@@ -1,4 +1,4 @@
-import idmanagementListTemplate from './idmanagement.html';
+import idmanagementListTemplate from './idmanagement.html?url';
 
 function idmanagementRouteConfig($stateProvider) {
     'ngInject';

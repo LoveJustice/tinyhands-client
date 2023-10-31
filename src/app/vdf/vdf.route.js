@@ -1,4 +1,4 @@
-import vdfListTemplate from './list/vdfList.html';
+import vdfListTemplate from './list/vdfList.html?url';
 import './list/vdfList.less';
 
 function VdfRoutes($stateProvider) {

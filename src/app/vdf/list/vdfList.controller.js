@@ -1,4 +1,4 @@
-import createVdfModalTemplate from './createVdfModal.html';
+import createVdfModalTemplate from './createVdfModal.html?url';
 
 /* global angular */
 

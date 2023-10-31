@@ -1,4 +1,4 @@
-import createLegalCaseModalTemplate from './createLegalCaseModal.html';
+import createLegalCaseModalTemplate from './createLegalCaseModal.html?url';
 
 /* global angular */
 

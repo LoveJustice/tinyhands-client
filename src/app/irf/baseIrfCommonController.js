@@ -1,17 +1,17 @@
 import {BaseIrfController} from './baseIrfController.js';
 import './common/irf.less';
 
-import topBoxTemplate from './common/step-templates/topBox.html';
-import profileTemplate from './common/step-templates/profile.html';
-import areaIndustryTemplate from './common/step-templates/areaIndustry.html';
-import resourceSafetyTemplate from './common/step-templates/resourceSafety.html';
-import controlTemplate from './common/step-templates/control.html';
-import noticedTemplate from './common/step-templates/noticed.html';
-import intercepteesTemplate from './common/step-templates/interceptees/people.html';
-import finalProceduresTemplate from './common/step-templates/finalProcedures.html';
-import attachmentsTemplate from './common/step-templates/attachments/attachment.html';
-import complianceTemplate from './common/step-templates/compliance.html';
-import verificationTemplate from './common/step-templates/verification.html';
+import topBoxTemplate from './common/step-templates/topBox.html?url';
+import profileTemplate from './common/step-templates/profile.html?url';
+import areaIndustryTemplate from './common/step-templates/areaIndustry.html?url';
+import resourceSafetyTemplate from './common/step-templates/resourceSafety.html?url';
+import controlTemplate from './common/step-templates/control.html?url';
+import noticedTemplate from './common/step-templates/noticed.html?url';
+import intercepteesTemplate from './common/step-templates/interceptees/people.html?url';
+import finalProceduresTemplate from './common/step-templates/finalProcedures.html?url';
+import attachmentsTemplate from './common/step-templates/attachments/attachment.html?url';
+import complianceTemplate from './common/step-templates/compliance.html?url';
+import verificationTemplate from './common/step-templates/verification.html?url';
 
 export class BaseIrfCommonController extends BaseIrfController {
 	constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {

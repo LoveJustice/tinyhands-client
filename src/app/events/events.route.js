@@ -1,9 +1,9 @@
-import calendarTemplate from './calendar/eventCalendar.html';
+import calendarTemplate from './calendar/eventCalendar.html?url';
 import './calendar/eventCalendar.less';
 import './calendar/eventModal.less';
-import eventsListTemplate from './list/event_list.html';
+import eventsListTemplate from './list/event_list.html?url';
 import './list/eventList.less';
-import eventTemplate from './form/event_form.html';
+import eventTemplate from './form/event_form.html?url';
 import './form/eventFrom.less';
 
 export default function routerConfig($stateProvider) {

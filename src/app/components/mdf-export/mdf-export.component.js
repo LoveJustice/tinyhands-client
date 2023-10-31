@@ -1,5 +1,5 @@
-import exportMdfTemplate from './mdf-export.html';
-import mdfExportModalTemplate from './mdf-export-modal.html';
+import exportMdfTemplate from './mdf-export.html?url';
+import mdfExportModalTemplate from './mdf-export-modal.html?url';
 import constants from '../../constants.js';
 
 class ExportMdfsModalController {

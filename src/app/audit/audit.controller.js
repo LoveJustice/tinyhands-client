@@ -1,5 +1,5 @@
 import './audit.less';
-const DateData = require('../dateData.js');
+import DateData from '../dateData';
 
 export default class AuditController {
     constructor(AuditService, SessionService, $state, $stateParams, toastr, constants) {

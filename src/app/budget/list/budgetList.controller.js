@@ -4,7 +4,7 @@
  * @export
  * @class BudgetList
  */
-import createBudgetModalTemplate from './createBudgetModal.html';
+import createBudgetModalTemplate from './createBudgetModal.html?url';
 
 export default class BudgetList {
     /**

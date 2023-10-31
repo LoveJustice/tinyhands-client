@@ -1,5 +1,5 @@
 import './gsp.less';
-const DateData = require('../dateData.js');
+import DateData from '../dateData';
 
 export default class GspController {
     constructor($scope, $uibModal, constants, GspService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {

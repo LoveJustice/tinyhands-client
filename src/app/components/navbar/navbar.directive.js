@@ -1,5 +1,5 @@
 import NavbarController from './navbar.controller';
-import navbarTemplate from './navbar.html';
+import navbarTemplate from './navbar.html?url';
 import './navbar.less';
 
 export default function NavbarDirective() {

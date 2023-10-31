@@ -1,5 +1,5 @@
 import CheckBoxController from './checkBox.controller';
-import checkBoxTemplate from './checkBox.html';
+import checkBoxTemplate from './checkBox.html?url';
 
 export default function CheckBoxDirective() {
     'ngInject';

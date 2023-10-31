@@ -1,4 +1,4 @@
-import countryTemplate from './countries.html';
+import countryTemplate from './countries.html?url';
 
 function countriesRouteConfig($stateProvider) {
     'ngInject';

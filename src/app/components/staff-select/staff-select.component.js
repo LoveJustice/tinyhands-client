@@ -1,5 +1,5 @@
-import StaffSelectTemplateUrl from './staff-select.html';
-import checkboxSelectionTemplate from './checkboxSelection.html';
+import StaffSelectTemplateUrl from './staff-select.html?url';
+import checkboxSelectionTemplate from './checkboxSelection.html?url';
 import CheckboxSelectionController from './checkboxSelectionController.js';
 /* global _ */
 

@@ -68,4 +68,4 @@ class OtherData {
 	}
 }
 
-module.exports = OtherData;
+export default OtherData;

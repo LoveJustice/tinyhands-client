@@ -1,6 +1,6 @@
-import empListTemplate from './list/empList.html';
+import empListTemplate from './list/empList.html?url';
 import './list/empList.less';
-import empTemplate from './emp.html';
+import empTemplate from './emp.html?url';
 
 function EmpRoutes($stateProvider) {
     'ngInject';

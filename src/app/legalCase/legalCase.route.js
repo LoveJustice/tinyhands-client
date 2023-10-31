@@ -1,4 +1,4 @@
-import legalCaseListTemplate from './list/legalCaseList.html';
+import legalCaseListTemplate from './list/legalCaseList.html?url';
 import './list/legalCaseList.less';
 
 function LegalCaseRoutes($stateProvider) {

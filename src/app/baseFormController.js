@@ -1,6 +1,6 @@
 /* global jQuery */
-const OtherData = require('./otherData.js');
-const DateData = require('./dateData.js');
+import OtherData from './otherData';
+import DateData from './dateData';
 
 const ID = 1;
 const TAG = 2;

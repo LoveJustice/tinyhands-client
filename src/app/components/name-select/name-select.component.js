@@ -1,6 +1,6 @@
 import './name-select.less';
-import NameSelectTemplateUrl from './name-select.html';
-import nameCheckboxSelectTemplate from './nameCheckboxSelect.html';
+import NameSelectTemplateUrl from './name-select.html?url';
+import nameCheckboxSelectTemplate from './nameCheckboxSelect.html?url';
 import NameCheckboxSelectController from './nameCheckboxSelectController.js';
 
 /* global _ */

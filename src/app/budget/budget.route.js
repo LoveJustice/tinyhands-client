@@ -1,7 +1,7 @@
-import budgetTemplate from './form/budget.html';
+import budgetTemplate from './form/budget.html?url';
 import './form/budget.less';
-import budgetListTemplate from './list/budgetList.html';
-import mdfTemplate from './mdf/mdf.html';
+import budgetListTemplate from './list/budgetList.html?url';
+import mdfTemplate from './mdf/mdf.html?url';
 import './mdf/mdf.less';
 import './list/budgetList.less';
 

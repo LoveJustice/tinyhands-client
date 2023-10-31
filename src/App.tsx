@@ -1,25 +1,23 @@
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.scss';
 import CustomQueryClientProvider from './CustomQueryClientProvider';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { AngularBasePageReact } from './angularBasePage.component';
+import { AngularRouterReact } from './angularRouter.component';
 
 function App() {
+  const location = useLocation()
   return (
     <>
-      <div>
-        <a href='https://vitejs.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
       <CustomQueryClientProvider>
-          {/* TODO navbar here */}
+        <AngularBasePageReact />
+        <div hidden={location.pathname == '/'}>
           {/*Outlet is where router children will be rendered*/}
-          <Outlet />
+          <Outlet/>
+        </div>
+        <div hidden={location.pathname != '/'}>
+          <AngularRouterReact />
+        </div>
       </CustomQueryClientProvider>
     </>
   );

@@ -1,5 +1,5 @@
-import autocompleteTemplate from './autocomplete-address2.html';
-import addAddress2Template from './addAddress2.html';
+import autocompleteTemplate from './autocomplete-address2.html?url';
+import addAddress2Template from './addAddress2.html?url';
 import AddAddress2Controller from './addAddress2Controller.js';
 
 export default function AutocompleteAddress2Directive() {

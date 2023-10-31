@@ -1,5 +1,5 @@
 import CsvExportController from './csv-export.controller';
-import csvExportTemplate from './csv-export.html';
+import csvExportTemplate from './csv-export.html?url';
 
 export default function CsvExportDirective() {
     'ngInject';

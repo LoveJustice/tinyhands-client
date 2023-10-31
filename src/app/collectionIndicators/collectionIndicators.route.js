@@ -1,4 +1,4 @@
-import collectionIndicatorsTemplate from './collectionIndicators.html';
+import collectionIndicatorsTemplate from './collectionIndicators.html?url';
 import './collectionIndicators.less';
 
 function collectionIndicatorsRoutes($stateProvider) {

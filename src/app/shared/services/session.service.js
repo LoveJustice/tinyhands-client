@@ -112,7 +112,7 @@ export default class SessionService {
 
     checkIfAuthenticatedAuth0() {
         let defer = this.$q.defer();
-        if(this.auth0Service.clientReadyPromise) {
+        if(this.auth0Service && this.auth0Service.clientReadyPromise) {
             const nonQPromise = this.auth0Service.clientReadyPromise.then((client) => {
                 return client.isAuthenticated();
             }).then((isAuthenticated) => {

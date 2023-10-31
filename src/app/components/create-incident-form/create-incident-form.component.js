@@ -1,4 +1,4 @@
-import CreateIncidentFormTemplate from './create-incident-form.html';
+import CreateIncidentFormTemplate from './create-incident-form.html?url';
 import createIncidentModal from './createIncidentFormModal.html';
 import CreateIncidentModalController from './createIncidentFormModalController.js';
 

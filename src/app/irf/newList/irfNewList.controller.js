@@ -1,4 +1,4 @@
-import createIrfModalTemplate from './createIrfModal.html';
+import createIrfModalTemplate from './createIrfModal.html?url';
 import attachmentExportModalTemplate from './attachmentExportModal.html'
 
 /* global angular */

@@ -1,4 +1,4 @@
-import photoExportTemplate from './photo-export.html';
+import photoExportTemplate from './photo-export.html?url';
 
 export default function PhotoExportDirective() {
     'ngInject';

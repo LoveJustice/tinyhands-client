@@ -1,18 +1,18 @@
 import {BaseSfController} from '../baseSfController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import './commonV2022_6.less';
-const CheckboxGroup = require('../../checkboxGroup.js');
+import CheckboxGroup from '../../checkboxGroup';
 
-import templateUrl from './commonV2022_6.html';
+import templateUrl from './commonV2022_6.html?url';
 
-import topTemplate from './step-templates/top.html';
-import suspectInformationTemplate from './step-templates/suspectInformation.html';
-import associationsNarrativeTemplate from './step-templates/associationsNarrative.html';
-import legalTemplate from './step-templates/legal.html';
-import attachmentsTemplate from './step-templates/attachments/attachment.html';
-import complianceTemplate from './step-templates/compliance.html';
+import topTemplate from './step-templates/top.html?url';
+import suspectInformationTemplate from './step-templates/suspectInformation.html?url';
+import associationsNarrativeTemplate from './step-templates/associationsNarrative.html?url';
+import legalTemplate from './step-templates/legal.html?url';
+import attachmentsTemplate from './step-templates/attachments/attachment.html?url';
+import complianceTemplate from './step-templates/compliance.html?url';
 
-import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
+import attachmentTemplate from './step-templates/attachments/attachment-modal.html?url';
 
 export class SfCommonV2022_6Controller extends BaseSfController {
     constructor($scope, $uibModal, SfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout) {

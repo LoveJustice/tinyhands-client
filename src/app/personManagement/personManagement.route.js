@@ -1,6 +1,6 @@
-import personManagementTemplate from './personManagement.html';
-import personManagementListTemplate from './list/personManagementList.html';
-import personManagementPendingListTemplate from './pending-list/personManagementPendingList.html';
+import personManagementTemplate from './personManagement.html?url';
+import personManagementListTemplate from './list/personManagementList.html?url';
+import personManagementPendingListTemplate from './pending-list/personManagementPendingList.html?url';
 
 function PersonManagementRoutes($stateProvider) {
     'ngInject';

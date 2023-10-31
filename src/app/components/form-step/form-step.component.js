@@ -1,4 +1,4 @@
-import formStepTemplateUrl from './form-step.html';
+import formStepTemplateUrl from './form-step.html?url';
 import './form-step.less';
 
 export class FormStepController {

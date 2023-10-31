@@ -1,5 +1,5 @@
-import loginTemplate from './login.html';
-import passwordResetTemplate from './password-reset/password-reset.html';
+import loginTemplate from './login.html?url';
+import passwordResetTemplate from './password-reset/password-reset.html?url';
 
 function loginRouteConfig($stateProvider) {
     'ngInject';

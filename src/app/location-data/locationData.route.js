@@ -1,4 +1,4 @@
-import locationDataTemplate from './locationData.html';
+import locationDataTemplate from './locationData.html?url';
 import './locationData.less';
 
 function locationDataRoutes($stateProvider) {

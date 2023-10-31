@@ -1,4 +1,4 @@
-import RelatedFormsTemplate from './related-forms.html';
+import RelatedFormsTemplate from './related-forms.html?url';
 
 export class RelatedFormController {
     constructor($scope) {

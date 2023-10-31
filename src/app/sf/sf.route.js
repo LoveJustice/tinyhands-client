@@ -1,4 +1,4 @@
-import sfListTemplate from './list/sfList.html';
+import sfListTemplate from './list/sfList.html?url';
 import './list/sfList.less';
 
 function SfRoutes($stateProvider) {

@@ -1,5 +1,5 @@
 import {BaseFormController} from '../baseFormController.js';
-import templateUrl from './incident.html';
+import templateUrl from './incident.html?url';
 
 export class IncidentController extends BaseFormController {
     constructor($scope, $stateParams, $state, $uibModalStack, SpinnerOverlayService, SessionService, IncidentService) {

@@ -1,4 +1,4 @@
-import photoExportModalTemplate from './photo-export-modal.html';
+import photoExportModalTemplate from './photo-export-modal.html?url';
 
 export default class PhotoExportController {
     constructor($scope, $uibModal) {

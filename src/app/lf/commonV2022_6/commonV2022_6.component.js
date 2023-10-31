@@ -1,18 +1,18 @@
 import {BaseLfController} from '../baseLfController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import './commonV2022_6.less';
-const CheckboxGroup = require('../../checkboxGroup.js');
+import CheckboxGroup from '../../checkboxGroup';
 
-import templateUrl from './commonV2022_6.html';
+import templateUrl from './commonV2022_6.html?url';
 
-import topTemplate from './step-templates/top.html';
-import locationInformationTemplate from './step-templates/locationInformation.html';
-import associationsTemplate from './step-templates/associations.html';
-import narrativeTemplate from './step-templates/narrative.html';
-import attachmentsTemplate from './step-templates/attachments/attachment.html';
-import complianceTemplate from './step-templates/compliance.html';
+import topTemplate from './step-templates/top.html?url';
+import locationInformationTemplate from './step-templates/locationInformation.html?url';
+import associationsTemplate from './step-templates/associations.html?url';
+import narrativeTemplate from './step-templates/narrative.html?url';
+import attachmentsTemplate from './step-templates/attachments/attachment.html?url';
+import complianceTemplate from './step-templates/compliance.html?url';
 
-import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
+import attachmentTemplate from './step-templates/attachments/attachment-modal.html?url';
 
 export class LfCommonV2022_6Controller extends BaseLfController {
     constructor($scope, $uibModal, LfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout) {

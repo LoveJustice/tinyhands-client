@@ -1,5 +1,5 @@
-import helpListTemplate from './helpList.html';
-import viewVideoTemplate from './viewVideo.html';
+import helpListTemplate from './helpList.html?url';
+import viewVideoTemplate from './viewVideo.html?url';
 
 function helpRouteConfig($stateProvider) {
     'ngInject';

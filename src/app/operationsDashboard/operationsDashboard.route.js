@@ -1,4 +1,4 @@
-import operationsDashboardTemplate from './operationsDashboard.html';
+import operationsDashboardTemplate from './operationsDashboard.html?url';
 import './operationsDashboard.less';
 
 function operationsDashboardRoutes($stateProvider) {

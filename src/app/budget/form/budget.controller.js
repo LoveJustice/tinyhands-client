@@ -10,8 +10,8 @@ import moneyNotSpentForm from './components/moneyNotSpent/moneyNotSpent.html';
 import impactMultiplyingForm from './components/impactMultiplying/impactMultiplying.html';
 import rentUtilitiesForm from './components/rentUtilities/rentUtilities.html';
 
-import categoryTemplate from './components/salaries/category.html';
-import detailTemplate from './detail.html';
+import categoryTemplate from './components/salaries/category.html?url';
+import detailTemplate from './detail.html?url';
 
 import CategoryModalController from './components/salaries/categoryModal.controller';
 import DetailModalController from './detailModal.controller';

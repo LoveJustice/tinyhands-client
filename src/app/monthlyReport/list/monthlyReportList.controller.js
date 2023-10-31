@@ -1,4 +1,4 @@
-import createMonthlyReportModalTemplate from './createMonthlyReportModal.html';
+import createMonthlyReportModalTemplate from './createMonthlyReportModal.html?url';
 
 /* global angular */
 

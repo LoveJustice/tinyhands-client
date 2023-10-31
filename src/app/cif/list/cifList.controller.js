@@ -1,4 +1,4 @@
-import createCifModalTemplate from './createCifModal.html';
+import createCifModalTemplate from './createCifModal.html?url';
 
 /* global angular */
 

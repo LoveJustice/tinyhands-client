@@ -1,4 +1,4 @@
-import createBudgetButtonTemplate from './create-budget.html';
+import createBudgetButtonTemplate from './create-budget.html?url';
 
 class CreateBudgetController {
   constructor(BorderStationService, SessionService) {

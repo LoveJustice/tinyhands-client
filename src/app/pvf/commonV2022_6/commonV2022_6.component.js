@@ -1,22 +1,22 @@
 import {BasePvfController} from '../basePvfController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import './commonV2022_6.less';
-const CheckboxGroup = require('../../checkboxGroup.js');
+import CheckboxGroup from '../../checkboxGroup';
 
-import templateUrl from './commonV2022_6.html';
+import templateUrl from './commonV2022_6.html?url';
 
-import topTemplate from './step-templates/top.html';
-import pvFamilyTemplate from './step-templates/pv-family.html';
-import recruitmentTemplate from './step-templates/recruitment.html';
-import travelTemplate from './step-templates/travel-prior-exploitation.html';
-import homeAssessmentTemplate from './step-templates/home-assessment.html';
-import awarenessTemplate from './step-templates/awareness.html';
-import releaseTemplate from './step-templates/release.html';
-import staffAssessmentTemplate from './step-templates/staff-assessment.html';
-import attachmentsTemplate from './step-templates/attachments/attachment.html';
-import complianceTemplate from './step-templates/compliance.html';
+import topTemplate from './step-templates/top.html?url';
+import pvFamilyTemplate from './step-templates/pv-family.html?url';
+import recruitmentTemplate from './step-templates/recruitment.html?url';
+import travelTemplate from './step-templates/travel-prior-exploitation.html?url';
+import homeAssessmentTemplate from './step-templates/home-assessment.html?url';
+import awarenessTemplate from './step-templates/awareness.html?url';
+import releaseTemplate from './step-templates/release.html?url';
+import staffAssessmentTemplate from './step-templates/staff-assessment.html?url';
+import attachmentsTemplate from './step-templates/attachments/attachment.html?url';
+import complianceTemplate from './step-templates/compliance.html?url';
 
-import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
+import attachmentTemplate from './step-templates/attachments/attachment-modal.html?url';
 
 export class PvfCommonV2022_6Controller extends BasePvfController {
     constructor($scope, $uibModal, constants, PvfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService) {

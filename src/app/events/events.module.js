@@ -1,5 +1,6 @@
 import uiBootstrap from 'angular-ui-bootstrap';
-import 'fullcalendar';
+// TODO BROKEN!!
+// import 'fullcalendar';
 import 'angular-ui-calendar';
 import sharedModule from '../shared/shared.module';
 

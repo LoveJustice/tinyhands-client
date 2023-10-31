@@ -1,5 +1,5 @@
 import ConfirmButtonController from './confirmButton.controller';
-import confirmButtonTemplate from './confirmButton.html';
+import confirmButtonTemplate from './confirmButton.html?url';
 
 export default function ConfirmButton() {
     'ngInject';

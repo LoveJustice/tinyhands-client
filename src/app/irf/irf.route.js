@@ -1,6 +1,6 @@
-import irfListTemplate from './list/irfList.html';
+import irfListTemplate from './list/irfList.html?url';
 import './list/irfList.less';
-import irfNewListTemplate from './newList/irfNewList.html';
+import irfNewListTemplate from './newList/irfNewList.html?url';
 import './newList/irfNewList.less';
 
 function IrfRoutes($stateProvider) {

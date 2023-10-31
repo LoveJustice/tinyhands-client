@@ -1,7 +1,7 @@
 import {BaseFormController} from '../baseFormController.js';
-const OtherData = require('../otherData.js');
-const DateData = require('../dateData.js');
-const CheckboxGroup = require('../checkboxGroup.js');
+import OtherData from '../otherData';
+import DateData from '../dateData';
+import CheckboxGroup from '../checkboxGroup';
 
 
 export class BaseSfController extends BaseFormController {

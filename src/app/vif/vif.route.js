@@ -1,4 +1,4 @@
-import vifListTemplate from './list/vifList.html';
+import vifListTemplate from './list/vifList.html?url';
 import './list/vifList.less';
 
 function VIFRoutes($stateProvider) {

@@ -1,4 +1,4 @@
-import locationStaffTemplate from './locationStaff.html';
+import locationStaffTemplate from './locationStaff.html?url';
 import './locationStaff.less';
 
 function locationStaffRoutes($stateProvider) {

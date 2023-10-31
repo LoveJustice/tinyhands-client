@@ -1,4 +1,4 @@
-import lfListTemplate from './list/lfList.html';
+import lfListTemplate from './list/lfList.html?url';
 import './list/lfList.less';
 
 function LfRoutes($stateProvider) {

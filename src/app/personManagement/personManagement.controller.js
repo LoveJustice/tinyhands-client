@@ -2,21 +2,21 @@
 /* global jQuery */
 import './personManagement.less';
 import {BaseMasterPersonCompare} from './baseMasterPersonCompare.js';
-import detailsTemplate from './step-templates/details.html';
-import confirmedMatchesTemplate from './step-templates/confirmedMatches.html';
-import possibleMatchesTemplate from './step-templates/possibleMatches.html';
-import suggestedMatchesTemplate from './step-templates/suggestedMatches.html';
-import confirmedNonMatchesTemplate from './step-templates/confirmedNonMatches.html';
-import createMatchTemplate from './step-templates/createMatch.html';
-import attachmentsTemplate from './step-templates/attachments/attachment.html';
+import detailsTemplate from './step-templates/details.html?url';
+import confirmedMatchesTemplate from './step-templates/confirmedMatches.html?url';
+import possibleMatchesTemplate from './step-templates/possibleMatches.html?url';
+import suggestedMatchesTemplate from './step-templates/suggestedMatches.html?url';
+import confirmedNonMatchesTemplate from './step-templates/confirmedNonMatches.html?url';
+import createMatchTemplate from './step-templates/createMatch.html?url';
+import attachmentsTemplate from './step-templates/attachments/attachment.html?url';
 
 import NotesModalController from './notesModal.controller';
-import notesTemplate from './step-templates/notesModal.html';
+import notesTemplate from './step-templates/notesModal.html?url';
 
 import MatchModalController from './matchModal.controller';
-import matchTemplate from './step-templates/matchModal.html';
+import matchTemplate from './step-templates/matchModal.html?url';
 
-import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
+import attachmentTemplate from './step-templates/attachments/attachmentModal.html?url';
 import AttachmentModalController from './step-templates/attachments/attachmentModal.controller';
 
 export class PersonManagementController extends BaseMasterPersonCompare {

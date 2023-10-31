@@ -1,4 +1,4 @@
-import eventModalTemplate from './eventModal.html';
+import eventModalTemplate from './eventModal.html?url';
 
 export default class EventCalendarController {
     constructor($uibModal, uiCalendarConfig, EventsService) {

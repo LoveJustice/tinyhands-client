@@ -1,5 +1,5 @@
 import './spinner.less';
-import template from './spinner.html';
+import Template from './spinner.html?url';
 import controller from './spinner.controller';
 
 export default function SpinnerDirective() {

@@ -1,4 +1,4 @@
-import createEmpModalTemplate from './createEmpModal.html';
+import createEmpModalTemplate from './createEmpModal.html?url';
 
 /* global angular */
 

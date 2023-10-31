@@ -1,4 +1,4 @@
-import LocationSelectTemplateUrl from './location-select.html';
+import LocationSelectTemplateUrl from './location-select.html?url';
 
 export class LocationSelectController {
     constructor(LocationService) {

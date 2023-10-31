@@ -1,5 +1,5 @@
-import monthlyReportListTemplate from './list/monthlyReportList.html';
-import monthlyReportSummaryTemplate from './summary/monthlyReportSummary.html';
+import monthlyReportListTemplate from './list/monthlyReportList.html?url';
+import monthlyReportSummaryTemplate from './summary/monthlyReportSummary.html?url';
 import './list/monthlyReportList.less';
 
 function MonthlyReportRoutes($stateProvider) {

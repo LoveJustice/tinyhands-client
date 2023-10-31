@@ -1,5 +1,5 @@
-const OtherData = require('./otherData.js');
-const DateDate = require('./dateData.js');
+import OtherData from './otherData';
+import DateData from './dateData';
 
 /* global _ */
 /* global setTimeout */

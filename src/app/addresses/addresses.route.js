@@ -1,5 +1,5 @@
-import address1ListTemplate from './address1/list/address1.html';
-import address2ListTemplate from './address2/list/address2.html';
+import address1ListTemplate from './address1/list/address1.html?url';
+import address2ListTemplate from './address2/list/address2.html?url';
 import './addresses.less';
 
 function addressesRouteConfig($stateProvider) {

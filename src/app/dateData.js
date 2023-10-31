@@ -88,4 +88,4 @@ class DateData {
 	}
 }
 
-module.exports = DateData;
+export default DateData;

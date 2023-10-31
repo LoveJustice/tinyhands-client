@@ -1,4 +1,4 @@
-import OpenMasterPersonTemplateUrl from './open-master-person.html';
+import OpenMasterPersonTemplateUrl from './open-master-person.html?url';
 
 export class OpenMasterPersonController {
     constructor($scope, $state, BaseService) {

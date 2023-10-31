@@ -2,19 +2,19 @@ import {BaseFormController} from '../baseFormController.js';
 import {BaseModalController} from '../baseModalController.js';
 import StationModalController from './stationModal.controller';
 import './borderStation.less';
-const CheckboxGroup = require('../checkboxGroup.js');
+import CheckboxGroup from '../checkboxGroup';
 
-import detailTemplate from './step-templates/detail.html';
-import committeeTemplate from './step-templates/committee/committee.html';
-import staffTemplate from './step-templates/staff/staff.html';
-import locationTemplate from './step-templates/location/location.html';
-import formsTemplate from './step-templates/forms.html';
-import committeeModalTemplate from './step-templates/committee/committeeModal.html';
-import staffModalTemplate from './step-templates/staff/staffModal.html';
-import staffWorkModalTemplate from './step-templates/staff/staffWorkModal.html';
-import locationModalTemplate from './step-templates/location/locationModal.html';
+import detailTemplate from './step-templates/detail.html?url';
+import committeeTemplate from './step-templates/committee/committee.html?url';
+import staffTemplate from './step-templates/staff/staff.html?url';
+import locationTemplate from './step-templates/location/location.html?url';
+import formsTemplate from './step-templates/forms.html?url';
+import committeeModalTemplate from './step-templates/committee/committeeModal.html?url';
+import staffModalTemplate from './step-templates/staff/staffModal.html?url';
+import staffWorkModalTemplate from './step-templates/staff/staffWorkModal.html?url';
+import locationModalTemplate from './step-templates/location/locationModal.html?url';
 
-import templateUrl from './borderStation.html';
+import templateUrl from './borderStation.html?url';
 
 class StaffWorkModalController {
     constructor($uibModalInstance, $scope, staff, parent) {

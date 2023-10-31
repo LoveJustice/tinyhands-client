@@ -2,17 +2,17 @@ import {BaseVdfController} from '../baseVdfController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import './commonV2.less';
 
-import templateUrl from './commonV2.html';
-import topTemplate from './step-templates/top.html';
-import victimTemplate from './step-templates/victim.html';
-import homeAssessmentTemplate from './step-templates/homeAssessment.html';
-import awarenessTemplate from './step-templates/awareness.html';
-import releaseTemplate from './step-templates/release.html';
-import finalTemplate from './step-templates/final.html';
-import attachmentsTemplate from './step-templates/attachments/attachment.html';
-import logbookTemplate from './step-templates/logbook.html';
+import templateUrl from './commonV2.html?url';
+import topTemplate from './step-templates/top.html?url';
+import victimTemplate from './step-templates/victim.html?url';
+import homeAssessmentTemplate from './step-templates/homeAssessment.html?url';
+import awarenessTemplate from './step-templates/awareness.html?url';
+import releaseTemplate from './step-templates/release.html?url';
+import finalTemplate from './step-templates/final.html?url';
+import attachmentsTemplate from './step-templates/attachments/attachment.html?url';
+import logbookTemplate from './step-templates/logbook.html?url';
 
-import attachmentTemplate from './step-templates/attachments/attachmentModal.html';
+import attachmentTemplate from './step-templates/attachments/attachmentModal.html?url';
 
 export class VdfCommonV2Controller extends BaseVdfController {
     constructor($scope, $uibModal, constants, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {

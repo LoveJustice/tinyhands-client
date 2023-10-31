@@ -1,4 +1,4 @@
-import deleteModalTemplate from './deleteModal.html';
+import deleteModalTemplate from './deleteModal.html?url';
 
 export default class EventsController {
     constructor(EventsService, $uibModal) {

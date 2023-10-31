@@ -2,22 +2,22 @@ import {BaseMonthlyReportController} from '../baseMonthlyReportController.js';
 import {BaseModalController} from '../../baseModalController.js';
 import '../common/monthlyReport.less';
 
-import templateUrl from '../common/monthlyReport.html';
+import templateUrl from '../common/monthlyReport.html?url';
 
-import governanceTemplate from '../common/step-templates/governance.html';
-import logisticsTemplate from '../common/step-templates/logisticsRegistration.html';
-import resourcesTemplate from '../common/step-templates/humanResources.html';
-import awarenessTemplate from '../common/step-templates/awareness.html';
-import securityTemplate from '../common/step-templates/security.html';
-import accountingTemplate from '../common/step-templates/accounting.html';
-import victimEngagementTemplate from '../common/step-templates/victimEngagement.html';
-import recordsTemplate from '../common/step-templates/records.html';
-import aftercareTemplate from '../common/step-templates/aftercare.html';
-import paralegalTemplate from '../common/step-templates/paralegal.html';
-import finalTemplate from '../common/step-templates/final.html';
-import attachmentsTemplate from '../common/step-templates/attachments/attachment.html';
+import governanceTemplate from '../common/step-templates/governance.html?url';
+import logisticsTemplate from '../common/step-templates/logisticsRegistration.html?url';
+import resourcesTemplate from '../common/step-templates/humanResources.html?url';
+import awarenessTemplate from '../common/step-templates/awareness.html?url';
+import securityTemplate from '../common/step-templates/security.html?url';
+import accountingTemplate from '../common/step-templates/accounting.html?url';
+import victimEngagementTemplate from '../common/step-templates/victimEngagement.html?url';
+import recordsTemplate from '../common/step-templates/records.html?url';
+import aftercareTemplate from '../common/step-templates/aftercare.html?url';
+import paralegalTemplate from '../common/step-templates/paralegal.html?url';
+import finalTemplate from '../common/step-templates/final.html?url';
+import attachmentsTemplate from '../common/step-templates/attachments/attachment.html?url';
 
-import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
+import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html?url';
 
 export class MonthlyReportNepalController extends BaseMonthlyReportController {
     constructor($scope, $uibModal, constants, MonthlyReportService, $stateParams, $state, SpinnerOverlayService, $uibModalStack) {

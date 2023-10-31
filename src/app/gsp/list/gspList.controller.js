@@ -1,4 +1,4 @@
-import createGspModalTemplate from './createGspModal.html';
+import createGspModalTemplate from './createGspModal.html?url';
 
 /* global angular */
 

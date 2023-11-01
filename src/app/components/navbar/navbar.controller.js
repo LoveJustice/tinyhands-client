@@ -17,6 +17,18 @@ export default class NavbarController {
         $scope.$on('GetNavBarBorderStations', () => {
             this.getBorderStations();
         });
+
+        // Function to track button clicks with Google Analytics
+        this.trackButtonClick = (buttonName) => {
+            gtag('event', 'button_click', {
+                'event_category': 'Button Clicks',
+                'event_action': 'click',
+                'event_label': buttonName,
+                'user_id': this.session.user.id,
+                'user_role': this.session.user.role,
+                'user_country': this.session.user.country_name
+            });
+        };
     }
 
     getBorderStations() {

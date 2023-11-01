@@ -84,7 +84,7 @@
 			</div>
     	</div>
 		<div class="container-fluid padding-bottom-20">
-			<div class=" col-md-8 row text-center padding-top-10" ng-if="vm.accepted==='Yes' && vm.gsp.full_name">
+			<div class=" col-md-8 row text-center padding-top-10" ng-if="vm.isFormComplete()">
 				<button class="btn btn-success" ng-click="vm.submit()">Submit</button>
 			</div>
 		</div>

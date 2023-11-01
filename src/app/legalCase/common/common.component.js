@@ -62,7 +62,7 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         }
     }
     
-    getSubIrfComplete() {
+    getLegalCaseComplete() {
         this.checkboxGroup.initOriginalValues(this.questions);
     }
     

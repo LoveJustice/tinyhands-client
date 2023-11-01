@@ -8,6 +8,13 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('sfBangladesh', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('sfBurkinaFaso', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
@@ -23,6 +30,13 @@ function SfCommonV2022_6Routes($stateProvider) {
             }
         })
         .state('sfBurundi', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfCambodia', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {
@@ -120,6 +134,20 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('sfOpenSource', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfRwanda', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('sfSierraLeone', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
@@ -134,7 +162,21 @@ function SfCommonV2022_6Routes($stateProvider) {
                 id: null,
             }
         })
+        .state('sfTanzania', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
         .state('sfUganda', {
+            url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
+            component: 'sfCommon202206Component',
+            params: {
+                id: null,
+            }
+        })
+        .state('sfUSA', {
             url: '/sf/commonV2022_6:?id&stationId&isViewing&formName&incidentId',
             component: 'sfCommon202206Component',
             params: {

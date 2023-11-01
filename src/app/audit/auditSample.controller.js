@@ -30,7 +30,7 @@ export default class AuditSampleController {
         this.service.getAuditSample(this.stateParams.id).then((promise) => {
             this.auditSample = promise.data;
             let baseRoute = this.auditSample.form_name;
-            if (this.auditSample.station_id) {
+            if (this.auditSample.station_id !== null) {
                 let params = {
                         id: this.auditSample.form_id,
                         stationId:this.auditSample.station_id,

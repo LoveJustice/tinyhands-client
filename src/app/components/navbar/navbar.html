@@ -17,6 +17,7 @@
         <ul class="nav navbar-nav" ng-mouseleave="stationsOpen = false; formsOpen = false">
 
 			<!-- START: FORMS -->
+
             <li class="dropdown" ng-class="{open:formsOpen}"
                 ng-hide="!navbarCtrl.showForms()"
                 ng-mouseleave="formsOpen = false">
@@ -26,39 +27,38 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null)"
-                            ui-sref="irfNewList">IRFs</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('CIF','VIEW',null, null)"
-                            ui-sref="cifList">CIFs</a>
-                    </li>
-                    <li>
-                        <a ng-show="navbarCtrl.session.checkPermission('VDF','VIEW',null, null)"
-                            ui-sref="vdfList">VDFs</a>
+                            ui-sref="irfNewList"
+                            ng-click="trackButtonClick('IRFs')">IRFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('PVF','VIEW',null, null)"
-                            ui-sref="pvfList">PVFs</a>
+                            ui-sref="pvfList"
+                            ng-click="trackButtonClick('PVFs')">PVFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('SF','VIEW',null, null)"
-                            ui-sref="sfList">SFs</a>
+                            ui-sref="sfList"
+                            ng-click="trackButtonClick('SFs')">SFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('LF','VIEW',null, null)"
-                            ui-sref="lfList">LFs</a>
+                            ui-sref="lfList"
+                            ng-click="trackButtonClick('LFs')">LFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('EMP','VIEW',null, null);"
-                            ui-sref="empList">Emps</a>
+                            ui-sref="empList"
+                            ng-click="trackButtonClick('Emps')">Emps</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('GSP','VIEW',null, null);"
-                            ui-sref="gspList">Gsps</a>
+                            ui-sref="gspList"
+                            ng-click="trackButtonClick('Gsps')">Gsps</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('MONTHLY_REPORT','VIEW',null, null)"
                             ui-sref="monthlyReportList">SMRs</a>
+
                     </li>
                 </ul>
             </li>
@@ -77,19 +77,23 @@
                		</li>
                		<li>
                         <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="operationsDashboard">Dashboard</a>
+                        	ui-sref="operationsDashboard"
+                            ng-click="trackButtonClick('Projects Dashboard')">Dashboard</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="stationData">Project Data</a>
+                        	ui-sref="stationData"
+                            ng-click="trackButtonClick('Project Data')">Project Data</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="locationData">Location Data</a>
+                        	ui-sref="locationData"
+                            ng-click="trackButtonClick('Location Data')">Location Data</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('PROJECT_STATISTICS','VIEW',null, null)"
-                        	ui-sref="locationStaff">Location Staffing</a>
+                        	ui-sref="locationStaff"
+                            ng-click="trackButtonClick('Location Staffing')">Location Staffing</a>
                     </li>
                 </ul>
             </li>
@@ -139,7 +143,8 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('GOSPEL_VERIFICATION','VIEW',null, null)"
-                            ui-sref="gospelVerificationList">Gospel Verification</a>
+                            ui-sref="gospelVerificationList"
+                            ng-click="trackButtonClick('Gospel Verification')">Gospel Verification</a>
                     </li>
                 </ul>
             </li>
@@ -194,27 +199,31 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a href="#" ng-show="navbarCtrl.session.user.permission_accounts_manage"
-                            ui-sref="accounts.list">
-                            Accounts and Permissions</a>
+                            ui-sref="accounts.list"
+                            ng-click="trackButtonClick('Accounts & Permissions')">Accounts & Permissions</a>
                     </li>
                     <li>
-                        <a ui-sref="countries">Countries</a>
+                        <a ui-sref="countries"
+                            ng-click="trackButtonClick('Countries')">Countries</a>
                     </li>
                     <li>
                         <a ui-sref="personManagementList"
-                            ng-show="navbarCtrl.session.checkPermission('PERSON_MANAGEMENT','EDIT',null, null)">
-                            Person Management</a>
+                            ng-show="navbarCtrl.session.checkPermission('PERSON_MANAGEMENT','EDIT',null, null)"
+                            ng-click="trackButtonClick('Person Management')">Person Management</a>
                     </li>
                     <li>
-                        <a ui-sref="traffickermatch" ng-show="navbarCtrl.session.user.permission_person_match">
-                            Person Match</a>
+                        <a ui-sref="traffickermatch"
+                           ng-show="navbarCtrl.session.user.permission_person_match"
+                            ng-click="trackButtonClick('Person Match')">Person Match</a>
                     </li>
                     <li>
-                        <a ui-sref="helpvideo">Help Videos</a>
+                        <a ui-sref="helpvideo"
+                            ng-click="trackButtonClick('Help Videos')">Help Videos</a>
                     </li>
                     <li class="divider"></li>
                     <li ng-click="navbarCtrl.logout()">
-                        <a href="#">Logout</a>
+                        <a href="#"
+                            ng-click="trackButtonClick('Logout')">Logout</a>
                     </li>
                 </ul>
             </li>

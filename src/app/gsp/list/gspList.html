@@ -64,8 +64,8 @@
                 <td>{{ gsp.station_name }}</td>
                 <td>{{ gsp.date_time_entered_into_system.substring(0,10)}}</td>
                 <td>{{ gsp.date_time_entered_into_system.substring(0,7)}}</td>
-                <td ng-if="gspListCtrl.session.checkPermission('GSP','VIEW',gsp.station.operating_country.id, gsp.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.viewUrl}}">View</a></td>
-                <td ng-if="gspListCtrl.session.checkPermission('GSP','EDIT',gsp.station.operating_country.id, gsp.station.id)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.editUrl}}">Edit</a></td>
+                <td ng-if="gspListCtrl.session.checkPermission('GSP','VIEW',gsp.country_id, gsp.station)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.viewUrl}}">View</a></td>
+                <td ng-if="gspListCtrl.session.checkPermission('GSP','EDIT',gsp.country_id, gsp.station)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.editUrl}}">Edit</a></td>
             </tr>
             <tr ng-show="gspListCtrl.gsps.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Gsps Matched your search for: "{{ gspListCtrl.queryParameters.search }}"</h2></td>

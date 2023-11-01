@@ -551,7 +551,7 @@ export class IrfSfeNepalController extends BaseIrfSfeController {
                 format:'level2Header',
                 points:0
             },
-            79:{
+            1082:{
                 enabled:true,
                 label:'Under 18 (enticed to work)',
                 type:'checkbox',
@@ -616,6 +616,14 @@ export class IrfSfeNepalController extends BaseIrfSfeController {
                 this.checkboxGroup.checkboxItem(detail.group, detail.value);
             }
         }
+    }
+    
+    overrideRadioItems(items, questionId) {
+        let result = items;
+        if (questionId === 92) {
+            result = this.contactList;
+        }
+        return result;
     }
     
     getDefaultIdentificationTypes() {

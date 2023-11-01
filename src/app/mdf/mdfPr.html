@@ -1,0 +1,162 @@
+<div id="mdf-calc-top" class="container-fluid col-xs-12">
+	<div class="row">
+		<h2 class="text-center form-inline">
+			{{ mdfCtrl.form.station_name }} Budget Calculation Form ({{ mdfCtrl.getMonthName() }} {{ mdfCtrl.year }})   
+			<div class="pull-right" ng-if="mdfCtrl.canApproveForm()" ng-mouseleave="mdfCtrl.confirmApprove=false;">
+  				<button ng-class="mdfCtrl.getApprovalClass()"
+        				ng-disabled="(mdfForm.$invalid || !mdfForm.$pristine)"
+    					ng-click="mdfCtrl.approveForm()">{{ mdfCtrl.confirmApprove ? mdfCtrl.getConfirmText() : mdfCtrl.getApprovalText() }}</button>
+    			<br>
+    			<p class="textDiscussionFont">
+    				<a ui-sref="projectRequestList({mdf_id:mdfCtrl.mdfId})" ng-disabled="mdfCtrl.openDiscussions < 1">Open Discussions: {{ mdfCtrl.openDiscussions }} </a></p>
+			</div>
+		</h2>
+		
+	</div>
+	<div class="row text-center">
+		<label>Currency:&nbsp;</label>
+		<select ng-model="mdfCtrl.currencyType" ng-change="mdfCtrl.currencyChange();">
+			<option value="local">local</option>
+			<option value="USD">USD</option>
+		</select>
+	</div>
+</div>
+<form id="mdf-calc-form" name="mdfForm" class="container-fluid col-xs-12">
+  <!-- Section Tabs -->
+  <div class="hidden-xs hidden-sm col-md-offset-1 col-md-10">
+    <div class="btn-group btn-group-justified">
+      <div class="btn-group" ng-repeat="section in mdfCtrl.sections.allSections">
+        <button type="button" class="btn btn-default" ng-class="{active: mdfCtrl.active == $index}" ng-click="mdfCtrl.active = $index; mdfCtrl.sectionTemplateUrl = section.templateUrl; mdfCtrl.updateSessionData()">{{section.name}}</button>
+      </div>
+    </div>
+  </div>
+  <!-- End Section Tabs -->
+
+  <!-- Section Dropdown -->
+  <div class="hidden-md hidden-lg col-xs-12 text-center">
+    <div class="btn-group" uib-dropdown is-open="sectionOpen">
+      <button class="btn btn-default" uib-dropdown-toggle>Sections <span class="caret"></span></button>
+      <ul uib-dropdown-menu>
+        <li ng-repeat="section in mdfCtrl.sections.allSections" ng-click="mdfCtrl.active = $index; mdfCtrl.sectionTemplateUrl = section.templateUrl"><a class="btn">{{section.name}}</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- End Section Dropdown -->
+
+  <!-- Section Area -->
+  <div id="sectionArea" class="panel panel-default panel-body col-md-offset-1 col-md-10 container-fluid" ng-if="mdfCtrl.active != null" ng-cloak>
+    <i class="glyphicon glyphicon-remove btn pull-right" ng-click="mdfCtrl.active = null; mdfCtrl.updateSessionData()"></i>
+    <div ng-include="mdfCtrl.sectionTemplateUrl"></div>
+  </div>
+  <!-- End Section Area -->
+
+
+  <div class="col-xs-12 text-center" ng-if="!mdfCtrl.isViewing">
+    <br>
+    <button class="btn btn-lg" ng-class="{'btn-primary': !mdfCtrl.isCreating, 'btn-success': mdfCtrl.isCreating}" 
+      ng-disabled="(mdfForm.$invalid || mdfForm.$pristine)  && !mdfCtrl.modified"
+    ng-click="mdfCtrl.updateForm()">{{mdfCtrl.isCreating ? "Create" : "Update"}}</button>
+  </div>
+
+  <div class="row col-md-12">
+    <label class="col-md-2 control-label">Monthly Distribution Form Notes</label>
+  </div>
+  <div class="row col-md-12">
+    <div class="row col-md-12">
+      <textarea class="form-control" rows="3" ng-model="mdfCtrl.form.notes"></textarea>
+    </div>
+  </div>
+
+  <!-- Total Table -->
+  <div id="totalTable" class="col-xs-12 col-md-offset-3 col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="2" class="text-center">{{ mdfCtrl.getProject(mdfCtrl.form.border_station).project_category_name}}: {{ mdfCtrl.getProject(mdfCtrl.form.border_station).station_name }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="section in mdfCtrl.sections.allSections" ng-if="section.include">
+          <td>{{ section.name }}</td>
+          <td width="25%">
+            <p class="text-right">{{ mdfCtrl.totals[mdfCtrl.form.border_station][section.value].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+          </td>
+        </tr>
+        <tr>
+        	<td>Money Not Spent(To Deduct)</td>
+	        	<td width="25%">
+	            <p class="text-right">{{ mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay| currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+        	</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <td class="text-left text-large"><b>Monthly Distribution Subtotal</b></td>
+          <td>
+            <p class="text-right text-large"><b>{{ mdfCtrl.totals[mdfCtrl.form.border_station].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</b></p>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-left active text-small">Last Month's Distribution Subtotal</td>
+          <td class="text-right active text-small">{{ mdfCtrl.penniesToStr(mdfCtrl.strToPennies(mdfCtrl.form.last_months_total)) | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+        </tr>
+        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+        	<td>&nbsp;</td>
+        </tr>
+        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+          <td class="text-left active text-small">
+          	<div>Past Month Sent Money Subtotal</div>
+          	<div>This total has already been sent and is not included in the monthly distribution.</div>
+          </td>
+          <td class="text-right active text-small">{{ mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-xs-12 col-md-offset-3 col-md-6" ng-repeat="project in mdfCtrl.allProjects"
+  		ng-if="project.id !== mdfCtrl.form.border_station && mdfCtrl.displayProjectTotal(project.id) !== '0.00'">
+   	<table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th colspan="2" class="text-center">{{ project.project_category_name }}: {{ project.station_name }}</th>
+        </tr>
+      </thead>
+      <tbody>
+      	<tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.Salaries].total > 0">
+      	  <td>Salaries And Benefits</td>
+      	  <td width="25%">
+               <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.Salaries].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+             </td>
+      	</tr>
+      	<tr>
+      	  <td>Operational Expenses</td>
+      	  <td width="25%">
+               <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.ImpactMultiplying].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+             </td>
+      	</tr>
+      	<tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent] && mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay > 0">
+        	<td>Money Not Spent(To Deduct)</td>
+	        	<td width="25%">
+	            <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay| currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+        	</td>
+        </tr>
+      	<tr>
+         <td class="text-left text-large"><b>{{ project.station_name }} Subtotal</b></td>
+         <td>
+           <p class="text-right text-large"><b>{{  mdfCtrl.totals[project.id].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</b></p>
+         </td>
+       </tr>
+       <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+        	<td>&nbsp;</td>
+        </tr>
+        <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+          <td class="text-left active text-small">
+          	<div>Past Month Sent Money Subtotal</div>
+          	<div>This total has already been sent and is not included in the monthly distribution.</div>
+          </td>
+          <td class="text-right active text-small">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>

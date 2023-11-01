@@ -25,6 +25,14 @@ export default class BorderStationService {
         return this.service.get(`api/user_permission/stations/${id}/`, params);
     }
     
+    getUserCountries(id) {
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=PROJECTS`);
+    }
+
+    getBorderStationList(queryParameters) {
+        return this.service.get('api/border-station/list/', queryParameters);
+    }
+    
     getAllCountries() {
         return this.service.get('api/country/?page_size=1000');
       }
@@ -94,4 +102,8 @@ export default class BorderStationService {
     updateWorkAssignment (id, staffAssignment) {
         return this.service.put(`api/border-station/${id}/staff/work/`, staffAssignment);
     }
+    
+    getStaffList(queryParameters) {
+		return this.service.get('api/staff/', queryParameters);
+	}
 }

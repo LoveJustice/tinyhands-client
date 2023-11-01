@@ -243,7 +243,7 @@ class LocationStaffController {
     getLocationsAndStaff() {
         this.service.getStationLocations(this.stationDropDown.selectedOptions[0].id).then((promise) => {
         	let tmpLocations = promise.data;
-        	this.locations = [];
+        	this.locations = [{active:false, id:"-1", name:"Other Projects"}];
         	for (let idx=0; idx < tmpLocations.length; idx++) {
         		if (tmpLocations[idx].location_type === 'monitoring') {
         			this.locations.push(tmpLocations[idx]);
@@ -283,7 +283,7 @@ class LocationStaffController {
         });
         
         this.service.getStationStaff(this.stationDropDown.selectedOptions[0].id, this.yearAndMonth).then((promise) => {
-            this.allStaff = promise.data;
+            this.allStaff = promise.data.results;
             this.filterStaff();
             this.staffTotals = {};
             for (let idx=0; idx < this.staff.length; idx++) {
@@ -393,6 +393,10 @@ class LocationStaffController {
             return;
         }
         this.work = {};
+        for (let staffIdx=0; staffIdx < this.staff.length; staffIdx++) {
+            this.work[-1] = {};
+            this.work[-1][this.staff[staffIdx].id] = null;
+        }
         for (let locIdx=0; locIdx < this.locations.length; locIdx++) {
             this.work[this.locations[locIdx].id] = {};
             for (let staffIdx=0; staffIdx < this.staff.length; staffIdx++) {
@@ -401,6 +405,9 @@ class LocationStaffController {
         }
         for (let idx=0; idx < this.workPortion.length; idx++) {
             let tmp = this.workPortion[idx];
+            if (tmp.location===null) {
+            	tmp.location = -1;
+            }
             if (tmp.location in this.work) {
 	            this.work[tmp.location][tmp.staff] = tmp.work_fraction;
 	            this.updateTotals(tmp.location, tmp.staff);

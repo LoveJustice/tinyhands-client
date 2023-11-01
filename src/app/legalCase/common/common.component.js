@@ -51,6 +51,10 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         
         this.charges = [];
         if (this.stateParams.countryId in this.countryCharges) {
+        	let countryId = this.stateParams.countryId;
+        	if (countryId instanceof String) {
+        		countryId = parseInt(countryId);
+        	}
             this.charges = this.countryCharges[this.stateParams.countryId];
         }
         for (let idx=0; idx < this.charges.length; idx++) {

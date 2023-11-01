@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h3 class="text-center">Create MDF</h3>
+</div>
+
+<div class="modal-body">
+	<h4 class="text-center">Project</h4>
+    <div class="text-center" ng-dropdown-multiselect="" options="stationDropDown.options"
+							selected-model="stationDropDown.selectedOptions"
+                            extra-settings="stationDropDown.settings"
+                            translation-texts="stationDropDown.customText"
+                            events="stationDropDown.eventListener">
+	</div>
+	<br>
+	<div class="form-inline text-center">
+		<span>
+	      <select ng-model="vm.month"
+	              ng-options="p.value as p.name for p in vm.months"
+	              class="form-control" style="width: 125px;">
+	      </select>
+	      <input ng-model="vm.year" ng-change="vm.newBudgetForm()" type="number" class="form-control" style="width: 125px;">
+	    </span>
+    </div>
+    <br>
+    <div class="form-inline text-center alert-danger" ng-if="vm.error">
+    	<strong>{{ vm.error }}</strong>
+    </div>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
+    <button class="btn btn-success" type="button" ng-click="vm.create()" ng-if="vm.scope.stationDropDown.selectedOptions.length>0">Create</button>
+</div>

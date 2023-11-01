@@ -1,0 +1,201 @@
+<div >
+  <h2 class="text-center">Salaries & Benefits</h2>
+  <div class="row" ng-repeat="project in mdfCtrl.salary.projects" ng-if="mdfCtrl.reviewStaff===null">
+     <hr class="boldLine">
+  	 <div class="col-md-11">
+  	 	 <h3>{{ mdfCtrl.findProject(project).project_category_name }}: {{ mdfCtrl.findProject(project).station_name }}</h3>
+	  	 <table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.staff">
+	  	 	<thead>
+		  	 	<tr>
+		  	 		<th class="name-col text-center">Name</th>
+		  	 		<th class="position-col text-center">Position</th>
+		  	 		<th class="salary-col text-center">Gross Pay</th>
+		  	 		<th class="salary-col text-center">Deductions</th>
+		  	 		<th class="salary-col text-center" ng-repeat="categoryType in mdfCtrl.salary.benefits"
+		  	 				ng-if="',Salary,Deductions,'.indexOf(categoryType) < 0">
+		  	 			{{ mdfCtrl.filterCategoryTypeName(categoryType) }}
+		  	 		</th>
+		  	 		<th></th>
+		  	 	</tr>
+	  	 	</thead>
+	  	 	<tbody>
+	  	 		<tr ng-repeat="staff in mdfCtrl.form.related_staff"
+	  	 				ng-if="staff.last_name.indexOf('general_staff') === -1 && mdfCtrl.salary.staffByProject[project].indexOf(staff.id) >= 0">
+	  	 			<td>{{ staff.first_name + ' ' + staff.last_name }}</td>
+	  	 			<td>{{ staff.position }}</td>
+	  	 			<td ng-class="mdfCtrl.getCostColor('',mdfCtrl.salary.requests[mdfCtrl.getSalaryKey(project, staff.id, 'Salary')])">
+	  	 				{{ mdfCtrl.getBenefitCost(project, staff.id, 'Salary') }}
+					</td>
+					<td ng-class="mdfCtrl.getCostColor('',mdfCtrl.salary.requests[mdfCtrl.getSalaryKey(project, staff.id, 'Deductions')])">
+	  	 				{{ mdfCtrl.getBenefitCost(project, staff.id, 'Deductions') }}
+					</td>
+					<td  ng-repeat="categoryType in mdfCtrl.salary.benefits" ng-if="',Salary,Deductions,'.indexOf(categoryType) < 0"
+							ng-class="mdfCtrl.getCostColor('',mdfCtrl.salary.requests[mdfCtrl.getSalaryKey(project, staff.id, categoryType)])">
+						{{ mdfCtrl.getBenefitCost(project, staff.id, categoryType) }}
+					</td>
+					<td class="text-center" ng-click="mdfCtrl.reviewBenefit(project, staff)"> <i ng-class="mdfCtrl.getReviewColor('fa fa-search', mdfCtrl.getBenefitRequests(project, staff.id))"></i></td>
+	  	 		</tr>
+	  	 		<tr>
+	  	 			<td colspan=2><b>Total</b></td>
+	  	 			<td class="text-right">
+	  	 				 {{ mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries].Salary.display }}
+	  	 			</td>
+	  	 			<td class="text-right">
+	  	 				 {{ mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries].Deductions.display }}
+	  	 			</td>
+	  	 			<td  ng-repeat="categoryType in mdfCtrl.salary.benefits" ng-if="',Salary,Deductions,'.indexOf(categoryType) < 0"  class="text-right">
+	  	 				{{ mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries][categoryType].display }}
+					</td>
+	  	 		</tr>
+	  	 	</tbody>
+	  	 </table>
+	  	 <div class=col-md-12>
+			<hr>
+		 </div>
+	  	 <div class="row text-center">
+	      <div class="col-md-4 col-md-offset-4">
+	        <label>Salaries & Benefits Total for {{ mdfCtrl.projectName(project) }}</label>
+	        <input class="form-control text-center" ng-value="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits" disabled />
+	      </div>
+	     </div>
+	  	 <div class="col-md-11" ng-if="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries].changed_count">
+	  	 	<hr>
+		  	<h4>{{ mdfCtrl.findProject(project).station_name }}: Requests with changed amount</h4>
+		  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+		  	 	<thead>
+			  	 	<tr>
+			  	 		<th class="name-col text-center">Name</th>
+			  	 		<th class="text-center">Benefit</th>
+			  	 		<th class="salary-col text-center">Original</th>
+			  	 		<th class="salary-col text-center">Modified</th>
+			  	 		<th class="text-center">Description</th>
+			  	 		<th class="text-center">Monthly</th>
+			  	 		<th class="text-center">Comment</th>
+			  	 		<th></th>
+			  	 	</tr>
+		  	 	</thead>
+		  	 	<tbody>
+		  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+		  	 				ng-if="request.status==='Approved' && request.project===project && request.category===mdfCtrl.constants.FormSections.Salaries && mdfCtrl.amountChanged(request)">
+		  	 			<td>{{ request.staff_name }}</td>
+		  	 			<td>{{ request.benefit_type_name }}</td>
+		  	 			<td class="text-right">{{ request.original_cost }}</td>
+						<td class="text-right">{{ request.cost }}</td>
+						<td>{{ request.description }}</td>
+						<td>
+							<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+                		</td>
+						<td>{{ mdfCtrl.getComment(request) }}</td>
+						<td class="text-center">
+							<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+						</td>
+		  	 		</tr>
+		  	 	</tbody>
+		  	 </table>
+		  </div>
+		  <div class="col-md-11" ng-if="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries].declined_count">
+		  	<hr>
+		  	<h4>{{ mdfCtrl.findProject(project).station_name }}: Declined requests</h4>
+		  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+		  	 	<thead>
+			  	 	<tr>
+			  	 		<th class="name-col text-center">Name</th>
+			  	 		<th class="text-center">Benefit</th>
+			  	 		<th class="salary-col text-center">Amount</th>
+			  	 		<th class="text-center">Description</th>
+			  	 		<th class="text-center">Monthly</th>
+			  	 		<th class="text-center">Comment</th>
+			  	 		<th></th>
+			  	 	</tr>
+		  	 	</thead>
+		  	 	<tbody>
+		  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+		  	 				ng-if="request.status==='Declined' && request.category===mdfCtrl.constants.FormSections.Salaries && request.project===project">
+		  	 			<td>{{ request.staff_name }}</td>
+		  	 			<td>{{ request.benefit_type_name }}</td>
+						<td class="text-right">{{ request.cost }}</td>
+						<td>{{ request.description }}</td>
+						<td>
+							<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+                		</td>
+						<td>{{ mdfCtrl.getComment(request) }}</td>
+						<td class="text-center">
+							<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+						</td>
+		  	 		</tr>
+		  	 	</tbody>
+		  	 </table>
+		  </div>
+		  <div class="col-md-11" ng-if="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.Salaries].completed_count">
+		  	<hr>
+		  	<h4>{{ mdfCtrl.findProject(project).station_name }}: Completed requests</h4>
+		  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+		  	 	<thead>
+			  	 	<tr>
+			  	 		<th class="name-col text-center">Name</th>
+			  	 		<th class="text-center">Benefit</th>
+			  	 		<th class="salary-col text-center">Amount</th>
+			  	 		<th class="text-center">Description</th>
+			  	 		<th class="text-center">Monthly</th>
+			  	 		<th class="text-center">Comment</th>
+			  	 		<th></th>
+			  	 	</tr>
+		  	 	</thead>
+		  	 	<tbody>
+		  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+		  	 				ng-if="request.status==='Approved-Completed' && request.category===mdfCtrl.constants.FormSections.Salaries && request.project===project">
+		  	 			<td>{{ request.staff_name }}</td>
+		  	 			<td>{{ request.benefit_type_name }}</td>
+						<td class="text-right">{{ request.cost }}</td>
+						<td>{{ request.description }}</td>
+						<td>
+							<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+                			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+                		</td>
+						<td>{{ mdfCtrl.getComment(request) }}</td>
+						<td class="text-center">
+							<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+						</td>
+		  	 		</tr>
+		  	 	</tbody>
+		  	 </table>
+		  </div>
+	</div>
+  </div>
+  
+  <div class="row" ng-if="mdfCtrl.reviewStaff!==null">
+	<h3 class="col-md-12">Request detail for {{ mdfCtrl.reviewStaff.first_name }} {{ mdfCtrl.reviewStaff.last_name}} on project {{ mdfCtrl.findProject(mdfCtrl.reviewProject).station_name }}</h3>
+	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.staff">
+       	<thead>
+       		<tr>
+        		<th class="text-center">Benefit</th>
+        		<th class="salary-col text-center">Cost</th>
+        		<th class="text-center">Description</th>
+        		<th class="text-center">Monthly</th>
+        		<th></th>
+       		</tr>
+       	</thead>
+       	<tbody>
+       		<tr ng-repeat="request in mdfCtrl.flattenRequests()">
+				<td>{{ request.benefit_type_name }}</td>
+				<td ng-class="mdfCtrl.getCostColor('',[request])">
+					{{ request.costDisplay }}
+				</td>
+	  	 		<td>{{ request.description }}</td>
+	  	 		<td class="text-center">
+						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+               		</td>
+				<td class="text-center">
+					<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+				</td>
+			</tr>
+       	</tbody>
+       </table>
+       <div class="row text-center">
+       		<button class="btn btn-normal" ng-click="mdfCtrl.reviewBenefit(null,null)">Return to Full List</button>
+       </div>
+  </div>
+</div>

@@ -748,6 +748,7 @@ export default class AccountEditController {
                 this.toastr.success("Account Updated");
                 this.saveButtonClicked = false;
                 this.$state.go('accounts.list');
+                this.session.refreshPermissions();
                 }, (err1) => {
                 this.saveButtonClicked = false;
                 if (err1.data.error_text) {
@@ -759,6 +760,7 @@ export default class AccountEditController {
                     this.toastr.success("Account Created");
                     this.saveButtonClicked = false;
                     this.$state.go('accounts.list');
+                    this.session.refreshPermissions();
                 }
         }, (err) => {
             this.saveButtonClicked = false;

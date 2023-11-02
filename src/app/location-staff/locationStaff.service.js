@@ -17,7 +17,7 @@ export default class LocationStaffService {
     }
     
     getStationStaff(station_id) {
-        return this.service.get(`api/border-station/${station_id}/staff/?include_inactive=true`);
+        return this.service.get(`api/staff/?project_id=${station_id}`);
     }
     
     getLocationStaff(station_id, yearAndMonth) {

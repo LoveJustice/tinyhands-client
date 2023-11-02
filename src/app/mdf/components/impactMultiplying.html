@@ -1,0 +1,136 @@
+<div class="col-md-offset-1 col-md-10">
+	<div>
+		<h2 class="text-center">Impact Multiplying Operating Expense</h2>
+	</div>
+	<hr>
+	<div class="row text-center" ng-if="mdfCtrl.form.impact_projects.length === 0"><h3>There are no Impact Multiplying projects for {{ mdfCtrl.countryName }}</h3></div>
+	<div class="row" ng-repeat="project in mdfCtrl.form.impact_projects">
+		<div class="col-md-10 col-md-offset-2">
+			<h3>{{ project.project_category_name }}: {{ project.station_name }}</h3>
+		</div>
+		<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+	  		<thead>
+	  			<tr>
+	  				<th class="text-center">Description</th>
+	  				<th class="salary-col text-center">Cost</th>
+	  				<th></th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+	  			<tr ng-repeat="request in mdfCtrl.form.requests" ng-if="request.category===mdfCtrl.constants.FormSections.ImpactMultiplying && request.status==='Approved' && request.project===project.id">
+	  				<td>{{ request.description }}</td>
+	  				<td ng-class="mdfCtrl.getCostColor('',[request])">
+	  					<input class="text-right awareness-extra-item-value form-control" type="text" 
+				        		ng-model="request.costDisplay"
+				        		disabled/>
+	  				</td>
+	  				<td class="text-center">
+	  					<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+	  				</td>
+	  			</tr>
+	  		</tbody>
+		</table>
+	  <hr>
+	  <div class="row center text-center">
+	    <div class="col-md-4 col-md-offset-4">
+	      <label>Impact Multiplying Total for {{  project.station_name }}</label>
+	      <input class="text-center form-control" ng-value="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.ImpactMultiplying].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits" disabled />
+	    </div>
+	  </div>
+	  <hr>
+  </div>
+  <div ng-repeat="project in mdfCtrl.projects">
+	  <div class="col-md-11" ng-if="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.ImpactMultiplying].changed_count">
+	  	 	<hr>
+		  	<h4>{{ mdfCtrl.findProject(project).station_name }}: Requests with changed amount</h4>
+		  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+		  	 	<thead>
+			  	 	<tr>
+			  	 		<th class="text-center">Description</th>
+			  	 		<th class="salary-col text-center">Original</th>
+			  	 		<th class="salary-col text-center">Modified</th>
+			  	 		<th class="text-center">Monthly</th>
+			  	 		<th class="text-center">Comment</th>
+			  	 		<th></th>
+			  	 	</tr>
+		  	 	</thead>
+		  	 	<tbody>
+		  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+		  	 				ng-if="request.status==='Approved' && request.project===project && request.category===mdfCtrl.constants.FormSections.ImpactMultiplying && mdfCtrl.amountChanged(request)">
+		  	 			<td>{{ request.description }}</td>
+		  	 			<td class="text-right">{{ request.originalCostDisplay }}</td>
+						<td class="text-right">{{ request.costDisplay }}</td>
+						<td>
+							<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+	               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+	               		</td>
+						<td>{{ mdfCtrl.getComment(request) }}</td>
+						<td class="text-center">
+							<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+						</td>
+		  	 		</tr>
+		  	 	</tbody>
+		  	 </table>
+		  </div>
+		  <div class="col-md-11" ng-if="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.ImpactMultiplying].declined_count">
+		  	<hr>
+		  	<h4>{{ mdfCtrl.findProject(project).station_name }}: Declined requests</h4>
+		  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+		  	 	<thead>
+			  	 	<tr>
+			  	 		<th class="text-center">Description</th>
+			  	 		<th class="salary-col text-center">Amount</th>
+			  	 		<th class="text-center">Monthly</th>
+			  	 		<th class="text-center">Comment</th>
+			  	 		<th></th>
+			  	 	</tr>
+		  	 	</thead>
+		  	 	<tbody>
+		  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+		  	 				ng-if="request.status==='Declined' && request.category===mdfCtrl.constants.FormSections.ImpactMultiplying && request.project===project">
+		  	 			<td>{{ request.description }}</td>
+						<td class="text-right">{{ request.costDisplay }}</td>
+						<td>
+							<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+	               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+	               		</td>
+						<td>{{ mdfCtrl.getComment(request) }}</td>
+						<td class="text-center">
+							<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+						</td>
+		  	 		</tr>
+		  	 	</tbody>
+		  	 </table>
+		  </div>
+		  <div class="col-md-11" ng-if="mdfCtrl.totals[project][mdfCtrl.constants.FormSections.ImpactMultiplying].completed_count">
+		  	<hr>
+		  	<h4>{{ mdfCtrl.findProject(project).station_name }}: Completed requests</h4>
+		  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+		  	 	<thead>
+			  	 	<tr>
+			  	 		<th class="text-center">Description</th>
+			  	 		<th class="salary-col text-center">Amount</th>
+			  	 		<th class="text-center">Monthly</th>
+			  	 		<th class="text-center">Comment</th>
+			  	 		<th></th>
+			  	 	</tr>
+		  	 	</thead>
+		  	 	<tbody>
+		  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+		  	 				ng-if="request.status==='Approved-Complete' && request.category===mdfCtrl.constants.FormSections.ImpactMultiplying && request.project===project">
+		  	 			<td>{{ request.description }}</td>
+						<td class="text-right">{{ request.costDisplay }}</td>
+						<td>
+							<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+	               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+	               		</td>
+						<td>{{ mdfCtrl.getComment(request) }}</td>
+						<td class="text-center">
+							<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+						</td>
+		  	 		</tr>
+		  	 	</tbody>
+		  	 </table>
+		  </div>
+	</div>
+</div>

@@ -1,4 +1,4 @@
-export default class StaffService {
+export default class StaffSelectService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;

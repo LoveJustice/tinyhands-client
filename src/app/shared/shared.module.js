@@ -16,7 +16,7 @@ import LocationService from '../components/location-select/location.service';
 import SearchAddressService from '../components/address-entry/searchAddress.service';
 import SessionService from './services/session.service';
 import SpinnerOverlayService from './directives/spinnerOverlay/spinnerOverlay.service';
-import StaffService from '../components/staff-select/staff.service';
+import StaffSelectService from '../components/staff-select/staff.service';
 import StickyHeaderService from './services/stickyHeader.service';
 import UtilService from './services/util.service';
 import TransitionOnBefore from './TransitionOnBefore';
@@ -53,7 +53,7 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'fl
     .service('SearchAddressService', SearchAddressService)
     .service('SessionService', SessionService)
     .service('SpinnerOverlayService', SpinnerOverlayService)
-    .service('StaffService', StaffService)
+    .service('StaffSelectService', StaffSelectService)
     .service('StickyHeader', StickyHeaderService)
     .service('UtilService', UtilService)
     .service('IncidentService', IncidentService)

@@ -26,7 +26,7 @@
         	<p>Category</p>
             <select ng-model="borderStationListCtrl.queryParameters.project_category" ng-change="borderStationListCtrl.searchBorderStations()">
             	<option value="">All</option>
-            	<option value="category.name" ng-repeat="category in borderStationListCtrl.projectCategoryOptions">{{ category.name }}</option>
+            	<option value="{{ category.name }}" ng-repeat="category in borderStationListCtrl.projectCategoryOptions">{{ category.name }}</option>
             </select>
         </div>
         <div class="col-md-1"></div>

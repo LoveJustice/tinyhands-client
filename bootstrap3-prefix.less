@@ -1,0 +1,28 @@
+// Unused, this is just compiled into bootstrap3-iso.css
+// And then I modified it a bit based on the link below
+
+//https://formden.com/blog/isolate-bootstrap
+
+// command: lessc bootstrap3-prefix.less public/assets/css/bootstrap3-iso.css
+
+/* Brad CSS tweaks inside result css file:
+  - find " body" and replace with ""
+  - find " html" and replace with ""
+ */
+
+// because of relative font imports, it must go in public/assets/css which has a public/assets/fonts next to it
+
+// TODO this variable doesn't do anything!!!
+@navbar-inverse-link-color: #5AADBB;
+
+.bootstrap3-iso {
+  @import (less) 'node_modules/bootstrap-3/dist/css/bootstrap.css';
+}
+
+/* Clear enough of the bootstrap 5 formatting that the header and spinner "look right" */
+.clear-bootstrap5 {
+  .nav.navbar-nav {
+    display: block;
+    flex-direction: unset;
+  }
+}

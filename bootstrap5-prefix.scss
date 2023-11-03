@@ -1,0 +1,19 @@
+// Very similar to src/app/bootstrap3-prefix.less and src/app/bootstrap3-iso.css
+// This time I am using sass because bootstrap 5 css file has some stuff that breaks less
+
+// command: sass bootstrap5-prefix.scss public/assets/css/bootstrap5-iso.css
+
+/* Brad CSS tweaks inside result css file:
+  - find " body" and replace with ""
+  - find " :root" and replace with ""
+  - find "bootstrap5-iso .modal" and replace with "bootstrap5-iso.modal"
+  - find "bootstrap5-iso .modal-backdrop" and replace with "bootstrap5-iso.modal-backdrop"
+ */
+
+//https://formden.com/blog/isolate-bootstrap (this is for bootstrap 3)
+
+@use "sass:meta";
+
+.bootstrap5-iso {
+    @include meta.load-css("./node_modules/bootstrap/dist/css/bootstrap.min.css");
+}

@@ -1,5 +1,5 @@
 import { angular2react } from 'angular2react';
-import { lazyInjector } from '../lazyInjector';
+import { lazyInjector } from '../../react/lazyInjector';
 
 const SimpleComponent = {
   template: '<h2>Hello from Angular!</h2>' +

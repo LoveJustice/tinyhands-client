@@ -18,12 +18,15 @@
     gtag('config', 'G-JY82WDLGXS');
   </script>
   <body>
-    <div class='full-height' id="angular-root">
-      <spinner-overlay></spinner-overlay>
-      <navbar></navbar>
-      <div class='full-height' id='angular-router' ui-view>
-      </div>
+    <div class="full-height" id="root"></div>
+    <div id="angular-root">
+
+<!--      These are now included in App.tsx wrapped in React -->
+<!--      <spinner-overlay></spinner-overlay>-->
+<!--      <navbar></navbar>-->
+<!--      <div class="full-height" id="angular-router" ui-view>-->
+<!--      </div>-->
     </div>
-    <script type="module" src='/src/app/angularMain.ts'></script>
+    <script type="module" src='/react/main.tsx'></script>
   </body>
 </html>

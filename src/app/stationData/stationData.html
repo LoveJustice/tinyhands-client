@@ -16,7 +16,7 @@
     	</div>
     	<div class="col-md-3">
     		<div class="col-md-6">
-	    		<select class="form-control"ng-model="vm.monthStr" ng-change="vm.setMonth()">
+	    		<select class="form-control" ng-model="vm.monthStr" ng-change="vm.setMonth()">
 	    			<option ng-repeat="month in vm.monthNames" ng-if="month!==''" value="{{ $index }}">{{ month }}</option>
 	    		</select>
 	    	</div>
@@ -24,7 +24,7 @@
 	    		<input type="number" class="form-control" ng-model="vm.year" ng-change="vm.setYear()">
 			</div>
 		</div>
-		<div class="col-md-2">&nbsp</div>
+		<div class="col-md-2">&nbsp;</div>
 		<div class="col-md-1 saving" ng-show="vm.saveCount > 0">Saving Data</div>
 	</div>
 	

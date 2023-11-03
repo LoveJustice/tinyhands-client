@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
 import PageWithLotsOfReactComponents from './examples/pageWithLotsOfReactComponents';
 import App from './App';
-import { SimpleComponentReact } from './examples/SimpleComponent';
+import { SimpleComponentReact } from '../src/examples/SimpleComponent';
 
 // function FallbackToAngular(){
 //   const location = useLocation();
@@ -30,7 +30,7 @@ const TOP_LEVEL_REACT_PAGES: RouteObject[] = [
 
 const ReactRouter = createBrowserRouter([
   {
-    path: '/',
+    path: '/react/',
     element: <App />,
     // errorElement: <FallbackToAngular />,
     children: TOP_LEVEL_REACT_PAGES,

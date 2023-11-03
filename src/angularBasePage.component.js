@@ -1,5 +1,5 @@
 import { angular2react } from 'angular2react';
-import { lazyInjector } from './lazyInjector';
+import { lazyInjector } from '../react/lazyInjector';
 
 class AngularBasePageController {
   'ngInject';
@@ -8,8 +8,9 @@ class AngularBasePageController {
   }
 }
 
+
 const template = `
-<div>
+<div class='clear-bootstrap5'>
   <spinner-overlay></spinner-overlay>
   <navbar></navbar>
 </div>

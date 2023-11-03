@@ -18,7 +18,8 @@ export const SatisfiesLoginRequired = (SessionService, transition) => {
     }
 
     return SessionService.checkIfAuthenticated().then(
-        () => {}, 
+        () => {
+        },
         () => {
             return transition.router.stateService.target('login', {returnState: toState.name, params: $.param(transition.params())});
         }

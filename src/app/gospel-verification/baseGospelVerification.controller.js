@@ -73,6 +73,20 @@ export class BaseGospelVerificationController extends BaseFormController {
             this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value = 'Came to believe that Jesus is the one true God';
         }
     }
+    
+    isFormComplete() {
+    	let formComplete = false;
+    	if (this.questions[1060].response.value === 'Yes') {
+    		formComplete = this.formQuestions[this.questionIdDict.believeNow[this.formType]].response.value &&
+    				this.questions[1061].response.value;
+    	} else if (this.questions[1060].response.value === 'No') {
+    		formComplete = this.questions[1062].response.value &&
+    				this.questions[1063].response.value &&
+    				this.questions[1064].response.value &&
+    				this.questions[1065].response.value;
+    	}
+        return formComplete;
+    }
 
     // Override in subclass for implementation specific features
     submitExtra() {

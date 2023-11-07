@@ -42,7 +42,7 @@ export default class AccountListController {
     //Account List Tab
     deleteAccount(account) {
         if (this.currentUser.id !== account.id) {
-        	account.is_deleted = true;
+        	account.is_active = false;
             this.AccountService.update(account.id, account).then(() => {
                 this.toastr.success("Account Successfully Deleted");
                 this.getAccounts(this.searchString);

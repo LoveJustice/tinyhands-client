@@ -18,7 +18,7 @@ jobs:
   deploy-staging:
     runs-on: ubuntu-latest
     needs: [build-client]
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/staging'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

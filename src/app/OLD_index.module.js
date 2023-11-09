@@ -48,6 +48,10 @@ import pvfModule from './pvf/pvf.module';
 import sfModule from './sf/sf.module';
 import lfModule from './lf/lf.module';
 import incidentModule from './incident/incident.module';
+import staffModule from './staff/staff.module';
+import projectRequestModule from './project-request/projectRequest.module';
+import mdfModule from './mdf/mdf.module';
+
 
 import constants from './constants.js';
 import config from './index.config';
@@ -100,6 +104,9 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         sfModule,
         lfModule,
         incidentModule,
+        staffModule,
+        projectRequestModule,
+        mdfModule
     ])
 
     .constant('constants', constants)

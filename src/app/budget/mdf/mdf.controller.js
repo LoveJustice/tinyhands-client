@@ -18,7 +18,11 @@ export default class MdfController {
     The former is what gets them put on this list of possible recipients, the latter is whether or not they actually receive
     this months MDF for this station. */
     retrieveMdf() {
-        this.service.getMdf(this.stateParams.id).then((promise) => {
+    	let mdfType = this.stateParams.mdf_type;
+    	if (!mdfType) {
+    		mdfType = 'budget';
+    	}
+        this.service.getMdf(this.stateParams.id,mdfType).then((promise) => {
             this.staff = promise.data.staff_members;
             this.committeeMembers = promise.data.committee_members;
             this.nationalStaff = promise.data.national_staff_members;

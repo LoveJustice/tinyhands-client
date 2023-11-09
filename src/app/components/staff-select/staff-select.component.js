@@ -4,11 +4,11 @@ import CheckboxSelectionController from './checkboxSelectionController.js';
 /* global _ */
 
 export class StaffSelectController {
-    constructor($scope, $uibModal, StaffService) {
+    constructor($scope, $uibModal, StaffSelectService) {
         'ngInject';
         this.$scope = $scope;
         this.$uibModal = $uibModal;
-        this.StaffService = StaffService;
+        this.StaffSelectService = StaffSelectService;
         this.getStaff();
     }
     
@@ -50,7 +50,7 @@ export class StaffSelectController {
 
     getStaff() {
     	if (typeof this.stationId !== 'undefined') {
-	        this.StaffService.getStaff(this.stationId).then((response) => {
+	        this.StaffSelectService.getStaff(this.stationId).then((response) => {
 	            this.staff = response.data.map((x) => `${x.first_name} ${x.last_name}`);
 	            this.staff.sort();
 	        });

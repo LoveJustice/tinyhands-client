@@ -1,0 +1,36 @@
+<div id="addStaffModal" class="modal-content">
+	<div class="modal-header">
+		<div class="col-md-5">
+			<h3 class="modal-title">Add Projects</h3>
+		</div>
+	</div>
+	<div class="modal-body">
+		<table class="table table-striped" float-thead="borderStationListCtrl.stickyOptions" ng-model="borderStationListCtrl.borderStations">
+	        <thead class="sticky-table-header">
+	            <tr>
+	                <th>Name</th>
+	                <th>Code</th>
+	                <th>Country</th>
+	                <th>Category</th>
+	                <th>Add</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr ng-repeat="project in vm.displayProjects">
+	                <td>{{ project.project.station_name }}</td>
+	                <td>{{ project.project.station_code }}</td>
+	                <td>{{ project.project.country_name }}</td>
+	                <td>{{ project.project.project_category_name }}</td>
+	                <td><input type="checkbox" ng-model="project.toAdd"></td>
+	            </tr>
+	            <tr ng-show="vm.displayProjects.length == 0">
+	                <td colspan="12" style="text-align:center;"><h2>No Projects Found To Add"</h2></td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-danger" type="button" ng-click="vm.cancel()">Cancel</button>
+	    <button class="btn btn-success" type="button" ng-click="vm.addProjects()" ng-if="vm.addedProjectCount()>0">Add Project(s)</button>
+	</div>
+</div>

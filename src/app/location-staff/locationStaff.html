@@ -55,10 +55,10 @@
 				<tr ng-repeat="staff in vm.staff">
 					<th class="staffName">{{ staff.first_name }} {{ staff.last_name }} {{ vm.staff.last_date }}</th>
 					<th ng-class="vm.totalColor('total',staff) ">{{ vm.staffTotals[staff.id] }}
-					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && !vm.mayEdit()">
+					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && (!vm.mayEdit() || loc.id==='-1')">
 						{{ vm.work[loc.id][staff.id] }}
 					</td>
-					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && vm.mayEdit()">
+					<td class="fraction" ng-repeat="loc in vm.locations" ng-if="(loc.active || vm.locationTotals[loc.id] > 0) && loc.name !== 'Leave' && vm.mayEdit() && loc.id!=='-1'">
 						<input type="number" ng-model="vm.work[loc.id][staff.id]" ng-blur="vm.changeFocus(loc.id, staff.id)"
 								style="width:60%" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 46"
 								ng-disabled="vm.isViewing">

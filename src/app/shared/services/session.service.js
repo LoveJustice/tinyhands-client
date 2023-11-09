@@ -162,6 +162,13 @@ export default class SessionService {
         this.clearSession();
         this.routeState.go('login');
     }
+    
+    refreshPermissions() {
+    	this.userPermissions = [];
+        this.permissions = [];
+        this.getPermissions();
+        this.getUserPermissions();
+    }
 
     clearSession() {
         localStorage.removeItem('token');

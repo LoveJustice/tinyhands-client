@@ -9,7 +9,9 @@
           <th ng-click="vm.sortColumn = 'date_joined'; vm.reverse = ! vm.reverse;" class="text-center">Created</th>
           <th ng-click="vm.sortColumn = 'last_login'; vm.reverse = ! vm.reverse;" class="text-center">Last Login</th>
           <th width="60px"></th>
-          <th width="100px"></th>
+          <th width="100px">
+          	<input ng-change=" accountListCtrl.getAccounts()" ng-model="accountListCtrl.searchString" placeholder="Search" class="form-control" autofocus>
+          </th>
           <th id="create"><a class="btn btn-sm btn-success pull-right"  ui-sref="account({id: 'create'})">Create Account</a></th>
         </tr>
       </thead>

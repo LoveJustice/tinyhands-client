@@ -4,11 +4,12 @@ export default class AccountListController {
         this.AccountService = AccountService;
         this.sticky = StickyHeader;
         this.toastr = toastr;
+        this.searchString = '';
 
         this.accounts = [];
         this.stickyOptions = this.sticky.stickyOptions;
 
-        this.getAccounts();
+        this.getAccounts(this.searchString);
         this.getCurrentUser();
     }
 
@@ -19,8 +20,8 @@ export default class AccountListController {
     }
 
     getAccounts() {
-        this.AccountService.getAccounts().then((result) => {
-            this.accounts = result.data;
+        this.AccountService.getAccounts(this.searchString).then((result) => {
+            this.accounts = result.data.results;
         });
     }
 
@@ -41,9 +42,10 @@ export default class AccountListController {
     //Account List Tab
     deleteAccount(account) {
         if (this.currentUser.id !== account.id) {
-            this.AccountService.destroy(account.id).then(() => {
+        	account.is_active = false;
+            this.AccountService.update(account.id, account).then(() => {
                 this.toastr.success("Account Successfully Deleted");
-                this.getAccounts();
+                this.getAccounts(this.searchString);
             });
         }
     }

@@ -9,14 +9,14 @@
     <div class="row">
     	<div class="col-md-3" >
         	<p>Form Type</p>
-            <select ng-model="$ctrl.formTypeId", class="form-control", ng-change="$ctrl.getAuditList()">
+            <select ng-model="$ctrl.formTypeId" class="form-control" ng-change="$ctrl.getAuditList()">
            		<option value="">All</option>
             	<option ng-repeat="formType in $ctrl.formTypes" value="{{ formType.id }}">{{ formType.name }}</option>
             </select>
         </div>
         <div class="col-md-3" >
         	<p>Country</p>
-            <select ng-model="$ctrl.countryId", class="form-control", ng-change="$ctrl.getAuditList()">
+            <select ng-model="$ctrl.countryId" class="form-control" ng-change="$ctrl.getAuditList()">
             	<option value="">All</option>
             	<option ng-repeat="country in $ctrl.countries" value="{{ country.id }}">{{ country.name }}</option>
             </select>

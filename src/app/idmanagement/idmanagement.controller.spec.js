@@ -154,7 +154,7 @@ describe('IdManagementController', () => {
         });
 
         it("if param's nextPageURL is not null, params should contain {name: page, value: vm.nextPageUrl}", function () {
-            vm.nextPageUrl = 'testURL.html';
+            vm.nextPageUrl = 'testURL.html?url';
             let loadMore = true;
             let params = vm.getQueryParams(loadMore);
             expect(params).toContain({ "name": "page", "value": vm.nextPageUrl });

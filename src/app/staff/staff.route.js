@@ -1,5 +1,5 @@
-import staffListTemplate from './list/staffList.html';
-import staffTemplate from './staff.html';
+import staffListTemplate from './list/staffList.html?url';
+import staffTemplate from './staff.html?url';
 
 function staffRouteConfig($stateProvider) {
     'ngInject';

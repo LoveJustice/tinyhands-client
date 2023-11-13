@@ -1,7 +1,7 @@
 /* global jQuery */
-import discussProjectRequestTemplate from './discussProjectRequestModal.html';
+import discussProjectRequestTemplate from './discussProjectRequestModal.html?url';
 import DiscussProjectRequestModalController from './discussProjectRequestModal.controller.js';
-import attachProjectRequestTemplate from './attachProjectRequestModal.html';
+import attachProjectRequestTemplate from './attachProjectRequestModal.html?url';
 import AttachProjectRequestModalController from './attachProjectRequestModal.controller.js';
 import {dropDecimals} from  './dropDecimal.js';
 

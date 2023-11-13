@@ -25,10 +25,13 @@ const htmlImport = {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), htmlImport],
+  // This is for if we want multiple SPAs for different pages
+  // Defaults to building /index.html
   rollupOptions: {
     input: {
+      // main: resolve(__dirname, 'src/index.html')
       // angular: resolve(__dirname, 'index.html'),
-      react: resolve(__dirname, 'react/index.html'),
+      // react: resolve(__dirname, 'react/index.html'),
     },
   },
   resolve: {

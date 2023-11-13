@@ -1,25 +1,27 @@
-/**
- *  Do not remove this comments bellow. It's the markers used by wiredep to inject
- *  less dependencies when defined in the bower.json of your dependencies
- */
-
-// bower:less
-// endbower
+// Would have preferred to switch this to sass (scss)
+// less has lost a lost of popularity in the past decade
+// However, this old version of bootstrap doesn't come with scss
+// I don't feel like going through the pain of switching it, but both scss and less work in the project
 
 /**
  *  If you want to override some bootstrap variables, you have to change values here.
- *  The list of variables are listed here bower_components/bootstrap/less/variables.less
+ *  The list of variables are listed here node_modules/bootstrap/less/variables.less
  */
 
-@import "~bootstrap-3/less/bootstrap";
-@import "~bootstrap-3/dist/css/bootstrap.css";
-@import "~animate.css/animate.min.css";
+// Shared
+@import "~bootstrap/less/bootstrap";
+@import "~bootstrap/dist/css/bootstrap.css";
+
+// React
 @import "~font-awesome/css/font-awesome.css";
+
+// Angular
+@import "~animate.css/animate.min.css";
 @import "~angular-chips/dist/main.css";
-@import './helpers.less';
+@import './app/helpers.less';
 @import "~angularjs-bootstrap-datetimepicker/src/css/datetimepicker.css";
 @navbar-inverse-link-color: #5AADBB;
-@icon-font-path: 'bootstrap-3/fonts/';
+@icon-font-path: 'bootstrap/fonts/';
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
@@ -94,11 +96,6 @@ hr.medium {
   color: #3b569c
 }
 
-
-/**
- *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
- *  all your less files automatically
- */
-
-// injector
-// endinjector
+body {
+  margin: 0
+}

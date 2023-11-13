@@ -1,10 +1,8 @@
-import './App.scss';
 import CustomQueryClientProvider from './CustomQueryClientProvider';
 import { Outlet, useLocation } from 'react-router-dom';
-import { AngularBasePageReact } from '../src/angularBasePage.component';
-import { AngularRouterReact } from '../src/angularRouter.component';
+import { AngularBasePageReact } from './angularBasePage.component';
+import { AngularRouterReact } from './angularRouter.component';
 import initializei18n from './initializeI18n';
-import { useTranslation } from 'react-i18next';
 
 
 initializei18n().then(() => () => {
@@ -13,18 +11,15 @@ initializei18n().then(() => () => {
 
 function App() {
   const location = useLocation()
+  console.log(location.pathname);
 
   return (
     <>
       <CustomQueryClientProvider>
         <AngularBasePageReact />
-        <div>
-          {/*Outlet is where router children will be rendered*/}
-          <Outlet/>
-        </div>
-        <div hidden={location.pathname != '/'}>
-          <AngularRouterReact />
-        </div>
+        {/*Outlet is where router children will be rendered*/}
+        <Outlet/>
+
       </CustomQueryClientProvider>
     </>
   );

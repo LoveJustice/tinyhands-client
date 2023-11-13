@@ -4,7 +4,7 @@
  * @export
  * @class MdfList
  */
-import createMdfModalTemplate from './createMdfModal.html';
+import createMdfModalTemplate from './createMdfModal.html?url';
 
 export default class MdfList {
     /**

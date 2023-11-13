@@ -1,14 +1,14 @@
 import Constants from './constants.js';
 
-import salariesForm from './components/salaries/salariesForm.html';
-import travelForm from './components/travel/travelForm.html';
-import administrationForm from './components/administration/administrationForm.html';
-import potentialVictimCareForm from './components/potentialVictimCare/potentialVictimCareForm.html';
-import suppliesAwarenessForm from './components/suppliesAwareness/suppliesAwarenessForm.html';
-import pastMonth from './components/pastMonth/pastMonthSentMoneyForm.html';
-import moneyNotSpentForm from './components/moneyNotSpent/moneyNotSpent.html';
-import impactMultiplyingForm from './components/impactMultiplying/impactMultiplying.html';
-import rentUtilitiesForm from './components/rentUtilities/rentUtilities.html';
+import salariesForm from './components/salaries/salariesForm.html?url';
+import travelForm from './components/travel/travelForm.html?url';
+import administrationForm from './components/administration/administrationForm.html?url';
+import potentialVictimCareForm from './components/potentialVictimCare/potentialVictimCareForm.html?url';
+import suppliesAwarenessForm from './components/suppliesAwareness/suppliesAwarenessForm.html?url';
+import pastMonth from './components/pastMonth/pastMonthSentMoneyForm.html?url';
+import moneyNotSpentForm from './components/moneyNotSpent/moneyNotSpent.html?url';
+import impactMultiplyingForm from './components/impactMultiplying/impactMultiplying.html?url';
+import rentUtilitiesForm from './components/rentUtilities/rentUtilities.html?url';
 
 import categoryTemplate from './components/salaries/category.html?url';
 import detailTemplate from './detail.html?url';

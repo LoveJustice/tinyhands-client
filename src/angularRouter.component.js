@@ -1,5 +1,5 @@
 import { angular2react } from 'angular2react';
-import { lazyInjector } from '../react/lazyInjector';
+import { lazyInjector } from './lazyInjector';
 
 class AngularRouterController {
   'ngInject';

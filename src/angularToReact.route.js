@@ -1,4 +1,4 @@
-import { TOP_LEVEL_REACT_PAGES } from '../react/ReactRouter';
+import { TOP_LEVEL_REACT_PAGES } from './ReactRouter';
 
 export default function angularToReactRouterConfig($stateProvider, $urlRouterProvider) {
     'ngInject';
@@ -17,5 +17,5 @@ export default function angularToReactRouterConfig($stateProvider, $urlRouterPro
         })
     });
 
-    // $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/');
 }

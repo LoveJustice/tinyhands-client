@@ -1,7 +1,8 @@
 {
   "translation": {
     "reactThings": {
-      "FORM_TITLE": "Translated Form Title"
+      "FORM_TITLE": "Translated Form Title",
+      "EMPLOYEE_NAME": "Employee Name"
     }
   }
 }

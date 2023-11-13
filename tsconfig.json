@@ -7,7 +7,7 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -22,7 +22,10 @@
     "allowSyntheticDefaultImports": true,
 
     // Custom
-    "allowJs": true
+    "allowJs": true,
+    "paths": {
+      "@cjs/*": ["./src/isomorphic/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -1,5 +1,5 @@
-import mdfListTemplate from './list/mdfList.html';
-import mdfPrTemplate from './mdfPr.html';
+import mdfListTemplate from './list/mdfList.html?url';
+import mdfPrTemplate from './mdfPr.html?url';
 import './list/mdfList.less';
 import './mdf.less';
 

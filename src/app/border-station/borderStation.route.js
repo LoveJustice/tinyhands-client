@@ -1,4 +1,4 @@
-import borderStationListTemplate from './list/borderStationList.html';
+import borderStationListTemplate from './list/borderStationList.html?url';
 function borderStationRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider

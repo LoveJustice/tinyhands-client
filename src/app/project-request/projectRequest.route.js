@@ -1,6 +1,6 @@
-import projectRequestListTemplate from './list/projectRequestList.html';
-import inputRequestsTemplate from './inputProjectRequests.html';
-import reviewRequestTemplate from './reviewProjectRequest.html';
+import projectRequestListTemplate from './list/projectRequestList.html?url';
+import inputRequestsTemplate from './inputProjectRequests.html?url';
+import reviewRequestTemplate from './reviewProjectRequest.html?url';
 
 function PvfRoutes($stateProvider) {
     'ngInject';

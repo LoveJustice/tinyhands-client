@@ -1,8 +1,8 @@
 import './staff.less';
 const DateData = require('../dateData.js');
 
-import generalTemplate from './step-templates/general.html';
-import AddProjectModalTemplate from './step-templates/addProjectModal.html';
+import generalTemplate from './step-templates/general.html?url';
+import AddProjectModalTemplate from './step-templates/addProjectModal.html?url';
 
 class AddProjectModalController {
 	constructor($uibModalInstance, staff, projects, coordinator) {

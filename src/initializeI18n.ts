@@ -1,6 +1,6 @@
 import i18n, { InitOptions } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as en from '../src/translations/en.json';
+import * as en from './translations/en.json';
 
 const initializei18n = async () => {
   const options = {

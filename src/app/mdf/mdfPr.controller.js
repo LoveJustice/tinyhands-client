@@ -1,14 +1,14 @@
 import Constants from './constants.js';
 
-import salariesForm from './components/salariesForm.html';
-import travelForm from './components/travelForm.html';
-import administrationForm from './components/administrationForm.html';
-import potentialVictimCareForm from './components/potentialVictimCareForm.html';
-import suppliesAwarenessForm from './components/suppliesAwarenessForm.html';
-import pastMonth from './components/pastMonthSentMoneyForm.html';
-import moneyNotSpentForm from './components/moneyNotSpent.html';
-import impactMultiplyingForm from './components/impactMultiplying.html';
-import rentUtilitiesForm from './components/rentUtilities.html';
+import salariesForm from './components/salariesForm.html?url';
+import travelForm from './components/travelForm.html?url';
+import administrationForm from './components/administrationForm.html?url';
+import potentialVictimCareForm from './components/potentialVictimCareForm.html?url';
+import suppliesAwarenessForm from './components/suppliesAwarenessForm.html?url';
+import pastMonth from './components/pastMonthSentMoneyForm.html?url';
+import moneyNotSpentForm from './components/moneyNotSpent.html?url';
+import impactMultiplyingForm from './components/impactMultiplying.html?url';
+import rentUtilitiesForm from './components/rentUtilities.html?url';
 
 class Tracking {
     constructor(shouldFinalize=false) {

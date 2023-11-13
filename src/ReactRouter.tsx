@@ -1,11 +1,12 @@
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
+import { createBrowserRouter, RouteObject } from 'react-router-dom';
 import PageWithLotsOfReactComponents from './examples/pageWithLotsOfReactComponents';
 import App from './App';
-import { SimpleComponentReact } from '../src/examples/SimpleComponent';
+import { SimpleComponentReact } from './examples/SimpleComponent';
+import { AngularRouterReact } from './angularRouter.component';
 
 // function FallbackToAngular(){
 //   const location = useLocation();
-//   return <Navigate to="/fallback-success/#!" replace={true} state={{ from: location }} />
+//   return <Navigate to="/" replace={true} state={{ from: location }} />
 // }
 
 // Abusing the id parameter name,
@@ -13,24 +14,25 @@ import { SimpleComponentReact } from '../src/examples/SimpleComponent';
 const TOP_LEVEL_REACT_PAGES: RouteObject[] = [
   {
     id: 'reactThings',
-    path: 'react-things',
+    path: '/react/react-things',
     element: <PageWithLotsOfReactComponents />,
   },
   {
     id: 'simpleWrappedAngularComponent',
-    path: 'simple-wrapped-angular-component',
+    path: '/react/simple-wrapped-angular-component',
     element: <SimpleComponentReact />,
-  }
-  ,
+  },
   {
     index: true,
-    element: <div>Testing</div>
-  }
+    element: <div>
+      <AngularRouterReact />
+    </div>,
+  },
 ];
 
 const ReactRouter = createBrowserRouter([
   {
-    path: '/react/',
+    path: '/',
     element: <App />,
     // errorElement: <FallbackToAngular />,
     children: TOP_LEVEL_REACT_PAGES,

@@ -1,5 +1,5 @@
-import profileForm from './components/profileForm.html';
-import permissionForm from './components/permissionForm.html';
+import profileForm from './components/profileForm.html?url';
+import permissionForm from './components/permissionForm.html?url';
 import {encodeGroup} from  '../../../encodeGroup.js';
 
 class PermDropDown {

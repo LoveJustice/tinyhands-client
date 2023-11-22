@@ -20,49 +20,62 @@
 	  		<label>Deduct</label>
 	  	</div>
 	  </div>
-	  <div class="row">
-	    <div ng-repeat="item in mdfCtrl.form.mdfitem_set"
+	  
+	  
+		<div class="row" ng-repeat="item in mdfCtrl.form.mdfitem_set"
 	    		ng-if="item.work_project === project.id  && item.category === mdfCtrl.constants.FormSections.MoneyNotSpent">
-	      <div class="col-md-3">
-	        <input class="form-control" type="text" ng-model="item.description" ng-disabled="mdfCtrl.isViewing" required/>
-	      </div>
-	      <div class="col-md-3">
-	      	<select ng-model="item.associated_section" required>
-	      		<option ng-repeat="section in mdfCtrl.sections.allSections"
-	      				ng-if="mdfCtrl.sections.excludeFromDropDown.indexOf(section.name) < 0 && project.id === mdfCtrl.borderStationId"
-	      			value="{{ section.value }}">{{ section.name }}</option>
-	      		<option ng-if="project.id !== mdfCtrl.borderStationId" value="8">Salaries & Benefits</option>
-      			<option ng-if="project.id !== mdfCtrl.borderStationId" value="14">Operational Expense</option>
-	      	</select>
-	      </div>
-	      <div class="col-md-2">
-	        <input ng-if="mdfCtrl.currencyType==='local'" class="text-right form-control" type="text" 
-	        		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
-	        		ng-change="mdfCtrl.setTotals()" 
-	        		ng-model="item.cost" 
-	        		ng-disabled="mdfCtrl.isViewing" required/>
-	        <input ng-if="mdfCtrl.currencyType==='USD'" class="text-right form-control" type="text" 
-	        		ng-model="item.display" 
-	        		disabled/>
-	      </div><div class="col-md-1">
-	      	<select ng-model="item.deduct" ng-change="mdfCtrl.setTotals()" required>
-	      		<option value="Yes">Yes</option>
-	      		<option value="No">No</option>
-	      	</select>
-	      </div>
-	      <div class="col-md-1">
-	        <button class="btn btn-danger" ng-click="mdfCtrl.removeItem(mdfCtrl.form.mdfitem_set, $index)" ng-hide="mdfCtrl.isViewing">Remove</button>
-	      </div>
-	      <br/>
+			<div class="row">
+				<div class="col-md-3">
+	        		<input class="form-control" type="text" ng-model="item.description" ng-disabled="mdfCtrl.isViewing" required/>
+				</div>
+				<div class="col-md-3">
+		      	<select ng-model="item.associated_section" required>
+		      		<option ng-repeat="section in mdfCtrl.sections.allSections"
+		      				ng-if="mdfCtrl.sections.excludeFromDropDown.indexOf(section.name) < 0 && project.id === mdfCtrl.borderStationId"
+		      			value="{{ section.value }}">{{ section.name }}</option>
+		      		<option ng-if="project.id !== mdfCtrl.borderStationId" value="8">Salaries & Benefits</option>
+	      			<option ng-if="project.id !== mdfCtrl.borderStationId" value="14">Operational Expense</option>
+		      	</select>
+		      </div>
+		      <div class="col-md-2">
+		        <input ng-if="mdfCtrl.currencyType==='local'" class="text-right form-control" type="text" 
+		        		onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
+		        		ng-change="mdfCtrl.setTotals()" 
+		        		ng-model="item.cost" 
+		        		ng-disabled="mdfCtrl.isViewing" required/>
+		        <input ng-if="mdfCtrl.currencyType==='USD'" class="text-right form-control" type="text" 
+		        		ng-model="item.display" 
+		        		disabled/>
+		      </div><div class="col-md-1">
+		      	<select ng-model="item.deduct" ng-change="mdfCtrl.setTotals()" required>
+		      		<option value="Yes">Yes</option>
+		      		<option value="No">No</option>
+		      	</select>
+		      </div>
+		      <div class="col-md-1">
+		        <button class="btn btn-danger" ng-click="mdfCtrl.removeItem(mdfCtrl.form.mdfitem_set, $index)" ng-hide="mdfCtrl.isViewing">Remove</button>
+		      </div>
+			</div>
+			<div class="row" ng-if="item.deduct==='No'">
+				<div class="col-md-1"></div>
+				<div class="col-md-2">
+					<label>Reason to not deduct</label>
+				</div>
+				<div class="col-md-6">
+					<input class="form-control" type="text" ng-model="item.reason_not_deduct" ng-disabled="mdfCtrl.isViewing">
+				</div>
+			</div>
+	      
 	      <br/>
 	    </div>
+	    
 	    <div class="row">
 	      <button class="btn btn-success col-xs-4 col-xs-offset-4" 
 	      		ng-click="mdfCtrl.addItem(project.id, mdfCtrl.constants.FormSections.MoneyNotSpent)" ng-hide="mdfCtrl.isViewing">
 	      		Add item for {{ project.station_name }}
 	      </button>
 	    </div>
-    </div>
+
 
 	  <hr>
 	  <div class="row text-center">

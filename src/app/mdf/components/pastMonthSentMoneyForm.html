@@ -4,7 +4,7 @@
   <hr>
   <div class="row" ng-repeat="project in mdfCtrl.allProjects">
   	<div class="row">
-  	<div class="col-md-12 center-vertical">
+	  	<div class="col-md-12 center-vertical">
 			<h3 class=col-md-6>{{ project.project_category_name }}: {{ project.station_name }}</h3>
 			<div>
 				<label>Approved by</label>
@@ -12,6 +12,20 @@
 	        		ng-model="mdfCtrl.form.past_sent_approved" 
 	        		ng-disabled="mdfCtrl.isViewing"/>
         	</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 center-vertical">
+			<div class="col-md-5">
+				<label>Description</label>
+			</div>
+			<div class="col-md-3">
+				<label>Budget Category</label>
+			</div>
+			<div class="col-md-2">
+		  		<label>Total</label>
+		  	</div>
+	  	</div>
 	</div>
     <div ng-repeat="item in mdfCtrl.form.mdfitem_set"
     		ng-if="item.work_project===project.id && item.category===mdfCtrl.constants.FormSections.PastMonth">
@@ -52,10 +66,10 @@
   </div>
   <hr>
   <div class="row center text-center">
+
     <div class="col-md-6 col-md-offset-3">
       <label>Past Month Sent Money Total</label>
       <input class="text-center form-control" ng-value="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits" disabled="disabled" />
     </div>
-  </div>
   </div>
 </div>

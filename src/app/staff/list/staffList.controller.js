@@ -16,13 +16,14 @@ export default class StaffListController {
         this.countries = [];
         this.projects = [];
         this.staffList = [];
+        this.digits1Format = {'minimumFractionDigits': 1, 'maximumFractionDigits': 1};
 
         this.timer = {};
         this.nextPage = "";
         this.queryParameters = {
             "page_size": 15,
             "reverse": false,
-            "ordering": 'first_name',
+            "ordering": 'first_name,last_name',
             "search": '',
             "country_ids": '',
             "project_id": ''
@@ -182,12 +183,17 @@ export default class StaffListController {
     	for (let idx=0; idx < staffList.length; idx++) {
             let staff = staffList[idx];
             staff.projectText = '';
+            staff.coordinatorRoles = '';
             let sep = '';
+            let coordinatorSep = ''
             for (let staffProjIdx in staff.staffproject_set) { 
             	for (let projIdx in this.projects) {
             		if (staff.staffproject_set[staffProjIdx].border_station === this.projects[projIdx].id) {
-		            	staff.projectText += sep + this.projects[projIdx].station_name;
+		            	staff.projectText += sep + this.projects[projIdx].station_code;
 		            	sep = '/';
+		            	if (staff.staffproject_set[staffProjIdx].coordinator) {
+		            		staff.coordinatorRoles += coordinatorSep + staff.staffproject_set[staffProjIdx].coordinator;
+		            	}
 		            }
             	}
             }

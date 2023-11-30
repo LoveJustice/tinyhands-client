@@ -104,7 +104,7 @@ export default class StaffController {
         };
         
         this.stepTemplates = [
-            {template:generalTemplate, name:"General"},
+            {template:generalTemplate, name:"Basic"},
         ];
         this.selectedStep = 0;
         
@@ -136,7 +136,12 @@ export default class StaffController {
             this.staff = response.data;
             this.staff.country = this.staff.country + '';
             let dateData = new DateData();
-            this.start_date = dateData.dateAsUTC(this.staff.first_date);
+            this.startDate = dateData.dateAsUTC(this.staff.first_date);
+            if (this.staff.birth_date) {
+            	this.birthDate = dateData.dateAsUTC(this.staff.birth_date);
+            } else {
+            	this.birthDate = null;
+            }
             this.spinner.hide();
             this.coordinators = {};
             for (let projIdx in this.staff.staffproject_set) {
@@ -210,7 +215,8 @@ export default class StaffController {
     
     submit() {
     	let dateData = new DateData();
-    	this.staff.first_date = dateData.dateToString(this.start_date);
+    	this.staff.first_date = dateData.dateToString(this.startDate);
+    	this.staff.birth_date = dateData.dateToString(this.birthDate);
     	for (let projIdx in this.staff.staffproject_set) {
     		let project = this.staff.staffproject_set[projIdx];
     		let tmp = '';

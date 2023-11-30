@@ -30,16 +30,31 @@
                    ng-model="vm.staff.phone">
           </div>
           <div class="col-sm-4 form-group">
-            <label class="col-md-3" for="position">Position</label>
-            <input class="col-md-9" type="text" class="form-control" placeholder="Position"
-                   ng-model="vm.staff.position">
+            <label class="col-md-3" for="position">Birthday</label>
+            <input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" 
+                   ng-model="vm.birthDate">
           </div>
 	</div>
 	<div class="row">
-          <div class="col-sm-4 form-group">
-           	<label class="col-md-3" for="joined">Start Date</label>
-           	<input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.start_date">
-          </div>
+		<div class="col-sm-4 form-group">
+           <label class="col-md-3" for="position">Position</label>
+           <input class="col-md-9" type="text" class="form-control" placeholder="Position"
+                  ng-model="vm.staff.position">
+         </div>
+         <div class="col-sm-4 form-group">
+          	<label class="col-md-3" for="joined">Start Date</label>
+          	<input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.startDate">
+         </div>
+         <div class="col-sm-4 form-group">
+          	<label class="col-md-3" for="education">Education</label>
+          	<input class="col-md-9" type="text" class="form-control" placeholder="Education" ng-model="vm.staff.education">
+         </div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 form-group">
+           <label class="col-md-3" for="id_card">ID Card Made</label>
+           <input type="checkbox" id="id_card" ng-model="vm.staff.id_card"/>
+         </div>
 	</div>
 	<hr>
 	<div class="row col-md-12">

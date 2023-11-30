@@ -41,43 +41,40 @@
     <table class="table table-striped" float-thead="staffListCtrl.stickyOptions" ng-model="staffListCtrl.staffList">
         <thead class="sticky-table-header">
             <tr>
-                <th ng-click="staffListCtrl.updateSort('first_name')" width="10%">First Name
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('first_name', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('first_name', 'reverse') }"></i>
-                </th>
-                <th ng-click="staffListCtrl.updateSort('last_name')" width="12%">Last Name
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('last_name', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('last_name', 'reverse')}"></i>
-                </th>
-                <th ng-click="staffListCtrl.updateSort('email')" width="20%">Email
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('email', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('email', 'reverse')}"></i>
-                </th>
-                <th ng-click="staffListCtrl.updateSort('country__name')" width="10%">Country
-                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('country__name', '!reverse'),
-                    'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('operating_country__name', 'reverse')}"></i>
+            	<th width="8%">Projects</th>
+                <th ng-click="staffListCtrl.updateSort('first_name,last_name')" width="18%">Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('first_name,last_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('first_name,last_name', 'reverse') }"></i>
                 </th>
                 <th ng-click="staffListCtrl.updateSort('phone')" width="11%">Phone
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('phone', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('phone', 'reverse')}"></i>
                 </th>
-                <th  width="15%">Position</th>
-                <th width="12%">Projects</th>
-                <th></th>
+                <th ng-click="staffListCtrl.updateSort('email')" width="20%">Email
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': staffListCtrl.getSortIcon('email', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('email', 'reverse')}"></i>
+                </th>
+                <th width="6%">Birthday</th>
+                <th width="6%">Education</th>
+                <th width="6%">Total Years</th>
+                <th width="15%">Role</th>
+                <th width="15%">Coordinator Roles</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="staff in staffListCtrl.staffList | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
-                <td>{{ staff.first_name }}</td>
-                <td>{{ staff.last_name }}</td>
-                <td>{{ staff.email }}</td>
-                <td>{{ staffListCtrl.getCountryName(staff.country) }}</td>
+            	<td class="ellipsis" title="{{ staff.projectText }}">{{ staff.projectText }}</td>
+                <td>{{ staff.first_name }} {{ staff.last_name }}</td>
                 <td>{{ staff.phone}}</td>
+                <td>{{ staff.email }}</td>
+                <td>{{ staff.birth_date }}</td>
+                <td>{{ staff.education }}</td>
+                <td>{{ staff.total_years.toLocaleString('en-US', staffListCtrl.digits1Format) }}</td>
                 <td class="ellipsis" title="{{ staff.position }}">{{ staff.position}}</td>
-                <td class="ellipsis" title="{{ staff.projectText }}">{{ staff.projectText }}</td>
-                <td ng-if="staffListCtrl.session.checkPermission('STAFF','VIEW', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.viewUrl}}">View</a></td>
-                <td ng-if="staffListCtrl.session.checkPermission('STAFF','EDIT', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.editUrl}}">Edit</a></td>
+                <td class="ellipsis" title="{{ staff.coordinatorRoles }}">{{ staff.coordinatorRoles}}</td>
+                <td ng-if="!staffListCtrl.session.checkPermission('STAFF','EDIT', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.viewUrl}}"><i class="fa fa-id-card"></i></a></td>
+                <td ng-if="staffListCtrl.session.checkPermission('STAFF','EDIT', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.editUrl}}"><i class="fa fa-id-card"></i></a></td>
             </tr>
             <tr ng-show="staffListCtrl.staffList.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Staff Matched your search for: "{{ staffListCtrl.queryParameters.search }}"</h2></td>

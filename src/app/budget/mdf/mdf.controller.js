@@ -56,6 +56,7 @@ export default class MdfController {
         people = this.getIds(this.committeeMembers, people, "committee_ids");
         people = this.getIds(this.nationalStaff, people, "national_staff_ids");
         people.budget_id = this.stateParams.id;
+        people.mdf_type = this.mdfType;
 
         this.service.sendMdfEmails(people).then(() => {
             this.toastr.success(`Successfully emailed the MDF`);

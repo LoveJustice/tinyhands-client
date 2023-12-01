@@ -1,0 +1,133 @@
+<div class="col-md-offset-2 col-md-8">
+  <h2 class="text-center">Staff Travel</h2>
+  <hr>
+  <div class="row">
+ 		<table class="fixed table-striped  staff-item-table" ng-model="mdfCtrl.form.requests">
+	  		<thead>
+	  			<tr>
+	  				<th class="text-center">Description</th>
+	  				<th class="text-center">Staff</th>
+	  				<th class="salary-col text-center">Cost</th>
+	  				<th></th>
+	  			</tr>
+	  		</thead>
+	  		<tbody>
+	  			<tr ng-repeat="request in mdfCtrl.form.requests" ng-if="request.category===mdfCtrl.constants.FormSections.Travel  && request.status==='Approved'">
+	  				<td>{{ request.description }}</td>
+	  				<td>{{ request.staff_name }}</td>
+	  				<td ng-class="mdfCtrl.getCostColor('',[request])">
+	  					{{ request.costDisplay }}
+	  				</td>
+	  				<td class="text-center">
+	  					<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+	  				</td>
+	  			</tr>
+	  		</tbody>
+		</table>
+	</div>
+    <hr>
+	<div class="row center text-center">
+		<div class="col-md-6 col-md-offset-3">
+			<label>Travel Total</label>
+			<input class="form-control text-center" ng-value="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Travel].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits" disabled/>
+		</div>
+	</div>
+	<div class="col-md-11" ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Travel].changed_count">
+  	 	<hr>
+	  	<h4>{{ mdfCtrl.findProject(mdfCtrl.form.border_station).station_name }}: Requests with changed amount</h4>
+	  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+	  	 	<thead>
+		  	 	<tr>
+		  	 		<th class="text-center">Description</th>
+		  	 		<th class="salary-col text-center">Original</th>
+		  	 		<th class="salary-col text-center">Modified</th>
+		  	 		<th class="name-col text-center">Name</th>
+		  	 		<th class="text-center">Monthly</th>
+		  	 		<th class="text-center">Comment</th>
+		  	 		<th></th>
+		  	 	</tr>
+	  	 	</thead>
+	  	 	<tbody>
+	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+	  	 				ng-if="request.status==='Approved' && request.project===mdfCtrl.form.border_station && request.category===mdfCtrl.constants.FormSections.Travel && mdfCtrl.amountChanged(request)">
+	  	 			<td>{{ request.description }}</td>
+	  	 			<td class="text-right">{{ request.originalCostDisplay }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
+					<td>{{ request.staff_name }}</td>
+					<td>
+						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+               		</td>
+					<td>{{ mdfCtrl.getComment(request) }}</td>
+					<td class="text-center">
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+					</td>
+	  	 		</tr>
+	  	 	</tbody>
+	  	 </table>
+	  </div>
+	  <div class="col-md-11" ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Travel].declined_count">
+	  	<hr>
+	  	<h4>{{ mdfCtrl.findProject(mdfCtrl.form.border_station).station_name }}: Declined requests</h4>
+	  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+	  	 	<thead>
+		  	 	<tr>
+		  	 		<th class="text-center">Description</th>
+		  	 		<th class="name-col text-center">Name</th>
+		  	 		<th class="salary-col text-center">Amount</th>
+		  	 		<th class="text-center">Monthly</th>
+		  	 		<th class="text-center">Comment</th>
+		  	 		<th></th>
+		  	 	</tr>
+	  	 	</thead>
+	  	 	<tbody>
+	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+	  	 				ng-if="request.status==='Declined' && request.category===mdfCtrl.constants.FormSections.Travel && request.project===mdfCtrl.form.border_station">
+	  	 			<td>{{ request.description }}</td>
+	  	 			<td>{{ request.staff_name }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
+					<td>
+						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+               		</td>
+					<td>{{ mdfCtrl.getComment(request) }}</td>
+					<td class="text-center">
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+					</td>
+	  	 		</tr>
+	  	 	</tbody>
+	  	 </table>
+	  </div>
+	  <div class="col-md-11" ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.Travel].completed_count">
+	  	<hr>
+	  	<h4>{{ mdfCtrl.findProject(mdfCtrl.form.border_station).station_name }}: Completed requests</h4>
+	  	<table class="fixed table-striped staff-item-table" ng-model="mdfCtrl.form.requests">
+	  	 	<thead>
+		  	 	<tr>
+		  	 		<th class="text-center">Description</th>
+		  	 		<th class="name-col text-center">Name</th>
+		  	 		<th class="salary-col text-center">Amount</th>
+		  	 		<th class="text-center">Monthly</th>
+		  	 		<th class="text-center">Comment</th>
+		  	 		<th></th>
+		  	 	</tr>
+	  	 	</thead>
+	  	 	<tbody>
+	  	 		<tr ng-repeat="request in mdfCtrl.form.requests"
+	  	 				ng-if="request.status==='Approved-Complete' && request.category===mdfCtrl.constants.FormSections.Travel && request.project===mdfCtrl.form.border_station">
+	  	 			<td>{{ request.description }}</td>
+	  	 			<td>{{ request.staff_name }}</td>
+					<td class="text-right">{{ request.costDisplay }}</td>
+					<td>
+						<i ng-if="request.monthly" class="fa fa-check-square-o monthlyIcon"></i>
+               			<i ng-if="!request.monthly" class="fa fa-square-o monthlyIcon"></i>
+               		</td>
+					<td>{{ mdfCtrl.getComment(request) }}</td>
+					<td class="text-center">
+						<a ng-href="{{ request.editUrl }}"><i ng-class="mdfCtrl.getReviewColor('fa fa-search', [request])"></i></a>
+					</td>
+	  	 		</tr>
+	  	 	</tbody>
+	  	 </table>
+	  </div>
+</div>

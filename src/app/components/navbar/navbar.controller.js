@@ -17,6 +17,18 @@ export default class NavbarController {
         $scope.$on('GetNavBarBorderStations', () => {
             this.getBorderStations();
         });
+
+        // Function to track button clicks with Google Analytics
+        this.trackButtonClick = (buttonName) => {
+            gtag('event', 'button_click', {
+                'event_category': 'Button Clicks',
+                'event_action': 'click',
+                'event_label': buttonName,
+                'user_id': this.session.user.id,
+                'user_role': this.session.user.role,
+                'user_country': this.session.user.country_name
+            });
+        };
     }
 
     getBorderStations() {
@@ -31,6 +43,21 @@ export default class NavbarController {
                 this.collapse[key] = false;
             }
         });
+    }
+    
+    showForms() {
+    	 return (
+    	 		this.session.checkPermission('IRF','VIEW',null, null) || 
+    	 		this.session.checkPermission('VDF','VIEW',null, null) ||
+    	 		this.session.checkPermission('PVF','VIEW',null, null) ||
+    	 		this.session.checkPermission('SF','VIEW',null, null) ||
+    	 		this.session.checkPermission('LF','VIEW',null, null) ||
+    	 		this.session.checkPermission('MONTHLY_REPORT','VIEW',null, null) ||
+    	 		this.session.checkPermission('BUDGETS','VIEW',null, null) ||
+    	 		this.session.checkPermission('EMP','VIEW',null, null) ||
+    	 		this.session.checkPermission('GSP','VIEW',null, null) ||
+    	 		this.session.checkPermission('PROJECT_REQUEST','VIEW',null, null));
+    	 		
     }
 
     logout() {

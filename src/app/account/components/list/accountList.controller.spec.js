@@ -14,14 +14,14 @@ describe('AccountListController', () => {
         $q = _$q_;
         rootScope = $rootScope;
 
-        mockAccountService = jasmine.createSpyObj('mockAccountService', ['getMe', 'getAccounts', 'resendActivationEmail', 'destroy']);
+        mockAccountService = jasmine.createSpyObj('mockAccountService', ['getMe', 'getAccounts', 'resendActivationEmail', 'destroy', 'update']);
 
         getMeResponse = { data: { id: 1, name: 'Foo' } };
         mockAccountService.getMe.and.callFake(() => {
             return $q.resolve(getMeResponse);
         });
 
-        getAccountsResponse = { data: [{ id: 1, name: 'Foo' }, { id: 2, name: 'Bar' }] };
+        getAccountsResponse = { data: {results: [{ id: 1, name: 'Foo' }, { id: 2, name: 'Bar' }]} };
         mockAccountService.getAccounts.and.callFake(() => {
             return $q.resolve(getAccountsResponse);
         });
@@ -31,6 +31,10 @@ describe('AccountListController', () => {
         });
 
         mockAccountService.destroy.and.callFake(() => {
+            return $q.resolve();
+        });
+        
+        mockAccountService.update.and.callFake(() => {
             return $q.resolve();
         });
 
@@ -66,7 +70,7 @@ describe('AccountListController', () => {
             controller.getAccounts();
             rootScope.$apply();
 
-            expect(controller.accounts).toEqual(getAccountsResponse.data)
+            expect(controller.accounts).toEqual(getAccountsResponse.data.results)
         });
     });
 
@@ -104,23 +108,23 @@ describe('AccountListController', () => {
 
     describe('deleteAccount', () => {
         describe('when current tries to delete himself', () => {
-            it('should not call destroy on AccountService', () => {
+            it('should not call update on AccountService', () => {
                 let account = { id: 1 };
                 controller.currentUser = account;
 
                 controller.deleteAccount(account);
 
-                expect(mockAccountService.destroy).not.toHaveBeenCalled();
+                expect(mockAccountService.update).not.toHaveBeenCalled();
             });
         });
 
-        it('should call destroy on AccountService', () => {
+        it('should call update on AccountService', () => {
             let account = { id: 2 };
             rootScope.$apply();
 
             controller.deleteAccount(account);
 
-            expect(mockAccountService.destroy).toHaveBeenCalledWith(account.id);
+            expect(mockAccountService.update).toHaveBeenCalledWith(account.id, account);
         });
 
         describe('when deleting an account is successful', () => {

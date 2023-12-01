@@ -1,0 +1,86 @@
+<div class="container" id="borderStationList"><br/>
+
+    <div class="row">
+        <div class="col-xs-7 text-center">
+            <h1>Projects</h1>
+        </div>
+
+        <div class="pull-right"><br>
+            <a ng-if="borderStationListCtrl.hasAddPermission" class="btn btn-success" ui-sref="border-station({id: null})">
+                Input A New Project
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2" >
+        	<p>Countries</p>
+            <div ng-dropdown-multiselect="" options="borderStationListCtrl.countryDropDown.options"
+							selected-model="borderStationListCtrl.countryDropDown.selectedOptions"
+                             extra-settings="borderStationListCtrl.countryDropDown.settings"
+                             translation-texts="borderStationListCtrl.countryDropDown.customText"
+                             events="borderStationListCtrl.countryDropDown.eventListener">
+			</div>
+        </div>
+        <div class="col-md-2" >
+        	<p>Category</p>
+            <select ng-model="borderStationListCtrl.queryParameters.project_category" ng-change="borderStationListCtrl.searchBorderStations()">
+            	<option value="">All</option>
+            	<option value="{{ category.name }}" ng-repeat="category in borderStationListCtrl.projectCategoryOptions">{{ category.name }}</option>
+            </select>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-2" >
+        	<p>Include Closed</p>
+            <input type="checkbox" ng-model="borderStationListCtrl.queryParameters.include_closed"  ng-change="borderStationListCtrl.getBorderStationList()">
+        </div>
+
+        <!-- Search -->
+        <div class="col-md-3 pull-right">
+        	<input ng-change="borderStationListCtrl.searchBorderStations()" ng-model="borderStationListCtrl.queryParameters.search" placeholder="Search" autofocus>
+        </div>
+        <!-- End search -->
+    </div>
+    <br/>
+    <table class="table table-striped" float-thead="borderStationListCtrl.stickyOptions" ng-model="borderStationListCtrl.borderStations">
+        <thead class="sticky-table-header">
+            <tr>
+                <th ng-click="borderStationListCtrl.updateSort('station_name')" width="20%">Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': borderStationListCtrl.getSortIcon('station_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': borderStationListCtrl.getSortIcon('station_name', 'reverse') }"></i>
+                </th>
+                <th ng-click="borderStationListCtrl.updateSort('station_code')" width="8%">Code
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': borderStationListCtrl.getSortIcon('station_code', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': borderStationListCtrl.getSortIcon('station_code', 'reverse')}"></i>
+                </th>
+                <th ng-click="borderStationListCtrl.updateSort('operating_country__name')" width="10%">Country
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': borderStationListCtrl.getSortIcon('operating_country__name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': borderStationListCtrl.getSortIcon('operating_country__name', 'reverse')}"></i>
+                </th>
+                <th ng-click="borderStationListCtrl.updateSort('project_category__name')" width="16%">Category
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': borderStationListCtrl.getSortIcon('project_category__name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': borderStationListCtrl.getSortIcon('project_category__name', 'reverse')}"></i>
+                </th>
+                <th  width="10%">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="project in borderStationListCtrl.projects | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
+                <td><a ng-href="{{project.viewUrl}}">{{ project.station_name }}</a></td>
+                <td>{{ project.station_code }}</td>
+                <td>{{ project.country_name }}</td>
+                <td>{{ project.project_category_name }}</td>
+                <td ng-if="project.open">Open</td>
+                <td ng-if="!project.open">Closed</td>
+            </tr>
+            <tr ng-show="borderStationListCtrl.projects.length == 0">
+                <td colspan="12" style="text-align:center;"><h2>No Projects Matched your search for: "{{ borderStationListCtrl.queryParameters.search }}"</h2></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row text-center">
+        <paginate page-control="borderStationListCtrl.paginate" controller="borderStationListCtrl">
+    </div>
+    <br>
+</div>

@@ -1,0 +1,71 @@
+<div id="project-request-attachment" class="modal-content">
+    <form name="AttachmentForm">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="vm.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-5">
+            	<h3 class="modal-title">Project Request Attachments</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+			<div class="row">
+				<div class="col-md-2 form-group">
+		        	<form-step>
+		            	<label>Description</label>
+		            </form-step>
+		        </div>
+				<input type="text" ng-model="vm.attachment.description">
+			</div>
+			<div class="row">
+				<div class="col-md-2 form-group">
+		        	<form-step>
+		            	<label>Option</label>
+		            </form-step>
+		        </div>
+				<select ng-model="vm.attachment.option">
+					<option value="Estimate">Estimate</option>
+					<option value="Invoice">Invoice</option>
+					<option value="Receipt">Receipt</option>
+				</select>
+			</div>
+			<div class="row">
+				<div class="col-md-2 form-group">
+		        	<form-step>
+		            	<label>File to attach</label>
+		            </form-step>
+		        </div>
+				<input type="file" ngf-select value="Choose File" ng-model="vm.attachment.attachment">
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					<button class="btn btn-success" ng-click="vm.addEntry()" ng-disabled="vm.attachment.attachment === null">Attach</button>
+				</div>
+				<div class="col-md-8">
+					<button class="btn btn-default pull-right" ng-click="vm.dismiss()">Close</button>
+				</div>
+			</div>
+			<br>
+	        <div style="height: 300px; overflow:auto">
+	            <hr>
+	            <div class="row" ng-repeat="attach in vm.attachmentEntries">
+	            	<div class=col-md-6>
+	            		<b>Description:</b> {{ attach.description }}
+	            	</div>
+	            	<div class=col-md-4>
+	            		<b>Option:</b> {{ attach.option }}
+	            	</div>
+	            	<div class="col-md-1">
+	            		<a class="btn btn-sm btn-danger" ng-click="vm.deleteAttachment(attach, $index)">
+                    		{{ attach.confirmedDelete ? "Confirm?" : "Delete" }}</a>
+	            	</div>
+	            	<div class=col-md-12>
+	            		<b>File: </b> <a href="{{attach.attachment }}" target="_blank">{{ vm.lastPath(attach.attachment) }}</a>
+	            		<hr>
+	            	</div>
+	            </div>
+	        </div>
+        </div>
+    </form>
+</div>

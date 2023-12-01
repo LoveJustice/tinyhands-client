@@ -1,5 +1,4 @@
 import {BaseFormController} from '../baseFormController.js';
-import {BaseModalController} from '../baseModalController.js';
 import StationModalController from './stationModal.controller';
 import './borderStation.less';
 const CheckboxGroup = require('../checkboxGroup.js');
@@ -7,6 +6,7 @@ const CheckboxGroup = require('../checkboxGroup.js');
 import detailTemplate from './step-templates/detail.html';
 import committeeTemplate from './step-templates/committee/committee.html';
 import staffTemplate from './step-templates/staff/staff.html';
+import staffNewTemplate from './step-templates/staffNew.html';
 import locationTemplate from './step-templates/location/location.html';
 import formsTemplate from './step-templates/forms.html';
 import committeeModalTemplate from './step-templates/committee/committeeModal.html';
@@ -60,7 +60,7 @@ class BorderStationController extends BaseFormController  {
         this.stepTemplates = [
             {template:detailTemplate, name:"Details"},
             {template:committeeTemplate, name:"Subcommittee"},
-            {template:staffTemplate, name:"Staff"},
+            {template:($stateParams.new_staff === 'true' ? staffNewTemplate : staffTemplate), name:"Staff"},
             {template:locationTemplate, name:"Locations"},
             {template:formsTemplate, name:"Forms"},
         ];
@@ -90,6 +90,7 @@ class BorderStationController extends BaseFormController  {
         this.getAllTimeZones();
         this.getBorderStation($stateParams.id);
         this.getFormTypes();
+        this.getUserProjects();
     }
     
     changeTab(tabIndex, isDisabled) {
@@ -220,6 +221,7 @@ class BorderStationController extends BaseFormController  {
     
     getAllCountries() {
         this.service.getAllCountries().then((response) => {
+        	this.countries = response.data.results;
             if (this.stationId !== null) {
                 this.countryOptions = response.data.results;
             } else{
@@ -233,6 +235,18 @@ class BorderStationController extends BaseFormController  {
             }
         });
       }
+    
+    getCountryName(countryId) {
+    	let countryName = 'Unknown';
+    	for (let idx in this.countries) {
+    		if (countryId === this.countries[idx].id) {
+    			countryName = this.countries[idx].name;
+    			break;
+    		}
+    	}
+    	
+    	return countryName;
+    }
     
     getAllCategories() {
         this.service.getAllProjectCategories().then((response) => {
@@ -428,6 +442,49 @@ class BorderStationController extends BaseFormController  {
         return nameList;
     }
     
+    getUserProjects() {
+        this.service.getUserStations(this.session.user.id, 'PROJECTS', 'VIEW').then((response) => {
+           	this.projects = response.data;
+           	this.getStaffList();
+        });
+    }
+    
+    getStaffList() {
+	    this.service.getStaffList([
+	    	{"name": "page_size", "value": 1000},
+	    	{"name": "reverse", "value": false},
+	    	{"name": "ordering", "value": 'first_name, last_name'},
+	    	{"name": "project_id", "value": this.stationId},
+	    	]).then ((response) => {
+	            this.staffList = response.data.results;
+	            this.projectText(this.staffList);
+		        for (let idx=0; idx < this.staffList.length; idx++) {
+		            let staff = this.staffList[idx];
+		            if (this.session.checkPermission('STAFF','EDIT',null, null)) {
+		            	staff.url = this.$state.href('staff', {id:staff.id, isViewing:false });
+		            } else {
+			            staff.url = this.$state.href('staff', {id:staff.id, isViewing:true});
+			        }
+		        }
+	    });
+    }
+    
+    projectText(staffList) {
+    	for (let idx=0; idx < staffList.length; idx++) {
+            let staff = staffList[idx];
+            staff.projectText = '';
+            let sep = '';
+            for (let staffProjIdx in staff.staffproject_set) { 
+            	for (let projIdx in this.projects) {
+            		if (staff.staffproject_set[staffProjIdx].border_station === this.projects[projIdx].id) {
+		            	staff.projectText += sep + this.projects[projIdx].station_name;
+		            	sep = '/';
+		            }
+            	}
+            }
+        }
+    }
+    
     sortedLocationCards() {
         // shallow copy array of cards
         let cards = this.getCardInstances('Location').concat();
@@ -466,7 +523,7 @@ class BorderStationController extends BaseFormController  {
         let config = this.config[config_name];      
         let starting_flag_count = the_card.flag_count;
         let staffList = [];
-        if (config_name == 'Staff') {
+        if (config_name === 'Staff') {
             staffList = this.staff;
         }
         let params = {

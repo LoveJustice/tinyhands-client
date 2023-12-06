@@ -32,7 +32,7 @@ export default class MdfListService {
     }
     
     getUserCountries(id) {
-        return this.service.get(`api/user_permission/countries/${id}/?permission_group=BUDGETS`);
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=MDF`);
     }
     
     getUserStationsForAdd(id) {

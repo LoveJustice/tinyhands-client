@@ -1,11 +1,15 @@
+/* global jQuery */
 import './staff.less';
 const DateData = require('../dateData.js');
 
-import generalTemplate from './step-templates/general.html';
+import basicTemplate from './step-templates/basic.html';
+import contractTemplate from './step-templates/contract.html';
+import knowledgeTemplate from './step-templates/knowledge.html';
+import reviewTemplate from './step-templates/review.html';
 import AddProjectModalTemplate from './step-templates/addProjectModal.html';
 
 class AddProjectModalController {
-	constructor($uibModalInstance, staff, projects, coordinator) {
+	constructor($uibModalInstance, staff, projects, coordinator, session) {
 	    'ngInject';
 		this.$uibModalInstance = $uibModalInstance;
 		this.staff = staff;
@@ -15,6 +19,9 @@ class AddProjectModalController {
 		this.displayProjects = [];
 		for (let projIdx in this.projects) {
 			if (this.projects[projIdx].operating_country + '' !== this.staff.country) {
+				continue;
+			}
+			if (!session.checkPermission('STAFF','EDIT_BASIC', this.projects[projIdx].operating_country,this.projects[projIdx].id)) {
 				continue;
 			}
 			let found = false;
@@ -68,14 +75,16 @@ class AddProjectModalController {
 		}
 		this.$uibModalInstance.close();
 	}
-	
+
 	cancel() {
 		this.$uibModalInstance.dismiss();
 	}
 }
 
+const reviewMertrics = 'leadership;obedience;faithfulness;alertness;questioning;awareness';
+
 export default class StaffController {
-    constructor($uibModal, constants, StaffService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
+    constructor($uibModal, constants, StaffService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, toastr) {
         'ngInject';
         
         this.stateParams = $stateParams;
@@ -87,10 +96,41 @@ export default class StaffController {
         this.spinner = SpinnerOverlayService;
         this.relatedUrl = null;
         this.session = SessionService;
+        this.toastr = toastr;
         this.isViewing = this.stateParams.isViewing === 'true';
         this.staff = null;
         this.projectsById=[];
         this.countries = [];
+        this.basicView = true;
+        this.basicEdit = false;
+        this.contractView = false;
+        this.contractEdit = false;
+        this.contract = null;
+        this.projectId = null;
+        this.currency = '';
+        this.dropDecimal = false;
+        this.knowledgeView = true;
+        this.knowledgeEdit = false;
+        this.knowledge = null;
+        this.knowledgeDates= {
+        	items:		['general','awareness','security','accounting','pv_care','paralegal','records','shelter'],
+        	itemLabels:	['General','Awareness','Security','Accounting','PV Care','Paralegal','Records','Shelter']
+        };
+        this.knowledgeMap = {
+        	general:null,
+        	awareness:['Awareness'],
+        	security:['Security'],
+        	accounting:['Accounting'],
+        	pv_care:['Care'],
+        	paralegal:['Legal'],
+        	records:['Records'],
+        	shelter:['Shelter']
+        };
+        this.reviewView = false;
+        this.reviewEdit = false;
+        this.reviews = null;
+        this.reviewDate = null;
+        this.requestCount = 0;
         
         this.coordinator = {
         	"Records": false,
@@ -103,89 +143,388 @@ export default class StaffController {
         	"Shelter":false,
         };
         
-        this.stepTemplates = [
-            {template:generalTemplate, name:"Basic"},
-        ];
+        let current = new Date();
+        this.lastYear = current.getFullYear();
+        this.lastMonth = current.getMonth();
+        if (this.lastMonth < 1) {
+        	this.lastYear -= 1;
+        	this.lastMonth = 12;
+        }
+        
+        this.stepTemplates = [];
+        
         this.selectedStep = 0;
+        this.isRemove = false;
         
         this.getUserCountries();
         this.getUserProjects();
     }
     
+    changeTab(tabIndex) {
+    	let base = this.stepTemplates[this.selectedStep].name.toLowerCase();
+    	if (this[base + 'Modified']()) {
+    		// Information on current tab has been modified
+    		
+    		if (base + 'ReadyToSave' in this && !this[base + 'ReadyToSave']()) {
+    			// Information on current tab is not ready to be saved
+    			if (window.confirm(this.stepTemplates[this.selectedStep].name + " information has been changed and is not ready to be saved.\nSelect Ok to continue working on current tab.\nSelect Cancel to discard changes")) {
+	    			return;
+	    		} else {
+	    			this[base + 'Discard']();
+	 			}
+    		} else {
+    			// Information on current tab can be saved		
+    			
+	    		if (window.confirm(this.stepTemplates[this.selectedStep].name + " information has been changed.\nSelect Ok to save changes.\nSelect Cancel to discard changes")) {
+	    			this[base + 'Save']();
+	    		} else {
+	    			this[base + 'Discard']();
+	    		}
+    		}
+    	}
+        this.selectedStep = tabIndex;
+    }
+    
     getUserProjects() {
-    	this.spinner.show("Get Staff..."); 
-    	this.projectsById=[];
+    	this.spinner.show("Get Staff...");
+    	this.getAllProjects();
         this.service.getUserStations(this.session.user.id).then((response) => {
            	this.projects = response.data;
-           	this.projectsById = _.keyBy(this.projects, (x) => x.id);
            	this.getStaff();
+           	
         }, () => {
-        	this.spinner.hide();
+        	if (this.requestCount < 1) {
+        		this.spinner.hide();
+        	}
         });
+    }
+    
+    getAllProjects() {
+    	this.projectsById=[];
+    	this.requestCount++;
+    	this.service.getAllBorderStations().then((response) => {
+    		this.projectsById = _.keyBy(response.data, (x) => x.id);
+    		this.requestCount--;
+    		if (this.requestCount < 1) {
+    			this.requestCount = 0;
+    			this.spinner.hide();
+    		}
+    	}, () => {
+    		this.requestCount--;
+    		if (this.requestCount < 1) {
+    			this.requestCount = 0;
+    			this.spinner.hide();
+    		}
+    	});
     }
     
     getUserCountries() {
     	this.projectsById=[];
         this.service.getUserCountries(this.session.user.id).then((response) => {
-           	this.countries = response.data;
+           	this.countries = [];
+           	for (let countryIndex in response.data) {
+           		if (this.session.checkPermission('STAFF','VIEW_BASIC',response.data[countryIndex].id, null) === true) {
+           			this.countries.push(response.data[countryIndex]);
+           		}
+           	}
         });
     }
-
-    getStaff() {
-        this.service.getStaff(this.stateParams.id).then((response) => {
-            this.staff = response.data;
-            this.staff.country = this.staff.country + '';
-            let dateData = new DateData();
-            this.startDate = dateData.dateAsUTC(this.staff.first_date);
-            if (this.staff.birth_date) {
-            	this.birthDate = dateData.dateAsUTC(this.staff.birth_date);
-            } else {
-            	this.birthDate = null;
-            }
-            this.spinner.hide();
-            this.coordinators = {};
-            for (let projIdx in this.staff.staffproject_set) {
-            	let project = this.staff.staffproject_set[projIdx];
-            	this.coordinator[project.border_station] = {
-            		options: [
-            			{label:"Accounting"},
-            			{label:"Awareness"},
-            			{label:"Care"},
-            			{label:"Investigations"},
-            			{label:"Legal"},
-            			{label:"Records"},
-            			{label:"Security"},
-            			{label:"Shelter"}
-            		],
-            		selectedOptions:[],
-            		settings: {smartButtonMaxItems:2, showCheckAll: false, showUncheckAll: false},
-            	};
-            	
-            	let selOptions = project.coordinator.split(';');
-            	for (let selIdx in selOptions) {
-            		for (let opIdx in this.coordinator[project.border_station].options) {
-            			if (selOptions[selIdx] === this.coordinator[project.border_station].options[opIdx].label) {
-            				this.coordinator[project.border_station].selectedOptions.push(this.coordinator[project.border_station].options[opIdx]);
-            			}
-            		}
-            	}
-            }
-        }, (error) => {this.spinner.hide();alert(error);});
+    
+    checkAnyPermission(projectList, permission) {
+    	let result = this.session.checkPermission('STAFF',permission, this.staff.country, null);
+    	if (!result) {
+	    	for (let projIdx in projectList) {
+	    		if (this.session.checkPermission('STAFF',permission,projectList[projIdx].country_id, projectList[projIdx].border_station) === true) {
+	    			result = true;
+	    			break;
+	    		}
+	    	}
+    	}
+    	
+    	return result;
     }
     
-    getProjectName(project_id) {
+    checkForPermission(projectList, permission) {
+    	let result = this.session.checkPermission('STAFF',permission, this.staff.country, null);
+    	if (!result) {
+	    	for (let projIdx in projectList) {
+	    		if (this.session.checkPermission('STAFF',permission,projectList[projIdx].country_id, projectList[projIdx].border_station) === true) {
+	    			result = true;
+	    		} else {
+	    			result = false;
+	    			break;
+	    		}
+	    	}
+    	}
+    	
+    	return result;
+    }
+    
+	getProjectName(projectId) {
     	let projectName = 'Unknown';
-    	for (let projIdx in this.projects) {
-    		if (project_id === this.projects[projIdx].id) {
-            	projectName = this.projects[projIdx].station_name;
-            	break;
-            }
-         }
+    	let project = this.projectsById[projectId];
+    	if (project) {
+    		projectName = project.station_name;
+    	}
  		return projectName;
     }
     
-    getProjectRef(project_id) {
-    	return this.state.href('border-station', {id:project_id, isViewing:false });
+    getProjectRef(projectId) {
+    	return this.state.href('border-station', {id:projectId, isViewing:false });
+    }
+
+	/*
+	 * Basic tab methods
+	*/
+    getStaff() {
+    	this.requestCount++;
+        this.service.getStaff(this.stateParams.id).then((response) => {
+        	this.requestCount--;
+            this.staff = response.data;
+            this.processBasicData();
+        }, () => {
+        	this.requestCount--;
+        	if (this.requestCount < 1) {
+        		this.requestCount = 0;
+        		this.spinner.hide();
+        	}
+        });
+    }
+    
+    // called after initial retrieval or update of basic data
+    processBasicData() {
+    	this.stepTemplates = [
+            {template:basicTemplate, name:"Basic", modified:'basicModified', save:this.basicSave, discard:this.basicDiscard},
+        ];
+    	this.basicEdit = this.checkForPermission(this.staff.staffproject_set, 'EDIT_BASIC') || this.staff.id === null;
+    	this.contractViewAny = this.checkAnyPermission(this.staff.staffproject_set, 'VIEW_CONTRACT') && this.staff.id !== null;
+        this.contractView = this.checkForPermission(this.staff.staffproject_set, 'VIEW_CONTRACT')  && this.staff.id !== null;
+        this.contractEdit = this.checkForPermission(this.staff.staffproject_set, 'EDIT_CONTRACT');
+        if (this.contractViewAny) {
+        	this.stepTemplates.push({template:contractTemplate, name:"Contract", modified:this.contractModified, save:this.contractSave, discard:this.contractDiscard});
+	        this.getStaffContract();
+        }
+        this.knowledgeView = true && this.staff.id !== null;
+        this.knowledgeEdit = this.checkForPermission(this.staff.staffproject_set, 'EDIT_BASIC');
+        if (this.knowledgeView) {
+        	this.stepTemplates.push({template:knowledgeTemplate, name:"Knowledge", modified:this.knowledgeModified, save:this.knowledgeSave, discard:this.knowledgeDiscard});
+        	this.getStaffKnowledge();
+        }
+        this.reviewView = this.checkForPermission(this.staff.staffproject_set, 'VIEW_REVIEW') && this.staff.id;
+        this.reviewEdit = this.checkForPermission(this.staff.staffproject_set, 'EDIT_REVIEW');
+        if (this.reviewView) {
+        	this.stepTemplates.push({template:reviewTemplate, name:"Reviews", modified:this.reviewsModified, save:this.reviewsSave, discard:this.reviewsDiscard});
+        	this.getStaffReviews();
+        }
+        this.canDelete = this.session.checkPermission('STAFF','DELETE', this.staff.country, null);
+        this.staff.country = this.staff.country + '';
+        let dateData = new DateData();
+        this.startDate = dateData.dateAsUTC(this.staff.first_date);
+        this.lastDate = null;
+        if (this.requestCount < 1) {
+        	this.spinner.hide();
+        }
+        this.coordinator = {};
+        for (let projIdx in this.staff.staffproject_set) {
+        	let project = this.staff.staffproject_set[projIdx];
+        	this.coordinator[project.border_station] = {
+        		options: [
+        			{label:"Accounting"},
+        			{label:"Awareness"},
+        			{label:"Care"},
+        			{label:"Investigations"},
+        			{label:"Legal"},
+        			{label:"Records"},
+        			{label:"Security"},
+        			{label:"Shelter"}
+        		],
+        		selectedOptions:[],
+        		settings: {smartButtonMaxItems:2, showCheckAll: false, showUncheckAll: false},
+        	};
+        	
+        	let selOptions = project.coordinator.split(';');
+        	for (let selIdx in selOptions) {
+        		for (let opIdx in this.coordinator[project.border_station].options) {
+        			if (selOptions[selIdx] === this.coordinator[project.border_station].options[opIdx].label) {
+        				this.coordinator[project.border_station].selectedOptions.push(this.coordinator[project.border_station].options[opIdx]);
+        			}
+        		}
+        	}
+        }
+        this.staffOriginal = jQuery.extend(true, {}, this.staff);
+    }
+    
+    updateCoordinatorOptions() {
+    	for (let projIdx in this.staff.staffproject_set) {
+    		let project = this.staff.staffproject_set[projIdx];
+    		let selectedLabels = [];
+    		if (project.coordinator) {
+    			selectedLabels = project.coordinator.split(';');
+    		}
+    		let newOptions = this.getCoordinatorOptions(selectedLabels);
+    		this.coordinator[project.border_station].options = newOptions;
+    		this.coordinator[project.border_station].selectedOptions = [];
+    		for (let selIdx in selectedLabels) {
+        		for (let opIdx in this.coordinator[project.border_station].options) {
+        			if (selectedLabels[selIdx] === this.coordinator[project.border_station].options[opIdx].label) {
+        				this.coordinator[project.border_station].selectedOptions.push(this.coordinator[project.border_station].options[opIdx]);
+        			}
+        		}
+        	}
+    	}
+    }
+    
+    getCoordinatorOptions(selectedLabels) {
+    	let options = [{label:"Investigations"}];
+    	let neededLabels = [];
+    	for (let labelIndex in selectedLabels) {
+    		if (selectedLabels[labelIndex] !== 'Investigations') {
+    			neededLabels.push(selectedLabels[labelIndex]);
+    		}
+    	}
+    	for (let key in this.knowledgeMap) {
+    		if (this.knowledgeMap[key] === null) {
+    			continue;
+    		}
+    		
+    		if (this.knowledgeDates[key] !== null) {
+    			for (let labelIndex in this.knowledgeMap[key]) {
+    				let found = false;
+    				for (let neededIndex in neededLabels) {
+    					if (this.knowledgeMap[key][labelIndex] === neededLabels[neededIndex]) {
+    						found = true;
+    					}
+    				}
+    				if (!found) {
+    					neededLabels.push(this.knowledgeMap[key][labelIndex]);
+    				}
+    			}
+    		}
+    	}
+    	neededLabels = neededLabels.sort();
+    	for (let neededIndex in neededLabels) {
+    		options.push({label:neededLabels[neededIndex]});
+    	}
+    	return options;
+    }
+    
+    basicPreSave() {
+    	let dateData = new DateData();
+    	this.staff.first_date = dateData.dateToString(this.startDate);
+    	for (let projIdx in this.staff.staffproject_set) {
+    		let project = this.staff.staffproject_set[projIdx];
+    		let tmp = '';
+    		let sep = '';
+    		for (let selIdx in this.coordinator[project.border_station].selectedOptions) {
+    			tmp += sep + this.coordinator[project.border_station].selectedOptions[selIdx].label;
+    			sep = ';';
+            			
+            }
+            project.coordinator = tmp;
+    	}
+    }
+    
+    basicModified() {
+    	this.basicPreSave();
+    	for (let item in this.staff) {
+    		if ("staffproject_set;miscellaneous;contract_data;knowledge_data;review_data".indexOf(item) >= 0) {
+    			continue;
+    		}
+    		
+    		if (this.staff[item] !== this.staffOriginal[item]) {
+    			return true;
+    		}
+    	}
+    	
+    	if (this.staff.staffproject_set.length !== this.staffOriginal.staffproject_set.length) {
+    		return true;
+    	}
+    		
+    	for (let projIndex in this.staff.staffproject_set) {
+    		for (let item in this.staff.staffproject_set[projIndex]) {
+    			if (item.startsWith("$")) {
+    				continue;
+    			}
+    			if (this.staff.staffproject_set[projIndex][item] !== this.staffOriginal.staffproject_set[projIndex][item]) {
+    				return true;
+    			}
+    		}
+    	}
+    	
+    	for (let miscIndex in this.staff.miscellaneous) {
+    		for (let item in this.staff.miscellaneous[miscIndex]) {
+    			if (item.startsWith("$") || item === 'type_detail') {
+    				continue;
+    			}
+    			if (this.staff.miscellaneous[miscIndex][item] !== this.staffOriginal.miscellaneous[miscIndex][item]) {
+    				return true;
+    			}
+    		}
+    	}
+    	
+    	return false;
+    }
+    
+    miscSaveItem (miscIndex) {
+    	this.service.submitMiscellaneous(this.staff.miscellaneous[miscIndex]).then((response) => {
+ 			this.staff.miscellaneous[miscIndex] = jQuery.extend(true, {}, response.data);
+ 			this.requestCount--;
+ 			if (this.requestCount <= 0) {
+ 				this.requestCount = 0;
+ 				this.spinner.hide();
+ 			}
+ 		}, () => {
+ 			this.toastr.error("Failed to save miscellaneous information");
+ 			this.requestCount--;
+ 			if (this.requestCount <= 0) {
+ 				this.requestCount = 0;
+ 				this.spinner.hide();
+ 			}
+ 		});
+    }
+    
+    basicSave() {
+    	this.basicPreSave();
+    	let keepMiscellaneous = this.staff.miscellaneous;
+    	this.spinner.show("Saving Basic..."); 
+        this.service.submitStaff(this.staff).then((response) => {
+             this.staff = response.data;
+             if (this.staff.last_date !== null) {
+             	// Staff was deleted - go back to list
+             	this.state.go('staffList');
+             }
+             this.staff.miscellaneous = keepMiscellaneous;
+             if (this.staff.miscellaneous.length > 0) {
+             	this.request_count = 0;
+             	for (let miscIndex in this.staff.miscellaneous) {
+             		this.requestCount++;
+             		if (this.staff.miscellaneous[miscIndex].staff === null) {
+             			this.staff.miscellaneous[miscIndex].staff = this.staff.id;
+             		}
+             		this.miscSaveItem(miscIndex);
+             	}
+             } else {
+             	if (this.requestCount < 1) {
+             		this.spinner.hide();
+             	}
+             }
+             this.stepTemplates = [
+	            {template:basicTemplate, name:"Basic", modified:'basicModified', save:this.basicSave, discard:this.basicDiscard},
+	        ];
+             this.processBasicData();
+         }, (error) => {
+         	this.spinner.hide();
+         	this.toastr.error("Failed to save basic information");
+            this.set_errors_and_warnings(error.data);
+            this.response.status = this.saved_status;
+            });
+        
+        this.messagesEnabled = true;
+    }
+    
+    basicDiscard() {
+    	this.staff = jQuery.extend(true, {}, this.staffOriginal);
+    	this.processBasicData();
     }
     
     addProject() {
@@ -197,6 +536,7 @@ export default class StaffController {
                 staff: () => this.staff,
                 projects: () => this.projects,
                 coordinator: () => this.coordinator,
+                session: () => this.session
             },
             size: 'lg',
             templateUrl: AddProjectModalTemplate,
@@ -212,30 +552,550 @@ export default class StaffController {
 		}
 	}
 	
+	deleteStaff() {
+		let dateData = new DateData();
+		this.staff.last_date = dateData.dateToString(this.lastDate);
+		this.basicSave();
+	}
     
-    submit() {
-    	let dateData = new DateData();
-    	this.staff.first_date = dateData.dateToString(this.startDate);
-    	this.staff.birth_date = dateData.dateToString(this.birthDate);
-    	for (let projIdx in this.staff.staffproject_set) {
-    		let project = this.staff.staffproject_set[projIdx];
-    		let tmp = '';
-    		let sep = '';
-    		for (let selIdx in this.coordinator[project.border_station].selectedOptions) {
-    			tmp += sep + this.coordinator[project.border_station].selectedOptions[selIdx].label;
-    			sep = ';';
-            			
-            }
-            project.coordinator = tmp;
+    
+    /*
+     * Contract tab methods
+    */
+    getStaffContract() {
+    	this.service.getStaffContract(this.staff.id).then((response) => {
+    		this.contract = response.data;
+    		this.processStaffContract();
+    	}, () => {
+    		this.toastr.error("Failed to retrieve contract information");
+    	});
+    }
+    
+    processStaffContract() {
+    	if (this.contract.contract_expiration !== null) {
+			let dateData = new DateData();
+			this.contractExpirationDate = dateData.dateAsUTC(this.contract.contract_expiration);
+		} else {
+			this.contractExpirationDate = null;
+		}
+		if (this.contract.projects.length > 0) {
+			this.projectId = this.contract.projects[0].id + '';
+		} else {
+			this.projectId = null;
+		}
+		this.setContractProject();
+		
+		this.originalContract = jQuery.extend(true, {}, this.contract);
+    }
+    
+    setContractProject() {
+    	this.contractProject = {
+    		labels:['Total', 'Gross Pay', 'Deductions'],
+    		twelveMonth:{},
+    		months: [],
+    		currentIndex:0,
+    		currencyType:'local',
+    	};
+    	
+    	for (let countryIndex in this.countries) {
+    		if (this.countries[countryIndex].id + '' === this.staff.country) {
+    			this.currency = decodeURI(this.countries[countryIndex].currency);
+    			if (this.countries[countryIndex].options.hasOwnProperty('drop_decimal')) {
+            		this.dropDecimal = this.countries[countryIndex].options.drop_decimal;
+            	}
+    		}
     	}
-        this.service.submitStaff(this.staff).then((response) => {
-             this.staff = response.data;
-             this.state.go('staffList');
-         }, (error) => {
-             this.set_errors_and_warnings(error.data);
-             this.response.status = this.saved_status;
-            });
+    	
+		this.getMonthlyRequests(0);
+    }
+    
+    getMonthlyRequests(idx) {
+    	let year = this.lastYear;
+    	let month = this.lastMonth - idx;
+    	while(month <= 0) {
+    		month += 12;
+    		year -= 1;
+    	}
+    	
+    	if (this.projectId === null) {
+    		this.contractProject.twelveMonth = {Total:{local:0,USD:0}};
+    		this.contractProject.months.push({month:month, year:year, Total:{local:0,USD:0}});
+    		if (this.contractProject.months.length < 12) {
+    			this.getMonthlyRequests(idx+1);
+    		}
+    		return;
+    	}
+    	
+    	this.spinner.show('Loading Salary');
+    	this.service.getContractRequests(this.staff, this.projectId, year, month).then((response) => {
+    		if (this.requestCount < 1) {
+    			this.spinner.hide();
+    		}
+    		let result = {
+    			month: parseInt(response.data.month),
+    			year: parseInt(response.data.year),
+    			Total:{local:0,USD:0}
+    		};
+    		for (let requestIndex in response.data.project_request) {
+    			let request = response.data.project_request[requestIndex];
+    			if (request.benefit_type_name.toLowerCase() === 'deductions') {
+    				if (!result.hasOwnProperty('Deductions')) {
+    					result.Deductions = {local:0};
+    				}
+    				result.Deductions.local += this.strToPennies(request.cost);
+    				result.Total.local -= this.strToPennies(request.cost);
+    			} else if (request.benefit_type_name.toLowerCase() === 'salary') {
+    				if (!result.hasOwnProperty('Gross Pay')) {
+    					result['Gross Pay'] = {local:0};
+    				}
+    				result['Gross Pay'].local += this.strToPennies(request.cost);
+    				result.Total.local += this.strToPennies(request.cost);
+    				
+    			} else {
+    				if (!result.hasOwnProperty(request.benefit_type_name)) {
+    					result[request.benefit_type_name] = {local:0};
+    					if (this.contractProject.labels.indexOf(request.benefit_type_name) < 0) {
+    						this.contractProject.labels.push(request.benefit_type_name);
+    					}
+    				}
+    				result[request.benefit_type_name].local += this.strToPennies(request.cost);
+    				result.Total.local += this.strToPennies(request.cost);
+    			}
+    		}
+    		for (let item in result) {
+    			if (item !== 'month' && item !== 'year') {
+    				result[item].USD = Math.floor(result[item].local / response.data.exchange_rate + 0.05);
+    			}
+    		}
+    		this.contractProject.months.push(result);
+    		if (this.contractProject.months.length <= 12) {
+    			for (let item in result) {
+    				if (item !== 'month' && item !== 'year') {
+	    				if (this.contractProject.twelveMonth.hasOwnProperty(item)) {
+	    					this.contractProject.twelveMonth[item].local += result[item].local;
+	    					this.contractProject.twelveMonth[item].USD += result[item].USD;
+	    				} else {
+	    					this.contractProject.twelveMonth[item]= {local:result[item].local,USD:result[item].USD};
+	    				}
+    				}
+    			}
+    		}
+    		if (this.contractProject.months.length < 12) {
+    			this.getMonthlyRequests(this.contractProject.months.length);
+    		}
+    	}, () => {
+    		this.spinner.hide();
+    		this.this.toastr.error("Failed to load salary information year=" + year + " month=" + month);
+    	});
+    }
+    
+    getContractMonthHeader(monthIndex) {
+    	let result = '';
+    	let months = ['','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    	if (this.contractProject) {
+	   		let theIndex = this.contractProject.currentIndex + monthIndex;
+	   		if (this.contractProject.months.length > theIndex) {
+	   			result = months[this.contractProject.months[theIndex].month] + " '" + (this.contractProject.months[theIndex].year - 2000);
+	   		}
+	   	}
+	   	return result;
+    }
+    
+    getContractMonthData(category, monthIndex) {
+    	let result = '';
+    	if (this.contractProject) {
+	    	let theIndex = this.contractProject.currentIndex + monthIndex;
+	    	if (this.contractProject.months.length > theIndex &&
+	    			this.contractProject.months[theIndex].hasOwnProperty(category)) {
+	    		return this.formatAmount(this.contractProject.months[theIndex][category]);
+	    	}
+    	}
+    	return result;
+    }
+    
+    formatAmount(amt) {
+    	let currency = "$";
+    	if (this.contractProject.currencyType === 'local') {
+    		currency = this.currency;
+    	}
+    	return currency + this.penniesToStr(amt[this.contractProject.currencyType]);
+    }
+    
+    contractScrollLeft() {
+    	if (this.contractProject.currentIndex > 0) {
+    		this.contractProject.currentIndex -= 1;
+    	}
+    }
+    
+    contractScrollRight() {
+    	this.contractProject.currentIndex += 1;
+    	if (this.contractProject.currentIndex + 7 >= this.contractProject.months.length) {
+    		this.getMonthlyRequests(this.contractProject.currentIndex + 7);
+    	}
+    }
+    
+    contractModified() {
+    	this.contractPreSave();
+    	if (this.contract.contract !== this.originalContract.contract) {
+    		return true;
+    	}
+    	if (this.contract.agreement !== this.originalContract.agreement) {
+    		return true;
+    	}
+    	if (this.contract.contract_expiration !== this.originalContract.contract_expiration) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    contractPreSave() {
+    	if (this.contractExpirationDate) {
+    		let dateData = new DateData();
+    		this.contract.contract_expiration = dateData.dateToString(this.contractExpirationDate);
+    	}
+    }
+    
+    contractSave() {
+    	this.contractPreSave();
+    	this.service.saveStaffContract(this.staff, this.contract).then((response) => {
+    		this.contract = response.data;
+    		this.processStaffContract();
+    	}, () => {
+    		this.toastr.error("Failed to save contract information");
+    	});
+    }
+    
+    contractDiscard() {
+    	this.contract = jQuery.extend(true, {}, this.originalContract);
+    	this.processStaffContract();
+    }
+    
+    strToPennies(strValue) {
+        let cents = 0;
+        let dollars = 0;
+        let pennies = 0;
+        if (strValue) {
+            let pos = strValue.indexOf(".");
+            if (pos < 0) {
+                dollars = parseInt(strValue);
+            } else {
+                dollars= parseInt(strValue.substring(0,pos));
+                let decimalDigits = strValue.length - (pos+1);
+                if (decimalDigits === 1) {
+                    cents = parseInt(strValue.substring(pos+1));
+                    cents *= 10;
+                } else if (decimalDigits === 2) {
+                    cents = parseInt(strValue.substring(pos+1));
+                }
+            }
+            pennies = dollars * 100 + cents;
+        }
+        if (isNaN(pennies)) {
+        	pennies = 0;
+        }
         
-        this.messagesEnabled = true;
+        return pennies;
+    }
+    
+     penniesToStr(pennies, exchange_rate=null) {
+    	let value = pennies;
+    	if (exchange_rate !== null) {
+    		value = Math.round(value / exchange_rate);
+    	}
+        let dollars = Math.floor(value / 100);
+        let cents = value - dollars * 100;
+        let str = '';
+        if (!this.dropDecimal || cents !== 0 || this.currencyType === 'USD') {
+	        str = cents + '';
+	        if (cents < 10) {
+	            str = '0' + str;
+	        }
+	        str = dollars + '.' + str;
+        } else {
+        	str = dollars + '';
+        }
+        return str;
+    }
+    
+    isString(val) {
+    	return typeof val === 'string';
+    }
+    
+    getScannedFormUrl(url) {
+        let theUrl = new URL(url);
+        let theHref = theUrl.href;
+        return theHref;
+    }
+    
+    
+	/*
+     * Knowledge tab methods
+    */
+    getStaffKnowledge() {
+    	this.service.getStaffKnowledge(this.stateParams.id).then((response) => {
+    		this.knowledge = response.data;
+    		this.processStaffKnowledge();
+    	});
+    }
+    
+    processStaffKnowledge() {
+    	let dateData = new DateData();
+		for (let itemIndex in this.knowledgeDates.items) {
+			let item = this.knowledgeDates.items[itemIndex];
+			if (this.knowledge[item] !== null) {
+				this.knowledgeDates[item] = dateData.dateAsUTC(this.knowledge[item]);
+			} else {
+				this.knowledgeDates[item] = null;
+			}
+		}
+		this.updateCoordinatorOptions();
+		this.originalKnowledge = jQuery.extend(true, {}, this.knowledge);
+    }
+    
+    knowledgePreSave() {
+    	let dateData = new DateData();
+    	for (let itemIndex in this.knowledgeDates.items) {
+    		let item = this.knowledgeDates.items[itemIndex];
+    		if (this.knowledgeDates[item] !== null) {
+    			this.knowledge[item] = dateData.dateToString(this.knowledgeDates[item]);
+    		} else {
+    			this.knowledge[item] = null;
+    		}
+    	}
+    }
+    
+    knowledgeModified() {
+    	this.knowledgePreSave();
+    	for (let item in this.knowledge) {
+    		if (this.knowledge[item] !== this.originalKnowledge[item]) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    knowledgeSave() {
+    	this.knowledgePreSave();
+    	this.spinner.show("Saving Knowledge..."); 
+    	this.service.saveStaffKnowledge(this.staff, this.knowledge).then((response) => {
+    		this.knowledge = response.data;
+    		this.processStaffKnowledge();
+    		if (this.requestCount < 1) {
+    			this.spinner.hide();
+    		}
+    	}, () => {
+    		this.spinner.hide();
+    		this.toastr.error("Failed to save knowledge information");
+    	});
+    }
+    
+    knowledgeDiscard() {
+    	this.knowledge = jQuery.extend(true, {}, this.originalKnowledge);
+    	this.processStaffKnowledge();
+    }
+    
+    knowledgeClass(item) {
+		if (this.staff) {
+	    	let roles = this.knowledgeMap[item];
+	    	if (roles === null) {
+	    		 if (this.knowledgeDates[item] === null) {
+	    		 	return 'knowledgeMissing';
+	    		 }
+	    	} else {
+	    		for (let roleIndex in roles) {
+	    			for (let projectIndex in this.staff.staffproject_set) {
+	    				if (this.staff.staffproject_set[projectIndex].coordinator.indexOf(roles[roleIndex]) >= 0) {
+	    					if (this.knowledgeDates[item] === null) {
+				    		 	return 'knowledgeMissing';
+				    		} else {
+				    			return 'knowledgeGood';
+				    		}
+	    				}
+	    			}
+	    		}
+	    	}
+    	}
+    	return '';
+    }
+    
+    
+    /*
+     * Review tab methods
+    */
+    getStaffReviews() {
+    	this.service.getStaffReviewList(this.staff.id).then((response) => {
+    		this.reviews = response.data.results;
+    		this.processStaffReviews();
+    		if (this.requestCount < 1) {
+    			this.spinner.hide();
+    		}
+    	});
+    }
+    
+    processStaffReviews() {
+    	this.originalReviews = [];
+    	for (let reviewIndex in this.reviews) {
+    		this.originalReviews.push(jQuery.extend(true, {}, this.reviews[reviewIndex]));
+    	}
+    }
+    
+    addReview() {
+    	this.finishReviewEdit();
+    	this.reviewDate = null;
+    	let newReview = {
+    		id:null,
+    		staff:this.staff.id,
+    		reviewDate:null,
+    		leadership:null,
+    		obedience:null,
+    		faithfulness:null,
+    		alertness:null,
+    		questioning:null,
+    		awareness:null,
+    		total:0,
+    		inProgress:true,
+    		modified:true
+    	};
+    	this.reviews.push(newReview);
+    }
+    
+    modifyReview(review) {
+    	this.finishReviewEdit();
+    	review.inProgress = true;
+    	review.modified = true;
+    	if (review.review_date === null) {
+    		this.reviewDate = null;
+    	} else {
+    		let dateData = new DateData();
+    		this.reviewDate = dateData.dateAsUTC(review.review_date);
+    	}
+    }
+    
+    deleteReview(index) {
+    	if (index < this.reviews.length) {
+	    	if (this.reviews[index].id !== null) {
+		    	this.reviews[index].toDelete = true;
+		    	this.reviews[index].modified = true;
+	    	} else {
+	    		this.reviews.splice(index, 1);
+	    	}
+	    }
+    }
+    
+    finishReviewEdit() {
+    	for (let reviewIndex in this.reviews) {
+    		if (this.reviews[reviewIndex].inProgress) {
+    			if (this.reviewDate === null) {
+    				this.reviews[reviewIndex].review_date = null;
+    			} else {
+    				let dateData = new DateData();
+    				this.reviews[reviewIndex].review_date = dateData.dateToString(this.reviewDate);
+    				this.reviews[reviewIndex].inProgress = false;
+    			}
+    		}
+    	}
+    }
+    
+    reviewTotal(review) {
+    	let newTotal = 0;
+    	for (let item in review) {
+    		if (reviewMertrics.indexOf(item) < 0) {
+    			continue;
+    		}
+    		if (review[item] !== null) {
+    			newTotal += review[item];
+    		}
+    	}
+    	
+    	review.total = newTotal;
+    }
+    
+    reviewInProgressReady() {
+    	let inProgressReady = true;
+    	for (let reviewIndex in this.reviews) {
+    		if (this.reviews[reviewIndex].inProgress) {
+    			if (this.reviewDate === null) {
+    				inProgressReady = false;
+    			}
+    			for (let item in this.reviews[reviewIndex]) {
+    				if (reviewMertrics.indexOf(item) >= 0 && this.reviews[reviewIndex][item] === null) {
+    					inProgressReady = false;
+    				}	
+    			}
+    		}
+    	}
+    	
+    	return inProgressReady;
+    }
+    
+    reviewsReadyToSave() {
+    	let inProgressReady = this.reviewInProgressReady();
+    	let modifiedReviews = this.reviews && this.reviews.length === 0;
+    	
+    	for (let reviewIndex in this.reviews) {
+    		if (this.reviews[reviewIndex].modified) {
+    			modifiedReviews = true;
+    		}
+    	}
+    	
+    	return inProgressReady && modifiedReviews;
+    }
+    
+    reviewsModified() {
+    	for (let reviewIndex in this.reviews) {
+    		if (this.reviews[reviewIndex].modified) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    reviewsSave() {
+    	this.finishReviewEdit();
+    	this.requestCount = 0;
+    	this.spinner.show("Saving Reviews..."); 
+    	for (let reviewIndex in this.reviews) {
+    		if (this.reviews[reviewIndex].modified) {
+    			this.requestCount++;
+    			if (this.reviews[reviewIndex].toDelete) {
+    				this.service.deleteStaffReview(this.reviews[reviewIndex]).then(() => {
+    					this.requestCount--;
+    					if (this.requestCount <= 0) {
+    						this.requestCount = 0;
+    						this.getStaffReviews();
+    					}
+    				}, () => {
+    					this.requestCount--;
+    					this.toastr.error("Failed to delete review");
+    					if (this.requestCount <= 0) {
+    						this.requestCount = 0;
+    						this.getStaffReviews();
+    					}
+    				});
+    			} else {
+    				this.service.submitStaffReview(this.reviews[reviewIndex]).then(() => {
+    					this.requestCount--;
+    					if (this.requestCount <= 0) {
+    						this.requestCount = 0;
+    						this.getStaffReviews();
+    					}
+    				}, () => {
+    					this.toastr.error("Failed to save review");
+    					this.requestCount--;
+    					if (this.requestCount <= 0) {
+    						this.requestCount = 0;
+    						this.getStaffReviews();
+    					}
+    				});
+    			}
+    		}
+    	}
+    }
+    
+    reviewsDiscard() {
+    	this.reviews = [];
+    	for (let reviewIndex in this.originalReviews) {
+    		this.reviews.push(jQuery.extend(true, {}, this.originalReviews[reviewIndex]));
+    	}
     }
 }

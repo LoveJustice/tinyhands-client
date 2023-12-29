@@ -1,0 +1,42 @@
+<fieldset id="staffReview" class="container-fluid" ng-disabled="!vm.reviewEdit">
+	<div class="row col-md-12 padding-bottom-20">
+      	<table class="table table-striped" float-thead="vm.stickyOptions" ng-model="vm.reviews">
+        	<thead>
+        		<tr>
+        			<th>Date</th>
+        			<th>Leadership</th>
+        			<th>Obedience</th>
+        			<th>Faithfulness</th>
+        			<th>Alertness</th>
+        			<th>Questioning</th>
+        			<th>Awareness</th>
+        			<th>Total</th>
+        			<th></th>
+        			<th></th>
+        		</tr>
+        	</thead>
+        	<tbody>
+        		<tr ng-repeat="review in vm.reviews" ng-if="!review.toDelete">
+        			<td ng-if="!review.inProgress">{{ review.review_date }}</td>
+        			<td ng-if="review.inProgress"><input type="date" ng-model-options="{timezone: 'utc'}" ng-model="vm.reviewDate"></td>
+        			<td><input type="number" ng-model="review.leadership" ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
+        			<td><input type="number" ng-model="review.obedience" ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
+        			<td><input type="number" ng-model="review.faithfulness" ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
+        			<td><input type="number" ng-model="review.alertness" ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
+        			<td><input type="number" ng-model="review.questioning" ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
+        			<td><input type="number" ng-model="review.awareness" ng-change="vm.reviewTotal(review)"  ng-disabled="!review.inProgress"></td>
+        			<td>{{ review.total }}</td>
+        			<td><button ng-if="vm.reviewEdit && !review.inProgress && vm.reviewInProgressReady()" class="btn btn-success"
+        					ng-click="vm.modifyReview(review)"><i class="fa fa-pencil-square"></i></button></td>
+        			<td><button ng-if="vm.reviewEdit" class="btn btn-danger" ng-click="vm.deleteReview($index)"><i class="fa fa-trash-o"></i></button></td>
+        		</tr>
+        	</tbody>
+        </table>
+	</div>
+	<div ng-if="vm.reviewEdit && vm.reviewInProgressReady()" class="row col-md-12 text-center padding-bottom-20">
+		<button class="btn btn-success" ng-click="vm.addReview()"><i class="fa fa-plus"></i></button>
+	</div>
+	<div class="row col-md-12 text-center padding-bottom-20" ng-if="vm.reviewEdit && vm.reviewsReadyToSave()">
+    	<button class="btn btn-success margin-left-20" ng-click="vm.reviewsSave()">Save</button>
+    </div>
+</fieldset>

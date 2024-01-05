@@ -106,7 +106,6 @@ export default class StaffController {
         this.contractView = false;
         this.contractEdit = false;
         this.contract = null;
-        this.projectId = null;
         this.currency = '';
         this.dropDecimal = false;
         this.knowledgeView = true;
@@ -578,11 +577,6 @@ export default class StaffController {
 		} else {
 			this.contractExpirationDate = null;
 		}
-		if (this.contract.projects.length > 0) {
-			this.projectId = this.contract.projects[0].id + '';
-		} else {
-			this.projectId = null;
-		}
 		this.setContractProject();
 		
 		this.originalContract = jQuery.extend(true, {}, this.contract);
@@ -617,17 +611,8 @@ export default class StaffController {
     		year -= 1;
     	}
     	
-    	if (this.projectId === null) {
-    		this.contractProject.twelveMonth = {Total:{local:0,USD:0}};
-    		this.contractProject.months.push({month:month, year:year, Total:{local:0,USD:0}});
-    		if (this.contractProject.months.length < 12) {
-    			this.getMonthlyRequests(idx+1);
-    		}
-    		return;
-    	}
-    	
     	this.spinner.show('Loading Salary');
-    	this.service.getContractRequests(this.staff, this.projectId, year, month).then((response) => {
+    	this.service.getContractRequests(this.staff, year, month).then((response) => {
     		if (this.requestCount < 1) {
     			this.spinner.hide();
     		}
@@ -683,9 +668,9 @@ export default class StaffController {
     		if (this.contractProject.months.length < 12) {
     			this.getMonthlyRequests(this.contractProject.months.length);
     		}
-    	}, () => {
+    	}, (error) => {
     		this.spinner.hide();
-    		this.this.toastr.error("Failed to load salary information year=" + year + " month=" + month);
+    		this.toastr.error("Failed to load salary information year=" + year + " month=" + month);
     	});
     }
     
@@ -1016,11 +1001,23 @@ export default class StaffController {
     		if (this.reviews[reviewIndex].inProgress) {
     			if (this.reviewDate === null) {
     				inProgressReady = false;
+    				break;
     			}
     			for (let item in this.reviews[reviewIndex]) {
-    				if (reviewMertrics.indexOf(item) >= 0 && this.reviews[reviewIndex][item] === null) {
+    				if (reviewMertrics.indexOf(item) < 0) {
+    					continue;
+    				}
+    				if (this.reviews[reviewIndex][item] === null || isNaN(this.reviews[reviewIndex][item]))
+    				{
     					inProgressReady = false;
-    				}	
+    					break;
+    				}
+    				
+    				let value = parseFloat(this.reviews[reviewIndex][item]);
+    				if (value < 1.0 || value > 5.0) {
+    					inProgressReady = false;
+    					break;
+    				}
     			}
     		}
     	}
@@ -1097,5 +1094,18 @@ export default class StaffController {
     	for (let reviewIndex in this.originalReviews) {
     		this.reviews.push(jQuery.extend(true, {}, this.originalReviews[reviewIndex]));
     	}
+    }
+    
+    reviewColor(value) {
+    	let color = "reviewInvalid";
+    	if (value!==null && value!== '') {
+    		if (!isNaN(value)) {
+    			let numValue = parseFloat(value);
+    			if (numValue >= 1.0 && numValue <= 5.0) {
+    				color = "reviewValid";
+    			}
+    		}
+    	}
+    	return color;
     }
 }

@@ -70,8 +70,8 @@ export default class BorderStationService {
 		return this.service.put(`api/staff/contract/${contract.id}/`, formData, {'Content-Type': undefined});
 	}
 	
-	getContractRequests(staff, project, year, month) {
-		return this.service.get(`api/staff/contract/requests/${staff.id}/${project}/${year}/${month}/`);
+	getContractRequests(staff, year, month) {
+		return this.service.get(`api/staff/contract/requests/${staff.id}/${year}/${month}/`);
 	}
 	
 	getStaffKnowledge(id) {

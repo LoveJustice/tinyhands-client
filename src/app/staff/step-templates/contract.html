@@ -1,13 +1,5 @@
 <fieldset id="staffContract" class="container-fluid">
-	<div class="col-md-2">
-		<div class="row text-center">
-			<label>Benefit Project</label>
-		</div>
-		<div class="row text-center">
-			<select ng-model="vm.projectId" ng-change="vm.setContractProject()">
-				<option ng-repeat="proj in vm.contract.projects" value="{{ proj.id }}">{{ proj.station_name }}</option>
-			</select>
-		</div>
+	<div class="col-md-1">
 		<div class="row text-center">
 			<label>currency</label>
 		</div>

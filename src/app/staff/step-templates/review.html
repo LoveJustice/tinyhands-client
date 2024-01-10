@@ -48,7 +48,7 @@
 	<div ng-if="vm.reviewEdit && vm.reviewInProgressReady()" class="row col-md-12 text-center padding-bottom-20">
 		<button class="btn btn-success" ng-click="vm.addReview()"><i class="fa fa-plus"></i></button>
 	</div>
-	<div class="row col-md-12 text-center padding-bottom-20" ng-if="vm.reviewEdit && vm.reviewsReadyToSave()">
+	<div class="row col-md-12 text-center padding-bottom-20" ng-if="vm.reviewEdit && vm.reviewsModified() && vm.reviewsReadyToSave()">
     	<button class="btn btn-success margin-left-20" ng-click="vm.reviewsSave()">Save</button>
     </div>
 </fieldset>

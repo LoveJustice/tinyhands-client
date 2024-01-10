@@ -67,6 +67,7 @@ export default class BorderStationService {
       
         params.push({name: 'permission_group', value: 'SUBCOMMITTEE'});
         params.push({name: 'action', value: 'VIEW_BASIC'});
+        params.push({name: 'include_closed', value: true})
 
         return this.service.get(`api/user_permission/stations/${id}/`, params);
     }

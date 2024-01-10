@@ -113,6 +113,11 @@
                            ui-sref="staffList"
                            ng-click="navbarCtrl.trackButtonClick('Staff')">Staff</a>
                     </li>
+                	<li>
+                    	<a ng-show="navbarCtrl.session.checkPermission('SUBCOMMITTEE','VIEW_BASIC',null, null)"
+                           ui-sref="subcommitteeList"
+                           ng-click="navbarCtrl.trackButtonClick('Staff')">Subcommittee</a>
+                    </li>
                 </ul>
             </li>
             <!-- END: Staff/SC -->

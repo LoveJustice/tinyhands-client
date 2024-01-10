@@ -484,6 +484,9 @@ export default class StaffController {
     
     basicSave() {
     	this.basicPreSave();
+    	if (this.staff.last_date !== null) {
+    		this.staff.staffproject_set = [];
+    	}
     	let keepMiscellaneous = this.staff.miscellaneous;
     	this.spinner.show("Saving Basic..."); 
         this.service.submitStaff(this.staff).then((response) => {

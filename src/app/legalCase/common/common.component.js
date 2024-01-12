@@ -42,6 +42,25 @@ export class LegalCaseCommonController extends BaseLegalCaseController {
         ];
     }
     
+    addRemoveVerification(shouldVerify) {
+   		let found = -1;
+    	for (let idx in this.stepTemplates) {
+    		if (this.stepTemplates[idx].name === 'Verification') {
+    			found = idx;
+    			break;
+    		}
+    	}
+    	if (shouldVerify) {
+    		if (!found === -1) {
+    			this.stepTemplates.push({template:verificationsTemplate, name:"Verification"});
+    		}
+    	} else {
+    		if (found > -1) {
+    			this.stepTemplates.splice(found, 1);
+    		}
+    	}
+    }
+    
     openTimelineModal(responses = [], isAdd = false, idx=null) {
         this.commonModal(responses, isAdd, idx, LegalCaseTimelineModalController, 'TimelineModalController',
                 timelineEntryTemplate, 'Timeline');

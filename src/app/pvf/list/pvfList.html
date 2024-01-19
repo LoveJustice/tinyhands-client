@@ -6,7 +6,7 @@
         </div>
 
         <div class="pull-right"><br>
-            <photoexport ng-if="pvfListCtrl.session.checkPermission('PVF','VIEW',null, null)"></photoexport>
+            <formexport form-type="PVF" country-list="pvfListCtrl.countries" ng-if="pvfListCtrl.session.checkPermission('PVF','VIEW',null, null)"></formexport>
             <create-incident-form stations-add="pvfListCtrl.stationsForAdd" use-title="Create PVF" form-type='PVM' call-controller="pvfListCtrl">
         </div>
     </div>

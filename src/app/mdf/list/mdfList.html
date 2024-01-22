@@ -1,8 +1,8 @@
-<div class="container">
+<div id="mdfList" class="container">
   
   <div class="row">
     <div class="col-xs-7">
-      <h1>Monthly Distribution Forms (MDFs)</h1>
+      <h1>Project Budget Sheets (PBSs)</h1>
     </div>
 
     <div class="pull-right"><br>
@@ -35,7 +35,6 @@
   
   <div class="row" ng-if="mdfListCtrl.listOfMdfs.length > 0">
   <table class="fixed table-striped" ng-model="mdfListCtrl.listOfMdfs"
-  		cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;"
          float-thead="mdfListCtrl.stickyOptions">
     <thead class="sticky-table-header">
       <tr>
@@ -69,7 +68,7 @@
       <tr ng-repeat="form in mdfListCtrl.listOfMdfs" ng-mouseenter="form.hover = true" ng-mouseleave="form.hover = false; form.mdfRemoved = false">
         <td>{{ form.border_station.station_name }}</td>
         <td>{{ form.border_station.station_code }}</td>
-        <td>{{ form.month_year | date:'MMMM y' }}</td>
+        <td>{{ form.month_year | date:'MMM y' }}</td>
         <td>{{ form.status }}</td>
         <td>{{ form.date_time_entered | date:'MMM d, y' }}</td>
         <td>{{ form.date_time_last_updated | date:'MMM d, y hh:mm:ss a' }}</td>

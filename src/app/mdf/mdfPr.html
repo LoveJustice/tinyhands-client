@@ -1,7 +1,7 @@
 <div id="mdf-calc-top" class="container-fluid col-xs-12">
 	<div class="row">
 		<h2 class="text-center form-inline">
-			{{ mdfCtrl.form.station_name }} Budget Calculation Form ({{ mdfCtrl.getMonthName() }} {{ mdfCtrl.year }})   
+			{{ mdfCtrl.form.station_name }} Project Budget Sheet ({{ mdfCtrl.getMonthName() }} {{ mdfCtrl.year }})   
 			<div class="pull-right" ng-if="mdfCtrl.canApproveForm()" ng-mouseleave="mdfCtrl.confirmApprove=false;">
   				<button ng-class="mdfCtrl.getApprovalClass()"
         				ng-disabled="(mdfForm.$invalid || !mdfForm.$pristine)"

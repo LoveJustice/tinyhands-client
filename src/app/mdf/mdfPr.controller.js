@@ -677,6 +677,12 @@ export default class MdfPrController {
                 if (this.form.past_month_sent) {
                 	this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth, include: false});
                 }
+                for (let itemIndex in this.form.mdfitem_set) {
+                    let mdfItem = this.form.mdfitem_set[itemIndex];
+                    if (mdfItem.associated_section) {
+                        mdfItem.associated_section += '';
+                    }
+                }
                 this.sections.allSections.push({ name: 'Money Not Spent', templateUrl: moneyNotSpentForm, value: 9999, include: false });
                 let tmp = sessionStorage.getItem('mdfState');
 		        if (tmp) {

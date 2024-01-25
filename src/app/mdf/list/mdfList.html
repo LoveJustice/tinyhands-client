@@ -8,7 +8,7 @@
     <div class="pull-right"><br>
       <mdfexport></mdfexport>
       <a ng-if="mdfListCtrl.hasAddPermission" class="btn btn-success" ng-click="mdfListCtrl.createMdf()">
-        Input A New MDF
+        Input A New PBS
       </a>
     </div>
   </div>
@@ -46,7 +46,7 @@
           <i class="glyphicon" ng-show="mdfListCtrl.sortValue === 'border_station__station_code' || mdfListCtrl.sortValue === '-border_station__station_code'" ng-class="{'glyphicon-sort-by-attributes-alt': mdfListCtrl.sortValue === '-border_station__station_code', 'glyphicon-sort-by-attributes': mdfListCtrl.sortValue === 'border_station__station_code'}">
         </i>
         </th>
-        <th class="text-center" ng-click="mdfListCtrl.getMdfList(null,'month_year');">Mdf For
+        <th class="text-center" ng-click="mdfListCtrl.getMdfList(null,'month_year');">Budget Month
           <i class="glyphicon" ng-show="mdfListCtrl.sortValue === 'month_year' || mdfListCtrl.sortValue === '-month_year'" ng-class="{'glyphicon-sort-by-attributes-alt': mdfListCtrl.sortValue === '-month_year', 'glyphicon-sort-by-attributes': mdfListCtrl.sortValue === 'month_year'}">
         </i>
         </th>
@@ -81,7 +81,7 @@
           <button ng-if="mdfListCtrl.session.checkPermission('MDF','DELETE',form.border_station.operating_country.id, form.border_station.id) && form.mdf_type==='mdf-pr' && form.status!=='Approved'"
           		class="btn btn-sm btn-danger animated" ng-click="mdfListCtrl.removeMdf(mdfListCtrl.listOfMdfs, form)"
           		ng-class="{fadeIn: form.hover && !form.mdfRemoved, fadeOut: !form.hover, pulse: form.mdfRemoved}">
-            {{ form.mdfRemoved ? "Are you sure?" : "Remove Mdf" }}
+            {{ form.mdfRemoved ? "Are you sure?" : "Remove PBS" }}
           </button>
         </td>
       </tr>
@@ -91,8 +91,7 @@
 
 
   <div ng-if="mdfListCtrl.listOfMdfs.length == 0" class="row col-xs-12 text-center">
-    <h3>No Mdf Forms</h3>
-    <h4>Go to a Border Station Form to create one.</h4>
+    <h4>No Project Budget Sheets Matched your search for: "{{ mdfListCtrl.searchTerm }}"</h4>
   </div>
   <div class="row text-center">
         <paginate page-control="mdfListCtrl.paginate" controller="mdfListCtrl">

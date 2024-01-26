@@ -101,7 +101,6 @@ class personManagementListController {
             this.paginate.currentPage = pageNumber;
             this.loading = false;
         });
-        
     }
 
     loadMoreKnownPersons() {
@@ -156,6 +155,10 @@ class personManagementListController {
     
     pendingList() {
         return this.state.href('personManagementPendingList');
+    }
+
+    pendingFaceMatchesList() {
+        return this.state.href('personManagementPendingFaceMatchesList');
     }
 }
 

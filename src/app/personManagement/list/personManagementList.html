@@ -5,11 +5,14 @@
 	        <div class="col-md-2">
 	            <select data-ng-model="vm.paginateBy" data-ng-change="vm.getKnownPersons()" class="form-control" ng-options="o for o in [25,50,75,500]"></select>
 	        </div>
-	        <div class="col-md-3">
+	        <div class="col-md-2">
 	            <p style="margin-top: 5px;">Results per page</p>
 	        </div>
-	        <div class="col-md-3">
+	        <div class="col-md-2">
 		        <a class="btn btn-primary" ng-href="{{ vm.pendingList() }}">Pending Matches</a>
+	        </div>
+	        <div class="col-md-2">
+		        <a class="btn btn-primary" ng-href="{{ vm.pendingFaceMatchesList() }}">Pending Face Matches</a>
 	        </div>
 	        <div class="pull-right">
 	            <form>

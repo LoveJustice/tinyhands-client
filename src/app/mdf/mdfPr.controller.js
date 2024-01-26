@@ -671,6 +671,12 @@ export default class MdfPrController {
                 	this.localDropDecimal = true;
                 	this.localDecimalDigits = 0;
                 }
+                for (let idx in this.form.mdfitem_set) {
+                	let mdfItem = this.form.mdfitem_set[idx];
+                	if (mdfItem.associated_section !== null && mdfItem.associated_section !== '') {
+                		mdfItem.associated_section += '';
+                	}
+                }
                 if (this.form.impact_projects.length > 0) {
                 	this.sections.allSections.push({ name: 'Impact Multiplying', templateUrl: impactMultiplyingForm, value: Constants.FormSections.ImpactMultiplying, include:false });
                 }
@@ -899,10 +905,14 @@ export default class MdfPrController {
     }	
     
     approveForm() {
+    	
         if (this.confirmApprove){
+        	this.spinner.show('Approving form...');
             this.service.approveMdf(this.form).then(() => {
+            	this.spinner.hide();
             	this.$state.go('mdfList'); 
             }, (error) => {
+            	this.spinner.hide();
             	this.toastr.error(`There was an error approving the mdf form! ${JSON.stringify(error.data.non_field_errors)}`);
             	this.confirmApprove = false;
             });

@@ -4,21 +4,21 @@ class PersonManagementPendingFaceMatchesListService {
         this.service = BaseService;
     }
 
-    listPendingMatches(queryParams) {
-        return this.service.get('api/pending-match/', queryParams);
+    listFaceEncodings(queryParams) {
+        return this.service.get('api/face-encodings/', queryParams);
     }
 
-    loadMorePendingMatches(queryParams) {
-        return this.service.get('api/pending-match/', queryParams);
+    loadMoreEncodedPersons(queryParams) {
+        return this.service.get('api/face-encodings/', queryParams);
     }
 
     getUserCountries(id) {
         return this.service.get(`api/user_permission/countries/${id}/?permission_group=PERSON_MANAGEMENT`);
     }
 
-    getPendingMatch(pending) {
-        return this.service.get(`api/pending-match/${pending}/`);
-    }
+    // getFaceEncoding(person_id) {
+    //     return this.service.get(`api/face-encodings/${person_id}/`);
+    // }
 }
 
 export default PersonManagementPendingFaceMatchesListService;

@@ -25,7 +25,7 @@ function PersonManagementRoutes($stateProvider) {
       controllerAs: 'vm',
     })
     .state('personManagementPendingFaceMatchesList', {
-        url: '/PersonManagementPendingFaceMatchesList?search&status&country_ids&pending',
+        url: '/PersonManagementPendingFaceMatchesList?search&status&country_ids',
         params: {
             search: { dynamic: true },
         },

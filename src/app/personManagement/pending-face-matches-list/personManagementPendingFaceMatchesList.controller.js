@@ -1,9 +1,6 @@
 import './personManagementPendingList.less';
-import { BaseMasterPersonCompare } from '../baseMasterPersonCompare.js';
-import MatchModalController from '../matchModal.controller';
-import matchTemplate from '../step-templates/matchModal.html';
 
-class personManagementPendingFaceMatchesListController extends BaseMasterPersonCompare {
+class personManagementPendingFaceMatchesListController {
     constructor(
         StickyHeader,
         $rootScope,
@@ -22,7 +19,6 @@ class personManagementPendingFaceMatchesListController extends BaseMasterPersonC
     ) {
         'ngInject';
 
-        super(personManagementService, $stateParams);
         this.state = $state;
         this.sticky = StickyHeader;
         this.rootScope = $rootScope;
@@ -75,11 +71,8 @@ class personManagementPendingFaceMatchesListController extends BaseMasterPersonC
             this.matchType = tmp;
         }
 
-        if ($stateParams.pending) {
-            this.getPendingMatch($stateParams.pending);
-        } else {
-            this.getCountries();
-        }
+        this.getEncodedPersons();
+
     }
 
     sortIcon(column) {
@@ -100,6 +93,7 @@ class personManagementPendingFaceMatchesListController extends BaseMasterPersonC
         return 'glyphicon-sort';
     }
 
+    // TODO
     searchPendingMatches() {
         if (this.timer.hasOwnProperty('$$timeoutId')) {
             this.timeout.cancel(this.timer);
@@ -123,37 +117,39 @@ class personManagementPendingFaceMatchesListController extends BaseMasterPersonC
         }, 500);
     }
 
+    // TODO
     getCountries() {
         this.personManagementPendingFaceMatchesListService.getUserCountries(this.session.user.id).then((promise) => {
             this.countries = promise.data;
-            this.getPendingMatches();
+            this.getEncodedPersons();
         });
     }
 
-    getPendingMatch(pending) {
-        this.personManagementPendingFaceMatchesListService.getPendingMatch(pending).then((promise) => {
-            this.compare(promise.data);
-        });
-    }
+    // TODO: compare
+    // getFaceEncoding(person_id) {
+    //     this.personManagementPendingFaceMatchesListService.getFaceEncoding(person_id).then((promise) => {
+    //         this.compare(promise.data);
+    //     });
+    // }
 
-    getPendingMatches() {
+    getEncodedPersons() {
         this.showPage(1);
     }
 
     showPage(pageNumber) {
         this.loading = true;
-        this.personManagementPendingFaceMatchesListService.listPendingMatches(this.getQueryParams(pageNumber)).then((promise) => {
-            this.pendingMatches = promise.data.results;
+        this.personManagementPendingFaceMatchesListService.listFaceEncodings(this.getQueryParams(pageNumber)).then((promise) => {
+            this.encodedPersons = promise.data.results;
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
             this.loading = false;
         });
     }
 
-    loadMorePendingMatches() {
+    loadMoreEncodedPersons() {
         this.loading = true;
-        this.personManagementPendingFaceMatchesListService.loadMorePendingMatches(this.getQueryParams(true)).then((promise) => {
-            this.pendingMatches = this.pendingMatches.concat(promise.data.results);
+        this.personManagementPendingFaceMatchesListService.loadMoreEncodedPersons(this.getQueryParams(true)).then((promise) => {
+            this.encodedPersons = this.encodedPersons.concat(promise.data.results);
             this.nextPageUrl = this.nextUrl(promise.data.next);
             this.loading = false;
         });
@@ -199,111 +195,6 @@ class personManagementPendingFaceMatchesListController extends BaseMasterPersonC
         if (event.keyCode === 13) {
             this.searchPendingMatches();
         }
-    }
-
-    compare(pendingMatch) {
-        this.match = [null, null];
-        this.getPvRelations(pendingMatch.master1_id, 0, pendingMatch);
-        this.getPvRelations(pendingMatch.master2_id, 1, pendingMatch);
-    }
-
-    getPvRelations(id, position, pendingMatch) {
-        this.service.getPvRelations(id).then((response) => {
-            let details = {
-                pvRelations: response.data,
-            };
-            this.getMasterPerson(id, position, pendingMatch, details);
-        });
-    }
-
-    getMasterPerson(id, position, pendingMatch, details) {
-        this.personManagementService.getMasterPerson(id).then((promise) => {
-            let matchData = {
-                masterPerson: promise.data,
-                details: details,
-            };
-            this.preProcess(matchData.masterPerson, matchData.details);
-            this.match[position] = matchData;
-            this.compareMasterPersons(pendingMatch);
-        });
-    }
-
-    compareMasterPersons(pendingMatch) {
-        if (this.match[0] === null || this.match[1] === null) {
-            return;
-        }
-        let matchObj = {
-            id: pendingMatch.match_id,
-            match_date: pendingMatch.match_date,
-            matched_by: pendingMatch.matched_by,
-            notes: pendingMatch.notes,
-            match_results: pendingMatch.match_results,
-            master_person: this.match[1].masterPerson,
-        };
-        let match_str = pendingMatch.match.toLowerCase();
-        if (match_str === 'non-match') {
-            match_str = 'non';
-        }
-        this.modalActions = {};
-        this.$uibModal
-            .open({
-                bindToController: true,
-                controller: MatchModalController,
-                controllerAs: 'vm',
-                resolve: {
-                    main: () => this.match[0].masterPerson,
-                    mainDetails: () => this.match[0].details,
-                    compare: () => matchObj,
-                    compareDetails: () => this.match[1].details,
-                    modalActions: () => this.modalActions,
-                    where: () => match_str,
-                    constants: () => this.constants,
-                    phoneTypes: () => this.phoneTypes,
-                    addressTypes: () => this.addressTypes,
-                    socialMediaTypes: () => this.socialMediaTypes,
-                    possibleMatchType: () => this.possibleMatchType,
-                    nonMatchType: () => this.nonMatchType,
-                    detailsModified: () => false,
-                },
-                size: 'lg',
-                templateUrl: matchTemplate,
-                windowClass: 'match-modal-popup',
-            })
-            .result.then(
-                () => {
-                    if (this.modalActions.action === 'update') {
-                        this.modalActions.master1 = this.match[0].masterPerson.id;
-                        this.modalActions.master2 = matchObj.master_person.id;
-                        this.personManagementService.updateMatch(pendingMatch.match_id, this.modalActions.match_type, this.modalActions).then(() => {
-                            this.searchPendingMatches();
-                        });
-                    } else if (this.modalActions.action === 'merge') {
-                        this.personManagementService.merge(this.match[0].masterPerson.id, matchObj.master_person.id, this.modalActions).then(
-                            () => {
-                                this.searchPendingMatches();
-                            },
-                            (error) => {
-                                this.toastr.error(error.data.errors);
-                            }
-                        );
-                    }
-                    if (this.stateParams.pending) {
-                        this.getCountries();
-                    }
-                },
-                () => {
-                    if (this.stateParams.pending) {
-                        this.getCountries();
-                    }
-                }
-            );
-    }
-
-    masterPersonLink(masterId) {
-        let ref = this.state.href('personManagement', {
-            id: masterId,
-        });
-        return ref;
     }
 }
 

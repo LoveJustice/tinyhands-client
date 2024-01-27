@@ -157,8 +157,8 @@ class personManagementListController {
         return this.state.href('personManagementPendingList');
     }
 
-    pendingFaceMatchesList() {
-        return this.state.href('personManagementPendingFaceMatchesList');
+    faceMatching() {
+        return this.state.href('personManagementFaceMatching');
     }
 }
 

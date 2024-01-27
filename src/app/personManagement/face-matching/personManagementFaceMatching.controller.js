@@ -1,22 +1,7 @@
 import './personManagementPendingList.less';
 
-class personManagementPendingFaceMatchesListController {
-    constructor(
-        StickyHeader,
-        $rootScope,
-        $scope,
-        $http,
-        $timeout,
-        personManagementPendingFaceMatchesListService,
-        personManagementService,
-        SessionService,
-        $uibModal,
-        $state,
-        $stateParams,
-        $document,
-        toastr,
-        constants
-    ) {
+class personManagementFaceMatchingController {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementFaceMatchingService, personManagementService, SessionService, $uibModal, $state, $document, toastr, constants) {
         'ngInject';
 
         this.state = $state;
@@ -26,7 +11,7 @@ class personManagementPendingFaceMatchesListController {
         this.$uibModal = $uibModal;
         this.http = $http;
         this.timeout = $timeout;
-        this.personManagementPendingFaceMatchesListService = personManagementPendingFaceMatchesListService;
+        this.personManagementFaceMatchingService = personManagementFaceMatchingService;
         this.personManagementService = personManagementService;
         this.session = SessionService;
         this.modal = $uibModal;
@@ -72,7 +57,7 @@ class personManagementPendingFaceMatchesListController {
         }
 
         this.getEncodedPersons();
-
+        this.getCountries();
     }
 
     sortIcon(column) {
@@ -119,7 +104,7 @@ class personManagementPendingFaceMatchesListController {
 
     // TODO
     getCountries() {
-        this.personManagementPendingFaceMatchesListService.getUserCountries(this.session.user.id).then((promise) => {
+        this.personManagementFaceMatchingService.getUserCountries(this.session.user.id).then((promise) => {
             this.countries = promise.data;
             this.getEncodedPersons();
         });
@@ -127,7 +112,7 @@ class personManagementPendingFaceMatchesListController {
 
     // TODO: compare
     // getFaceEncoding(person_id) {
-    //     this.personManagementPendingFaceMatchesListService.getFaceEncoding(person_id).then((promise) => {
+    //     this.personManagementFaceMatchingService.getFaceEncoding(person_id).then((promise) => {
     //         this.compare(promise.data);
     //     });
     // }
@@ -138,7 +123,7 @@ class personManagementPendingFaceMatchesListController {
 
     showPage(pageNumber) {
         this.loading = true;
-        this.personManagementPendingFaceMatchesListService.listFaceEncodings(this.getQueryParams(pageNumber)).then((promise) => {
+        this.personManagementFaceMatchingService.listFaceEncodings(this.getQueryParams(pageNumber)).then((promise) => {
             this.encodedPersons = promise.data.results;
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
@@ -148,7 +133,7 @@ class personManagementPendingFaceMatchesListController {
 
     loadMoreEncodedPersons() {
         this.loading = true;
-        this.personManagementPendingFaceMatchesListService.loadMoreEncodedPersons(this.getQueryParams(true)).then((promise) => {
+        this.personManagementFaceMatchingService.loadMoreEncodedPersons(this.getQueryParams(true)).then((promise) => {
             this.encodedPersons = this.encodedPersons.concat(promise.data.results);
             this.nextPageUrl = this.nextUrl(promise.data.next);
             this.loading = false;
@@ -198,4 +183,4 @@ class personManagementPendingFaceMatchesListController {
     }
 }
 
-export default personManagementPendingFaceMatchesListController;
+export default personManagementFaceMatchingController;

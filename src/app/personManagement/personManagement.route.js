@@ -1,7 +1,7 @@
 import personManagementTemplate from './personManagement.html';
 import personManagementListTemplate from './list/personManagementList.html';
 import personManagementPendingListTemplate from './pending-list/personManagementPendingList.html';
-import personManagementPendingFaceMatchesListTemplate from './pending-face-matches-list/personManagementPendingFaceMatchesList.html';
+import personManagementFaceMatchingTemplate from './face-matching/personManagementFaceMatching.html';
 
 function PersonManagementRoutes($stateProvider) {
     'ngInject';
@@ -24,19 +24,19 @@ function PersonManagementRoutes($stateProvider) {
       controller: 'PersonManagementPendingListController',
       controllerAs: 'vm',
     })
-    .state('personManagementPendingFaceMatchesList', {
-        url: '/PersonManagementPendingFaceMatchesList?search&status&country_ids',
+    .state('personManagementFaceMatching', {
+        url: '/PersonManagementFaceMatching?search&status&country_ids',
         params: {
             search: { dynamic: true },
         },
-        templateUrl: personManagementPendingFaceMatchesListTemplate,
-        controller: 'PersonManagementPendingFaceMatchesListController',
+        templateUrl: personManagementFaceMatchingTemplate,
+        controller: 'PersonManagementFaceMatchingController',
         controllerAs: 'vm',
     })
     .state('personManagement', {
-      url: '/PersonManagement?id',
-      params: {
-        id: null
+        url: '/PersonManagement?id',
+        params: {
+    id: null
       },
       templateUrl: personManagementTemplate,
       controller: 'PersonManagementController',

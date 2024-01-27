@@ -1,10 +1,9 @@
-<div id="personManagementPendingFaceMatchesList" class="container">
+<div id="personManagementFaceMatching" class="container">
 	<!-- To start, list person_ids with face_encodings -->
 	<!-- Upload a photo, encode photo, get matching (face_encodings) from filterd list of person_ids with face_encodings -->
 	<div>
-		<h1 class="text-center">Face-Matching</h1>
+		<h1 class="text-center">Face Matching</h1>
 		<div>
-			<p>0. List person_ids with face_encoding</p>
 			<p>1. Upload and image and search for similar faces in records</p>
 			<p>2. Select and image from records and search for similar faces in records</p>
 		</div>
@@ -25,9 +24,6 @@
 		        <div class="col-md-8">
 			        <select class="form-control" ng-model="vm.matchType" ng-change="">
 			        	<option value="">All</option>
-						<option value="Possible">Possible</option>
-						<option value="Suggested">Suggested</option>
-						<option value="Non-match">Non-match</option>
 					</select>
 		        </div>
 	        </div>

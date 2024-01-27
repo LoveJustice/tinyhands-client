@@ -1,4 +1,4 @@
-class PersonManagementPendingFaceMatchesListService {
+class PersonManagementFaceMatchingListService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
@@ -21,4 +21,4 @@ class PersonManagementPendingFaceMatchesListService {
     // }
 }
 
-export default PersonManagementPendingFaceMatchesListService;
+export default PersonManagementFaceMatchingListService;

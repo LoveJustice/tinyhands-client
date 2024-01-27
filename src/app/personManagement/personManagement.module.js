@@ -8,8 +8,8 @@ import PersonManagementListController from './list/personManagementList.controll
 import PersonManagementListService from './list/personManagementList.service';
 import PersonManagementPendingListController from './pending-list/personManagementPendingList.controller';
 import PersonManagementPendingListService from './pending-list/personManagementPendingList.service';
-import PersonManagementPendingFaceMatchesListController from './pending-face-matches-list/personManagementPendingFaceMatchesList.controller';
-import PersonManagementPendingFaceMatchesListService from './pending-face-matches-list/personManagementPendingFaceMatchesList.service';
+import PersonManagementFaceMatchingController from './face-matching/personManagementFaceMatching.controller';
+import PersonManagementFaceMatchingService from './face-matching/personManagementFaceMatching.service';
 
 export default angular.module('tinyhands.PersonManagement', [sharedModule])
     .config(personManagementRouteConfig)
@@ -20,5 +20,5 @@ export default angular.module('tinyhands.PersonManagement', [sharedModule])
     .service('personManagementListService', PersonManagementListService)
     .controller('PersonManagementPendingListController', PersonManagementPendingListController)
     .service('personManagementPendingListService', PersonManagementPendingListService)
-    .controller('PersonManagementPendingFaceMatchesListController', PersonManagementPendingFaceMatchesListController)
-    .service('personManagementPendingFaceMatchesListService', PersonManagementPendingFaceMatchesListService).name;
+    .controller('PersonManagementFaceMatchingController', PersonManagementFaceMatchingController)
+    .service('personManagementFaceMatchingService', PersonManagementFaceMatchingService).name;

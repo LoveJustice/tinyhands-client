@@ -7,7 +7,8 @@
                     'glyphicon glyphicon-sort-by-alphabet-alt': staffListCtrl.getSortIcon('first_name,last_name', 'reverse') }"></i>
                 </th>
                 <th width="6%">Contract?</th>
-                <th width="10%">Mgmt/Misconduct?</th>
+                <th width="8%">Contract Expiration</th>
+                <th width="10%">C & M?</th>
                 <th width="12%">Last Month Total</th>
                 <th width="12%">12 Month Total</th>
                 <th width="25%">Role</th>
@@ -19,6 +20,7 @@
             	<td class="ellipsis" title="{{ staff.projectText }}">{{ staff.projectText }}</td>
                 <td>{{ staff.first_name }} {{ staff.last_name }}</td>
                 <td><i class="fa {{ staff.contract_data?staff.contract_data.contract?'fa-check-square-o':'fa-square-o':'' }}"></i></td>
+                <td ng-class="staffListCtrl.contractExpirationClass(staff.contract_data.contract_expiration)">{{ staffListCtrl.monthYearString(staff.contract_data.contract_expiration) }}</td>
                 <td><i class="fa {{ staff.contract_data?staff.contract_data.agreement?'fa-check-square-o':'fa-square-o':'' }}"></i></td>
                 <td class="moneyField">{{staff.contract_data?staffListCtrl.displayCurrency(staff)+staff.contract_data.last_month[staffListCtrl.currency].toLocaleString('en-US', staffListCtrl.displayCurrencyFormat(staff)):'' }}</td>
                 <td  class="moneyField">{{staff.contract_data?staffListCtrl.displayCurrency(staff)+staff.contract_data.twelve_month[staffListCtrl.currency].toLocaleString('en-US', staffListCtrl.displayCurrencyFormat(staff)):'' }}</td>

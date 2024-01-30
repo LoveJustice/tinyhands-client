@@ -1,5 +1,7 @@
 /* global jQuery */
 import './staff.less';
+const CheckboxGroup = require('../checkboxGroup.js');
+
 const DateData = require('../dateData.js');
 
 import basicTemplate from './step-templates/basic.html';
@@ -7,6 +9,7 @@ import contractTemplate from './step-templates/contract.html';
 import knowledgeTemplate from './step-templates/knowledge.html';
 import reviewTemplate from './step-templates/review.html';
 import AddProjectModalTemplate from './step-templates/addProjectModal.html';
+import AddAttachmentModalTemplate from './step-templates/addAttachmentModal.html';
 
 class AddProjectModalController {
 	constructor($uibModalInstance, staff, projects, coordinator, session) {
@@ -81,6 +84,66 @@ class AddProjectModalController {
 	}
 }
 
+class AddAttachmentModalController {
+    constructor($uibModalInstance, isAdd, card, isViewing, modalActions, parentController) {
+        'ngInject';
+        this.$uibModalInstance = $uibModalInstance;
+        this.isAdd = isAdd;
+        this.card = card;
+        this.modalActions = modalActions;
+        this.parentController = parentController;
+        
+        this.expirationDate = null;
+        if (this.card.expiration_date !== null) {
+            let dateData = new DateData();
+            this.expirationDate = dateData.dateAsUTC(this.card.expiration_date);
+        }
+    }
+    
+    isString(value) {
+        return this.parentController.isString(value);
+    }
+    
+    getScannedFormUrl(value) {
+        return this.parentController.getScannedFormUrl(value);
+    }
+ 
+    close() {
+        this.$uibModalInstance.close();
+    }
+
+    dismiss() {
+        this.$uibModalInstance.dismiss();
+    }
+    
+    delete() {
+        this.modalActions.push('removeCard');
+        this.$uibModalInstance.close();
+    }
+    
+    canSave() {
+        if (!this.card.option || !this.card.attachment) {
+            return false;
+        }
+        
+        if (this.card.option === 'Contract' && this.expirationDate === null) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    save() {
+        let dateData = new DateData();
+        if (this.expirationDate) {
+            this.card.expiration_date = dateData.dateToString(this.expirationDate);
+        } else {
+            this.card.expiration_date = null;
+        }
+        this.close();
+    }
+}
+
 const reviewMertrics = 'leadership;obedience;faithfulness;alertness;questioning;awareness';
 
 export default class StaffController {
@@ -103,6 +166,14 @@ export default class StaffController {
         this.countries = [];
         this.basicView = true;
         this.basicEdit = false;
+        this.educationOptions = ['Illiterate','Primary','Secondary','University'];
+        this.positionOptions = [
+            'Monitor', 'Data Entry Specialist', 'Station Manager',
+            'Compliance Officer'];
+        this.checkboxGroup = new CheckboxGroup();
+        for (let positionIndex in this.positionOptions) {
+            this.checkboxGroup.checkboxItem('position', this.positionOptions[positionIndex]);
+        }
         this.contractView = false;
         this.contractEdit = false;
         this.contract = null;
@@ -115,6 +186,7 @@ export default class StaffController {
         	items:		['general','awareness','security','accounting','pv_care','paralegal','records','shelter'],
         	itemLabels:	['General','Awareness','Security','Accounting','PV Care','Paralegal','Records','Shelter']
         };
+        
         this.knowledgeMap = {
         	general:null,
         	awareness:['Awareness'],
@@ -131,16 +203,7 @@ export default class StaffController {
         this.reviewDate = null;
         this.requestCount = 0;
         
-        this.coordinator = {
-        	"Records": false,
-        	"Security": false,
-        	"Care":false,
-        	"Legal":false,
-        	"Awareness": false,
-        	"Accounting": false,
-        	"Investigations": false,
-        	"Shelter":false,
-        };
+        this.coordinator = {};
         
         let current = new Date();
         this.lastYear = current.getFullYear();
@@ -154,6 +217,7 @@ export default class StaffController {
         
         this.selectedStep = 0;
         this.isRemove = false;
+        this.attachmentType = '';
         
         this.getUserCountries();
         this.getUserProjects();
@@ -319,10 +383,17 @@ export default class StaffController {
         this.staff.country = this.staff.country + '';
         let dateData = new DateData();
         this.startDate = dateData.dateAsUTC(this.staff.first_date);
+        if (this.staff.id_card_expiration) {
+            this.idExpirationDate = dateData.dateAsUTC(this.staff.id_card_expiration);
+        } else {
+            this.idExpirationDate = null;
+        }
         this.lastDate = null;
         if (this.requestCount < 1) {
         	this.spinner.hide();
         }
+        this.positionQuestion = {position:{response:{value: this.staff.position}}};
+        this.checkboxGroup.initOriginalValues(this.positionQuestion);
         this.coordinator = {};
         for (let projIdx in this.staff.staffproject_set) {
         	let project = this.staff.staffproject_set[projIdx];
@@ -410,6 +481,12 @@ export default class StaffController {
     basicPreSave() {
     	let dateData = new DateData();
     	this.staff.first_date = dateData.dateToString(this.startDate);
+    	if (this.idExpirationDate) {
+    	    this.staff.id_card_expiration = dateData.dateToString(this.idExpirationDate);
+    	} else {
+    	    this.staff.id_card_expiration = null;
+    	}
+    	this.staff.position = this.checkboxGroup.getValue('position');
     	for (let projIdx in this.staff.staffproject_set) {
     		let project = this.staff.staffproject_set[projIdx];
     		let tmp = '';
@@ -565,24 +642,21 @@ export default class StaffController {
      * Contract tab methods
     */
     getStaffContract() {
-    	this.service.getStaffContract(this.staff.id).then((response) => {
-    		this.contract = response.data;
+    	this.service.getAttachments(this.staff).then((response) => {
+    		this.attachments = response.data.results;
     		this.processStaffContract();
     	}, () => {
-    		this.toastr.error("Failed to retrieve contract information");
+    		this.toastr.error("Failed to retrieve attachments");
     	});
     }
     
     processStaffContract() {
-    	if (this.contract.contract_expiration !== null) {
-			let dateData = new DateData();
-			this.contractExpirationDate = dateData.dateAsUTC(this.contract.contract_expiration);
-		} else {
-			this.contractExpirationDate = null;
-		}
 		this.setContractProject();
-		
-		this.originalContract = jQuery.extend(true, {}, this.contract);
+		for (let idx in this.attachments) {
+		    this.attachments[idx].isModified = false;
+		    this.attachments[idx].isRemoved = false;
+		    this.attachments[idx].isNew = false;
+		}
     }
     
     setContractProject() {
@@ -722,35 +796,120 @@ export default class StaffController {
     	}
     }
     
+    cantractExpirationColor(value) {
+        let color = "";
+        if (value) {
+            let current = new Date();
+            let expiration = new Date(value);
+            let diff = expiration - current;
+            if (diff < 30) {
+                color = 'expirationWarn';
+            }
+        }
+        return color;
+    }
+    
+    addAttachment() {
+        let card = {
+            id:null,
+            staff:this.staff.id,
+            attachment:null,
+            option:null,
+            attach_date:null,
+            expiration_date:null,
+            description:'',
+            isNew:true,
+            isRemoved:false,
+            isModified:true,
+        };
+        this.openAttachment(card, null, true);
+    }
+    
+    openAttachment(theCard, cardIndex, isAdd) {
+        let modalActions = [];
+        this.$uibModal.open({
+            bindToController: true,
+            controller: AddAttachmentModalController,
+            controllerAs: 'vm',
+            resolve: {
+                isAdd: () => isAdd,
+                card: () => theCard,
+                isViewing: () => this.contractView,
+                modalActions: () => modalActions,
+                parentController: () => this
+            },
+            size: 'lg',
+            templateUrl: AddAttachmentModalTemplate,
+        }).result.then(() => {
+            if (modalActions.indexOf('removeCard') > -1 && cardIndex !== null) {
+                if (this.attachments[cardIndex].isNew) {
+                    this.attachments.splice(cardIndex,1);
+                } else {
+                    this.attachments[cardIndex].isRemoved = true;
+                }
+            } else {
+                if (isAdd) {
+                    this.attachments.push(theCard);
+                } else {
+                    theCard.isModified = true;
+                }
+            }
+        });
+    }
+    
     contractModified() {
-    	this.contractPreSave();
-    	if (this.contract.contract !== this.originalContract.contract) {
-    		return true;
-    	}
-    	if (this.contract.agreement !== this.originalContract.agreement) {
-    		return true;
-    	}
-    	if (this.contract.contract_expiration !== this.originalContract.contract_expiration) {
-    		return true;
-    	}
+        for (let idx in this.attachments) {
+            if (this.attachments[idx].isNew || this.attachments[idx].isModified || this.attachments[idx].isRemoved) {
+                return true;
+            }
+        }
+    
     	return false;
     }
     
-    contractPreSave() {
-    	if (this.contractExpirationDate) {
-    		let dateData = new DateData();
-    		this.contract.contract_expiration = dateData.dateToString(this.contractExpirationDate);
-    	}
+    contractSave() {
+        this.spinner.show('Saving contract information');
+        for (let idx in this.attachments) {
+            if (this.attachments[idx].isRemoved) {
+                this.attachmentDelete(this.attachments[idx]);
+            } else if (this.attachments[idx].isNew || this.attachments[idx].isModified) {
+                this.attachmentSave(this.attachments[idx]);
+            }
+        }
     }
     
-    contractSave() {
-    	this.contractPreSave();
-    	this.service.saveStaffContract(this.staff, this.contract).then((response) => {
-    		this.contract = response.data;
-    		this.processStaffContract();
-    	}, () => {
-    		this.toastr.error("Failed to save contract information");
-    	});
+    attachmentSave(card) {
+        this.requestCount += 1;
+        this.service.saveAttachment(this.staff, card).then (() => {
+            this.requestCount -= 1;
+            if (this.requestCount < 1) {
+                this.requestCount = 0;
+                this.getStaffContract();
+            }
+        }, () => {
+            this.toastr.error("Failed to save contract information");
+            this.requestCount -= 1;
+            if (this.requestCount < 1) {
+                this.requestCount = 0;
+                this.getStaffContract();
+            }});
+    }
+    
+    attachmentDelete(card) {
+        this.requestCount += 1;
+        this.service.deleteAttachment(card).then (() => {
+            this.requestCount -= 1;
+            if (this.requestCount < 1) {
+                this.requestCount = 0;
+                this.getStaffContract();
+            }
+        }, () => {
+            this.toastr.error("Failed to delete contract information");
+            this.requestCount -= 1;
+            if (this.requestCount < 1) {
+                this.requestCount = 0;
+                this.getStaffContract();
+            }});
     }
     
     contractDiscard() {

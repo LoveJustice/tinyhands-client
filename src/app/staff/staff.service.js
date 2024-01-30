@@ -43,7 +43,10 @@ export default class BorderStationService {
 			return;
 		}
 		
-		let fileName = baseLabel + '_' + staff.first_name + '_' + staff.last_name + '_' + staff.id;
+		let fileName = baseLabel + '_' + staff.first_name + '_' + staff.last_name + '_' + (new Date()).getTime();
+		fileName = fileName.replace(' & ','-')
+		fileName = fileName.replace(' ','-')
+		fileName = fileName.replace(',','-')
 		let t = Object.prototype.toString.call(file_obj);
         if (t === '[object Blob]') {
         	let origFile = file_obj.$ngfName;
@@ -51,14 +54,14 @@ export default class BorderStationService {
         	if (lastIdx >= 0) {
         		fileName += origFile.substring(lastIdx);
         	}
-            formData.append(baseLabel+'_file', file_obj, fileName);
+            formData.append('attachment_file', file_obj, fileName);
         } else if (t === '[object File]') {
         	let origFile = file_obj.name;
         	let lastIdx = origFile.lastIndexOf('.');
         	if (lastIdx >= 0) {
         		fileName += origFile.substring(lastIdx);
         	}
-        	formData.append(baseLabel+'_file', file_obj, fileName);
+        	formData.append('attachment_file', file_obj, fileName);
         }
 	}
 	
@@ -68,6 +71,25 @@ export default class BorderStationService {
 		this.appendFile(formData, staff, 'contract', contract.contract);
 		this.appendFile(formData, staff, 'agreement', contract.agreement);
 		return this.service.put(`api/staff/contract/${contract.id}/`, formData, {'Content-Type': undefined});
+	}
+	
+	getAttachments(staff) {
+	    return this.service.get(`api/staff/attachment/?staff_id=${staff.id}`);
+	}
+	
+	saveAttachment(staff, attachment) {
+	    let formData = new FormData();
+        formData.append("attachment", JSON.stringify(attachment));
+        this.appendFile(formData, staff, attachment.option, attachment.attachment);
+        if (attachment.id !== null) {
+            return this.service.put(`api/staff/attachment/${attachment.id}/`, formData, {'Content-Type': undefined});
+        } else {
+            return this.service.post(`api/staff/attachment/`, formData, {'Content-Type': undefined});
+        }
+	}
+	
+	deleteAttachment(attachment) {
+	    return this.service.delete(`api/staff/attachment/${attachment.id}/`);  
 	}
 	
 	getContractRequests(staff, year, month) {

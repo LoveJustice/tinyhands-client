@@ -42,53 +42,44 @@
 	</div>
 	
 	<div class="row col-md-12 padding-bottom-20" ng-if="vm.contractView">
-		<div class="col-md-3"></div>
-		<div class="center-vertical col-md-4">
-			<div class="row col-md-12">
-            	<label>Signed Contract</label>
-            </div>
-            <div class="row col-md-12">
-            	<input type="file" ngf-select value="Choose File" ng-model="vm.contract.contract" ng-disabled="!vm.contractEdit">
-            </div>
-            <div class="row col-md-12">
-	            <div ng-if="!vm.isString( vm.contract.contract)">
-	        		<p>{{ vm.contract.contract.name }}</p>
-	        	</div>
-	        	<div ng-if="vm.isString( vm.contract.contract)">
-	        		<a href="{{ vm.getScannedFormUrl(vm.contract.contract) }}">{{ vm.contract.contract.split("/")[6] }}</a>
-	        	</div>
-        	</div>
-       	</div>
-       	<div class="center-vertical col-md-4">
-			<div class="row col-md-12">
-				<label>Signed Corruption & Misconduct Agreement</label>
-            </div>
-            <div class="row col-md-12">
-            	<input type="file" ngf-select value="Choose File" ng-model="vm.contract.agreement" ng-disabled="!vm.contractEdit">
-            </div>
-			<div class="row col-md-12">
-	            <div ng-if="!vm.isString(vm.contract.agreement)">
-	        		<p>{{ vm.contract.agreement.name }}</p>
-	        	</div>
-	        	<div ng-if="vm.isString(vm.contract.agreement)">
-	        		<a href="{{ vm.getScannedFormUrl(vm.contract.agreement) }}">{{ vm.contract.agreement.split("/")[6] }}</a>
-	        	</div>
-        	</div>
-       	</div>
+		<label>Attachments</label>
+		<select ng-model="vm.attachmentType">
+			<option value=''>All</option>
+			<option>Contract</option>
+			<option>C & M</option>
+			<option>Miscellaneous</option>
+		</select>
+		<table class="table table-striped" ng-model="vm.attachments">
+			<thead>
+				<tr>
+					<th width="10%">Type</th>
+					<th width="25%">File</th>
+					<th width="10%">Expiration Date</th>
+					<th width="10%">Date Added</th>
+					<th width="40%">Description</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="attachment in vm.attachments" ng-if="!attachment.isRemoved && (vm.attachmentType==='' || vm.attachmentType===attachment.option)" >
+					<td>{{ attachment.option }}</td>
+					<td ng-if="!vm.isString(attachment.attachment)">{{ attachment.attachment.name }}</th>
+					<td ng-if="vm.isString(attachment.attachment)"><a href="{{ vm.getScannedFormUrl(attachment.attachment) }}">{{ attachment.attachment.split("/")[5] }}</a></th>
+					<td>{{ attachment.expiration_date }}</th>
+					<td>{{ attachment.attach_date }}</th>
+					<td>{{ attachment.description }}</th>
+					<td><button ng-if="vm.contractEdit" class="btn btn-success"
+        					ng-click="vm.openAttachment(attachment, $index, false)"><i class="fa fa-pencil-square"></i></button></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<div class="row" ng-if="vm.contractView">
-		<div class="col-md-3"></div>
-		<div class="col-md-4">
-			<div class="row col-md-12">
-				<label>Contract Expiration Date</label>
-			</div>
-			<div class="row col-md-12">
-				<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="vm.contractExpirationDate" ng-readonly="!vm.contractEdit">
-			</div>
-		</div>
+	<div ng-if="vm.contractEdit" class="row col-md-12 text-center padding-bottom-20">
+		<button class="btn btn-success" ng-click="vm.addAttachment()"><i class="fa fa-plus"></i></button>
 	</div>
+	
 	<div class="container-fluid padding-bottom-20" ng-if="vm.contractEdit">
-        <div class="col-xs-6 text-right">
+        <div class="row col-md-12 text-center">
             <button class="btn btn-success margin-left-20" ng-if="vm.contractModified()" ng-click="vm.contractSave()">Save</button>
         </div>
     </div>

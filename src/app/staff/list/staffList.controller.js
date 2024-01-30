@@ -123,6 +123,19 @@ export default class StaffListController {
     	return '';
     }
     
+    contractExpirationClass(value) {
+        let color = "";
+        if (value) {
+            let current = new Date();
+            let expiration = new Date(value);
+            let diff = (expiration - current)/(1000 * 60 * 60 * 24);
+            if (diff < 30) {
+                color = 'expirationWarn';
+            }
+        }
+        return color;
+    }
+    
     monthYearString(dt) {
     	let result = '';
     	if (dt !== null) {

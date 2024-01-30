@@ -35,10 +35,9 @@
           </div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4 form-group">
-           <label class="col-md-3" for="position">Position</label>
-           <input class="col-md-9" type="text" class="form-control" placeholder="Position"
-                  ng-model="vm.staff.position">
+		 <div class="col-sm-4 form-group">
+		   <label class="col-md-3" for="position">ID Card Expiration</label>
+           <input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.idExpirationDate">
          </div>
          <div class="col-sm-4 form-group">
           	<label class="col-md-3" for="joined">Start Date</label>
@@ -46,15 +45,23 @@
          </div>
          <div class="col-sm-4 form-group">
           	<label class="col-md-3" for="education">Education</label>
-          	<input class="col-md-9" type="text" class="form-control" placeholder="Education" ng-model="vm.staff.education">
+          	<select ng-model="vm.staff.education">
+          		<option ng-repeat="option in vm.educationOptions">{{ option }}</option>
+          	</select>
          </div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4 form-group">
-           <label class="col-md-3" for="id_card">ID Card Made</label>
-           <input type="checkbox" id="id_card" ng-model="vm.staff.id_card"/>
+		 <div class="col-md-1 form-group">
+           <label class="col-md-12">Position:</label>
+         </div>
+         <div class="col-md-11 form-group">
+         	<form-step type="checkbox" class="col-md-3" ng-repeat="positionOption in vm.positionOptions"
+				label="{{positionOption}}" response-value="vm.checkboxGroup.questions['position'][positionOption]"></form-step>
+			<form-step type="otherCheckbox" class="col-md-3"
+				label="Other" response-value="vm.checkboxGroup.questions['position'].internalOther"></form-step>
          </div>
 	</div>
+	
 	<div class="row">
 		<div class='col-md-4' ng-repeat="item in vm.staff.miscellaneous">
 			<div class="col-md-8">

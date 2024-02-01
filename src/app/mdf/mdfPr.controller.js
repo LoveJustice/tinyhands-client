@@ -671,11 +671,23 @@ export default class MdfPrController {
                 	this.localDropDecimal = true;
                 	this.localDecimalDigits = 0;
                 }
+                for (let idx in this.form.mdfitem_set) {
+                	let mdfItem = this.form.mdfitem_set[idx];
+                	if (mdfItem.associated_section !== null && mdfItem.associated_section !== '') {
+                		mdfItem.associated_section += '';
+                	}
+                }
                 if (this.form.impact_projects.length > 0) {
                 	this.sections.allSections.push({ name: 'Impact Multiplying', templateUrl: impactMultiplyingForm, value: Constants.FormSections.ImpactMultiplying, include:false });
                 }
                 if (this.form.past_month_sent) {
                 	this.sections.allSections.push({ name: 'Past Month Sent Money', templateUrl: pastMonth, value: Constants.FormSections.PastMonth, include: false});
+                }
+                for (let itemIndex in this.form.mdfitem_set) {
+                    let mdfItem = this.form.mdfitem_set[itemIndex];
+                    if (mdfItem.associated_section) {
+                        mdfItem.associated_section += '';
+                    }
                 }
                 this.sections.allSections.push({ name: 'Money Not Spent', templateUrl: moneyNotSpentForm, value: 9999, include: false });
                 let tmp = sessionStorage.getItem('mdfState');
@@ -893,10 +905,14 @@ export default class MdfPrController {
     }	
     
     approveForm() {
+    	
         if (this.confirmApprove){
+        	this.spinner.show('Approving form...');
             this.service.approveMdf(this.form).then(() => {
+            	this.spinner.hide();
             	this.$state.go('mdfList'); 
             }, (error) => {
+            	this.spinner.hide();
             	this.toastr.error(`There was an error approving the mdf form! ${JSON.stringify(error.data.non_field_errors)}`);
             	this.confirmApprove = false;
             });

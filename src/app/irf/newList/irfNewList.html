@@ -1,11 +1,11 @@
 <div class="container" id="irfNewList"><br/>
 
     <div class="row">
-        <div class="col-xs-7">
+        <div class="col-xs-6">
             <h1>Interception Record Forms (IRFs)</h1>
         </div>
-
         <div class="pull-right"><br>
+        	<formexport form-type="IRF" country-list="irfNewListCtrl.countries" ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW',null, null)"></formexport>
         	<button class="btn btn-primary" ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"
         			ng-click="irfNewListCtrl.attachmentExport()">Export Attachments</button>
             <photoexport ng-if="irfNewListCtrl.session.checkPermission('IRF','VIEW PI',null, null)"></photoexport>
@@ -32,8 +32,7 @@
 	        	<div class="col-md-4">
 	        		<select ng-model="irfNewListCtrl.queryParameters.date_filter" class="form-control" ng-change="irfNewListCtrl.searchIrfs()">
 	        			<option value="None">None</option>
-	        			<option value="First Verification">First Verification</option>
-	        			<option value="Second Verification">Second Verification/Verified</option>
+	        			<option value="Second Verification">Verified</option>
 	        			<option value="Interception">Interception</option>
 	        		</select>
 	        	</div>

@@ -67,6 +67,8 @@ export class BasePvfController extends BaseFormController {
                 
                 let items = ['Parent','Sibling','Grandparent','Aunt/Uncle','Spouse'];
                 this.otherData.setRadioButton(items, 'pvfPvInfoPv-guardian_relationship', 'basic', this.questions.pvfPvInfoPv.response.guardian_relationship.value);
+                let educationItems=['None/Illiterate','Primary','Secondary','University'];
+                this.otherData.setRadioButton(educationItems, 'pvfPvInfoPv-education', 'basic', this.questions.pvfPvInfoPv.response.education.value);
                 this.getPvfComplete();
                 
                 if (this.questions.pvfTopPvfNumber.response.value === null || this.questions.pvfTopPvfNumber.response.value === '') {

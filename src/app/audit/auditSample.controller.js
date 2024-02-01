@@ -35,7 +35,7 @@ export default class AuditSampleController {
                         id: this.auditSample.form_id,
                         stationId:this.auditSample.station_id,
                         countryId:this.auditSample.country_id,
-                        isViewing:this.isViewing,
+                        isViewing:true,
                         formName:this.auditSample.form_name,
                     };
                 this.auditSample.ref = this.state.href(baseRoute, params);

@@ -144,6 +144,7 @@ export class BaseLegalCaseController extends BaseFormController {
                 	this. addCourtCase();
                 }
                 this.setCaseStatus();
+                this.needVerify();
             });
         });
     }
@@ -258,6 +259,7 @@ export class BaseLegalCaseController extends BaseFormController {
                     cards.sort(BaseLegalCaseController.compareTimelineEntries);
                 }
             }
+            this.needVerify();
         });
     }
     
@@ -491,6 +493,143 @@ export class BaseLegalCaseController extends BaseFormController {
     			continue;
     		}
     		charges.splice(chargeIndex,1);
+    	}
+    }
+    
+    // Override in subclass
+    addRemoveVerification() {
+    }
+    
+    needVerify() {
+    	let needVerify = false;
+    	let suspects = this.getCardInstances('Suspects');
+    	for (let suspectIndex in suspects) {
+    		if (this.getResponseOfQuestionByTag(suspects[suspectIndex].responses,'lcSuspectArrested').value === 'Yes') {
+    			needVerify = true;
+    			break;
+    		}
+    	}
+    	this.addRemoveVerification(needVerify)
+    }
+    
+    canRemoveCase(caseIndex) {
+    	let canRemove = true;
+    	let courtCases = this.getCardInstances('Court Case');
+    	if (courtCases.length < 2) {
+    		canRemove = false;
+    	} else {
+	    	let suspects = this.getCardInstances('Suspects');
+	    	for (let suspectIndex in suspects) {
+		    	let cases = this.getResponseOfQuestionByTag(suspects[suspectIndex].responses,'lcSuspectCourtCases').value.split(';');
+		    	if (cases.indexOf((caseIndex + 1)+'') >= 0) {
+		    		canRemove = false;
+		    		break;
+		    	}
+		    }
+		    if (canRemove) {
+		    	let victims = this.getCardInstances('Victims');
+		    	for (let victimIndex in victims) {
+		    		let cases = this.getResponseOfQuestionByTag(victims[victimIndex].responses,'lcVictimCourtCases').value.split(';');
+		    		if (cases.indexOf((caseIndex + 1)+'') >= 0) {
+			    		canRemove = false;
+			    		break;
+			    	}
+		    	}
+		    }
+		    if (canRemove) {
+		    	let comments = this.getCardInstances('Timeline');
+		    	for (let commentIndx in comments) {
+		    		if (this.getResponseOfQuestionByTag(comments[commentIndx].responses,'lcTimelineCourtCaseSequence').value === (caseIndex + 1) + '') {
+		    			canRemove = false;
+		    			break;
+		    		}
+		    	}
+		    }
+    	}
+    	return canRemove;
+    }
+    
+    verifyRemoveCase(cardIndex)  {
+    	this.modalActions = [];
+    	this.$uibModal.open({
+    		bindToController: true,
+    		controller: ConfirmModalController,
+    		controllerAs: "$ctrl",
+    		resolve: {
+    			message: () => 'Confirm that you wish to remove this court case',
+    			acceptLabel: () => 'Remove Court Case',
+    			declineLabel: () => 'Cancel',
+    			modalActions: () => this.modalActions,
+    		},
+    		size: 'md',
+    		templateUrl: confirmTemplate,
+    	}).result.then(() => {
+    		if (this.modalActions[0]) {
+    			// remove charge
+    			this.removeCase(cardIndex);
+    		}
+    	});
+    }
+    
+    
+    
+    removeCase(removeIndex) {
+    	let courtCases = this.getCardInstances('Court Case');
+    	if (removeIndex >= courtCases.length) {
+    		return;
+    	}
+    	courtCases.splice(removeIndex,1);
+    	this.initCheckboxGroups();
+    	for (let caseIndex=removeIndex; caseIndex < courtCases.length; caseIndex++) {
+    		let oldValue = (caseIndex + 2) + '';
+    		let newValue = (caseIndex + 1) + '';
+    		this.getResponseOfQuestionByTag(courtCases[caseIndex].responses,'lcCourtCaseSequence').value = newValue;
+    		
+    		let suspects = this.getCardInstances('Suspects');
+    		for (let suspectIndex in suspects) {
+		    	let cases = this.getResponseOfQuestionByTag(suspects[suspectIndex].responses,'lcSuspectCourtCases').value.split(';');
+		    	let caseString = '';
+		    	let sep = '';
+		    	for (let valueIndex in cases) {
+		    		if (cases[valueIndex] === oldValue) {
+			    		caseString += sep + newValue;
+			    	} else {
+			    		caseString += sep + cases[valueIndex];
+			    	}
+			    	sep = ';';
+			    }
+			    this.getResponseOfQuestionByTag(suspects[suspectIndex].responses,'lcSuspectCourtCases').value = caseString;
+		    }
+		    
+		    let chargeCards = this.getCardInstances('Suspect Charge');
+		    for (let chargeIndex in chargeCards) {
+		    	if (this.getResponseOfQuestionByTag(chargeCards[chargeIndex].responses,'lcSuspectChargeSequence').value + '' === oldValue) {
+	    			this.getResponseOfQuestionByTag(chargeCards[chargeIndex].responses,'lcSuspectChargeSequence').value = newValue;
+	    		} 
+		    }
+		    
+		    let victims = this.getCardInstances('Victims');
+	    	for (let victimIndex in victims) {
+	    		let cases = this.getResponseOfQuestionByTag(victims[victimIndex].responses,'lcVictimCourtCases').value.split(';');
+	    		let caseString = '';
+		    	let sep = '';
+		    	for (let valueIndex in cases) {
+		    		if (cases[valueIndex] === oldValue) {
+			    		caseString += sep + newValue;
+			    	} else {
+			    		caseString += sep + cases[valueIndex];
+			    	}
+			    	sep = ';';
+			    }
+			    this.getResponseOfQuestionByTag(victims[victimIndex].responses,'lcVictimCourtCases').value = caseString;
+	    	}
+	    	
+	    	let comments = this.getCardInstances('Timeline');
+	    	for (let commentIndx in comments) {
+	    		if (this.getResponseOfQuestionByTag(comments[commentIndx].responses,'lcTimelineCourtCaseSequence').value + '' === oldValue) {
+	    			this.getResponseOfQuestionByTag(comments[commentIndx].responses,'lcTimelineCourtCaseSequence').value = newValue;
+	    		}
+	    	}
     	}
     }
     

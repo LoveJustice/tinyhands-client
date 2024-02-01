@@ -51,6 +51,7 @@ import incidentModule from './incident/incident.module';
 import staffModule from './staff/staff.module';
 import projectRequestModule from './project-request/projectRequest.module';
 import mdfModule from './mdf/mdf.module';
+import formExportModule from './components/form-export/form-export.module';
 
 
 import constants from './constants.js';
@@ -105,7 +106,8 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         incidentModule,
         staffModule,
         projectRequestModule,
-        mdfModule
+        mdfModule,
+        formExportModule
     ])
 
     .constant('constants', constants)

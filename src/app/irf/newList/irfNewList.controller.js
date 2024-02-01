@@ -70,8 +70,6 @@ export default class IrfNewListController {
         this.status.options = [ {id: '!invalid', label: 'all valid', group:'z'},
             { id: 'in-progress', label: 'in-progress', group:'Status' }, 
             { id: 'approved,!None', label: 'submitted', group:'Status' },
-            { id: 'first-verification', label: 'first-verification', group:'Status' },
-            { id: 'second-verification', label: 'second-verification', group:'Status'},
             { id: 'verification-tie', label: 'verification-tie', group:'Status'},
             { id: 'verified', label: 'verified', group:'Status'},
             { id: 'second-verification|verified,Evidence', label: 'evidence', group:'Final Verification Evidence Category'},

@@ -75,7 +75,7 @@
 			         </div>
 				 </div>
 	        	 <div class="row" ng-if="SuspectModalController.courtCaseCount > 1">
-			    	<div class="col-md-3 form-group">
+			    	<div class="col-md-2 form-group">
 	            		<label>Court Cases</label>
 		            </div>
 	            	<span class="checkbox-text col-md-2" ng-if="!$last" ng-repeat="courtCase in SuspectModalController.checkboxGroup.questions.lcSuspectCourtCases">
@@ -92,23 +92,26 @@
 			    		<form-step class="sequenceNumber">{{ SuspectModalController.displayNumber(courtCase) }}</form-step>
 			    	</span>
 			    	<span>
-	    				<div class=col-md-11>
+	    				<div class=col-md-12>
 				    		<div class="row col-md-12 form-group" style="display:inline-block" ng-repeat="suspectCharge in courtCase.charges">
 				    			<span>
-					    			<h4 class="col-md-8" style="display:inline-block" >Charge: {{ suspectCharge.questions.lcSuspectChargeCharge.response.value }}</h4>
-					    			<label>Legal Status</label>
-					    			<select ng-model="suspectCharge.questions.lcSuspectChargeLegalStatus.response.value"
-					    					ng-disabled="suspectCharge.dateData.questions.lcSuspectChargeVerdictSubmittedDate.value">
-					    				<option>Pre-trial</option>
-					    				<option>Trial</option>
-					    				<option>Awaiting Verdict</option>
-					    				<option>Verdict</option>
-					    				<option>Case Dismissed</option>
-					    				<option>Not Charged</option>
-					    			</select>
+					    			<h4 class="col-md-4 nopadding" style="display:inline-block" >Charge: {{ suspectCharge.questions.lcSuspectChargeCharge.response.value }}</h4>
+					    			<div class="col-md-4"><label>Legal Status</label>
+                                        <select ng-model="suspectCharge.questions.lcSuspectChargeLegalStatus.response.value"
+                                                ng-disabled="suspectCharge.dateData.questions.lcSuspectChargeVerdictSubmittedDate.value">
+                                            <option>Pre-trial</option>
+                                            <option>Trial</option>
+                                            <option>Awaiting Verdict</option>
+                                            <option>Verdict</option>
+                                            <option>Case Dismissed</option>
+                                            <option>Not Charged</option>
+                                        </select>
+                                    </div>
 					    		</span>
+                                <br>
 					    		<div class="row col-md-12" ng-if="suspectCharge.questions.lcSuspectChargeLegalStatus.response.value==='Verdict'">
-					    			<div class="col-md-2">
+					    			<hr class="hr-imprison">
+                                    <div class="col-md-2">
 					    				<label>Verdict</label>
 					    			</div>
 					    			<div class="col-md-4">
@@ -118,7 +121,7 @@
 						                	<option value="Acquittal">Acquittal</option>
 						                </select>
 					    			</div>
-					    			<div class="col-md-4" ng-if="suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Conviction'||suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Acquittal'">
+					    			<div class="col-md-3" ng-if="suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Conviction'||suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Acquittal'">
 					    				<label>Sentence mentioned in attached verdict</label>
 					    			</div>
 					    			<div class="col-md-2" ng-if="suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Conviction'||suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Acquittal'">
@@ -131,7 +134,7 @@
 					    			</div>
 					    		</div>
 					    		<div class="row col-md-12" ng-if="suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Conviction'||suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Acquittal'">
-					    			<div class="col-md-2">
+                                    <div class="col-md-2">
 					    				<label>Verdict Date</label>
 					    			</div>
 					    			<div class="col-md-4">
@@ -170,6 +173,8 @@
 					    				<input type="text" class="form-control" ng-model="suspectCharge.questions.lcSuspectChargeFineAmount.response.value"
 					    						ng-disabled="suspectCharge.dateData.questions.lcSuspectChargeVerdictSubmittedDate.value">
 					    			</div>
+                                </div>
+                                <div class="row col-md-12" ng-if="suspectCharge.questions.lcSuspectChargeVerdict.response.value==='Conviction'">
 					    			<div class="col-md-4">
 					    				<label>Fine Currency</label>
 					    			</div>

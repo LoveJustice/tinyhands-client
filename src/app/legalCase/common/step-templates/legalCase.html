@@ -15,7 +15,7 @@
      <div class="row">
     	<div class="col-md-12 form-group center-vertical">
 	    		<form-step class="col-md-2 control-label">Location:</form-step>
-	    	<div class="col-md-10">
+	    	<div class="col-md-10 nopadding">
 	    		<form-step class="col-md-3" type="radio" radio-name="locationRadio" ng-repeat="location in $ctrl.locations" label="{{location}}" other-value="$ctrl.otherData.questions.lcLocation.otherValue" response-value="$ctrl.otherData.questions.lcLocation.value"></form-step>
 	        	<form-step class="col-md-3" type="otherRadio" label="Other:" radio-name="locationRadio" other-value="$ctrl.otherData.questions.lcLocation.otherValue" response-value="$ctrl.otherData.questions.lcLocation.value"></form-step>
 	        </div>
@@ -39,8 +39,11 @@
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <form-step class="col-md-4 control-label">Human Trafficking Narrative</form-step>
-            <div class="col-md-8">
+            <form-step class="col-md-4 control-label">Human Trafficking Narrative
+                <i class="fa fa-question-circle" title="Whether the facts indicate this is a human trafficking situation, regardless of what has been charged by authorities."></i>
+            </form-step>
+
+            <div class="col-md-8 nopadding">
 	        	<form-step type="radio" class="col-md-6" radio-name="human-trafficking" label="Yes"
 	            	response-value="$ctrl.questions.lcHumanTrafficking.response.value"></form-step>
 	           <form-step type="radio" class="col-md-6" radio-name="human-trafficking" label="No"
@@ -86,7 +89,7 @@
 		    		<span>
 			    	<form-step class="col-md-2 control-label">Charges</form-step>
 					<div class="col-md-10 nopadding">
-						<span class="checkbox-text col-md-3" ng-repeat="charge in $ctrl.basicCharges">
+						<span class="checkbox-text col-md-3 nopadding" ng-repeat="charge in $ctrl.basicCharges">
 				            <input type="checkbox" 
 				            	ng-model="$ctrl.courtCase[cardIndex].checkboxGroup.questions.lcCourtCaseCharges[charge]"
 				            	ng-class="$ctrl.inputClass" id="{{'Charge_'+$cardIndex+'_'+$charge}}"
@@ -98,7 +101,7 @@
 		    	</div>
 		    	<div  class="row form-group">
 			    	<form-step class="col-md-2 control-label">Specific Country Code/Law</form-step>
-					<div class="col-md-10">
+					<div class="col-md-10 nopadding">
 	    	 			<form-step type="checkbox" ng-repeat="charge in $ctrl.countrySpecific" class={{charge.format}}
 							label="{{charge.charge}} " response-value="$ctrl.courtCase[cardIndex].checkboxGroup.questions.lcCourtCaseSpecific[charge.charge]"></form-step>
 					</div>

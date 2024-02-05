@@ -24,7 +24,14 @@
         </div>
     </div>
     <div class="col-md-2">
-      &nbsp;
+      <p>Status</p>
+      <select ng-model="mdfListCtrl.status" ng-change="mdfListCtrl.getMdfList(mdfListCtrl.searchTerm, null)">
+      	<option value=""></option>
+      	<option>Approved</option>
+      	<option>Initial Review</option>
+      	<option>Submitted</option>
+      	<option>Final</option>
+      </select>
     </div>
     <div class="col-md-3 search-bar pull-right">
       <input type="text" class="form-control" placeholder="Search" ng-model="mdfListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="mdfListCtrl.getMdfList(mdfListCtrl.searchTerm, null)">

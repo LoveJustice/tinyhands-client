@@ -158,7 +158,7 @@ class personManagementListController {
     }
 
     faceMatching() {
-        return this.state.href('personManagementFaceMatching');
+        return this.state.href('faceMatching');
     }
 }
 

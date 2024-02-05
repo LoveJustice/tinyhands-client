@@ -1,62 +1,16 @@
-import './personManagementPendingList.less';
+import './faceMatchingResults.less';
 
-class personManagementFaceMatchingController {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementFaceMatchingService, personManagementService, SessionService, $uibModal, $state, $document, toastr, constants) {
+class FaceMatchingResultsController {
+    constructor(faceMatchingResultsService, SessionService, $state) {
         'ngInject';
 
         this.state = $state;
-        this.sticky = StickyHeader;
-        this.rootScope = $rootScope;
-        this.scope = $scope;
-        this.$uibModal = $uibModal;
-        this.http = $http;
-        this.timeout = $timeout;
-        this.personManagementFaceMatchingService = personManagementFaceMatchingService;
-        this.personManagementService = personManagementService;
+        this.faceMatchingResultsService = faceMatchingResultsService;
         this.session = SessionService;
-        this.modal = $uibModal;
-        this.toastr = toastr;
-        this.constants = constants;
-
+        
         this.loading = false;
         this.reverse = false;
-        this.paginateBy = 25;
-        this.knownPersons = [];
-        this.searchValue = '';
-        this.nextPageUrl = '';
-        this.sortColumn = '';
-        this.stickyOptions = this.sticky.stickyOptions;
-        this.timer = {};
-        this.addSearchValue = '';
 
-        this.paginate = {
-            items: 0,
-            pageSize: this.paginateBy,
-            currentPage: 1,
-        };
-
-        this.showIdMgmt = true;
-        this.showAddAlias = false;
-        this.showRemoveAlias = false;
-        this.isViewing = false;
-        this.countryId = '';
-        this.matchType = '';
-        this.matchRole = '';
-
-        let tmp = sessionStorage.getItem('personManagement-search');
-        if (tmp !== null) {
-            this.searchValue = tmp;
-        }
-        tmp = sessionStorage.getItem('personManagement-country');
-        if (tmp !== null) {
-            this.countryId = tmp;
-        }
-        tmp = sessionStorage.getItem('personManagement-match');
-        if (tmp !== null) {
-            this.matchType = tmp;
-        }
-
-        this.getEncodedPersons();
         this.getCountries();
     }
 
@@ -102,20 +56,11 @@ class personManagementFaceMatchingController {
         }, 500);
     }
 
-    // TODO
     getCountries() {
-        this.personManagementFaceMatchingService.getUserCountries(this.session.user.id).then((promise) => {
+        this.faceMatchingResultsService.getUserCountries(this.session.user.id).then((promise) => {
             this.countries = promise.data;
-            this.getEncodedPersons();
         });
     }
-
-    // TODO: compare
-    // getFaceEncoding(person_id) {
-    //     this.personManagementFaceMatchingService.getFaceEncoding(person_id).then((promise) => {
-    //         this.compare(promise.data);
-    //     });
-    // }
 
     getEncodedPersons() {
         this.showPage(1);
@@ -123,7 +68,7 @@ class personManagementFaceMatchingController {
 
     showPage(pageNumber) {
         this.loading = true;
-        this.personManagementFaceMatchingService.listFaceEncodings(this.getQueryParams(pageNumber)).then((promise) => {
+        this.faceMatchingService.listFaceEncodings(this.getQueryParams(pageNumber)).then((promise) => {
             this.encodedPersons = promise.data.results;
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
@@ -133,7 +78,7 @@ class personManagementFaceMatchingController {
 
     loadMoreEncodedPersons() {
         this.loading = true;
-        this.personManagementFaceMatchingService.loadMoreEncodedPersons(this.getQueryParams(true)).then((promise) => {
+        this.faceMatchingService.loadMoreEncodedPersons(this.getQueryParams(true)).then((promise) => {
             this.encodedPersons = this.encodedPersons.concat(promise.data.results);
             this.nextPageUrl = this.nextUrl(promise.data.next);
             this.loading = false;
@@ -183,4 +128,4 @@ class personManagementFaceMatchingController {
     }
 }
 
-export default personManagementFaceMatchingController;
+export default FaceMatchingResultsController;

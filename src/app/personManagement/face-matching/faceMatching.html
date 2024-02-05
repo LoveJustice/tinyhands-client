@@ -1,0 +1,25 @@
+<div id="faceMatching" class="container">
+	<div>
+		<h1 class="text-center">Face Matching</h1>
+		<div class="row">
+			<h4>1. Upload an image and search for similar faces in records.</h4>
+			<form id="uploadPhotoForm" name="uploadPhotoForm">
+				<label for="upload-photo">Upload photo</label>
+				<input type="file" ngf-select ng-model="vm.uploadedPhoto" name="upload-photo" ngf-pattern="'image/*'"
+					ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+					ngf-resize="{width: 100, height: 100}" required />
+			</form>
+			<img ngf-thumbnail="vm.uploadedPhoto" ngf-no-object-url="true">
+			<input form="uploadPhotoForm" type="submit" ng-click="vm.submit($uploadedPhoto)"
+				ng-disabled="!uploadPhotoForm.$valid" />
+		</div>
+		<br>
+		<div class="row">
+			<h4>2. Select an image from records and search for similar faces in records.</h4>
+		</div>
+	</div>
+	<br>
+	<div ng-show="vm.loading" class="loader-container">
+		<div class="loader">Loading...</div>
+	</div>
+</div>

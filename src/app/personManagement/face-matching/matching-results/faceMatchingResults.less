@@ -1,0 +1,47 @@
+#faceMatchingResults {
+
+	#full-photo-summary {
+		height: 100px;
+		background-color: lightcoral;
+	}
+
+	#match-results {
+		min-height: 100%;
+	}
+
+	#match-summary {
+		width: 100%;
+		background-color: lightpink;
+	}
+
+	#uploaded-person-container {
+		height: 500px;
+		background-color: grey;
+		justify-content: space-between;
+	}
+
+	#matching-person-container {
+		height: 500px;
+		overflow: auto;
+		background-color: lightblue;
+		scroll-padding: 0;
+		scroll-snap-type: y mandatory;
+	}
+
+	.matching-person-row {
+		display: flex;
+	}
+
+	.col-comparison {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.matching-person {
+		display: flex;
+		flex-direction: column;
+		min-height: 500px;
+		justify-content: space-between;
+		scroll-snap-align: start;
+	}
+}

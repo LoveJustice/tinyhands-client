@@ -1,0 +1,115 @@
+<div id="faceMatchingResults" class="container">
+    <div>
+        <h1 class="text-center">Face Matching Results</h1>
+        <div class="row">
+            <div class="col-md-1">
+                <p style="margin-top: 5px;">Country</p>
+            </div>
+            <div class="col-md-2">
+                <select class="form-control" ng-model="vm.countryId" ng-change="">
+                    <option value="">All</option>
+                    <option ng-repeat="country in vm.countries" value="{{country.id}}">{{ country.name}} </option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-4">
+                    <p style="margin-top: 5px;">Gender</p>
+                </div>
+                <div class="col-md-8">
+                    <select class="form-control" ng-model="vm.gender" ng-change="">
+                        <option value="">All</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="col-md-3">
+                    <p style="margin-top: 5px;">Role</p>
+                </div>
+                <div class="col-md-9">
+                    <select class="form-control" ng-model="vm.matchRole" ng-change="">
+                        <option value="">All</option>
+                        <option value="PV">PV</option>
+                        <option value="NON-PV">Non PV</option>
+                    </select>
+                </div>
+            </div>
+            <div class="pull-right">
+                <form>
+                    <label>
+                        <input type="search" placeholder="Person name..." ng-model="vm.searchValue" class="form-control"
+                            ng-keypress="vm.keyPress($event)">
+                    </label>
+                    <a class="btn btn-primary" ng-click="">Search</a>
+                </form>
+            </div>
+        </div>
+        <div id="full-photo-summary" class="row">Uploaded full photo and X matching full photos, with match percentage
+        </div>
+        <div id="match-results" class="row container">
+            <div id="match-summary">Match summary</div>
+            <div class="row">
+                <div id="uploaded-person-container" class="col-xs-4 col-comparison">
+                    <div class="uploaded-person">
+                        <div>
+                            Uploaded face
+                        </div>
+                        <div>
+                            Uploaded face analysis
+                        </div>
+                    </div>
+                </div>
+                <div id="matching-person-container" class="col-xs-8 col-comparison">
+                    <div class="matching-person">
+                        <div class="matching-person-row">
+                            <div>
+                                1 Matching face
+                            </div>
+                            <div>
+                                1 Matching person details
+                            </div>
+                        </div>
+                        <div>
+                            1 Matching face analysis
+                        </div>
+                    </div>
+                    <div class="matching-person">
+                        <div class="matching-person-row">
+                            <div>
+                                2 Matching face
+                            </div>
+                            <div>
+                                2 Matching person details
+                            </div>
+                        </div>
+                        <div>
+                            2 Matching face analysis
+                        </div>
+                    </div>
+                    <div class="matching-person">
+                        <div class="matching-person-row">
+                            <div>
+                                3 Matching face
+                            </div>
+                            <div>
+                                3 Matching person details
+                            </div>
+                        </div>
+                        <div>
+                            3 Matching face analysis
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div ng-show="vm.loading" class="loader-container">
+        <div class="loader">Loading...</div>
+    </div>
+</div>

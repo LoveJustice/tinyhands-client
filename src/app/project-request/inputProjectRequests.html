@@ -40,18 +40,20 @@
                 	<select ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-model="request.benefit_type_name">
                 		<option ng-repeat="opt in $ctrl.benefits" value="{{ opt }}">{{ opt }}</option>
                 	</select>
-                	<button class="btn newBenefit"  ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-click="$ctrl.addingType=$index">New Benefit Type</button>
+                	<button class="btn newBenefit btn-success"  ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-click="$ctrl.addingType=$index">New Benefit Type</button>
                 </td>
-                <td ng-if="$ctrl.addingType===$index">
-                	<div><label>New Benefit Name</label></div>
-                	<input type="text" ng-model="$ctrl.newBenefit">
+                <td colspan="2" ng-if="$ctrl.addingType===$index">
+                	<div class="col-md-5">
+	                	<div><label>New Benefit Name</label></div>
+	                	<input type="text" ng-model="$ctrl.newBenefit">
+                	</div>
+                	<div class="col-md-2">
+	                	<button class="btn newBenefit btn-success" ng-disabled="!$ctrl.newBenefit" ng-click="$ctrl.addBenefit($index);$ctrl.addingType=null;">Add Benefit</button>
+	                	<button class="btn newBenefit btn-normal"  ng-click="$ctrl.addingType=null;">Cancel Add</button>
+                	</div>
                 </td>
                 <td ng-if="$ctrl.addingType!==$index"><a class="btn btn-sm btn-danger" ng-click="$ctrl.deleteRequest(request, $index)">
                     {{ request.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
-                <td ng-if="$ctrl.addingType===$index">
-                	<button class="btn newBenefit btn-success" ng-disabled="!$ctrl.newBenefit" ng-click="$ctrl.addBenefit($index);$ctrl.addingType=null;">Add Benefit</button>
-                	<button class="btn newBenefit btn-normal"  ng-click="$ctrl.addingType=null;">Cancel Add</button>
-                </td>
         	</tr>
         </tbody>
     </table>

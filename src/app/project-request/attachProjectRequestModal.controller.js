@@ -3,6 +3,7 @@
 
 export default class DiscussProjectRequestModalController{
 	constructor($uibModalInstance, SpinnerOverlayService, $scope, service, request) {
+		'ngInject';
 		this.$uibModalInstance = $uibModalInstance;
 		this.spinner = SpinnerOverlayService;
 		this.$scope = $scope;

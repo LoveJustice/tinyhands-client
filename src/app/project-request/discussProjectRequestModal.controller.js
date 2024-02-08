@@ -19,7 +19,9 @@ export default class DiscussProjectRequestModalController{
         this.accountDropDown.selectedOptions = [];
         this.accountDropDown.settings = {smartButtonMaxItems:2, showCheckAll: false, showUncheckAll: false,};
         this.accountDropDown.customText = {buttonDefaultText: 'None'};
-        
+
+		this.editComment = null;
+		this.editCommentText = null;
 		
 		this.getDiscussionAccounts(request.id);
 		this.getDiscussionEntries(request.id);
@@ -79,6 +81,25 @@ export default class DiscussProjectRequestModalController{
 		});
 	}
 	
+	copyText(original, includeModified) {
+		let result = '';
+		if (original.substring(0,10) === '[Modified]') {
+			if (includeModified) {
+				result = original;
+			} else {
+				result = origina.substring(10);
+			}
+		} else {
+			if (includeModified) {
+				result = '[Modified]' + original;
+			} else {
+				result = original;
+			}
+		}
+		
+		return result;
+	}
+	
 	addEntry() {
 		let notifyIds = [];
 		for (let selectedIndex in this.accountDropDown.selectedOptions) {
@@ -97,6 +118,16 @@ export default class DiscussProjectRequestModalController{
 			this.discussionEntries.unshift(promise.data);
 			this.modified = true;
 		}, () => {
+			this.spinner.hide();
+		});
+	}
+	
+	updateComment(discussion) {
+		this.spinner.show("Updating entry...");
+		this.service.updateDiscussionComment(discussion).then(() => {
+			this.spinner.hide();
+			this.modified = true;
+		}, ()=> {
 			this.spinner.hide();
 		});
 	}

@@ -4,12 +4,13 @@
         	<thead>
         		<tr>
         			<th>Date</th>
-        			<th>Leadership</th>
-        			<th>Obedience</th>
-        			<th>Faithfulness</th>
+        			<th>Networking</th>
+        			<th>Compliance</th>
+        			<th>Dependability</th>
         			<th>Alertness</th>
+        			<th>Boldness</th>
         			<th>Questioning</th>
-        			<th>Awareness</th>
+        			<th>Teamwork</th>
         			<th>Total</th>
         			<th></th>
         			<th></th>
@@ -19,22 +20,25 @@
         		<tr ng-repeat="review in vm.reviews" ng-if="!review.toDelete">
         			<td ng-if="!review.inProgress">{{ review.review_date }}</td>
         			<td ng-if="review.inProgress"><input type="date" ng-model-options="{timezone: 'utc'}" ng-model="vm.reviewDate"></td>
-        			<td ng-class="vm.reviewColor(review.leadership)"><input type="number" ng-model="review.leadership" 
+        			<td ng-class="vm.reviewColor(review.networking)"><input type="number" ng-model="review.networking" 
         					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
         					ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
-        			<td ng-class="vm.reviewColor(review.obedience)"><input type="number" ng-model="review.obedience"
+        			<td ng-class="vm.reviewColor(review.compliance)"><input type="number" ng-model="review.compliance"
         					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
         					ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
-        			<td ng-class="vm.reviewColor(review.faithfulness)"><input type="number" ng-model="review.faithfulness"
+        			<td ng-class="vm.reviewColor(review.dependability)"><input type="number" ng-model="review.dependability"
         					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
         					ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
         			<td ng-class="vm.reviewColor(review.alertness)"><input type="number" ng-model="review.alertness"
         					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
         					ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
+        			<td ng-class="vm.reviewColor(review.boldness)"><input type="number" ng-model="review.boldness"
+        					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
+        					ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
         			<td ng-class="vm.reviewColor(review.questioning)"><input type="number" ng-model="review.questioning"
         					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
         					ng-change="vm.reviewTotal(review)" ng-disabled="!review.inProgress"></td>
-        			<td ng-class="vm.reviewColor(review.awareness)"><input type="number" ng-model="review.awareness"
+        			<td ng-class="vm.reviewColor(review.teamwork)"><input type="number" ng-model="review.teamwork"
         					onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode===46"
         					ng-change="vm.reviewTotal(review)"  ng-disabled="!review.inProgress"></td>
         			<td>{{ review.total }}</td>

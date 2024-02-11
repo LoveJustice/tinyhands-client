@@ -10,7 +10,8 @@ function mdfRouteConfig($stateProvider) {
             url: '/mdf-pr?search&countryIds',
             params: {
                 search: { dynamic: true },
-                countryIds: { dynamic: true }
+                countryIds: { dynamic: true },
+                status: { dynamic: ''},
             },
             templateUrl: mdfListTemplate,
             controller: 'MdfListController',

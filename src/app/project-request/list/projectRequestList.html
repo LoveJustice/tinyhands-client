@@ -90,6 +90,7 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': $ctrl.getSortIcon('status', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': $ctrl.getSortIcon('status', 'reverse')}"></i>
                 </th>
+                <th>Date</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Description</th>
@@ -103,8 +104,9 @@
             <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-mouseleave="request.confirmedApprove = false;">
                 <td>{{ request.project_name }}</td>
                 <td>{{ request.status }}</td>
+                <td>{{ request.date_time_entered | date:"yyyy-MM-dd" }}</td>
                 <td>{{ request.category_name }}</td>
-                <td>{{ request.cost }}</td>
+                <td class="text-right">{{ request.cost }}</td>
                 <td ng-if="!request.staff_name">{{ request.description }}</td>
                 <td ng-if="request.staff_name">{{ request.benefit_type_name }} for {{ request.staff_name }}</td>
                 <td ng-if="request.monthly"><i class="fa fa-check-square-o monthlyIcon"></i></td>

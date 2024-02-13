@@ -56,7 +56,8 @@
          </div>
          <div class="col-md-11 form-group">
          	<form-step type="checkbox" class="col-md-3" ng-repeat="positionOption in vm.positionOptions"
-				label="{{positionOption}}" response-value="vm.checkboxGroup.questions['position'][positionOption]"></form-step>
+				label="{{positionOption}}" response-value="vm.checkboxGroup.questions['position'][positionOption]"
+				ng-show="vm.showPosition(positionOption)"></form-step>
 			<form-step type="otherCheckbox" class="col-md-3"
 				label="Other" response-value="vm.checkboxGroup.questions['position'].internalOther"></form-step>
          </div>

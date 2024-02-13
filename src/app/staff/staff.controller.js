@@ -58,7 +58,8 @@ class AddProjectModalController {
 						"staff": this.staff.id,
 						"border_station": this.displayProjects[projIdx].project.id,
 						"receives_money_distribution_form": false,
-						"coordinator":""
+						"coordinator":"",
+						"project_category":this.displayProjects[projIdx].project.project_category_name,
 					});
 				this.coordinator[this.displayProjects[projIdx].project.id] = {
             		options: [
@@ -166,10 +167,40 @@ export default class StaffController {
         this.countries = [];
         this.basicView = true;
         this.basicEdit = false;
-        this.educationOptions = ['Illiterate','Primary','Secondary','University'];
+        this.educationOptions = [
+        	'None',
+        	'Primary',
+        	'Secondary',
+        	'Vocational School',
+        	'Certificate Program',
+        	'Diploma',
+        	"Associate's Degree",
+        	"Bachelor's Degree",
+        	'Graduate Degree'];
         this.positionOptions = [
-            'Monitor', 'Data Entry Specialist', 'Station Manager',
-            'Compliance Officer'];
+            'Finanace',
+            'Compliance Officer',
+            'Counselor',
+            'Data Entry Specialist',
+            'Driver',
+            'Investigator',
+            'Lawyer',
+            'Office Assitant',
+            'Police Liaison',
+            'Project Manager',
+            'SFE Counselor',
+            'Shelter Care',
+            'Spiritual Care Coordinator',
+            'Station Manager',
+            'Transit Monitor'];
+        this.limitedPositions = {
+        	'Compliance Officer':['National Office'],
+        	'Counselor':['National Office'],
+        	'Data Entry Specialist':['National Office'],
+        	'Police Liaison':['National Office'],
+        	'Project Manager':['National Office'],
+        	'Spiritual Care Coordinator':['National Office'],
+        };
         this.checkboxGroup = new CheckboxGroup();
         for (let positionIndex in this.positionOptions) {
             this.checkboxGroup.checkboxItem('position', this.positionOptions[positionIndex]);
@@ -539,6 +570,25 @@ export default class StaffController {
     	}
     	
     	return false;
+    }
+    
+    showPosition(position) {
+    	let result = true;
+    	if (!this.checkboxGroup.questions['position'][position]) {
+    		if (this.limitedPositions.hasOwnProperty(position)) {
+    			result = false;
+    			for (let categoryIndex in this.limitedPositions[position]) {
+    				let category = this.limitedPositions[position][categoryIndex];
+    				for (let projectIndex in this.staff.staffproject_set) {
+    					if (this.staff.staffproject_set[projectIndex].project_category === category) {
+    						result = true;
+    						break;
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return result;
     }
     
     miscSaveItem (miscIndex) {

@@ -18,7 +18,7 @@
 			</select>
 		</fieldset>
 		<div class="col-md-3"><b>Request Date:</b> {{ $ctrl.requestDate }}</div>
-		<div class="col-md-2"><b>Status:</b> {{ $ctrl.projectRequest.status }}</div>
+		<div class="col-md-2"><b>Status:</b> {{ $ctrl.displayStatus($ctrl.projectRequest.status) }}</div>
 	</div>
 	<div class="row col-md-12 reviewLine">
 		<div class="col-md-1"><b>Category:</b></div>
@@ -107,7 +107,11 @@
 					ng-click="$ctrl.update()" ng-disabled="$ctrl.entryCost !== $ctrl.projectRequest.cost && !$ctrl.isAuthor ">Update</button>
 		</div>
 		<div class="col-md-1">
-			<button class="btn btn-danger" ng-if="$ctrl.canModifyApproved || $ctrl.canApprove" ng-click="$ctrl.decline()">{{ $ctrl.projectRequest.approved_mdf ? "Complete" : "Decline" }}</button>
+			<button class="btn btn-danger" ng-if="($ctrl.canModifyApproved || $ctrl.canApprove) && !$ctrl.projectRequest.approved_mdf" ng-click="$ctrl.decline()">Decline</button>
+			<button class="btn btn-danger" ng-if="($ctrl.canModifyApproved || $ctrl.canApprove) && $ctrl.projectRequest.approved_mdf" ng-click="$ctrl.decline()">
+				<div>End Monthly</div>
+				<div>Approval</div>
+			</button>
 		</div>
 		<div class="col-md-2">
 			<button class="btn btn-warning" ng-if="$ctrl.canModifyApproved || $ctrl.canApprove" ng-click="$ctrl.changeApprovedAmount()">Change Approved Amount</button>

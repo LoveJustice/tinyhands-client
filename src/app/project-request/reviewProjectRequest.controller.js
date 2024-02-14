@@ -275,4 +275,9 @@ export default class ReviewProjectRequestController {
 			this.state.go('projectRequestList',{});
 		}
     }
+    
+    displayStatus(status) {
+    	let display = status.replace('Completed','Ended');
+    	return display;
+    }
 }

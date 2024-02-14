@@ -55,9 +55,9 @@
         		<option value=''>All</option>
         		<option value='Submitted'>Submitted</option>
         		<option value='Approved'>Approved</option>
-        		<option value='Approved-Completed'>Approved-Completed</option>
+        		<option value='Approved-Completed'>Approved-Ended</option>
         		<option value='Declined'>Declined</option>
-        		<option value='Declined-Completed'>Declined-Completed</option>
+        		<option value='Declined-Completed'>Declined-Ended</option>
         	</select>
         </div>
         <div class="col-md-1">
@@ -103,7 +103,7 @@
         <tbody>
             <tr ng-repeat="request in $ctrl.requests | orderBy:this.queryParameters.ordering:this.queryParameters.reverse" ng-mouseleave="request.confirmedApprove = false;">
                 <td>{{ request.project_name }}</td>
-                <td>{{ request.status }}</td>
+                <td>{{ $ctrl.displayStatus(request.status) }}</td>
                 <td>{{ request.date_time_entered | date:"yyyy-MM-dd" }}</td>
                 <td>{{ request.category_name }}</td>
                 <td class="text-right">{{ request.cost }}</td>

@@ -273,6 +273,11 @@ export default class ProjectRequestListController {
     	return cssClass;
     }
     
+    displayStatus(status) {
+    	let display = status.replace('Completed','Ended');
+    	return display;
+    }
+    
     discuss(request) {
     	let theService = this.service;
     	let userId = this.session.user.id;

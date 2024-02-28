@@ -108,7 +108,7 @@ angular.module('tinyhandsFrontend', ['angular.chips', ngAnimate, ngCookies, ngCs
         staffModule,
         projectRequestModule,
         mdfModule,
-        subcommitteeModule
+        subcommitteeModule,
         formExportModule
     ])
 

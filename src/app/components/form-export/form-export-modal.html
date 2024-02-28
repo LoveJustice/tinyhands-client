@@ -1,0 +1,95 @@
+<div class="modal-header">
+    <h3 class="modal-title">Export {{ vm.params.form }} Forms</h3>
+</div>
+
+<div class="modal-body">
+    <div class="row">
+      <div class="col-md-5">
+        <h3>From: {{vm.fromDate | date:' MMMM d yyyy' }}</h3>
+        <div uib-datepicker ng-model="vm.params.start" class="well well-sm" datepicker-options="options"></div>
+      </div>
+
+      <div class="col-md-2"></div>
+
+      <div class="col-md-5">
+
+        <h3>To {{vm.toDate | date:' MMMM d yyyy' }}</h3>
+        <div class="well well-sm"><div uib-datepicker ng-model="vm.params.end" datepicker-options="options"></div></div>
+      </div>
+    </div>
+
+    <div class="col-md-6"> 
+    	<label>Country</label>
+    	<select ng-model="vm.params.country" ng-change="vm.checkPrivatePermission()">
+    		<option value="all">all</option>
+    		<option value="{{ entry.id }}" ng-repeat="entry in vm.countryList">{{ entry.name }}</option>
+    	</select>
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='IRF'"> 
+    	<label>Status</label>
+    	<select ng-model="vm.params.status">
+    		<option value="all">all</option>
+    		<option value="counted_intercept">counted intercept</option>
+    		<option value="evidence">evidence</option>
+    		<option value="high_risk">high risk</option>
+    	</select>
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='PVF'"> 
+    	<label>Status</label>
+    	<select ng-model="vm.params.status">
+    		<option>all</option>
+    		<option>approved</option>
+    	</select>
+    </div>
+    <div class="col-md-6"> 
+    	<label>Include Private Information</label>
+    	<select ng-model="vm.params.include_pi" ng-disabled="!vm.canExportPrivateInformation">
+    		<option value="No">{{ vm.noPermissionText }}</option>
+    		<option>Yes</option>
+    	</select>
+    </div>
+    <div class="col-md-6"> 
+    	<label>Sample percentage</label>
+    	<input type="text" ng-model="vm.params.sample">
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='IRF'"> 
+    	<label>Remove Suspects</label>
+    	<select ng-model="vm.params.remove_suspects">
+    		<option>No</option>
+    		<option>Yes</option>
+    	</select>
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='IRF'"> 
+    	<label>Minimum Number of Red Flags</label>
+    	<input type="text" ng-model="vm.params.red_flags">
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='IRF'"> 
+    	<label>Case Notes</label>
+    	<select ng-model="vm.params.case_notes">
+    		<option>No</option>
+    		<option>Yes</option>
+    	</select>
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='PVF'"> 
+    	<label>Include IRF's Verification Category</label>
+    	<select ng-model="vm.params.evidence_category">
+    		<option>No</option>
+    		<option>Yes</option>
+    	</select>
+    </div>
+    <div class="col-md-6" ng-if="vm.params.form==='PVF'"> 
+    	<label>Follow Up Call Pull</label>
+    	<select ng-model="vm.params.follow_up">
+    		<option>No</option>
+    		<option>Yes</option>
+    	</select>
+    </div>
+    <div class="row col-md-12">
+    	<hr>
+    </div>
+</div>
+
+<div class="modal-footer" style="border:none;">
+  <button ng-click="vm.uibModalInstance.dismiss()" type="button" class="btn btn-danger">Cancel</button>
+  <button ng-click="vm.exportForms()" ng-disabled="!vm.validDate()" type="button" class="btn btn-success">Export</button>
+</div>

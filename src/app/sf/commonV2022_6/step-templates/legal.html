@@ -14,7 +14,7 @@
 		<div class="col-md-3 form-group">
 			<span>
         		<label>3.2 Arrest Date</label>
-        		<input type="date" ng-model="$ctrl.dateDataLegal.questions['sfLegalArrestDate'].value">
+        		<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateDataLegal.questions['sfLegalArrestDate'].value">
         	</span>
         </div>
         <div class="col-md-3 form-group">
@@ -26,7 +26,7 @@
         <div class="col-md-4 form-group">
         	<span>
 	        	<label>3.4 Charge Sheet Date</label>
-	        	<input type="date" ng-model="$ctrl.dateDataLegal.questions['sfLegalChargeSheetDate'].value">
+	        	<input type="date" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateDataLegal.questions['sfLegalChargeSheetDate'].value">
 	        	(attach copy if available)
 	        </span>
         </div>
@@ -87,7 +87,7 @@
 							<label class="col-md-1">Notes</label>
 							<textarea class="col-md-6" rows="2" ng-model="$ctrl.getResponseOfQuestionByTag($ctrl.legalCard.responses, 'sfLegalLocationLastNotes').value"></textarea>
 							<label class="col-md-1">Date</label>
-							<input class="col-md-2" type="date" ng-model="$ctrl.dateDataLegal.questions['sfLegalLocationLastDate'].value">
+							<input class="col-md-2" type="date" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateDataLegal.questions['sfLegalLocationLastDate'].value">
 						</div>
 					</td>
 	        	</tr>

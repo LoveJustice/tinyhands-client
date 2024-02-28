@@ -1,29 +1,29 @@
 <div id="legal-case-victim-modal" class="modal-content">
     <form name="LegalCaseVictimModal" ng-disabled="VictimModalController.isViewing === 'true'">
-    	<div class="modal-header">
-            <button type="button" class="close" ng-click="VictimModalController.dismiss()">
-                <span aria-hidden="true">&times;</span>
-                <span class="sr-only">Close</span>
-            </button>
-            <div class="col-md-5">
-            	<h3 class="modal-title">Potential Victim</h3>
-            </div>
-        </div>
         <div class="modal-body">
         	<div class="row">
-	            <div class="col-md-3 form-group">
-		    		<label>Potential Victim Name</label>
-		    	</div>
-				<div class="col-md-6 form-group">
-			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions[9].response.name.value">
+        		<div class="col-md-2 form-group">
+        		</div>
+				<div class="col-md-8 form-group text-center">
+					<select class="modalTitle" ng-model="VictimModalController.questions.lcVictimPvf.response.value"
+							ng-if="VictimModalController.questions.lcVictimPvf.response.value===null">
+						<option value="{{ pvf.id }}" ng-repeat="pvf in VictimModalController.filteredPvfs">{{ pvf.victim.full_name }}</option>
+					</select>
+					<p class="modalTitle" ng-if="VictimModalController.questions.lcVictimPvf.response.value!==null">
+						{{ VictimModalController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.full_name }}
+					</p>
 		        </div>
+		    	<div class="col-md-2 form-group">
+		    		<strong>PVF&nbsp;</strong><a ng-href="{{ VictimModalController.pvfUrl() }}">{{ VictimModalController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).vdf_number  }}</a>
+		    	</div>
             </div>
             <div class="row center-vertical">
 		    	<div class="col-md-3 form-group">
             		<label>Phone #</label>
 	            </div>
 	            <div class="col-md-3 form-group">
-			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions[9].response.phone.value">
+			        <input type="text" min="0" class="form-control" disabled
+			        		ng-model="VictimModalController.parentController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.phone_contact">
 		        </div>
             </div>
             <div class="row center-vertical">
@@ -31,51 +31,49 @@
             		<label>Alternative Phone #</label>
 	            </div>
 	            <div class="col-md-3 form-group">
-			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions[1016].response.value">
+			        <input type="text" min="0" class="form-control" ng-model="VictimModalController.questions.lcVictimAlternatePhone.response.value">
 		        </div>
             </div>
             <div class="row center-vertical">
 	        	<label class="col-md-3 control-label">Address:</label>
 	        	<div class="col-md-6 margin-top-0">
-		        	<address-entry ng-model="VictimModalController.questions[9].response.address.value"
-		        			latitude-model="VictimModalController.questions[9].response.latitude.value"
-		        			longitude-model="VictimModalController.questions[9].response.longitude.value" view-only="VictimModalController.isViewing"></addressEntry>
+		        	<address-entry ng-model="VictimModalController.parentController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.address"
+		        			latitude-model="VictimModalController.parentController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.latitude"
+		        			longitude-model="VictimModalController.parentController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.longitude"
+		        			view-only="true"></addressEntry>
 		        </div>
 		    </div>
 		    <div class="row">
 	        	<label class="col-md-3 control-label">Address Notes:</label>
 	        	<div class="col-md-6">
-	                <input type="text" class="form-control" ng-model="VictimModalController.questions[9].response.address_notes.value">
+	                <input type="text" class="form-control"
+	                		ng-model="VictimModalController.parentController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.address_notes"
+	                		disabled>
 	            </div>
 		    </div>
-		    <div class="row center-vertical">
-            	<div class="col-md-3 form-group">
-            		<label>Date of Last Attempt</label>
-	            </div>
-	            <div class="col-md-3 form-group">
-			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="VictimModalController.dateData.questions[1017].value">
-		        </div>
-        	</div>
-        	<div class="row center-vertical">
-            	<div class="col-md-3 form-group">
-            		<label>Date of Last Contact</label>
-	            </div>
-	            <div class="col-md-3 form-group">
-			        <input type="date" min="0" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="VictimModalController.dateData.questions[1018].value">
-		        </div>
-        	</div>
         	<div class="row">
-	        	<label class="col-md-3 control-label">Update/Status of Potential Victim</label>
+	        	<label class="col-md-3 control-label">Notes:</label>
 	        	<div class="col-md-9">
-	                <input type="text" class="form-control" ng-model="VictimModalController.questions[1019].response.value">
+	        		<textarea class="form-control" rows="3" ng-model="VictimModalController.questions.lcVictimStatus.response.value"></textarea>
 	            </div>
 		    </div>
-		    <open-master-person person-id="VictimModalController.questions[9].response.storage_id">
+		    <div class="row" ng-if="VictimModalController.courtCaseCount > 1">
+		    	<div class="col-md-3 form-group">
+            		<label>Cases</label>
+	            </div>
+            	<span class="checkbox-text col-md-2" ng-if="!$last" ng-repeat="courtCase in VictimModalController.checkboxGroup.questions.lcVictimCourtCases">
+		            <input type="checkbox"
+		            	ng-model="VictimModalController.checkboxGroup.questions.lcVictimCourtCases[$index+1]"
+		            	id="{{'court' + $index}}">
+	            	<label for="{{'court' + $index}}">{{$index+1}}</label>
+	            </span>
+		    </div>
+		    <open-master-person person-id="VictimModalController.parentController.getPvf(VictimModalController.questions.lcVictimPvf.response.value).victim.id">
         </div>
         <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="VictimModalController.save()" ng-disabled="!VictimModalController.questions[9].response.name.value" ng-if="!VictimModalController.isViewing">Save</button>
+                    <button class="btn btn-success float-left" ng-click="VictimModalController.save()" ng-disabled="!VictimModalController.questions.lcVictimPvf.response.value" ng-if="!VictimModalController.isViewing">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">
                     <button class="btn btn-danger" ng-click="VictimModalController.delete()" ng-if="!VictimModalController.isAdd && !VictimModalController.isViewing">Delete</button>

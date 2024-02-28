@@ -11,40 +11,51 @@
         </div>
         <div class="modal-body">
         	<div class="row">
-	            <div class="col-md-2 form-group">
+	            <div class="col-md-3 form-group">
 		    		<label>Entered By</label>
 		    	</div>
 				<div class="col-md-4 form-group">
-			        <input type="text" min="0" class="form-control" ng-model="TimelineModalController.questions[1037].response.value" disabled>
+			        <input type="text" min="0" class="form-control" ng-model="TimelineModalController.questions.lcTimelineAddedBy.response.value" disabled>
 		        </div>
 		        <div class="col-md-2 form-group">
 		    		<label>Date Entered</label>
 		    	</div>
-		    	<div class="col-md-4 form-group">
-		    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions[1038].value" disabled>
+		    	<div class="col-md-3 form-group">
+		    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions.lcTimelineDateAdded.value" disabled>
 		    	</div>
             </div>
             <div class="row">
-	            <div class="col-md-2 form-group">
-		    		<label>Date of Incident</label>
+	            <div class="col-md-3 form-group">
+		    		<label>Date of New Case Event</label>
 		    	</div>
 		    	<div class="col-md-4 form-group">
-		    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions[1035].value"
+		    		<input type="date" class="form-control"
+		    				ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions.lcTimelineCommentDate.value"
 		    				ng-disabled="TimelineModalController.isAdd !== true">
 		    	</div>
+            </div>
+            <div class="row" ng-if="TimelineModalController.parentController.courtCase.length > 1">
+            	<label class="col-md-2">Court Case</label>
+            	<div class="col-md-10">
+	            	<form-step class="col-md-1" type="radio" radio-name="timelineCourtCase"
+	            			ng-repeat="case in TimelineModalController.parentController.courtCase"
+	            			label="{{case.questions.lcCourtCaseSequence.response.value}}"
+	            			response-value="TimelineModalController.questions.lcTimelineCourtCaseSequence.response.value"></form-step>
+	            </div>
             </div>
             <div class="row col-md-12">
             	<label>Next Step / Case Comments</label>
             </div>
             <div class="row col-md-12">
-            	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions[1036].response.value" ng-disabled="TimelineModalController.isAdd !== true"></textarea>
+            	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions.lcTimelineComment.response.value" ng-disabled="TimelineModalController.isAdd !== true"></textarea>
             </div> 
         </div>
         <hr>
         <div class="modal-footer">
             <div class="row">
                 <div class="col-xs-4">
-                    <button class="btn btn-success float-left" ng-click="TimelineModalController.save()" ng-disabled="!TimelineModalController.questions[1036].response.value" 
+                    <button class="btn btn-success float-left" ng-click="TimelineModalController.save()"
+                    		ng-disabled="!TimelineModalController.questions.lcTimelineComment.response.value||!TimelineModalController.questions.lcTimelineCourtCaseSequence.response.value" 
                     		ng-if="TimelineModalController.isAdd">Save</button>
                 </div>
                 <div class="col-xs-4 text-center">

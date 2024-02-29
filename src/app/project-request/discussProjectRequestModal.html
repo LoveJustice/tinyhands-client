@@ -10,57 +10,85 @@
             </div>
         </div>
         <div class="modal-body">
-        <div class="row">
-        	<div class="col-md-2">
-				<b>Discussion:</b>
+	        <div class="row">
+	        	<div class="col-md-2">
+					<b>Discussion:</b>
+				</div>
+				<div class="col-md-2">
+					<input type="radio" id="discussionOpen" name="discussion" value="Open" ng-model="vm.request.discussion_status" ng-change="vm.changeDiscussionStatus()" ng-disabled="vm.request.discussion_status=='Open'">
+					<label for="discussionOpen">Open</label>
+				</div>
+				<div class="col-md-2">
+					<input type="radio" id="discussionClosed" name="discussion" value="Closed" ng-model="vm.request.discussion_status" ng-change="vm.changeDiscussionStatus()" ng-disabled="vm.request.discussion_status!='Open'">
+					<label for="discussionClosed">Closed</label>
+				</div>
+	        </div>
+			<div class="row">
+				<textarea class="form-control" rows="4" ng-model="vm.discussionText" ng-disabled="vm.request.discussion_status!=='Open'"
+						placeholder="{{ vm.request.discussion_status!=='Open' ? 'Open discussion above to start discussion' : ''}}"></textarea>
 			</div>
-			<div class="col-md-2">
-				<input type="radio" id="discussionOpen" name="discussion" value="Open" ng-model="vm.request.discussion_status" ng-change="vm.changeDiscussionStatus()" ng-disabled="vm.request.discussion_status=='Open'">
-				<label for="discussionOpen">Open</label>
-			</div>
-			<div class="col-md-2">
-				<input type="radio" id="discussionClosed" name="discussion" value="Closed" ng-model="vm.request.discussion_status" ng-change="vm.changeDiscussionStatus()" ng-disabled="vm.request.discussion_status!='Open'">
-				<label for="discussionClosed">Closed</label>
-			</div>
-        </div>
-		<div class="row">
-			<textarea class="form-control" rows="4" ng-model="vm.discussionText" ng-disabled="vm.request.discussion_status!=='Open'"
-					placeholder="{{ vm.request.discussion_status!=='Open' ? 'Open discussion above to start discussion' : ''}}"></textarea>
-		</div>
-		<div class="row">
-			<div class="col-md-1">
-				<b>Notify: </b>
-			</div>
-
-			<fieldset class="col-md-7" ng-dropdown-multiselect="" options="vm.accountDropDown.options"
-						selected-model="vm.accountDropDown.selectedOptions"
-						extra-settings="vm.accountDropDown.settings"
-						translation-texts="vm.accountDropDown.customText"
-						ng-disabled="vm.request.discussion_status!=='Open'">
-       		</fieldset>
-			<div class="col-md-2">
-                <button class="btn btn-success float-left" ng-click="vm.addEntry()" ng-disabled="vm.discussionText==='' || vm.request.discussion_status!=='Open'">Add Entry</button>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-default" ng-click="vm.checkClose()">Close</button>
-            </div>
-		</div>
-		<br>
-        <div style="height: 300px; overflow:auto">
-            <hr>
-            <div ng-repeat="discussion in vm.discussionEntries">
-            	<div class="col-md-6">
-	            		<b>Author:</b> {{ discussion.author_email }} &nbsp;&nbsp;{{ discussion.date_time_entered }}
+			<div class="row">
+				<div class="col-md-1">
+					<b>Notify: </b>
+				</div>
+	
+				<fieldset class="col-md-7" ng-dropdown-multiselect="" options="vm.accountDropDown.options"
+							selected-model="vm.accountDropDown.selectedOptions"
+							extra-settings="vm.accountDropDown.settings"
+							translation-texts="vm.accountDropDown.customText"
+							ng-disabled="vm.request.discussion_status!=='Open'">
+	       		</fieldset>
+				<div class="col-md-2">
+	                <button class="btn btn-success float-left" ng-click="vm.addEntry()" ng-disabled="vm.discussionText==='' || vm.request.discussion_status!=='Open'">Add Entry</button>
 	            </div>
-	            <div class="col-md-6" ng-if="discussion.notify_emails">
-	            		<b>Notify</b> {{ discussion.notify_emails }}
+	            <div class="col-md-2">
+	                <button class="btn btn-default" ng-click="vm.checkClose()">Close</button>
 	            </div>
-	            <div class="col-md-12">
-	            	{{ discussion.text }}
-	            	<hr>
+			</div>
+			<br>
+	        <div style="height: 300px; overflow:auto">
+	            <hr>
+	            <div ng-repeat="discussion in vm.discussionEntries">
+	            	<div>
+		            	<div class="col-md-6">
+			            		<b>Author:</b> {{ discussion.author_email }} &nbsp;&nbsp;{{ discussion.date_time_entered }}
+			            </div>
+			            <div class="col-md-6" ng-if="discussion.notify_emails">
+			            		<b>Notify</b> {{ discussion.notify_emails }}
+			            </div>
+			            <div ng-if="vm.editComment!==$index" ng-mouseleave="vm.confirmDelete=null;">
+				            <div class="col-md-10">
+				            	{{ discussion.text }}
+				            </div>
+				            <div class="col-md-2" ng-if="vm.request.discussion_status==='Open' && discussion.author===vm.userId && discussion.text!=='[Deleted]'">
+				            	<div class="row text-center">
+				            		<button class="btn btn-warning" ng-click="vm.editComment=$index;vm.editCommentText=vm.copyText(discussion.text, false);"><i class="fa fa-pencil-square"></i></button>
+								</div>
+								<div class="row text-center">
+									<button class="btn btn-danger" ng-click="vm.confirmDelete=$index"
+											ng-if="vm.confirmDelete!==$index"><i class="fa fa-trash-o"></i></button>
+									<button class="btn btn-danger" ng-click="discussion.text='[Deleted]';vm.updateComment(discussion); vm.confirmDelete=null;"
+											ng-if="vm.confirmDelete===$index">Confirm Delete</button>
+								</div>
+				            </div>
+			            </div>
+			            <div ng-if="vm.editComment===$index">
+				            <div class="col-md-10" ng-if="vm.editComment===$index">
+				            	<textarea class="form-control" rows="4" ng-model="vm.editCommentText"></textarea>
+				            </div>
+				            <div class="col-md-2" ng-if="vm.request.discussion_status==='Open' && discussion.author===vm.userId">
+				            	<button class="btn btn-warning" ng-click="discussion.text=vm.copyText(vm.editCommentText, true);vm.updateComment(discussion);vm.editComment=null;">Save</button>
+				            	<button class="btn btn-normal" ng-click="vm.editComment=null;">Cancel</button>
+				            	
+				            </div>	
+			            </div>
+	            	</div>
+	            	<div class="col-md-12">
+	            		<hr>
+	            	</div>
 	            </div>
-            </div>
-            </div>
+	            
+	        </div>
         </div>
     </form>
 </div>

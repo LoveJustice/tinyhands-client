@@ -32,6 +32,7 @@ export default class InputProjectRequestController {
         this.getStaff();
         this.getBenefitTypes();
         this.getMultipliers();
+        this.addingType = null;
     }
     
     createRequest() {
@@ -100,8 +101,9 @@ export default class InputProjectRequestController {
     	}
     }
     
-    addBenefit() {
+    addBenefit(index) {
     	this.benefits.push(this.newBenefit);
+    	this.requests[index].benefit_type_name = this.newBenefit;
     	this.newBenefit = '';
     }
     

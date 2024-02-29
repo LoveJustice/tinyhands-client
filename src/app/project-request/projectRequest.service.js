@@ -86,6 +86,10 @@ export default class ProjectRequestService {
     	return this.service.post(`api/project-request/discussion/`, entry);
     }
     
+    updateDiscussionComment(entry) {
+    	return this.service.put(`api/project-request/discussion/${entry.id}/`, entry);
+    }
+    
     getAttachment(id) {
     	return this.service.get(`api/project-request/attachment/?request_id=${id}`);
     }

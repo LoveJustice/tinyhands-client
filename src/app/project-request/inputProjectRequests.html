@@ -1,10 +1,6 @@
 <div id="inputRequests" class="container-fluid">
 	<h2>Requests for {{ $ctrl.stateParams.name }}</h2>
-	<div>
-		<div class="col-md-2"><p>Add new benefit type</p></div>
-		<div class="col-md-2"><input type="text" ng-model="$ctrl.newBenefit"></div>
-		<div class="col-md-2"><button class="btn btn-success" ng-if="$ctrl.newBenefit" ng-click="$ctrl.addBenefit()">Add Benefit</button></div>
-	</div>
+
     <table class="table table-striped" float-thead="$ctrl.stickyOptions" ng-model="$ctrl.requests">
         <thead class="sticky-table-header">
             <tr>
@@ -13,7 +9,7 @@
                 <th width="20%">Description</th>
                 <th width="5%">Monthly</th>
                 <th width="15%">Staff</th>
-                <th width="10%">Benefit</th>
+                <th width="17%">Benefit</th>
                 <th width="5%"></th>
             </tr>
         </thead>
@@ -40,12 +36,23 @@
                 		<option ng-repeat="opt in $ctrl.staff" value="{{ opt.id }}">{{ opt.first_name }} {{opt.last_name }}</option>
                 	</select>
                 </td>
-                <td>
+                <td ng-if="$ctrl.addingType!==$index">
                 	<select ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-model="request.benefit_type_name">
                 		<option ng-repeat="opt in $ctrl.benefits" value="{{ opt }}">{{ opt }}</option>
                 	</select>
+                	<button class="btn newBenefit btn-success"  ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-click="$ctrl.addingType=$index">New Benefit Type</button>
                 </td>
-                <td><a class="btn btn-sm btn-danger" ng-click="$ctrl.deleteRequest(request, $index)">
+                <td colspan="2" ng-if="$ctrl.addingType===$index">
+                	<div class="col-md-5">
+	                	<div><label>New Benefit Name</label></div>
+	                	<input type="text" ng-model="$ctrl.newBenefit">
+                	</div>
+                	<div class="col-md-2">
+	                	<button class="btn newBenefit btn-success" ng-disabled="!$ctrl.newBenefit" ng-click="$ctrl.addBenefit($index);$ctrl.addingType=null;">Add Benefit</button>
+	                	<button class="btn newBenefit btn-normal"  ng-click="$ctrl.addingType=null;">Cancel Add</button>
+                	</div>
+                </td>
+                <td ng-if="$ctrl.addingType!==$index"><a class="btn btn-sm btn-danger" ng-click="$ctrl.deleteRequest(request, $index)">
                     {{ request.confirmedDelete ? "Confirm?" : "Delete" }}</a></td>
         	</tr>
         </tbody>

@@ -5,7 +5,7 @@ function LegalCaseRoutes($stateProvider) {
     'ngInject';
     $stateProvider
     .state('legalCaseList', {
-      url: '/legalCase?search&status&country_ids',
+      url: '/legalCase?search&status&country_ids&incidentId',
       params: {
         search: { dynamic: true },
         status: { dynamic: true },

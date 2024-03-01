@@ -1,0 +1,28 @@
+<div id="confirm-modal" class="modal-content">
+    <form name="ConfirmForm">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="$ctrl.dismiss()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div>
+            	<h3 class="modal-title">Confirm Charge Removal</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+	            <textarea class="col-md-12" ng-model="$ctrl.message"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+            	<div class="col-xs-6">
+                    <button class="btn btn-danger" ng-click="$ctrl.accept()" ng-if="$ctrl.acceptLabel!==null">{{ $ctrl.acceptLabel }}</button>
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn btn-default float-left" ng-click="$ctrl.decline()">{{ $ctrl.declineLabel }}</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

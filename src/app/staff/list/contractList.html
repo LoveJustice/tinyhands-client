@@ -25,8 +25,7 @@
                 <td class="moneyField">{{staff.contract_data?staffListCtrl.displayCurrency(staff)+staff.contract_data.last_month[staffListCtrl.currency].toLocaleString('en-US', staffListCtrl.displayCurrencyFormat(staff)):'' }}</td>
                 <td  class="moneyField">{{staff.contract_data?staffListCtrl.displayCurrency(staff)+staff.contract_data.twelve_month[staffListCtrl.currency].toLocaleString('en-US', staffListCtrl.displayCurrencyFormat(staff)):'' }}</td>
                 <td class="ellipsis" title="{{ staff.position }}">{{ staff.position}}</td>
-                <td ng-if="!staffListCtrl.session.checkPermission('STAFF','EDIT_BASIC', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.viewUrl}}"><i class="fa fa-user"></i></a></td>
-                <td ng-if="staffListCtrl.session.checkPermission('STAFF','EDIT_BASIC', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.editUrl}}"><i class="fa fa-user"></i></a></td>
+                <td><a class="btn btn-sm btn-primary" ng-href="{{ staffListCtrl.getDetailUrl(staff, 'VIEW_CONTRACT', 'Contract')}}"><i class="fa fa-user"></i></a></td>
             </tr>
             <tr ng-show="staffListCtrl.staffList.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Staff Matched your search for: "{{ staffListCtrl.queryParameters.search }}"</h2></td>

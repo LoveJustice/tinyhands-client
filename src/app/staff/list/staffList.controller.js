@@ -299,6 +299,15 @@ export default class StaffListController {
         }
     }
     
+    getDetailUrl(staff, permission, tabName) {
+    	let canEdit = (this.session.checkPermission('STAFF','EDIT_BASIC',staff.country, null) === true);
+    	if (this.session.checkPermission('STAFF',permission, null, null) !== true) {
+    		tabName = 'Basic';
+    	}
+    	let detailUrl = this.state.href('staff', {id:staff.id, isViewing:!canEdit, tabName:tabName});
+    	return detailUrl;
+    }
+    
     projectText(staffList) {
     	for (let idx=0; idx < staffList.length; idx++) {
             let staff = staffList[idx];

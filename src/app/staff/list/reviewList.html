@@ -31,8 +31,7 @@
                 <td>{{ staff.review_data.questioning }}</td>
                 <td>{{ staff.review_data.awareness}}</td>
                 <td>{{ staff.review_data.total }}</td>
-                <td ng-if="!staffListCtrl.session.checkPermission('STAFF','EDIT', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.viewUrl}}"><i class="fa fa-user"></i></a></td>
-                <td ng-if="staffListCtrl.session.checkPermission('STAFF','EDIT', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.editUrl}}"><i class="fa fa-user"></i></a></td>
+                <td><a class="btn btn-sm btn-primary" ng-href="{{ staffListCtrl.getDetailUrl(staff, 'VIEW_REVIEW', 'Reviews')}}"><i class="fa fa-user"></i></a></td>
             </tr>
             <tr ng-show="staffListCtrl.staffList.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Staff Matched your search for: "{{ staffListCtrl.queryParameters.search }}"</h2></td>

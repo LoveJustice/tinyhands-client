@@ -5,7 +5,7 @@ export default class LegalCaseListService {
     }
 
     getLegalCaseList(queryParameters) {
-        return this.service.get('api/legal-case/', queryParameters);
+        return this.service.get('api/legal-charge/', queryParameters);
     }
     
     getUserCountries(id) {
@@ -16,12 +16,8 @@ export default class LegalCaseListService {
         return this.service.get(`api/user_permission/stations/${id}/?permission_group=LEGAL_CASE&form_present=true&action=ADD`);
     }
 
-    getMoreLegalCases(queryParameters) {
-        return this.service.get('api/vdf/', queryParameters);
-    }
-
     deleteLegalCase(stationId, id){
-        return this.service.delete(`api/legal-case/${stationId}/${id}/`);
+        return this.service.delete(`api/legal-charge/${stationId}/${id}/`);
     }
     
     getFormForStation(stationId) {

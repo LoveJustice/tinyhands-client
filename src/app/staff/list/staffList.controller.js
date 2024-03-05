@@ -3,12 +3,34 @@ import basicTemplate from './basicList.html';
 import contractTemplate from './contractList.html';
 import knowledgeTemplate from './knowledgeList.html';
 import reviewTemplate from './reviewList.html';
+
+import staffExportModalTemplate from './staffExportModal.html';
 import './staffList.less';
+import constants from '../../constants.js';
 
 const months = ["", "Jan ", "Feb ", "Mar ", "Apr ", "May ", "Jun ", "Jul ", "Aug ", "Sep ", "Oct ", "Nov ", "Dec "];
 
+class StaffExportModalController {
+	constructor($uibModalInstance, $window, exportCountries) {
+		'ngInject';
+		this.$uibModalInstance = $uibModalInstance;
+		this.window = $window;
+		this.exportCountries = exportCountries;
+		this.country = '';
+	}
+	
+	exportStaff() {
+		let url = constants.BaseUrl + `api/staff/csv/${this.country}/?include=VIEW_CONTRACTVIEW_REVIEW`;
+        this.window.open(url, '_blank');
+	}
+	
+	cancel() {
+        this.$uibModalInstance.dismiss();
+    }
+}
+
 export default class StaffListController {
-    constructor(StaffService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout,  toastr, constants, moment) {
+    constructor(StaffService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout,  toastr, constants, moment, $uibModal) {
         'ngInject';
         this.service = StaffService;
         this.session = SessionService;
@@ -20,6 +42,7 @@ export default class StaffListController {
         this.toastr = toastr;
         this.constants = constants;
         this.moment = moment;
+        this.modal = $uibModal;
         this.countries = [];
         this.projects = [];
         this.staffList = [];
@@ -264,6 +287,13 @@ export default class StaffListController {
                 }
             }
             
+            this.exportCountries = [];
+            for (let countryIndex in this.countries) {
+            	if (this.session.checkPermission('STAFF','EXPORT',this.countries[countryIndex].id, null) === true) {
+                	this.exportCountries.push(this.countries[countryIndex]);
+                }
+            }
+            
             if (this.queryParameters.country_ids.length > 0) {
                 let country_array = this.queryParameters.country_ids.split(',');
                 for (let idx=0; idx < country_array.length; idx++) {
@@ -299,11 +329,8 @@ export default class StaffListController {
         }
     }
     
-    getDetailUrl(staff, permission, tabName) {
+    getDetailUrl(staff, tabName) {
     	let canEdit = (this.session.checkPermission('STAFF','EDIT_BASIC',staff.country, null) === true);
-    	if (this.session.checkPermission('STAFF',permission, null, null) !== true) {
-    		tabName = 'Basic';
-    	}
     	let detailUrl = this.state.href('staff', {id:staff.id, isViewing:!canEdit, tabName:tabName});
     	return detailUrl;
     }
@@ -325,9 +352,23 @@ export default class StaffListController {
             }
         }
     }
-
+    
     getStaffList() {
         this.showPage(1);
+    }
+
+    staffExport() {
+    	let exportCountries = this.exportCountries;
+        this.modal.open({
+            animation: true,
+            templateUrl: staffExportModalTemplate,
+            controller: StaffExportModalController,
+            size: 'md',
+            controllerAs: "vm",
+            resolve: {
+            	exportCountries() {return exportCountries;},
+            },
+        });
     }
     
     showPage(pageNumber) {

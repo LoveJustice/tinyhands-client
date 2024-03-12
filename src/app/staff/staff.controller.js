@@ -727,7 +727,9 @@ export default class StaffController {
     		}
     	}
     	
-		this.getMonthlyRequests(0);
+    	if (this.staff.has_pbs) {
+			this.getMonthlyRequests(0);
+		}
     }
     
     getMonthlyRequests(idx) {

@@ -5,13 +5,13 @@ export default class LegalCaseService {
     constructor(BaseService) {
         'ngInject';
         this.service = BaseService;
-        this.file_questions = [1020];
+        this.file_questions = ['lcAttachmentAttachment'];
     }
     
     getFormNumber(legalCase) {
         let response = '';
         for (let idx in legalCase.responses) {
-            if (legalCase.responses[idx].question_id === 998) {
+            if (legalCase.responses[idx].question_tag === 'lcNumber') {
                 response = legalCase.responses[idx].response.value;
                 break;
             }
@@ -32,7 +32,7 @@ export default class LegalCaseService {
     appendScannedFiles(formData, responses, formNumber, startingIndex) {
         let cnt = startingIndex;
         for (let idx=0; idx < responses.length; idx++) {
-            if (this.file_questions.indexOf(responses[idx].question_id) !== -1) {
+            if (this.file_questions.indexOf(responses[idx].question_tag) !== -1) {
                 let t = Object.prototype.toString.call(responses[idx].response.value);
                 if (t === '[object Blob]') {
                     let fileName = formNumber + '_' + responses[idx].response.value.$ngfName;

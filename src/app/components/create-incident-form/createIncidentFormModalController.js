@@ -55,7 +55,7 @@ export default class CreateIncidentFormModalController {
     			break;
     		}
     	}
-    	if (!foundCode  && !this.selectOnly) {
+    	if (!foundCode  && this.selectOnly==='true') {
     		this.errorText = "You do not have permission to add forms for the project with code " + code;
     		return;
     	}

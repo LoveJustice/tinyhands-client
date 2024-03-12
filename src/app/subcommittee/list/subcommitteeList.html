@@ -51,6 +51,8 @@
                 <th width="11%">Phone</th>
                 <th width="20%">Email</th>
                 <th width="25%">Projects</th>
+                <th width="10%">SC Agreement</th>
+                <th width="10%">C & M?</th>
                 <th></th>
             </tr>
         </thead>
@@ -60,6 +62,8 @@
                 <td>{{ member.phone}}</td>
                 <td>{{ member.email }}</td>
                 <td class="ellipsis" title="{{ member.project_text }}">{{ member.project_text }}</td>
+                <td><i class="fa {{ member.sc_agreement?'fa-check-square-o':'fa-square-o' }}"></i></td>
+                <td><i class="fa {{ member.misconduct_agreement?'fa-check-square-o':'fa-square-o' }}"></i></td>
                 <td ng-if="!listCtrl.session.checkPermission('SUBCOMMITTEE','EDIT_BASIC', member.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{ member.viewUrl }}"><i class="fa fa-user"></i></a></td>
                 <td ng-if="listCtrl.session.checkPermission('SUBCOMMITTEE','EDIT_BASIC', member.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{ member.editUrl}}"><i class="fa fa-user"></i></a></td>
             </tr>

@@ -57,7 +57,7 @@ class LegalCaseTimelineModalController extends BaseModalController {
     }
     
     markAsDeleted() {
-        this.dateData.questions[1039].value = new Date();
+        this.dateData.questions.lcTimelineDateRemoved.value = new Date();
         this.save();
     }
 }

@@ -205,7 +205,8 @@ export class BaseLegalCaseController extends BaseFormController {
         		let cardQuestions = _.keyBy(chargeCards[card].responses, (x) => x.question_tag);
         		if (cardQuestions.lcSuspectChargeSequence.response.value === this.courtCase[courtCaseIdx].questions.lcCourtCaseSequence.response.value &&
         			cardQuestions.lcSuspectChargeLegalStatus.response.value !== 'Verdict' &&
-        			cardQuestions.lcSuspectChargeLegalStatus.response.value !== 'Not Charged') {
+        			cardQuestions.lcSuspectChargeLegalStatus.response.value !== 'Not Charged' &&
+        			cardQuestions.lcSuspectChargeLegalStatus.response.value !== 'Case Dismissed') {
         			activeCourtCase = true;
         			active = true;
         			break;

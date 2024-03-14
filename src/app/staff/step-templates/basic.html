@@ -1,80 +1,101 @@
 <fieldset id="staffBasic" class="container-fluid" ng-disabled="!vm.basicEdit">
 	<div class="row">
-          <div class="col-sm-4 form-group">
-            <label class="col-md-3">First Name</label>
-            <input class="col-md-9" type="text" class="form-control" placeholder="First Name" ng-model="vm.staff.first_name">
-          </div>
-          <div class="col-sm-4 form-group">
-            <label class="col-md-3" for="lastName">Last Name</label>
-            <input class="col-md-9" type="text" class="form-control" placeholder="Last Name"
-                   ng-model="vm.staff.last_name">
-          </div>
-          <div class="col-sm-4 form-group">
-            <label class="col-md-3" for="lastName">Country</label>
-            <div class="col-md-9">
-            	<select ng-model="vm.staff.country">
-            		<option value="{{ country.id }}" ng-repeat="country in vm.countries">{{ country.name }}</option>
-            	</select>
-            </div>
-          </div>
-	</div>
-	<div class="row">
-          <div class="col-sm-4 form-group">
-            <label class="col-md-3" for="email">Email</label>
-            <input class="col-md-9" type="text" class="form-control" placeholder="Email Address"
-                   ng-model="vm.staff.email">
-          </div>
-          <div class="col-sm-4 form-group">
-            <label class="col-md-4" for="phone">Phone Number</label>
-            <input class="col-md-8" type="text" class="form-control" placeholder="Phone Number"
-                   ng-model="vm.staff.phone">
-          </div>
-          <div class="col-sm-4 form-group">
-            <label class="col-md-3" for="position">Birthday</label>
-            <input class="col-md-9" type="text" class="form-control" ng-model="vm.staff.birth_date">
-          </div>
-	</div>
-	<div class="row">
-		 <div class="col-sm-4 form-group">
-		   <label class="col-md-3" for="position">ID Card Expiration</label>
-           <input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.idExpirationDate">
-         </div>
-         <div class="col-sm-4 form-group">
-          	<label class="col-md-3" for="joined">Start Date</label>
-          	<input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.startDate" ng-readonly="!vm.basicEdit">
-         </div>
-         <div class="col-sm-4 form-group">
-          	<label class="col-md-3" for="education">Education</label>
-          	<select ng-model="vm.staff.education">
-          		<option ng-repeat="option in vm.educationOptions">{{ option }}</option>
-          	</select>
-         </div>
-	</div>
-	<div class="row">
-		 <div class="col-md-1 form-group">
-           <label class="col-md-12">Position:</label>
-         </div>
-         <div class="col-md-11 form-group">
-         	<form-step type="checkbox" class="col-md-3" ng-repeat="positionOption in vm.positionOptions"
-				label="{{positionOption}}" response-value="vm.checkboxGroup.questions['position'][positionOption]"
-				ng-show="vm.showPosition(positionOption)"></form-step>
-			<form-step type="otherCheckbox" class="col-md-3"
-				label="Other" response-value="vm.checkboxGroup.questions['position'].internalOther"></form-step>
-         </div>
-	</div>
-	
-	<div class="row">
-		<div class='col-md-4' ng-repeat="item in vm.staff.miscellaneous">
-			<div class="col-md-8">
-				<label>{{ item.type_detail.name }}</label>
+		<div class="col-md-8">
+			<div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label class="col-md-3">First Name</label>
+	            <input class="col-md-9" type="text" class="form-control" placeholder="First Name" ng-model="vm.staff.first_name">
+	          </div>
+	          <div class="col-sm-6 form-group">
+	            <label class="col-md-3" for="lastName">Last Name</label>
+	            <input class="col-md-9" type="text" class="form-control" placeholder="Last Name"
+	                   ng-model="vm.staff.last_name">
+	          </div>
+	       </div>
+	       <div class="row">
+	          <div class="col-sm-6 form-group">
+	            <label class="col-md-3" for="lastName">Country</label>
+	            <div class="col-md-9">
+	            	<select ng-model="vm.staff.country">
+	            		<option value="{{ country.id }}" ng-repeat="country in vm.countries">{{ country.name }}</option>
+	            	</select>
+	            </div>
+	          </div>
+	          <div class="col-sm-6 form-group">
+	            <label class="col-md-3" for="email">Email</label>
+	            <input class="col-md-9" type="text" class="form-control" placeholder="Email Address"
+	                   ng-model="vm.staff.email">
+	          </div>
+	        </div>
+	        <div class="row">
+		        <div class="col-sm-6 form-group">
+		            <label class="col-md-4" for="phone">Phone Number</label>
+		            <input class="col-md-8" type="text" class="form-control" placeholder="Phone Number"
+		                   ng-model="vm.staff.phone">
+		          </div>
+		          <div class="col-sm-6 form-group">
+		            <label class="col-md-3" for="position">Birthday</label>
+		            <input class="col-md-9" type="text" class="form-control" ng-model="vm.staff.birth_date">
+		          </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-sm-6 form-group">
+				   <label class="col-md-3" for="position">ID Card Expiration</label>
+		           <input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.idExpirationDate">
+		         </div>
+		         <div class="col-sm-6 form-group">
+		          	<label class="col-md-3" for="joined">Start Date</label>
+		          	<input class="col-md-9" type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="vm.startDate" ng-readonly="!vm.basicEdit">
+		         </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-sm-6 form-group">
+		          	<label class="col-md-3" for="education">Education</label>
+		          	<select ng-model="vm.staff.education">
+		          		<option ng-repeat="option in vm.educationOptions">{{ option }}</option>
+		          	</select>
+		         </div>
+	        </div>
+			  <div class="row">
+				 <div class="col-md-1 form-group">
+		           <label class="col-md-12">Position:</label>
+		         </div>
+		         <div class="col-md-11 form-group">
+		         	<form-step type="checkbox" class="col-md-4" ng-repeat="positionOption in vm.positionOptions"
+						label="{{positionOption}}" response-value="vm.checkboxGroup.questions['position'][positionOption]"
+						ng-show="vm.showPosition(positionOption)"></form-step>
+					<form-step type="otherCheckbox" class="col-md-4"
+						label="Other" response-value="vm.checkboxGroup.questions['position'].internalOther"></form-step>
+		         </div>
 			</div>
-			<div class="col-md-4">
-				<input type="text" ng-if="item.type_detail.type==='string'" ng-model="item.value">
-				<input type="text" ng-if="item.type_detail.type==='integer'" ng-model="item.value" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-				<select ng-if="item.type_detail.type==='choice'" ng-model="item.value">
-					<option ng-repeat="optionValue in item.type_detail.choices.split(';')">{{ optionValue }}</option>
-				</select>
+			
+			<div class="row">
+				<div class='col-md-4' ng-repeat="item in vm.staff.miscellaneous">
+					<div class="col-md-8">
+						<label>{{ item.type_detail.name }}</label>
+					</div>
+					<div class="col-md-4">
+						<input type="text" ng-if="item.type_detail.type==='string'" ng-model="item.value">
+						<input type="text" ng-if="item.type_detail.type==='integer'" ng-model="item.value" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+						<select ng-if="item.type_detail.type==='choice'" ng-model="item.value">
+							<option ng-repeat="optionValue in item.type_detail.choices.split(';')">{{ optionValue }}</option>
+						</select>
+					</div>
+				</div>
 			</div>
+		</div>
+		<div class="col-md-4 text-center">
+			<div class="upload-image clickable" ngf-select ng-change="vm.fileUpload($file)" ng-model="vm.staff.photo"
+		        name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="50"
+		        ng-if="!vm.photoPresent">
+		        	<h4>Upload Image</h4>
+		    </div>
+	        <canvas id="myCanvas" width="300" height="300" style="border:1px solid #d3d3d3;" ng-init="vm.init()"
+	            		ngf-select ng-model="vm.staff.photo" ng-change="vm.fileUpload($file)"
+	            		ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-min-height="50"
+	            		ng-show="vm.photoPresent">
+				Your browser does not support the HTML5 canvas tag.
+			</canvas>
 		</div>
 	</div>
 	<hr>

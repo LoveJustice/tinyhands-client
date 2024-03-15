@@ -6,6 +6,9 @@
         </div>
 
         <div class="pull-right"><br>
+        	<a ng-if="staffListCtrl.exportCountries.length > 0" class="btn btn-success" ng-click="staffListCtrl.staffExport()">
+                Export Staff
+            </a>
             <a ng-if="staffListCtrl.hasAddPermission" class="btn btn-success" ui-sref="staff({id: null, isViewing: false})">
                 Input New Staff
             </a>

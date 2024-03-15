@@ -233,6 +233,7 @@ export default class StaffController {
         this.reviews = null;
         this.reviewDate = null;
         this.requestCount = 0;
+        this.initializing = true;
         
         this.coordinator = {};
         
@@ -410,6 +411,15 @@ export default class StaffController {
         	this.stepTemplates.push({template:reviewTemplate, name:"Reviews", modified:this.reviewsModified, save:this.reviewsSave, discard:this.reviewsDiscard});
         	this.getStaffReviews();
         }
+        if (this.initializing) {
+	    	for (let idx in this.stepTemplates) {
+	    		if (this.stepTemplates[idx].name === this.stateParams.tabName) {
+	    			this.selectedStep = idx;
+	    			this.initializing = false;
+	    		}
+	    	}
+	    }
+        
         this.canDelete = this.session.checkPermission('STAFF','DELETE', this.staff.country, null);
         this.staff.country = this.staff.country + '';
         let dateData = new DateData();

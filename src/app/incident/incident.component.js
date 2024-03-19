@@ -70,7 +70,7 @@ export class IncidentController extends BaseFormController {
         this.spinner = SpinnerOverlayService;
         this.session = SessionService;
         this.incidentService = IncidentService;
-        this.toastr = toastr
+        this.toastr = toastr;
         
         this.changeIncidentPermission = false;
         
@@ -135,9 +135,7 @@ export class IncidentController extends BaseFormController {
     submit() {
         this.incidentService.submitIncident(this.incident).then((response) => {
              this.incident = response.data;
-         }, (error) => {
-             alert(error);
-            });
+         });
     }
 }
 

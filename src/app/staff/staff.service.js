@@ -18,10 +18,13 @@ export default class BorderStationService {
 	}
 	
 	submitStaff(staff) {
+		let formData = new FormData();
+		formData.append("staff", JSON.stringify(staff));
+		this.appendFile(formData, staff, 'photo', staff.photo);
 		if (staff.id === null) {
-			return this.service.post(`api/staff/`, staff);
+			return this.service.post(`api/staff/`,  formData, {'Content-Type': undefined});
 		} else {
-			return this.service.put(`api/staff/${staff.id}/`, staff);
+			return this.service.put(`api/staff/${staff.id}/`,  formData, {'Content-Type': undefined});
 		}
 	}
 	

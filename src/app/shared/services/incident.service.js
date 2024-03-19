@@ -43,4 +43,8 @@ export default class IncidentService {
     getRelatedForms(stationId, formNumber) {
         return this.service.get(`api/forms/related/${stationId}/${formNumber}/`);
     }
+    
+    changeIncident(incidentId, changeData) {
+    	return this.service.put(`api/incident/change_incident/${incidentId}/`, changeData);
+    }
 }

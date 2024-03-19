@@ -1,0 +1,50 @@
+<div id="incident-change-modal" class="modal-content">
+    	<div class="modal-header">
+            <button type="button" class="close" ng-click="vm.cancel()">
+                <span aria-hidden="true">&times;</span>
+                <span class="sr-only">Close</span>
+            </button>
+            <div class="col-md-12">
+            	<h3 class="modal-title">Change Incident on Forms</h3>
+            </div>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+	        	<div class="col-md-7">
+	        		<label>Incident number with which forms are currently associated</label>
+	        	</div>
+	        	<div class="2">
+	        		<input type="text" ng-model="vm.updateForms.existingIncident.formNumber" disabled>
+	        	</div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-7">
+	            	<label>Enter incident number with which forms should be associated</label>
+	            </div>
+	            <div class="2">
+	        		<input type="text" ng-model="vm.updateForms.newIncidentNumber">
+	        	</div>
+        	</div>
+        	<h4>The forms selected below will have their form number/incident changed</h4>
+	        <div class="row col-md-12" ng-repeat="formType in vm.formTypes" ng-if="vm.relatedForms[formType].length > 0">
+	        	<div class="col-md-12">
+	        		<label>{{ formType }}</label>
+	        	</div>
+	        	<div class="row col-md-10 col-md-offset-1" ng-repeat="entry in vm.relatedForms[formType]">
+	        		<form-step type="checkbox" label="{{ entry.formNumber }}" response-value="vm.selected[formType + '|' + $index]"></form-step>
+	        	</div>
+	        </div>
+        </div>
+        
+    <div class="modal-footer" style="border: none;">
+    	<div class="col-md-12">
+    		<hr>
+    	</div>
+       	<div class="col-md-4">
+            <button class="btn btn-danger float-left" ng-click="vm.submit()" ng-disabled="!vm.validIncidentNumber()">Change Incident</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-default" ng-click="vm.cancel()">Close</button>
+        </div>
+    </div>
+</div>

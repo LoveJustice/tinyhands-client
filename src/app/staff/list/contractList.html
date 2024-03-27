@@ -20,13 +20,12 @@
             	<td class="ellipsis" title="{{ staff.projectText }}">{{ staff.projectText }}</td>
                 <td>{{ staff.first_name }} {{ staff.last_name }}</td>
                 <td><i class="fa {{ staff.contract_data?staff.contract_data.contract?'fa-check-square-o':'fa-square-o':'' }}"></i></td>
-                <td ng-class="staffListCtrl.contractExpirationClass(staff.contract_data.contract_expiration)">{{ staffListCtrl.monthYearString(staff.contract_data.contract_expiration) }}</td>
+                <td ng-class="staffListCtrl.contractExpirationClass(staff.contract_data.contract_expiration)">{{ staff.contract_data?staffListCtrl.monthYearString(staff.contract_data.contract_expiration):'' }}</td>
                 <td><i class="fa {{ staff.contract_data?staff.contract_data.agreement?'fa-check-square-o':'fa-square-o':'' }}"></i></td>
                 <td class="moneyField">{{staff.contract_data?staffListCtrl.displayCurrency(staff)+staff.contract_data.last_month[staffListCtrl.currency].toLocaleString('en-US', staffListCtrl.displayCurrencyFormat(staff)):'' }}</td>
                 <td  class="moneyField">{{staff.contract_data?staffListCtrl.displayCurrency(staff)+staff.contract_data.twelve_month[staffListCtrl.currency].toLocaleString('en-US', staffListCtrl.displayCurrencyFormat(staff)):'' }}</td>
                 <td class="ellipsis" title="{{ staff.position }}">{{ staff.position}}</td>
-                <td ng-if="!staffListCtrl.session.checkPermission('STAFF','EDIT_BASIC', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.viewUrl}}"><i class="fa fa-user"></i></a></td>
-                <td ng-if="staffListCtrl.session.checkPermission('STAFF','EDIT_BASIC', staff.country, null)"><a class="btn btn-sm btn-primary" ng-href="{{staff.editUrl}}"><i class="fa fa-user"></i></a></td>
+                <td><a class="btn btn-sm btn-primary" ng-href="{{ staffListCtrl.getDetailUrl(staff, staff.contract_data?'Contract':'Basic')}}"><i class="fa fa-user"></i></a></td>
             </tr>
             <tr ng-show="staffListCtrl.staffList.length == 0">
                 <td colspan="12" style="text-align:center;"><h2>No Staff Matched your search for: "{{ staffListCtrl.queryParameters.search }}"</h2></td>

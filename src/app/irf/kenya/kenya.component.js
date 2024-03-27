@@ -618,6 +618,7 @@ export class IrfKenyaController extends BaseIrfBlindVerificationController {
         }
         
         this.version2022_8 = true;
+        this.intercepteeConsent = true;
     }
     
     overrideRadioItems(items, questionId) {

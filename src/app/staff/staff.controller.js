@@ -233,6 +233,7 @@ export default class StaffController {
         this.reviews = null;
         this.reviewDate = null;
         this.requestCount = 0;
+        this.initializing = true;
         
         this.coordinator = {};
         
@@ -278,6 +279,35 @@ export default class StaffController {
     	}
         this.selectedStep = tabIndex;
     }
+    
+    init() {
+    }
+    
+    resizeImage(img) {
+        let temp = angular.element('#myCanvas');
+        let canvas = temp.get(0);
+        let ctx = canvas.getContext('2d');
+        if (img.width > img.height) {
+            canvas.width = 300;
+            canvas.height = img.height * 300/img.width;
+        } else {
+            canvas.height = 300;
+            canvas.width = img.width * 300.0/img.height;
+        }
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+    
+    loadImage(imageUrl) {
+        let img = new Image();
+        img.addEventListener('load', (e)=>{/*jshint unused: false */this.resizeImage(img);});
+        img.src = imageUrl;
+    }
+    
+    fileUpload() {
+        this.photoPresent = true;
+        this.loadImage(this.staff.photo.$ngfBlobUrl);
+    }
+    
     
     getUserProjects() {
     	this.spinner.show("Get Staff...");
@@ -410,6 +440,15 @@ export default class StaffController {
         	this.stepTemplates.push({template:reviewTemplate, name:"Reviews", modified:this.reviewsModified, save:this.reviewsSave, discard:this.reviewsDiscard});
         	this.getStaffReviews();
         }
+        if (this.initializing) {
+	    	for (let idx in this.stepTemplates) {
+	    		if (this.stepTemplates[idx].name === this.stateParams.tabName) {
+	    			this.selectedStep = idx;
+	    			this.initializing = false;
+	    		}
+	    	}
+	    }
+        
         this.canDelete = this.session.checkPermission('STAFF','DELETE', this.staff.country, null);
         this.staff.country = this.staff.country + '';
         let dateData = new DateData();
@@ -451,6 +490,23 @@ export default class StaffController {
         			}
         		}
         	}
+        }
+        if (this.staff.photo !== null && this.staff.photo !== '') {
+            this.initialPhoto = this.staff.photo;
+            this.photoPresent = true;
+            var t = Object.prototype.toString.call(this.staff.photo);
+            if (t !== '[object String]') {
+                if (this.staff.photo) {
+                    this.file = this.staff.photo;
+                    this.loadImage(this.file.$ngfBlobUrl);
+                } else {
+                	this.photoPresent = false;
+                }
+            } else {
+                this.loadImage(this.staff.photo);
+            }
+        } else {
+            this.photoPresent = false;
         }
         this.staffOriginal = jQuery.extend(true, {}, this.staff);
     }

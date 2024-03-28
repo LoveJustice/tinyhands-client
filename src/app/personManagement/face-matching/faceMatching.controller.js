@@ -1,38 +1,38 @@
 import './faceMatching.less';
 
 class faceMatchingController {
-    constructor($window, faceMatchingService) {
+    constructor($window, faceMatchingService, SessionService) {
         'ngInject';
 
         this.window = $window;
         this.faceMatchingService = faceMatchingService;
+        this.session = SessionService;
 
-        let tmp = sessionStorage.getItem('personManagement-search');
-        if (tmp !== null) {
-            this.searchValue = tmp;
-        }
-        tmp = sessionStorage.getItem('personManagement-country');
-        if (tmp !== null) {
-            this.countryId = tmp;
-        }
-        tmp = sessionStorage.getItem('personManagement-match');
-        if (tmp !== null) {
-            this.matchType = tmp;
-        }
+        this.country = "";
+        this.gender = "";
+        this.role = "";
+
+        this.getCountries();
+    }
+
+    getCountries() {
+        this.faceMatchingService.getUserCountries(this.session.user.id).then((promise) => {
+            this.countries = promise.data;
+        });
     }
 
     submit() {
         if (this.uploadedPhoto) {
             this.window.location.href='/#!/FaceMatchingResults';
-            // Convert image to base 64
-            const file_base64 = btoa(this.uploadedPhoto.$ngfDataUrl);
 
-            let tmp = sessionStorage.getItem('uploadedPhoto');
-            if (!tmp) {
-                sessionStorage.setItem('uploadedPhoto', file_base64);
-            }
+            // Package params
+            let fd = new FormData();
+            let params = {"country": this.country, "gender": this.gender, "role": this.role}
 
-            this.faceMatchingService.getFaceMatches(sessionStorage.getItem('uploadedPhoto'));
+            fd.append('file', this.uploadedPhoto)
+            fd.append('params', JSON.stringify(params))
+
+            this.faceMatchingService.getFaceMatches(fd)
           } else {
             // TODO: Handle error
         }

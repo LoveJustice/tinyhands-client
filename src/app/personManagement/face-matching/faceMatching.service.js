@@ -4,10 +4,15 @@ class FaceMatchingListService {
         this.service = BaseService;
     }
 
+    getUserCountries(id) {
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=PERSON_MANAGEMENT`);
+    }
+
     // Encode given image and return matching persons
-    getFaceMatches(file) {
-        return this.service.post(`api/face-encodings/upload/`, file);
+    getFaceMatches(formData) {
+        // return this.service.post(`api/face-matching/upload/`, formData);
+        // return this.service.post(`api/face-matching/upload/`, formData, {'Content-Type': 'multipart/form-data'});
+        return this.service.post(`api/face-matching/upload/`, formData, {'Content-Type': undefined});
     }
 }
-
 export default FaceMatchingListService;

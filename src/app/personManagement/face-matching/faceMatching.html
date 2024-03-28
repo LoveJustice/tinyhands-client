@@ -1,21 +1,48 @@
 <div id="faceMatching" class="container">
 	<div>
 		<h1 class="text-center">Face Matching</h1>
-		<div class="row">
-			<h4>1. Upload an image and search for similar faces in records.</h4>
-			<form id="uploadPhotoForm" name="uploadPhotoForm">
-				<label for="upload-photo">Upload photo</label>
-				<input type="file" ngf-select ng-model="vm.uploadedPhoto" name="upload-photo" ngf-pattern="'image/*'"
-					ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
-					ngf-resize="{width: 100, height: 100}" required />
-			</form>
-			<img ngf-thumbnail="vm.uploadedPhoto" ngf-no-object-url="true">
-			<input form="uploadPhotoForm" type="submit" ng-click="vm.submit($uploadedPhoto)"
-				ng-disabled="!uploadPhotoForm.$valid" />
+		<h4>1. Select filters to limit records searched.</h4>
+		<form id="uploadPhotoForm" name="uploadPhotoForm" enctype="multipart/form-data"></form>
+		<div class="row filters">
+			<div>
+				<label for="country">Country</label>
+				<select multiple form="uploadPhotoForm" id="country" class="form-control" ng-model="vm.country">
+					<option value="">All</option>
+					<option ng-repeat="country in vm.countries" value="{{country.name}}">{{country.name}}</option>
+				</select>
+			</div>
+			<div>
+				<label for="gender">Gender</label>
+				<select multiple form="uploadPhotoForm" id="gender" class="form-control" ng-model="vm.gender">
+					<option value="">All</option>
+					<option value="Female">Female</option>
+					<option value="Male">Male</option>
+					<option value="Other">Other</option>
+					<option value="Unknown">Unknown</option>
+				</select>
+			</div>
+			<div>
+				<label for="role">Role</label>
+				<select multiple form="uploadPhotoForm" id="role" class="form-control" ng-model="vm.role">
+					<option value="">All</option>
+					<option value="PV">PV</option>
+					<option value="NON-PV">Non PV</option>
+				</select>
+			</div>
 		</div>
-		<br>
+		<h4>2. Upload an image and search for similar faces in records.</h4>
 		<div class="row">
-			<h4>2. Select an image from records and search for similar faces in records.</h4>
+			<label for="upload-photo">Upload photo</label>
+			<input type="file" ngf-select ng-model="vm.uploadedPhoto" filename="upload-photo" ngf-pattern="'image/*'"
+				ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100" ngf-resize="{width: 100, height: 100}"
+				required />
+			<img ngf-thumbnail="vm.uploadedPhoto" ngf-no-object-url="true">
+			<input form="uploadPhotoForm" type="submit" ng-click="vm.submit()" ng-disabled="!uploadPhotoForm.$valid" />
+		</div>
+		</form>
+		<br>
+		<h4>3. Select an image from records and search for similar faces in records.</h4>
+		<div class="row">
 		</div>
 	</div>
 	<br>

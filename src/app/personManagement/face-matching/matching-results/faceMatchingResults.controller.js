@@ -6,12 +6,9 @@ class FaceMatchingResultsController {
 
         this.state = $state;
         this.faceMatchingResultsService = faceMatchingResultsService;
-        this.session = SessionService;
         
         this.loading = false;
         this.reverse = false;
-
-        this.getCountries();
     }
 
     sortIcon(column) {
@@ -54,12 +51,6 @@ class FaceMatchingResultsController {
             });
             this.getPendingMatches();
         }, 500);
-    }
-
-    getCountries() {
-        this.faceMatchingResultsService.getUserCountries(this.session.user.id).then((promise) => {
-            this.countries = promise.data;
-        });
     }
 
     getEncodedPersons() {

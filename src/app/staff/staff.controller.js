@@ -699,7 +699,19 @@ export default class StaffController {
              this.processBasicData();
          }, (error) => {
          	this.spinner.hide();
-         	this.toastr.error("Failed to save basic information");
+         	let detail = '';
+         	let sep = '';
+         	if (error.data) {
+         		for (let prop in error.data) {
+         			if (error.data[prop] instanceof Array) {
+				    	for (let idx in error.data[prop]) {
+				    		detail += sep + error.data[prop][idx];
+				    		sep = ';';
+				    	}
+				    }
+				}
+         	}
+         	this.toastr.error("Failed to save basic information: " + detail);
             this.set_errors_and_warnings(error.data);
             this.response.status = this.saved_status;
             });

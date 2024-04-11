@@ -66,6 +66,15 @@ export default class InputProjectRequestController {
             	if (this.categories[idx].text === 'Multipliers') {
             		this.multipliersId = this.categories[idx].id + '';
             	}
+            	if (this.categories[idx].text === 'Guides') {
+            		this.guidesId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Potential Victim Care') {
+            		this.pvCareId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Supplies & Awareness') {
+            		this.awarenessId = this.categories[idx].id + '';
+            	}
             }
         }, ()=>{
         	this.toastr.error('Failed to retrieve categories');

@@ -26,7 +26,8 @@
   <div class="hidden-xs hidden-sm col-md-offset-1 col-md-10">
     <div class="btn-group btn-group-justified">
       <div class="btn-group" ng-repeat="section in mdfCtrl.sections.allSections">
-        <button type="button" class="btn btn-default" ng-class="{active: mdfCtrl.active == $index}" ng-click="mdfCtrl.active = $index; mdfCtrl.sectionTemplateUrl = section.templateUrl; mdfCtrl.updateSessionData()">{{section.name}}</button>
+        <button type="button" ng-class="mdfCtrl.tabButtonClass(section.name)" ng-class="{active: mdfCtrl.active == $index}" 
+        		ng-click="mdfCtrl.active = $index; mdfCtrl.sectionTemplateUrl = section.templateUrl; mdfCtrl.updateSessionData()">{{section.name}}</button>
       </div>
     </div>
   </div>

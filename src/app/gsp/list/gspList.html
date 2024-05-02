@@ -46,6 +46,10 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('station__station_name', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('station__station_name', 'reverse')}"></i>
                 </th>
+                <th ng-click="gspListCtrl.updateSort('full_name')" width="20%">Name
+                    <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('full_name', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('full_name', 'reverse')}"></i>
+                </th>
                 <th ng-click="gspListCtrl.updateSort('date_time_entered_into_system')" width="20%"> Entry Date
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': gspListCtrl.getSortIcon('date_time_entered_into_system', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': gspListCtrl.getSortIcon('date_time_entered_into_system', 'reverse')}"></i>
@@ -62,6 +66,7 @@
             <tr ng-repeat="gsp in gspListCtrl.gsps | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ gsp.country_name }}</td>
                 <td>{{ gsp.station_name }}</td>
+                <td>{{ gsp.full_name }}</td>
                 <td>{{ gsp.date_time_entered_into_system.substring(0,10)}}</td>
                 <td>{{ gsp.date_time_entered_into_system.substring(0,7)}}</td>
                 <td ng-if="gspListCtrl.session.checkPermission('GSP','VIEW',gsp.country_id, gsp.station)"><a class="btn btn-sm btn-primary" ng-href="{{gsp.viewUrl}}">View</a></td>

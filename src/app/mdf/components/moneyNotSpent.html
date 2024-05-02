@@ -2,6 +2,10 @@
   <div>
 	<h2 class="text-center">Money Not Spent</h2>
   </div>
+  <div class="col-md-4"></div>
+  <div  ng-class="mdfCtrl.reviewCompleteClass('col-md-4 text-center',mdfCtrl.form.money_not_spent_reviewed)" ng-hide="mdfCtrl.isViewing">
+  	<form-step type="checkbox" label="Money Not Spent Reviewed" response-value="mdfCtrl.form.money_not_spent_reviewed"></form-step>
+  </div>
   <div class="row" ng-repeat="project in mdfCtrl.allProjects">
   	<div class="col-md-12">
 			<h3>{{ project.project_category_name }}: {{ project.station_name }}</h3>
@@ -71,7 +75,7 @@
 	    
 	    <div class="row">
 	      <button class="btn btn-success col-xs-4 col-xs-offset-4" 
-	      		ng-click="mdfCtrl.addItem(project.id, mdfCtrl.constants.FormSections.MoneyNotSpent)" ng-hide="mdfCtrl.isViewing">
+	      		ng-click="mdfCtrl.addItem(project.id, mdfCtrl.constants.FormSections.MoneyNotSpent);mdfCtrl.form.money_not_spent_reviewed=true" ng-hide="mdfCtrl.isViewing">
 	      		Add item for {{ project.station_name }}
 	      </button>
 	    </div>

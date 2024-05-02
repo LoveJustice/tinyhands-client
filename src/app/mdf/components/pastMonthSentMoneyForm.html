@@ -1,6 +1,9 @@
 <div class="col-md-offset-1 col-md-10">
   <h2 class="text-center">Past Month Sent Money</h2>
-  <h4></h4>
+  <div class="col-md-4"></div>
+  <div  ng-class="mdfCtrl.reviewCompleteClass('col-md-4 text-center',mdfCtrl.form.past_month_sent_reviewed)" ng-hide="mdfCtrl.isViewing">
+  	<form-step type="checkbox" label="Past Month Sent Reviewed" response-value="mdfCtrl.form.past_month_sent_reviewed"></form-step>
+  </div>
   <hr>
   <div class="row" ng-repeat="project in mdfCtrl.allProjects">
   	<div class="row">
@@ -59,7 +62,7 @@
     </div>
     <div class="row">
       <button class="btn btn-success col-xs-4 col-xs-offset-4"
-	      	ng-click="mdfCtrl.addItem(project.id,mdfCtrl.constants.FormSections.PastMonth)"
+	      	ng-click="mdfCtrl.addItem(project.id,mdfCtrl.constants.FormSections.PastMonth);mdfCtrl.form.past_month_sent_reviewed=true"
 	      	ng-hide="mdfCtrl.isViewing">Add item for {{ project.station_name }}
 	  </button>
     </div>

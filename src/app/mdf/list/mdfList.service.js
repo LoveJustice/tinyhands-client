@@ -21,6 +21,10 @@ export default class MdfListService {
         }
         return this.service.get('api/mdf-combined/', params);
     }
+    
+    getLastMdfDate(station_id) {
+    	return this.service.get(`api/mdf-pr/last-date/${station_id}/`);
+    }
 
     getNextMdfPage(nextPageUrl) {
         return this.service.get(nextPageUrl);

@@ -144,6 +144,24 @@ export default class MdfPrController {
         this.getMdfForm();
     }
     
+    tabButtonClass(section) {
+    	let result = 'btn btn-default';
+    	if (section === 'Past Month Sent Money' && this.form && !this.form.past_month_sent_reviewed) {
+    		result += ' notCompleted';
+    	} else if (section === 'Money Not Spent' && this.form && !this.form.money_not_spent_reviewed) {
+    		result += ' notCompleted';
+    	}
+    	return result;
+    }
+    
+    reviewCompleteClass(baseCss, isDone) {
+    	if (isDone) {
+    		return baseCss;
+    	} else {
+    		return baseCss + ' notCompleted';
+    	}
+    }
+    
     strToPennies(strValue) {
         let cents = 0;
         let dollars = 0;
@@ -270,6 +288,7 @@ export default class MdfPrController {
 		let project = this.form.border_station;
 		let amount = this.getRequestTotal(project, Constants.FormSections.PotentialVictimCare);
 		
+		/****
 		let totalFoodSnacks = this.strToPennies(this.multiplierByLocation[this.constants.FormSections.PotentialVictimCare].cost) * this.form.number_of_pv_days;
 		this.totalFoodSnacks = this.penniesToStr(totalFoodSnacks);
 		amount += totalFoodSnacks;
@@ -279,6 +298,7 @@ export default class MdfPrController {
 		
 		this.limboCost = this.penniesToStr(limboCost);
 		amount += limboCost;
+		*/
 		
 		this.verifyTotalPresent(project, this.constants.FormSections.PotentialVictimCare);
 		this.totals[project][this.constants.FormSections.PotentialVictimCare].total = amount;
@@ -533,11 +553,13 @@ export default class MdfPrController {
     // Supplies and awareness is dependent on number of PVs last month and a multiplier
     // Total can be computed when form is loaded and cannot change
     suppliesAwarenessTotals() {
-    	let stationary = (this.validAmount(this.form.last_month_number_of_intercepted_pvs) *
+    	/*
+    	let stationary s.validAmo= (thiunt(this.form.last_month_number_of_intercepted_pvs) *
                 this.strToPennies(this.multiplierByLocation[Constants.FormSections.Awareness].cost));
         this.stationaryTotalDisplay = this.penniesToStr(stationary);
+        */
         let supplyTotal = this.totals[this.form.border_station][Constants.FormSections.Awareness];
-        supplyTotal.total = stationary + supplyTotal.requestTotal;
+        supplyTotal.total = supplyTotal.requestTotal;
         supplyTotal.display = this.penniesToStr(supplyTotal.total);
     }
     
@@ -853,7 +875,11 @@ export default class MdfPrController {
     canApproveForm() {
     	let canApprove = false;
     	if (this.form) {
-	    	if (this.form.status === 'Submitted') {
+    		if (this.form.status === 'Pending' && this.form.past_month_sent_reviewed && this.form.money_not_spent_reviewed) {
+    			if (this.session.checkPermission('MDF','EDIT',this.form.country_id, this.form.project)) {
+	    			canApprove = true;
+	    		}
+    		} else if (this.form.status === 'Submitted') {
 	    		if (this.session.checkPermission('MDF','INITIAL_REVIEW',this.form.country_id, this.form.project)) {
 	    			canApprove = true;
 	    		}
@@ -870,10 +896,13 @@ export default class MdfPrController {
     
     getConfirmText() {
     	let text = '';
-    	if (this.openDiscussions > 0) {
-    		text = 'Comfirm: close discussions and approve MDF?';
+    	if (this.form && this.form.status === 'Pending') {
+    		text = 'Confim: submit PBS?';
+    	}
+    	else if (this.openDiscussions > 0) {
+    		text = 'Comfirm: close discussions and approve PBS?';
     	} else {
-    		text = 'Comfirm: approve MDF?';
+    		text = 'Comfirm: approve PBS?';
     	}
     	return text;
     }
@@ -881,7 +910,9 @@ export default class MdfPrController {
     getApprovalText() {
     	let text = 'Unknown';
     	if (this.form) {
-	    	if (this.form.status === 'Submitted') {
+    		if (this.form.status === 'Pending') {
+    			text = 'Submit for Approval';
+    		} else if (this.form.status === 'Submitted') {
 	    		text = 'Regional Steward Approve';
 	    	} else if (this.form.status === 'Initial Review') {
 	    		text = 'AT Director Approve';
@@ -943,9 +974,9 @@ export default class MdfPrController {
     }
 
 
-    getMonthName() {
+    getMonthName(theMonth = this.month) {
         return this.months.filter(month => {
-            return month.value === this.month;
+            return month.value === theMonth;
         })[0].name;
     }
     

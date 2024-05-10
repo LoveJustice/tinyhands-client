@@ -9,7 +9,7 @@
                 <th width="20%">Description</th>
                 <th width="5%">Monthly</th>
                 <th width="15%">Staff</th>
-                <th width="17%">Benefit</th>
+                <th width="17%">Subcategory</th>
                 <th width="5%"></th>
             </tr>
         </thead>
@@ -24,10 +24,16 @@
         			onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode === 45 || event.charCode === 46"
         			ng-model="request.cost" >
         		</td>
-                <td ng-if="request.category !== $ctrl.multipliersId"><input class="form-control" type="text" ng-model="request.description"></td>
+                <td ng-if="request.category !== $ctrl.multipliersId && request.category !== $ctrl.guidesId"><input class="form-control" type="text" ng-model="request.description"></td>
                 <td ng-if="request.category === $ctrl.multipliersId">
                 	<select ng-model="request.description">
                 		<option ng-repeat="opt in $ctrl.multipliers" value="{{ opt.name }}">{{ opt.name }}</option>
+                	</select>
+                </td>
+                <td ng-if="request.category === $ctrl.guidesId">
+                	<select ng-model="request.description">
+                		<option>PV Food</option>
+                		<option>Stationary</option>
                 	</select>
                 </td>
                 <td class="text-center"><input type="checkbox" ng-model="request.monthly"></td>
@@ -41,6 +47,14 @@
                 		<option ng-repeat="opt in $ctrl.benefits" value="{{ opt }}">{{ opt }}</option>
                 	</select>
                 	<button class="btn newBenefit btn-success"  ng-if="request.category === $ctrl.salariesAndBenefitsId" ng-click="$ctrl.addingType=$index">New Benefit Type</button>
+                	<select ng-if="request.category === $ctrl.pvCareId" ng-model="request.benefit_type_name">
+                		<option>PV Food</option>
+                		<option>Other</option>
+                	</select>
+                	<select ng-if="request.category === $ctrl.awarenessId" ng-model="request.benefit_type_name">
+                		<option>Stationary</option>
+                		<option>Other</option>
+                	</select>
                 </td>
                 <td colspan="2" ng-if="$ctrl.addingType===$index">
                 	<div class="col-md-5">

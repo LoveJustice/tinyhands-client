@@ -13,7 +13,7 @@
 			<div ng-if="$ctrl.details[quest].type=='header'" class={{$ctrl.details[quest].format}}>{{$ctrl.details[quest].label}}</div>
 		</div>
 	</div>
-	<div id="deceive" class="col-md-6">
+	<div id="deceive" class="col-md-6" ng-class="$ctrl.resourcesBorderClass()">
 		<div ng-repeat="quest in $ctrl.deceiveQuestions" ng-if="$ctrl.details[quest].enabled">
 			<form-step ng-if="$ctrl.details[quest].type=='checkbox'" type="checkbox" class={{$ctrl.details[quest].format}}
 				red-flag="$ctrl.details[quest].points" label="{{$ctrl.details[quest].label}}" response-value="$ctrl.questions[quest].response.value"></form-step>

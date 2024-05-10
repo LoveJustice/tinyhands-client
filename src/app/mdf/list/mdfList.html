@@ -26,10 +26,11 @@
     <div class="col-md-2">
       <p>Status</p>
       <select ng-model="mdfListCtrl.status" ng-change="mdfListCtrl.getMdfList(mdfListCtrl.searchTerm, null)">
-      	<option value=""></option>
+      	<option value="">All</option>
       	<option>Approved</option>
       	<option>Initial Review</option>
       	<option>Submitted</option>
+      	<option>Pending</option>
       	<option>Final</option>
       </select>
     </div>

@@ -11,7 +11,7 @@
                             events="stationDropDown.eventListener">
 	</div>
 	<br>
-	<div class="form-inline text-center">
+	<div class="form-inline text-center" ng-if="vm.lastMdfInfo">
 		<span>
 	      <select ng-model="vm.month"
 	              ng-options="p.value as p.name for p in vm.months"

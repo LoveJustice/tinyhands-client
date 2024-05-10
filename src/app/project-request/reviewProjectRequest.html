@@ -74,10 +74,28 @@
 		</fieldset>
 	</div>
 	<div class="row col-md-12 reviewLine" ng-if="$ctrl.projectRequest.category === $ctrl.salariesAndBenefitsId">
-		<div class="col-md-1"><b>Benefit:</b></div>
+		<div class="col-md-1"><b>Subcategory:</b></div>
 		<fieldset class="col-md-1"  ng-disabled="!$ctrl.canUpdate  || $ctrl.projectRequest.approved_mdf">
 			<select ng-model="$ctrl.projectRequest.benefit_type_name">
             	<option ng-repeat="opt in $ctrl.benefits" value="{{ opt }}">{{ opt }}</option>
+            </select>
+		</fieldset>
+	</div>
+	<div class="row col-md-12 reviewLine" ng-if="$ctrl.projectRequest.category === $ctrl.pvCareId">
+		<div class="col-md-1"><b>Subcategory:</b></div>
+		<fieldset class="col-md-1"  ng-disabled="!$ctrl.canUpdate  || $ctrl.projectRequest.approved_mdf">
+			<select ng-model="$ctrl.projectRequest.benefit_type_name">
+            	<option>PV Food</option>
+            	<option>Other</option>
+            </select>
+		</fieldset>
+	</div>
+	<div class="row col-md-12 reviewLine" ng-if="$ctrl.projectRequest.category === $ctrl.awarenessId">
+		<div class="col-md-1"><b>Subcategory:</b></div>
+		<fieldset class="col-md-1"  ng-disabled="!$ctrl.canUpdate  || $ctrl.projectRequest.approved_mdf">
+			<select ng-model="$ctrl.projectRequest.benefit_type_name">
+            	<option>Stationary</option>
+            	<option>Other</option>
             </select>
 		</fieldset>
 	</div>

@@ -1,24 +1,37 @@
-<div class="col-md-offset-1 col-md-10">
+<div class="col-md-offset-2 col-md-10">
   <h2 class="text-center">Potential Victim Care</h2>
   <hr>
   <div ng-if="mdfCtrl.form.guide_progress['PV Food']">
   	<div class="row text-center"><label>PV Food Guide</label></div>
-  	<div class="row">
+  	<div class="row col-md-offset-1">
+  		<div class = "col-md-1 guideBorder">&nbsp;</div>
 	  	<div class = "col-md-1 guideBorder" ng-repeat="entry in mdfCtrl.form.guide_progress['PV Food'].months.slice().reverse()">
 	  		{{ mdfCtrl.getMonthName(entry.month) }}
 	  	</div>
-	  	<div class="col-md-2 guideBorder">Total (Actual)</div>
-	  	<div class="col-md-2 guideBorder">Total (Guide/Max)</div>
-	  	<div class="col-md-1 guideBorder">Variance</div>
+	  	<div class="col-md-2 guideBorder">Six Month Total</div>
   	</div>
-  	<div class="row">
+  	<div class="row col-md-offset-1">
+  		<div class = "col-md-1 guideBorder">Guide</div>
+	  	<div class = "col-md-1 guideBorder" ng-repeat="entry in mdfCtrl.form.guide_progress['PV Food'].months.slice().reverse()">
+	  		{{ mdfCtrl.penniesToStr(entry.guide * 100) }}
+	  	</div>
+	  	<div class="col-md-2 guideBorder">{{ mdfCtrl.penniesToStr(mdfCtrl.form.guide_progress['PV Food'].six_month.guide * 100) }}</div>
+  	</div>
+  	<div class="row col-md-offset-1">
+  		<div class = "col-md-1 guideBorder">Actual</div>
 	  	<div class = "col-md-1 guideBorder" ng-repeat="entry in mdfCtrl.form.guide_progress['PV Food'].months.slice().reverse()">
 	  		{{ mdfCtrl.penniesToStr(entry.total * 100) }}
 	  	</div>
-	  	<div class="col-md-2 guideBorder">{{ mdfCtrl.penniesToStr(mdfCtrl.form.guide_progress['PV Food'].six_month_total * 100) }}</div>
-	  	<div class="col-md-2 guideBorder">{{ mdfCtrl.penniesToStr(mdfCtrl.form.guide_progress['PV Food'].guide * 6 * 100) }}</div>
-	  	<div class="col-md-1 guideBorder" ng-if="mdfCtrl.form.guide_progress['PV Food'].guide * 6 - mdfCtrl.form.guide_progress['PV Food'].six_month_total >= 0">{{ mdfCtrl.penniesToStr((mdfCtrl.form.guide_progress['PV Food'].guide * 6 - mdfCtrl.form.guide_progress['PV Food'].six_month_total) * 100) }}</div>
-	  	<div class="col-md-1 guideBorder overGuide" ng-if="mdfCtrl.form.guide_progress['PV Food'].guide * 6 - mdfCtrl.form.guide_progress['PV Food'].six_month_total < 0">{{ mdfCtrl.penniesToStr((mdfCtrl.form.guide_progress['PV Food'].guide * 6 - mdfCtrl.form.guide_progress['PV Food'].six_month_total) * 100) }}</div>
+	  	<div class="col-md-2 guideBorder">{{ mdfCtrl.penniesToStr(mdfCtrl.form.guide_progress['PV Food'].six_month.total * 100) }}</div>
+	</div>
+  	<div class="row col-md-offset-1">
+  		<div class = "col-md-1 guideBorder">Variance</div>
+	  	<div class = "col-md-1 guideBorder" ng-repeat="entry in mdfCtrl.form.guide_progress['PV Food'].months.slice().reverse()">
+	  		<div ng-if="entry.guide>=entry.total">{{ mdfCtrl.penniesToStr((entry.guide - entry.total) * 100) }}</div>
+	  		<div class="overGuide" ng-if="entry.guide<entry.total">{{ mdfCtrl.penniesToStr((entry.guide - entry.total) * 100) }}</div>
+	  	</div>
+	  	<div class="col-md-2 guideBorder" ng-if="mdfCtrl.form.guide_progress['PV Food'].six_month.guide >= mdfCtrl.form.guide_progress['PV Food'].six_month.total">{{ mdfCtrl.penniesToStr((mdfCtrl.form.guide_progress['PV Food'].six_month.guide - mdfCtrl.form.guide_progress['PV Food'].six_month.total) * 100) }}</div>
+	  	<div class="col-md-2 guideBorder overGuide" ng-if="mdfCtrl.form.guide_progress['PV Food'].six_month.guide < mdfCtrl.form.guide_progress['PV Food'].six_month.total">{{ mdfCtrl.penniesToStr((mdfCtrl.form.guide_progress['PV Food'].six_month.guide - mdfCtrl.form.guide_progress['PV Food'].six_month.total) * 100) }}</div>
   	</div>
   	<hr>
   </div>

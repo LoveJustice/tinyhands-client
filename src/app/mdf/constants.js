@@ -13,7 +13,8 @@ let Constants = {
         MoneyNotSpent: 13,
         ImpactMultiplying:14,
         RentUtilities: 15,
-        Multipliers: 16
+        Multipliers: 16,
+        Guides: 17
     }
 };
 

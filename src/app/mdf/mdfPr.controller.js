@@ -509,6 +509,9 @@ export default class MdfPrController {
     	this.openDiscussions = 0;
     	for (let requestIndex in this.form.requests) {
     		let request = this.form.requests[requestIndex];
+    		if (request.category === Constants.FormSections.Guides) {
+    			continue;
+    		}
     		
     		if (request.discussion_status === 'Open') {
     			this.openDiscussions += 1;

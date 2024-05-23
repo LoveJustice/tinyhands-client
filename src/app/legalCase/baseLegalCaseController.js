@@ -309,6 +309,10 @@ export class BaseLegalCaseController extends BaseFormController {
         this.errorMessages = [];
         this.warningMessages = [];
         let submission_date = this.dateData.dateToString(new Date());
+        let courtCases = this.getCardInstances('Court Case');
+        for (let card=0; card < courtCases.length; card++) {
+        	this.courtCase[card].checkboxGroup.updateResponses();
+        }
         let suspectCards = this.getCardInstances('Suspects');
         for (let card=0; card < suspectCards.length; card++) {
         	let cardQuestions = _.keyBy(suspectCards[card].responses, (x) => x.question_tag);

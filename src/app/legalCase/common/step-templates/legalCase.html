@@ -92,9 +92,9 @@
 						<span class="checkbox-text col-md-3 nopadding" ng-repeat="charge in $ctrl.basicCharges">
 				            <input type="checkbox" 
 				            	ng-model="$ctrl.courtCase[cardIndex].checkboxGroup.questions.lcCourtCaseCharges[charge]"
-				            	ng-class="$ctrl.inputClass" id="{{'Charge_'+$cardIndex+'_'+$charge}}"
+				            	ng-class="$ctrl.inputClass" id="{{'Charge_'+$cardIndex+'_'+charge}}"
 				            	ng-change="$ctrl.chargesChange(cardIndex, charge)">
-			            	<label for="{{'Charge_'+$cardIndex+'_'+$charge}}">{{charge}}</label>
+			            	<label for="{{'Charge_'+$cardIndex+'_'+charge}}">{{charge}}</label>
 			            </span>
 		            </div>
 		            </span>

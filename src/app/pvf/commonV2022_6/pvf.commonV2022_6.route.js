@@ -141,6 +141,13 @@ function PvfCommonV2022_6Routes($stateProvider) {
                 id: null
             }
         })
+        .state('pvfPhilippines', {
+            url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
+            component: 'pvfCommon202206Component',
+            params: {
+                id: null
+            }
+        })
         .state('pvfRwanda', {
             url: '/pvf/commonV2022_6:?id&stationId&countryId&isViewing&formName&incidentId',
             component: 'pvfCommon202206Component',

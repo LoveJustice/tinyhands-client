@@ -210,7 +210,7 @@ export default class BudgetController {
     }
 
     // REGION: Administration
-    stationaryTotal() {
+    stationeryTotal() {
         return (
             this.validAmount(this.form.number_of_intercepts_last_month) *
                 this.strToPennies(this.form.number_of_intercepts_last_month_multiplier) +
@@ -218,8 +218,8 @@ export default class BudgetController {
         );
     }
     
-    stationaryTotalDisplay() {
-        return this.penniesToStr(this.stationaryTotal());
+    stationeryTotalDisplay() {
+        return this.penniesToStr(this.stationeryTotal());
     }
 
     meetingsTotal() {
@@ -283,7 +283,7 @@ export default class BudgetController {
         if (this.form.awareness_party_boolean) {
             amount += this.strToPennies(this.form.awareness_party);
         }
-        amount += this.stationaryTotal() + this.getOtherCost(this.form.other.Awareness);
+        amount += this.stationeryTotal() + this.getOtherCost(this.form.other.Awareness);
         this.form.totals.borderMonitoringStation.supplies_and_Awareness = this.penniesToStr(amount);
         return amount;
     }

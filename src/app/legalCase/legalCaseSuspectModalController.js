@@ -258,6 +258,16 @@ class LegalCaseSuspectModalController extends BaseModalController {
     subclassSave() {
     	this.checkboxGroup.updateResponses();
     	
+    	if (!this.originalQuestions.lcSuspectVerifiedDate.response.value &&
+    			(this.questions.lcSuspectVerifiedAttachment.response.value === 'Yes' ||
+	    		(this.questions.lcSuspectTakenIntoCustody.response.value === 'Yes' && 
+	    			this.questions.lcSuspectChargedWithCrime.response.value === 'Yes' && 
+	    			this.questions.lcSuspectHowKnow.response.value))) {
+    		let dateData = new DateData();
+    		this.originalQuestions.lcSuspectVerifiedDate.response.value = dateData.dateToString(new Date());
+    		this.originalQuestions.lcSuspectVerifiedBy.response.value = this.userName;
+    	}
+    	
     	// Update existing and remove deleted charges
     	let sf = this.questions.lcSuspectSuspect.response.value + '';
     	let charges = this.parentController.getCardInstances('Suspect Charge');

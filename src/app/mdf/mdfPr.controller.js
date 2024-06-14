@@ -557,9 +557,9 @@ export default class MdfPrController {
     // Total can be computed when form is loaded and cannot change
     suppliesAwarenessTotals() {
     	/*
-    	let stationary s.validAmo= (thiunt(this.form.last_month_number_of_intercepted_pvs) *
+    	let stationery s.validAmo= (thiunt(this.form.last_month_number_of_intercepted_pvs) *
                 this.strToPennies(this.multiplierByLocation[Constants.FormSections.Awareness].cost));
-        this.stationaryTotalDisplay = this.penniesToStr(stationary);
+        this.stationeryTotalDisplay = this.penniesToStr(stationery);
         */
         let supplyTotal = this.totals[this.form.border_station][Constants.FormSections.Awareness];
         supplyTotal.total = supplyTotal.requestTotal;

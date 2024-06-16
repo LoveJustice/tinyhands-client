@@ -28,7 +28,7 @@ function budgetRouteConfig($stateProvider) {
             controllerAs: 'budgetListCtrl',
         })
         .state('mdf', {
-            url: '/budget/:id/mdf?mdf_type',
+            url: '/budget/:id/mdf?mdf_type&form_status',
             templateUrl: mdfTemplate,
             controller: 'MdfController',
             controllerAs: 'vm',

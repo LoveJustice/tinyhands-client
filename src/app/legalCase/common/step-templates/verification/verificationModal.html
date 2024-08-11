@@ -54,19 +54,20 @@
 	        				<option>No</option>
 	        			</select>
 	        		</div>
-	        	</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Was this suspect taken into police custody?</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select ng-model="VerificationModalController.questions.lcSuspectTakenIntoCustody.response.value">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
 	        	<div ng-if="VerificationModalController.questions.lcSuspectVerifiedAttachment.response.value==='No'">
-	        		<div class="row">
-		        		<div class="col-md-4">
-		        			<label>Was this suspect taken into police custody?</label>
-		        		</div>
-		        		<div class="col-md-2">
-		        			<select ng-model="VerificationModalController.questions.lcSuspectTakenIntoCustody.response.value">
-		        				<option>Yes</option>
-		        				<option>No</option>
-		        			</select>
-		        		</div>
-		        	</div>
+
 		        	<div class="row">
 		        		<div class="col-md-4">
 		        			<label>Do you know that this suspect charged with a crime?</label>
@@ -81,7 +82,7 @@
 		        	<div class="row"
 		        		ng-if="VerificationModalController.questions.lcSuspectTakenIntoCustody.response.value==='Yes' && VerificationModalController.questions.lcSuspectChargedWithCrime.response.value==='Yes'">
 		        		<div class="col-md-4">
-		        			<label>How do you know that the suspect was taken into custody and chared with a crime?</label>
+		        			<label>How do you know that the suspect was taken into custody and charged with a crime?</label>
 		        		</div>
 		        		<div class="col-md-8">
 		        			<textarea class="form-control" rows="3" ng-model="VerificationModalController.questions.lcSuspectHowKnow.response.value"></textarea>

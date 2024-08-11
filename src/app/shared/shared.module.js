@@ -36,6 +36,7 @@ import SpinnerOverlay from './directives/spinnerOverlay/spinnerOverlay.directive
 
 import MonthFilter from './filters/month.filter';
 import CapitalizeFilter from './filters/capitalize.filter';
+import BaseUrlService from "./services/baseUrl.service";
 
 export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'floatThead', 'ui.validate', uiRouter, 'angularjs-dropdown-multiselect'])
     .run(TransitionOnBefore)
@@ -57,6 +58,7 @@ export default angular.module('tinyhands.Shared', [ngFileSaver, 'ngCookies', 'fl
     .service('StickyHeader', StickyHeaderService)
     .service('UtilService', UtilService)
     .service('IncidentService', IncidentService)
+    .service('BaseUrlService', BaseUrlService)
 
     .component('formStep', FormStepComponent)
     .component('locationSelect', LocationSelectComponent)

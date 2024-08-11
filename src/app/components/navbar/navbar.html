@@ -27,12 +27,12 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null)"
-                            ui-sref="irfNewList"
+                            ng-href="{{ navbarCtrl.getReactUrl('irf/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('IRFs')">IRFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('PVF','VIEW',null, null)"
-                            ui-sref="pvfList"
+                            ng-href="{{ navbarCtrl.getReactUrl('pvf/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('PVFs')">PVFs</a>
                     </li>
                     <li>

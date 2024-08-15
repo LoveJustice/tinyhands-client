@@ -10,11 +10,11 @@ export default class BaseUrlService {
         const hostname = this.location.host();
 
         if (hostname === 'searchlightdata.org') {
-            baseUrl = 'https://searchlightdata.org/re/';
+            baseUrl = 'https://searchlightdata.org/';
         } else if (hostname === 'staging.searchlightdata.org') {
-            baseUrl = 'https://staging.searchlightdata.org/re/';
+            baseUrl = 'https://staging.searchlightdata.org/';
         } else {
-            baseUrl = 'http://localhost:5173/re/';
+            baseUrl = 'http://localhost:5173/';
         }
 
         return baseUrl + path;

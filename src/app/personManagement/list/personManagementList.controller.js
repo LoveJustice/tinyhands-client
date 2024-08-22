@@ -1,5 +1,5 @@
 class personManagementListController {
-    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementListService, $uibModal, $state, $stateParams, $document, toastr, constants) {
+    constructor(StickyHeader, $rootScope, $scope, $http, $timeout, personManagementListService, BaseUrlService, $uibModal, $state, $stateParams, $document, toastr, constants) {
         'ngInject';
 
         this.state = $state;
@@ -47,6 +47,10 @@ class personManagementListController {
             this.searchValue = tmp;
         }
 
+        this.getReactUrl = (path) => {
+           return BaseUrlService.getReactUrl(path);
+        };
+
         this.getKnownPersons();
     }
     
@@ -92,9 +96,16 @@ class personManagementListController {
             this.knownPersons = promise.data.results;
             for (let idx in this.knownPersons) {
                 if (this.knownPersons[idx].form.form_name) {
-                    this.knownPersons[idx].viewUrl = this.state.href(this.knownPersons[idx].form.form_name, {id:this.knownPersons[idx].form.form_id, 
-                        stationId:this.knownPersons[idx].form.station_id, countryId:this.knownPersons[idx].form.country_id, isViewing:true,
-                        formName:this.knownPersons[idx].form.form_name});
+                    let path = this.knownPersons[idx].form.form_type + '/' + this.knownPersons[idx].form.form_id;
+                    let reactParams = new URLSearchParams({
+                        countryName: this.knownPersons[idx].form.country_name,
+                        stationId: this.knownPersons[idx].form.station_id,
+                        countryId: this.knownPersons[idx].form.country_id
+                    }).toString();
+
+                    let reactPath = `${path}/view?${reactParams}`;
+
+                    this.knownPersons[idx].viewUrl = this.getReactUrl(reactPath);
                 }
             }
             this.paginate.items = promise.data.count;

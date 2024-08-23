@@ -7,6 +7,8 @@
     "dev": "webpack-dev-server --env.dev --content-base dist/ --devtool eval --progress --colors --open",
     "devOnStaging": "webpack-dev-server --env.staging --content-base dist/ --devtool eval --progress --colors --open",
     "devOnLocal": "webpack-dev-server --env.local --content-base dist/ --devtool eval --progress --colors --open",
+    "devOnLocalNoDocker": "webpack-dev-server --env.noDocker --content-base dist/ --devtool eval --progress --colors --open",
+    "localNoDocker": "rimraf ./dist/* && webpack --env.noDocker",
     "local": "rimraf ./dist/* && webpack --env.local",
     "stage": "rimraf ./dist/* && webpack --env.staging",
     "prod": "rimraf ./dist/* && webpack --env.production",

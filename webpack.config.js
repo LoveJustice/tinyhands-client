@@ -14,6 +14,8 @@ function getServerApiUrl(env) {
         return '"https://searchlightdata.org/"';
     } else if (env.staging) {
         return '"https://staging.searchlightdata.org/"';
+    } else if (env.noDocker){
+        return '"http://localhost:9001/"';
     } else {
         return '"http://localhost/"';
     }

@@ -1,7 +1,36 @@
 /* global angular */
+import basicTemplate from './basicList.html';
+import contractTemplate from './contractList.html';
+import knowledgeTemplate from './knowledgeList.html';
+import reviewTemplate from './reviewList.html';
+
+import staffExportModalTemplate from './staffExportModal.html';
 import './staffList.less';
+import constants from '../../constants.js';
+
+const months = ["", "Jan ", "Feb ", "Mar ", "Apr ", "May ", "Jun ", "Jul ", "Aug ", "Sep ", "Oct ", "Nov ", "Dec "];
+
+class StaffExportModalController {
+	constructor($uibModalInstance, $window, exportCountries) {
+		'ngInject';
+		this.$uibModalInstance = $uibModalInstance;
+		this.window = $window;
+		this.exportCountries = exportCountries;
+		this.country = '';
+	}
+	
+	exportStaff() {
+		let url = constants.BaseUrl + `api/staff/csv/${this.country}/?include=VIEW_CONTRACTVIEW_REVIEW`;
+        this.window.open(url, '_blank');
+	}
+	
+	cancel() {
+        this.$uibModalInstance.dismiss();
+    }
+}
+
 export default class StaffListController {
-    constructor(StaffService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout,  toastr, constants, moment) {
+    constructor(StaffService, SessionService, SpinnerOverlayService, StickyHeader, $state, $stateParams, $timeout,  toastr, constants, moment, $uibModal) {
         'ngInject';
         this.service = StaffService;
         this.session = SessionService;
@@ -13,19 +42,37 @@ export default class StaffListController {
         this.toastr = toastr;
         this.constants = constants;
         this.moment = moment;
+        this.modal = $uibModal;
         this.countries = [];
         this.projects = [];
         this.staffList = [];
+        this.holdList = [];
+        this.hasAddPermission = false;
+        this.knowledgeMap = {
+        	general:null,
+        	awareness:['Awareness'],
+        	security:['Security'],
+        	accounting:['Accounting'],
+        	pv_care:['Care'],
+        	paralegal:['Legal'],
+        	records:['Records'],
+        	shelter:['Shelter']
+        };
+        this.digits1Format = {'minimumFractionDigits': 1, 'maximumFractionDigits': 1};
+        this.digits2Format = {'minimumFractionDigits': 2, 'maximumFractionDigits': 2};
+        this.digitsMinFormat = {'minimumFractionDigits': 0, 'maximumFractionDigits': 2};
+        this.currency = 'local';
 
         this.timer = {};
         this.nextPage = "";
         this.queryParameters = {
             "page_size": 15,
             "reverse": false,
-            "ordering": 'first_name',
+            "ordering": 'first_name,last_name',
             "search": '',
             "country_ids": '',
-            "project_id": ''
+            "project_id": '',
+            "include":''
         };
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
@@ -57,14 +104,76 @@ export default class StaffListController {
         if (tmp !== null) {
             this.queryParameters.country_ids = tmp;
         }
+        
+        this.selectedStep = 0;
+        this.stepTemplates = [
+        	{template:basicTemplate, name:"Basic"},
+        ];
+        
+   		if (this.session.checkPermission('STAFF','VIEW_CONTRACT',null, null) === true) {
+   			this.stepTemplates.push({template:contractTemplate, name:"Contract"});
+   			this.queryParameters.include += 'VIEW_CONTRACT';
+   			
+   		}
+   		this.stepTemplates.push({template:knowledgeTemplate, name:"Knowledge"});
+   		if (this.session.checkPermission('STAFF','VIEW_REVIEW',null, null) === true) {
+   			this.stepTemplates.push({template:reviewTemplate, name:"Reviews"});
+   			this.queryParameters.include += 'VIEW_REVIEW';
+   		}
 
         this.getUserCountries();
         this.getUserProjects();
         //this.getStaffList();
     }
-
-    get hasAddPermission() {
-        return this.session.checkPermission('PROJECTS','ADD',null, null) === true;
+    
+    knowledgeClass(staff, item) {
+    	let roles = this.knowledgeMap[item];
+    	if (roles === null) {
+    		 if (staff.knowledge_data[item] === null) {
+    		 	return 'knowledgeMissing';
+    		 }
+    	} else {
+    		for (let roleIndex in roles) {
+    			if (staff.coordinatorRoles.indexOf(roles[roleIndex]) >= 0) {
+    				if (staff.knowledge_data[item] === null) {
+		    		 	return 'knowledgeMissing';
+		    		} else {
+		    			return 'knowledgeGood';
+		    		}
+    			}
+    		}
+    	}
+    	return '';
+    }
+    
+    contractExpirationClass(value) {
+        let color = "";
+        if (value) {
+            let current = new Date();
+            let expiration = new Date(value);
+            let diff = (expiration - current)/(1000 * 60 * 60 * 24);
+            if (diff < 30) {
+                color = 'expirationWarn';
+            }
+        }
+        return color;
+    }
+    
+    monthYearString(dt) {
+    	let result = '';
+    	if (dt !== null) {
+    		let parts = dt.split('-');
+    		result = months[parseInt(parts[1])] + "'" + parts[0].substring(2);
+    	}
+    	return result;
+    }
+    monthDayString(dt) {
+    	let result = '';
+    	if (dt !== null) {
+    		let parts = dt.split('-');
+    		result = months[parseInt(parts[1])] + parts[2];
+    	}
+    	return result;
     }
 
     transform(queryParams, pageNumber) {
@@ -89,6 +198,7 @@ export default class StaffListController {
         }
         sessionStorage.setItem('staffList-search', this.queryParameters.search);
         sessionStorage.setItem('staffList-country_ids', this.queryParameters.country_ids);
+        sessionStorage.setItem('staffList-project_id', this.queryParameters.project_id);
         this.timer = this.timeout( () => {
             this.getStaffList(1);
         }, 500);
@@ -125,10 +235,40 @@ export default class StaffListController {
         this.getStaffList();
     }
     
+    displayCurrency(staff) {
+    	if (this.currency === 'USD') {
+    		return '$ ';
+    	}
+    	return decodeURI(this.countryById[staff.country].currency);
+    }
+    
+    displayCurrencyFormat(staff) {
+    	let format = this.digits2Format;
+    	let dropDecimal = false;
+    	if (this.countryById[staff.country].options!==null &&
+    			this.countryById[staff.country].options.hasOwnProperty('drop_decimal') &&
+    			this.currency !== 'USD') {
+    		dropDecimal = this.countryById[staff.country].options.drop_decimal;
+    		
+    	}
+    	if (dropDecimal) {
+    		format = this.digitsMinFormat;
+    	} 
+    	return format;	
+    }
+    
     getUserProjects() {
     	this.spinnerOverlayService.show("Searching for Staff..."); 
         this.service.getUserStations(this.session.user.id).then((response) => {
            	this.projects = response.data;
+           	let tmp = sessionStorage.getItem('staffList-project_id');
+	        if (tmp !== null && this.countryDropDown.selectedOptions.length > 0) {
+	        	for (let idx in this.projects) {
+	        		if (this.projects[idx].id + '' === tmp && this.projects[idx].operating_country === this.countryDropDown.selectedOptions[0].id) {
+	        			this.queryParameters.project_id = tmp;
+	        		}
+	        	}
+	        }
            	this.getStaffList();
         }, () => {
         	this.spinnerOverlayService.hide();
@@ -138,9 +278,20 @@ export default class StaffListController {
     getUserCountries() {
         this.service.getUserCountries(this.session.user.id).then((promise) => {
             this.countries = promise.data;
+            this.countryById = _.keyBy(this.countries, (x) => x.id);
             this.countryDropDown.options = [];
             for (var idx=0; idx < this.countries.length; idx++) {
                 this.countryDropDown.options.push({id: this.countries[idx].id, label: this.countries[idx].name});
+                if (this.session.checkPermission('STAFF','ADD',this.countries[idx].id, null) === true) {
+                	this.hasAddPermission = true;
+                }
+            }
+            
+            this.exportCountries = [];
+            for (let countryIndex in this.countries) {
+            	if (this.session.checkPermission('STAFF','EXPORT',this.countries[countryIndex].id, null) === true) {
+                	this.exportCountries.push(this.countries[countryIndex]);
+                }
             }
             
             if (this.queryParameters.country_ids.length > 0) {
@@ -178,24 +329,46 @@ export default class StaffListController {
         }
     }
     
+    getDetailUrl(staff, tabName) {
+    	let canEdit = (this.session.checkPermission('STAFF','EDIT_BASIC',staff.country, null) === true);
+    	let detailUrl = this.state.href('staff', {id:staff.id, isViewing:!canEdit, tabName:tabName});
+    	return detailUrl;
+    }
+    
     projectText(staffList) {
     	for (let idx=0; idx < staffList.length; idx++) {
             let staff = staffList[idx];
             staff.projectText = '';
+            staff.coordinatorRoles = '';
             let sep = '';
+            let coordinatorSep = '';
             for (let staffProjIdx in staff.staffproject_set) { 
-            	for (let projIdx in this.projects) {
-            		if (staff.staffproject_set[staffProjIdx].border_station === this.projects[projIdx].id) {
-		            	staff.projectText += sep + this.projects[projIdx].station_name;
-		            	sep = '/';
-		            }
+            	staff.projectText += sep + staff.staffproject_set[staffProjIdx].project_code;
+            	sep = '/';
+            	if (staff.staffproject_set[staffProjIdx].coordinator) {
+            		staff.coordinatorRoles += coordinatorSep + staff.staffproject_set[staffProjIdx].coordinator.replace(';','/');
+            		coordinatorSep = '/';
             	}
             }
         }
     }
-
+    
     getStaffList() {
         this.showPage(1);
+    }
+
+    staffExport() {
+    	let exportCountries = this.exportCountries;
+        this.modal.open({
+            animation: true,
+            templateUrl: staffExportModalTemplate,
+            controller: StaffExportModalController,
+            size: 'md',
+            controllerAs: "vm",
+            resolve: {
+            	exportCountries() {return exportCountries;},
+            },
+        });
     }
     
     showPage(pageNumber) {

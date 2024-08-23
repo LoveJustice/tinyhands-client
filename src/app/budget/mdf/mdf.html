@@ -4,7 +4,7 @@
     <div class="col-lg-6" >
         <div class="row">
             <h2 class="text-center col-lg-8">Monthly Distribution Form</h2>
-            <a style="margin-top: 20px; margin-bottom:25px;" ui-sref="budget({id: vm.stateParams.id})" class="btn btn-primary col-lg-3">Update Budget</a>
+            <a style="margin-top: 20px; margin-bottom:25px;" ui-sref="{{ vm.mdfType }}({id: vm.stateParams.id})" class="btn btn-primary col-lg-4">Project Budget Sheet</a>
         </div>
 
         <!-- The Money Distribution Form PDF -->
@@ -66,7 +66,8 @@
         <div class="row text-center">
             <a type="button" id="sendEmails" style="margin-top: 50px"
                class="btn btn-primary" value="Send to Selected Staff and Members"
-               ng-click="vm.sendEmails()" ng-disabled="!vm.recipientSelected()">
+               ng-click="vm.sendEmails()" ng-disabled="!vm.recipientSelected()"
+               ng-if="vm.stateParams.form_status === 'Approved' || vm.stateParams.form_status === 'Final' ">
                   Send to Selected Staff and SC
             </a>
         </div>

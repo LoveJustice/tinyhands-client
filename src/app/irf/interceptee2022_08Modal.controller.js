@@ -11,6 +11,7 @@ export default class IntercepteeModalController extends BaseModalController {
         this.options = options;
         this.photoPresent = false;
         this.initialPhoto = null;
+        this.needConsent = parentController.intercepteeConsent?true:false;
     }
     
     delayedQuestionData() {

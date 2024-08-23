@@ -1,14 +1,14 @@
-<div class="container">
+<div id="mdfList" class="container">
   
   <div class="row">
     <div class="col-xs-7">
-      <h1>Monthly Distribution Forms (MDFs)</h1>
+      <h1>Project Budget Sheets (PBSs)</h1>
     </div>
 
     <div class="pull-right"><br>
       <mdfexport></mdfexport>
       <a ng-if="mdfListCtrl.hasAddPermission" class="btn btn-success" ng-click="mdfListCtrl.createMdf()">
-        Input A New MDF
+        Input A New PBS
       </a>
     </div>
   </div>
@@ -24,7 +24,15 @@
         </div>
     </div>
     <div class="col-md-2">
-      &nbsp;
+      <p>Status</p>
+      <select ng-model="mdfListCtrl.status" ng-change="mdfListCtrl.getMdfList(mdfListCtrl.searchTerm, null)">
+      	<option value="">All</option>
+      	<option>Approved</option>
+      	<option>Initial Review</option>
+      	<option>Submitted</option>
+      	<option>Pending</option>
+      	<option>Final</option>
+      </select>
     </div>
     <div class="col-md-3 search-bar pull-right">
       <input type="text" class="form-control" placeholder="Search" ng-model="mdfListCtrl.searchTerm" ng-model-options="{ debounce: 500 }" ng-change="mdfListCtrl.getMdfList(mdfListCtrl.searchTerm, null)">
@@ -35,7 +43,6 @@
   
   <div class="row" ng-if="mdfListCtrl.listOfMdfs.length > 0">
   <table class="fixed table-striped" ng-model="mdfListCtrl.listOfMdfs"
-  		cellspacing="0" cellpadding="0" cellborder="0" style="border-collapse:collapse;"
          float-thead="mdfListCtrl.stickyOptions">
     <thead class="sticky-table-header">
       <tr>
@@ -47,7 +54,7 @@
           <i class="glyphicon" ng-show="mdfListCtrl.sortValue === 'border_station__station_code' || mdfListCtrl.sortValue === '-border_station__station_code'" ng-class="{'glyphicon-sort-by-attributes-alt': mdfListCtrl.sortValue === '-border_station__station_code', 'glyphicon-sort-by-attributes': mdfListCtrl.sortValue === 'border_station__station_code'}">
         </i>
         </th>
-        <th class="text-center" ng-click="mdfListCtrl.getMdfList(null,'month_year');">Mdf For
+        <th class="text-center" ng-click="mdfListCtrl.getMdfList(null,'month_year');">Budget Month
           <i class="glyphicon" ng-show="mdfListCtrl.sortValue === 'month_year' || mdfListCtrl.sortValue === '-month_year'" ng-class="{'glyphicon-sort-by-attributes-alt': mdfListCtrl.sortValue === '-month_year', 'glyphicon-sort-by-attributes': mdfListCtrl.sortValue === 'month_year'}">
         </i>
         </th>
@@ -69,7 +76,7 @@
       <tr ng-repeat="form in mdfListCtrl.listOfMdfs" ng-mouseenter="form.hover = true" ng-mouseleave="form.hover = false; form.mdfRemoved = false">
         <td>{{ form.border_station.station_name }}</td>
         <td>{{ form.border_station.station_code }}</td>
-        <td>{{ form.month_year | date:'MMMM y' }}</td>
+        <td>{{ form.month_year | date:'MMM y' }}</td>
         <td>{{ form.status }}</td>
         <td>{{ form.date_time_entered | date:'MMM d, y' }}</td>
         <td>{{ form.date_time_last_updated | date:'MMM d, y hh:mm:ss a' }}</td>
@@ -77,12 +84,12 @@
           <a ui-sref="{{ form.mdf_type }}({id:form.id, isViewing:true})" class="btn btn-sm btn-primary">View</a>
           <a ui-sref="{{ form.mdf_type }}({id:form.id})" class="btn btn-sm btn-primary" 
           		ng-if="mdfListCtrl.session.checkPermission('MDF','EDIT',form.border_station.operating_country.id, form.border_station.id) && form.status!=='Approved'&&form.status!=='Final'">Edit</a>
-          <a ui-sref="mdf({id: form.id, mdf_type:form.mdf_type})" class="btn btn-sm btn-primary">Send MDF</a>
+          <a ui-sref="mdf({id: form.id, mdf_type:form.mdf_type, form_status:form.status})" class="btn btn-sm btn-primary">{{form.status === 'Approved' || form.status === 'Final' ? 'Send MDF' : 'View MDF'}}</a>
 
           <button ng-if="mdfListCtrl.session.checkPermission('MDF','DELETE',form.border_station.operating_country.id, form.border_station.id) && form.mdf_type==='mdf-pr' && form.status!=='Approved'"
           		class="btn btn-sm btn-danger animated" ng-click="mdfListCtrl.removeMdf(mdfListCtrl.listOfMdfs, form)"
           		ng-class="{fadeIn: form.hover && !form.mdfRemoved, fadeOut: !form.hover, pulse: form.mdfRemoved}">
-            {{ form.mdfRemoved ? "Are you sure?" : "Remove Mdf" }}
+            {{ form.mdfRemoved ? "Are you sure?" : "Remove PBS" }}
           </button>
         </td>
       </tr>
@@ -92,8 +99,7 @@
 
 
   <div ng-if="mdfListCtrl.listOfMdfs.length == 0" class="row col-xs-12 text-center">
-    <h3>No Mdf Forms</h3>
-    <h4>Go to a Border Station Form to create one.</h4>
+    <h4>No Project Budget Sheets Matched your search for: "{{ mdfListCtrl.searchTerm }}"</h4>
   </div>
   <div class="row text-center">
         <paginate page-control="mdfListCtrl.paginate" controller="mdfListCtrl">

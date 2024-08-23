@@ -1,7 +1,7 @@
 <div id="mdf-calc-top" class="container-fluid col-xs-12">
 	<div class="row">
 		<h2 class="text-center form-inline">
-			{{ mdfCtrl.form.station_name }} Budget Calculation Form ({{ mdfCtrl.getMonthName() }} {{ mdfCtrl.year }})   
+			{{ mdfCtrl.form.station_name }} Project Budget Sheet ({{ mdfCtrl.getMonthName() }} {{ mdfCtrl.year }})   
 			<div class="pull-right" ng-if="mdfCtrl.canApproveForm()" ng-mouseleave="mdfCtrl.confirmApprove=false;">
   				<button ng-class="mdfCtrl.getApprovalClass()"
         				ng-disabled="(mdfForm.$invalid || !mdfForm.$pristine)"
@@ -26,7 +26,8 @@
   <div class="hidden-xs hidden-sm col-md-offset-1 col-md-10">
     <div class="btn-group btn-group-justified">
       <div class="btn-group" ng-repeat="section in mdfCtrl.sections.allSections">
-        <button type="button" class="btn btn-default" ng-class="{active: mdfCtrl.active == $index}" ng-click="mdfCtrl.active = $index; mdfCtrl.sectionTemplateUrl = section.templateUrl; mdfCtrl.updateSessionData()">{{section.name}}</button>
+        <button type="button" ng-class="mdfCtrl.tabButtonClass(section.name)" ng-class="{active: mdfCtrl.active == $index}" 
+        		ng-click="mdfCtrl.active = $index; mdfCtrl.sectionTemplateUrl = section.templateUrl; mdfCtrl.updateSessionData()">{{section.name}}</button>
       </div>
     </div>
   </div>
@@ -55,11 +56,11 @@
     <br>
     <button class="btn btn-lg" ng-class="{'btn-primary': !mdfCtrl.isCreating, 'btn-success': mdfCtrl.isCreating}" 
       ng-disabled="(mdfForm.$invalid || mdfForm.$pristine)  && !mdfCtrl.modified"
-    ng-click="mdfCtrl.updateForm()">{{mdfCtrl.isCreating ? "Create" : "Update"}}</button>
+    ng-click="mdfCtrl.updateForm()">{{mdfCtrl.isCreating ? "Create" : "Save"}}</button>
   </div>
 
   <div class="row col-md-12">
-    <label class="col-md-2 control-label">Monthly Distribution Form Notes</label>
+    <label class="col-md-2 control-label">Project Budget Sheet Notes</label>
   </div>
   <div class="row col-md-12">
     <div class="row col-md-12">

@@ -5,7 +5,7 @@ function staffRouteConfig($stateProvider) {
     'ngInject';
     $stateProvider
         .state('staff', {
-            url: '/staff/?id&isViewing',
+            url: '/staff/?id&isViewing&tabName',
             templateUrl: staffTemplate,
             controller: 'staffController',
             controllerAs: 'vm',

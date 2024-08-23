@@ -1,0 +1,121 @@
+<div id="legal-case-verification-modal" class="modal-content">
+    <form name="LegalCaseVerificationModal" ng-disabled="VerificationModalController.isViewing === 'true'">
+        <div class="modal-body">
+        	<div class="row">
+        		<div class="col-md-2 form-group">
+        		</div>
+	            <div class="col-md-8 form-group text-center">
+					<p class="modalTitle" ng-if="SuspectModalController.questions.lcSuspectSuspect.response.value!==null">
+						{{ VerificationModalController.getSf(VerificationModalController.questions.lcSuspectSuspect.response.value).merged_person.full_name }}
+					</p>
+		        </div>
+		       <div class="col-md-2 form-group">
+		    		<strong>SF&nbsp;</strong><a ng-href="{{ VerificationModalController.sfUrl() }}">{{ VerificationModalController.getSf(VerificationModalController.questions.lcSuspectSuspect.response.value).sf_number }}</a>
+		    	</div>
+            </div>
+            <hr>
+            <div ng-if="VerificationModalController.suspect!==null">
+	            <div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Arrest Status</label>
+		            </div>
+		            <div class="col-md-4 form-group">
+				       {{ VerificationModalController.questions.lcSuspectArrestStatus.response.value }}
+			        </div>
+			        <div class="col-md-4 form-group">
+	            		<label>Named in charge sheet?</label>
+		            </div>
+		            <div class="col-md-2 form-group">
+		            	{{ VerificationModalController.questions.lcSuspectNamedOnChargeSheet.response.value }}
+			        </div>
+	        	</div>
+	        	<div class="row center-vertical">
+	            	<div class="col-md-2 form-group">
+	            		<label>Arrest Date</label>
+		            </div>
+		            <div class="col-md-4 form-group">
+		            	{{ VerificationModalController.questions.lcSuspectArrestDate.response.value }}
+		            </div>
+			        <div class="col-md-2 form-group" ng-show="VerificationModalController.questions.lcSuspectArrestSubmittedDate.response.value">
+	            		<label>Submitted</label>
+		            </div>
+		            <div class="col-md-4 form-group" ng-show="VerificationModalController.questions.lcSuspectArrestSubmittedDate.response.value">
+		            	{{ VerificationModalController.questions.lcSuspectArrestSubmittedDate.response.value }}
+			        </div>
+	        	</div>
+	        	<hr>
+	        	<div class="row">
+	        		<div class="col-md-4">
+	        			<label>Is there a verified charge sheet attached?</label>
+	        		</div>
+	        		<div class="col-md-2">
+	        			<select ng-model="VerificationModalController.questions.lcSuspectVerifiedAttachment.response.value">
+	        				<option>Yes</option>
+	        				<option>No</option>
+	        			</select>
+	        		</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Was this suspect taken into police custody?</label>
+                    </div>
+                    <div class="col-md-2">
+                        <select ng-model="VerificationModalController.questions.lcSuspectTakenIntoCustody.response.value">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                </div>
+	        	<div ng-if="VerificationModalController.questions.lcSuspectVerifiedAttachment.response.value==='No'">
+
+		        	<div class="row">
+		        		<div class="col-md-4">
+		        			<label>Do you know that this suspect charged with a crime?</label>
+		        		</div>
+		        		<div class="col-md-2">
+		        			<select ng-model="VerificationModalController.questions.lcSuspectChargedWithCrime.response.value">
+		        				<option>Yes</option>
+		        				<option>No</option>
+		        			</select>
+		        		</div>
+		        	</div>
+		        	<div class="row"
+		        		ng-if="VerificationModalController.questions.lcSuspectTakenIntoCustody.response.value==='Yes' && VerificationModalController.questions.lcSuspectChargedWithCrime.response.value==='Yes'">
+		        		<div class="col-md-4">
+		        			<label>How do you know that the suspect was taken into custody and charged with a crime?</label>
+		        		</div>
+		        		<div class="col-md-8">
+		        			<textarea class="form-control" rows="3" ng-model="VerificationModalController.questions.lcSuspectHowKnow.response.value"></textarea>
+		        		</div>
+		        	</div>
+	        	</div>
+	        	<div class="row" ng-if="VerificationModalController.questions.lcSuspectVerifiedDate.response.value">
+	        		<hr>
+	        		<div class="col-md-2">
+	        			<label>Verified By:</label>
+	        		</div>
+	        		<div class="col-md-4">
+	        			{{ VerificationModalController.questions.lcSuspectVerifiedBy.response.value }}
+	        		</div>
+	        		<div class="col-md-2">
+	        			<label>Verified Date:</label>
+	        		</div>
+	        		<div class="col-md-4">
+	        			{{ VerificationModalController.questions.lcSuspectVerifiedDate.response.value }}
+	        		</div>
+	        	</div>
+        	</div>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <button class="btn btn-success float-left" ng-click="VerificationModalController.save()"
+                    	ng-if="!VerificationModalController.isViewing && !VerificationModalController.questions.lcSuspectVerifiedDate.response.value && !VerificationModalController.questions.lcSuspectVerifiedBy.response.value">Save</button>
+                </div>
+                <div class="col-xs-4">
+                    <button class="btn btn-default" ng-click="VerificationModalController.dismiss()">Close</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

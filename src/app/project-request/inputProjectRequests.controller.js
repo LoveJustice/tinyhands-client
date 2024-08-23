@@ -32,6 +32,7 @@ export default class InputProjectRequestController {
         this.getStaff();
         this.getBenefitTypes();
         this.getMultipliers();
+        this.addingType = null;
     }
     
     createRequest() {
@@ -64,6 +65,15 @@ export default class InputProjectRequestController {
             	}
             	if (this.categories[idx].text === 'Multipliers') {
             		this.multipliersId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Guides') {
+            		this.guidesId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Potential Victim Care') {
+            		this.pvCareId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Supplies & Awareness') {
+            		this.awarenessId = this.categories[idx].id + '';
             	}
             }
         }, ()=>{
@@ -100,8 +110,9 @@ export default class InputProjectRequestController {
     	}
     }
     
-    addBenefit() {
+    addBenefit(index) {
     	this.benefits.push(this.newBenefit);
+    	this.requests[index].benefit_type_name = this.newBenefit;
     	this.newBenefit = '';
     }
     

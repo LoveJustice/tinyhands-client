@@ -14,7 +14,7 @@ export default class CreateMdfModalController {
                 groupByTextProvider(groupValue) { return groupValue; }, groupBy:'country', closeOnSelect: true,
                 scrollableHeight: '250px', scrollable: true,};
         this.scope.stationDropDown.customText = {};
-        this.scope.stationDropDown.eventListener = {};
+        this.scope.stationDropDown.eventListener = {onItemSelect: this.stationChangeInner, ctrl: this,};
         
         this.months = [
             { name: 'January', value: 1 },
@@ -33,6 +33,7 @@ export default class CreateMdfModalController {
         this.month = parseInt(window.moment().format('M'));
         this.year = parseInt(window.moment().format('YYYY'));
         
+        this.lastMdfInfo = null;
         this.error = null;
     }
     
@@ -46,6 +47,32 @@ export default class CreateMdfModalController {
                 }
             }
         });
+    }
+    
+    stationChangeInner() {
+    	this.ctrl.stationChange();
+    }
+    
+    stationChange() {
+    	this.service.getLastMdfDate(this.scope.stationDropDown.selectedOptions[0].id).then((promise) => {
+    		this.lastMdfInfo = promise.data;
+    		if (this.lastMdfInfo.status === null) {
+    			let tmp = window.moment().add(7,'days');
+    			this.month = parseInt(tmp.format('M'));
+    			this.year = parseInt(tmp.format('YYYY'));
+    		} else if (this.lastMdfInfo.status !== 'Approved') {
+    			this.error = 'There is already an active MDF for this project.  Only one active (not Approved) my be present for a project.';
+    			this.lastMdfInfo = null;
+    		} else {
+    			this.year = Math.floor(this.lastMdfInfo.month / 100);
+    			this.month = this.lastMdfInfo.month % 100 + 1;
+    			if (this.month > 12) {
+    				this.month = 1;
+    				this.year += 1;
+    			}
+    			
+    		}
+    	});
     }
     
     create() {

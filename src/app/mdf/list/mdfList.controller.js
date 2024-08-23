@@ -30,12 +30,13 @@ export default class MdfList {
         this.searchTerm = '';
         this.countryIds = '';
         this.sortValue = 'month_year';
+        this.status = '';
         this.stickyOptions = this.sticky.stickyOptions;
         this.stickyOptions.zIndex = 1;
 
         this.hasAddPermission = true;
         this.listOfMdfs = [];
-        this.parameters = ['searchTerm', 'sortValue', 'countryIds'];
+        this.parameters = ['searchTerm', 'sortValue', 'countryIds', 'status'];
         
         this.paginate = {
             items:0,
@@ -97,7 +98,7 @@ export default class MdfList {
         		sessionStorage.setItem('mdfList-' + name, '');
         	}
 	    }      
-        this.service.getMdfList(this.searchTerm, this.sortValue, this.countryIds, pageNumber).then( (promise) => {
+        this.service.getMdfList(this.searchTerm, this.sortValue, this.countryIds, pageNumber, this.status).then( (promise) => {
             this.listOfMdfs = promise.data.results;
             this.paginate.items = promise.data.count;
             this.paginate.currentPage = pageNumber;
@@ -124,6 +125,7 @@ export default class MdfList {
             this.state.go('.', {
                 search: this.searchTerm,
                 countryIds: this.countryIds,
+                status: this.status,
             });
         }, 500);
     }

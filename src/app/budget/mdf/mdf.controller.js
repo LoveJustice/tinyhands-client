@@ -18,11 +18,11 @@ export default class MdfController {
     The former is what gets them put on this list of possible recipients, the latter is whether or not they actually receive
     this months MDF for this station. */
     retrieveMdf() {
-    	let mdfType = this.stateParams.mdf_type;
-    	if (!mdfType) {
-    		mdfType = 'budget';
+    	this.mdfType = this.stateParams.mdf_type;
+    	if (!this.mdfType) {
+    		this.mdfType = 'budget';
     	}
-        this.service.getMdf(this.stateParams.id,mdfType).then((promise) => {
+        this.service.getMdf(this.stateParams.id,this.mdfType).then((promise) => {
             this.staff = promise.data.staff_members;
             this.committeeMembers = promise.data.committee_members;
             this.nationalStaff = promise.data.national_staff_members;
@@ -56,6 +56,7 @@ export default class MdfController {
         people = this.getIds(this.committeeMembers, people, "committee_ids");
         people = this.getIds(this.nationalStaff, people, "national_staff_ids");
         people.budget_id = this.stateParams.id;
+        people.mdf_type = this.mdfType;
 
         this.service.sendMdfEmails(people).then(() => {
             this.toastr.success(`Successfully emailed the MDF`);

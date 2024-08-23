@@ -125,6 +125,10 @@ export class BaseIrfController extends BaseFormController {
     	});
     }
     
+    resourcesBorderClass() {
+    	return '';
+    }
+    
     getIntercepteeImage(url) {
         return new URL(url, this.constants.BaseUrl).href;
     }

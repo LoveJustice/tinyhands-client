@@ -273,6 +273,11 @@ export default class ProjectRequestListController {
     	return cssClass;
     }
     
+    displayStatus(status) {
+    	let display = status.replace('Completed','Ended');
+    	return display;
+    }
+    
     discuss(request) {
     	let theService = this.service;
     	let userId = this.session.user.id;
@@ -308,11 +313,29 @@ export default class ProjectRequestListController {
     	if (request.can_approve) {
     		let localRequest = jQuery.extend(true, {}, request);
     		localRequest.status = 'Approved';
-    		this.spinnerOverlayService.show("Approving request...");   
+    		this.spinnerOverlayService.show("Approving request...");
     		this.service.putRequest(localRequest).then( (promise) => {
-    			this.spinnerOverlayService.hide();
-    			this.requests[index] = promise.data;
-    			this.addExtra (this.requests[index]);
+    		    if (this.queryParameters.status==='') {
+        			this.spinnerOverlayService.hide();
+        			this.requests[index] = promise.data;
+        			this.addExtra (this.requests[index]);
+    		    } else {
+    		        if (this.paginate.items > this.paginate.currentPage * this.queryParameters.page_size) {
+    		            // Additional project requests on next page
+    		            this.showPage(this.paginate.currentPage);
+    		        } else {
+    		            this.paginate.items -= 1;
+    		            if (this.paginate.items > (this.paginate.currentPage - 1) * this.queryParameters.page_size) {
+    		                this.spinnerOverlayService.hide();
+    		                this.requests.splice(index,1);
+    		            } else {
+    		                if (this.paginate.currentPage > 1) {
+    		                    this.paginate.currentPage -= 1;
+    		                }
+    		                this.showPage(this.paginate.currentPage);
+    		            }
+    		        }
+    		    }
     		}, (error) => {
     			this.spinnerOverlayService.hide();
     			this.toastr.error("Failed to approve request:" + error.statusText);

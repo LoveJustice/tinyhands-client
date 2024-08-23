@@ -61,19 +61,32 @@
             </div>
         </div>
         <div class="col-md-6">
-            <form-step class="col-md-3 control-label" style="float:left">1.7 Education</form-step>
+            <form-step class="col-md-2 control-label" style="float:left">1.7 Education</form-step>
             <div class="col-md-3">
-                <form-step type="radio" radio-name="education" label="None/Illiterate" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+                <form-step type="radio" radio-name="education" label="None/Illiterate"
+                		response-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].value"
+                		other-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].otherValue"></form-step>
             </div>
             <div class="col-md-2">
-                <form-step type="radio" radio-name="education" label="Primary" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+                <form-step type="radio" radio-name="education" label="Primary"
+                		response-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].value"
+                		other-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].otherValue"></form-step>
             </div>
             <div class="col-md-2">
-                <form-step type="radio" radio-name="education" label="Secondary" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+                <form-step type="radio" radio-name="education" label="Secondary"
+						response-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].value"
+                		other-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].otherValue"></form-step>
             </div>
             <div class="col-md-2">
-                <form-step type="radio" radio-name="education" label="University" response-value="$ctrl.questions.pvfPvInfoPv.response.education.value"></form-step>
+                <form-step type="radio" radio-name="education" label="University"
+                		response-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].value"
+                		other-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].otherValue"></form-step>
             </div>
+        </div>
+        <div class="col-md-3">
+                <form-step type="otherRadio" radio-name="education" label="Other:"
+                		response-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].value"
+                		other-value="$ctrl.otherData.questions['pvfPvInfoPv-education'].otherValue"></form-step>
         </div>
     </div>
     <div class="row">

@@ -727,6 +727,7 @@ export class IrfNamibiaController extends BaseIrfBlindVerificationController {
         
         this.version2022_8 = true;
         this.officialFlight = true;
+        this.intercepteeConsent = true;
     }
     
     overrideRadioItems(items, questionId) {

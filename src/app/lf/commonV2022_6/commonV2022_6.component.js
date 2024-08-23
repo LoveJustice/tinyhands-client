@@ -135,7 +135,7 @@ export class LfCommonV2022_6Controller extends BaseLfController {
     
     getInfoCardConfig() {
     	let infoCard = {
-        	dateQuestions: [{tag:'lfInformationInterviewDate', type:'basic'}],
+        	dateQuestions: [{tag:'lfInformationInterviewDate', type:'basic'},{tag:'lfAssociationPvsStayStartDate', type:'basic'}],
         	otherQuestions: [{
         	    tag: 'lfInformationSourceType',
         	    radioItems:['Intercept','Operation','Victim','Police','Trafficker','OSI']},
@@ -144,7 +144,10 @@ export class LfCommonV2022_6Controller extends BaseLfController {
         	    radioItems:['Transit Location','Meet Point','Destination','Source of ID','Recruitment Agency']},
         	    {
         	    tag: 'lfInformationPlaceKind',
-        	    radioItems:['House','Bus Station','Hotel','Train Station','Airport','Port']}
+        	    radioItems:['House','Bus Station','Hotel','Train Station','Airport','Port']},
+        	    {
+        	    tag: 'lfAssociationPvsStayHowLong',
+        	    radioItems:['N/A (Not Applicable)']}
         	    ],
         	checkboxGroupQuestions: []
         };

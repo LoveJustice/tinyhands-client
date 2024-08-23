@@ -1,0 +1,13 @@
+<div id="lc-verification" class="row stretch-vertical">
+    <div class="col-md-3 stretch-vertical" ng-repeat="card in $ctrl.getCardInstances('Suspects')"
+    	ng-if="$ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectArrested').value==='Yes'">
+        <div class="panel panel-default clickable col-md-12 padding-0" ng-click="$ctrl.openVerificationModal(card, false, $index)">
+            <h3 class="panel-heading margin-top-0">{{ $ctrl.getSf($ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectSuspect').value).merged_person.full_name + 
+            		$ctrl.displayCaseNumbers($ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectCourtCases').value) }}</h3>
+            <div class="panel-body text-center">
+	                <form-step>Arrested: {{ $ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectArrestStatus').value }}</form-step>
+	                <form-step>{{ $ctrl.suspectSummary($ctrl.getResponseOfQuestionByTag(card.responses, 'lcSuspectSuspect').value, null) }}</form-step>
+            </div>
+        </div>
+    </div>
+</div>

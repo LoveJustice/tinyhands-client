@@ -51,6 +51,12 @@ export default class ReviewProjectRequestController {
             	if (this.categories[idx].text === 'Operational Expenses') {
             		this.operationalId = this.categories[idx].id + '';
             	}
+            	if (this.categories[idx].text === 'Potential Victim Care') {
+            		this.pvCareId = this.categories[idx].id + '';
+            	}
+            	if (this.categories[idx].text === 'Supplies & Awareness') {
+            		this.awarenessId = this.categories[idx].id + '';
+            	}
             }
         }, ()=>{
         	this.toastr.error("Failed to retrieve categories");
@@ -274,5 +280,10 @@ export default class ReviewProjectRequestController {
 		} else {
 			this.state.go('projectRequestList',{});
 		}
+    }
+    
+    displayStatus(status) {
+    	let display = status.replace('Completed','Ended');
+    	return display;
     }
 }

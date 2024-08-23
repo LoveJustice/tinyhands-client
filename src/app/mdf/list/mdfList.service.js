@@ -8,7 +8,7 @@ export default class MdfListService {
         return this.service.delete(`api/mdf-pr/${id}/`);
     }
 
-    getMdfList(searchTerm, sortValue, country_ids, nextPage) {
+    getMdfList(searchTerm, sortValue, country_ids, nextPage, status) {
         let params = [{ name: "page_size", value: "25" }, { name: "search", value: searchTerm }, { name: "ordering", value: sortValue }];
         if (country_ids !== null && country_ids !== '') {
             params.push({name:"country_ids", value:country_ids});
@@ -16,7 +16,14 @@ export default class MdfListService {
         if (nextPage !== null) {
             params.push({name:"page", value:nextPage});
         }
+        if (status !== null && status !== '') {
+        	params.push({name:"status", value:status});
+        }
         return this.service.get('api/mdf-combined/', params);
+    }
+    
+    getLastMdfDate(station_id) {
+    	return this.service.get(`api/mdf-pr/last-date/${station_id}/`);
     }
 
     getNextMdfPage(nextPageUrl) {
@@ -32,7 +39,8 @@ export default class MdfListService {
     }
     
     getUserCountries(id) {
-        return this.service.get(`api/user_permission/countries/${id}/?permission_group=BUDGETS`);
+        return this.service.get(`api/user_permission/countries/${id}/?permission_group=MDF&form_present=true`);
+
     }
     
     getUserStationsForAdd(id) {

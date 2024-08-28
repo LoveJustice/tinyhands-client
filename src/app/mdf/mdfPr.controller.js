@@ -878,7 +878,7 @@ export default class MdfPrController {
     canApproveForm() {
     	let canApprove = false;
     	if (this.form) {
-    		if (this.form.status === 'Pending' && this.form.past_month_sent_reviewed && this.form.money_not_spent_reviewed) {
+    		if (this.form.status === 'Pending' && this.form.money_not_spent_reviewed && (!this.form.past_month_sent || this.form.past_month_sent_reviewed)) {
     			if (this.session.checkPermission('MDF','ADD',this.form.country_id, this.form.project)) {
 	    			canApprove = true;
 	    		}

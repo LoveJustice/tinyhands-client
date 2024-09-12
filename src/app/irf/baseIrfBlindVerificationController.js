@@ -19,9 +19,9 @@ var TIE_BREAK_REVIEW = 3;
 var OVERRIDE = 4;
 
 export class BaseIrfBlindVerificationController extends BaseIrfController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService);
         
         this.stepTemplates = [
             {template:topBoxTemplate, name:"Top"},

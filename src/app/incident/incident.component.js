@@ -2,9 +2,9 @@ import {BaseFormController} from '../baseFormController.js';
 import templateUrl from './incident.html';
 
 export class IncidentController extends BaseFormController {
-    constructor($scope, $stateParams, $state, $uibModalStack, SpinnerOverlayService, SessionService, IncidentService) {
+    constructor($scope, $stateParams, $state, $uibModalStack, SpinnerOverlayService, SessionService, IncidentService, BaseUrlService) {
         'ngInject';
-        super($scope, $stateParams, $uibModalStack);
+        super($scope, $stateParams, $uibModalStack, BaseUrlService);
 
         this.state = $state;
         this.spinner = SpinnerOverlayService;

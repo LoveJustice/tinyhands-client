@@ -15,9 +15,9 @@ import complianceTemplate from './step-templates/compliance.html';
 import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
 
 export class LfCommonV2022_6Controller extends BaseLfController {
-    constructor($scope, $uibModal, LfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout) {
+    constructor($scope, $uibModal, LfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout, BaseUrlService) {
         'ngInject';        
-        super($scope, $uibModal, LfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout);
+        super($scope, $uibModal, LfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout, BaseUrlService);
 
         this.stepTemplates = [
             {template:topTemplate,name:'Top Box'},

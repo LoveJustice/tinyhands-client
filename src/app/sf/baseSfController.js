@@ -5,9 +5,9 @@ const CheckboxGroup = require('../checkboxGroup.js');
 
 
 export class BaseSfController extends BaseFormController {
-    constructor($scope, $uibModal, SfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout) {
+    constructor($scope, $uibModal, SfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, $timeout, BaseUrlService) {
         'ngInject';
-        super($scope, $stateParams, $uibModalStack);
+        super($scope, $stateParams, $uibModalStack, BaseUrlService);
         
         this.incidentService = IncidentService;
         this.$uibModal = $uibModal;

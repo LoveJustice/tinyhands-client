@@ -146,15 +146,17 @@ export default class SessionService {
         this.service.get('api/logout/');
         if(this.auth0Service.clientReadyPromise) {
             const nonQPromise = this.auth0Service.clientReadyPromise.then((client) => {
-                client.logout();
+                client.logout({
+                    openUrl: false
+                });
             }).finally(() => {
                 // Always do legacy logout
-                // this.logoutLegacy();
+                this.logoutLegacy();
             });
             // When everything returns, trigger angular digest cycle to refresh page
             return this.$q.when(nonQPromise);
         } else {
-            // this.logoutLegacy();
+            this.logoutLegacy();
         }
     }
 

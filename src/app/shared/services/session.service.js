@@ -149,12 +149,12 @@ export default class SessionService {
                 client.logout();
             }).finally(() => {
                 // Always do legacy logout
-                this.logoutLegacy();
+                // this.logoutLegacy();
             });
             // When everything returns, trigger angular digest cycle to refresh page
             return this.$q.when(nonQPromise);
         } else {
-            this.logoutLegacy();
+            // this.logoutLegacy();
         }
     }
 

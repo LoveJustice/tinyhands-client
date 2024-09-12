@@ -14,7 +14,7 @@ export default class BaseUrlService {
         } else if (hostname === 'staging.searchlightdata.org') {
             baseUrl = 'https://staging.searchlightdata.org/re/';
         } else {
-            baseUrl = 'http://localhost:5173/';
+            baseUrl = 'http://localhost:5173/re/';
         }
 
         return baseUrl + path;

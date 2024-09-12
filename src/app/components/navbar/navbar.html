@@ -27,7 +27,7 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null)"
-                            ng-href="{{ navbarCtrl.getReactUrl('irf/search') }}"
+                            ng-href="{{ navbarCtrl.getReactUrl('irf/search?status=!invalid') }}"
                             ng-click="navbarCtrl.trackButtonClick('IRFs')">IRFs</a>
                     </li>
                     <li>

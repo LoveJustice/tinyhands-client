@@ -6,7 +6,7 @@ const ID = 1;
 const TAG = 2;
 
 export class BaseFormController {
-    constructor($scope, $stateParams, $uibModalStack) {
+    constructor($scope, $stateParams, $uibModalStack, BaseUrlService) {
         'ngInject';
         this.$scope = $scope;
         this.stateParams = $stateParams;
@@ -55,6 +55,10 @@ export class BaseFormController {
         this.warningMessages = [];
         
         this.setupFlagListener();
+
+        this.getReactUrl = function(path) {
+           return BaseUrlService.getReactUrl(path);
+        };
     }
     
     getErrorMessages() {
@@ -413,25 +417,30 @@ export class BaseFormController {
             this.relatedForms = {};
             for (let idx in relatedForms) {
                 let url = null;
+                let action;
                 if (relatedForms[idx].form_type === 'Incident' ||
                         this.session.checkPermission(relatedForms[idx].form_type,'EDIT',relatedForms[idx].country_id, stationId)) {
+                    action = 'edit';
+                } else if (this.session.checkPermission(relatedForms[idx].form_type,'VIEW',relatedForms[idx].country_id, stationId)) {
+                    action = 'view';
+                } else {
+                    continue;
+                }
+                const id = relatedForms[idx].id;
+                const stationId = relatedForms[idx].station_id;
+                const countryId = relatedForms[idx].country_id;
+                if(relatedForms[idx].form_type === 'Incident'){
                     url = this.state.href(relatedForms[idx].form_name, {
                         id: relatedForms[idx].id,
                         stationId: relatedForms[idx].station_id,
                         countryId: relatedForms[idx].country_id,
+                        // Always editing Incident
                         isViewing: false,
                         formName: relatedForms[idx].form_name,
                     });
-                } else if (this.session.checkPermission(relatedForms[idx].form_type,'VIEW',relatedForms[idx].country_id, stationId)) {
-                    url = this.state.href(relatedForms[idx].form_name, {
-                        id: relatedForms[idx].id,
-                        stationId: relatedForms[idx].station_id,
-                        countryId: relatedForms[idx].country_id,
-                        isViewing: true,
-                        formName: relatedForms[idx].form_name,
-                    });
                 } else {
-                    continue;
+                    url = this.getReactUrl(
+                        `${relatedForms[idx].form_type.toLowerCase()}/${id}/${action}?stationId=${stationId}&countryId=${countryId}`);
                 }
                 if (!this.relatedForms[relatedForms[idx].form_type]) {
                     this.relatedForms[relatedForms[idx].form_type] = []; 

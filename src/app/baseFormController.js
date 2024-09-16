@@ -429,14 +429,19 @@ export class BaseFormController {
                 const id = relatedForms[idx].id;
                 const stationId = relatedForms[idx].station_id;
                 const countryId = relatedForms[idx].country_id;
-                if(relatedForms[idx].form_type === 'Incident'){
+                if(relatedForms[idx].form_type === 'Incident' || relatedForms[idx].form_type === 'LEGAL_CASE'){
+                    let isViewing = action === 'view'
+                    if(relatedForms[idx].form_type === 'Incident'){
+                        // Always editing Incident
+                        isViewing = 'false';
+                    }
                     url = this.state.href(relatedForms[idx].form_name, {
                         id: relatedForms[idx].id,
                         stationId: relatedForms[idx].station_id,
                         countryId: relatedForms[idx].country_id,
-                        // Always editing Incident
-                        isViewing: false,
+                        isViewing: isViewing,
                         formName: relatedForms[idx].form_name,
+                        // Note: Legal cases won't have related links because we aren't passing incident ID here.
                     });
                 } else {
                     url = this.getReactUrl(

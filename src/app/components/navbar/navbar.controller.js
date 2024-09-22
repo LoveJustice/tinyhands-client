@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 export default class NavbarController {
-    constructor($scope, $state, constants, BorderStationService, SessionService) {
+    constructor($scope, $state, constants, BorderStationService, SessionService, BaseUrlService) {
         'ngInject';
 
         this.borderStationService = BorderStationService;
@@ -11,7 +11,10 @@ export default class NavbarController {
         this.borderStationMap = {};
         this.countryNames = [];
 
-       
+        this.getReactUrl = function(path) {
+           return BaseUrlService.getReactUrl(path);
+        };
+
         this.state = $state;
 
         $scope.$on('GetNavBarBorderStations', () => {

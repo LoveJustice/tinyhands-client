@@ -16,9 +16,9 @@ import complianceTemplate from './common/step-templates/compliance.html';
 import verificationTemplate from './common/step-templates/verificationBlind.html';
 
 export class BaseIrfSfeController extends BaseIrfBlindVerificationController {
-	constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
+	constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService);
         
         this.stepTemplates = [
             {template:topBoxTemplate, name:"Top"},

@@ -25,9 +25,9 @@ import vehicleBoxTemplate from '../common/step-templates/vehicleBoxes/vehicleBox
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class CifOsiController extends BaseCifController {
-    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack, SessionService) {
+    constructor($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService) {
         'ngInject';        
-        super($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack, SessionService);
+        super($scope, $uibModal, constants, CifService, $stateParams, $state, $timeout, IrfService,  SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService);
        
         this.stepTemplates = [
             {template:topTemplate, name:"Top"},

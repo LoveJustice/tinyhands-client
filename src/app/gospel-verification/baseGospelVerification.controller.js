@@ -2,9 +2,9 @@
 import {BaseFormController} from '../baseFormController.js';
 
 export class BaseGospelVerificationController extends BaseFormController {
-    constructor($scope, GospelVerificationService, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
+    constructor($scope, GospelVerificationService, VdfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService) {
         'ngInject';
-        super($scope, $stateParams, $uibModalStack);
+        super($scope, $stateParams, $uibModalStack, BaseUrlService);
         
         this.service = GospelVerificationService;
         this.vdfService = VdfService;

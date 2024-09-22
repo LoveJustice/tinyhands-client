@@ -19,9 +19,9 @@ import complianceTemplate from './step-templates/compliance.html';
 import attachmentTemplate from './step-templates/attachments/attachment-modal.html';
 
 export class PvfCommonV2022_6Controller extends BasePvfController {
-    constructor($scope, $uibModal, constants, PvfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService) {
+    constructor($scope, $uibModal, constants, PvfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, BaseUrlService) {
         'ngInject';        
-        super($scope, $uibModal, constants, PvfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService);
+        super($scope, $uibModal, constants, PvfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, IncidentService, BaseUrlService);
 
         this.stepTemplates = [
             {template:topTemplate,name:'Top Box'},

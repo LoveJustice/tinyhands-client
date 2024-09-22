@@ -20,9 +20,9 @@ import attachmentTemplate from './step-templates/attachments/attachmentModal.htm
 import verificationTemplate from './step-templates/verification/verificationModal.html';
 
 export class LegalCaseCommonController extends BaseLegalCaseController {
-    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService) {
+    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService, BaseUrlService) {
         'ngInject';        
-        super($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService);
+        super($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService, BaseUrlService);
        
         this.stepTemplates = [
             legalCaseTemplate,

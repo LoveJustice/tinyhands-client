@@ -1,7 +1,7 @@
 import './audit.less';
 
 export default class AuditSampleController {
-    constructor(AuditService, SessionService, $state, $stateParams, toastr, constants) {
+    constructor(AuditService, SessionService, BaseUrlService, $state, $stateParams, toastr, constants) {
         'ngInject';
         this.service = AuditService;
         this.session = SessionService;
@@ -10,43 +10,56 @@ export default class AuditSampleController {
         this.toastr = toastr;
         this.constants = constants;
         this.digits1Format = {'minimumFractionDigits': 1, 'maximumFractionDigits': 1};
-        
+
         this.audit = null;
         this.auditSample = null;
-        
-        this.isViewing = !this.session.checkPermission('AUDIT','SUBMIT_SAMPLE',null, null);
-        this.getAuditSample();
-        this.getAudit();
+
+        this.getReactUrl = (path) => {
+           return BaseUrlService.getReactUrl(path);
+        };
+
+        this.isViewing = !this.session.checkPermission('AUDIT', 'SUBMIT_SAMPLE', null, null);
+
+        this.getAudit()
+            .then(() => this.getAuditSample())
+            .then(() => this.setSampleRef());
     }
-    
+
     getAudit() {
-        this.service.getAudit(this.stateParams.auditId).then((promise) => {
+        return this.service.getAudit(this.stateParams.auditId).then((promise) => {
             this.audit = promise.data;
-            this.isViewing = !this.session.checkPermission('AUDIT','SUBMIT_SAMPLE', this.audit.country, null);
+            this.isViewing = !this.session.checkPermission('AUDIT', 'SUBMIT_SAMPLE', this.audit.country, null);
         });
     }
-    
+
     getAuditSample() {
-        this.service.getAuditSample(this.stateParams.id).then((promise) => {
+        return this.service.getAuditSample(this.stateParams.id).then((promise) => {
             this.auditSample = promise.data;
-            let baseRoute = this.auditSample.form_name;
-            if (this.auditSample.station_id !== null) {
-                let params = {
-                        id: this.auditSample.form_id,
-                        stationId:this.auditSample.station_id,
-                        countryId:this.auditSample.country_id,
-                        isViewing:true,
-                        formName:this.auditSample.form_name,
-                    };
-                this.auditSample.ref = this.state.href(baseRoute, params);
-            } else {
-                this.auditSample.ref = null;
-            }
             if (this.auditSample.corrected === null || this.auditSample.corrected === '') {
                 this.auditSample.corrected = 'No';
             }
         });
     }
+
+    setSampleRef() {
+        // May need to find a better way to get the form name / path to ensure we reliably get the right path here
+        let path = this.audit.form_type_name + '/' + this.auditSample.form_id;
+        if (this.auditSample.station_id !== null) {
+            let reactParams = new URLSearchParams({
+                countryName: this.audit.country_name,
+                stationId: this.auditSample.station_id,
+                countryId: this.auditSample.country_id
+            }).toString();
+
+            // Combine baseRoute with query string
+            let reactPath = `${path}/view?${reactParams}`;
+
+            this.auditSample.ref = this.getReactUrl(reactPath);
+        } else {
+            this.auditSample.ref = null;
+        }
+    }
+
     
     getTotal() {
         let total = 0;

@@ -27,32 +27,32 @@
                 <ul class="dropdown-menu">
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('IRF','VIEW',null, null)"
-                            ui-sref="irfNewList"
+                            ng-href="{{ navbarCtrl.getReactUrl('irf/search?status=!invalid') }}"
                             ng-click="navbarCtrl.trackButtonClick('IRFs')">IRFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('PVF','VIEW',null, null)"
-                            ui-sref="pvfList"
+                            ng-href="{{ navbarCtrl.getReactUrl('pvf/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('PVFs')">PVFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('SF','VIEW',null, null)"
-                            ui-sref="sfList"
+                            ng-href="{{ navbarCtrl.getReactUrl('sf/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('SFs')">SFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('LF','VIEW',null, null)"
-                            ui-sref="lfList"
+                            ng-href="{{ navbarCtrl.getReactUrl('lf/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('LFs')">LFs</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('EMP','VIEW',null, null);"
-                            ui-sref="empList"
+                            ng-href="{{ navbarCtrl.getReactUrl('emp/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('Emps')">Emps</a>
                     </li>
                     <li>
                         <a ng-show="navbarCtrl.session.checkPermission('GSP','VIEW',null, null);"
-                            ui-sref="gspList"
+                            ng-href="{{ navbarCtrl.getReactUrl('gsp/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('Gsps')">Gsps</a>
                     </li>
                     <li>

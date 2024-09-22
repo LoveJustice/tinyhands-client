@@ -6,9 +6,9 @@ import templateUrl from '../common/irf.html';
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfSfeNepalController extends BaseIrfSfeController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService);
         
         this.checkboxGroup = new CheckboxGroup();
         

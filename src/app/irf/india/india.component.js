@@ -8,9 +8,9 @@ import intercepteeModalTemplate from '../common/step-templates/interceptees/inte
 import attachmentTemplate from '../common/step-templates/attachments/attachmentModal.html';
 
 export class IrfIndiaController extends BaseIrfBlindVerificationController {
-    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService) {
+    constructor($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService) {
         'ngInject';
-        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService);
+        super($scope, $uibModal, constants, IrfService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, SessionService, BaseUrlService);
         
         this.checkboxGroup = new CheckboxGroup();
         

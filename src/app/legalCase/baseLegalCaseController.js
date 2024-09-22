@@ -4,9 +4,9 @@ const ConfirmModalController = require('./confirmModalController.js');
 import confirmTemplate from './confirmModal.html';
 
 export class BaseLegalCaseController extends BaseFormController {
-    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService) {
+    constructor($scope, $uibModal, constants, LegalCaseService, $stateParams, $state, SpinnerOverlayService, $uibModalStack, IrfService, SessionService, IncidentService, BaseUrlService) {
         'ngInject';
-        super($scope, $stateParams, $uibModalStack);
+        super($scope, $stateParams, $uibModalStack, BaseUrlService);
         
         this.$uibModal = $uibModal;
         this.constants = constants;

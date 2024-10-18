@@ -421,7 +421,11 @@ export default class MdfPrController {
     getBenefitCost(project, staff, benefit) {
     	let key = this.getSalaryKey(project,staff,benefit);
     	if (key in this.salary.requests) {
-    		return this.penniesToStr(this.strToPennies(this.salary.requests[key][0].cost));
+    		let total = 0;
+    		for (let costIdx in this.salary.requests[key]) {
+    			total += this.strToPennies(this.salary.requests[key][costIdx].cost)
+    		}
+    		return this.penniesToStr(total);
     	} else {
     		return null;
     	}

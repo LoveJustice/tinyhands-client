@@ -39,4 +39,8 @@ export default class MdfService {
     approveMdf(mdf) {
     	return this.service.put(`api/mdf-pr/approve/${mdf.id}/`, mdf);
     }
+    
+    getMdfTrend(id) {
+    	return this.service.get(`api/mdf-pr/trend/${id}/`);
+    }
 }

@@ -97,6 +97,17 @@ export default class MdfPrController {
             { name: 'November', value: 11 },
             { name: 'December', value: 12 },
         ];
+        
+        this.nationalTrendSections = [
+        	'Salaries & Benefits',
+        	'Rent & Utilities',
+        	'Administration',
+        	'Supplies & Awareness',
+        	'Staff Travel',
+        	'PV Care',
+        	'Operational Expenses',
+        	'Money Not Spent (To Deduct)',
+        ];
 
 		this.dropDecimal = false;
         this.active = null;
@@ -688,6 +699,11 @@ export default class MdfPrController {
             .getMdf(this.mdfId)
             .then(response => {
                 this.form = response.data;
+                if (this.form.status === 'Initial Review' || this.form.status === 'Approved') {
+                	this.service.getMdfTrend(this.mdfId).then ((trendResponse) => {
+                		this.trend = trendResponse.data;
+                	})
+                }
                 this.month = parseInt(window.moment(this.form.month_year).format('M'));
                 this.year = parseInt(window.moment(this.form.month_year).format('YYYY'));
                 this.borderStationId = response.data.border_station;
@@ -1049,5 +1065,35 @@ export default class MdfPrController {
     		}
     	}
     	return comment;
+    }
+    
+    colorMonth(projectId) {
+    	let result = '';
+    	if (this.trend.projects[projectId]) {
+    		if (this.trend.national.month.prior.month !== this.trend.projects[projectId].month.prior.month) {
+    			result = 'trendMajorBad';
+    		}
+    	}
+    	return result;
+    }
+    
+    getTrendColor(trend, colorDirection=1) {
+    	let result = '';
+    	let trendColor = trend * colorDirection;
+    	if (trend > 0) {
+    		result = "fa fa-arrow-up";
+    	} else if(trend < 0) {
+    		result = "fa fa-arrow-down";
+    	}
+    	if (trendColor > 1) {
+    		result += " trendMajorGood";
+    	} else if (trendColor > 0) {
+    		result += " trendMinorGood";
+    	} else if (trendColor < -1) {
+    		result += " trendMajorBad";
+    	} else if (trendColor < 0) {
+    		result += " trendMinorBad";
+    	}
+    	return result;
     }
 }

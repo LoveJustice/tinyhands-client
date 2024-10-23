@@ -1111,7 +1111,10 @@ export default class MdfPrController {
     attachSignedForm() {
     	this.service.attachFile(this.form.id, this.form, this.signedForm).then((promise) => {
     		 this.getMdfForm();
-    	}, (error) => {console.log(error)});
+    	}, (error) => {
+    		this.toastr.error(`Failed to attach form`);
+    		console.log(error);
+    	});
     }
     
     viewSignedForm() {

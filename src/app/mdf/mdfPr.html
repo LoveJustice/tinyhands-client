@@ -15,7 +15,9 @@
 						ng-change="mdfCtrl.attachSignedForm()">Attach Signed Form</button>
 			</div>
 			<div class="pull-right" ng-if="!mdfCtrl.canApproveForm() && mdfCtrl.form.status==='Approved' && mdfCtrl.form.signed_pbs!==''">
-				<button ng-class="mdfCtrl.getApprovalClass()" ng-click="mdfCtrl.viewSignedForm()">View Signed Form</button>
+				<button class="btn btn-lg btn-success text-wrap" ng-click="mdfCtrl.viewSignedForm()">View Signed Form</button>
+				<button class="btn btn-sm btn-warning text-wrap" type="file" ngf-select bindLabel="Attach Signed Form" ng-model="mdfCtrl.signedForm"
+						ng-change="mdfCtrl.attachSignedForm()">Replace Signed Form</button>
 			</div>
 		</h2>
 		

@@ -21,7 +21,8 @@ class LoginController {
             // https://www.sitepoint.com/easy-angularjs-authentication-with-auth0/
             auth0Client.getTokenWithPopup({
                 authorizationParams: {
-                    audience: AUTH0_AUDIENCE_ID
+                    audience: AUTH0_AUDIENCE_ID,
+                    prompt: 'login'
                 }
             }).then(() => {
                 this.$state.go(this.returnStateName, this.returnStateParams);

@@ -10,6 +10,15 @@
     			<p class="textDiscussionFont">
     				<a ui-sref="projectRequestList({mdf_id:mdfCtrl.mdfId})" ng-disabled="mdfCtrl.openDiscussions < 1">Open Discussions: {{ mdfCtrl.openDiscussions }} </a></p>
 			</div>
+			<div class="pull-right" ng-if="!mdfCtrl.canApproveForm()&&mdfCtrl.canEdit&&mdfCtrl.form.status==='Approved' && mdfCtrl.form.signed_pbs===''">
+				<button ng-class="mdfCtrl.getApprovalClass()" type="file" ngf-select bindLabel="Attach Signed Form" ng-model="mdfCtrl.signedForm"
+						ng-change="mdfCtrl.attachSignedForm()">Attach Signed Form</button>
+			</div>
+			<div class="pull-right" ng-if="!mdfCtrl.canApproveForm() && mdfCtrl.form.status==='Approved' && mdfCtrl.form.signed_pbs!==''">
+				<button class="btn btn-lg btn-success text-wrap" ng-click="mdfCtrl.viewSignedForm()">View Signed Form</button>
+				<button class="btn btn-sm btn-warning text-wrap" type="file" ngf-select bindLabel="Attach Signed Form" ng-model="mdfCtrl.signedForm"
+						ng-change="mdfCtrl.attachSignedForm()">Replace Signed Form</button>
+			</div>
 		</h2>
 		
 	</div>

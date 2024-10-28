@@ -42,7 +42,7 @@ class Tracking {
 }
 
 export default class MdfPrController {
-    constructor($state, $stateParams,  $uibModal, MdfService, SessionService, UtilService, SpinnerOverlayService, toastr, $scope) {
+    constructor($state, $stateParams,  $uibModal, MdfService, SessionService, UtilService, SpinnerOverlayService, toastr, $scope, $window, constants) {
         'ngInject';
 
         this.$state = $state;
@@ -65,6 +65,8 @@ export default class MdfPrController {
         this.usdDecimalDigits = 2;
         this.modified = false;
         this.scope = $scope;
+        this.window = $window;
+        this.constantsParam = constants;
 
 		this.constants = Constants;
         this.sections = {
@@ -712,6 +714,7 @@ export default class MdfPrController {
                 		this.trend = trendResponse.data;
                 	})
                 }
+                this.canEdit = this.session.checkPermission('MDF','EDIT',this.form.country_id, this.form.project);
                 this.month = parseInt(window.moment(this.form.month_year).format('M'));
                 this.year = parseInt(window.moment(this.form.month_year).format('YYYY'));
                 this.borderStationId = response.data.border_station;
@@ -1093,7 +1096,7 @@ export default class MdfPrController {
     	} else if(trend < 0) {
     		result = "fa fa-arrow-down";
     	}
-    	if (trendColor > 1) {
+    	if (trendColor > 1) {;
     		result += " trendMajorGood";
     	} else if (trendColor > 0) {
     		result += " trendMinorGood";
@@ -1103,5 +1106,21 @@ export default class MdfPrController {
     		result += " trendMinorBad";
     	}
     	return result;
+    }
+    
+    attachSignedForm() {
+    	this.service.attachFile(this.form.id, this.form, this.signedForm).then((promise) => {
+    		 this.getMdfForm();
+    	}, (error) => {
+    		this.toastr.error(`Failed to attach form`);
+    		console.log(error);
+    	});
+    }
+    
+    viewSignedForm() {
+    	if (this.form.signed_pbs && this.form.signed_pbs !== '') {
+	    	let url = new URL(this.form.signed_pbs, this.constantsParam.BaseUrl).href
+	    	this.window.open(url, '_blank');
+    	}
     }
 }

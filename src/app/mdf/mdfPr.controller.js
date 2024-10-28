@@ -197,7 +197,8 @@ export default class MdfPrController {
     }
     
     penniesToStr(pennies) {
-    	let value = pennies;
+    	let negative = pennies < 0;
+    	let value = Math.abs(pennies);
     	if (this.currencyType === 'USD') {
     		value = Math.round(value / this.form.exchange_rate);
     	}
@@ -212,6 +213,9 @@ export default class MdfPrController {
 	        str = dollars + '.' + str;
         } else {
         	str = dollars + '';
+        }
+        if (negative) {
+        	str = '-' + str;
         }
         return str;
     }

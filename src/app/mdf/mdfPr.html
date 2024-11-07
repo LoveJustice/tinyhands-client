@@ -10,6 +10,15 @@
     			<p class="textDiscussionFont">
     				<a ui-sref="projectRequestList({mdf_id:mdfCtrl.mdfId})" ng-disabled="mdfCtrl.openDiscussions < 1">Open Discussions: {{ mdfCtrl.openDiscussions }} </a></p>
 			</div>
+			<div class="pull-right" ng-if="!mdfCtrl.canApproveForm()&&mdfCtrl.canEdit&&mdfCtrl.form.status==='Approved' && mdfCtrl.form.signed_pbs===''">
+				<button ng-class="mdfCtrl.getApprovalClass()" type="file" ngf-select bindLabel="Attach Signed Form" ng-model="mdfCtrl.signedForm"
+						ng-change="mdfCtrl.attachSignedForm()">Attach Signed Form</button>
+			</div>
+			<div class="pull-right" ng-if="!mdfCtrl.canApproveForm() && mdfCtrl.form.status==='Approved' && mdfCtrl.form.signed_pbs!==''">
+				<button class="btn btn-lg btn-success text-wrap" ng-click="mdfCtrl.viewSignedForm()">View Signed Form</button>
+				<button class="btn btn-sm btn-warning text-wrap" type="file" ngf-select bindLabel="Attach Signed Form" ng-model="mdfCtrl.signedForm"
+						ng-change="mdfCtrl.attachSignedForm()">Replace Signed Form</button>
+			</div>
 		</h2>
 		
 	</div>
@@ -67,27 +76,125 @@
       <textarea class="form-control" rows="3" ng-model="mdfCtrl.form.notes"></textarea>
     </div>
   </div>
+  
 
   <!-- Total Table -->
-  <div id="totalTable" class="col-xs-12 col-md-offset-3 col-md-6">
-    <table class="table">
+  <div id="totalTable" class="col-xs-12 col-md-offset-2 col-md-8">
+  	<table class="table table-bordered" ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+  		<thead>
+  		<tr>
+  			<th colspan="4" class="text-center">{{ mdfCtrl.trend.national.label }}</th>
+  		</tr>
+  		<tr>
+  			<th>Category</th>
+  			<th>{{ mdfCtrl.getMonthName() }}</th>
+  			<th>{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station+''].month.prior.month }}</th>
+        	<th>Trend</th>
+  		</tr>
+  		</thead>
+  		<tbody>
+  			<tr>
+  				<td>Intercepts</td>
+  				<td>
+  					<p class="text-right">{{ mdfCtrl.trend.national.intercepts.current }}</p>
+  				</td>
+  				<td>
+  					<p class="text-right">{{ mdfCtrl.trend.national.intercepts.prior }}</p>
+  				</td>
+  				<td>
+  					<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.national.intercepts.trend)"></i>
+  				</td>
+  			</tr>
+  			<tr ng-repeat="section in mdfCtrl.nationalTrendSections">
+  				<td>{{ section }}</td>
+  				<td>
+  					<p class="text-right">{{ mdfCtrl.trend.national[section].current[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+  				</td>
+  				<td>
+  					<p class="text-right">{{ mdfCtrl.trend.national[section].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+  				</td>
+  				<td>
+  					<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.national[section].trend, -1)"></i>
+  				</td>
+  			</tr>
+  			<tr>
+	          <td class="text-left text-large"><b>Monthly Distribution Subtotal</b></td>
+	          <td>
+	            <p class="text-right text-large"><b>{{ mdfCtrl.trend.national['Distribution'].current[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</b></p>
+	          </td>
+	          <td>
+	          	  <p class="text-right">{{ mdfCtrl.trend.national['Distribution'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+	            </td>
+	            <td>
+	          	  <i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.national.Distribution.trend,-1)"></i>
+	           </td>
+	        </tr>
+	        <tr>
+	        	<td>&nbsp;</td>
+	        </tr>
+	        <tr>
+	          <td class="text-left active text-small">
+	          	<div>Past Month Sent Money Subtotal</div>
+	          	<div>This total has already been sent and is not included in the monthly distribution.</div>
+	          </td>
+	          <td class="text-right active text-small">{{ mdfCtrl.trend.national['Past Month Sent Money'].current[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+	          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+	          	<p class="text-right active text-small">{{ mdfCtrl.trend.national['Past Month Sent Money'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+	          </td>
+	          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+	          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.national['Past Month Sent Money'].trend,-1)"></i>
+	          </td>
+	        </tr>
+  		</tbody>
+  	</table>
+    <table class="table table-bordered">
       <thead>
         <tr>
-          <th colspan="2" class="text-center">{{ mdfCtrl.getProject(mdfCtrl.form.border_station).project_category_name}}: {{ mdfCtrl.getProject(mdfCtrl.form.border_station).station_name }}</th>
+          <th colspan="4" class="text-center">{{ mdfCtrl.getProject(mdfCtrl.form.border_station).project_category_name}}: {{ mdfCtrl.getProject(mdfCtrl.form.border_station).station_name }}</th>
+        </tr>
+        <tr>
+        	<th>Category</th>
+        	<th>{{ mdfCtrl.getMonthName() }}</th>
+        	<th ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend" ng-class="mdfCtrl.colorMonth(mdfCtrl.form.border_station)">{{mdfCtrl.trend.projects[mdfCtrl.form.border_station+''].month.prior.month}}</th>
+        	<th ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">Trend</th>
         </tr>
       </thead>
       <tbody>
+      	<tr ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+      		<td>Intercepts</td>
+      		<td>
+      			<p class="text-right">{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station].intercepts.current }}</p>
+      		</td>
+      		<td>
+      			<p class="text-right">{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station].intercepts.prior }}</p>
+      		</td>
+      		<td>
+      			<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[mdfCtrl.form.border_station].intercepts.trend)"></i>
+      		</td>
+      	</tr>
         <tr ng-repeat="section in mdfCtrl.sections.allSections" ng-if="section.include">
           <td>{{ section.name }}</td>
-          <td width="25%">
+          <td>
             <p class="text-right">{{ mdfCtrl.totals[mdfCtrl.form.border_station][section.value].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<p class="text-right">{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station][section.name].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[mdfCtrl.form.border_station+''][section.name].trend,-1)"></i>
           </td>
         </tr>
         <tr>
         	<td>Money Not Spent(To Deduct)</td>
-	        	<td width="25%">
+	        <td>
 	            <p class="text-right">{{ mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay| currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
         	</td>
+        	<td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	  <p class="text-right">{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station]['Money Not Spent (To Deduct)'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+            </td>
+            <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	  <i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[mdfCtrl.form.border_station]['Money Not Spent (To Deduct)'].trend,-1)"></i>
+           </td>
         </tr>
       </tbody>
       <tbody>
@@ -96,66 +203,126 @@
           <td>
             <p class="text-right text-large"><b>{{ mdfCtrl.totals[mdfCtrl.form.border_station].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</b></p>
           </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	  <p class="text-right">{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station]['Distribution'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+            </td>
+            <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	  <i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[mdfCtrl.form.border_station]['Distribution'].trend,-1)"></i>
+           </td>
         </tr>
-        <tr>
+        <tr ng-if="!((!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend)">
           <td class="text-left active text-small">Last Month's Distribution Subtotal</td>
           <td class="text-right active text-small">{{ mdfCtrl.penniesToStr(mdfCtrl.strToPennies(mdfCtrl.form.last_months_total)) | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
         </tr>
-        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0 || (!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
         	<td>&nbsp;</td>
         </tr>
-        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+        <tr ng-if="mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].total > 0 || (!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
           <td class="text-left active text-small">
           	<div>Past Month Sent Money Subtotal</div>
           	<div>This total has already been sent and is not included in the monthly distribution.</div>
           </td>
           <td class="text-right active text-small">{{ mdfCtrl.totals[mdfCtrl.form.border_station][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<p class="text-right active text-small">{{ mdfCtrl.trend.projects[mdfCtrl.form.border_station]['Past Month Sent Money'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[mdfCtrl.form.border_station]['Past Month Sent Money'].trend,-1)"></i>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  <div class="col-xs-12 col-md-offset-3 col-md-6" ng-repeat="project in mdfCtrl.allProjects"
+  <div class="col-xs-12 col-md-offset-2 col-md-8" ng-repeat="project in mdfCtrl.allProjects"
   		ng-if="project.id !== mdfCtrl.form.border_station && mdfCtrl.displayProjectTotal(project.id) !== '0.00'">
    	<table class="table table-bordered table-hover">
       <thead>
         <tr>
           <th colspan="2" class="text-center">{{ project.project_category_name }}: {{ project.station_name }}</th>
         </tr>
+        <tr>
+        	<th>Category</th>
+        	<th>{{ mdfCtrl.getMonthName() }}</th>
+        	<th ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend" ng-class="mdfCtrl.colorMonth(project.id)">{{mdfCtrl.trend.projects[project.id+''].month.prior.month}}</th>
+        	<th ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">Trend</th>
+        </tr>
       </thead>
       <tbody>
+        <tr ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+      		<td>Intercepts</td>
+      		<td>
+      			<p class="text-right">{{ mdfCtrl.trend.projects[project.id].intercepts.current }}</p>
+      		</td>
+      		<td>
+      			<p class="text-right">{{ mdfCtrl.trend.projects[project.id].intercepts.prior }}</p>
+      		</td>
+      		<td>
+      			<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[project.id].intercepts.trend)"></i>
+      		</td>
+      	</tr>
       	<tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.Salaries].total > 0">
       	  <td>Salaries And Benefits</td>
-      	  <td width="25%">
+      	  <td>
                <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.Salaries].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
-             </td>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<p class="text-right">{{ mdfCtrl.trend.projects[project.id+'']['Salaries & Benefits'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[project.id+'']['Salaries & Benefits'].trend,-1)"></i>
+          </td>
       	</tr>
       	<tr>
       	  <td>Operational Expenses</td>
-      	  <td width="25%">
+      	  <td>
                <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.ImpactMultiplying].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
              </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<p class="text-right">{{ mdfCtrl.trend.projects[project.id+'']['Operational Expenses'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[project.id+'']['Operational Expenses'].trend,-1)"></i>
+          </td>
       	</tr>
       	<tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent] && mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay > 0">
         	<td>Money Not Spent(To Deduct)</td>
-	        	<td width="25%">
+	        	<td>
 	            <p class="text-right">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.MoneyNotSpent].toDeductDisplay| currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
         	</td>
+        	<td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	  <p class="text-right">{{ mdfCtrl.trend.projects[project.id+'']['Money Not Spent (To Deduct)'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+            </td>
+            <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	  <i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[project.id+'']['Money Not Spent (To Deduct)'].trend,-1)"></i>
+            </td>
         </tr>
       	<tr>
          <td class="text-left text-large"><b>{{ project.station_name }} Subtotal</b></td>
          <td>
            <p class="text-right text-large"><b>{{  mdfCtrl.totals[project.id].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</b></p>
          </td>
+         <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<p class="text-right">{{ mdfCtrl.trend.projects[project.id+'']['Distribution'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits }}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[project.id+'']['Distribution'].trend,-1)"></i>
+          </td>
        </tr>
-       <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+       <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0  || (!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
         	<td>&nbsp;</td>
         </tr>
-        <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0">
+        <tr ng-if="mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].total > 0  || (!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
           <td class="text-left active text-small">
           	<div>Past Month Sent Money Subtotal</div>
           	<div>This total has already been sent and is not included in the monthly distribution.</div>
           </td>
           <td class="text-right active text-small">{{ mdfCtrl.totals[project.id][mdfCtrl.constants.FormSections.PastMonth].display | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</td>
+           <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<p class="text-right active text-small">{{ mdfCtrl.trend.projects[project.id]['Past Month Sent Money'].prior[mdfCtrl.currencyType] | currency:mdfCtrl.currency:mdfCtrl.decimalDigits}}</p>
+          </td>
+          <td ng-if="(!mdfForm.$invalid&&mdfForm.$pristine)&&mdfCtrl.trend">
+          	<i  ng-class="mdfCtrl.getTrendColor(mdfCtrl.trend.projects[project.id]['Past Month Sent Money'].trend,-1)"></i>
+          </td>
         </tr>
       </tbody>
     </table>

@@ -74,7 +74,7 @@
                 <ul class="dropdown-menu">
                 	<li>
                        	<a ng-show="navbarCtrl.session.checkPermission('PROJECTS','VIEW',null, null)"
-                           ui-sref="projectList"
+                           ng-href="{{ navbarCtrl.getReactUrl('project/search') }}"
                             ng-click="navbarCtrl.trackButtonClick('Project List')">Project List</a>
                		</li>
                		<li>

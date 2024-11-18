@@ -24,8 +24,10 @@ class LegalCaseTimelineModalController extends BaseModalController {
             if (this.parentController.courtCase.length < 2) {
             	this.questions.lcTimelineCourtCaseSequence.response.value = '1';
             }
+            this.comment = '';
         } else {
         	this.questions.lcTimelineCourtCaseSequence.response.value += '';
+        	this.comment = this.questions.lcTimelineComment.response.value;
         }
     }
     

@@ -49,11 +49,14 @@
                     <i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('status', '!reverse'),
                     'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('status', 'reverse') }"></i>
                 </th>
-                <th width="7%"># Cases</th>
+                <th ng-click="lcfListCtrl.updateSort('incident__incident_date')" width="7%">Incident Date
+                	<i ng-class="{ 'glyphicon glyphicon-sort-by-alphabet': lcfListCtrl.getSortIcon('incident__incident_date', '!reverse'),
+                    'glyphicon glyphicon-sort-by-alphabet-alt': lcfListCtrl.getSortIcon('incident__incident_date', 'reverse') }"></i>
+                </th>
                 <th width="7%"># PVs</th>
                 <th width="9%"># Suspects</th>
                 <th width="10%"># Convictions</th>
-                <th width="8%"># Arrests</th>
+                <th width="8%"># Verified / # Arrests</th>
                 <th width="14%">Type(s)</th>
                 <th width="10%">Last Timeline Event</th>
                 <th width="8%"># Missing Details</th>
@@ -66,11 +69,11 @@
             <tr ng-repeat="legalCase in lcfListCtrl.legalCases | orderBy:this.queryParameters.ordering:this.queryParameters.reverse">
                 <td>{{ legalCase.incident_number }}</td>
                 <td>{{ legalCase.status }}</td>
-                <td>{{ legalCase.number_cases }}</td>
-                <td>{{ legalCase.number_victims }}</td>
+                <td>{{ legalCase.incident_date }}</td>
+                <td class="text-center">{{ legalCase.number_victims }}</td>
                 <td>{{ legalCase.number_suspects }}</td>
                 <td>{{ legalCase.number_convictions }}</td> 
-                <td>{{ legalCase.number_arrests }}</td> 
+                <td ng-class="lcfListCtrl.arrestColor(legalCase)">{{ legalCase.number_verified_arrests }}/{{ legalCase.number_arrests }}</td> 
                 <td>{{ legalCase.charges }}</td> 
                 <td>{{ legalCase.last_timeline_date }}</td>
                 <td>{{ legalCase.missing_data_count }}</td>

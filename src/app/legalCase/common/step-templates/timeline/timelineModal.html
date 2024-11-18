@@ -12,13 +12,13 @@
         <div class="modal-body">
         	<div class="row">
 	            <div class="col-md-3 form-group">
-		    		<label>Entered By</label>
+		    		<label>Initial Entry By</label>
 		    	</div>
 				<div class="col-md-4 form-group">
 			        <input type="text" min="0" class="form-control" ng-model="TimelineModalController.questions.lcTimelineAddedBy.response.value" disabled>
 		        </div>
 		        <div class="col-md-2 form-group">
-		    		<label>Date Entered</label>
+		    		<label>Initial Date Entered</label>
 		    	</div>
 		    	<div class="col-md-3 form-group">
 		    		<input type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="TimelineModalController.dateData.questions.lcTimelineDateAdded.value" disabled>
@@ -47,7 +47,7 @@
             	<label>Next Step / Case Comments</label>
             </div>
             <div class="row col-md-12">
-            	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions.lcTimelineComment.response.value" ng-disabled="TimelineModalController.isAdd !== true"></textarea>
+            	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions.lcTimelineComment.response.value"></textarea>
             </div> 
         </div>
         <hr>
@@ -57,6 +57,9 @@
                     <button class="btn btn-success float-left" ng-click="TimelineModalController.save()"
                     		ng-disabled="!TimelineModalController.questions.lcTimelineComment.response.value||!TimelineModalController.questions.lcTimelineCourtCaseSequence.response.value" 
                     		ng-if="TimelineModalController.isAdd">Save</button>
+                    <button class="btn btn-success float-left" ng-click="TimelineModalController.save()"
+                    		ng-disabled="!TimelineModalController.questions.lcTimelineComment.response.value||!TimelineModalController.questions.lcTimelineCourtCaseSequence.response.value" 
+                    		ng-if="!TimelineModalController.isAdd&&TimelineModalController.questions.lcTimelineComment.response.value!==TimelineModalController.comment">Update</button>
                 </div>
                 <div class="col-xs-4 text-center">
                     <button class="btn btn-danger" ng-click="TimelineModalController.markAsDeleted()" ng-if="!TimelineModalController.isAdd && !TimelineModalController.isViewing">Delete</button>

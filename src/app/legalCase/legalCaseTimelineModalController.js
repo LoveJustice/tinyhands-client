@@ -8,6 +8,7 @@ class LegalCaseTimelineModalController extends BaseModalController {
         this.caseStatus = caseStatus;
         this.userName = userName;
         this.parentController = parentController;
+        this.isViewing = isViewing;
     }
     
     delayedQuestionData() {

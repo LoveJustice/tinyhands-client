@@ -1,5 +1,5 @@
 <div id="legal-timeline-modal" class="modal-content">
-    <form name="LegalTimelineModal" ng-disabled="TimelineModalController.isViewing === 'true'">
+    <form name="LegalTimelineModal" ng-disabled="TimelineModalController.isViewing">
     	<div class="modal-header">
             <button type="button" class="close" ng-click="TimelineModalController.dismiss()">
                 <span aria-hidden="true">&times;</span>
@@ -47,7 +47,7 @@
             	<label>Next Step / Case Comments</label>
             </div>
             <div class="row col-md-12">
-            	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions.lcTimelineComment.response.value"></textarea>
+            	<textarea class="form-control" rows="5" ng-model="TimelineModalController.questions.lcTimelineComment.response.value" ng-disabled="TimelineModalController.isViewing"></textarea>
             </div> 
         </div>
         <hr>

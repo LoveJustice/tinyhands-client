@@ -89,6 +89,7 @@ export class PermDropDownGroup {
     constructor(permission, managePermission, allCountries, allStations, allCurrentPermissions, accountId, editController, position) {
         this.permissionId = permission.id;
         this.permissionName = permission.action;
+        this.permissionDisplayName = permission.action_display_name;
         this.minLevel = permission.min_level;
         this.accountId = accountId;
         this.editController = editController;
@@ -602,7 +603,10 @@ export default class AccountEditController {
             this.permissions = result.data.results;
             let groupCount = {};
             for (let idx=0; idx < this.permissions.length; idx++) {
-                var pg = this.permissions[idx].permission_group;
+            	if (this.permissions[idx].hide_group) {
+            		continue;
+            	}
+                var pg = this.permissions[idx].group_display_name;
                 if (this.permissionGroups.indexOf(pg) < 0) {
                     this.permissionGroups.push(pg);
                     groupCount[pg] = 1;
@@ -654,7 +658,7 @@ export default class AccountEditController {
             this.unlinked = false;
 
             for (var idx=0; idx < this.permissions.length; idx++) {
-                if (this.permissions[idx].permission_group === grp) {
+                if (this.permissions[idx].group_display_name === grp && !this.permissions[idx].hide_action) {
                 	if (this.permissions[idx].display_order < 0) {
                 		this.unlinked = true;
                 	}

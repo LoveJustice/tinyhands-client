@@ -215,6 +215,7 @@ class IndicatorsController {
                     {'key':'v2Lag', 'name':'Tie Break Verification Lag time', 'color':true},
                     {'key':'v2Backlog', 'name':'Tie Break Verification Backlog', 'color':true},
                     {'key':'v2Count', 'name':'Tie Break Verifications Completed', 'color':false},
+                    {'key':'mdfSignedPercent', 'name':'MDF Signed %', 'color':false},
                 ];
                 
             } else {
@@ -243,6 +244,7 @@ class IndicatorsController {
                     {'key':'v2Backlog', 'name':'Step 2: Verification Backlog', 'color':true},
                    // {'key':'v2ChangeCount', 'name':'Verification Change', 'color':false},
                     {'key':'v2ConflictPercent', 'name':'Conflict %', 'color':false},
+                    {'key':'mdfSignedPercent', 'name':'MDF Signed %', 'color':false},
                 ];
             }
             

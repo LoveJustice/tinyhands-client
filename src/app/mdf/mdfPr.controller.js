@@ -1096,7 +1096,7 @@ export default class MdfPrController {
     	} else if(trend < 0) {
     		result = "fa fa-arrow-down";
     	}
-    	if (trendColor > 1) {;
+    	if (trendColor > 1) {
     		result += " trendMajorGood";
     	} else if (trendColor > 0) {
     		result += " trendMinorGood";
@@ -1109,9 +1109,12 @@ export default class MdfPrController {
     }
     
     attachSignedForm() {
+    	this.spinner.show("Attaching signed form");
     	this.service.attachFile(this.form.id, this.form, this.signedForm).then((promise) => {
-    		 this.getMdfForm();
+    		this.spinner.hide();
+    		this.getMdfForm();
     	}, (error) => {
+    		this.spinner.hide();
     		this.toastr.error(`Failed to attach form`);
     		console.log(error);
     	});

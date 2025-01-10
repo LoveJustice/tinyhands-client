@@ -1096,7 +1096,7 @@ export default class MdfPrController {
     	} else if(trend < 0) {
     		result = "fa fa-arrow-down";
     	}
-    	if (trendColor > 1) {;
+    	if (trendColor > 1) {
     		result += " trendMajorGood";
     	} else if (trendColor > 0) {
     		result += " trendMinorGood";

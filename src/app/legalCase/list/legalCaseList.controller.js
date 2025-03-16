@@ -311,4 +311,13 @@ export default class LegalCaseListController {
             legalCase.confirmedDelete = true;
         }
     }
+    
+    arrestColor(legalCase) {
+    	let result = 'text-center';
+    	if (legalCase.number_verified_arrests < legalCase.number_arrests) {
+    		result += ' notAllVerified';
+    	}
+    	
+    	return result;
+    }
 }

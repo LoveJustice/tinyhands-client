@@ -56,12 +56,6 @@
     	 	<form-step class="col-md-12 control-label" type="textarea"
                label="Case Summary" response-value="$ctrl.questions.lcCaseSummary.response.value"></form-step>
 		</div>
-		<div class="col-md-6 form-group">
-            <form-step class="col-md-4 control-label">Date Last Contacted</form-step>
-            <div class="col-md-4">
-                <input  type="date" class="form-control" ng-model-options="{timezone: 'utc'}" ng-model="$ctrl.dateData.questions.lcDateLastContacted.value">
-            </div>
-        </div>
    	 </div>
     
     <div class="row" ng-repeat="(cardIndex, card) in $ctrl.getCardInstances('Court Case')">

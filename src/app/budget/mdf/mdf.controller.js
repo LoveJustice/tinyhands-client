@@ -60,7 +60,7 @@ export default class MdfController {
 
         this.service.sendMdfEmails(people).then(() => {
             this.toastr.success(`Successfully emailed the MDF`);
-            this.state.go('budgetList'); // When the emails have been sent, load next page in the workflow (the budget list)
+            this.state.go('mdfList'); // When the emails have been sent, load next page in the workflow (the budget list)
         },
             () => {
                 this.toastr.error(`Could not send emails`);
